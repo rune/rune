@@ -1,0 +1,15 @@
+# OSX
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Dev Tooling
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# Distribution
+build/

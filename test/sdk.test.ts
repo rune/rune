@@ -41,4 +41,9 @@ describe("sdk", function () {
     })
     expect(errMsg).toMatchInlineSnapshot(`"Rune.startGame() called before Rune.init()"`)
   })
+
+  it("exposed version should match npm version", async function () {
+    const packageJson = require("../package.json")
+    expect(packageJson.version).toMatch(Rune.version)
+  })
 })

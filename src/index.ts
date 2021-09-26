@@ -26,6 +26,7 @@ interface InitInput {
 export interface RuneExport extends InitInput {
   gameOver: (object: GameOverInput) => void
   init: (object: InitInput) => void
+  version: string
 }
 
 const Rune: RuneExport = {
@@ -50,6 +51,8 @@ const Rune: RuneExport = {
     // Overwrite exposed functions to allow using them now
     Rune.gameOver = gameOver
   },
+  // Allow Rune to see which SDK version the game is using
+  version: "1.0.0",
 }
 
 export { Rune }

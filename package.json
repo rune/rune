@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build": "sh scripts/build.sh",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "test:updateSnapshots": "jest --runInBand -u"
   },
   "repository": {
     "type": "git",

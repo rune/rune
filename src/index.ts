@@ -6,17 +6,6 @@ interface GameOverInput {
   score: number
 }
 
-const gameOver = function ({ score }: GameOverInput) {
-  // This function is automatically replaced inside Rune.
-  // This logic is just to ease game development.
-  console.log(`RUNE: Successfully communicated score of ${score}.`)
-  console.log(`RUNE: Starting new game in 3 seconds.`)
-  setTimeout(() => {
-    Rune.startGame()
-    console.log(`RUNE: Started new game.`)
-  }, 3000)
-}
-
 interface InitInput {
   startGame: () => void
   resumeGame: () => void
@@ -48,8 +37,17 @@ const Rune: RuneExport = {
     Rune.startGame = startGame
     Rune.resumeGame = resumeGame
     Rune.pauseGame = pauseGame
-    // Overwrite exposed functions to allow using them now
-    Rune.gameOver = gameOver
+    // Overwrite exposed function to allow using it now
+    Rune.gameOver = function ({ score }: GameOverInput) {
+      // This function is automatically replaced inside Rune.
+      // This logic is just to ease game development.
+      console.log(`RUNE: Successfully communicated score of ${score}.`)
+      console.log(`RUNE: Starting new game in 3 seconds.`)
+      setTimeout(() => {
+        Rune.startGame()
+        console.log(`RUNE: Started new game.`)
+      }, 3000)
+    }
   },
   // Allow Rune to see which SDK version the game is using
   version: "1.0.0",

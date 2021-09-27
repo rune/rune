@@ -2,7 +2,7 @@ import { Rune } from "./setup"
 import { extractErrMsg } from "./helper"
 
 describe("sdk", function () {
-  it("init() -> pauseGame() -> gameOver() -> startGame()", async function () {
+  test("common flow of init() -> pauseGame() -> gameOver() -> startGame()", async function () {
     // Mock a game's state
     let gameState: "OFF" | "RUNNING" | "PAUSED" = "OFF"
     Rune.init({
@@ -35,19 +35,19 @@ describe("sdk", function () {
     expect(gameState).toMatchInlineSnapshot(`"RUNNING"`)
   })
 
-  it("don't allow calling other functions before init()", async function () {
+  test("don't allow calling other functions before init()", async function () {
     const errMsg = await extractErrMsg(() => {
       Rune.startGame()
     })
     expect(errMsg).toMatchInlineSnapshot(`"Rune.startGame() called before Rune.init()"`)
   })
 
-  it("exposed version should match npm version", async function () {
+  test("exposed version should match npm version", async function () {
     const packageJson = require("../package.json")
     expect(packageJson.version).toMatch(Rune.version)
   })
 
-  it("allow replacing functions to communicate with the Rune app", async function () {
+  test("allow replacing functions to communicate with the Rune app", async function () {
     let gameFinished = false
 
     // Mimic running inside Rune, where gameOver() is replaced using code injection

@@ -38,9 +38,10 @@ const Rune: RuneExport = {
     Rune.resumeGame = resumeGame
     Rune.pauseGame = pauseGame
 
-    // If debugging locally, mimic events and e.g. start a new game after finishing.
     // When running inside Rune, the env RUNE_PLATFORM will always be provided.
+    // The gameOver function will be provided by the Rune.
     if (process.env.RUNE_PLATFORM === undefined) {
+      // If debugging locally, mimic events and e.g. start a new game after finishing
       Rune.gameOver = function ({ score }: GameOverInput) {
         console.log(`RUNE: Successfully communicated score of ${score}.`)
         console.log(`RUNE: Starting new game in 3 seconds.`)

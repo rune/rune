@@ -46,4 +46,24 @@ describe("sdk", function () {
     const packageJson = require("../package.json")
     expect(packageJson.version).toMatch(Rune.version)
   })
+
+  it("allow replacing functions to communicate with the Rune app", async function () {
+    let gameFinished = false
+
+    // Mimic running inside Rune, where gameOver() is replaced using code injection
+    Rune.gameOver = ({}) => {
+      gameFinished = true
+    }
+    process.env.RUNE_PLATFORM = "MOBILE"
+
+    // See that the injected gameOver() is used
+    Rune.gameOver({ score: 0 })
+    expect(gameFinished).toEqual(true)
+
+    // See that calling init() doesn't overwrite injected gameOver()
+    gameFinished = false
+    Rune.init({ startGame: () => {}, pauseGame: () => {}, resumeGame: () => {} })
+    Rune.gameOver({ score: 0 })
+    expect(gameFinished).toEqual(true)
+  })
 })

@@ -37,16 +37,18 @@ const Rune: RuneExport = {
     Rune.startGame = startGame
     Rune.resumeGame = resumeGame
     Rune.pauseGame = pauseGame
-    // Overwrite exposed function to allow using it now
-    Rune.gameOver = function ({ score }: GameOverInput) {
-      // This function is automatically replaced inside Rune.
-      // This logic is just to ease game development.
-      console.log(`RUNE: Successfully communicated score of ${score}.`)
-      console.log(`RUNE: Starting new game in 3 seconds.`)
-      setTimeout(() => {
-        Rune.startGame()
-        console.log(`RUNE: Started new game.`)
-      }, 3000)
+
+    // If debugging locally, mimic events and e.g. start a new game after finishing.
+    // When running inside Rune, the env RUNE_PLATFORM will always be provided.
+    if (process.env.RUNE_PLATFORM === undefined) {
+      Rune.gameOver = function ({ score }: GameOverInput) {
+        console.log(`RUNE: Successfully communicated score of ${score}.`)
+        console.log(`RUNE: Starting new game in 3 seconds.`)
+        setTimeout(() => {
+          Rune.startGame()
+          console.log(`RUNE: Started new game.`)
+        }, 3000)
+      }
     }
   },
   // Allow Rune to see which SDK version the game is using

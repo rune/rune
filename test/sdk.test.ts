@@ -36,10 +36,27 @@ describe("sdk", function () {
   })
 
   test("don't allow calling other functions before init()", async function () {
-    const errMsg = await extractErrMsg(() => {
-      Rune.startGame()
-    })
-    expect(errMsg).toMatchInlineSnapshot(`"Rune.startGame() called before Rune.init()"`)
+    expect(
+      await extractErrMsg(() => {
+        Rune.startGame()
+      })
+    ).toMatchInlineSnapshot(`"Rune.startGame() called before Rune.init()"`)
+  })
+
+  test("ensure correct input passed to init()", async function () {
+    expect(
+      await extractErrMsg(() => {
+        //@ts-expect-error
+        Rune.init()
+      })
+    ).toMatchInlineSnapshot(`"Invalid startGame function provided to Rune.init()"`)
+
+    expect(
+      await extractErrMsg(() => {
+        //@ts-expect-error
+        Rune.init({ startGame: () => {}, resumeGame: "sure", pauseGame: "sometimes" })
+      })
+    ).toMatchInlineSnapshot(`"Invalid resumeGame function provided to Rune.init()"`)
   })
 
   test("exposed version should match npm version", async function () {

@@ -32,7 +32,19 @@ const Rune: RuneExport = {
   gameOver: () => {
     throw new Error("Rune.gameOver() called before Rune.init()")
   },
-  init: ({ startGame, resumeGame, pauseGame }: InitInput) => {
+  init: (input: InitInput) => {
+    // Check that game provided correct input to SDK
+    const { startGame, resumeGame, pauseGame } = input || {}
+    if (typeof startGame !== "function") {
+      throw new Error("Invalid startGame function provided to Rune.init()")
+    }
+    if (typeof resumeGame !== "function") {
+      throw new Error("Invalid resumeGame function provided to Rune.init()")
+    }
+    if (typeof pauseGame !== "function") {
+      throw new Error("Invalid pauseGame function provided to Rune.init()")
+    }
+
     // Initialize the SDK with the game's functions
     Rune.startGame = startGame
     Rune.resumeGame = resumeGame

@@ -10,6 +10,7 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   rules: {
     "no-console": ["warn"],
+    "no-throw-literal": "error",
   },
   settings: {},
   globals: {

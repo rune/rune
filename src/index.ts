@@ -13,8 +13,8 @@ interface InitInput {
 }
 
 export interface RuneExport extends InitInput {
-  gameOver: (object: GameOverInput) => void
-  init: (object: InitInput) => void
+  gameOver: (input: GameOverInput) => void
+  init: (input: InitInput) => void
   version: string
 }
 

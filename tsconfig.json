@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2019"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "target": "ES2019",
+    "outDir": "build",
+    "strict": true,
+    "noImplicitAny": true
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules", ".vscode", "test"]
+}

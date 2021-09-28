@@ -18,7 +18,7 @@ export interface RuneExport extends InitInput {
   version: string
 }
 
-const Rune: RuneExport = {
+export const Rune: RuneExport = {
   // Make functions throw until init()
   startGame: () => {
     throw new Error("Rune.startGame() called before Rune.init()")
@@ -67,5 +67,3 @@ const Rune: RuneExport = {
   // Allow Rune to see which SDK version the game is using
   version: "1.0.0",
 }
-
-export { Rune }

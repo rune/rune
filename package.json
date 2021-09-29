@@ -2,7 +2,8 @@
   "name": "rune-games-sdk",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "sh scripts/build.sh",
     "test": "jest --runInBand",

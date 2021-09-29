@@ -10,6 +10,3 @@ yarn-error.log
 .vscode/*
 !.vscode/launch.json
 !.vscode/tasks.json
-
-# Distribution
-build/

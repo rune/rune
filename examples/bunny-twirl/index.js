@@ -76,10 +76,12 @@ function endGame() {
   Rune.gameOver({ score })
 }
 
-// End game on click (i.e. player couldn't handle more twirls)
-app.renderer.view.addEventListener("click", function () {
-  endGame()
-})
+// End game on click / tap (i.e. player couldn't handle more twirls)
+for (const eventType of ["click", "touchstart"]) {
+  document.body.addEventListener(eventType, function () {
+    endGame()
+  })
+}
 
 // Initialize Rune SDK with the start/pause/resume functions
 Rune.init({

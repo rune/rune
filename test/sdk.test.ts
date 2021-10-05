@@ -39,7 +39,7 @@ describe("sdk", function () {
       await extractErrMsg(() => {
         Rune._startGame()
       })
-    ).toMatchInlineSnapshot(`"Rune.startGame() called before Rune.init()"`)
+    ).toMatchInlineSnapshot(`"Rune._startGame() called before Rune.init()"`)
   })
 
   test("ensure correct input passed to init()", async function () {

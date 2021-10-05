@@ -5,19 +5,6 @@ The SDK interface for games to interact with Rune.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rune = void 0;
 exports.Rune = {
-    // Make functions throw until init()
-    _startGame: () => {
-        throw new Error("Rune.startGame() called before Rune.init()");
-    },
-    _resumeGame: () => {
-        throw new Error("Rune.resumeGame() called before Rune.init()");
-    },
-    _pauseGame: () => {
-        throw new Error("Rune.pauseGame() called before Rune.init()");
-    },
-    gameOver: () => {
-        throw new Error("Rune.gameOver() called before Rune.init()");
-    },
     init: (input) => {
         // Check that game provided correct input to SDK
         const { startGame, resumeGame, pauseGame } = input || {};
@@ -57,5 +44,18 @@ exports.Rune = {
     },
     // Allow Rune to see which SDK version the game is using
     version: "1.0.0",
+    // Make functions throw until init()
+    _startGame: () => {
+        throw new Error("Rune._startGame() called before Rune.init()");
+    },
+    _resumeGame: () => {
+        throw new Error("Rune._resumeGame() called before Rune.init()");
+    },
+    _pauseGame: () => {
+        throw new Error("Rune._pauseGame() called before Rune.init()");
+    },
+    gameOver: () => {
+        throw new Error("Rune.gameOver() called before Rune.init()");
+    },
 };
 //# sourceMappingURL=index.js.map

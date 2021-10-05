@@ -36,7 +36,7 @@ function scoreText(score) {
   return `You've survived ${score} bunny twirls`
 }
 let score = 0
-const text = new PIXI.Text(scoreText(score), {
+const text = new PIXI.Text("Tap to start!", {
   fontFamily: "Arial",
   fontSize: 12,
   fill: "white",
@@ -47,31 +47,42 @@ text.position.y = -50
 text.anchor.set(0.5)
 container.addChild(text)
 
+// Keep track of whether to animate and if the player started playing
+let isAnimating = true
+let isPlaying = false
+
 // Listen for animate update
-let isRunning = true
 app.ticker.add((delta) => {
   // Skip if game is paused
-  if (!isRunning) return
+  if (!isAnimating) return
 
-  // Rotate container and increment score (approx. 6.28 radians per rotation)
+  // Rotate container
   container.rotation += 0.01 * delta
-  score = Math.ceil(container.rotation / 6.28)
-  text.text = scoreText(score)
+
+  // Increment score if user started playing (approx. 6.28 radians per rotation)
+  if (isPlaying) {
+    score = Math.floor(container.rotation / 6.28)
+    if (text.text !== scoreText(score)) text.text = scoreText(score)
+  }
 })
 
 // Setup functions for starting the game etc.
 function startGame() {
   container.rotation = 0
-  isRunning = true
+
+  // Make user tap screen to actually start playing
+  isAnimating = true
+  isPlaying = false
+  text.text = "Tap to start!"
 }
 function pauseGame() {
-  isRunning = false
+  isAnimating = false
 }
 function resumeGame() {
-  isRunning = true
+  isAnimating = true
 }
 function endGame() {
-  isRunning = false
+  isAnimating = false
   text.text = `You gave up after ${score} twirls!`
   Rune.gameOver({ score })
 }
@@ -79,7 +90,12 @@ function endGame() {
 // End game on click / tap (i.e. player couldn't handle more twirls)
 for (const eventType of ["click", "touchstart"]) {
   document.body.addEventListener(eventType, function () {
-    endGame()
+    if (!isPlaying) {
+      // First tap should start gameplay
+      isPlaying = true
+    } else {
+      endGame()
+    }
   })
 }
 

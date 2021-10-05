@@ -16,7 +16,7 @@ Or include the following line in your HTML file:
 
 ## Usage
 
-Initialize the Rune SDK and and start your gameplay.
+Initialize the Rune SDK when initializing your game. The game can show animations to entice the player, but should wait on a tap from the player to start the actual gameplay as the game may be preloaded.
 
 ```js
 Rune.init({

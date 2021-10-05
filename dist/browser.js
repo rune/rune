@@ -49,6 +49,13 @@ window["Rune"] = {
                     console.log(`RUNE: Started new game.`);
                 }, 3000);
             };
+            // Mimic the user starting the game by tapping into it
+            console.log(`RUNE: Successfully initialized.`);
+            console.log(`RUNE: Starting new game in 3 seconds.`);
+            setTimeout(() => {
+                Rune._startGame();
+                console.log(`RUNE: Started new game.`);
+            }, 3000);
         }
     },
     // Allow Rune to see which SDK version the game is using

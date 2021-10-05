@@ -2,9 +2,10 @@ import { Rune } from "./setup"
 import { extractErrMsg } from "./helper"
 
 describe("sdk", function () {
-  test("common flow of init() -> pauseGame() -> gameOver() -> startGame()", async function () {
-    // Mock a game's state
-    let gameState: "OFF" | "RUNNING" | "PAUSED" = "OFF"
+  test("init() -> startGame() -> pauseGame() -> resumeGame()", async function () {
+    // Mock a game's state and mimic running inside Rune where env is set
+    process.env.RUNE_PLATFORM = "MOBILE"
+    let gameState: "WAITING" | "RUNNING" | "PAUSED" = "WAITING"
     Rune.init({
       startGame: () => {
         gameState = "RUNNING"
@@ -18,7 +19,7 @@ describe("sdk", function () {
     })
 
     // Should be no change in gameState from calling init()
-    expect(gameState).toMatchInlineSnapshot(`"OFF"`)
+    expect(gameState).toMatchInlineSnapshot(`"WAITING"`)
 
     // Should start the game
     Rune._startGame()
@@ -28,10 +29,8 @@ describe("sdk", function () {
     Rune._pauseGame()
     expect(gameState).toMatchInlineSnapshot(`"PAUSED"`)
 
-    // Should restart the game a bit after providing score
-    Rune.gameOver({ score: 0 })
-    expect(gameState).toMatchInlineSnapshot(`"PAUSED"`)
-    await new Promise((resolve) => setTimeout(resolve, 3000))
+    // Should resume the game
+    Rune._resumeGame()
     expect(gameState).toMatchInlineSnapshot(`"RUNNING"`)
   })
 

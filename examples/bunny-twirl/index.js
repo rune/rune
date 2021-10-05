@@ -36,12 +36,17 @@ function scoreText(score) {
   return `You've survived ${score} bunny twirls`
 }
 let score = 0
-const text = new PIXI.Text("Tap to start!", {
-  fontFamily: "Arial",
-  fontSize: 12,
-  fill: "white",
-  align: "center",
-})
+const text = new PIXI.Text(
+  // Show devs that the game is waiting on startGame().
+  // A real Rune game doesn't need to show text like this.
+  "Waiting to start...",
+  {
+    fontFamily: "Arial",
+    fontSize: 12,
+    fill: "white",
+    align: "center",
+  }
+)
 text.position.x = 80
 text.position.y = -50
 text.anchor.set(0.5)
@@ -59,21 +64,21 @@ app.ticker.add((delta) => {
   // Rotate container
   container.rotation += 0.01 * delta
 
-  // Increment score if user started playing (approx. 6.28 radians per rotation)
+  // Increment score if user started playing
   if (isPlaying) {
-    score = Math.floor(container.rotation / 6.28)
+    score = Math.floor(container.rotation / (Math.PI * 2))
     if (text.text !== scoreText(score)) text.text = scoreText(score)
   }
 })
 
 // Setup functions for starting the game etc.
 function startGame() {
-  container.rotation = 0
+  // Reset score w/o changing container orientation by removing full rotations
+  container.rotation = container.rotation % (Math.PI * 2)
 
-  // Make user tap screen to actually start playing
+  // Start actual gameplay
   isAnimating = true
-  isPlaying = false
-  text.text = "Tap to start!"
+  isPlaying = true
 }
 function pauseGame() {
   isAnimating = false
@@ -91,15 +96,15 @@ function endGame() {
 for (const eventType of ["click", "touchstart"]) {
   document.body.addEventListener(eventType, function () {
     if (!isPlaying) {
-      // First tap should start gameplay
-      isPlaying = true
+      // Don't do anything if the game hasn't started
     } else {
       endGame()
     }
   })
 }
 
-// Initialize Rune SDK with the start/pause/resume functions
+// Initialize Rune SDK with the start/pause/resume functions.
+// Rune will call startGame() to let this game know to start the gameplay.
 Rune.init({
   startGame,
   pauseGame,

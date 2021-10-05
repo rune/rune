@@ -7,7 +7,7 @@ if (typeof process.env === "undefined") process.env = {}
 /*
 The SDK interface for games to interact with Rune.
 */
-const Rune = {
+window["Rune"] = {
     // Make functions throw until init()
     startGame: () => {
         throw new Error("Rune.startGame() called before Rune.init()");

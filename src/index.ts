@@ -12,21 +12,26 @@ interface InitInput {
   pauseGame: () => void
 }
 
-export interface RuneExport extends InitInput {
+export interface RuneExport {
+  version: string
+  // External functions
   gameOver: (input: GameOverInput) => void
   init: (input: InitInput) => void
-  version: string
+  // Internal functions
+  _startGame: () => void
+  _resumeGame: () => void
+  _pauseGame: () => void
 }
 
 export const Rune: RuneExport = {
   // Make functions throw until init()
-  startGame: () => {
+  _startGame: () => {
     throw new Error("Rune.startGame() called before Rune.init()")
   },
-  resumeGame: () => {
+  _resumeGame: () => {
     throw new Error("Rune.resumeGame() called before Rune.init()")
   },
-  pauseGame: () => {
+  _pauseGame: () => {
     throw new Error("Rune.pauseGame() called before Rune.init()")
   },
   gameOver: () => {
@@ -46,9 +51,9 @@ export const Rune: RuneExport = {
     }
 
     // Initialize the SDK with the game's functions
-    Rune.startGame = startGame
-    Rune.resumeGame = resumeGame
-    Rune.pauseGame = pauseGame
+    Rune._startGame = startGame
+    Rune._resumeGame = resumeGame
+    Rune._pauseGame = pauseGame
 
     // When running inside Rune, the env RUNE_PLATFORM will always be provided.
     // The gameOver function will be provided by the Rune.
@@ -58,7 +63,7 @@ export const Rune: RuneExport = {
         console.log(`RUNE: Successfully communicated score of ${score}.`)
         console.log(`RUNE: Starting new game in 3 seconds.`)
         setTimeout(() => {
-          Rune.startGame()
+          Rune._startGame()
           console.log(`RUNE: Started new game.`)
         }, 3000)
       }

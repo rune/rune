@@ -6,13 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rune = void 0;
 exports.Rune = {
     // Make functions throw until init()
-    startGame: () => {
+    _startGame: () => {
         throw new Error("Rune.startGame() called before Rune.init()");
     },
-    resumeGame: () => {
+    _resumeGame: () => {
         throw new Error("Rune.resumeGame() called before Rune.init()");
     },
-    pauseGame: () => {
+    _pauseGame: () => {
         throw new Error("Rune.pauseGame() called before Rune.init()");
     },
     gameOver: () => {
@@ -31,9 +31,9 @@ exports.Rune = {
             throw new Error("Invalid pauseGame function provided to Rune.init()");
         }
         // Initialize the SDK with the game's functions
-        exports.Rune.startGame = startGame;
-        exports.Rune.resumeGame = resumeGame;
-        exports.Rune.pauseGame = pauseGame;
+        exports.Rune._startGame = startGame;
+        exports.Rune._resumeGame = resumeGame;
+        exports.Rune._pauseGame = pauseGame;
         // When running inside Rune, the env RUNE_PLATFORM will always be provided.
         // The gameOver function will be provided by the Rune.
         if (process.env.RUNE_PLATFORM === undefined) {
@@ -42,7 +42,7 @@ exports.Rune = {
                 console.log(`RUNE: Successfully communicated score of ${score}.`);
                 console.log(`RUNE: Starting new game in 3 seconds.`);
                 setTimeout(() => {
-                    exports.Rune.startGame();
+                    exports.Rune._startGame();
                     console.log(`RUNE: Started new game.`);
                 }, 3000);
             };

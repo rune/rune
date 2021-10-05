@@ -9,13 +9,13 @@ The SDK interface for games to interact with Rune.
 */
 window["Rune"] = {
     // Make functions throw until init()
-    startGame: () => {
+    _startGame: () => {
         throw new Error("Rune.startGame() called before Rune.init()");
     },
-    resumeGame: () => {
+    _resumeGame: () => {
         throw new Error("Rune.resumeGame() called before Rune.init()");
     },
-    pauseGame: () => {
+    _pauseGame: () => {
         throw new Error("Rune.pauseGame() called before Rune.init()");
     },
     gameOver: () => {
@@ -34,9 +34,9 @@ window["Rune"] = {
             throw new Error("Invalid pauseGame function provided to Rune.init()");
         }
         // Initialize the SDK with the game's functions
-        Rune.startGame = startGame;
-        Rune.resumeGame = resumeGame;
-        Rune.pauseGame = pauseGame;
+        Rune._startGame = startGame;
+        Rune._resumeGame = resumeGame;
+        Rune._pauseGame = pauseGame;
         // When running inside Rune, the env RUNE_PLATFORM will always be provided.
         // The gameOver function will be provided by the Rune.
         if (process.env.RUNE_PLATFORM === undefined) {
@@ -45,7 +45,7 @@ window["Rune"] = {
                 console.log(`RUNE: Successfully communicated score of ${score}.`);
                 console.log(`RUNE: Starting new game in 3 seconds.`);
                 setTimeout(() => {
-                    Rune.startGame();
+                    Rune._startGame();
                     console.log(`RUNE: Started new game.`);
                 }, 3000);
             };

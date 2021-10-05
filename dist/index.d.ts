@@ -6,10 +6,13 @@ interface InitInput {
     resumeGame: () => void;
     pauseGame: () => void;
 }
-export interface RuneExport extends InitInput {
+export interface RuneExport {
+    version: string;
     gameOver: (input: GameOverInput) => void;
     init: (input: InitInput) => void;
-    version: string;
+    _startGame: () => void;
+    _resumeGame: () => void;
+    _pauseGame: () => void;
 }
 export declare const Rune: RuneExport;
 export {};

@@ -21,11 +21,11 @@ describe("sdk", function () {
     expect(gameState).toMatchInlineSnapshot(`"OFF"`)
 
     // Should start the game
-    Rune.startGame()
+    Rune._startGame()
     expect(gameState).toMatchInlineSnapshot(`"RUNNING"`)
 
     // Should pause the game
-    Rune.pauseGame()
+    Rune._pauseGame()
     expect(gameState).toMatchInlineSnapshot(`"PAUSED"`)
 
     // Should restart the game a bit after providing score
@@ -38,7 +38,7 @@ describe("sdk", function () {
   test("don't allow calling other functions before init()", async function () {
     expect(
       await extractErrMsg(() => {
-        Rune.startGame()
+        Rune._startGame()
       })
     ).toMatchInlineSnapshot(`"Rune.startGame() called before Rune.init()"`)
   })

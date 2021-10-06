@@ -43,7 +43,7 @@ exports.Rune = {
         }
     },
     // Allow Rune to see which SDK version the game is using
-    version: "1.0.0",
+    version: "1.1.1",
     // Make functions throw until init()
     _startGame: () => {
         throw new Error("Rune._startGame() called before Rune.init()");

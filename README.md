@@ -36,6 +36,15 @@ The player may pause the game through the Rune interface. When this happens, the
 
 Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
 
+## Debugging Locally
+
+To make it easy for you to debug your game locally, this SDK will:
+
+- Call the `startGame` function 3 seconds after your game called `Rune.init()`
+- Call the `startGame` function 3 seconds after your game called `Rune.gameOver({ score: myGameScore })`
+
+This simulates what the SDK will do based on player actions when your game is running inside [Rune](https://play.google.com/store/apps/details?id=ai.rune.tincan).
+
 ## Score
 
 For the Rune leaderboard logic to work correctly, your game's score should:

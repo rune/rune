@@ -81,6 +81,9 @@ export const Rune: RuneExport = {
     if (!Rune._doneInit) {
       throw new Error("Rune.gameOver() called before Rune.init()")
     }
+    if (typeof score !== "number") {
+      throw new Error("Score provided to Rune.gameOver() must be a number")
+    }
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
   },
 }

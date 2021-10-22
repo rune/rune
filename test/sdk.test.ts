@@ -60,6 +60,17 @@ describe("sdk", function () {
     ).toMatchInlineSnapshot(`"Invalid resumeGame function provided to Rune.init()"`)
   })
 
+  test("ensure correct types passed to gameOver()", async function () {
+    Rune.init({ startGame: () => {}, resumeGame: () => {}, pauseGame: () => {} })
+
+    expect(
+      await extractErrMsg(() => {
+        //@ts-expect-error
+        Rune.gameOver({ score: "99" })
+      })
+    ).toMatchInlineSnapshot(`"Score provided to Rune.gameOver() must be a number"`)
+  })
+
   test("exposed version should match npm version", async function () {
     const packageJson = require("../package.json")
     expect(packageJson.version).toMatch(Rune.version)

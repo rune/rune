@@ -58,9 +58,23 @@ describe("sdk", function () {
     ).toMatchInlineSnapshot(`"Invalid resumeGame function provided to Rune.init()"`)
   })
 
-  test("exposed version should match npm version", async function () {
+  test("INIT event should include version matching npm version", async function () {
     const packageJson = require("../package.json")
-    expect(packageJson.version).toMatch(Rune.version)
+
+    let version: string | undefined
+    globalThis.postRuneEvent = (event) => {
+      if (event.type === "INIT") {
+        version = event.version
+      }
+    }
+
+    Rune.init({
+      startGame: () => {},
+      pauseGame: () => {},
+      resumeGame: () => {},
+    })
+
+    expect(packageJson.version).toBe(version)
   })
 
   test("allow replacing functions to communicate with the Rune app", async function () {

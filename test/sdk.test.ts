@@ -4,7 +4,7 @@ import { extractErrMsg } from "./helper"
 describe("sdk", function () {
   test("init() -> startGame() -> pauseGame() -> resumeGame()", async function () {
     // Mock a game's state and mimic running inside Rune where env is set
-    process.env.RUNE_PLATFORM = "MOBILE"
+    globalThis.postRuneEvent = () => {}
     let gameState: "WAITING" | "RUNNING" | "PAUSED" = "WAITING"
     Rune.init({
       startGame: () => {
@@ -70,7 +70,7 @@ describe("sdk", function () {
     Rune.gameOver = ({}) => {
       gameFinished = true
     }
-    process.env.RUNE_PLATFORM = "MOBILE"
+    globalThis.postRuneEvent = () => {}
 
     // See that the injected gameOver() is used
     Rune.gameOver({ score: 0 })

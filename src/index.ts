@@ -22,6 +22,7 @@ export type RuneGameEvent =
   | { type: "ERR"; errMsg: string }
 
 export interface RuneExport {
+  version: string
   _doneInit: boolean
   // External functions
   gameOver: (input: GameOverInput) => void
@@ -33,6 +34,7 @@ export interface RuneExport {
 }
 
 export const Rune: RuneExport = {
+  version: "1.1.1",
   _doneInit: false,
   init: (input: InitInput) => {
     // Check that this function has not already been called
@@ -60,7 +62,7 @@ export const Rune: RuneExport = {
 
     // When running inside Rune, runePostMessage will always be defined.
     if (globalThis.postRuneEvent) {
-      globalThis.postRuneEvent({ type: "INIT", version: "1.1.1" })
+      globalThis.postRuneEvent({ type: "INIT", version: Rune.version })
     } else {
       mockEvents()
     }

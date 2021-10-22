@@ -60,6 +60,11 @@ describe("sdk", function () {
     ).toMatchInlineSnapshot(`"Invalid resumeGame function provided to Rune.init()"`)
   })
 
+  test("exposed version should match npm version", async function () {
+    const packageJson = require("../package.json")
+    expect(packageJson.version).toMatch(Rune.version)
+  })
+
   test("INIT event should include version matching npm version", async function () {
     const packageJson = require("../package.json")
 

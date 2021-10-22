@@ -4,7 +4,7 @@ import { extractErrMsg } from "./helper"
 describe("sdk", function () {
   test("init() -> startGame() -> pauseGame() -> resumeGame()", async function () {
     // Mock a game's state and mimic running inside Rune where env is set
-    process.env.RUNE_PLATFORM = "MOBILE"
+    globalThis.postRuneEvent = () => {}
     let gameState: "WAITING" | "RUNNING" | "PAUSED" = "WAITING"
     Rune.init({
       startGame: () => {
@@ -42,14 +42,16 @@ describe("sdk", function () {
     ).toMatchInlineSnapshot(`"Rune._startGame() called before Rune.init()"`)
   })
 
-  test("ensure correct input passed to init()", async function () {
+  test("ensure correct properties passed to init()", async function () {
     expect(
       await extractErrMsg(() => {
         //@ts-expect-error
         Rune.init()
       })
     ).toMatchInlineSnapshot(`"Invalid startGame function provided to Rune.init()"`)
+  })
 
+  test("ensure correct types passed to init()", async function () {
     expect(
       await extractErrMsg(() => {
         //@ts-expect-error
@@ -58,9 +60,39 @@ describe("sdk", function () {
     ).toMatchInlineSnapshot(`"Invalid resumeGame function provided to Rune.init()"`)
   })
 
+  test("ensure correct types passed to gameOver()", async function () {
+    Rune.init({ startGame: () => {}, resumeGame: () => {}, pauseGame: () => {} })
+
+    expect(
+      await extractErrMsg(() => {
+        //@ts-expect-error
+        Rune.gameOver({ score: "99" })
+      })
+    ).toMatchInlineSnapshot(`"Score provided to Rune.gameOver() must be a number"`)
+  })
+
   test("exposed version should match npm version", async function () {
     const packageJson = require("../package.json")
     expect(packageJson.version).toMatch(Rune.version)
+  })
+
+  test("INIT event should include version matching npm version", async function () {
+    const packageJson = require("../package.json")
+
+    let version: string | undefined
+    globalThis.postRuneEvent = (event) => {
+      if (event.type === "INIT") {
+        version = event.version
+      }
+    }
+
+    Rune.init({
+      startGame: () => {},
+      pauseGame: () => {},
+      resumeGame: () => {},
+    })
+
+    expect(packageJson.version).toBe(version)
   })
 
   test("allow replacing functions to communicate with the Rune app", async function () {
@@ -70,7 +102,7 @@ describe("sdk", function () {
     Rune.gameOver = ({}) => {
       gameFinished = true
     }
-    process.env.RUNE_PLATFORM = "MOBILE"
+    globalThis.postRuneEvent = () => {}
 
     // See that the injected gameOver() is used
     Rune.gameOver({ score: 0 })

@@ -2,6 +2,10 @@
 The SDK interface for games to interact with Rune.
 */
 
+declare global {
+  var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
+}
+
 interface GameOverInput {
   score: number
 }
@@ -12,8 +16,14 @@ interface InitInput {
   pauseGame: () => void
 }
 
+export type RuneGameEvent =
+  | { type: "INIT"; version: string }
+  | { type: "GAME_OVER"; score: number }
+  | { type: "ERR"; errMsg: string }
+
 export interface RuneExport {
   version: string
+  _doneInit: boolean
   // External functions
   gameOver: (input: GameOverInput) => void
   init: (input: InitInput) => void
@@ -24,7 +34,15 @@ export interface RuneExport {
 }
 
 export const Rune: RuneExport = {
+  version: "1.1.1",
+  _doneInit: false,
   init: (input: InitInput) => {
+    // Check that this function has not already been called
+    if (Rune._doneInit) {
+      throw new Error("Rune.init() should only be called once")
+    }
+    Rune._doneInit = true
+
     // Check that game provided correct input to SDK
     const { startGame, resumeGame, pauseGame } = input || {}
     if (typeof startGame !== "function") {
@@ -42,30 +60,13 @@ export const Rune: RuneExport = {
     Rune._resumeGame = resumeGame
     Rune._pauseGame = pauseGame
 
-    // When running inside Rune, the env RUNE_PLATFORM will always be provided.
-    // The gameOver function will be provided by the Rune.
-    if (process.env.RUNE_PLATFORM === undefined) {
-      // If debugging locally, mimic events and e.g. start a new game after finishing
-      Rune.gameOver = function ({ score }: GameOverInput) {
-        console.log(`RUNE: Successfully communicated score of ${score}.`)
-        console.log(`RUNE: Starting new game in 3 seconds.`)
-        setTimeout(() => {
-          Rune._startGame()
-          console.log(`RUNE: Started new game.`)
-        }, 3000)
-      }
-
-      // Mimic the user starting the game by tapping into it
-      console.log(`RUNE: Successfully initialized.`)
-      console.log(`RUNE: Starting new game in 3 seconds.`)
-      setTimeout(() => {
-        Rune._startGame()
-        console.log(`RUNE: Started new game.`)
-      }, 3000)
+    // When running inside Rune, runePostMessage will always be defined.
+    if (globalThis.postRuneEvent) {
+      globalThis.postRuneEvent({ type: "INIT", version: Rune.version })
+    } else {
+      mockEvents()
     }
   },
-  // Allow Rune to see which SDK version the game is using
-  version: "1.1.1",
   // Make functions throw until init()
   _startGame: () => {
     throw new Error("Rune._startGame() called before Rune.init()")
@@ -76,7 +77,37 @@ export const Rune: RuneExport = {
   _pauseGame: () => {
     throw new Error("Rune._pauseGame() called before Rune.init()")
   },
-  gameOver: () => {
-    throw new Error("Rune.gameOver() called before Rune.init()")
+  gameOver: ({ score }) => {
+    if (!Rune._doneInit) {
+      throw new Error("Rune.gameOver() called before Rune.init()")
+    }
+    if (typeof score !== "number") {
+      throw new Error("Score provided to Rune.gameOver() must be a number")
+    }
+    globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
   },
+}
+
+// Create mock events to support development
+const mockEvents = () => {
+  // Log posted events to the console (in production, these are processed by Rune)
+  globalThis.postRuneEvent = (event: RuneGameEvent) =>
+    console.log(`RUNE: Posted ${JSON.stringify(event)}`)
+
+  // Mimic the user tapping Play after 3 seconds
+  console.log(`RUNE: Starting new game in 3 seconds.`)
+  setTimeout(() => {
+    Rune._startGame()
+    console.log(`RUNE: Started new game.`)
+  }, 3000)
+
+  // Automatically restart game 3 seconds after Game Over
+  Rune.gameOver = function ({ score }) {
+    globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
+    console.log(`RUNE: Starting new game in 3 seconds.`)
+    setTimeout(() => {
+      Rune._startGame()
+      console.log(`RUNE: Started new game.`)
+    }, 3000)
+  }
 }

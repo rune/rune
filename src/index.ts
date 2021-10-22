@@ -22,6 +22,7 @@ export type RuneGameEvent =
   | { type: "ERR"; errMsg: string }
 
 export interface RuneExport {
+  _doneInit: boolean
   // External functions
   gameOver: (input: GameOverInput) => void
   init: (input: InitInput) => void
@@ -32,7 +33,14 @@ export interface RuneExport {
 }
 
 export const Rune: RuneExport = {
+  _doneInit: false,
   init: (input: InitInput) => {
+    // Check that this function has not already been called
+    if (Rune._doneInit) {
+      throw new Error("Rune.init() should only be called once")
+    }
+    Rune._doneInit = true
+
     // Check that game provided correct input to SDK
     const { startGame, resumeGame, pauseGame } = input || {}
     if (typeof startGame !== "function") {
@@ -68,6 +76,9 @@ export const Rune: RuneExport = {
     throw new Error("Rune._pauseGame() called before Rune.init()")
   },
   gameOver: ({ score }) => {
+    if (!Rune._doneInit) {
+      throw new Error("Rune.gameOver() called before Rune.init()")
+    }
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
   },
 }

@@ -3,7 +3,7 @@ The SDK interface for games to interact with Rune.
 */
 
 declare global {
-  var postRuneEvent: ((event: GameEvent) => void) | undefined
+  var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
 }
 
 interface GameOverInput {
@@ -16,14 +16,12 @@ interface InitInput {
   pauseGame: () => void
 }
 
-// N.B. Keep this in sync with TinCan repo
-type GameEvent =
+export type RuneGameEvent =
   | { type: "INIT"; version: string }
   | { type: "GAME_OVER"; score: number }
   | { type: "ERR"; errMsg: string }
 
 export interface RuneExport {
-  version: string
   // External functions
   gameOver: (input: GameOverInput) => void
   init: (input: InitInput) => void
@@ -53,33 +51,12 @@ export const Rune: RuneExport = {
     Rune._pauseGame = pauseGame
 
     // When running inside Rune, runePostMessage will always be defined.
-    if (!globalThis.postRuneEvent) {
-      // If debugging locally, log events and start a new game after finishing
-      globalThis.postRuneEvent = (event: GameEvent) =>
-        console.log(`RUNE: Posted ${JSON.stringify(event)}`)
-
-      Rune.gameOver = function ({ score }) {
-        globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
-        console.log(`RUNE: Starting new game in 3 seconds.`)
-        setTimeout(() => {
-          Rune._startGame()
-          console.log(`RUNE: Started new game.`)
-        }, 3000)
-      }
-
-      // Mimic the user starting the game by tapping into it
-      console.log(`RUNE: Starting new game in 3 seconds.`)
-      setTimeout(() => {
-        Rune._startGame()
-        console.log(`RUNE: Started new game.`)
-      }, 3000)
+    if (globalThis.postRuneEvent) {
+      globalThis.postRuneEvent({ type: "INIT", version: "1.1.1" })
+    } else {
+      mockEvents()
     }
-
-    // TODO: Get version from package.json
-    globalThis.postRuneEvent({ type: "INIT", version: "1.1.1" })
   },
-  // Allow Rune to see which SDK version the game is using
-  version: "1.1.1",
   // Make functions throw until init()
   _startGame: () => {
     throw new Error("Rune._startGame() called before Rune.init()")
@@ -93,4 +70,28 @@ export const Rune: RuneExport = {
   gameOver: ({ score }) => {
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
   },
+}
+
+// Create mock events to support development
+const mockEvents = () => {
+  // Log posted events to the console (in production, these are processed by Rune)
+  globalThis.postRuneEvent = (event: RuneGameEvent) =>
+    console.log(`RUNE: Posted ${JSON.stringify(event)}`)
+
+  // Mimic the user tapping Play after 3 seconds
+  console.log(`RUNE: Starting new game in 3 seconds.`)
+  setTimeout(() => {
+    Rune._startGame()
+    console.log(`RUNE: Started new game.`)
+  }, 3000)
+
+  // Automatically restart game 3 seconds after Game Over
+  Rune.gameOver = function ({ score }) {
+    globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
+    console.log(`RUNE: Starting new game in 3 seconds.`)
+    setTimeout(() => {
+      Rune._startGame()
+      console.log(`RUNE: Started new game.`)
+    }, 3000)
+  }
 }

@@ -42,14 +42,16 @@ describe("sdk", function () {
     ).toMatchInlineSnapshot(`"Rune._startGame() called before Rune.init()"`)
   })
 
-  test("ensure correct input passed to init()", async function () {
+  test("ensure correct properties passed to init()", async function () {
     expect(
       await extractErrMsg(() => {
         //@ts-expect-error
         Rune.init()
       })
     ).toMatchInlineSnapshot(`"Invalid startGame function provided to Rune.init()"`)
+  })
 
+  test("ensure correct types passed to init()", async function () {
     expect(
       await extractErrMsg(() => {
         //@ts-expect-error

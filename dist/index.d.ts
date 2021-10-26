@@ -1,3 +1,6 @@
+declare global {
+    var postRuneEvent: ((event: RuneGameEvent) => void) | undefined;
+}
 interface GameOverInput {
     score: number;
 }
@@ -6,8 +9,19 @@ interface InitInput {
     resumeGame: () => void;
     pauseGame: () => void;
 }
+export declare type RuneGameEvent = {
+    type: "INIT";
+    version: string;
+} | {
+    type: "GAME_OVER";
+    score: number;
+} | {
+    type: "ERR";
+    errMsg: string;
+};
 export interface RuneExport {
     version: string;
+    _doneInit: boolean;
     gameOver: (input: GameOverInput) => void;
     init: (input: InitInput) => void;
     _startGame: () => void;

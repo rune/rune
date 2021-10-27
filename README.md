@@ -55,6 +55,10 @@ For the Rune leaderboard logic to work correctly, your game's score should:
 
 This is the case by default for most games.
 
+## Audio
+
+Your game can have soundtracks and sound effects. However, your game should not play any audio before the `startGame` function is called.
+
 ## Help
 
 If you're having trouble, please feel free to file an issue in our [GitHub issue tracker](https://github.com/rune/rune-games-sdk/issues).

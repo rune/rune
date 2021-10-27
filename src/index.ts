@@ -22,20 +22,21 @@ export type RuneGameEvent =
   | { type: "ERR"; errMsg: string }
 
 export interface RuneExport {
+  // External properties and functions
   version: string
-  _doneInit: boolean
-  // External functions
   gameOver: (input: GameOverInput) => void
   init: (input: InitInput) => void
-  // Internal functions
+
+  // Internal properties and functions
+  _doneInit: boolean
   _startGame: () => void
   _resumeGame: () => void
   _pauseGame: () => void
 }
 
 export const Rune: RuneExport = {
+  // External properties and functions
   version: "1.1.2",
-  _doneInit: false,
   init: (input: InitInput) => {
     // Check that this function has not already been called
     if (Rune._doneInit) {
@@ -67,16 +68,6 @@ export const Rune: RuneExport = {
       mockEvents()
     }
   },
-  // Make functions throw until init()
-  _startGame: () => {
-    throw new Error("Rune._startGame() called before Rune.init()")
-  },
-  _resumeGame: () => {
-    throw new Error("Rune._resumeGame() called before Rune.init()")
-  },
-  _pauseGame: () => {
-    throw new Error("Rune._pauseGame() called before Rune.init()")
-  },
   gameOver: ({ score }) => {
     if (!Rune._doneInit) {
       throw new Error("Rune.gameOver() called before Rune.init()")
@@ -85,6 +76,18 @@ export const Rune: RuneExport = {
       throw new Error("Score provided to Rune.gameOver() must be a number")
     }
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
+  },
+
+  // Internal properties and functions used by the Rune app
+  _doneInit: false,
+  _startGame: () => {
+    throw new Error("Rune._startGame() called before Rune.init()")
+  },
+  _resumeGame: () => {
+    throw new Error("Rune._resumeGame() called before Rune.init()")
+  },
+  _pauseGame: () => {
+    throw new Error("Rune._pauseGame() called before Rune.init()")
   },
 }
 

@@ -50,7 +50,7 @@ This simulates what the SDK will do based on player actions when your game is ru
 For the Rune leaderboard logic to work correctly, your game's score should:
 
 - be an integer
-- be 0 or higher (i.e. no negative values)
+- be between 0 and 1 billion (i.e. no negative or extremely high values)
 - treat higher scores as better
 
 This is the case by default for most games.

@@ -16,6 +16,9 @@ describe("sdk", function () {
       resumeGame: () => {
         gameState = "RUNNING"
       },
+      getScore: () => {
+        return 0
+      },
     })
 
     // Should be no change in gameState from calling init()
@@ -60,15 +63,20 @@ describe("sdk", function () {
     ).toMatchInlineSnapshot(`"Invalid resumeGame function provided to Rune.init()"`)
   })
 
-  test("ensure correct types passed to gameOver()", async function () {
-    Rune.init({ startGame: () => {}, resumeGame: () => {}, pauseGame: () => {} })
-
+  test("ensure score passed as number", async function () {
     expect(
       await extractErrMsg(() => {
-        //@ts-expect-error
-        Rune.gameOver({ score: "99" })
+        Rune.init({
+          startGame: () => {},
+          resumeGame: () => {},
+          pauseGame: () => {},
+          //@ts-expect-error
+          getScore: () => {
+            return "99"
+          },
+        })
       })
-    ).toMatchInlineSnapshot(`"Score provided to Rune.gameOver() must be a number"`)
+    ).toMatchInlineSnapshot(`"Score is not a number. Received: string"`)
   })
 
   test("exposed version should match npm version", async function () {
@@ -90,28 +98,38 @@ describe("sdk", function () {
       startGame: () => {},
       pauseGame: () => {},
       resumeGame: () => {},
+      getScore: () => {
+        return 0
+      },
     })
 
     expect(packageJson.version).toBe(version)
   })
 
-  test("allow replacing functions to communicate with the Rune app", async function () {
+  test("allow replacing functions through code injection", async function () {
     let gameFinished = false
 
     // Mimic running inside Rune, where gameOver() is replaced using code injection
-    Rune.gameOver = ({}) => {
+    Rune.gameOver = () => {
       gameFinished = true
     }
     globalThis.postRuneEvent = () => {}
 
     // See that the injected gameOver() is used
-    Rune.gameOver({ score: 0 })
+    Rune.gameOver()
     expect(gameFinished).toEqual(true)
 
     // See that calling init() doesn't overwrite injected gameOver()
     gameFinished = false
-    Rune.init({ startGame: () => {}, pauseGame: () => {}, resumeGame: () => {} })
-    Rune.gameOver({ score: 0 })
+    Rune.init({
+      startGame: () => {},
+      pauseGame: () => {},
+      resumeGame: () => {},
+      getScore: () => {
+        return 0
+      },
+    })
+    Rune.gameOver()
     expect(gameFinished).toEqual(true)
   })
 })

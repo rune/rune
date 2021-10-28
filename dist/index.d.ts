@@ -21,9 +21,9 @@ export declare type RuneGameEvent = {
 };
 export interface RuneExport {
     version: string;
-    _doneInit: boolean;
     gameOver: (input: GameOverInput) => void;
     init: (input: InitInput) => void;
+    _doneInit: boolean;
     _startGame: () => void;
     _resumeGame: () => void;
     _pauseGame: () => void;

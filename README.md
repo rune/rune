@@ -11,7 +11,7 @@ $ npm install --save rune-games-sdk
 Or include the following line in your HTML file:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@1.1/dist/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@1.2/dist/browser.min.js"></script>
 ```
 
 ## Usage

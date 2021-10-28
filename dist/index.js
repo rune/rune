@@ -5,8 +5,8 @@ The SDK interface for games to interact with Rune.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rune = void 0;
 exports.Rune = {
-    version: "1.1.2",
-    _doneInit: false,
+    // External properties and functions
+    version: "1.2.0",
     init: (input) => {
         // Check that this function has not already been called
         if (exports.Rune._doneInit) {
@@ -36,16 +36,6 @@ exports.Rune = {
             mockEvents();
         }
     },
-    // Make functions throw until init()
-    _startGame: () => {
-        throw new Error("Rune._startGame() called before Rune.init()");
-    },
-    _resumeGame: () => {
-        throw new Error("Rune._resumeGame() called before Rune.init()");
-    },
-    _pauseGame: () => {
-        throw new Error("Rune._pauseGame() called before Rune.init()");
-    },
     gameOver: ({ score }) => {
         var _a;
         if (!exports.Rune._doneInit) {
@@ -55,6 +45,17 @@ exports.Rune = {
             throw new Error("Score provided to Rune.gameOver() must be a number");
         }
         (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, { type: "GAME_OVER", score });
+    },
+    // Internal properties and functions used by the Rune app
+    _doneInit: false,
+    _startGame: () => {
+        throw new Error("Rune._startGame() called before Rune.init()");
+    },
+    _resumeGame: () => {
+        throw new Error("Rune._resumeGame() called before Rune.init()");
+    },
+    _pauseGame: () => {
+        throw new Error("Rune._pauseGame() called before Rune.init()");
     },
 };
 // Create mock events to support development

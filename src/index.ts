@@ -6,25 +6,23 @@ declare global {
   var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
 }
 
-interface GameOverInput {
-  score: number
-}
-
 interface InitInput {
   startGame: () => void
   resumeGame: () => void
   pauseGame: () => void
+  getScore: () => number
 }
 
 export type RuneGameEvent =
   | { type: "INIT"; version: string }
   | { type: "GAME_OVER"; score: number }
   | { type: "ERR"; errMsg: string }
+  | { type: "SCORE"; score: number }
 
 export interface RuneExport {
   // External properties and functions
   version: string
-  gameOver: (input: GameOverInput) => void
+  gameOver: () => void
   init: (input: InitInput) => void
 
   // Internal properties and functions
@@ -32,6 +30,8 @@ export interface RuneExport {
   _startGame: () => void
   _resumeGame: () => void
   _pauseGame: () => void
+  _getScore: () => void // Called by Rune
+  _getScoreFromGame: () => number // Provided by game
 }
 
 export const Rune: RuneExport = {
@@ -45,7 +45,7 @@ export const Rune: RuneExport = {
     Rune._doneInit = true
 
     // Check that game provided correct input to SDK
-    const { startGame, resumeGame, pauseGame } = input || {}
+    const { startGame, resumeGame, pauseGame, getScore } = input || {}
     if (typeof startGame !== "function") {
       throw new Error("Invalid startGame function provided to Rune.init()")
     }
@@ -55,11 +55,16 @@ export const Rune: RuneExport = {
     if (typeof pauseGame !== "function") {
       throw new Error("Invalid pauseGame function provided to Rune.init()")
     }
+    if (typeof getScore !== "function") {
+      throw new Error("Invalid getScore function provided to Rune.init()")
+    }
+    validateScore(getScore())
 
     // Initialize the SDK with the game's functions
     Rune._startGame = startGame
     Rune._resumeGame = resumeGame
     Rune._pauseGame = pauseGame
+    Rune._getScoreFromGame = getScore
 
     // When running inside Rune, runePostMessage will always be defined.
     if (globalThis.postRuneEvent) {
@@ -68,18 +73,22 @@ export const Rune: RuneExport = {
       mockEvents()
     }
   },
-  gameOver: ({ score }) => {
+  gameOver: () => {
     if (!Rune._doneInit) {
       throw new Error("Rune.gameOver() called before Rune.init()")
     }
-    if (typeof score !== "number") {
-      throw new Error("Score provided to Rune.gameOver() must be a number")
-    }
+    const score = Rune._getScoreFromGame()
+    validateScore(score)
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
   },
 
   // Internal properties and functions used by the Rune app
   _doneInit: false,
+  _getScore: () => {
+    const score = Rune._getScoreFromGame()
+    validateScore(score)
+    globalThis.postRuneEvent?.({ type: "SCORE", score })
+  },
   _startGame: () => {
     throw new Error("Rune._startGame() called before Rune.init()")
   },
@@ -89,6 +98,21 @@ export const Rune: RuneExport = {
   _pauseGame: () => {
     throw new Error("Rune._pauseGame() called before Rune.init()")
   },
+  _getScoreFromGame: () => {
+    throw new Error("Rune._getScoreFromGame() called before Rune.init()")
+  },
+}
+
+const validateScore = (score: number) => {
+  if (typeof score !== "number") {
+    throw new Error(`Score is not a number. Received: ${typeof score}`)
+  }
+  if (score < 0 || score > Math.pow(10, 9)) {
+    throw new Error(`Score is not between 0 and 1000000000. Received: ${score}`)
+  }
+  if (!Number.isInteger(score)) {
+    throw new Error(`Score is not an integer. Received: ${score}`)
+  }
 }
 
 // Create mock events to support development
@@ -105,7 +129,9 @@ const mockEvents = () => {
   }, 3000)
 
   // Automatically restart game 3 seconds after Game Over
-  Rune.gameOver = function ({ score }) {
+  Rune.gameOver = function () {
+    const score = Rune._getScoreFromGame()
+    validateScore(score)
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
     console.log(`RUNE: Starting new game in 3 seconds.`)
     setTimeout(() => {

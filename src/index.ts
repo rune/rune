@@ -6,10 +6,6 @@ declare global {
   var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
 }
 
-interface GameOverInput {
-  score: number
-}
-
 interface InitInput {
   startGame: () => void
   resumeGame: () => void
@@ -26,7 +22,7 @@ export type RuneGameEvent =
 export interface RuneExport {
   // External properties and functions
   version: string
-  gameOver: (input: GameOverInput) => void
+  gameOver: () => void
   init: (input: InitInput) => void
 
   // Internal properties and functions
@@ -77,13 +73,12 @@ export const Rune: RuneExport = {
       mockEvents()
     }
   },
-  gameOver: ({ score }) => {
+  gameOver: () => {
     if (!Rune._doneInit) {
       throw new Error("Rune.gameOver() called before Rune.init()")
     }
-    if (typeof score !== "number") {
-      throw new Error("Score provided to Rune.gameOver() must be a number")
-    }
+    const score = Rune._getScoreFromGame()
+    validateScore(score)
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
   },
 
@@ -103,6 +98,11 @@ export const Rune: RuneExport = {
   _pauseGame: () => {
     throw new Error("Rune._pauseGame() called before Rune.init()")
   },
+  _getScoreFromGame: () => {
+    throw new Error("Rune._getScoreFromGame() called before Rune.init()")
+  },
+}
+
 const validateScore = (score: number) => {
   if (typeof score !== "number") {
     throw new Error(`Score is not a number. Received: ${typeof score}`)
@@ -129,7 +129,9 @@ const mockEvents = () => {
   }, 3000)
 
   // Automatically restart game 3 seconds after Game Over
-  Rune.gameOver = function ({ score }) {
+  Rune.gameOver = function () {
+    const score = Rune._getScoreFromGame()
+    validateScore(score)
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
     console.log(`RUNE: Starting new game in 3 seconds.`)
     setTimeout(() => {

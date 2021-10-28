@@ -1,13 +1,11 @@
 declare global {
     var postRuneEvent: ((event: RuneGameEvent) => void) | undefined;
 }
-interface GameOverInput {
-    score: number;
-}
 interface InitInput {
     startGame: () => void;
     resumeGame: () => void;
     pauseGame: () => void;
+    getScore: () => number;
 }
 export declare type RuneGameEvent = {
     type: "INIT";
@@ -18,15 +16,20 @@ export declare type RuneGameEvent = {
 } | {
     type: "ERR";
     errMsg: string;
+} | {
+    type: "SCORE";
+    score: number;
 };
 export interface RuneExport {
     version: string;
-    gameOver: (input: GameOverInput) => void;
+    gameOver: () => void;
     init: (input: InitInput) => void;
     _doneInit: boolean;
     _startGame: () => void;
     _resumeGame: () => void;
     _pauseGame: () => void;
+    _getScore: () => void;
+    _getScoreFromGame: () => number;
 }
 export declare const Rune: RuneExport;
 export {};

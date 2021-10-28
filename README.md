@@ -23,16 +23,19 @@ Rune.init({
   startGame: myStartGameFunction,
   pauseGame: myPauseGameFunction,
   resumeGame: myResumeGameFunction,
+  getScore: myGetScoreFunction,
 })
 ```
 
 At this point, the game can show animations to entice the player, but should not start the actual gameplay as the game may be preloaded. When the player wants to start your game, Rune will call the provided `startGame` function to let your game know to start the gameplay.
 
-Once the player loses the game, your game should call `Rune.gameOver({ score: myGameScore })`. This tells Rune to show the "game over" screen. Your game should not show any "game over" screen and your game does not need to keep track of the user's highscore.
+Once the player loses the game, your game should call `Rune.gameOver()`. This tells Rune to show the "game over" screen. Your game should not show any "game over" screen and your game does not need to keep track of the user's highscore.
 
 When the player is ready to play again, Rune will call the `startGame` function. Your game should then reset all gameplay back to the experience as a completely new player, including resetting the score.
 
 The player may pause the game through the Rune interface. When this happens, the `pauseGame` function is called to let your game know to freeze all gameplay. Similarly, the `resumeGame` function should unfreeze all gameplay, leaving the player in the same state as before they paused the game.
+
+The Rune SDK may request your game's score at anytime by calling the `getScore` function. This function should return your game's score as a number.
 
 Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
 
@@ -41,7 +44,7 @@ Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/st
 To make it easy for you to debug your game locally, this SDK will:
 
 - Call the `startGame` function 3 seconds after your game called `Rune.init()`
-- Call the `startGame` function 3 seconds after your game called `Rune.gameOver({ score: myGameScore })`
+- Call the `startGame` function 3 seconds after your game called `Rune.gameOver()`
 
 This simulates what the SDK will do based on player actions when your game is running inside [Rune](https://play.google.com/store/apps/details?id=ai.rune.tincan).
 

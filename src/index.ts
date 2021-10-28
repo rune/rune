@@ -14,12 +14,14 @@ interface InitInput {
   startGame: () => void
   resumeGame: () => void
   pauseGame: () => void
+  getScore: () => number
 }
 
 export type RuneGameEvent =
   | { type: "INIT"; version: string }
   | { type: "GAME_OVER"; score: number }
   | { type: "ERR"; errMsg: string }
+  | { type: "SCORE"; score: number }
 
 export interface RuneExport {
   // External properties and functions
@@ -32,6 +34,8 @@ export interface RuneExport {
   _startGame: () => void
   _resumeGame: () => void
   _pauseGame: () => void
+  _getScore: () => void // Called by Rune
+  _getScoreFromGame: () => number // Provided by game
 }
 
 export const Rune: RuneExport = {
@@ -45,7 +49,7 @@ export const Rune: RuneExport = {
     Rune._doneInit = true
 
     // Check that game provided correct input to SDK
-    const { startGame, resumeGame, pauseGame } = input || {}
+    const { startGame, resumeGame, pauseGame, getScore } = input || {}
     if (typeof startGame !== "function") {
       throw new Error("Invalid startGame function provided to Rune.init()")
     }
@@ -55,11 +59,16 @@ export const Rune: RuneExport = {
     if (typeof pauseGame !== "function") {
       throw new Error("Invalid pauseGame function provided to Rune.init()")
     }
+    if (typeof getScore !== "function") {
+      throw new Error("Invalid getScore function provided to Rune.init()")
+    }
+    validateScore(getScore())
 
     // Initialize the SDK with the game's functions
     Rune._startGame = startGame
     Rune._resumeGame = resumeGame
     Rune._pauseGame = pauseGame
+    Rune._getScoreFromGame = getScore
 
     // When running inside Rune, runePostMessage will always be defined.
     if (globalThis.postRuneEvent) {
@@ -80,6 +89,11 @@ export const Rune: RuneExport = {
 
   // Internal properties and functions used by the Rune app
   _doneInit: false,
+  _getScore: () => {
+    const score = Rune._getScoreFromGame()
+    validateScore(score)
+    globalThis.postRuneEvent?.({ type: "SCORE", score })
+  },
   _startGame: () => {
     throw new Error("Rune._startGame() called before Rune.init()")
   },

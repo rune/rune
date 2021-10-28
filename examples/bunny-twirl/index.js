@@ -89,7 +89,10 @@ function resumeGame() {
 function endGame() {
   isAnimating = false
   text.text = `You gave up after ${score} twirls!`
-  Rune.gameOver({ score })
+  Rune.gameOver()
+}
+function getScore() {
+  return score
 }
 
 // End game on click / tap (i.e. player couldn't handle more twirls)
@@ -109,4 +112,5 @@ Rune.init({
   startGame,
   pauseGame,
   resumeGame,
+  getScore,
 })

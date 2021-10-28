@@ -106,6 +106,33 @@ describe("sdk", function () {
     expect(packageJson.version).toBe(version)
   })
 
+  test("SCORE event should include score from game's getScore()", async function () {
+    // Init with score function
+    let gameScore = 0
+    const getScore = () => {
+      return gameScore
+    }
+    Rune.init({
+      startGame: () => {},
+      pauseGame: () => {},
+      resumeGame: () => {},
+      getScore: getScore,
+    })
+
+    // Override postRuneEvent to extract score
+    let eventScore: number | undefined
+    globalThis.postRuneEvent = (event) => {
+      if (event.type === "SCORE") {
+        eventScore = event.score
+      }
+    }
+
+    // Mock game updating its local score and extract using _getScore
+    gameScore = 100
+    Rune._getScore()
+    expect(eventScore).toEqual(gameScore)
+  })
+
   test("allow replacing functions through code injection", async function () {
     let gameFinished = false
 

@@ -89,6 +89,16 @@ export const Rune: RuneExport = {
   _pauseGame: () => {
     throw new Error("Rune._pauseGame() called before Rune.init()")
   },
+const validateScore = (score: number) => {
+  if (typeof score !== "number") {
+    throw new Error(`Score is not a number. Received: ${typeof score}`)
+  }
+  if (score < 0 || score > Math.pow(10, 9)) {
+    throw new Error(`Score is not between 0 and 1000000000. Received: ${score}`)
+  }
+  if (!Number.isInteger(score)) {
+    throw new Error(`Score is not an integer. Received: ${score}`)
+  }
 }
 
 // Create mock events to support development

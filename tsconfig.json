@@ -2,7 +2,7 @@
   "compilerOptions": {
     // Export settings
     "module": "CommonJS",
-    "target": "es6",
+    "target": "es3",
     "outDir": "dist",
     "sourceMap": true,
     // Development settings

@@ -24,7 +24,7 @@ var Rune = {
         if (typeof getScore !== "function") {
             throw new Error("Invalid getScore function provided to Rune.init()");
         }
-        validateScore(getScore());
+        RuneLib.validateScore(getScore());
         // Initialize the SDK with the game's functions
         Rune._startGame = startGame;
         Rune._resumeGame = resumeGame;
@@ -35,7 +35,7 @@ var Rune = {
             window.postRuneEvent({ type: "INIT", version: Rune.version });
         }
         else {
-            mockEvents();
+            RuneLib.mockEvents();
         }
     },
     gameOver: function () {
@@ -44,7 +44,7 @@ var Rune = {
             throw new Error("Rune.gameOver() called before Rune.init()");
         }
         var score = Rune._getScoreFromGame();
-        validateScore(score);
+        RuneLib.validateScore(score);
         (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "GAME_OVER", score: score });
     },
     // Internal properties and functions used by the Rune app
@@ -52,7 +52,7 @@ var Rune = {
     _getScore: function () {
         var _a;
         var score = Rune._getScoreFromGame();
-        validateScore(score);
+        RuneLib.validateScore(score);
         (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "SCORE", score: score });
     },
     _startGame: function () {
@@ -68,39 +68,42 @@ var Rune = {
         throw new Error("Rune._getScoreFromGame() called before Rune.init()");
     }
 };
-var validateScore = function (score) {
-    if (typeof score !== "number") {
-        throw new Error("Score is not a number. Received: " + typeof score);
-    }
-    if (score < 0 || score > Math.pow(10, 9)) {
-        throw new Error("Score is not between 0 and 1000000000. Received: " + score);
-    }
-    if (!Number.isInteger(score)) {
-        throw new Error("Score is not an integer. Received: " + score);
-    }
-};
-// Create mock events to support development
-var mockEvents = function () {
-    // Log posted events to the console (in production, these are processed by Rune)
-    window.postRuneEvent = function (event) {
-        return console.log("RUNE: Posted " + JSON.stringify(event));
-    };
-    // Mimic the user tapping Play after 3 seconds
-    console.log("RUNE: Starting new game in 3 seconds.");
-    setTimeout(function () {
-        Rune._startGame();
-        console.log("RUNE: Started new game.");
-    }, 3000);
-    // Automatically restart game 3 seconds after Game Over
-    Rune.gameOver = function () {
-        var _a;
-        var score = Rune._getScoreFromGame();
-        validateScore(score);
-        (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "GAME_OVER", score: score });
+// Helper functions (namedspaced to avoid conflicts)
+var RuneLib = {
+    validateScore: function (score) {
+        if (typeof score !== "number") {
+            throw new Error("Score is not a number. Received: " + typeof score);
+        }
+        if (score < 0 || score > Math.pow(10, 9)) {
+            throw new Error("Score is not between 0 and 1000000000. Received: " + score);
+        }
+        if (!Number.isInteger(score)) {
+            throw new Error("Score is not an integer. Received: " + score);
+        }
+    },
+    // Create mock events to support development
+    mockEvents: function () {
+        // Log posted events to the console (in production, these are processed by Rune)
+        window.postRuneEvent = function (event) {
+            return console.log("RUNE: Posted " + JSON.stringify(event));
+        };
+        // Mimic the user tapping Play after 3 seconds
         console.log("RUNE: Starting new game in 3 seconds.");
         setTimeout(function () {
             Rune._startGame();
             console.log("RUNE: Started new game.");
         }, 3000);
-    };
+        // Automatically restart game 3 seconds after Game Over
+        Rune.gameOver = function () {
+            var _a;
+            var score = Rune._getScoreFromGame();
+            RuneLib.validateScore(score);
+            (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "GAME_OVER", score: score });
+            console.log("RUNE: Starting new game in 3 seconds.");
+            setTimeout(function () {
+                Rune._startGame();
+                console.log("RUNE: Started new game.");
+            }, 3000);
+        };
+    }
 };

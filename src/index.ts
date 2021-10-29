@@ -36,7 +36,7 @@ export interface RuneExport {
 
 export const Rune: RuneExport = {
   // External properties and functions
-  version: "1.3.0",
+  version: "1.3.1",
   init: (input: InitInput) => {
     // Check that this function has not already been called
     if (Rune._doneInit) {

@@ -6,7 +6,7 @@ exports.__esModule = true;
 exports.Rune = void 0;
 exports.Rune = {
     // External properties and functions
-    version: "1.3.0",
+    version: "1.3.1",
     init: function (input) {
         // Check that this function has not already been called
         if (exports.Rune._doneInit) {

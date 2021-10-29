@@ -1,7 +1,7 @@
 /*
 The SDK interface for games to interact with Rune.
 */
-var Rune = {
+export var Rune = {
     // External properties and functions
     version: "1.3.0",
     init: function (input) {
@@ -31,8 +31,8 @@ var Rune = {
         Rune._pauseGame = pauseGame;
         Rune._getScoreFromGame = getScore;
         // When running inside Rune, runePostMessage will always be defined.
-        if (window.postRuneEvent) {
-            window.postRuneEvent({ type: "INIT", version: Rune.version });
+        if (globalThis.postRuneEvent) {
+            globalThis.postRuneEvent({ type: "INIT", version: Rune.version });
         }
         else {
             mockEvents();
@@ -45,7 +45,7 @@ var Rune = {
         }
         var score = Rune._getScoreFromGame();
         validateScore(score);
-        (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "GAME_OVER", score: score });
+        (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, { type: "GAME_OVER", score: score });
     },
     // Internal properties and functions used by the Rune app
     _doneInit: false,
@@ -53,7 +53,7 @@ var Rune = {
         var _a;
         var score = Rune._getScoreFromGame();
         validateScore(score);
-        (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "SCORE", score: score });
+        (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, { type: "SCORE", score: score });
     },
     _startGame: function () {
         throw new Error("Rune._startGame() called before Rune.init()");
@@ -82,7 +82,7 @@ var validateScore = function (score) {
 // Create mock events to support development
 var mockEvents = function () {
     // Log posted events to the console (in production, these are processed by Rune)
-    window.postRuneEvent = function (event) {
+    globalThis.postRuneEvent = function (event) {
         return console.log("RUNE: Posted " + JSON.stringify(event));
     };
     // Mimic the user tapping Play after 3 seconds
@@ -96,7 +96,7 @@ var mockEvents = function () {
         var _a;
         var score = Rune._getScoreFromGame();
         validateScore(score);
-        (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "GAME_OVER", score: score });
+        (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, { type: "GAME_OVER", score: score });
         console.log("RUNE: Starting new game in 3 seconds.");
         setTimeout(function () {
             Rune._startGame();

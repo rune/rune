@@ -127,9 +127,9 @@ describe("sdk", function () {
       }
     }
 
-    // Mock game updating its local score and extract using _getScore
+    // Mock game updating its local score and extract using _requestScore
     gameScore = 100
-    Rune._getScore()
+    Rune._requestScore()
     expect(eventScore).toEqual(gameScore)
   })
 

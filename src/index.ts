@@ -30,8 +30,8 @@ export interface RuneExport {
   _startGame: () => void
   _resumeGame: () => void
   _pauseGame: () => void
-  _getScore: () => void // Called by Rune
-  _getScoreFromGame: () => number // Provided by game
+  _requestScore: () => void // Called by Rune
+  _getScore: () => number // Provided by game
 }
 
 export const Rune: RuneExport = {
@@ -64,7 +64,7 @@ export const Rune: RuneExport = {
     Rune._startGame = startGame
     Rune._resumeGame = resumeGame
     Rune._pauseGame = pauseGame
-    Rune._getScoreFromGame = getScore
+    Rune._getScore = getScore
 
     // When running inside Rune, runePostMessage will always be defined.
     if (globalThis.postRuneEvent) {
@@ -77,15 +77,15 @@ export const Rune: RuneExport = {
     if (!Rune._doneInit) {
       throw new Error("Rune.gameOver() called before Rune.init()")
     }
-    const score = Rune._getScoreFromGame()
+    const score = Rune._getScore()
     RuneLib.validateScore(score)
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
   },
 
   // Internal properties and functions used by the Rune app
   _doneInit: false,
-  _getScore: () => {
-    const score = Rune._getScoreFromGame()
+  _requestScore: () => {
+    const score = Rune._getScore()
     RuneLib.validateScore(score)
     globalThis.postRuneEvent?.({ type: "SCORE", score })
   },
@@ -98,8 +98,8 @@ export const Rune: RuneExport = {
   _pauseGame: () => {
     throw new Error("Rune._pauseGame() called before Rune.init()")
   },
-  _getScoreFromGame: () => {
-    throw new Error("Rune._getScoreFromGame() called before Rune.init()")
+  _getScore: () => {
+    throw new Error("Rune._getScore() called before Rune.init()")
   },
 }
 
@@ -131,7 +131,7 @@ const RuneLib = {
 
     // Automatically restart game 3 seconds after Game Over
     Rune.gameOver = function () {
-      const score = Rune._getScoreFromGame()
+      const score = Rune._getScore()
       RuneLib.validateScore(score)
       globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
       console.log(`RUNE: Starting new game in 3 seconds.`)

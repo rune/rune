@@ -4,11 +4,7 @@ Tiny SDK for making your HTML5 game run inside [Rune](https://play.google.com/st
 
 ## Install
 
-```sh
-$ npm install --save rune-games-sdk
-```
-
-Or include the following line in your HTML file:
+Include the following line in your `index.html` file before your implementation:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@1.3/dist/browser.min.js"></script>

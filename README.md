@@ -35,6 +35,15 @@ The Rune SDK may request your game's score at anytime by calling the `getScore` 
 
 Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
 
+## Submission
+
+When you are done with your game, please zip the folder that contains the implementation.
+
+Also, make sure that:
+
+- The folder contains `index.html` and it is the entry point of the game.
+- The folder contains all resources that are used by the game: css, js, images, soundtracks, helper libs etc. In other words, please make sure that when loading or playing the game no external resources are fetched from the Internet except for Rune Games SDK.
+
 ## Debugging Locally
 
 To make it easy for you to debug your game locally, this SDK will:

@@ -6,7 +6,7 @@ exports.__esModule = true;
 exports.Rune = void 0;
 exports.Rune = {
     // External properties and functions
-    version: "1.3.1",
+    version: "1.4.0",
     init: function (input) {
         // Check that this function has not already been called
         if (exports.Rune._doneInit) {
@@ -32,7 +32,7 @@ exports.Rune = {
         exports.Rune._startGame = startGame;
         exports.Rune._resumeGame = resumeGame;
         exports.Rune._pauseGame = pauseGame;
-        exports.Rune._getScoreFromGame = getScore;
+        exports.Rune._getScore = getScore;
         // When running inside Rune, runePostMessage will always be defined.
         if (globalThis.postRuneEvent) {
             globalThis.postRuneEvent({ type: "INIT", version: exports.Rune.version });
@@ -41,20 +41,21 @@ exports.Rune = {
             RuneLib.mockEvents();
         }
     },
+    getChallengeNumber: function () { var _a; return (_a = globalThis._runeChallengeNumber) !== null && _a !== void 0 ? _a : 1; },
     gameOver: function () {
         var _a;
         if (!exports.Rune._doneInit) {
             throw new Error("Rune.gameOver() called before Rune.init()");
         }
-        var score = exports.Rune._getScoreFromGame();
+        var score = exports.Rune._getScore();
         RuneLib.validateScore(score);
         (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, { type: "GAME_OVER", score: score });
     },
     // Internal properties and functions used by the Rune app
     _doneInit: false,
-    _getScore: function () {
+    _requestScore: function () {
         var _a;
-        var score = exports.Rune._getScoreFromGame();
+        var score = exports.Rune._getScore();
         RuneLib.validateScore(score);
         (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, { type: "SCORE", score: score });
     },
@@ -67,8 +68,8 @@ exports.Rune = {
     _pauseGame: function () {
         throw new Error("Rune._pauseGame() called before Rune.init()");
     },
-    _getScoreFromGame: function () {
-        throw new Error("Rune._getScoreFromGame() called before Rune.init()");
+    _getScore: function () {
+        throw new Error("Rune._getScore() called before Rune.init()");
     }
 };
 // Helper functions (namedspaced to avoid conflicts)
@@ -99,7 +100,7 @@ var RuneLib = {
         // Automatically restart game 3 seconds after Game Over
         exports.Rune.gameOver = function () {
             var _a;
-            var score = exports.Rune._getScoreFromGame();
+            var score = exports.Rune._getScore();
             RuneLib.validateScore(score);
             (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, { type: "GAME_OVER", score: score });
             console.log("RUNE: Starting new game in 3 seconds.");

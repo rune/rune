@@ -1,5 +1,6 @@
 declare global {
     var postRuneEvent: ((event: RuneGameEvent) => void) | undefined;
+    var _runeChallengeNumber: number | undefined;
 }
 interface InitInput {
     startGame: () => void;
@@ -22,14 +23,15 @@ export declare type RuneGameEvent = {
 };
 export interface RuneExport {
     version: string;
-    gameOver: () => void;
     init: (input: InitInput) => void;
+    getChallengeNumber: () => number;
+    gameOver: () => void;
     _doneInit: boolean;
     _startGame: () => void;
     _resumeGame: () => void;
     _pauseGame: () => void;
-    _getScore: () => void;
-    _getScoreFromGame: () => number;
+    _requestScore: () => void;
+    _getScore: () => number;
 }
 export declare const Rune: RuneExport;
 export {};

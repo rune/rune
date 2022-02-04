@@ -33,7 +33,7 @@ The player may pause the game through the Rune interface. When this happens, the
 
 The Rune SDK may request your game's score at anytime by calling the `getScore` function. This function should return your game's score as a number.
 
-### Challenge Number (optional)
+### Challenge Number
 
 Rune provides a challenge number that will increment every day starting from value 1.
 Use its value for generating different game maps so that your game is always fresh and challenging.
@@ -41,6 +41,8 @@ Use its value for generating different game maps so that your game is always fre
 ```js
 const challengeNumber = Rune.getChallengeNumber()
 ```
+
+Although using game challenge number is an optional feature, we encourage you to use it to make your game more appealing.
 
 Please make sure that your game is deterministic, i.e. every time you initialize it with the same `challengeNumber` it always uses the same map.
 
@@ -73,6 +75,7 @@ const challengeNumber = Rune.getChallengeNumber() // Get today's challenge numbe
 
 const mapId = (challengeNumber - 1) % mapIds.length + 1 // Get deterministic mapId
 ```
+
 
 Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
 

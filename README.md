@@ -33,6 +33,47 @@ The player may pause the game through the Rune interface. When this happens, the
 
 The Rune SDK may request your game's score at anytime by calling the `getScore` function. This function should return your game's score as a number.
 
+### Challenge Number (optional)
+
+Rune provides a challenge number that will increment every day starting from value 1.
+Use its value for generating different game maps so that your game is always fresh and challenging.
+
+```js
+const challengeNumber = Rune.getChallengeNumber()
+```
+
+Please make sure that your game is deterministic, i.e. every time you initialize it with the same `challengeNumber` it always uses the same map.
+
+You could use `challengeNumber` in the following ways:
+
+1. Game map randomization
+
+If you randomize your maps, you could use `challengeNumber` as a seed.
+For example:
+
+```js
+import seedrandom from 'seedrandom'; // See: https://www.npmjs.com/package/seedrandom
+
+const challengeNumber = Rune.getChallengeNumber() // Get today's challenge number
+const random = seedrandom(challengeNumber) // Make deterministic pseudorandom number generator
+
+const pseudoRandomNumber = random() // Get deterministic pseudorandom number in range of [0, 1)
+const numberOfEnemies =  Math.floor(pseudoRandomNumber * 200) + 1 // Get deterministic number of enemies in range of [1, 200]
+```
+
+2. Fixed list of game maps
+
+If you have a fixed list of maps, you could use `challengeNumber` in modulo operation so that when all maps are used, the game starts using the first map again.
+For example:
+
+```js
+const mapIds = [1, 2, 3, 4, 5, 6, 7] // Define your fixed list of maps
+
+const challengeNumber = Rune.getChallengeNumber() // Get today's challenge number
+
+const mapId = (challengeNumber - 1) % mapIds.length + 1 // Get deterministic mapId
+```
+
 Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
 
 ## Submission

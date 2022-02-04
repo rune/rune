@@ -4,6 +4,7 @@ The SDK interface for games to interact with Rune.
 
 declare global {
   var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
+  var _runeChallengeNumber: number | undefined
 }
 
 interface InitInput {
@@ -22,8 +23,9 @@ export type RuneGameEvent =
 export interface RuneExport {
   // External properties and functions
   version: string
-  gameOver: () => void
   init: (input: InitInput) => void
+  getChallengeNumber: () => number
+  gameOver: () => void
 
   // Internal properties and functions
   _doneInit: boolean
@@ -73,6 +75,7 @@ export const Rune: RuneExport = {
       RuneLib.mockEvents()
     }
   },
+  getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
   gameOver: () => {
     if (!Rune._doneInit) {
       throw new Error("Rune.gameOver() called before Rune.init()")

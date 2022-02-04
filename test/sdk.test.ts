@@ -159,4 +159,19 @@ describe("sdk", function () {
     Rune.gameOver()
     expect(gameFinished).toEqual(true)
   })
+
+  test("get challenge number if not injected", async function () {
+    const challengeNumber = Rune.getChallengeNumber();
+
+    // See that default challenge number is 1
+    expect(challengeNumber).toEqual(1)
+  })
+
+  test("get challenge number if injected", async function () {
+    globalThis._runeChallengeNumber = 123
+    const challengeNumber = Rune.getChallengeNumber();
+
+    // See that challenge number is correct
+    expect(challengeNumber).toEqual(123)
+  })
 })

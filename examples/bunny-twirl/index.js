@@ -56,13 +56,26 @@ container.addChild(text)
 let isAnimating = true
 let isPlaying = false
 
+// Generate map
+const challengeNumber = Rune.getChallengeNumber();
+// const nextChallengeNumber = challengeNumber + 1;
+
+// 1. Game map randomization
+const random = new Math.seedrandom(challengeNumber)
+const pseudoRandomNumber = random()
+const speed = (pseudoRandomNumber / 100) * 3 + 0.005
+
+// 2. Fixed list of game maps
+const directions = [-1, 1]
+const direction = directions[(challengeNumber - 1) % directions.length]
+
 // Listen for animate update
 app.ticker.add((delta) => {
   // Skip if game is paused
   if (!isAnimating) return
 
   // Rotate container
-  container.rotation += 0.01 * delta
+  container.rotation += speed * delta * direction
 
   // Increment score if user started playing
   if (isPlaying) {

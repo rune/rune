@@ -73,7 +73,7 @@ const mapIds = [1, 2, 3, 4, 5, 6, 7] // Define your fixed list of maps
 
 const challengeNumber = Rune.getChallengeNumber() // Get today's challenge number
 
-const mapId = (challengeNumber - 1) % mapIds.length + 1 // Get deterministic mapId
+const mapId = mapIds[(challengeNumber - 1) % mapIds.length] // Get deterministic mapId
 ```
 
 

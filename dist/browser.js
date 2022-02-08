@@ -29,7 +29,7 @@ var Rune = {
         Rune._startGame = startGame;
         Rune._resumeGame = resumeGame;
         Rune._pauseGame = pauseGame;
-        Rune._getScoreFromGame = getScore;
+        Rune._getScore = getScore;
         // When running inside Rune, runePostMessage will always be defined.
         if (window.postRuneEvent) {
             window.postRuneEvent({ type: "INIT", version: Rune.version });
@@ -43,15 +43,15 @@ var Rune = {
         if (!Rune._doneInit) {
             throw new Error("Rune.gameOver() called before Rune.init()");
         }
-        var score = Rune._getScoreFromGame();
+        var score = Rune._getScore();
         RuneLib.validateScore(score);
         (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "GAME_OVER", score: score });
     },
     // Internal properties and functions used by the Rune app
     _doneInit: false,
-    _getScore: function () {
+    _requestScore: function () {
         var _a;
-        var score = Rune._getScoreFromGame();
+        var score = Rune._getScore();
         RuneLib.validateScore(score);
         (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "SCORE", score: score });
     },
@@ -64,8 +64,8 @@ var Rune = {
     _pauseGame: function () {
         throw new Error("Rune._pauseGame() called before Rune.init()");
     },
-    _getScoreFromGame: function () {
-        throw new Error("Rune._getScoreFromGame() called before Rune.init()");
+    _getScore: function () {
+        throw new Error("Rune._getScore() called before Rune.init()");
     }
 };
 // Helper functions (namedspaced to avoid conflicts)
@@ -96,7 +96,7 @@ var RuneLib = {
         // Automatically restart game 3 seconds after Game Over
         Rune.gameOver = function () {
             var _a;
-            var score = Rune._getScoreFromGame();
+            var score = Rune._getScore();
             RuneLib.validateScore(score);
             (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "GAME_OVER", score: score });
             console.log("RUNE: Starting new game in 3 seconds.");

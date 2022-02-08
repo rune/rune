@@ -28,8 +28,8 @@ export interface RuneExport {
     _startGame: () => void;
     _resumeGame: () => void;
     _pauseGame: () => void;
-    _getScore: () => void;
-    _getScoreFromGame: () => number;
+    _requestScore: () => void;
+    _getScore: () => number;
 }
 export declare const Rune: RuneExport;
 export {};

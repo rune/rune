@@ -38,6 +38,7 @@ var Rune = {
             RuneLib.mockEvents();
         }
     },
+    getChallengeNumber: function () { var _a; return (_a = window._runeChallengeNumber) !== null && _a !== void 0 ? _a : 1; },
     gameOver: function () {
         var _a;
         if (!Rune._doneInit) {

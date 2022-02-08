@@ -41,6 +41,7 @@ exports.Rune = {
             RuneLib.mockEvents();
         }
     },
+    getChallengeNumber: function () { var _a; return (_a = globalThis._runeChallengeNumber) !== null && _a !== void 0 ? _a : 1; },
     gameOver: function () {
         var _a;
         if (!exports.Rune._doneInit) {

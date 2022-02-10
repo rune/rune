@@ -64,7 +64,9 @@ const challengeNumber = Rune.getChallengeNumber();
 // Derive rotation speed (floating-point number between 0.005 and 0.03) from Rune challenge number
 const random = new Math.seedrandom(challengeNumber)
 const pseudoRandomNumber = random()
-const speed = (pseudoRandomNumber / 100) * 3 + 0.005
+const minSpeed = 0.005
+const maxSpeed = 0.03
+const speed = pseudoRandomNumber * (maxSpeed - minSpeed) + minSpeed
 
 // 2. Fixed list of game maps
 // Derive direction (-1 or 1) from Rune challenge number

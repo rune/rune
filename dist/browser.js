@@ -54,7 +54,7 @@ var Rune = {
         var _a;
         var score = Rune._getScore();
         RuneLib.validateScore(score);
-        (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "SCORE", score: score });
+        (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, { type: "SCORE", score: score, challengeNumber: Rune.getChallengeNumber() });
     },
     _startGame: function () {
         throw new Error("Rune._startGame() called before Rune.init()");

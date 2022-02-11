@@ -21,6 +21,7 @@ export declare type RuneGameEvent = {
 } | {
     type: "SCORE";
     score: number;
+    challengeNumber: number;
 };
 export interface RuneExport {
     version: string;

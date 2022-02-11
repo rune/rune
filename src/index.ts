@@ -18,7 +18,7 @@ export type RuneGameEvent =
   | { type: "INIT"; version: string }
   | { type: "GAME_OVER"; score: number, challengeNumber: number }
   | { type: "ERR"; errMsg: string }
-  | { type: "SCORE"; score: number }
+  | { type: "SCORE"; score: number, challengeNumber: number }
 
 export interface RuneExport {
   // External properties and functions
@@ -90,7 +90,7 @@ export const Rune: RuneExport = {
   _requestScore: () => {
     const score = Rune._getScore()
     RuneLib.validateScore(score)
-    globalThis.postRuneEvent?.({ type: "SCORE", score })
+    globalThis.postRuneEvent?.({ type: "SCORE", score, challengeNumber: Rune.getChallengeNumber() })
   },
   _startGame: () => {
     throw new Error("Rune._startGame() called before Rune.init()")

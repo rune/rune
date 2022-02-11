@@ -33,51 +33,49 @@ The player may pause the game through the Rune interface. When this happens, the
 
 The Rune SDK may request your game's score at anytime by calling the `getScore` function. This function should return your game's score as a number.
 
-### Challenge Number
+Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
 
-Rune provides a challenge number that will increment every day starting from value 1.
-Use its value for generating different game maps so that your game is always fresh and challenging.
+### Challenge Number (optional)
 
-```js
-const challengeNumber = Rune.getChallengeNumber()
-```
+Rune provides a challenge number through `Rune.getChallengeNumber()` that will increment every day starting from value 1. It's optional to use the challenge number, but we strongly encourage you to use it for your game as it has multiple benefits:
+- Changes your game content every day so to ensure your game is always fresh and entertaining
+- Makes everyone compete under the same conditions to ensure fairness and increase competition
 
-Although using game challenge number is an optional feature, we encourage you to use it to make your game more appealing.
+You could e.g. use the challenge number in the following ways:
 
-Please make sure that your game is deterministic, i.e. every time you initialize it with the same `challengeNumber` it always uses the same map.
-
-You could use `challengeNumber` in the following ways:
-
-1. Game map randomization
-
-If you randomize your maps, you could use `challengeNumber` as a seed.
-For example:
+<details>
+<summary>1) As a seed for randomness</summary>
+&nbsp;
+  
+If your game uses randomness to determine the gameplay (i.e. by randomly generating the maps), you can use the challenge number as the seed to achieve deterministic randomness. For example:
 
 ```js
-import seedrandom from 'seedrandom'; // See: https://www.npmjs.com/package/seedrandom
+import seedrandom from 'seedrandom' // From https://www.npmjs.com/package/seedrandom
 
 const challengeNumber = Rune.getChallengeNumber() // Get today's challenge number
-const random = seedrandom(challengeNumber) // Make deterministic pseudorandom number generator
+const random = seedrandom(challengeNumber) // Make deterministic number generator
 
-const pseudoRandomNumber = random() // Get deterministic pseudorandom number in range of [0, 1)
-const numberOfEnemies =  Math.floor(pseudoRandomNumber * 200) + 1 // Get deterministic number of enemies in range of [1, 200]
+const pseudoRandomNumber = random() // Get pseudorandom number in range of [0, 1)
+const numberOfEnemies =  Math.floor(pseudoRandomNumber * 200) + 1 // Get number of enemies in range of [1, 200]
 ```
+</details>
 
-2. Fixed list of game maps
-
-If you have a fixed list of maps, you could use `challengeNumber` in modulo operation so that when all maps are used, the game starts using the first map again.
-For example:
+<details>
+<summary>2) Iterate through a fixed list of game content (e.g. maps)</summary>
+&nbsp;
+  
+Often games have a fixed list of maps, powerups, artwork or other kinds of content. You can use the challenge number to iterate through these so that players experience a new one every day. For instance, you can use the modulo operator to iterate through a fixed list of maps:
 
 ```js
 const mapIds = [1, 2, 3, 4, 5, 6, 7] // Define your fixed list of maps
 
 const challengeNumber = Rune.getChallengeNumber() // Get today's challenge number
 
-const mapId = mapIds[(challengeNumber - 1) % mapIds.length] // Get deterministic mapId
+const mapId = mapIds[challengeNumber % mapIds.length] // Get deterministic mapId
 ```
+</details>
 
-
-Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
+Please make sure that your game is deterministic, i.e. providing it with the same challenge number provide the same player experience.
 
 ## Submission
 

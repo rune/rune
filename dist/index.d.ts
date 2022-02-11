@@ -14,12 +14,14 @@ export declare type RuneGameEvent = {
 } | {
     type: "GAME_OVER";
     score: number;
+    challengeNumber: number;
 } | {
     type: "ERR";
     errMsg: string;
 } | {
     type: "SCORE";
     score: number;
+    challengeNumber: number;
 };
 export interface RuneExport {
     version: string;

@@ -133,6 +133,40 @@ describe("sdk", function () {
     expect(eventScore).toEqual(gameScore)
   })
 
+  test("GAME_OVER event should include score from game's getScore() and challenge number", async function () {
+    // Init challenge number
+    const challengeNumber = 123
+    globalThis._runeChallengeNumber = challengeNumber
+
+    // Init with score function
+    let gameScore = 0
+    const getScore = () => {
+      return gameScore
+    }
+    Rune.init({
+      startGame: () => {},
+      pauseGame: () => {},
+      resumeGame: () => {},
+      getScore: getScore,
+    })
+
+    // Override postRuneEvent to extract score and challenge number
+    let eventScore: number | undefined
+    let eventChallengeNumber: number | undefined
+    globalThis.postRuneEvent = (event) => {
+      if (event.type === "GAME_OVER") {
+        eventScore = event.score
+        eventChallengeNumber = event.challengeNumber
+      }
+    }
+
+    // Mock game updating its local score and extract using gameOver
+    gameScore = 100
+    Rune.gameOver()
+    expect(eventScore).toEqual(gameScore)
+    expect(eventChallengeNumber).toEqual(challengeNumber)
+  })
+
   test("allow replacing functions through code injection", async function () {
     let gameFinished = false
 
@@ -174,4 +208,9 @@ describe("sdk", function () {
     // See that challenge number is correct
     expect(challengeNumber).toEqual(123)
   })
+})
+
+beforeEach(() => {
+  // Reset globally injected challenge number
+  delete globalThis._runeChallengeNumber
 })

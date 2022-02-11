@@ -14,6 +14,7 @@ export declare type RuneGameEvent = {
 } | {
     type: "GAME_OVER";
     score: number;
+    challengeNumber: number;
 } | {
     type: "ERR";
     errMsg: string;

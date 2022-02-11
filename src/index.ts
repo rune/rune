@@ -16,7 +16,7 @@ interface InitInput {
 
 export type RuneGameEvent =
   | { type: "INIT"; version: string }
-  | { type: "GAME_OVER"; score: number }
+  | { type: "GAME_OVER"; score: number, challengeNumber: number }
   | { type: "ERR"; errMsg: string }
   | { type: "SCORE"; score: number }
 
@@ -82,7 +82,7 @@ export const Rune: RuneExport = {
     }
     const score = Rune._getScore()
     RuneLib.validateScore(score)
-    globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
+    globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
   },
 
   // Internal properties and functions used by the Rune app
@@ -136,7 +136,7 @@ const RuneLib = {
     Rune.gameOver = function () {
       const score = Rune._getScore()
       RuneLib.validateScore(score)
-      globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
+      globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
       console.log(`RUNE: Starting new game in 3 seconds.`)
       setTimeout(() => {
         Rune._startGame()

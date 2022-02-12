@@ -60,16 +60,16 @@ let isPlaying = false
 const challengeNumber = Rune.getChallengeNumber();
 // const nextChallengeNumber = challengeNumber + 1;
 
-// 1. Game map randomization
-// Derive rotation speed (floating-point number between 0.005 and 0.03) from Rune challenge number
+// Derive rotation speed from Rune challenge number.
+// See the README on using challenge number as a seed for randomness.
 const random = new Math.seedrandom(challengeNumber)
 const pseudoRandomNumber = random()
 const minSpeed = 0.005
 const maxSpeed = 0.03
 const speed = pseudoRandomNumber * (maxSpeed - minSpeed) + minSpeed
 
-// 2. Fixed list of game maps
-// Derive direction (-1 or 1) from Rune challenge number
+// Derive direction (-1 or 1) from Rune challenge number.
+// See the README on using challenge number to iterate through game content.
 const directions = [-1, 1]
 const direction = directions[(challengeNumber - 1) % directions.length]
 

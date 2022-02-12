@@ -16,9 +16,9 @@ interface InitInput {
 
 export type RuneGameEvent =
   | { type: "INIT"; version: string }
-  | { type: "GAME_OVER"; score: number }
+  | { type: "GAME_OVER"; score: number, challengeNumber: number }
   | { type: "ERR"; errMsg: string }
-  | { type: "SCORE"; score: number }
+  | { type: "SCORE"; score: number, challengeNumber: number }
 
 export interface RuneExport {
   // External properties and functions
@@ -82,7 +82,7 @@ export const Rune: RuneExport = {
     }
     const score = Rune._getScore()
     RuneLib.validateScore(score)
-    globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
+    globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
   },
 
   // Internal properties and functions used by the Rune app
@@ -90,7 +90,7 @@ export const Rune: RuneExport = {
   _requestScore: () => {
     const score = Rune._getScore()
     RuneLib.validateScore(score)
-    globalThis.postRuneEvent?.({ type: "SCORE", score })
+    globalThis.postRuneEvent?.({ type: "SCORE", score, challengeNumber: Rune.getChallengeNumber() })
   },
   _startGame: () => {
     throw new Error("Rune._startGame() called before Rune.init()")
@@ -136,7 +136,7 @@ const RuneLib = {
     Rune.gameOver = function () {
       const score = Rune._getScore()
       RuneLib.validateScore(score)
-      globalThis.postRuneEvent?.({ type: "GAME_OVER", score })
+      globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
       console.log(`RUNE: Starting new game in 3 seconds.`)
       setTimeout(() => {
         Rune._startGame()

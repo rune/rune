@@ -6,7 +6,7 @@ exports.__esModule = true;
 exports.Rune = void 0;
 exports.Rune = {
     // External properties and functions
-    version: "1.4.0",
+    version: "1.4.1",
     init: function (input) {
         // Check that this function has not already been called
         if (exports.Rune._doneInit) {
@@ -76,20 +76,20 @@ exports.Rune = {
 var RuneLib = {
     validateScore: function (score) {
         if (typeof score !== "number") {
-            throw new Error("Score is not a number. Received: " + typeof score);
+            throw new Error("Score is not a number. Received: ".concat(typeof score));
         }
         if (score < 0 || score > Math.pow(10, 9)) {
-            throw new Error("Score is not between 0 and 1000000000. Received: " + score);
+            throw new Error("Score is not between 0 and 1000000000. Received: ".concat(score));
         }
         if (!Number.isInteger(score)) {
-            throw new Error("Score is not an integer. Received: " + score);
+            throw new Error("Score is not an integer. Received: ".concat(score));
         }
     },
     // Create mock events to support development
     mockEvents: function () {
         // Log posted events to the console (in production, these are processed by Rune)
         globalThis.postRuneEvent = function (event) {
-            return console.log("RUNE: Posted " + JSON.stringify(event));
+            return console.log("RUNE: Posted ".concat(JSON.stringify(event)));
         };
         // Mimic the user tapping Play after 3 seconds
         console.log("RUNE: Starting new game in 3 seconds.");

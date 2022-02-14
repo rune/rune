@@ -83,7 +83,7 @@ app.ticker.add((delta) => {
 
   // Increment score if user started playing
   if (isPlaying) {
-    score = Math.floor(container.rotation / (Math.PI * 2))
+    score = Math.abs(Math.floor(container.rotation / (Math.PI * 2)))
     if (text.text !== scoreText(score)) text.text = scoreText(score)
   }
 })

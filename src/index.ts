@@ -135,13 +135,13 @@ const RuneLib = {
   },
 }
 
-// Global namespace properties needed to communicating with the Rune app
+// Global namespace properties needed for communicating with Rune
 declare global {
   var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
   var _runeChallengeNumber: number | undefined
 }
 
-// "Events" sent to the Rune app to e.g. communicate that the game is over
+// "Events" sent to Rune to e.g. communicate that the game is over
 export type RuneGameEvent =
     | { type: "INIT"; version: string }
     | { type: "GAME_OVER"; score: number, challengeNumber: number }

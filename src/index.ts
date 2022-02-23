@@ -2,23 +2,12 @@
 The SDK interface for games to interact with Rune.
 */
 
-declare global {
-  var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
-  var _runeChallengeNumber: number | undefined
-}
-
 interface InitInput {
   startGame: () => void
   resumeGame: () => void
   pauseGame: () => void
   getScore: () => number
 }
-
-export type RuneGameEvent =
-  | { type: "INIT"; version: string }
-  | { type: "GAME_OVER"; score: number, challengeNumber: number }
-  | { type: "ERR"; errMsg: string }
-  | { type: "SCORE"; score: number, challengeNumber: number }
 
 export interface RuneExport {
   // External properties and functions
@@ -145,3 +134,16 @@ const RuneLib = {
     }
   },
 }
+
+// Global namespace properties needed for communicating with Rune
+declare global {
+  var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
+  var _runeChallengeNumber: number | undefined
+}
+
+// "Events" sent to Rune to e.g. communicate that the game is over
+export type RuneGameEvent =
+    | { type: "INIT"; version: string }
+    | { type: "GAME_OVER"; score: number, challengeNumber: number }
+    | { type: "ERR"; errMsg: string }
+    | { type: "SCORE"; score: number, challengeNumber: number }

@@ -47,7 +47,7 @@ You could e.g. use the challenge number in the following ways:
 <summary>1) As a seed for randomness</summary>
 &nbsp;
   
-If your game uses randomness to determine the gameplay (i.e. by randomly generating the maps), you can use the challenge number as the seed to achieve deterministic randomness. For example:
+If your game uses randomness to determine the gameplay (e.g. by randomly generating the maps), you can use the challenge number as the seed to achieve deterministic randomness. For example:
 
 ```js
 import seedrandom from 'seedrandom' // From https://www.npmjs.com/package/seedrandom
@@ -79,12 +79,7 @@ Please make sure that your game is deterministic, i.e. providing it with the sam
 
 ## Submission
 
-When you are done with your game, please zip the folder that contains the implementation.
-
-Also, make sure that:
-
-- The folder contains `index.html` and it is the entry point of the game.
-- The folder contains all resources that are used by the game: css, js, images, soundtracks, helper libs etc. In other words, please make sure that when loading or playing the game no external resources are fetched from the Internet except for Rune Games SDK.
+When your game is ready, please zip it as a folder containing `index.html` as the entry point of the game. The folder should contain all resources that are used by the game (css, js, images, soundtracks, helper libs, etc). In other words, please make sure that the game does not fetch any external resources from the Internet except for Rune Games SDK.
 
 ## Debugging Locally
 

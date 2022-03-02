@@ -15,6 +15,7 @@ export interface RuneExport {
   init: (input: InitInput) => void
   gameOver: () => void
   getChallengeNumber: () => number
+  deterministicRandom: () => number
 
   // Internal properties and functions
   _doneInit: boolean
@@ -73,6 +74,9 @@ export const Rune: RuneExport = {
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
   },
   getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
+  deterministicRandom: () => {
+    return RuneLib.random()
+  },
 
   // Internal properties and functions used by the Rune app
   _doneInit: false,

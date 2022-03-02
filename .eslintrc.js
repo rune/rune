@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     es6: true,
   },
@@ -9,8 +10,14 @@ module.exports = {
   extends: ["eslint:recommended", "prettier"],
   plugins: ["@typescript-eslint"],
   rules: {
-    "no-console": ["warn"],
     "no-throw-literal": "error",
+
+    // Used to inject into global space
+    "no-undef": "off",
+    "no-unused-vars": "off",
+
+    // Used to improve developer experience
+    "no-console": "off"
   },
   settings: {},
   globals: {

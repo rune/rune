@@ -117,7 +117,6 @@ const RuneLib = {
     // Log posted events to the console (in production, these are processed by Rune)
     globalThis.postRuneEvent = (event: RuneGameEvent) =>
       console.log(`RUNE: Posted ${JSON.stringify(event)}`)
-
     // Mimic the user tapping Play after 3 seconds
     console.log(`RUNE: Starting new game in 3 seconds.`)
     setTimeout(() => {
@@ -140,6 +139,7 @@ const RuneLib = {
   // A pseudorandom number generator (PRNG) for determinism.
   // Heavily inspired by https://stackoverflow.com/a/19301306/1452257.
   // Do not use for anything that needs to be cryptographically secure!
+  // Placed in RuneLib to not expose magic constants, seed(), etc.
   _m_w: 123456789,
   _m_z: 987654321,
   _mask: 0xffffffff,
@@ -153,8 +153,15 @@ const RuneLib = {
     let result = ((RuneLib._m_z << 16) + (RuneLib._m_w & 65535)) >>> 0
     result /= 4294967296
     return result
+  },
+  onLoad: () => {
+    // Support deterministicRandom() before calling Rune.init()
+    RuneLib.seed(Rune.getChallengeNumber())
   }
 }
+
+// Do any setup required in RuneLib
+RuneLib.onLoad()
 
 // Global namespace properties needed for communicating with Rune
 declare global {

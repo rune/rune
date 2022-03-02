@@ -71,7 +71,12 @@ export const Rune: RuneExport = {
     }
     const score = Rune._getScore()
     RuneLib.validateScore(score)
-    globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
+
+    // Reset randomness to be deterministic across plays
+    const challengeNumber = Rune.getChallengeNumber()
+    RuneLib.seed(challengeNumber)
+
+    globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber })
   },
   getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
   deterministicRandom: () => {

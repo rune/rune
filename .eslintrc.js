@@ -12,8 +12,7 @@ module.exports = {
   rules: {
     "no-throw-literal": "error",
 
-    // Used to inject into global space
-    "no-undef": "off",
+    // Used for communicating with the game and Rune
     "no-unused-vars": "off",
 
     // Used to improve developer experience
@@ -28,5 +27,18 @@ module.exports = {
     Promise: "readonly",
     require: "readonly",
     setTimeout: "readonly",
+    globalThis: "readonly",
   },
+
+  overrides: [{
+    files: ["test/*.ts"],
+    globals: {
+      jest: "readonly",
+      describe: "readonly",
+      expect: "readonly",
+      test: "readonly",
+      beforeEach: "readonly",
+      afterEach: "readonly"
+    }
+  }]
 }

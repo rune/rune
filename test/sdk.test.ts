@@ -1,5 +1,16 @@
-import { Rune } from "./setup"
 import { extractErrMsg } from "./helper"
+
+import * as src from "../src"
+let Rune: src.RuneExport
+
+beforeEach(async () => {
+  // Reset globally injected challenge number
+  delete globalThis._runeChallengeNumber
+
+  // Reimport of the Rune module between every test
+  jest.resetModules()
+  Rune = (await import("../src")).Rune
+})
 
 describe("sdk", function () {
   test("init() -> startGame() -> pauseGame() -> resumeGame()", async function () {
@@ -215,9 +226,4 @@ describe("sdk", function () {
     // See that challenge number is correct
     expect(challengeNumber).toEqual(123)
   })
-})
-
-beforeEach(() => {
-  // Reset globally injected challenge number
-  delete globalThis._runeChallengeNumber
 })

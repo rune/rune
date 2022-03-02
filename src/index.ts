@@ -133,6 +133,23 @@ const RuneLib = {
       }, 3000)
     }
   },
+  // A pseudorandom number generator (PRNG) for determinism.
+  // Heavily inspired by https://stackoverflow.com/a/19301306/1452257.
+  // Do not use for anything that needs to be cryptographically secure!
+  _m_w: 123456789,
+  _m_z: 987654321,
+  _mask: 0xffffffff,
+  seed: (i: number) => {
+    RuneLib._m_w = (123456789 + i) & RuneLib._mask
+    RuneLib._m_z = (987654321 - i) & RuneLib._mask
+  },
+  random: (): number => {
+    RuneLib._m_z = (36969 * (RuneLib._m_z & 65535) + (RuneLib._m_z >> 16)) & RuneLib._mask
+    RuneLib._m_w = (18000 * (RuneLib._m_w & 65535) + (RuneLib._m_w >> 16)) & RuneLib._mask
+    let result = ((RuneLib._m_z << 16) + (RuneLib._m_w & 65535)) >>> 0
+    result /= 4294967296
+    return result
+  }
 }
 
 // Global namespace properties needed for communicating with Rune

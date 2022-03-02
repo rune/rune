@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     es6: true,
   },
@@ -9,8 +10,13 @@ module.exports = {
   extends: ["eslint:recommended", "prettier"],
   plugins: ["@typescript-eslint"],
   rules: {
-    "no-console": ["warn"],
     "no-throw-literal": "error",
+
+    // Used for communicating with the game and Rune
+    "no-unused-vars": "off",
+
+    // Used to improve developer experience
+    "no-console": "off"
   },
   settings: {},
   globals: {
@@ -21,5 +27,18 @@ module.exports = {
     Promise: "readonly",
     require: "readonly",
     setTimeout: "readonly",
+    globalThis: "readonly",
   },
+
+  overrides: [{
+    files: ["test/*.ts"],
+    globals: {
+      jest: "readonly",
+      describe: "readonly",
+      expect: "readonly",
+      test: "readonly",
+      beforeEach: "readonly",
+      afterEach: "readonly"
+    }
+  }]
 }

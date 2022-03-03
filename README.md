@@ -41,23 +41,16 @@ Rune provides a challenge number through `Rune.getChallengeNumber()` that will i
 - Changes your game content every day so to ensure your game is always fresh and entertaining
 - Makes everyone compete under the same conditions to ensure fairness and increase competition
 
-You could e.g. use the challenge number in the following ways:
+Here's two common ways you could use the challenge number:
 
 <details>
-<summary>1) As a seed for randomness</summary>
-&nbsp;
-  
-If your game uses randomness to determine the gameplay (e.g. by randomly generating the maps), you can use the challenge number as the seed to achieve deterministic randomness. For example:
+<summary>1) For deterministic randomness (e.g. map generation)</summary>
+&nbsp; 
 
-```js
-import seedrandom from 'seedrandom' // From https://www.npmjs.com/package/seedrandom
+If your game uses randomness to randomly generate maps, you should use `Rune.deterministicRandom()` instead of `Math.random()`. The random number generator provided by Rune is seeded with the challenge number and will therefore always provide the same random values. In this way, all players will play the same map every time.
 
-const challengeNumber = Rune.getChallengeNumber() // Get today's challenge number
-const random = seedrandom(challengeNumber) // Make deterministic number generator
+You should only use `Rune.deterministicRandom()` for your map generation and not as a generic replacement for `Math.random()`. This is because each call to `Rune.deterministicRandom()` will iterate through the random values.
 
-const pseudoRandomNumber = random() // Get pseudorandom number in range of [0, 1)
-const numberOfEnemies =  Math.floor(pseudoRandomNumber * 200) + 1 // Get number of enemies in range of [1, 200]
-```
 </details>
 
 <details>

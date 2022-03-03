@@ -76,10 +76,7 @@ export const Rune: RuneExport = {
     }
     const score = Rune._getScore()
     Rune._validateScore(score)
-
-    // Reset randomness to be deterministic across plays
     Rune._resetDeterministicRandom()
-
     globalThis.postRuneEvent?.({
       type: "GAME_OVER",
       score,
@@ -89,7 +86,7 @@ export const Rune: RuneExport = {
   getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
   deterministicRandom: () => {
     // The first time that this method is called, replace it with our
-    // determinstic random number generator and return the first number.
+    // deterministic random number generator and return the first number.
     Rune._resetDeterministicRandom()
     return Rune.deterministicRandom()
   },
@@ -145,10 +142,7 @@ export const Rune: RuneExport = {
     Rune.gameOver = function () {
       const score = Rune._getScore()
       Rune._validateScore(score)
-
-      // Reset randomness to be deterministic across plays
       Rune._resetDeterministicRandom()
-
       globalThis.postRuneEvent?.({
         type: "GAME_OVER",
         score,
@@ -192,6 +186,7 @@ export const Rune: RuneExport = {
     return seed()
   },
   _resetDeterministicRandom: () => {
+    // Reset randomness to be deterministic across plays
     Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber())
   },
 }

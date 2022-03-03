@@ -136,7 +136,7 @@ export const Rune: RuneExport = {
   // A pseudorandom number generator (PRNG) for determinism.
   // Based on the efficient mulberry32 with 32-bit state.
   // From https://github.com/bryc/code/blob/master/jshash/PRNGs.md.
-  _randomNumberGenerator(seed: number): () => number {
+  _randomNumberGenerator: (seed) => {
     // Initialize using hash function to avoid seed quality issues.
     // E.g. to avoid correlations between using 1 and 2 as seed.
     let hash = Rune._hashFromString(seed.toString())
@@ -150,7 +150,7 @@ export const Rune: RuneExport = {
   },
   // xmur3 from https://github.com/bryc/code/blob/master/jshash/PRNGs.md.
   // Returns a number as opposed to seed() function for ease of use.
-  _hashFromString(str: string): number {
+  _hashFromString: (str) => {
     for(var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
       h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
       h = h << 13 | h >>> 19;

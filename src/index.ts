@@ -15,6 +15,7 @@ export interface RuneExport {
   init: (input: InitInput) => void
   gameOver: () => void
   getChallengeNumber: () => number
+  deterministicRandom: () => number
 
   // Internal properties and functions
   _doneInit: boolean
@@ -25,6 +26,9 @@ export interface RuneExport {
   _getScore: () => number // Provided by game
   _validateScore: (score: number) => void
   _mockEvents: () => void
+  _randomNumberGenerator: (seed: number) => () => number
+  _hashFromString: (str: string) => number
+  _resetDeterministicRandom: () => void
 }
 
 export const Rune: RuneExport = {
@@ -72,16 +76,31 @@ export const Rune: RuneExport = {
     }
     const score = Rune._getScore()
     Rune._validateScore(score)
-    globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
+    Rune._resetDeterministicRandom()
+    globalThis.postRuneEvent?.({
+      type: "GAME_OVER",
+      score,
+      challengeNumber: Rune.getChallengeNumber(),
+    })
   },
   getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
+  deterministicRandom: () => {
+    // The first time that this method is called, replace it with our
+    // deterministic random number generator and return the first number.
+    Rune._resetDeterministicRandom()
+    return Rune.deterministicRandom()
+  },
 
   // Internal properties and functions used by the Rune app
   _doneInit: false,
   _requestScore: () => {
     const score = Rune._getScore()
     Rune._validateScore(score)
-    globalThis.postRuneEvent?.({ type: "SCORE", score, challengeNumber: Rune.getChallengeNumber() })
+    globalThis.postRuneEvent?.({
+      type: "SCORE",
+      score,
+      challengeNumber: Rune.getChallengeNumber(),
+    })
   },
   _startGame: () => {
     throw new Error("Rune._startGame() called before Rune.init()")
@@ -110,7 +129,7 @@ export const Rune: RuneExport = {
   _mockEvents: () => {
     // Log posted events to the console (in production, these are processed by Rune)
     globalThis.postRuneEvent = (event: RuneGameEvent) =>
-        console.log(`RUNE: Posted ${JSON.stringify(event)}`)
+      console.log(`RUNE: Posted ${JSON.stringify(event)}`)
 
     // Mimic the user tapping Play after 3 seconds
     console.log(`RUNE: Starting new game in 3 seconds.`)
@@ -123,13 +142,52 @@ export const Rune: RuneExport = {
     Rune.gameOver = function () {
       const score = Rune._getScore()
       Rune._validateScore(score)
-      globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
+      Rune._resetDeterministicRandom()
+      globalThis.postRuneEvent?.({
+        type: "GAME_OVER",
+        score,
+        challengeNumber: Rune.getChallengeNumber(),
+      })
+
       console.log(`RUNE: Starting new game in 3 seconds.`)
       setTimeout(() => {
         Rune._startGame()
         console.log(`RUNE: Started new game.`)
       }, 3000)
     }
+  },
+  // A pseudorandom number generator (PRNG) for determinism.
+  // Based on the efficient mulberry32 with 32-bit state.
+  // From https://github.com/bryc/code/blob/master/jshash/PRNGs.md.
+  _randomNumberGenerator: (seed) => {
+    // Initialize using hash function to avoid seed quality issues.
+    // E.g. to avoid correlations between using 1 and 2 as seed.
+    let hash = Rune._hashFromString(seed.toString())
+
+    return function () {
+      let t = (hash += 0x6d2b79f5)
+      t = Math.imul(t ^ (t >>> 15), t | 1)
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+    }
+  },
+  // xmur3 from https://github.com/bryc/code/blob/master/jshash/PRNGs.md.
+  // Returns a number as opposed to seed() function for ease of use.
+  _hashFromString: (str) => {
+    for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
+      h = Math.imul(h ^ str.charCodeAt(i), 3432918353)
+      h = (h << 13) | (h >>> 19)
+    }
+    const seed = () => {
+      h = Math.imul(h ^ (h >>> 16), 2246822507)
+      h = Math.imul(h ^ (h >>> 13), 3266489909)
+      return (h ^= h >>> 16) >>> 0
+    }
+    return seed()
+  },
+  _resetDeterministicRandom: () => {
+    // Reset randomness to be deterministic across plays
+    Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber())
   },
 }
 
@@ -141,7 +199,7 @@ declare global {
 
 // "Events" sent to Rune to e.g. communicate that the game is over
 export type RuneGameEvent =
-    | { type: "INIT"; version: string }
-    | { type: "GAME_OVER"; score: number, challengeNumber: number }
-    | { type: "ERR"; errMsg: string }
-    | { type: "SCORE"; score: number, challengeNumber: number }
+  | { type: "INIT"; version: string }
+  | { type: "GAME_OVER"; score: number; challengeNumber: number }
+  | { type: "ERR"; errMsg: string }
+  | { type: "SCORE"; score: number; challengeNumber: number }

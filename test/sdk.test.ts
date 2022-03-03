@@ -226,4 +226,42 @@ describe("sdk", function () {
     // See that challenge number is correct
     expect(challengeNumber).toEqual(123)
   })
+
+
+  test("deterministicRandom() works before init()", async function () {
+    const randomArray = [...Array(7)].map(() => Math.round(Rune.deterministicRandom() * 10))
+    expect(randomArray).toEqual([1, 4, 4, 3, 5, 1, 7])
+  })
+
+  test("deterministicRandom() changes value based on challengeNumber", async function () {
+
+    // Mimic challengeNumber being set before loading
+    globalThis._runeChallengeNumber = 123
+    Rune._onLoad()
+
+    const randomArray = [...Array(7)].map(() => Math.round(Rune.deterministicRandom() * 10))
+    expect(randomArray).toEqual([2, 4, 5, 3, 6, 9, 6])
+  })
+
+  test("deterministicRandom() resets with gameOver()", async function () {
+    const randomArray1 = [...Array(7)].map(() => Math.round(Rune.deterministicRandom() * 10))
+
+    // Mimic being in the actual app to avoid mockEvents() causing issues
+    globalThis.postRuneEvent = () => {}
+
+    // Call init() and gameOver()
+    Rune.init({
+      startGame: () => {},
+      pauseGame: () => {},
+      resumeGame: () => {},
+      getScore: () => {
+        return 0
+      },
+    })
+    Rune.gameOver()
+
+    // See that random numbers are identical
+    const randomArray2 = [...Array(7)].map(() => Math.round(Rune.deterministicRandom() * 10))
+    expect(randomArray1).toEqual(randomArray2)
+  })
 })

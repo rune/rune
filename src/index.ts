@@ -13,8 +13,8 @@ export interface RuneExport {
   // External properties and functions
   version: string
   init: (input: InitInput) => void
-  getChallengeNumber: () => number
   gameOver: () => void
+  getChallengeNumber: () => number
 
   // Internal properties and functions
   _doneInit: boolean
@@ -66,7 +66,6 @@ export const Rune: RuneExport = {
       Rune._mockEvents()
     }
   },
-  getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
   gameOver: () => {
     if (!Rune._doneInit) {
       throw new Error("Rune.gameOver() called before Rune.init()")
@@ -75,6 +74,7 @@ export const Rune: RuneExport = {
     Rune._validateScore(score)
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
   },
+  getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
 
   // Internal properties and functions used by the Rune app
   _doneInit: false,

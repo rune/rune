@@ -15,6 +15,7 @@ export interface RuneExport {
   init: (input: InitInput) => void
   gameOver: () => void
   getChallengeNumber: () => number
+  deterministicRandom: () => number
 
   // Internal properties and functions
   _doneInit: boolean
@@ -27,6 +28,7 @@ export interface RuneExport {
   _mockEvents: () => void
   _randomNumberGenerator: (seed: number) => () => number
   _hashFromString: (str: string) => number
+  _onLoad: () => void
 }
 
 export const Rune: RuneExport = {
@@ -77,6 +79,8 @@ export const Rune: RuneExport = {
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
   },
   getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
+  // @ts-ignore This will be set by onLoad()
+  deterministicRandom: undefined,
 
   // Internal properties and functions used by the Rune app
   _doneInit: false,
@@ -161,8 +165,14 @@ export const Rune: RuneExport = {
       return (h ^= h >>> 16) >>> 0;
     }
     return seed()
+  },
+  _onLoad: () => {
+    Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber())
   }
 }
+
+// Do any setup required upon load
+Rune._onLoad()
 
 // Global namespace properties needed for communicating with Rune
 declare global {

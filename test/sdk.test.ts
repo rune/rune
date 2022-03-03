@@ -213,7 +213,7 @@ describe("sdk", function () {
   })
 
   test("get challenge number if not injected", async function () {
-    const challengeNumber = Rune.getChallengeNumber();
+    const challengeNumber = Rune.getChallengeNumber()
 
     // See that default challenge number is 1
     expect(challengeNumber).toEqual(1)
@@ -221,30 +221,34 @@ describe("sdk", function () {
 
   test("get challenge number if injected", async function () {
     globalThis._runeChallengeNumber = 123
-    const challengeNumber = Rune.getChallengeNumber();
+    const challengeNumber = Rune.getChallengeNumber()
 
     // See that challenge number is correct
     expect(challengeNumber).toEqual(123)
   })
 
-
   test("deterministicRandom() works before init()", async function () {
-    const randomArray = [...Array(7)].map(() => Math.round(Rune.deterministicRandom() * 10))
+    const randomArray = [...Array(7)].map(() =>
+      Math.round(Rune.deterministicRandom() * 10)
+    )
     expect(randomArray).toEqual([1, 4, 4, 3, 5, 1, 7])
   })
 
   test("deterministicRandom() changes value based on challengeNumber", async function () {
-
     // Mimic challengeNumber being set before loading
     globalThis._runeChallengeNumber = 123
     Rune._onLoad()
 
-    const randomArray = [...Array(7)].map(() => Math.round(Rune.deterministicRandom() * 10))
+    const randomArray = [...Array(7)].map(() =>
+      Math.round(Rune.deterministicRandom() * 10)
+    )
     expect(randomArray).toEqual([2, 4, 5, 3, 6, 9, 6])
   })
 
   test("deterministicRandom() resets with gameOver()", async function () {
-    const randomArray1 = [...Array(7)].map(() => Math.round(Rune.deterministicRandom() * 10))
+    const randomArray1 = [...Array(7)].map(() =>
+      Math.round(Rune.deterministicRandom() * 10)
+    )
 
     // Mimic being in the actual app to avoid mockEvents() causing issues
     globalThis.postRuneEvent = () => {}
@@ -261,7 +265,15 @@ describe("sdk", function () {
     Rune.gameOver()
 
     // See that random numbers are identical
-    const randomArray2 = [...Array(7)].map(() => Math.round(Rune.deterministicRandom() * 10))
+    const randomArray2 = [...Array(7)].map(() =>
+      Math.round(Rune.deterministicRandom() * 10)
+    )
     expect(randomArray1).toEqual(randomArray2)
+  })
+
+  test("deterministicRandom() seed changes dramatically with every challenge number", async function () {
+    // This is important to prevent correlation etc. between challenges
+    expect(Rune._hashFromString("1")).toMatchInlineSnapshot("1986881138")
+    expect(Rune._hashFromString("2")).toMatchInlineSnapshot("2072285185")
   })
 })

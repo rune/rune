@@ -76,7 +76,12 @@ export const Rune: RuneExport = {
     }
     const score = Rune._getScore()
     Rune._validateScore(score)
-    globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
+
+    // Reset randomness to be deterministic across plays
+    const challengeNumber = Rune.getChallengeNumber()
+    Rune.deterministicRandom = Rune._randomNumberGenerator(challengeNumber)
+
+    globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber })
   },
   getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
   // @ts-ignore This will be set by onLoad()
@@ -129,7 +134,12 @@ export const Rune: RuneExport = {
     Rune.gameOver = function () {
       const score = Rune._getScore()
       Rune._validateScore(score)
-      globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
+
+      // Reset randomness to be deterministic across plays
+      const challengeNumber = Rune.getChallengeNumber()
+      Rune.deterministicRandom = Rune._randomNumberGenerator(challengeNumber)
+
+      globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber })
       console.log(`RUNE: Starting new game in 3 seconds.`)
       setTimeout(() => {
         Rune._startGame()

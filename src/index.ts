@@ -23,6 +23,8 @@ export interface RuneExport {
   _pauseGame: () => void
   _requestScore: () => void // Called by Rune
   _getScore: () => number // Provided by game
+  _validateScore: (score: number) => void
+  _mockEvents: () => void
 }
 
 export const Rune: RuneExport = {
@@ -49,7 +51,7 @@ export const Rune: RuneExport = {
     if (typeof getScore !== "function") {
       throw new Error("Invalid getScore function provided to Rune.init()")
     }
-    RuneLib.validateScore(getScore())
+    Rune._validateScore(getScore())
 
     // Initialize the SDK with the game's functions
     Rune._startGame = startGame
@@ -61,7 +63,7 @@ export const Rune: RuneExport = {
     if (globalThis.postRuneEvent) {
       globalThis.postRuneEvent({ type: "INIT", version: Rune.version })
     } else {
-      RuneLib.mockEvents()
+      Rune._mockEvents()
     }
   },
   getChallengeNumber: () => globalThis._runeChallengeNumber ?? 1,
@@ -70,7 +72,7 @@ export const Rune: RuneExport = {
       throw new Error("Rune.gameOver() called before Rune.init()")
     }
     const score = Rune._getScore()
-    RuneLib.validateScore(score)
+    Rune._validateScore(score)
     globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
   },
 
@@ -78,7 +80,7 @@ export const Rune: RuneExport = {
   _doneInit: false,
   _requestScore: () => {
     const score = Rune._getScore()
-    RuneLib.validateScore(score)
+    Rune._validateScore(score)
     globalThis.postRuneEvent?.({ type: "SCORE", score, challengeNumber: Rune.getChallengeNumber() })
   },
   _startGame: () => {
@@ -93,11 +95,7 @@ export const Rune: RuneExport = {
   _getScore: () => {
     throw new Error("Rune._getScore() called before Rune.init()")
   },
-}
-
-// Helper functions (namedspaced to avoid conflicts)
-const RuneLib = {
-  validateScore: (score: number) => {
+  _validateScore: (score: number) => {
     if (typeof score !== "number") {
       throw new Error(`Score is not a number. Received: ${typeof score}`)
     }
@@ -109,10 +107,10 @@ const RuneLib = {
     }
   },
   // Create mock events to support development
-  mockEvents: () => {
+  _mockEvents: () => {
     // Log posted events to the console (in production, these are processed by Rune)
     globalThis.postRuneEvent = (event: RuneGameEvent) =>
-      console.log(`RUNE: Posted ${JSON.stringify(event)}`)
+        console.log(`RUNE: Posted ${JSON.stringify(event)}`)
 
     // Mimic the user tapping Play after 3 seconds
     console.log(`RUNE: Starting new game in 3 seconds.`)
@@ -124,7 +122,7 @@ const RuneLib = {
     // Automatically restart game 3 seconds after Game Over
     Rune.gameOver = function () {
       const score = Rune._getScore()
-      RuneLib.validateScore(score)
+      Rune._validateScore(score)
       globalThis.postRuneEvent?.({ type: "GAME_OVER", score, challengeNumber: Rune.getChallengeNumber() })
       console.log(`RUNE: Starting new game in 3 seconds.`)
       setTimeout(() => {

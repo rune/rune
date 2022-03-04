@@ -62,7 +62,7 @@ const mapId = mapIds[challengeNumber % mapIds.length] // Get deterministic mapId
 <summary>2) For deterministic randomness (e.g. map generation)</summary>
 &nbsp; 
 
-If your game uses randomness to generate maps, you should use `Rune.deterministicRandom()` instead of `Math.random()`. The random number generator provided by Rune is seeded with the challenge number and will therefore always provide the same random values. When `Rune.gameOver()` is called, the random number generator is reset with the same seed. In this way, all players will play the same map every time.
+Rune provides a random number generator seeded with the challenge number and will therefore always provide the same random values for the same challenge number. You can use `Rune.deterministicRandom()` instead of `Math.random()` in your map generation code to ensure all players play the same map.
 
 You should only use `Rune.deterministicRandom()` for your map generation and not as a generic replacement for `Math.random()`. This is because each call to `Rune.deterministicRandom()` will iterate through the random values.
 

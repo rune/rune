@@ -68,7 +68,7 @@ You should only use `Rune.deterministicRandom()` for your map generation and not
 
 </details>
 
-Please make sure that your game is deterministic, i.e. providing it with the same challenge number provide the same player experience.
+For instance, for a racing game with 20 predefined maps you would use method (1) above. Alternatively, if the racing game randomly generated maps by placing turns and obstacles then you would use method (2). These are just examples of ways you can use the challenge number. You can use it in many other ways as well. The high-level goal is just to make sure that your game is deterministic, i.e. the same challenge number always creates the same player experience.
 
 ## Submission
 

@@ -44,17 +44,7 @@ Rune provides a challenge number through `Rune.getChallengeNumber()` that will i
 Here's two common ways you could use the challenge number:
 
 <details>
-<summary>1) For deterministic randomness (e.g. map generation)</summary>
-&nbsp; 
-
-If your game uses randomness to randomly generate maps, you should use `Rune.deterministicRandom()` instead of `Math.random()`. The random number generator provided by Rune is seeded with the challenge number and will therefore always provide the same random values. In this way, all players will play the same map every time.
-
-You should only use `Rune.deterministicRandom()` for your map generation and not as a generic replacement for `Math.random()`. This is because each call to `Rune.deterministicRandom()` will iterate through the random values.
-
-</details>
-
-<details>
-<summary>2) Iterate through a fixed list of game content (e.g. maps)</summary>
+<summary>1) Iterate through a fixed list of game content (e.g. maps)</summary>
 &nbsp;
   
 Often games have a fixed list of maps, powerups, artwork or other kinds of content. You can use the challenge number to iterate through these so that players experience a new one every day. For instance, you can use the modulo operator to iterate through a fixed list of maps:
@@ -66,6 +56,16 @@ const challengeNumber = Rune.getChallengeNumber() // Get today's challenge numbe
 
 const mapId = mapIds[challengeNumber % mapIds.length] // Get deterministic mapId
 ```
+</details>
+
+<details>
+<summary>2) For deterministic randomness (e.g. map generation)</summary>
+&nbsp; 
+
+If your game uses randomness to generate maps, you should use `Rune.deterministicRandom()` instead of `Math.random()`. The random number generator provided by Rune is seeded with the challenge number and will therefore always provide the same random values. When `Rune.gameOver()` is called, the random number generator is reset with the same seed. In this way, all players will play the same map every time.
+
+You should only use `Rune.deterministicRandom()` for your map generation and not as a generic replacement for `Math.random()`. This is because each call to `Rune.deterministicRandom()` will iterate through the random values.
+
 </details>
 
 Please make sure that your game is deterministic, i.e. providing it with the same challenge number provide the same player experience.

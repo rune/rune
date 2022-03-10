@@ -160,7 +160,11 @@ exports.Rune = {
         exports.Rune.deterministicRandom = exports.Rune._randomNumberGenerator(exports.Rune.getChallengeNumber());
     },
     _getQueryParams: function () {
-        return decodeURI(window.location.search)
+        var _a;
+        if (!((_a = globalThis.location) === null || _a === void 0 ? void 0 : _a.search)) {
+            return {};
+        }
+        return decodeURI(globalThis.location.search)
             .replace('?', '')
             .split('&')
             .map(function (param) { return param.split('='); })

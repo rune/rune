@@ -191,7 +191,11 @@ export const Rune: RuneExport = {
     Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber())
   },
   _getQueryParams: () => {
-    return decodeURI(window.location.search)
+    if (!globalThis.location?.search) {
+      return {}
+    }
+
+    return decodeURI(globalThis.location.search)
         .replace('?', '')
         .split('&')
         .map(param => param.split('='))

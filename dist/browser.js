@@ -157,6 +157,10 @@ var Rune = {
         Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber());
     },
     _getQueryParams: function () {
+        var _a;
+        if (!((_a = window.location) === null || _a === void 0 ? void 0 : _a.search)) {
+            return {};
+        }
         return decodeURI(window.location.search)
             .replace('?', '')
             .split('&')

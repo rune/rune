@@ -212,7 +212,7 @@ export const Rune: RuneExport = {
 ;(() => {
   const queryParams = Rune._getQueryParams()
 
-  if (!!queryParams.webBrowser && queryParams.webBrowser === '1') {
+  if (!!queryParams.enableInitialOverlayInBrowser && queryParams.enableInitialOverlayInBrowser === '1') {
     document.addEventListener('DOMContentLoaded', function () {
       const div = document.createElement('div')
       div.setAttribute('style', "top: 0; bottom: 0; left: 0; right: 0; position: absolute; z-index: 9999;")

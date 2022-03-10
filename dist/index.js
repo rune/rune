@@ -184,6 +184,9 @@ exports.Rune = {
                 }
             });
             document.body.appendChild(div);
+            if (globalThis.postRuneEvent) {
+                globalThis.postRuneEvent({ type: "_GAME_LOAD_STARTED" });
+            }
         });
     }
 })();

@@ -224,6 +224,10 @@ export const Rune: RuneExport = {
         }
       })
       document.body.appendChild(div)
+
+      if (globalThis.postRuneEvent) {
+        globalThis.postRuneEvent({type: "_GAME_LOAD_STARTED"})
+      }
     })
   }
 })();
@@ -242,3 +246,4 @@ export type RuneGameEvent =
   | { type: "ERR"; errMsg: string }
   | { type: "SCORE"; score: number; challengeNumber: number }
   | { type: "_INITIAL_OVERLAY_CLICK"}
+  | { type: "_GAME_LOAD_STARTED"}

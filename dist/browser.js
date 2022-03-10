@@ -181,6 +181,9 @@ var Rune = {
                 }
             });
             document.body.appendChild(div);
+            if (window.postRuneEvent) {
+                window.postRuneEvent({ type: "_GAME_LOAD_STARTED" });
+            }
         });
     }
 })();

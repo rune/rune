@@ -29,12 +29,12 @@ export interface RuneExport {
   _randomNumberGenerator: (seed: number) => () => number
   _hashFromString: (str: string) => number
   _resetDeterministicRandom: () => void
-  _getQueryParams: () => ({[key: string]: string})
+  _getQueryParams: () => { [key: string]: string }
 }
 
 export const Rune: RuneExport = {
   // External properties and functions
-  version: "1.4.2",
+  version: "1.4.3",
   init: (input: InitInput) => {
     // Check that this function has not already been called
     if (Rune._doneInit) {
@@ -196,14 +196,14 @@ export const Rune: RuneExport = {
     }
 
     return decodeURI(globalThis.location.search)
-        .replace('?', '')
-        .split('&')
-        .map(param => param.split('='))
-        .reduce((values, [ key, value ]) => {
-          values[ key ] = value
-          return values
-        }, {} as {[key: string]: string})
-  }
+      .replace("?", "")
+      .split("&")
+      .map((param) => param.split("="))
+      .reduce((values, [key, value]) => {
+        values[key] = value
+        return values
+      }, {} as { [key: string]: string })
+  },
 }
 
 //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.
@@ -216,26 +216,31 @@ export const Rune: RuneExport = {
 ;(() => {
   const queryParams = Rune._getQueryParams()
 
-  if (!!queryParams.enableInitialOverlayInBrowser && queryParams.enableInitialOverlayInBrowser === '1') {
-    document.addEventListener('DOMContentLoaded', function () {
-      const div = document.createElement('div')
-      div.setAttribute('style', "top: 0; bottom: 0; left: 0; right: 0; position: absolute; z-index: 9999;")
+  if (
+    !!queryParams.enableInitialOverlayInBrowser &&
+    queryParams.enableInitialOverlayInBrowser === "1"
+  ) {
+    document.addEventListener("DOMContentLoaded", function () {
+      const div = document.createElement("div")
+      div.setAttribute(
+        "style",
+        "top: 0; bottom: 0; left: 0; right: 0; position: absolute; z-index: 9999;"
+      )
 
-      div.addEventListener('click', () => {
+      div.addEventListener("click", () => {
         div.remove()
         if (globalThis.postRuneEvent) {
-          globalThis.postRuneEvent({type: "_INITIAL_OVERLAY_CLICK"})
+          globalThis.postRuneEvent({ type: "_INITIAL_OVERLAY_CLICK" })
         }
       })
       document.body.appendChild(div)
 
       if (globalThis.postRuneEvent) {
-        globalThis.postRuneEvent({type: "_GAME_LOAD_STARTED"})
+        globalThis.postRuneEvent({ type: "_GAME_LOAD_STARTED" })
       }
     })
   }
-})();
-
+})()
 
 // Global namespace properties needed for communicating with Rune
 declare global {
@@ -249,5 +254,5 @@ export type RuneGameEvent =
   | { type: "GAME_OVER"; score: number; challengeNumber: number }
   | { type: "ERR"; errMsg: string }
   | { type: "SCORE"; score: number; challengeNumber: number }
-  | { type: "_INITIAL_OVERLAY_CLICK"}
-  | { type: "_GAME_LOAD_STARTED"}
+  | { type: "_INITIAL_OVERLAY_CLICK" }
+  | { type: "_GAME_LOAD_STARTED" }

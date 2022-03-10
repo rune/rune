@@ -3,7 +3,7 @@ The SDK interface for games to interact with Rune.
 */
 var Rune = {
     // External properties and functions
-    version: "1.4.2",
+    version: "1.4.3",
     init: function (input) {
         // Check that this function has not already been called
         if (Rune._doneInit) {
@@ -162,9 +162,9 @@ var Rune = {
             return {};
         }
         return decodeURI(window.location.search)
-            .replace('?', '')
-            .split('&')
-            .map(function (param) { return param.split('='); })
+            .replace("?", "")
+            .split("&")
+            .map(function (param) { return param.split("="); })
             .reduce(function (values, _a) {
             var key = _a[0], value = _a[1];
             values[key] = value;
@@ -174,11 +174,12 @@ var Rune = {
 };
 (function () {
     var queryParams = Rune._getQueryParams();
-    if (!!queryParams.enableInitialOverlayInBrowser && queryParams.enableInitialOverlayInBrowser === '1') {
-        document.addEventListener('DOMContentLoaded', function () {
-            var div = document.createElement('div');
-            div.setAttribute('style', "top: 0; bottom: 0; left: 0; right: 0; position: absolute; z-index: 9999;");
-            div.addEventListener('click', function () {
+    if (!!queryParams.enableInitialOverlayInBrowser &&
+        queryParams.enableInitialOverlayInBrowser === "1") {
+        document.addEventListener("DOMContentLoaded", function () {
+            var div = document.createElement("div");
+            div.setAttribute("style", "top: 0; bottom: 0; left: 0; right: 0; position: absolute; z-index: 9999;");
+            div.addEventListener("click", function () {
                 div.remove();
                 if (window.postRuneEvent) {
                     window.postRuneEvent({ type: "_INITIAL_OVERLAY_CLICK" });

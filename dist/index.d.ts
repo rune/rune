@@ -21,6 +21,9 @@ export interface RuneExport {
     _randomNumberGenerator: (seed: number) => () => number;
     _hashFromString: (str: string) => number;
     _resetDeterministicRandom: () => void;
+    _getQueryParams: () => ({
+        [key: string]: string;
+    });
 }
 export declare const Rune: RuneExport;
 declare global {
@@ -41,5 +44,7 @@ export declare type RuneGameEvent = {
     type: "SCORE";
     score: number;
     challengeNumber: number;
+} | {
+    type: "_INITIAL_OVERLAY_CLICK";
 };
 export {};

@@ -182,12 +182,12 @@ var Rune = {
             div.addEventListener("click", function () {
                 div.remove();
                 if (window.postRuneEvent) {
-                    window.postRuneEvent({ type: "_INITIAL_OVERLAY_CLICK" });
+                    window.postRuneEvent({ type: "BROWSER_INITIAL_OVERLAY_CLICKED" });
                 }
             });
             document.body.appendChild(div);
             if (window.postRuneEvent) {
-                window.postRuneEvent({ type: "_GAME_LOAD_STARTED" });
+                window.postRuneEvent({ type: "BROWSER_IFRAME_LOADED" });
             }
         });
     }

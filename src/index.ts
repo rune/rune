@@ -230,13 +230,13 @@ export const Rune: RuneExport = {
       div.addEventListener("click", () => {
         div.remove()
         if (globalThis.postRuneEvent) {
-          globalThis.postRuneEvent({ type: "_INITIAL_OVERLAY_CLICK" })
+          globalThis.postRuneEvent({ type: "BROWSER_INITIAL_OVERLAY_CLICKED" })
         }
       })
       document.body.appendChild(div)
 
       if (globalThis.postRuneEvent) {
-        globalThis.postRuneEvent({ type: "_GAME_LOAD_STARTED" })
+        globalThis.postRuneEvent({ type: "BROWSER_IFRAME_LOADED" })
       }
     })
   }
@@ -254,5 +254,5 @@ export type RuneGameEvent =
   | { type: "GAME_OVER"; score: number; challengeNumber: number }
   | { type: "ERR"; errMsg: string }
   | { type: "SCORE"; score: number; challengeNumber: number }
-  | { type: "_INITIAL_OVERLAY_CLICK" }
-  | { type: "_GAME_LOAD_STARTED" }
+  | { type: "BROWSER_INITIAL_OVERLAY_CLICKED" }
+  | { type: "BROWSER_IFRAME_LOADED" }

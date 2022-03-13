@@ -45,8 +45,8 @@ export declare type RuneGameEvent = {
     score: number;
     challengeNumber: number;
 } | {
-    type: "_INITIAL_OVERLAY_CLICK";
+    type: "BROWSER_INITIAL_OVERLAY_CLICKED";
 } | {
-    type: "_GAME_LOAD_STARTED";
+    type: "BROWSER_IFRAME_LOADED";
 };
 export {};

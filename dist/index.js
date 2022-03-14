@@ -185,12 +185,12 @@ exports.Rune = {
             div.addEventListener("click", function () {
                 div.remove();
                 if (globalThis.postRuneEvent) {
-                    globalThis.postRuneEvent({ type: "_INITIAL_OVERLAY_CLICK" });
+                    globalThis.postRuneEvent({ type: "BROWSER_INITIAL_OVERLAY_CLICKED" });
                 }
             });
             document.body.appendChild(div);
             if (globalThis.postRuneEvent) {
-                globalThis.postRuneEvent({ type: "_GAME_LOAD_STARTED" });
+                globalThis.postRuneEvent({ type: "BROWSER_IFRAME_LOADED" });
             }
         });
     }

@@ -1,6 +1,6 @@
 {
   "name": "rune-games-sdk",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Tiny SDK for making your HTML5 game run inside Rune.",
   "keywords": [
     "HTML5",

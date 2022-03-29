@@ -2,7 +2,9 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "module": "ES6",
+    "declaration": false,
+    "declarationDir": null,
     "outDir": "dist/browser",
-    "sourceMap": false,
+    "sourceMap": false
   },
 }

@@ -12,7 +12,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand && npm run test:browserCompatibility",
+    "test:browserCompatibility": "es-check es3 dist/browser.js",
     "test:updateSnapshots": "jest --runInBand -u"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "@types/node": "^16.9.6",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.11.0",
+    "es-check": "^6.2.1",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "jest": "^26.6.3",

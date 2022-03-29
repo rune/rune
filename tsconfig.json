@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
     // Export settings
-    "module": "CommonJS",
+    "module": "ESNext",
     "target": "es3",
-    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": ".",
     "sourceMap": true,
     // Development settings
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
-    "noImplicitAny": true,
+    "noImplicitAny": true
   },
-  "include": ["./**/*.ts"],
+  "include": ["./src/index.ts"],
   "exclude": ["node_modules", ".vscode", "test"]
 }

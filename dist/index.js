@@ -1,18 +1,62 @@
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function getQueryParams() {
+    var _a;
+    if (!((_a = globalThis.location) === null || _a === void 0 ? void 0 : _a.search)) {
+        return {};
+    }
+    return decodeURI(globalThis.location.search)
+        .replace("?", "")
+        .split("&")
+        .map(function (param) { return param.split("="); })
+        .reduce(function (values, _a) {
+        var key = _a[0], value = _a[1];
+        values[key] = value;
+        return values;
+    }, {});
+}
+function setupBrowser() {
+    //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.
+    //In case the games are not using clicks (for instance only swiping), ios will not treat these interactions
+    //with the iframe as user interacting. As a workaround, in the browser we will start overlay with
+    //click events disabled and display an invisible div inside the iframe above the canvas.
+    //This way the users will click on the transparent div element the very first time. We will let our client
+    //know about it with BROWSER_INITIAL_OVERLAY_CLICKED event and the transparent div will remove itself.
+    //Afterwards the play/pause will be once again fully controlled by our client.
+    var queryParams = getQueryParams();
+    if (!!queryParams.enableInitialOverlayInBrowser &&
+        queryParams.enableInitialOverlayInBrowser === "1") {
+        document.addEventListener("DOMContentLoaded", function () {
+            var div = document.createElement("div");
+            div.setAttribute("style", "top: 0; bottom: 0; left: 0; right: 0; width: 100vw; height: 100vh; position: absolute; z-index: 9999;");
+            div.addEventListener("click", function () {
+                div.remove();
+                if (globalThis.postRuneEvent) {
+                    globalThis.postRuneEvent({ type: "BROWSER_INITIAL_OVERLAY_CLICKED" });
+                }
+            });
+            document.body.appendChild(div);
+            if (globalThis.postRuneEvent) {
+                globalThis.postRuneEvent({ type: "BROWSER_IFRAME_LOADED" });
+            }
+        });
+    }
+}
+
 /*
 The SDK interface for games to interact with Rune.
 */
-exports.__esModule = true;
-exports.Rune = void 0;
-exports.Rune = {
+var Rune = {
     // External properties and functions
     version: "1.4.5",
     init: function (input) {
         // Check that this function has not already been called
-        if (exports.Rune._doneInit) {
+        if (Rune._doneInit) {
             throw new Error("Rune.init() should only be called once");
         }
-        exports.Rune._doneInit = true;
+        Rune._doneInit = true;
         // Check that game provided correct input to SDK
         var _a = input || {}, startGame = _a.startGame, resumeGame = _a.resumeGame, pauseGame = _a.pauseGame, getScore = _a.getScore;
         if (typeof startGame !== "function") {
@@ -27,51 +71,51 @@ exports.Rune = {
         if (typeof getScore !== "function") {
             throw new Error("Invalid getScore function provided to Rune.init()");
         }
-        exports.Rune._validateScore(getScore());
+        Rune._validateScore(getScore());
         // Initialize the SDK with the game's functions
-        exports.Rune._startGame = startGame;
-        exports.Rune._resumeGame = resumeGame;
-        exports.Rune._pauseGame = pauseGame;
-        exports.Rune._getScore = getScore;
+        Rune._startGame = startGame;
+        Rune._resumeGame = resumeGame;
+        Rune._pauseGame = pauseGame;
+        Rune._getScore = getScore;
         // When running inside Rune, runePostMessage will always be defined.
         if (globalThis.postRuneEvent) {
-            globalThis.postRuneEvent({ type: "INIT", version: exports.Rune.version });
+            globalThis.postRuneEvent({ type: "INIT", version: Rune.version });
         }
         else {
-            exports.Rune._mockEvents();
+            Rune._mockEvents();
         }
     },
     gameOver: function () {
         var _a;
-        if (!exports.Rune._doneInit) {
+        if (!Rune._doneInit) {
             throw new Error("Rune.gameOver() called before Rune.init()");
         }
-        var score = exports.Rune._getScore();
-        exports.Rune._validateScore(score);
-        exports.Rune._resetDeterministicRandom();
+        var score = Rune._getScore();
+        Rune._validateScore(score);
+        Rune._resetDeterministicRandom();
         (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, {
             type: "GAME_OVER",
             score: score,
-            challengeNumber: exports.Rune.getChallengeNumber()
+            challengeNumber: Rune.getChallengeNumber()
         });
     },
     getChallengeNumber: function () { var _a; return (_a = globalThis._runeChallengeNumber) !== null && _a !== void 0 ? _a : 1; },
     deterministicRandom: function () {
         // The first time that this method is called, replace it with our
         // deterministic random number generator and return the first number.
-        exports.Rune._resetDeterministicRandom();
-        return exports.Rune.deterministicRandom();
+        Rune._resetDeterministicRandom();
+        return Rune.deterministicRandom();
     },
     // Internal properties and functions used by the Rune app
     _doneInit: false,
     _requestScore: function () {
         var _a;
-        var score = exports.Rune._getScore();
-        exports.Rune._validateScore(score);
+        var score = Rune._getScore();
+        Rune._validateScore(score);
         (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, {
             type: "SCORE",
             score: score,
-            challengeNumber: exports.Rune.getChallengeNumber()
+            challengeNumber: Rune.getChallengeNumber()
         });
     },
     _startGame: function () {
@@ -106,23 +150,23 @@ exports.Rune = {
         // Mimic the user tapping Play after 3 seconds
         console.log("RUNE: Starting new game in 3 seconds.");
         setTimeout(function () {
-            exports.Rune._startGame();
+            Rune._startGame();
             console.log("RUNE: Started new game.");
         }, 3000);
         // Automatically restart game 3 seconds after Game Over
-        exports.Rune.gameOver = function () {
+        Rune.gameOver = function () {
             var _a;
-            var score = exports.Rune._getScore();
-            exports.Rune._validateScore(score);
-            exports.Rune._resetDeterministicRandom();
+            var score = Rune._getScore();
+            Rune._validateScore(score);
+            Rune._resetDeterministicRandom();
             (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, {
                 type: "GAME_OVER",
                 score: score,
-                challengeNumber: exports.Rune.getChallengeNumber()
+                challengeNumber: Rune.getChallengeNumber()
             });
             console.log("RUNE: Starting new game in 3 seconds.");
             setTimeout(function () {
-                exports.Rune._startGame();
+                Rune._startGame();
                 console.log("RUNE: Started new game.");
             }, 3000);
         };
@@ -133,7 +177,7 @@ exports.Rune = {
     _randomNumberGenerator: function (seed) {
         // Initialize using hash function to avoid seed quality issues.
         // E.g. to avoid correlations between using 1 and 2 as seed.
-        var hash = exports.Rune._hashFromString(seed.toString());
+        var hash = Rune._hashFromString(seed.toString());
         return function () {
             var t = (hash += 0x6d2b79f5);
             t = Math.imul(t ^ (t >>> 15), t | 1);
@@ -157,42 +201,10 @@ exports.Rune = {
     },
     _resetDeterministicRandom: function () {
         // Reset randomness to be deterministic across plays
-        exports.Rune.deterministicRandom = exports.Rune._randomNumberGenerator(exports.Rune.getChallengeNumber());
-    },
-    _getQueryParams: function () {
-        var _a;
-        if (!((_a = globalThis.location) === null || _a === void 0 ? void 0 : _a.search)) {
-            return {};
-        }
-        return decodeURI(globalThis.location.search)
-            .replace("?", "")
-            .split("&")
-            .map(function (param) { return param.split("="); })
-            .reduce(function (values, _a) {
-            var key = _a[0], value = _a[1];
-            values[key] = value;
-            return values;
-        }, {});
+        Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber());
     }
 };
-(function () {
-    var queryParams = exports.Rune._getQueryParams();
-    if (!!queryParams.enableInitialOverlayInBrowser &&
-        queryParams.enableInitialOverlayInBrowser === "1") {
-        document.addEventListener("DOMContentLoaded", function () {
-            var div = document.createElement("div");
-            div.setAttribute("style", "top: 0; bottom: 0; left: 0; right: 0; width: 100vw; height: 100vh; position: absolute; z-index: 9999;");
-            div.addEventListener("click", function () {
-                div.remove();
-                if (globalThis.postRuneEvent) {
-                    globalThis.postRuneEvent({ type: "BROWSER_INITIAL_OVERLAY_CLICKED" });
-                }
-            });
-            document.body.appendChild(div);
-            if (globalThis.postRuneEvent) {
-                globalThis.postRuneEvent({ type: "BROWSER_IFRAME_LOADED" });
-            }
-        });
-    }
-})();
+setupBrowser();
+
+exports.Rune = Rune;
 //# sourceMappingURL=index.js.map

@@ -21,9 +21,6 @@ export interface RuneExport {
     _randomNumberGenerator: (seed: number) => () => number;
     _hashFromString: (str: string) => number;
     _resetDeterministicRandom: () => void;
-    _getQueryParams: () => {
-        [key: string]: string;
-    };
 }
 export declare const Rune: RuneExport;
 declare global {

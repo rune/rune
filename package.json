@@ -11,8 +11,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "sh scripts/build.sh",
-    "test": "jest --runInBand",
+    "build": "rollup -c",
+    "test": "jest --runInBand && npm run test:browserCompatibility",
+    "test:browserCompatibility": "es-check es3 dist/browser.js",
     "test:updateSnapshots": "jest --runInBand -u"
   },
   "repository": {
@@ -26,14 +27,18 @@
   },
   "homepage": "https://github.com/rune/rune-games-sdk#readme",
   "devDependencies": {
+    "@rollup/plugin-replace": "^4.0.0",
+    "@rollup/plugin-typescript": "^8.3.1",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.9.6",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.11.0",
+    "es-check": "^6.2.1",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
+    "rollup": "^2.70.1",
     "ts-jest": "^26.5.4",
     "typescript": "^4.5.5"
   },

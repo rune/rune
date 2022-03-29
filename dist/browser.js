@@ -22,7 +22,7 @@ var Rune = (function () {
         //with the iframe as user interacting. As a workaround, in the browser we will start overlay with
         //click events disabled and display an invisible div inside the iframe above the canvas.
         //This way the users will click on the transparent div element the very first time. We will let our client
-        //know about it with _INITIAL_OVERLAY_CLICK event and the transparent div will remove itself.
+        //know about it with BROWSER_INITIAL_OVERLAY_CLICKED event and the transparent div will remove itself.
         //Afterwards the play/pause will be once again fully controlled by our client.
         var queryParams = getQueryParams();
         if (!!queryParams.enableInitialOverlayInBrowser &&

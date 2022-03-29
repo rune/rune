@@ -44,6 +44,7 @@ var Rune = (function () {
         }
     }
 
+    //This function disables functionality of both localStorage and sessionStorage because they both depend on the same Storage object.
     function disableStorage() {
         if (!window.localStorage)
             return;
@@ -52,11 +53,11 @@ var Rune = (function () {
         };
         var getItem = function () {
             noop();
-            // We always return null to imitate empty local storage.
+            // We always return null to imitate empty storage.
             return null;
         };
-        var localStorageProto = Object.getPrototypeOf(window.localStorage);
-        Object.defineProperties(localStorageProto, {
+        var storageProto = Object.getPrototypeOf(window.localStorage);
+        Object.defineProperties(storageProto, {
             getItem: {
                 value: getItem
             },

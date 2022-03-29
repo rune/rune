@@ -1,3 +1,4 @@
+//This function disables functionality of both localStorage and sessionStorage because they both depend on the same Storage object.
 export function disableStorage() {
   if (!globalThis.localStorage) return
 
@@ -7,13 +8,13 @@ export function disableStorage() {
 
   const getItem = () => {
     noop()
-    // We always return null to imitate empty local storage.
+    // We always return null to imitate empty storage.
     return null
   }
 
-  const localStorageProto = Object.getPrototypeOf(globalThis.localStorage)
+  const storageProto = Object.getPrototypeOf(globalThis.localStorage)
 
-  Object.defineProperties(localStorageProto, {
+  Object.defineProperties(storageProto, {
     getItem: {
       value: getItem,
     },

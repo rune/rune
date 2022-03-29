@@ -50,7 +50,7 @@ function disableStorage() {
     if (!globalThis.localStorage)
         return;
     var noop = function () {
-        console.error("WARNING! Local storage is disabled when using Rune SDK.");
+        console.error("Error! Local/Session storage is disabled when using Rune SDK.");
     };
     var getItem = function () {
         noop();

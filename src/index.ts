@@ -1,7 +1,7 @@
 /*
 The SDK interface for games to interact with Rune.
 */
-import {setup} from './internal';
+import { setupBrowser } from "./setupBrowser"
 
 interface InitInput {
   startGame: () => void
@@ -189,10 +189,10 @@ export const Rune: RuneExport = {
   _resetDeterministicRandom: () => {
     // Reset randomness to be deterministic across plays
     Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber())
-  }
+  },
 }
 
-setup();
+setupBrowser()
 
 // Global namespace properties needed for communicating with Rune
 declare global {

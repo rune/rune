@@ -17,7 +17,7 @@ function getQueryParams() {
         return values;
     }, {});
 }
-function initialOverlay() {
+function setupBrowser() {
     //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.
     //In case the games are not using clicks (for instance only swiping), ios will not treat these interactions
     //with the iframe as user interacting. As a workaround, in the browser we will start overlay with
@@ -43,9 +43,6 @@ function initialOverlay() {
             }
         });
     }
-}
-function setup() {
-    initialOverlay();
 }
 
 /*
@@ -207,7 +204,7 @@ var Rune = {
         Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber());
     }
 };
-setup();
+setupBrowser();
 
 exports.Rune = Rune;
 //# sourceMappingURL=index.js.map

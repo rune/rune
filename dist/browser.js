@@ -44,7 +44,7 @@ var Rune = (function () {
         }
     }
 
-    function disableLocalStorage() {
+    function disableStorage() {
         if (!window.localStorage)
             return;
         var noop = function () {
@@ -68,6 +68,12 @@ var Rune = (function () {
             },
             clear: {
                 value: noop
+            },
+            length: {
+                value: 0
+            },
+            key: {
+                value: getItem
             }
         });
     }
@@ -231,7 +237,7 @@ var Rune = (function () {
             Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber());
         }
     };
-    disableLocalStorage();
+    disableStorage();
     setupBrowser();
 
     return Rune;

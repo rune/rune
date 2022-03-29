@@ -1,4 +1,4 @@
-export function disableLocalStorage() {
+export function disableStorage() {
   if (!globalThis.localStorage) return
 
   const noop = () => {
@@ -25,6 +25,12 @@ export function disableLocalStorage() {
     },
     clear: {
       value: noop,
+    },
+    length: {
+      value: 0,
+    },
+    key: {
+      value: getItem,
     },
   })
 }

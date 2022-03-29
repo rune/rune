@@ -16,7 +16,7 @@ var Rune = (function () {
             return values;
         }, {});
     }
-    function setupBrowser() {
+    function setupInitialOverlay() {
         //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.
         //In case the games are not using clicks (for instance only swiping), ios will not treat these interactions
         //with the iframe as user interacting. As a workaround, in the browser we will start overlay with
@@ -42,6 +42,37 @@ var Rune = (function () {
                 }
             });
         }
+    }
+    function disableLocalStorage() {
+        if (!window.localStorage)
+            return;
+        var noop = function () {
+            console.error("WARNING! Local storage is disabled when using Rune SDK.");
+        };
+        var getItem = function () {
+            noop();
+            // We always return null to imitate empty local storage.
+            return null;
+        };
+        var localStorageProto = Object.getPrototypeOf(window.localStorage);
+        Object.defineProperties(localStorageProto, {
+            getItem: {
+                value: getItem
+            },
+            setItem: {
+                value: noop
+            },
+            removeItem: {
+                value: noop
+            },
+            clear: {
+                value: noop
+            }
+        });
+    }
+    function setupBrowser() {
+        setupInitialOverlay();
+        disableLocalStorage();
     }
 
     /*

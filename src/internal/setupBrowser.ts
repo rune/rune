@@ -13,7 +13,7 @@ function getQueryParams() {
     }, {} as { [key: string]: string })
 }
 
-function setupInitialOverlay() {
+export function setupBrowser() {
   //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.
   //In case the games are not using clicks (for instance only swiping), ios will not treat these interactions
   //with the iframe as user interacting. As a workaround, in the browser we will start overlay with
@@ -47,40 +47,4 @@ function setupInitialOverlay() {
       }
     })
   }
-}
-
-function disableLocalStorage() {
-  if (!globalThis.localStorage) return
-
-  const noop = () => {
-    console.error("WARNING! Local storage is disabled when using Rune SDK.")
-  }
-
-  const getItem = () => {
-    noop()
-    // We always return null to imitate empty local storage.
-    return null
-  }
-
-  const localStorageProto = Object.getPrototypeOf(globalThis.localStorage)
-
-  Object.defineProperties(localStorageProto, {
-    getItem: {
-      value: getItem,
-    },
-    setItem: {
-      value: noop,
-    },
-    removeItem: {
-      value: noop,
-    },
-    clear: {
-      value: noop,
-    },
-  })
-}
-
-export function setupBrowser() {
-  setupInitialOverlay()
-  disableLocalStorage()
 }

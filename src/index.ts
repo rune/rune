@@ -1,7 +1,8 @@
 /*
 The SDK interface for games to interact with Rune.
 */
-import { setupBrowser } from "./setupBrowser"
+import { setupBrowser } from "./internal/setupBrowser"
+import { disableStorage } from "./internal/disableStorage"
 
 interface InitInput {
   startGame: () => void
@@ -192,6 +193,7 @@ export const Rune: RuneExport = {
   },
 }
 
+disableStorage()
 setupBrowser()
 
 // Global namespace properties needed for communicating with Rune

@@ -45,6 +45,41 @@ function setupBrowser() {
     }
 }
 
+//This function disables functionality of both localStorage and sessionStorage because they both depend on the same Storage object.
+function disableStorage() {
+    if (!globalThis.localStorage)
+        return;
+    var noop = function () {
+        console.error("Error! Local/Session storage is disabled when using Rune SDK.");
+    };
+    var getItem = function () {
+        noop();
+        // We always return null to imitate empty storage.
+        return null;
+    };
+    var storageProto = Object.getPrototypeOf(globalThis.localStorage);
+    Object.defineProperties(storageProto, {
+        getItem: {
+            value: getItem
+        },
+        setItem: {
+            value: noop
+        },
+        removeItem: {
+            value: noop
+        },
+        clear: {
+            value: noop
+        },
+        length: {
+            value: 0
+        },
+        key: {
+            value: getItem
+        }
+    });
+}
+
 /*
 The SDK interface for games to interact with Rune.
 */
@@ -204,6 +239,7 @@ var Rune = {
         Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber());
     }
 };
+disableStorage();
 setupBrowser();
 
 exports.Rune = Rune;

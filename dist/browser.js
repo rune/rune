@@ -44,37 +44,52 @@ var Rune = (function () {
         }
     }
 
-    //This function disables functionality of both localStorage and sessionStorage because they both depend on the same Storage object.
-    function disableStorage() {
+    //This function overrides functionality of both localStorage and sessionStorage because they both depend on the same Storage object.
+    function overrideStorage() {
         if (!window.localStorage)
             return;
-        var noop = function () {
+        var notify = function () {
             console.error("Error! Local/Session storage is disabled when using Rune SDK.");
         };
-        var getItem = function () {
-            noop();
-            // We always return null to imitate empty storage.
-            return null;
-        };
+        var storage = {};
         var storageProto = Object.getPrototypeOf(window.localStorage);
         Object.defineProperties(storageProto, {
             getItem: {
-                value: getItem
+                value: function (key) {
+                    notify();
+                    return key in storage ? storage[key] : null;
+                }
             },
             setItem: {
-                value: noop
+                value: function (key, value) {
+                    notify();
+                    storage[key] = value;
+                }
             },
             removeItem: {
-                value: noop
+                value: function (key) {
+                    notify();
+                    delete storage[key];
+                }
             },
             clear: {
-                value: noop
+                value: function () {
+                    notify();
+                    storage = {};
+                }
             },
             length: {
-                value: 0
+                value: function () {
+                    notify();
+                    return Object.keys(storage).length;
+                }
             },
             key: {
-                value: getItem
+                value: function (index) {
+                    notify();
+                    var keys = Object.keys(storage);
+                    return keys[index] !== undefined ? keys[index] : null;
+                }
             }
         });
     }
@@ -238,7 +253,7 @@ var Rune = (function () {
             Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber());
         }
     };
-    disableStorage();
+    overrideStorage();
     setupBrowser();
 
     return Rune;

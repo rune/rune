@@ -11,7 +11,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rm -rf dist/* && rollup -c",
     "test": "jest --runInBand && npm run test:browserCompatibility",
     "test:browserCompatibility": "es-check es3 dist/browser.js",
     "test:updateSnapshots": "jest --runInBand -u"

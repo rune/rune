@@ -45,54 +45,14 @@ function setupBrowser() {
     }
 }
 
-//This function overrides functionality of both localStorage and sessionStorage because they both depend on the same Storage object.
-function overrideStorage() {
-    if (!globalThis.localStorage)
-        return;
-    var notify = function () {
-        console.error("Error! Local/Session storage is disabled when using Rune SDK.");
-    };
-    var storage = {};
-    var storageProto = Object.getPrototypeOf(globalThis.localStorage);
-    Object.defineProperties(storageProto, {
-        getItem: {
-            value: function (key) {
-                notify();
-                return key in storage ? storage[key] : null;
-            }
-        },
-        setItem: {
-            value: function (key, value) {
-                notify();
-                storage[key] = value;
-            }
-        },
-        removeItem: {
-            value: function (key) {
-                notify();
-                delete storage[key];
-            }
-        },
-        clear: {
-            value: function () {
-                notify();
-                storage = {};
-            }
-        },
-        length: {
-            value: function () {
-                notify();
-                return Object.keys(storage).length;
-            }
-        },
-        key: {
-            value: function (index) {
-                notify();
-                var keys = Object.keys(storage);
-                return keys[index] !== undefined ? keys[index] : null;
-            }
-        }
-    });
+//We clear the storage each time we reload the game.
+function clearStorage() {
+    if (globalThis.localStorage) {
+        globalThis.localStorage.clear();
+    }
+    if (globalThis.sessionStorage) {
+        globalThis.sessionStorage.clear();
+    }
 }
 
 /*
@@ -254,7 +214,7 @@ var Rune = {
         Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber());
     }
 };
-overrideStorage();
+clearStorage();
 setupBrowser();
 
 exports.Rune = Rune;

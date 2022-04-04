@@ -59,7 +59,7 @@ var Rune = (function () {
     */
     var Rune = {
         // External properties and functions
-        version: "1.4.6",
+        version: "1.4.7",
         init: function (input) {
             // Check that this function has not already been called
             if (Rune._doneInit) {

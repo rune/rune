@@ -44,39 +44,14 @@ var Rune = (function () {
         }
     }
 
-    //This function disables functionality of both localStorage and sessionStorage because they both depend on the same Storage object.
-    function disableStorage() {
-        if (!window.localStorage)
-            return;
-        var noop = function () {
-            console.error("Error! Local/Session storage is disabled when using Rune SDK.");
-        };
-        var getItem = function () {
-            noop();
-            // We always return null to imitate empty storage.
-            return null;
-        };
-        var storageProto = Object.getPrototypeOf(window.localStorage);
-        Object.defineProperties(storageProto, {
-            getItem: {
-                value: getItem
-            },
-            setItem: {
-                value: noop
-            },
-            removeItem: {
-                value: noop
-            },
-            clear: {
-                value: noop
-            },
-            length: {
-                value: 0
-            },
-            key: {
-                value: getItem
-            }
-        });
+    //We clear the storage each time we reload the game.
+    function clearStorage() {
+        if (window.localStorage) {
+            window.localStorage.clear();
+        }
+        if (window.sessionStorage) {
+            window.sessionStorage.clear();
+        }
     }
 
     /*
@@ -238,7 +213,7 @@ var Rune = (function () {
             Rune.deterministicRandom = Rune._randomNumberGenerator(Rune.getChallengeNumber());
         }
     };
-    disableStorage();
+    clearStorage();
     setupBrowser();
 
     return Rune;

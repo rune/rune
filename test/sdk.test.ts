@@ -242,32 +242,6 @@ describe("sdk", function () {
     expect(randomArray).toEqual([2, 4, 5, 3, 6, 9, 6])
   })
 
-  test("deterministicRandom() resets with gameOver()", async function () {
-    const randomArray1 = [...Array(7)].map(() =>
-      Math.round(Rune.deterministicRandom() * 10)
-    )
-
-    // Mimic being in the actual app to avoid mockEvents() causing issues
-    globalThis.postRuneEvent = () => {}
-
-    // Call init() and gameOver()
-    Rune.init({
-      startGame: () => {},
-      pauseGame: () => {},
-      resumeGame: () => {},
-      getScore: () => {
-        return 0
-      },
-    })
-    Rune.gameOver()
-
-    // See that random numbers are identical
-    const randomArray2 = [...Array(7)].map(() =>
-      Math.round(Rune.deterministicRandom() * 10)
-    )
-    expect(randomArray1).toEqual(randomArray2)
-  })
-
   test("deterministicRandom() does not reset at game start", async function () {
     const randomArray1 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
@@ -276,7 +250,6 @@ describe("sdk", function () {
     // Mimic being in the actual app to avoid mockEvents() causing issues
     globalThis.postRuneEvent = () => {}
 
-    // Call init() and gameOver()
     Rune.init({
       startGame: () => {},
       pauseGame: () => {},
@@ -294,6 +267,33 @@ describe("sdk", function () {
     expect(randomArray1).not.toEqual(randomArray2)
   })
 
+  test("deterministicRandom() is reset after game over is over and started again", async function () {
+    const randomArray1 = [...Array(7)].map(() =>
+      Math.round(Rune.deterministicRandom() * 10)
+    )
+
+    // Mimic being in the actual app to avoid mockEvents() causing issues
+    globalThis.postRuneEvent = () => {}
+
+    Rune.init({
+      startGame: () => {},
+      pauseGame: () => {},
+      resumeGame: () => {},
+      getScore: () => {
+        return 0
+      },
+    })
+    Rune._startGame()
+    Rune.gameOver()
+    Rune._startGame()
+
+    // See that random numbers are identical
+    const randomArray2 = [...Array(7)].map(() =>
+      Math.round(Rune.deterministicRandom() * 10)
+    )
+    expect(randomArray1).toEqual(randomArray2)
+  })
+
   test("deterministicRandom() is reset at game restart", async function () {
     const randomArray1 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
@@ -302,7 +302,6 @@ describe("sdk", function () {
     // Mimic being in the actual app to avoid mockEvents() causing issues
     globalThis.postRuneEvent = () => {}
 
-    // Call init() and gameOver()
     Rune.init({
       startGame: () => {},
       pauseGame: () => {},

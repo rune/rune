@@ -32,6 +32,8 @@ export interface RuneExport {
   _resetDeterministicRandom: () => void
 }
 
+let isStartCalled = false
+
 export const Rune: RuneExport = {
   // External properties and functions
   version: "1.4.7",
@@ -59,10 +61,14 @@ export const Rune: RuneExport = {
     Rune._validateScore(getScore())
 
     // Initialize the SDK with the game's functions
-    Rune._startGame = (options) => {
-      if (options?.isRestarting) {
+    Rune._startGame = () => {
+      //Restart the random function starting from the 2nd time the game is started (due to restart/game over)
+      if (isStartCalled) {
         Rune._resetDeterministicRandom()
       }
+
+      isStartCalled = true
+
       return startGame()
     }
     Rune._resumeGame = resumeGame
@@ -82,7 +88,6 @@ export const Rune: RuneExport = {
     }
     const score = Rune._getScore()
     Rune._validateScore(score)
-    Rune._resetDeterministicRandom()
     globalThis.postRuneEvent?.({
       type: "GAME_OVER",
       score,

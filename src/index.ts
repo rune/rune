@@ -20,7 +20,7 @@ export interface RuneExport {
 
   // Internal properties and functions
   _doneInit: boolean
-  _startGame: (options?: { isRestarting?: boolean }) => void
+  _startGame: () => void
   _resumeGame: () => void
   _pauseGame: () => void
   _requestScore: () => void // Called by Rune

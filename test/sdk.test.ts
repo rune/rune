@@ -312,7 +312,7 @@ describe("sdk", function () {
     })
 
     Rune._startGame()
-    Rune._startGame({ isRestarting: true })
+    Rune._startGame()
 
     const randomArray2 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)

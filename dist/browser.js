@@ -57,6 +57,7 @@ var Rune = (function () {
     /*
     The SDK interface for games to interact with Rune.
     */
+    var doneFirstPlay = false;
     var Rune = {
         // External properties and functions
         version: "1.4.7",
@@ -82,7 +83,14 @@ var Rune = (function () {
             }
             Rune._validateScore(getScore());
             // Initialize the SDK with the game's functions
-            Rune._startGame = startGame;
+            Rune._startGame = function () {
+                //Restart the random function starting from the 2nd time the game is started (due to restart/game over)
+                if (doneFirstPlay) {
+                    Rune._resetDeterministicRandom();
+                }
+                doneFirstPlay = true;
+                return startGame();
+            };
             Rune._resumeGame = resumeGame;
             Rune._pauseGame = pauseGame;
             Rune._getScore = getScore;
@@ -101,7 +109,6 @@ var Rune = (function () {
             }
             var score = Rune._getScore();
             Rune._validateScore(score);
-            Rune._resetDeterministicRandom();
             (_a = window.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(window, {
                 type: "GAME_OVER",
                 score: score,

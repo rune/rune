@@ -10,7 +10,6 @@ interface InitInput {
   pauseGame: () => void
   getScore: () => number
 }
-
 export interface RuneExport {
   // External properties and functions
   version: string
@@ -32,6 +31,8 @@ export interface RuneExport {
   _hashFromString: (str: string) => number
   _resetDeterministicRandom: () => void
 }
+
+let doneFirstPlay = false
 
 export const Rune: RuneExport = {
   // External properties and functions
@@ -60,7 +61,16 @@ export const Rune: RuneExport = {
     Rune._validateScore(getScore())
 
     // Initialize the SDK with the game's functions
-    Rune._startGame = startGame
+    Rune._startGame = () => {
+      //Restart the random function starting from the 2nd time the game is started (due to restart/game over)
+      if (doneFirstPlay) {
+        Rune._resetDeterministicRandom()
+      }
+
+      doneFirstPlay = true
+
+      return startGame()
+    }
     Rune._resumeGame = resumeGame
     Rune._pauseGame = pauseGame
     Rune._getScore = getScore
@@ -78,7 +88,6 @@ export const Rune: RuneExport = {
     }
     const score = Rune._getScore()
     Rune._validateScore(score)
-    Rune._resetDeterministicRandom()
     globalThis.postRuneEvent?.({
       type: "GAME_OVER",
       score,

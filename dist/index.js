@@ -58,7 +58,7 @@ function clearStorage() {
 /*
 The SDK interface for games to interact with Rune.
 */
-var isStartCalled = false;
+var doneFirstPlay = false;
 var Rune = {
     // External properties and functions
     version: "1.4.7",
@@ -86,10 +86,10 @@ var Rune = {
         // Initialize the SDK with the game's functions
         Rune._startGame = function () {
             //Restart the random function starting from the 2nd time the game is started (due to restart/game over)
-            if (isStartCalled) {
+            if (doneFirstPlay) {
                 Rune._resetDeterministicRandom();
             }
-            isStartCalled = true;
+            doneFirstPlay = true;
             return startGame();
         };
         Rune._resumeGame = resumeGame;

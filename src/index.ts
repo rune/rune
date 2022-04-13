@@ -32,7 +32,7 @@ export interface RuneExport {
   _resetDeterministicRandom: () => void
 }
 
-let isStartCalled = false
+let doneFirstPlay = false
 
 export const Rune: RuneExport = {
   // External properties and functions
@@ -63,11 +63,11 @@ export const Rune: RuneExport = {
     // Initialize the SDK with the game's functions
     Rune._startGame = () => {
       //Restart the random function starting from the 2nd time the game is started (due to restart/game over)
-      if (isStartCalled) {
+      if (doneFirstPlay) {
         Rune._resetDeterministicRandom()
       }
 
-      isStartCalled = true
+      doneFirstPlay = true
 
       return startGame()
     }

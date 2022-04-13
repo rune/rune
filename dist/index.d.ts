@@ -11,7 +11,9 @@ export interface RuneExport {
     getChallengeNumber: () => number;
     deterministicRandom: () => number;
     _doneInit: boolean;
-    _startGame: () => void;
+    _startGame: (options?: {
+        isRestarting?: boolean;
+    }) => void;
     _resumeGame: () => void;
     _pauseGame: () => void;
     _requestScore: () => void;

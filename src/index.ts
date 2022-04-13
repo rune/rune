@@ -10,7 +10,6 @@ interface InitInput {
   pauseGame: () => void
   getScore: () => number
 }
-
 export interface RuneExport {
   // External properties and functions
   version: string
@@ -21,7 +20,7 @@ export interface RuneExport {
 
   // Internal properties and functions
   _doneInit: boolean
-  _startGame: () => void
+  _startGame: (options?: { isRestarting?: boolean }) => void
   _resumeGame: () => void
   _pauseGame: () => void
   _requestScore: () => void // Called by Rune
@@ -60,7 +59,12 @@ export const Rune: RuneExport = {
     Rune._validateScore(getScore())
 
     // Initialize the SDK with the game's functions
-    Rune._startGame = startGame
+    Rune._startGame = (options) => {
+      if (options?.isRestarting) {
+        Rune._resetDeterministicRandom()
+      }
+      return startGame()
+    }
     Rune._resumeGame = resumeGame
     Rune._pauseGame = pauseGame
     Rune._getScore = getScore

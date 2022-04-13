@@ -82,7 +82,12 @@ var Rune = (function () {
             }
             Rune._validateScore(getScore());
             // Initialize the SDK with the game's functions
-            Rune._startGame = startGame;
+            Rune._startGame = function (options) {
+                if (options === null || options === void 0 ? void 0 : options.isRestarting) {
+                    Rune._resetDeterministicRandom();
+                }
+                return startGame();
+            };
             Rune._resumeGame = resumeGame;
             Rune._pauseGame = pauseGame;
             Rune._getScore = getScore;

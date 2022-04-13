@@ -267,7 +267,7 @@ describe("sdk", function () {
     expect(randomArray1).not.toEqual(randomArray2)
   })
 
-  test("deterministicRandom() is reset after game over is over and started again", async function () {
+  test("deterministicRandom() is reset after game is over and started again", async function () {
     const randomArray1 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
     )

@@ -59,19 +59,18 @@ function clearStorage() {
 // website and the game loaded in an iframe using the postMessage api
 function setupEventBridge() {
     var _a;
-    var windowRef = window;
-    if (windowRef.postRuneEvent)
+    if (globalThis.postRuneEvent)
         return;
-    var challengeNumber = +((_a = new URLSearchParams(windowRef.location.search).get("challengeNumber")) !== null && _a !== void 0 ? _a : "1");
+    var challengeNumber = +((_a = new URLSearchParams(globalThis.location.search).get("challengeNumber")) !== null && _a !== void 0 ? _a : "1");
     if (!isNaN(challengeNumber)) {
-        windowRef._runeChallengeNumber = challengeNumber;
+        globalThis._runeChallengeNumber = challengeNumber;
     }
-    windowRef.postRuneEvent = function (event) {
+    globalThis.postRuneEvent = function (event) {
         window.parent.postMessage({ runeGameEvent: event }, "*");
     };
     window.addEventListener("message", function (msg) {
-        if (windowRef.Rune && isRuneGameMessage(msg)) {
-            windowRef.Rune[msg.data.runeGameCommand.type]();
+        if (globalThis.Rune && isRuneGameMessage(msg)) {
+            globalThis.Rune[msg.data.runeGameCommand.type]();
         }
     });
 }

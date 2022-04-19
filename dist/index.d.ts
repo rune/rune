@@ -17,7 +17,6 @@ export interface RuneExport {
     _requestScore: () => void;
     _getScore: () => number;
     _validateScore: (score: number) => void;
-    _mockEvents: () => void;
     _randomNumberGenerator: (seed: number) => () => number;
     _hashFromString: (str: string) => number;
     _resetDeterministicRandom: () => void;

@@ -124,9 +124,6 @@ var Rune = {
         if (globalThis.postRuneEvent) {
             globalThis.postRuneEvent({ type: "INIT", version: Rune.version });
         }
-        else {
-            Rune._mockEvents();
-        }
     },
     gameOver: function () {
         var _a;
@@ -182,36 +179,6 @@ var Rune = {
         if (!Number.isInteger(score)) {
             throw new Error("Score is not an integer. Received: ".concat(score));
         }
-    },
-    // Create mock events to support development
-    _mockEvents: function () {
-        // Log posted events to the console (in production, these are processed by Rune)
-        globalThis.postRuneEvent = function (event) {
-            return console.log("RUNE: Posted ".concat(JSON.stringify(event)));
-        };
-        // Mimic the user tapping Play after 3 seconds
-        console.log("RUNE: Starting new game in 3 seconds.");
-        setTimeout(function () {
-            Rune._startGame();
-            console.log("RUNE: Started new game.");
-        }, 3000);
-        // Automatically restart game 3 seconds after Game Over
-        Rune.gameOver = function () {
-            var _a;
-            var score = Rune._getScore();
-            Rune._validateScore(score);
-            Rune._resetDeterministicRandom();
-            (_a = globalThis.postRuneEvent) === null || _a === void 0 ? void 0 : _a.call(globalThis, {
-                type: "GAME_OVER",
-                score: score,
-                challengeNumber: Rune.getChallengeNumber()
-            });
-            console.log("RUNE: Starting new game in 3 seconds.");
-            setTimeout(function () {
-                Rune._startGame();
-                console.log("RUNE: Started new game.");
-            }, 3000);
-        };
     },
     // A pseudorandom number generator (PRNG) for determinism.
     // Based on the efficient mulberry32 with 32-bit state.

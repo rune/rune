@@ -55,6 +55,32 @@ function clearStorage() {
     }
 }
 
+// This code serves as a bridge to allow cross-domain communication between the
+// website and the game loaded in an iframe using the postMessage api
+function setupEventBridge() {
+    var _a;
+    var windowRef = window;
+    if (windowRef.postRuneEvent)
+        return;
+    var challengeNumber = +((_a = new URLSearchParams(windowRef.location.search).get("challengeNumber")) !== null && _a !== void 0 ? _a : "1");
+    if (!isNaN(challengeNumber)) {
+        windowRef._runeChallengeNumber = challengeNumber;
+    }
+    windowRef.postRuneEvent = function (event) {
+        window.parent.postMessage({ runeGameEvent: event }, "*");
+    };
+    window.addEventListener("message", function (msg) {
+        if (windowRef.Rune && isRuneGameMessage(msg)) {
+            windowRef.Rune[msg.data.runeGameCommand.type]();
+        }
+    });
+}
+function isRuneGameMessage(msg) {
+    return (typeof msg.data === "object" &&
+        !!msg.data &&
+        typeof msg.data.runeGameCommand === "object");
+}
+
 /*
 The SDK interface for games to interact with Rune.
 */
@@ -223,6 +249,7 @@ var Rune = {
 };
 clearStorage();
 setupBrowser();
+setupEventBridge();
 
 exports.Rune = Rune;
 //# sourceMappingURL=index.js.map

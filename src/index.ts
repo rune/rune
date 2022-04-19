@@ -3,6 +3,7 @@ The SDK interface for games to interact with Rune.
 */
 import { setupBrowser } from "./internal/setupBrowser"
 import { clearStorage } from "./internal/clearStorage"
+import { setupEventBridge } from "./internal/setupEventBridge"
 
 interface InitInput {
   startGame: () => void
@@ -204,6 +205,7 @@ export const Rune: RuneExport = {
 
 clearStorage()
 setupBrowser()
+setupEventBridge()
 
 // Global namespace properties needed for communicating with Rune
 declare global {

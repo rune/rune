@@ -61,7 +61,7 @@ var Rune = (function () {
         if (window.postRuneEvent)
             return;
         var challengeNumber = +((_a = new URLSearchParams(window.location.search).get("challengeNumber")) !== null && _a !== void 0 ? _a : "1");
-        if (!isNaN(challengeNumber)) {
+        if (Number.isInteger(challengeNumber)) {
             window._runeChallengeNumber = challengeNumber;
         }
         window.postRuneEvent = function (event) {

@@ -62,7 +62,7 @@ function setupEventBridge() {
     if (globalThis.postRuneEvent)
         return;
     var challengeNumber = +((_a = new URLSearchParams(globalThis.location.search).get("challengeNumber")) !== null && _a !== void 0 ? _a : "1");
-    if (!isNaN(challengeNumber)) {
+    if (Number.isInteger(challengeNumber)) {
         globalThis._runeChallengeNumber = challengeNumber;
     }
     globalThis.postRuneEvent = function (event) {

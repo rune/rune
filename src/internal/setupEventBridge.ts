@@ -7,7 +7,7 @@ export function setupEventBridge() {
     new URLSearchParams(globalThis.location.search).get("challengeNumber") ?? "1"
   )
 
-  if (!isNaN(challengeNumber)) {
+  if (Number.isInteger(challengeNumber)) {
     globalThis._runeChallengeNumber = challengeNumber
   }
 

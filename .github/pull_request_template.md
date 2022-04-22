@@ -1,1 +1,1 @@
-<!--- Thank you for contributing to Rune Games SDK :) . -->
+<!--- Thank You for contributing to Rune Games SDK :) . -->

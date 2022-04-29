@@ -2,21 +2,6 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function getQueryParams() {
-    var _a;
-    if (!((_a = globalThis.location) === null || _a === void 0 ? void 0 : _a.search)) {
-        return {};
-    }
-    return decodeURI(globalThis.location.search)
-        .replace("?", "")
-        .split("&")
-        .map(function (param) { return param.split("="); })
-        .reduce(function (values, _a) {
-        var key = _a[0], value = _a[1];
-        values[key] = value;
-        return values;
-    }, {});
-}
 function setupBrowser() {
     //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.
     //In case the games are not using clicks (for instance only swiping), ios will not treat these interactions
@@ -25,9 +10,8 @@ function setupBrowser() {
     //This way the users will click on the transparent div element the very first time. We will let our client
     //know about it with BROWSER_INITIAL_OVERLAY_CLICKED event and the transparent div will remove itself.
     //Afterwards the play/pause will be once again fully controlled by our client.
-    var queryParams = getQueryParams();
-    if (!!queryParams.enableInitialOverlayInBrowser &&
-        queryParams.enableInitialOverlayInBrowser === "1") {
+    var enableInitialOverlayInBrowser = !!new URLSearchParams(globalThis.location.search).get("enableInitialOverlayInBrowser");
+    if (enableInitialOverlayInBrowser) {
         document.addEventListener("DOMContentLoaded", function () {
             var div = document.createElement("div");
             div.setAttribute("style", "top: 0; bottom: 0; left: 0; right: 0; width: 100vw; height: 100vh; position: absolute; z-index: 9999;");

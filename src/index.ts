@@ -36,7 +36,7 @@ let doneFirstPlay = false
 
 export const Rune: RuneExport = {
   // External properties and functions
-  version: "1.4.8",
+  version: "1.5.0",
   init: (input: InitInput) => {
     // Check that this function has not already been called
     if (Rune._doneInit) {

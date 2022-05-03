@@ -70,7 +70,7 @@ The SDK interface for games to interact with Rune.
 var doneFirstPlay = false;
 var Rune = {
     // External properties and functions
-    version: "1.4.8",
+    version: "1.5.0",
     init: function (input) {
         // Check that this function has not already been called
         if (Rune._doneInit) {

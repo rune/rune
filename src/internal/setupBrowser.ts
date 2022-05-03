@@ -6,7 +6,6 @@ export function setupBrowser() {
   //This way the users will click on the transparent div element the very first time. We will let our client
   //know about it with BROWSER_INITIAL_OVERLAY_CLICKED event and the transparent div will remove itself.
   //Afterwards the play/pause will be once again fully controlled by our client.
-
   const enableInitialOverlayInBrowser = !!new URLSearchParams(
     globalThis.location.search
   ).get("enableInitialOverlayInBrowser")

@@ -50,9 +50,9 @@ function setupEventBridge() {
         globalThis._runeChallengeNumber = challengeNumber;
     }
     globalThis.postRuneEvent = function (event) {
-        window.parent.postMessage({ runeGameEvent: event }, "*");
+        globalThis.parent.postMessage({ runeGameEvent: event }, "*");
     };
-    window.addEventListener("message", function (msg) {
+    globalThis.addEventListener("message", function (msg) {
         if (globalThis.Rune && isRuneGameMessage(msg)) {
             globalThis.Rune[msg.data.runeGameCommand.type]();
         }

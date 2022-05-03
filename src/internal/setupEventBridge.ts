@@ -12,10 +12,10 @@ export function setupEventBridge() {
   }
 
   globalThis.postRuneEvent = (event: any) => {
-    window.parent.postMessage({ runeGameEvent: event }, "*")
+    globalThis.parent.postMessage({ runeGameEvent: event }, "*")
   }
 
-  window.addEventListener("message", (msg) => {
+  globalThis.addEventListener("message", (msg) => {
     if ((globalThis as any).Rune && isRuneGameMessage(msg)) {
       ;(globalThis as any).Rune[msg.data.runeGameCommand.type]()
     }

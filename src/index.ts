@@ -3,6 +3,7 @@ The SDK interface for games to interact with Rune.
 */
 import { setupBrowser } from "./internal/setupBrowser"
 import { clearStorage } from "./internal/clearStorage"
+import { setupEventBridge } from "./internal/setupEventBridge"
 
 interface InitInput {
   startGame: () => void
@@ -26,7 +27,6 @@ export interface RuneExport {
   _requestScore: () => void // Called by Rune
   _getScore: () => number // Provided by game
   _validateScore: (score: number) => void
-  _mockEvents: () => void
   _randomNumberGenerator: (seed: number) => () => number
   _hashFromString: (str: string) => number
   _resetDeterministicRandom: () => void
@@ -78,8 +78,6 @@ export const Rune: RuneExport = {
     // When running inside Rune, runePostMessage will always be defined.
     if (globalThis.postRuneEvent) {
       globalThis.postRuneEvent({ type: "INIT", version: Rune.version })
-    } else {
-      Rune._mockEvents()
     }
   },
   gameOver: () => {
@@ -136,37 +134,6 @@ export const Rune: RuneExport = {
       throw new Error(`Score is not an integer. Received: ${score}`)
     }
   },
-  // Create mock events to support development
-  _mockEvents: () => {
-    // Log posted events to the console (in production, these are processed by Rune)
-    globalThis.postRuneEvent = (event: RuneGameEvent) =>
-      console.log(`RUNE: Posted ${JSON.stringify(event)}`)
-
-    // Mimic the user tapping Play after 3 seconds
-    console.log(`RUNE: Starting new game in 3 seconds.`)
-    setTimeout(() => {
-      Rune._startGame()
-      console.log(`RUNE: Started new game.`)
-    }, 3000)
-
-    // Automatically restart game 3 seconds after Game Over
-    Rune.gameOver = function () {
-      const score = Rune._getScore()
-      Rune._validateScore(score)
-      Rune._resetDeterministicRandom()
-      globalThis.postRuneEvent?.({
-        type: "GAME_OVER",
-        score,
-        challengeNumber: Rune.getChallengeNumber(),
-      })
-
-      console.log(`RUNE: Starting new game in 3 seconds.`)
-      setTimeout(() => {
-        Rune._startGame()
-        console.log(`RUNE: Started new game.`)
-      }, 3000)
-    }
-  },
   // A pseudorandom number generator (PRNG) for determinism.
   // Based on the efficient mulberry32 with 32-bit state.
   // From https://github.com/bryc/code/blob/master/jshash/PRNGs.md.
@@ -204,6 +171,7 @@ export const Rune: RuneExport = {
 
 clearStorage()
 setupBrowser()
+setupEventBridge()
 
 // Global namespace properties needed for communicating with Rune
 declare global {

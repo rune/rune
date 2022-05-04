@@ -1,6 +1,6 @@
 # Rune Games CLI
 
-Test your games inside a mock Rune app.
+Test your HTML5 game inside a mock Rune app to ensure your game works with the [Rune SDK](https://github.com/rune/rune-games-sdk).
 
 ## Install
 
@@ -14,9 +14,9 @@ npm install -g rune-games-cli
 
 ```sh
 cd game/path && rune start
-# OR
+# or
 rune start game/path
-# OR
+# or
 rune start https://game-url.com
 ```
 

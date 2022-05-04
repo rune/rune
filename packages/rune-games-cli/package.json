@@ -1,6 +1,13 @@
 {
   "name": "rune-games-cli",
   "version": "1.0.0",
+  "description": "Easy way to test your HTML5 game before releasing it on Rune.",
+  "keywords": [
+    "HTML5",
+    "game",
+    "javascript",
+    "typescript"
+  ],
   "type": "module",
   "repository": "git@github.com:rune/rune-games-cli.git",
   "author": "Rune AI Inc.",

@@ -10,7 +10,7 @@ Include the following line at the top of your `index.html` file:
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@1.5/dist/browser.min.js"></script>
 ```
 
-## Usage
+## Use
 
 Initialize the Rune SDK once your game is fully ready.
 
@@ -81,14 +81,9 @@ For instance, for a racing game with 20 predefined maps you would use method (1)
 
 When your game is ready, please zip it as a folder containing `index.html` as the entry point of the game. The folder should contain all resources that are used by the game (css, js, images, soundtracks, helper libs, etc). In other words, please make sure that the game does not fetch any external resources from the Internet except for Rune Games SDK.
 
-## Debugging Locally
+## Debugging
 
-To make it easy for you to debug your game locally, this SDK will:
-
-- Call the `startGame` function 3 seconds after your game called `Rune.init()`
-- Call the `startGame` function 3 seconds after your game called `Rune.gameOver()`
-
-This simulates what the SDK will do based on player actions when your game is running inside [Rune](https://play.google.com/store/apps/details?id=ai.rune.tincan).
+Use the [Rune CLI](https://github.com/rune/rune-games-cli) to test your game's integration with the SDK.
 
 ## Score
 

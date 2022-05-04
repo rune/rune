@@ -1,5 +1,5 @@
 import { RuneExport, InitInput } from "./types";
 import { getRuneGameEvent, stringifyRuneGameCommand } from "./messageBridge";
-export type { RuneExport, InitInput };
 declare const Rune: RuneExport;
+export type { RuneExport, InitInput };
 export { Rune, getRuneGameEvent, stringifyRuneGameCommand };

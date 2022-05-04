@@ -6,8 +6,6 @@ import { getRuneGameEvent, stringifyRuneGameCommand } from "./messageBridge"
 
 let doneFirstPlay = false
 
-export type { RuneExport, InitInput }
-
 const Rune: RuneExport = {
   // External properties and functions
   version: "1.5.0",
@@ -143,4 +141,5 @@ const Rune: RuneExport = {
   },
 }
 
+export type { RuneExport, InitInput }
 export { Rune, getRuneGameEvent, stringifyRuneGameCommand }

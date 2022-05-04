@@ -10,6 +10,8 @@ yarn global add rune-games-cli
 npm install -g rune-games-cli
 ```
 
+Here's download links for the [yarn](https://classic.yarnpkg.com/lang/en/docs/install) and [npm](https://docs.npmjs.com/cli/v8/commands/npm-install) package managers in case you don't already have one of them installed.
+
 ## Use
 
 ```sh

@@ -57,7 +57,7 @@ describe("Message Bridge", () => {
     })
 
     test("should stringify the passed event", async () => {
-      let messageEventPromise: Promise<MessageEvent> = new Promise<MessageEvent>(
+      const messageEventPromise: Promise<MessageEvent> = new Promise<MessageEvent>(
         (resolve) => {
           globalThis.ReactNativeWebView = {
             postMessage: jest.fn().mockImplementation((event) => {

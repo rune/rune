@@ -1,4 +1,4 @@
-export function setupBrowser() {
+export function setupIframe() {
   //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.
   //In case the games are not using clicks (for instance only swiping), ios will not treat these interactions
   //with the iframe as user interacting. As a workaround, in the browser we will start overlay with

@@ -13,6 +13,7 @@
   "scripts": {
     "build": "rm -rf dist/* && rollup -c",
     "test": "jest --runInBand && npm run test:browserCompatibility",
+    "test:watch": "jest --runInBand --watch",
     "test:browserCompatibility": "es-check es3 dist/browser.js",
     "test:updateSnapshots": "jest --runInBand -u"
   },

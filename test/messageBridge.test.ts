@@ -56,13 +56,16 @@ describe("Message Bridge", () => {
       expect(globalThis.parent.postMessage).toHaveBeenCalled()
     })
 
-    test("should stringify the passed event", () => {
-      let message: MessageEvent
-      globalThis.ReactNativeWebView = {
-        postMessage: jest.fn().mockImplementation((event) => {
-          message = new MessageEvent("message", { data: event })
-        }),
-      }
+    test("should stringify the passed event", async () => {
+      let messageEventPromise: Promise<MessageEvent> = new Promise<MessageEvent>(
+        (resolve) => {
+          globalThis.ReactNativeWebView = {
+            postMessage: jest.fn().mockImplementation((event) => {
+              resolve(new MessageEvent("message", { data: event }))
+            }),
+          }
+        }
+      )
 
       setupMessageBridge()
 
@@ -74,6 +77,8 @@ describe("Message Bridge", () => {
           return 0
         },
       })
+
+      const message = await messageEventPromise
 
       expect(getRuneGameEvent(message)).toEqual(
         expect.objectContaining({

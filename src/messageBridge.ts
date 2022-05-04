@@ -47,6 +47,7 @@ function getRuneGameMessage(
     return null
   }
 
+  //TODO - remove direct event.data usage when all clients are migrated (including native)
   const message =
     typeof event.data === "string" ? parseRuneMessage(event.data) : event.data
 

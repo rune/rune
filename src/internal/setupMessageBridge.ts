@@ -6,7 +6,7 @@ import { RuneGameEvent } from "../types"
 
 export function setupMessageBridge() {
   globalThis.postRuneEvent = (data: RuneGameEvent) => {
-    //We only send events through the postMessages
+    //We only expect to send Game events through postMessages
     const event = stringifyRuneGameEvent(data)
 
     globalThis.ReactNativeWebView
@@ -18,7 +18,7 @@ export function setupMessageBridge() {
 
   globalThis.addEventListener("message", (event: MessageEvent) => {
     if (globalThis.Rune) {
-      //We only expect Game commands to come in from the postMessages
+      //We only expect to get Game commands from postMessages
       const command = getRuneGameCommand(event)
 
       //Ignore non Rune messages

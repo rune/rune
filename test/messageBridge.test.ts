@@ -56,7 +56,7 @@ describe("Message Bridge", () => {
       expect(globalThis.parent.postMessage).toHaveBeenCalled()
     })
 
-    test("should stringify the passed content", () => {
+    test("should stringify the passed event", () => {
       let message: MessageEvent
       globalThis.ReactNativeWebView = {
         postMessage: jest.fn().mockImplementation((event) => {

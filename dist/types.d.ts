@@ -27,8 +27,8 @@ declare global {
     var ReactNativeWebView: {
         postMessage: (data: string) => void;
     } | undefined;
-    var runeWindowErrHandler: (event: ErrorEvent) => void | undefined;
     var _runeChallengeNumber: number | undefined;
+    var runeWindowErrHandler: (event: ErrorEvent) => void | undefined;
     var postRuneEvent: ((event: RuneGameEvent) => void) | undefined;
 }
 export declare type RuneGameEvent = {

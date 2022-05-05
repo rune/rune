@@ -1,19 +1,22 @@
 import { postRuneEvent } from "../messageBridge"
 
 export function setupErrorLogging() {
-  globalThis.runeWindowErrHandler = function (event: ErrorEvent) {
-    postRuneEvent({
-      type: "WINDOW_ERR",
-      err: {
-        msg: event.message,
-        filename: event.filename,
-        lineno: event.lineno,
-        colno: event.colno,
-      },
-    })
-  }
+  // TODO remove runeWindowErrHandler usage when native app is migrated
+  const errorHandler = globalThis.runeWindowErrHandler
+    ? globalThis.runeWindowErrHandler
+    : function (event: ErrorEvent) {
+        postRuneEvent({
+          type: "WINDOW_ERR",
+          err: {
+            msg: event.message,
+            filename: event.filename,
+            lineno: event.lineno,
+            colno: event.colno,
+          },
+        })
 
-  globalThis.addEventListener("error", window.runeWindowErrHandler)
+        return true
+      }
 
-  return true
+  globalThis.addEventListener("error", errorHandler)
 }

@@ -5,6 +5,7 @@ import { RuneGameCommand, RuneGameEvent } from "./types"
 //do the identification without having to JSON.parse data first.
 const RUNE_MESSAGE_PREFIX = "RUNE_MSG;"
 
+// getRuneGameEvent & stringifyRuneGameCommand are exported in index.ts and used by the clients to do external communication.
 export function getRuneGameEvent(event: MessageEvent) {
   return getRuneGameMessage<{ runeGameEvent: RuneGameEvent }>(event, "runeGameEvent")
 }

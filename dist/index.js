@@ -2,6 +2,7 @@
 //To identify if received message is used by Rune, we are prefixing all of them with RUNE_MESSAGE_PREFIX. This allows to
 //do the identification without having to JSON.parse data first.
 const RUNE_MESSAGE_PREFIX = "RUNE_MSG;";
+// getRuneGameEvent & stringifyRuneGameCommand are exported in index.ts and used by the clients to do external communication.
 function getRuneGameEvent(event) {
     return getRuneGameMessage(event, "runeGameEvent");
 }

@@ -1,5 +1,5 @@
 import { getRuneGameEvent, InitInput, RuneExport } from "../src"
-import { RuneGameEvent } from "../dist/types"
+import { RuneGameEvent } from "../src/types"
 
 export async function extractErrMsg(fn: Function) {
   let errMsg

@@ -39,6 +39,9 @@ declare global {
     | undefined
 
   var runeWindowErrHandler: (event: ErrorEvent) => void | undefined
+
+  // used by legacy native clients
+  var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
 }
 
 // "Events" sent to Rune to e.g. communicate that the game is over

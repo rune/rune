@@ -12,6 +12,11 @@ function stringifyRuneGameEvent(data) {
     return stringifyRuneGameMessage({ runeGameEvent: data });
 }
 function postRuneEvent(data) {
+    //TODO remove when all legacy native clients are migrated
+    if (globalThis.postRuneEvent) {
+        globalThis.postRuneEvent(data);
+        return;
+    }
     //We only expect to send Game events through postMessages
     const event = stringifyRuneGameEvent(data);
     globalThis.ReactNativeWebView
@@ -21,23 +26,13 @@ function postRuneEvent(data) {
             globalThis.parent.postMessage(event, "*");
 }
 function stringifyRuneGameMessage(message) {
-    //TODO - remove me when all clients are migrated (including native)
-    //backwards compatibility to support non scoped events in the native app.
-    const messageContent = message.runeGameEvent
-        ? message.runeGameEvent
-        : message.runeGameCommand;
-    const runeGameMessage = {
-        ...message,
-        ...messageContent,
-    };
-    return `${RUNE_MESSAGE_PREFIX}${JSON.stringify(runeGameMessage)}`;
+    return `${RUNE_MESSAGE_PREFIX}${JSON.stringify(message)}`;
 }
 function getRuneGameMessage(event, key) {
     if (!isRuneGameMessage(event)) {
         return null;
     }
-    //TODO - remove direct event.data usage when all clients are migrated (including native)
-    const message = typeof event.data === "string" ? parseRuneMessage(event.data) : event.data;
+    const message = parseRuneMessage(event.data);
     if (!message[key]) {
         throw new Error(`Wrong message received. Expected to find: ${key}, but the message was: ${JSON.stringify(message)}`);
     }

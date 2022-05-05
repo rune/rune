@@ -6,7 +6,7 @@ import { RuneGameCommand, RuneGameEvent } from "./types"
 const RUNE_MESSAGE_PREFIX = "RUNE_MSG;"
 
 export function getRuneGameEvent(event: MessageEvent) {
-  return getRuneGameMessage(event, "runeGameEvent") as RuneGameEvent | null
+  return getRuneGameMessage<{ runeGameEvent: RuneGameEvent }>(event, "runeGameEvent")
 }
 
 export function stringifyRuneGameCommand(data: RuneGameCommand) {
@@ -18,10 +18,19 @@ export function stringifyRuneGameEvent(data: RuneGameEvent) {
 }
 
 export function getRuneGameCommand(event: MessageEvent) {
-  return getRuneGameMessage(event, "runeGameCommand") as RuneGameCommand | null
+  return getRuneGameMessage<{ runeGameCommand: RuneGameCommand }>(
+    event,
+    "runeGameCommand"
+  )
 }
 
 export function postRuneEvent(data: RuneGameEvent) {
+  //TODO remove when all legacy native clients are migrated
+  if (globalThis.postRuneEvent) {
+    globalThis.postRuneEvent(data)
+    return
+  }
+
   //We only expect to send Game events through postMessages
   const event = stringifyRuneGameEvent(data)
 
@@ -32,38 +41,19 @@ export function postRuneEvent(data: RuneGameEvent) {
       globalThis.parent.postMessage(event, "*")
 }
 
-//The message will always only have runeGameEvent or runeGameCommand.
-//Using union allows to simplify checks below
-type RuneGameMessage = { runeGameEvent?: RuneGameEvent } & {
-  runeGameCommand?: RuneGameCommand
+function stringifyRuneGameMessage<T>(message: T) {
+  return `${RUNE_MESSAGE_PREFIX}${JSON.stringify(message)}`
 }
 
-function stringifyRuneGameMessage(message: RuneGameMessage) {
-  //TODO - remove me when all clients are migrated (including native)
-  //backwards compatibility to support non scoped events in the native app.
-  const messageContent = message.runeGameEvent
-    ? message.runeGameEvent
-    : message.runeGameCommand
-
-  const runeGameMessage = {
-    ...message,
-    ...messageContent,
-  }
-
-  return `${RUNE_MESSAGE_PREFIX}${JSON.stringify(runeGameMessage)}`
-}
-
-function getRuneGameMessage(
+function getRuneGameMessage<MessageType>(
   event: MessageEvent,
-  key: "runeGameEvent" | "runeGameCommand"
-) {
+  key: keyof MessageType
+): MessageType[keyof MessageType] | null {
   if (!isRuneGameMessage(event)) {
     return null
   }
 
-  //TODO - remove direct event.data usage when all clients are migrated (including native)
-  const message =
-    typeof event.data === "string" ? parseRuneMessage(event.data) : event.data
+  const message = parseRuneMessage<MessageType>(event.data)
 
   if (!message[key]) {
     throw new Error(
@@ -76,12 +66,10 @@ function getRuneGameMessage(
   return message[key]
 }
 
-function parseRuneMessage(msg: string): RuneGameMessage {
+function parseRuneMessage<MessageType>(msg: string): MessageType {
   return JSON.parse(msg.slice(RUNE_MESSAGE_PREFIX.length))
 }
 
-function isRuneGameMessage(
-  event: MessageEvent
-): event is MessageEvent<string | RuneGameMessage> {
+function isRuneGameMessage(event: MessageEvent): event is MessageEvent<string> {
   return typeof event.data === "string" && event.data.startsWith(RUNE_MESSAGE_PREFIX)
 }

@@ -4,18 +4,30 @@ import {
   setupMessageBridge,
 } from "../src/internal/setupMessageBridge"
 import { extractErrMsg, initRune, runePostMessageHandler } from "./helper"
-import { RuneGameEvent } from "../dist/types"
+import { RuneGameEvent } from "../src/types"
 
 let Rune: RuneExport
 
 beforeEach(async () => {
   delete globalThis.ReactNativeWebView
+  delete globalThis.postRuneEvent
 
   Rune = getRuneSdk()
 })
 
 describe("Message Bridge", () => {
   describe("Rune Game Events", () => {
+    test("should use legacy postMessage if it is available", () => {
+      globalThis.postRuneEvent = jest.fn()
+
+      initRune(Rune)
+
+      expect(globalThis.postRuneEvent).toHaveBeenCalledWith({
+        type: "INIT",
+        version: Rune.version,
+      })
+    })
+
     test("should use ReactNativeWebView postMessage if it is available", () => {
       globalThis.ReactNativeWebView = {
         postMessage: jest.fn(),

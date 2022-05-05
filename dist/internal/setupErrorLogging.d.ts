@@ -1,1 +1,1 @@
-export declare function setupErrorLogging(): void;
+export declare function setupErrorLogging(): boolean;

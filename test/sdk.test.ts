@@ -1,9 +1,15 @@
-import { extractErrMsg, initRune, runePostMessageHandler } from "./helper"
+import {
+  extractErrMsg,
+  initRune,
+  runePostMessageHandler,
+  simulateNativeApp,
+} from "./helper"
 import { getRuneSdk, RuneExport } from "../src"
 
 let Rune: RuneExport
 
 beforeEach(async () => {
+  simulateNativeApp()
   Rune = getRuneSdk()
 })
 

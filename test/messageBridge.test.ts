@@ -3,15 +3,20 @@ import {
   messageEventHandler,
   setupMessageBridge,
 } from "../src/internal/setupMessageBridge"
-import { extractErrMsg, initRune, runePostMessageHandler } from "./helper"
+import {
+  extractErrMsg,
+  initRune,
+  simulateNativeApp,
+  runePostMessageHandler,
+  simulateIframe,
+} from "./helper"
 import { RuneGameEvent } from "../src/types"
 
 let Rune: RuneExport
 
 beforeEach(async () => {
-  delete globalThis.ReactNativeWebView
   delete globalThis.postRuneEvent
-
+  simulateNativeApp()
   Rune = getRuneSdk()
 })
 
@@ -41,7 +46,7 @@ describe("Message Bridge", () => {
     })
 
     test("should use iframe postMessage if ReactNativeWebView is not available", () => {
-      globalThis.parent.postMessage = jest.fn()
+      simulateIframe()
 
       initRune(Rune)
 

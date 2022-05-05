@@ -19,11 +19,18 @@ function postRuneEvent(data) {
     }
     //We only expect to send Game events through postMessages
     const event = stringifyRuneGameEvent(data);
-    globalThis.ReactNativeWebView
-        ? //Post message for Native app
-            globalThis.ReactNativeWebView.postMessage(event)
-        : //Post message for iframe
-            globalThis.parent.postMessage(event, "*");
+    //Post message for Native app
+    if (globalThis.ReactNativeWebView) {
+        globalThis.ReactNativeWebView.postMessage(event);
+        return;
+    }
+    //Game is not running in iframe, don't try to send a message and notify user
+    if (globalThis.parent === globalThis) {
+        console.error("Rune SDK is supposed to run in a container");
+        return;
+    }
+    //Post message for iframe
+    globalThis.parent.postMessage(event, "*");
 }
 function stringifyRuneGameMessage(message) {
     return `${RUNE_MESSAGE_PREFIX}${JSON.stringify(message)}`;

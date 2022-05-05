@@ -14,4 +14,6 @@ export function setupErrorLogging() {
   }
 
   globalThis.addEventListener("error", window.runeWindowErrHandler)
+
+  return true
 }

@@ -1,9 +1,11 @@
-export function getChallengeNumber() {
+import { RuneExport } from "../types"
+
+export function getChallengeNumber(Rune: RuneExport) {
   const challengeNumber = +(
     new URLSearchParams(globalThis.location.search).get("challengeNumber") ?? "1"
   )
 
   if (Number.isInteger(challengeNumber)) {
-    globalThis._runeChallengeNumber = challengeNumber
+    Rune._runeChallengeNumber = challengeNumber
   }
 }

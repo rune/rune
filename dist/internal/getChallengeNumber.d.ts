@@ -1,1 +1,2 @@
-export declare function getChallengeNumber(): void;
+import { RuneExport } from "../types";
+export declare function getChallengeNumber(Rune: RuneExport): void;

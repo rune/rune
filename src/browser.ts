@@ -1,17 +1,22 @@
-import { Rune } from "./index"
+import { getRuneSdk, RuneExport } from "./index"
 import { clearStorage } from "./internal/clearStorage"
 import { setupIframe } from "./internal/setupIframe"
 import { getChallengeNumber } from "./internal/getChallengeNumber"
 import { setupMessageBridge } from "./internal/setupMessageBridge"
+import { setupErrorLogging } from "./internal/setupErrorLogging"
+import { setupConsole } from "./internal/setupConsole"
 
-function setupBrowser() {
+function setupBrowser(Rune: RuneExport) {
   clearStorage()
   setupIframe()
-  getChallengeNumber()
-  setupMessageBridge()
+  getChallengeNumber(Rune)
+  setupMessageBridge(Rune)
+  setupErrorLogging()
+  setupConsole()
 }
 
-setupBrowser()
+const Rune = getRuneSdk()
+setupBrowser(Rune)
 
 //Make sure to not export anything else here
 export default Rune

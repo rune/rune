@@ -25,11 +25,10 @@ export interface RuneExport {
   _randomNumberGenerator: (seed: number) => () => number
   _hashFromString: (str: string) => number
   _resetDeterministicRandom: () => void
+  _runeChallengeNumber: number
 }
 
 declare global {
-  var postRuneEvent: (event: RuneGameEvent) => void | undefined
-  var _runeChallengeNumber: number | undefined
   var Rune: RuneExport | undefined
 
   // Available in case the game is running in native webview
@@ -38,6 +37,8 @@ declare global {
         postMessage: (data: string) => void
       }
     | undefined
+
+  var runeWindowErrHandler: (event: ErrorEvent) => void | undefined
 }
 
 // "Events" sent to Rune to e.g. communicate that the game is over
@@ -45,6 +46,15 @@ export type RuneGameEvent =
   | { type: "INIT"; version: string }
   | { type: "GAME_OVER"; score: number; challengeNumber: number }
   | { type: "ERR"; errMsg: string }
+  | {
+      type: "WINDOW_ERR"
+      err: {
+        msg: string
+        filename: string
+        lineno: number
+        colno: number
+      }
+    }
   | { type: "SCORE"; score: number; challengeNumber: number }
   | { type: "BROWSER_INITIAL_OVERLAY_CLICKED" }
   | { type: "BROWSER_IFRAME_LOADED" }

@@ -1,23 +1,18 @@
-import { extractErrMsg } from "./helper"
+import { extractErrMsg, initRune, runePostMessageHandler } from "./helper"
+import { getRuneSdk, RuneExport } from "../src"
 
-import * as src from "../src"
-let Rune: src.RuneExport
+let Rune: RuneExport
 
 beforeEach(async () => {
-  // Reset globally injected challenge number
-  delete globalThis._runeChallengeNumber
-
-  // Reimport of the Rune module between every test
-  jest.resetModules()
-  Rune = (await import("../src")).Rune
+  Rune = getRuneSdk()
 })
 
 describe("sdk", function () {
   test("init() -> startGame() -> pauseGame() -> resumeGame()", async function () {
+    const Rune = getRuneSdk()
     // Mock a game's state and mimic running inside Rune where env is set
-    globalThis.postRuneEvent = () => {}
     let gameState: "WAITING" | "RUNNING" | "PAUSED" = "WAITING"
-    Rune.init({
+    initRune(Rune, {
       startGame: () => {
         gameState = "RUNNING"
       },
@@ -77,10 +72,7 @@ describe("sdk", function () {
   test("ensure score passed as number", async function () {
     expect(
       await extractErrMsg(() => {
-        Rune.init({
-          startGame: () => {},
-          resumeGame: () => {},
-          pauseGame: () => {},
+        initRune(Rune, {
           //@ts-expect-error
           getScore: () => {
             return "99"
@@ -99,20 +91,14 @@ describe("sdk", function () {
     const packageJson = require("../package.json")
 
     let version: string | undefined
-    globalThis.postRuneEvent = (event) => {
+
+    runePostMessageHandler((event) => {
       if (event.type === "INIT") {
         version = event.version
       }
-    }
-
-    Rune.init({
-      startGame: () => {},
-      pauseGame: () => {},
-      resumeGame: () => {},
-      getScore: () => {
-        return 0
-      },
     })
+
+    initRune(Rune)
 
     expect(packageJson.version).toBe(version)
   })
@@ -120,29 +106,25 @@ describe("sdk", function () {
   test("SCORE event should include score from game's getScore() and challenge number", async function () {
     // Init challenge number
     const challengeNumber = 123
-    globalThis._runeChallengeNumber = challengeNumber
+    Rune._runeChallengeNumber = challengeNumber
 
     // Init with score function
     let gameScore = 0
     const getScore = () => {
       return gameScore
     }
-    Rune.init({
-      startGame: () => {},
-      pauseGame: () => {},
-      resumeGame: () => {},
-      getScore: getScore,
-    })
+    initRune(Rune, { getScore })
 
     // Override postRuneEvent to extract score
     let eventScore: number | undefined
     let eventChallengeNumber: number | undefined
-    globalThis.postRuneEvent = (event) => {
+
+    runePostMessageHandler((event) => {
       if (event.type === "SCORE") {
         eventScore = event.score
         eventChallengeNumber = event.challengeNumber
       }
-    }
+    })
 
     // Mock game updating its local score and extract using _requestScore
     gameScore = 100
@@ -154,29 +136,25 @@ describe("sdk", function () {
   test("GAME_OVER event should include score from game's getScore() and challenge number", async function () {
     // Init challenge number
     const challengeNumber = 123
-    globalThis._runeChallengeNumber = challengeNumber
+    Rune._runeChallengeNumber = challengeNumber
 
     // Init with score function
     let gameScore = 0
     const getScore = () => {
       return gameScore
     }
-    Rune.init({
-      startGame: () => {},
-      pauseGame: () => {},
-      resumeGame: () => {},
-      getScore: getScore,
-    })
+    initRune(Rune, { getScore })
 
     // Override postRuneEvent to extract score and challenge number
     let eventScore: number | undefined
     let eventChallengeNumber: number | undefined
-    globalThis.postRuneEvent = (event) => {
+
+    runePostMessageHandler((event) => {
       if (event.type === "GAME_OVER") {
         eventScore = event.score
         eventChallengeNumber = event.challengeNumber
       }
-    }
+    })
 
     // Mock game updating its local score and extract using gameOver
     gameScore = 100
@@ -192,7 +170,6 @@ describe("sdk", function () {
     Rune.gameOver = () => {
       gameFinished = true
     }
-    globalThis.postRuneEvent = () => {}
 
     // See that the injected gameOver() is used
     Rune.gameOver()
@@ -200,14 +177,7 @@ describe("sdk", function () {
 
     // See that calling init() doesn't overwrite injected gameOver()
     gameFinished = false
-    Rune.init({
-      startGame: () => {},
-      pauseGame: () => {},
-      resumeGame: () => {},
-      getScore: () => {
-        return 0
-      },
-    })
+    initRune(Rune)
     Rune.gameOver()
     expect(gameFinished).toEqual(true)
   })
@@ -220,7 +190,7 @@ describe("sdk", function () {
   })
 
   test("get challenge number if injected", async function () {
-    globalThis._runeChallengeNumber = 123
+    Rune._runeChallengeNumber = 123
     const challengeNumber = Rune.getChallengeNumber()
 
     // See that challenge number is correct
@@ -235,7 +205,7 @@ describe("sdk", function () {
   })
 
   test("deterministicRandom() changes value based on challengeNumber", async function () {
-    globalThis._runeChallengeNumber = 123
+    Rune._runeChallengeNumber = 123
     const randomArray = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
     )
@@ -247,17 +217,7 @@ describe("sdk", function () {
       Math.round(Rune.deterministicRandom() * 10)
     )
 
-    // Mimic being in the actual app to avoid mockEvents() causing issues
-    globalThis.postRuneEvent = () => {}
-
-    Rune.init({
-      startGame: () => {},
-      pauseGame: () => {},
-      resumeGame: () => {},
-      getScore: () => {
-        return 0
-      },
-    })
+    initRune(Rune)
 
     Rune._startGame()
 
@@ -272,17 +232,7 @@ describe("sdk", function () {
       Math.round(Rune.deterministicRandom() * 10)
     )
 
-    // Mimic being in the actual app to avoid mockEvents() causing issues
-    globalThis.postRuneEvent = () => {}
-
-    Rune.init({
-      startGame: () => {},
-      pauseGame: () => {},
-      resumeGame: () => {},
-      getScore: () => {
-        return 0
-      },
-    })
+    initRune(Rune)
     Rune._startGame()
     Rune.gameOver()
     Rune._startGame()
@@ -299,17 +249,7 @@ describe("sdk", function () {
       Math.round(Rune.deterministicRandom() * 10)
     )
 
-    // Mimic being in the actual app to avoid mockEvents() causing issues
-    globalThis.postRuneEvent = () => {}
-
-    Rune.init({
-      startGame: () => {},
-      pauseGame: () => {},
-      resumeGame: () => {},
-      getScore: () => {
-        return 0
-      },
-    })
+    initRune(Rune)
 
     Rune._startGame()
     Rune._startGame()

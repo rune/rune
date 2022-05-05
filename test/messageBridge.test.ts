@@ -1,19 +1,17 @@
-import * as bridgeModule from "../src/internal/setupMessageBridge"
-import { RuneExport, getRuneGameEvent, stringifyRuneGameCommand } from "../src"
+import { RuneExport, stringifyRuneGameCommand, getRuneSdk } from "../src"
+import {
+  messageEventHandler,
+  setupMessageBridge,
+} from "../src/internal/setupMessageBridge"
+import { extractErrMsg, initRune, runePostMessageHandler } from "./helper"
+import { RuneGameEvent } from "../dist/types"
 
-let setupMessageBridge: typeof bridgeModule.setupMessageBridge
 let Rune: RuneExport
 
 beforeEach(async () => {
-  // Reimport of the Rune module between every test
-  delete globalThis._runeChallengeNumber
   delete globalThis.ReactNativeWebView
-  delete globalThis.Rune
 
-  jest.resetModules()
-  setupMessageBridge = (await import("../src/internal/setupMessageBridge"))
-    .setupMessageBridge
-  Rune = (await import("../src")).Rune
+  Rune = getRuneSdk()
 })
 
 describe("Message Bridge", () => {
@@ -24,16 +22,7 @@ describe("Message Bridge", () => {
       }
       globalThis.parent.postMessage = jest.fn()
 
-      setupMessageBridge()
-
-      Rune.init({
-        startGame: () => {},
-        pauseGame: () => {},
-        resumeGame: () => {},
-        getScore: () => {
-          return 0
-        },
-      })
+      initRune(Rune)
 
       expect(globalThis.ReactNativeWebView.postMessage).toHaveBeenCalled()
       expect(globalThis.parent.postMessage).not.toHaveBeenCalled()
@@ -42,74 +31,75 @@ describe("Message Bridge", () => {
     test("should use iframe postMessage if ReactNativeWebView is not available", () => {
       globalThis.parent.postMessage = jest.fn()
 
-      setupMessageBridge()
-
-      Rune.init({
-        startGame: () => {},
-        pauseGame: () => {},
-        resumeGame: () => {},
-        getScore: () => {
-          return 0
-        },
-      })
+      initRune(Rune)
 
       expect(globalThis.parent.postMessage).toHaveBeenCalled()
     })
 
-    test("should stringify the passed event", async () => {
-      const messageEventPromise: Promise<MessageEvent> = new Promise<MessageEvent>(
-        (resolve) => {
-          globalThis.ReactNativeWebView = {
-            postMessage: jest.fn().mockImplementation((event) => {
-              resolve(new MessageEvent("message", { data: event }))
-            }),
-          }
-        }
-      )
-
-      setupMessageBridge()
-
-      Rune.init({
-        startGame: () => {},
-        pauseGame: () => {},
-        resumeGame: () => {},
-        getScore: () => {
-          return 0
-        },
+    test("should stringify the passed event", () => {
+      let event: RuneGameEvent | null = null
+      runePostMessageHandler((e) => {
+        event = e
       })
 
-      const message = await messageEventPromise
+      initRune(Rune)
 
-      expect(getRuneGameEvent(message)).toEqual(
-        expect.objectContaining({
-          type: "INIT",
-          version: Rune.version,
-        })
-      )
+      expect(event).toEqual({
+        type: "INIT",
+        version: Rune.version,
+      })
     })
   })
 
   describe("Rune Game Commands", () => {
     test("should listen to post messages", () => {
-      globalThis.Rune = Rune
       const startGame = jest.fn()
-      setupMessageBridge()
 
-      Rune.init({
-        startGame,
-        pauseGame: () => {},
-        resumeGame: () => {},
-        getScore: () => {
-          return 0
-        },
-      })
+      //Simulate emitting a real message event
+      const eventHandler = setupMessageBridge(Rune)
+
+      initRune(Rune, { startGame })
 
       const messageEvent = new MessageEvent("message", {
         data: stringifyRuneGameCommand({ type: "_startGame" }),
       })
 
       globalThis.dispatchEvent(messageEvent)
+
+      //Cleanup event listener to not impact other tests
+      removeEventListener("message", eventHandler)
+
       expect(startGame).toHaveBeenCalled()
+    })
+
+    test("should silently ignore non rune commands", async () => {
+      initRune(Rune)
+
+      const messageEvent = new MessageEvent("message", {
+        data: "Some random command",
+      })
+
+      globalThis.dispatchEvent(messageEvent)
+
+      messageEventHandler(Rune)(messageEvent)
+
+      //Sanity check to confirm that no error was raised
+      expect(true).toEqual(true)
+    })
+
+    test("should silently ignore non rune commands", async () => {
+      const badEvent = "bad command"
+      initRune(Rune)
+
+      const messageEvent = new MessageEvent("message", {
+        data: stringifyRuneGameCommand(badEvent as any),
+      })
+
+      expect(
+        await extractErrMsg(() => {
+          messageEventHandler(Rune)(messageEvent)
+        })
+      ).toEqual(`Received incorrect message: ${badEvent}`)
     })
   })
 })

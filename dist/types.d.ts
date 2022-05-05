@@ -20,14 +20,14 @@ export interface RuneExport {
     _randomNumberGenerator: (seed: number) => () => number;
     _hashFromString: (str: string) => number;
     _resetDeterministicRandom: () => void;
+    _runeChallengeNumber: number;
 }
 declare global {
-    var postRuneEvent: (event: RuneGameEvent) => void | undefined;
-    var _runeChallengeNumber: number | undefined;
     var Rune: RuneExport | undefined;
     var ReactNativeWebView: {
         postMessage: (data: string) => void;
     } | undefined;
+    var runeWindowErrHandler: (event: ErrorEvent) => void | undefined;
 }
 export declare type RuneGameEvent = {
     type: "INIT";
@@ -39,6 +39,14 @@ export declare type RuneGameEvent = {
 } | {
     type: "ERR";
     errMsg: string;
+} | {
+    type: "WINDOW_ERR";
+    err: {
+        msg: string;
+        filename: string;
+        lineno: number;
+        colno: number;
+    };
 } | {
     type: "SCORE";
     score: number;

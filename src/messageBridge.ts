@@ -18,6 +18,17 @@ export function getRuneGameCommand(event: MessageEvent) {
   return getRuneGameMessage(event, "runeGameCommand") as RuneGameCommand | null
 }
 
+export function postRuneEvent(data: RuneGameEvent) {
+  //We only expect to send Game events through postMessages
+  const event = stringifyRuneGameEvent(data)
+
+  globalThis.ReactNativeWebView
+    ? //Post message for Native app
+      globalThis.ReactNativeWebView.postMessage(event)
+    : //Post message for iframe
+      globalThis.parent.postMessage(event, "*")
+}
+
 //The message will always only have runeGameEvent or runeGameCommand.
 //Using union allows to simplify checks below
 type RuneGameMessage = { runeGameEvent?: RuneGameEvent } & {

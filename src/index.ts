@@ -1,12 +1,9 @@
 /*
 The SDK interface for games to interact with Rune.
 */
-import { RuneExport, InitInput } from "./types"
-import {
-  getRuneGameEvent,
-  postRuneEvent,
-  stringifyRuneGameCommand,
-} from "./messageBridge"
+import { RuneExport, InitInput, RuneGameCommand, RuneGameEvent } from "./types"
+import { getRuneGameEvent, stringifyRuneGameCommand } from "./api"
+import { postRuneEvent } from "./internal/messageBridge"
 
 function getRuneSdk() {
   let doneFirstPlay = false
@@ -148,5 +145,5 @@ function getRuneSdk() {
   return Rune
 }
 
-export type { RuneExport, InitInput }
+export type { RuneExport, InitInput, RuneGameEvent, RuneGameCommand }
 export { getRuneSdk, getRuneGameEvent, stringifyRuneGameCommand }

@@ -1,4 +1,4 @@
-import { postRuneEvent } from "../messageBridge"
+import { postRuneEvent } from "./messageBridge"
 
 export function setupIframe() {
   //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.

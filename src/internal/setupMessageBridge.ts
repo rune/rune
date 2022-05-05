@@ -1,13 +1,13 @@
 // This code serves as a bridge to allow cross-domain communication between the
 // website and the game loaded in an iframe using the postMessage api
 // or the webview in the native app.
-import { getRuneGameCommand } from "../messageBridge"
+import { getRuneGameCommand } from "./messageBridge"
 import { RuneExport } from "../types"
 
 export function messageEventHandler(Rune: RuneExport) {
   return (event: MessageEvent) => {
     //We only expect to get Game commands from postMessages
-    const command = getRuneGameCommand(event)
+    const command = getRuneGameCommand(event.data)
 
     //Ignore non Rune messages
     if (!command) {

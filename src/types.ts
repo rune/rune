@@ -41,6 +41,7 @@ declare global {
   var runeWindowErrHandler: (event: ErrorEvent) => void | undefined
 
   // used by legacy native clients
+  var _runeChallengeNumber: number | undefined
   var postRuneEvent: ((event: RuneGameEvent) => void) | undefined
 }
 

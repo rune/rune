@@ -27,7 +27,7 @@ function postRuneEvent(data) {
     }
     //Game is not running in iframe, don't try to send a message and notify user
     if (globalThis.parent === globalThis) {
-        console.error("Rune SDK is supposed to run in a container");
+        console.error("Rune SDK has to run in a container");
         return;
     }
     //Post message for iframe

@@ -44,7 +44,7 @@ export function postRuneEvent(data: RuneGameEvent) {
 
   //Game is not running in iframe, don't try to send a message and notify user
   if (globalThis.parent === (globalThis as typeof window)) {
-    console.error("Rune SDK is supposed to run in a container")
+    console.error("Rune SDK has to run in a container")
     return
   }
 

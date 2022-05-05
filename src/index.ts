@@ -2,11 +2,8 @@
 The SDK interface for games to interact with Rune.
 */
 import { RuneExport, InitInput } from "./types"
-import {
-  getRuneGameEvent,
-  postRuneEvent,
-  stringifyRuneGameCommand,
-} from "./messageBridge"
+import { getRuneGameEvent, stringifyRuneGameCommand } from "./api"
+import { postRuneEvent } from "./internal/messageBridge"
 
 function getRuneSdk() {
   let doneFirstPlay = false

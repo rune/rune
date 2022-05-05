@@ -1,28 +1,16 @@
-import { RuneGameCommand, RuneGameEvent } from "./types"
+import { RuneGameCommand, RuneGameEvent } from "../types"
 
 //The native app only support strings for post message communication.
 //To identify if received message is used by Rune, we are prefixing all of them with RUNE_MESSAGE_PREFIX. This allows to
 //do the identification without having to JSON.parse data first.
 const RUNE_MESSAGE_PREFIX = "RUNE_MSG;"
 
-// getRuneGameEvent & stringifyRuneGameCommand are exported in index.ts and used by the clients to do external communication.
-export function getRuneGameEvent(event: MessageEvent) {
-  return getRuneGameMessage<{ runeGameEvent: RuneGameEvent }>(event, "runeGameEvent")
-}
-
-export function stringifyRuneGameCommand(data: RuneGameCommand) {
-  return stringifyRuneGameMessage({ runeGameCommand: data })
-}
-
 export function stringifyRuneGameEvent(data: RuneGameEvent) {
   return stringifyRuneGameMessage({ runeGameEvent: data })
 }
 
-export function getRuneGameCommand(event: MessageEvent) {
-  return getRuneGameMessage<{ runeGameCommand: RuneGameCommand }>(
-    event,
-    "runeGameCommand"
-  )
+export function getRuneGameCommand(data: unknown) {
+  return getRuneGameMessage<{ runeGameCommand: RuneGameCommand }>(data, "runeGameCommand")
 }
 
 export function postRuneEvent(data: RuneGameEvent) {
@@ -52,19 +40,19 @@ export function postRuneEvent(data: RuneGameEvent) {
   globalThis.parent.postMessage(event, "*")
 }
 
-function stringifyRuneGameMessage<T>(message: T) {
+export function stringifyRuneGameMessage<T>(message: T) {
   return `${RUNE_MESSAGE_PREFIX}${JSON.stringify(message)}`
 }
 
-function getRuneGameMessage<MessageType>(
-  event: MessageEvent,
+export function getRuneGameMessage<MessageType>(
+  data: unknown,
   key: keyof MessageType
 ): MessageType[keyof MessageType] | null {
-  if (!isRuneGameMessage(event)) {
+  if (!isRuneGameMessage(data)) {
     return null
   }
 
-  const message = parseRuneMessage<MessageType>(event.data)
+  const message = parseRuneMessage<MessageType>(data)
 
   if (!message[key]) {
     throw new Error(
@@ -81,6 +69,6 @@ function parseRuneMessage<MessageType>(msg: string): MessageType {
   return JSON.parse(msg.slice(RUNE_MESSAGE_PREFIX.length))
 }
 
-function isRuneGameMessage(event: MessageEvent): event is MessageEvent<string> {
-  return typeof event.data === "string" && event.data.startsWith(RUNE_MESSAGE_PREFIX)
+function isRuneGameMessage(data: unknown): data is string {
+  return typeof data === "string" && data.startsWith(RUNE_MESSAGE_PREFIX)
 }

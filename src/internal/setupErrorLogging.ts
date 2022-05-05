@@ -1,4 +1,4 @@
-import { postRuneEvent } from "../messageBridge"
+import { postRuneEvent } from "./messageBridge"
 
 export function setupErrorLogging() {
   // TODO remove runeWindowErrHandler usage when native app is migrated

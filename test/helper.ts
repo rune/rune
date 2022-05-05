@@ -13,10 +13,8 @@ export async function extractErrMsg(fn: Function) {
 
 export function runePostMessageHandler(handler?: (event: RuneGameEvent) => void) {
   globalThis.ReactNativeWebView = {
-    postMessage: jest.fn().mockImplementation((event) => {
-      const messageEvent = new MessageEvent("message", { data: event })
-
-      const parsedEvent = getRuneGameEvent(messageEvent)
+    postMessage: jest.fn().mockImplementation((data) => {
+      const parsedEvent = getRuneGameEvent(data)
       if (parsedEvent === null) {
         return
       }

@@ -22,7 +22,6 @@
     "url": "git+https://github.com/rune/rune-games-sdk.git"
   },
   "author": "Rune AI Inc.",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rune/rune-games-sdk/issues"
   },

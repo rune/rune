@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     // Export settings
-    "module": "ESNext",
-    "target": "es3",
+    "module": "esNext",
+    "target": "esNext",
     "declaration": true,
     "declarationDir": ".",
     "sourceMap": true,
@@ -11,8 +11,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
   },
-  "include": ["./src/index.ts"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules", ".vscode", "test"]
 }

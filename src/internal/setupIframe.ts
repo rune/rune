@@ -1,4 +1,6 @@
-export function setupBrowser() {
+import { postRuneEvent } from "../messageBridge"
+
+export function setupIframe() {
   //Safari ios throttles requestAnimationFrame when user has not interacted with the iframe at least once.
   //In case the games are not using clicks (for instance only swiping), ios will not treat these interactions
   //with the iframe as user interacting. As a workaround, in the browser we will start overlay with
@@ -20,15 +22,11 @@ export function setupBrowser() {
 
       div.addEventListener("click", () => {
         div.remove()
-        if (globalThis.postRuneEvent) {
-          globalThis.postRuneEvent({ type: "BROWSER_INITIAL_OVERLAY_CLICKED" })
-        }
+        postRuneEvent({ type: "BROWSER_INITIAL_OVERLAY_CLICKED" })
       })
       document.body.appendChild(div)
 
-      if (globalThis.postRuneEvent) {
-        globalThis.postRuneEvent({ type: "BROWSER_IFRAME_LOADED" })
-      }
+      postRuneEvent({ type: "BROWSER_IFRAME_LOADED" })
     })
   }
 }

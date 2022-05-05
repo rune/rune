@@ -1,3 +1,6 @@
+//The native app only support strings for post message communication.
+//To identify if received message is used by Rune, we are prefixing all of them with RUNE_MESSAGE_PREFIX. This allows to
+//do the identification without having to JSON.parse data first.
 const RUNE_MESSAGE_PREFIX = "RUNE_MSG;";
 function getRuneGameEvent(event) {
     return getRuneGameMessage(event, "runeGameEvent");

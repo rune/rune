@@ -29,9 +29,7 @@ export function setupMessageBridge(
   const eventHandler = messageEventHandler(Rune)
 
   //According to https://github.com/react-native-webview/react-native-webview/issues/356
-  //This is the only way android webview can listen to post messages.
-  //The message only get sent to either window or document, not to both of them.
-
+  //android webview can only listen to post messages on document (while everything else uses window for that).
   if (useDocumentForPostMessages) {
     //The MDN Web API docs do not even list this action, so we need to use any
     document.addEventListener("message" as any, eventHandler)

@@ -1,14 +1,10 @@
 import { RuneExport } from "../types"
 
-export function getChallengeNumber(Rune: RuneExport) {
-  let challengeNumber = 1
+export function setChallengeNumber(Rune: RuneExport, challengeNumberFromParams: number) {
+  let challengeNumber = challengeNumberFromParams
   // TODO remove _runeChallengeNumber usage when native app is migrated
   if (globalThis._runeChallengeNumber) {
     challengeNumber = globalThis._runeChallengeNumber
-  } else {
-    challengeNumber = +(
-      new URLSearchParams(globalThis.location.search).get("challengeNumber") ?? "1"
-    )
   }
 
   if (Number.isInteger(challengeNumber)) {

@@ -1,16 +1,18 @@
 import { getRuneSdk, RuneExport } from "./index"
 import { clearStorage } from "./internal/clearStorage"
 import { setupIframe } from "./internal/setupIframe"
-import { getChallengeNumber } from "./internal/getChallengeNumber"
+import { setChallengeNumber } from "./internal/setChallengeNumber"
 import { setupMessageBridge } from "./internal/setupMessageBridge"
 import { setupErrorLogging } from "./internal/setupErrorLogging"
 import { setupConsole } from "./internal/setupConsole"
+import { getUrlParams } from "./internal/getUrlParams"
 
 function setupBrowser(Rune: RuneExport) {
+  const urlParams = getUrlParams()
   clearStorage()
-  setupIframe()
-  getChallengeNumber(Rune)
-  setupMessageBridge(Rune)
+  setupIframe(urlParams.enableInitialOverlayInBrowser)
+  setChallengeNumber(Rune, urlParams.challengeNumber)
+  setupMessageBridge(Rune, urlParams.useDocumentForPostMessages)
   setupErrorLogging()
   setupConsole()
 }

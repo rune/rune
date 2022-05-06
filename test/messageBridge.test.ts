@@ -69,11 +69,10 @@ describe("Message Bridge", () => {
   })
 
   describe("Rune Game Commands", () => {
-    test("should listen to post messages", () => {
+    test("should listen to post messages on window by default", () => {
       const startGame = jest.fn()
 
-      //Simulate emitting a real message event
-      const eventHandler = setupMessageBridge(Rune)
+      const eventHandler = setupMessageBridge(Rune, false)
 
       initRune(Rune, { startGame })
 
@@ -84,7 +83,26 @@ describe("Message Bridge", () => {
       globalThis.dispatchEvent(messageEvent)
 
       //Cleanup event listener to not impact other tests
-      removeEventListener("message", eventHandler)
+      globalThis.removeEventListener("message", eventHandler)
+
+      expect(startGame).toHaveBeenCalled()
+    })
+
+    test("should listen to post messages on document in case of native app on android", () => {
+      const startGame = jest.fn()
+
+      const eventHandler = setupMessageBridge(Rune, true)
+
+      initRune(Rune, { startGame })
+
+      const messageEvent = new MessageEvent("message", {
+        data: stringifyRuneGameCommand({ type: "_startGame" }),
+      })
+
+      document.dispatchEvent(messageEvent)
+
+      //Cleanup event listener to not impact other tests
+      document.removeEventListener("message" as any, eventHandler)
 
       expect(startGame).toHaveBeenCalled()
     })

@@ -22,9 +22,20 @@ export function messageEventHandler(Rune: RuneExport) {
   }
 }
 
-export function setupMessageBridge(Rune: RuneExport) {
+export function setupMessageBridge(
+  Rune: RuneExport,
+  useDocumentForPostMessages: boolean
+) {
   const eventHandler = messageEventHandler(Rune)
-  globalThis.addEventListener("message", eventHandler)
+
+  //According to https://github.com/react-native-webview/react-native-webview/issues/356
+  //android webview can only listen to post messages on document (while everything else uses window for that).
+  if (useDocumentForPostMessages) {
+    //The MDN Web API docs do not even list this action, so we need to use any
+    document.addEventListener("message" as any, eventHandler)
+  } else {
+    globalThis.addEventListener("message", eventHandler)
+  }
 
   return eventHandler
 }

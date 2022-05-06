@@ -1,1 +1,1 @@
-export declare function setupIframe(): void;
+export declare function setupIframe(enableInitialOverlayInBrowser: boolean): void;

@@ -188,6 +188,13 @@ describe("sdk", function () {
     expect(gameFinished).toEqual(true)
   })
 
+  test("deterministicRandom() works before init()", async function () {
+    const randomArray = [...Array(7)].map(() =>
+      Math.round(Rune.deterministicRandom() * 10)
+    )
+    expect(randomArray).toEqual([1, 4, 4, 3, 5, 1, 7])
+  })
+
   test("deterministicRandom() changes value based on challengeNumber", async function () {
     Rune._runeChallengeNumber = 123
     const randomArray = [...Array(7)].map(() =>

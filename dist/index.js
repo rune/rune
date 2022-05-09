@@ -58,7 +58,7 @@ function getRuneSdk() {
     let doneFirstPlay = false;
     const Rune = {
         // External properties and functions
-        version: "1.5.3",
+        version: "1.5.4",
         init: (input) => {
             // Check that this function has not already been called
             if (Rune._doneInit) {

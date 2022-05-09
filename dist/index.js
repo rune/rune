@@ -107,7 +107,13 @@ function getRuneSdk() {
                 challengeNumber: Rune.getChallengeNumber(),
             });
         },
-        getChallengeNumber: () => Rune._runeChallengeNumber ?? 1,
+        getChallengeNumber: () => {
+            // TODO remove _runeChallengeNumber usage when native app is migrated
+            if (globalThis._runeChallengeNumber) {
+                return globalThis._runeChallengeNumber;
+            }
+            return Rune._runeChallengeNumber ?? 1;
+        },
         deterministicRandom: () => {
             // The first time that this method is called, replace it with our
             // deterministic random number generator and return the first number.

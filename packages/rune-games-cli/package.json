@@ -1,6 +1,6 @@
 {
   "name": "rune-games-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Easy way to test your HTML5 game before releasing it on Rune.",
   "keywords": [
     "HTML5",
@@ -22,7 +22,7 @@
     "cli": "ts-node --esm src",
     "build": "rm -rf dist && tsc && chmod +x dist/index.js",
     "prepublishOnly": "npm run build",
-    "postpublish": "git tag v$npm_package_version && git push --tags",
+    "postpublish": "git tag v$npm_package_version && git push origin v$npm_package_version",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit"
   },

@@ -35,11 +35,9 @@ The Rune SDK may request your game's score at anytime by calling the `getScore` 
 
 Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
 
-### Challenge Number (optional)
+## Challenge Number (optional)
 
-Rune provides a challenge number through `Rune.getChallengeNumber()` that will increment every day starting from value 1. It's optional to use the challenge number, but we strongly encourage you to use it for your game as it has multiple benefits:
-- Changes your game content every day so to ensure your game is always fresh and entertaining
-- Makes everyone compete under the same conditions to ensure fairness and increase competition
+Rune provides a challenge number through `Rune.getChallengeNumber()` that will increment every day starting from value 1. It's optional to use the challenge number, but we strongly encourage using it to keep your game entertaining and make everyone compete under the same conditions.
 
 Here's two common ways you could use the challenge number:
 
@@ -75,7 +73,7 @@ You should only use `Rune.deterministicRandom()` for your map generation and not
 
 </details>
 
-For instance, for a racing game with 20 predefined maps you would use method (1) above. Alternatively, if the racing game randomly generated maps by placing turns and obstacles then you would use method (2). These are just examples of ways you can use the challenge number. You can use it in many other ways as well. The high-level goal is just to make sure that your game is deterministic, i.e. the same challenge number always creates the same player experience.
+For instance, for a racing game with 20 predefined maps you would use method (1) above. Alternatively, if the racing game randomly generates maps by placing turns and obstacles then you would use method (2). The high-level goal is just to make sure that your game is deterministic, i.e. the same challenge number always creates the same player experience.
 
 ## Submission
 

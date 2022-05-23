@@ -8,8 +8,8 @@ do
     node scripts/updateVersions.js
     git add --all
     git commit -m "$npm_package_version"
-    git push
     git tag "v$npm_package_version"
+    git push
     git push origin "v$npm_package_version"
     break
     ;;

@@ -12,7 +12,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "generateStateMachineTypes": "xstate typegen 'src/internal/stateMachine.ts'",
-    "build": "rm -rf dist/* && npm run generateStateMachineTypes && rollup -c",
+    "build": "rm -rf dist/* && rollup -c",
+    "pretest": "npm run generateStateMachineTypes",
     "test": "jest && npm run test:browserCompatibility",
     "test:watch": "JEST_WATCH_TESTS=1 jest --watch",
     "test:browserCompatibility": "es-check es3 dist/browser.js",

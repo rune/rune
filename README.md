@@ -1,6 +1,6 @@
 # Rune Games SDK
 
-[![npm](https://img.shields.io/npm/v/rune-games-sdk)](https://www.npmjs.com/package/rune-games-sdk) [![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/rune/rune-games-sdk/CI/master)](https://github.com/rune/rune-games-sdk/actions/workflows/CI.yml?query=branch%3Amaster)
+[![npm](https://img.shields.io/npm/v/rune-games-sdk)](https://www.npmjs.com/package/rune-games-sdk) [![GitHub Workflow Status (staging)](https://img.shields.io/github/workflow/status/rune/rune-games-sdk/CI/staging)](https://github.com/rune/rune-games-sdk/actions/workflows/CI.yml?query=branch%3Astaging)
 
 Tiny SDK for making your HTML5 game run inside [Rune](https://play.google.com/store/apps/details?id=ai.rune.tincan).
 

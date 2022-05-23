@@ -165,10 +165,15 @@ export function createStateMachine(challengeNumber: number) {
         SEND_INIT: (_, { version }) => {
           postRuneEvent({ type: "INIT", version })
         },
-        SEND_ERROR: () => {
+        SEND_ERROR: (_, action, meta) => {
+          //console.log({ context, action, meta })
+          const statePath = (meta.state.history?.toStrings() || []).slice(-1)[0]
+
+          const errorMessage = `Fatal issue: Received ${action.type} while in ${statePath}`
+
           postRuneEvent({
             type: "ERR",
-            errMsg: "TODO",
+            errMsg: errorMessage,
           })
         },
         SEND_GAME_OVER: ({ getScore }) => {

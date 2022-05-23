@@ -135,7 +135,7 @@ describe("stateMachine", function () {
       initRune(Rune)
       initRune(Rune)
 
-      expect(error).toEqual("TODO")
+      expect(error).toEqual("Fatal issue: Received onGameInit while in INIT.PAUSED")
     })
 
     test("should send error message when game over is without initialization", () => {
@@ -151,7 +151,7 @@ describe("stateMachine", function () {
 
       Rune.gameOver()
 
-      expect(error).toEqual("TODO")
+      expect(error).toEqual("Fatal issue: Received onGameOver while in LOADING")
     })
 
     test("should go to error state when game over is called during pause", () => {
@@ -168,7 +168,7 @@ describe("stateMachine", function () {
       initRune(Rune)
       Rune.gameOver()
 
-      expect(error).toEqual("TODO")
+      expect(error).toEqual("Fatal issue: Received onGameOver while in INIT.PAUSED")
     })
 
     test("should go to error state when game over is called multiple times in a row", () => {
@@ -187,7 +187,7 @@ describe("stateMachine", function () {
       Rune.gameOver()
       Rune.gameOver()
 
-      expect(error).toEqual("TODO")
+      expect(error).toEqual("Fatal issue: Received onGameOver while in INIT.GAME_OVER")
     })
   })
 })

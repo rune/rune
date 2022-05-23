@@ -47,5 +47,5 @@ export declare type LegacyRuneGameCommand = {
     type: "_startGame" | "_resumeGame" | "_pauseGame" | "_requestScore";
 };
 export declare type RuneAppCommand = {
-    type: "restartGame" | "playGame" | "pauseGame" | "requestScore";
+    type: "playGame" | "pauseGame" | "restartGame" | "requestScore";
 };

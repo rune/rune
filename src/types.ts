@@ -48,5 +48,5 @@ export type LegacyRuneGameCommand = {
 }
 
 export type RuneAppCommand = {
-  type: "restartGame" | "playGame" | "pauseGame" | "requestScore"
+  type: "playGame" | "pauseGame" | "restartGame" | "requestScore"
 }

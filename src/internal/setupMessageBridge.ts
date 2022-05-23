@@ -20,6 +20,7 @@ export function messageEventHandler(stateMachineService: StateMachineService) {
       throw new Error(`Received incorrect message: ${command}`)
     }
 
+    //TODO - remove the _ commands after all games/clients are migrated to v2
     switch (command.type) {
       case "pauseGame":
       case "_pauseGame":

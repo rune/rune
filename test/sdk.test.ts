@@ -31,10 +31,11 @@ describe("sdk", function () {
     const { Rune } = getRuneSdk(1)
     expect(
       await extractErrMsg(() => {
-        //@ts-expect-error
         Rune.init({
           startGame: () => {},
+          // @ts-ignore
           resumeGame: "sure",
+          // @ts-ignore
           pauseGame: "sometimes",
         })
       })

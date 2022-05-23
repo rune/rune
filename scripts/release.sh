@@ -6,11 +6,12 @@ do
   patch|minor|major)
     yarn version --$version --no-git-tag-version
     node scripts/updateVersions.js
+    VERSION=$(node -p -e "require('./package.json').version")
     git add --all
-    git commit -m "$npm_package_version"
-    git tag "v$npm_package_version"
+    git commit -m "$VERSION"
+    git tag "v$VERSION"
     git push
-    git push origin "v$npm_package_version"
+    git push origin "v$VERSION"
     break
     ;;
   *)

@@ -11,13 +11,17 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "generateStateMachineTypes": "xstate typegen 'src/internal/stateMachine.ts'",
     "build": "rm -rf dist/* && rollup -c",
-    "pretest": "npm run generateStateMachineTypes",
-    "test": "jest && npm run test:browserCompatibility",
+    "prepublishOnly": "yarn build",
+    "lint": "eslint . --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "pretest": "yarn generateStateMachineTypes",
+    "test": "jest && yarn test:browserCompatibility",
     "test:watch": "JEST_WATCH_TESTS=1 jest --watch",
     "test:browserCompatibility": "es-check es3 dist/browser.js",
-    "test:updateSnapshots": "jest --runInBand -u"
+    "test:updateSnapshots": "jest --runInBand -u",
+    "release": "scripts/release.sh",
+    "generateStateMachineTypes": "xstate typegen 'src/internal/stateMachine.ts'"
   },
   "repository": {
     "type": "git",

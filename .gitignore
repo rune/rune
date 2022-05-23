@@ -11,5 +11,6 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/tasks.json
 .idea
+dist/
 
 src/internal/stateMachine.typegen.ts

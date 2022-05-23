@@ -12,6 +12,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist/* && rollup -c",
+    "prepublishOnly": "yarn build",
     "lint": "eslint . --ext .ts",
     "typecheck": "tsc --noEmit",
     "test": "jest && yarn test:browserCompatibility",

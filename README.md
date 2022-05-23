@@ -1,5 +1,7 @@
 # Rune Games SDK
 
+[![npm](https://img.shields.io/npm/v/rune-games-sdk)](https://www.npmjs.com/package/rune-games-sdk) [![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/rune/rune-games-sdk/CI/master)](https://github.com/rune/rune-games-sdk/actions/workflows/CI.yml?query=branch%3Amaster)
+
 Tiny SDK for making your HTML5 game run inside [Rune](https://play.google.com/store/apps/details?id=ai.rune.tincan).
 
 ## Install
@@ -55,7 +57,9 @@ const challengeNumber = Rune.getChallengeNumber() // Get today's challenge numbe
 
 const mapId = mapIds[challengeNumber % mapIds.length] // Get deterministic mapId
 ```
+
 ---
+
 </details>
 
 <details>
@@ -63,7 +67,7 @@ const mapId = mapIds[challengeNumber % mapIds.length] // Get deterministic mapId
 
 ---
 
-Rune provides a random number generator using the challenge number as seed. This random number generator will therefore always provide the same random values for the same challenge number. 
+Rune provides a random number generator using the challenge number as seed. This random number generator will therefore always provide the same random values for the same challenge number.
 
 You can use `Rune.deterministicRandom()` instead of `Math.random()` in your map generation code to ensure all players play the same map. The `Rune.deterministicRandom()` function returns a value between 0 and 1 similar to `Math.random()`.
 

@@ -1,5 +1,5 @@
 export interface InitInput {
-    startGame: () => void;
+    restartGame: () => void;
     resumeGame: () => void;
     pauseGame: () => void;
     getScore: () => number;
@@ -10,26 +10,11 @@ export interface RuneExport {
     gameOver: () => void;
     getChallengeNumber: () => number;
     deterministicRandom: () => number;
-    _doneInit: boolean;
-    _startGame: () => void;
-    _resumeGame: () => void;
-    _pauseGame: () => void;
-    _requestScore: () => void;
-    _getScore: () => number;
-    _validateScore: (score: number) => void;
-    _randomNumberGenerator: (seed: number) => () => number;
-    _hashFromString: (str: string) => number;
-    _resetDeterministicRandom: () => void;
-    _runeChallengeNumber: number;
 }
 declare global {
-    var Rune: RuneExport | undefined;
     var ReactNativeWebView: {
         postMessage: (data: string) => void;
     } | undefined;
-    var _runeChallengeNumber: number | undefined;
-    var runeWindowErrHandler: (event: ErrorEvent) => void | undefined;
-    var postRuneEvent: ((event: RuneGameEvent) => void) | undefined;
 }
 export declare type RuneGameEvent = {
     type: "INIT";
@@ -58,6 +43,9 @@ export declare type RuneGameEvent = {
 } | {
     type: "BROWSER_IFRAME_LOADED";
 };
-export declare type RuneGameCommand = {
+export declare type LegacyRuneGameCommand = {
     type: "_startGame" | "_resumeGame" | "_pauseGame" | "_requestScore";
+};
+export declare type RuneAppCommand = {
+    type: "restartGame" | "playGame" | "pauseGame" | "requestScore";
 };

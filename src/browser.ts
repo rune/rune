@@ -1,24 +1,24 @@
-import { getRuneSdk, RuneExport } from "./index"
+import { getRuneSdk } from "./index"
 import { clearStorage } from "./internal/clearStorage"
 import { setupIframe } from "./internal/setupIframe"
-import { setChallengeNumber } from "./internal/setChallengeNumber"
 import { setupMessageBridge } from "./internal/setupMessageBridge"
 import { setupErrorLogging } from "./internal/setupErrorLogging"
 import { setupConsole } from "./internal/setupConsole"
 import { getUrlParams } from "./internal/getUrlParams"
 
-function setupBrowser(Rune: RuneExport) {
-  const urlParams = getUrlParams()
-  clearStorage()
-  setupIframe(urlParams.enableInitialOverlayInBrowser)
-  setChallengeNumber(Rune, urlParams.challengeNumber)
-  setupMessageBridge(Rune, urlParams.useDocumentForPostMessages)
-  setupErrorLogging()
-  setupConsole()
-}
+const {
+  challengeNumber,
+  enableInitialOverlayInBrowser,
+  useDocumentForPostMessages,
+} = getUrlParams()
+const { Rune, stateMachineService } = getRuneSdk(challengeNumber)
 
-const Rune = getRuneSdk()
-setupBrowser(Rune)
+clearStorage()
+setupErrorLogging()
+setupConsole()
+setupIframe(enableInitialOverlayInBrowser)
+
+setupMessageBridge(stateMachineService, useDocumentForPostMessages)
 
 //Make sure to not export anything else here
 export default Rune

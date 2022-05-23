@@ -1,4 +1,4 @@
-import { RuneGameCommand, RuneGameEvent } from "../types"
+import { LegacyRuneGameCommand, RuneAppCommand, RuneGameEvent } from "../types"
 
 //The native app only support strings for post message communication.
 //To identify if received message is used by Rune, we are prefixing all of them with RUNE_MESSAGE_PREFIX. This allows to
@@ -10,16 +10,13 @@ export function stringifyRuneGameEvent(data: RuneGameEvent) {
 }
 
 export function getRuneGameCommand(data: unknown) {
-  return getRuneGameMessage<{ runeGameCommand: RuneGameCommand }>(data, "runeGameCommand")
+  return getRuneGameMessage<{ runeGameCommand: RuneAppCommand | LegacyRuneGameCommand }>(
+    data,
+    "runeGameCommand"
+  )
 }
 
 export function postRuneEvent(data: RuneGameEvent) {
-  //TODO remove when all legacy native clients are migrated
-  if (globalThis.postRuneEvent) {
-    globalThis.postRuneEvent(data)
-    return
-  }
-
   //We only expect to send Game events through postMessages
   const event = stringifyRuneGameEvent(data)
 

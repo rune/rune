@@ -11,7 +11,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist/* && rollup -c",
+    "generateStateMachineTypes": "xstate typegen 'src/internal/stateMachine.ts'",
+    "build": "rm -rf dist/* && npm run generateStateMachineTypes && rollup -c",
     "test": "jest && npm run test:browserCompatibility",
     "test:watch": "JEST_WATCH_TESTS=1 jest --watch",
     "test:browserCompatibility": "es-check es3 dist/browser.js",
@@ -27,12 +28,14 @@
   },
   "homepage": "https://github.com/rune/rune-games-sdk#readme",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-typescript": "^8.3.1",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.9.6",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.11.0",
+    "@xstate/cli": "^0.1.7",
     "es-check": "^6.2.1",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
@@ -45,5 +48,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "xstate": "4.32.1"
+  }
 }

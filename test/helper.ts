@@ -1,5 +1,14 @@
-import { getRuneGameEvent, InitInput, RuneExport } from "../src"
+import {
+  getRuneGameEvent,
+  InitInput,
+  LegacyRuneGameCommand,
+  RuneAppCommand,
+  RuneExport,
+  stringifyRuneGameCommand,
+} from "../src"
 import { RuneGameEvent } from "../src/types"
+import { messageEventHandler } from "../src/internal/setupMessageBridge"
+import { StateMachineService } from "../src/internal/stateMachine"
 
 export async function extractErrMsg(fn: Function) {
   let errMsg
@@ -24,6 +33,17 @@ export function runePostMessageHandler(handler?: (event: RuneGameEvent) => void)
   }
 }
 
+export function sendRuneAppCommand(
+  stateMachineService: StateMachineService,
+  command: RuneAppCommand | LegacyRuneGameCommand
+) {
+  messageEventHandler(stateMachineService)(
+    new MessageEvent("message", {
+      data: stringifyRuneGameCommand(command),
+    })
+  )
+}
+
 export function simulateNativeApp() {
   runePostMessageHandler()
 }
@@ -40,7 +60,7 @@ export function simulateIframe() {
 
 export function initRune(Rune: RuneExport, overrides: Partial<InitInput> = {}) {
   Rune.init({
-    startGame: () => {},
+    restartGame: () => {},
     pauseGame: () => {},
     resumeGame: () => {},
     getScore: () => {

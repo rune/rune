@@ -1,3 +1,2 @@
-import { RuneExport } from "./index";
-declare const Rune: RuneExport;
+declare const Rune: import("./types").RuneExport;
 export default Rune;

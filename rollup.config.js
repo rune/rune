@@ -2,7 +2,7 @@
 import typescript from "@rollup/plugin-typescript"
 import replace from "@rollup/plugin-replace"
 import { terser } from "rollup-plugin-terser"
-
+import { nodeResolve } from "@rollup/plugin-node-resolve"
 export default [
   {
     input: "src/browser.ts",
@@ -21,6 +21,7 @@ export default [
       }),
       typescript({ tsconfig: "./tsconfig.browser.json" }),
       terser({ format: { comments: false } }),
+      nodeResolve(),
     ],
   },
   {
@@ -30,6 +31,7 @@ export default [
       format: "es",
       file: "dist/index.js",
     },
+    external: ["xstate"],
     plugins: [typescript({ tsconfig: "./tsconfig.json" })],
   },
 ]

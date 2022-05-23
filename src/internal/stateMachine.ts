@@ -19,6 +19,7 @@ type Context = {
 
 export type StateMachineService = ReturnType<typeof createStateMachine>
 
+//Link to state machine - https://stately.ai/registry/editor/share/ced5de88-385e-44f3-938f-ffa38580b774
 export function createStateMachine(challengeNumber: number) {
   const machine = createMachine(
     {
@@ -165,11 +166,10 @@ export function createStateMachine(challengeNumber: number) {
         SEND_INIT: (_, { version }) => {
           postRuneEvent({ type: "INIT", version })
         },
-        SEND_ERROR: (_, action, meta) => {
-          //console.log({ context, action, meta })
+        SEND_ERROR: (_, event, meta) => {
           const statePath = (meta.state.history?.toStrings() || []).slice(-1)[0]
 
-          const errorMessage = `Fatal issue: Received ${action.type} while in ${statePath}`
+          const errorMessage = `Fatal issue: Received ${event.type} while in ${statePath}`
 
           postRuneEvent({
             type: "ERR",
@@ -192,6 +192,24 @@ export function createStateMachine(challengeNumber: number) {
   )
 
   const service = interpret(machine)
+
+  service.onTransition((state, event) => {
+    //As soon as state machine is initialized, it calls onTransition, but the state.changed is undefined (see https://xstate.js.org/docs/guides/states.html#state-changed)
+    if (state.changed === undefined) {
+      return
+    }
+
+    if (!state.changed) {
+      const statePath = (state.toStrings() || []).slice(-1)[0]
+
+      const msg = `Received ${event.type} while in ${statePath}`
+      postRuneEvent({
+        type: "WARNING",
+        msg,
+      })
+    }
+  })
+
   service.start()
 
   return service

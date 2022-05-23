@@ -27,6 +27,9 @@ export declare type RuneGameEvent = {
     type: "ERR";
     errMsg: string;
 } | {
+    type: "WARNING";
+    msg: string;
+} | {
     type: "WINDOW_ERR";
     err: {
         msg: string;

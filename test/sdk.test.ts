@@ -153,4 +153,90 @@ describe("sdk", function () {
     expect(eventScore).toEqual(gameScore)
     expect(eventChallengeNumber).toEqual(CHALLENGE_NUMBER)
   })
+
+  describe("error state", () => {
+    test("should send error message when init is called multiple times", () => {
+      const { Rune } = getRuneSdk(1)
+
+      let error: string | null = null
+
+      runePostMessageHandler((event) => {
+        if (event.type === "ERR") {
+          error = event.errMsg
+        }
+      })
+
+      initRune(Rune)
+      initRune(Rune)
+
+      expect(error).toEqual("Fatal issue: Received onGameInit while in INIT.PAUSED")
+    })
+
+    test("should send error message when game over is without initialization", () => {
+      const { Rune } = getRuneSdk(1)
+
+      let error: string | null = null
+
+      runePostMessageHandler((event) => {
+        if (event.type === "ERR") {
+          error = event.errMsg
+        }
+      })
+
+      Rune.gameOver()
+
+      expect(error).toEqual("Fatal issue: Received onGameOver while in LOADING")
+    })
+
+    test("should go to error state when game over is called during pause", () => {
+      const { Rune } = getRuneSdk(1)
+
+      let error: string | null = null
+
+      runePostMessageHandler((event) => {
+        if (event.type === "ERR") {
+          error = event.errMsg
+        }
+      })
+
+      initRune(Rune)
+      Rune.gameOver()
+
+      expect(error).toEqual("Fatal issue: Received onGameOver while in INIT.PAUSED")
+    })
+
+    test("should go to error state when game over is called multiple times in a row", () => {
+      const { Rune, stateMachineService } = getRuneSdk(1)
+
+      let error: string | null = null
+
+      runePostMessageHandler((event) => {
+        if (event.type === "ERR") {
+          error = event.errMsg
+        }
+      })
+
+      initRune(Rune)
+      sendRuneAppCommand(stateMachineService, { type: "playGame" })
+      Rune.gameOver()
+      Rune.gameOver()
+
+      expect(error).toEqual("Fatal issue: Received onGameOver while in INIT.GAME_OVER")
+    })
+  })
+
+  test("WARNING event should be sent when handling unexpected events", async function () {
+    const { Rune, stateMachineService } = getRuneSdk(1)
+    initRune(Rune)
+
+    let msg = ""
+    runePostMessageHandler((event) => {
+      if (event.type === "WARNING") {
+        msg = event.msg
+      }
+    })
+
+    sendRuneAppCommand(stateMachineService, { type: "pauseGame" })
+    expect(msg).toEqual("Received onAppPause while in INIT.PAUSED")
+  })
 })

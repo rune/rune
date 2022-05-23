@@ -29,6 +29,7 @@ export type RuneGameEvent =
   | { type: "INIT"; version: string }
   | { type: "GAME_OVER"; score: number; challengeNumber: number }
   | { type: "ERR"; errMsg: string }
+  | { type: "WARNING"; msg: string }
   | {
       type: "WINDOW_ERR"
       err: {

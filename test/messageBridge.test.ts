@@ -1,4 +1,5 @@
-import { RuneExport, stringifyRuneGameCommand, getRuneSdk } from "../src"
+import { RuneExport, stringifyRuneGameCommand } from "../src"
+import { getRuneSdk } from "../src/sdk"
 import {
   messageEventHandler,
   setupMessageBridge,

@@ -1,4 +1,4 @@
-import { getRuneSdk } from "./index"
+import { getRuneSdk } from "./sdk"
 import { clearStorage } from "./internal/clearStorage"
 import { setupIframe } from "./internal/setupIframe"
 import { setupMessageBridge } from "./internal/setupMessageBridge"

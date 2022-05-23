@@ -1,4 +1,4 @@
-import { getRuneSdk } from "../src"
+import { getRuneSdk } from "../src/sdk"
 import { getUrlParams } from "../src/internal/getUrlParams"
 
 describe("Game Challenge", () => {

@@ -6,7 +6,7 @@ import {
   RuneExport,
   stringifyRuneGameCommand,
 } from "../src"
-import { RuneGameEvent } from "../src/types"
+import { RuneGameEvent } from "../src"
 import { messageEventHandler } from "../src/internal/setupMessageBridge"
 import { StateMachineService } from "../src/internal/stateMachine"
 

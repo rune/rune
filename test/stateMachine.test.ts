@@ -4,7 +4,8 @@ import {
   sendRuneAppCommand,
   simulateNativeApp,
 } from "./helper"
-import { getRuneSdk, LegacyRuneGameCommand, RuneAppCommand } from "../src"
+import { getRuneSdk } from "../src/sdk"
+import { LegacyRuneGameCommand, RuneAppCommand } from "../src"
 
 type GameStates = "WAITING" | "RESUMED" | "PAUSED" | "RESTARTED" | "GAME_OVER"
 

@@ -22,7 +22,9 @@ describe("sdk", function () {
         //@ts-expect-error
         Rune.init()
       })
-    ).toMatchInlineSnapshot(`"Invalid resumeGame function provided to Rune.init()"`)
+    ).toMatchInlineSnapshot(
+      `"Invalid resumeGame function provided to Rune.init()"`
+    )
   })
 
   test("ensure correct types passed to init()", async function () {
@@ -30,9 +32,15 @@ describe("sdk", function () {
     expect(
       await extractErrMsg(() => {
         //@ts-expect-error
-        Rune.init({ startGame: () => {}, resumeGame: "sure", pauseGame: "sometimes" })
+        Rune.init({
+          startGame: () => {},
+          resumeGame: "sure",
+          pauseGame: "sometimes",
+        })
       })
-    ).toMatchInlineSnapshot(`"Invalid resumeGame function provided to Rune.init()"`)
+    ).toMatchInlineSnapshot(
+      `"Invalid resumeGame function provided to Rune.init()"`
+    )
   })
 
   test("ensure score passed as number", async function () {
@@ -155,7 +163,7 @@ describe("sdk", function () {
   })
 
   describe("error state", () => {
-    test("should send error message when init is called multiple times", () => {
+    test("ERR event should be sent when init is called multiple times", () => {
       const { Rune } = getRuneSdk(1)
 
       let error: string | null = null
@@ -169,10 +177,12 @@ describe("sdk", function () {
       initRune(Rune)
       initRune(Rune)
 
-      expect(error).toEqual("Fatal issue: Received onGameInit while in INIT.PAUSED")
+      expect(error).toEqual(
+        "Fatal issue: Received onGameInit while in INIT.PAUSED"
+      )
     })
 
-    test("should send error message when game over is without initialization", () => {
+    test("ERR event should be sent when game over is without initialization", () => {
       const { Rune } = getRuneSdk(1)
 
       let error: string | null = null
@@ -188,7 +198,7 @@ describe("sdk", function () {
       expect(error).toEqual("Fatal issue: Received onGameOver while in LOADING")
     })
 
-    test("should go to error state when game over is called during pause", () => {
+    test("ERR event should be sent when  game over is called during pause", () => {
       const { Rune } = getRuneSdk(1)
 
       let error: string | null = null
@@ -202,10 +212,12 @@ describe("sdk", function () {
       initRune(Rune)
       Rune.gameOver()
 
-      expect(error).toEqual("Fatal issue: Received onGameOver while in INIT.PAUSED")
+      expect(error).toEqual(
+        "Fatal issue: Received onGameOver while in INIT.PAUSED"
+      )
     })
 
-    test("should go to error state when game over is called multiple times in a row", () => {
+    test("ERR event should be sent when game over is called multiple times in a row", () => {
       const { Rune, stateMachineService } = getRuneSdk(1)
 
       let error: string | null = null
@@ -221,7 +233,9 @@ describe("sdk", function () {
       Rune.gameOver()
       Rune.gameOver()
 
-      expect(error).toEqual("Fatal issue: Received onGameOver while in INIT.GAME_OVER")
+      expect(error).toEqual(
+        "Fatal issue: Received onGameOver while in INIT.GAME_OVER"
+      )
     })
   })
 

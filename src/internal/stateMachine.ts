@@ -199,6 +199,7 @@ export function createStateMachine(challengeNumber: number) {
       return
     }
 
+    //If nothing has changed inside the state machine (state/context) that means that the event was not handled.
     if (!state.changed) {
       const statePath = (state.toStrings() || []).slice(-1)[0]
 

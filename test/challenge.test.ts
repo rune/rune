@@ -6,7 +6,7 @@ describe("Game Challenge", () => {
     jest.spyOn(URLSearchParams.prototype, "get").mockImplementation(() => "10")
     const { challengeNumber } = getUrlParams()
 
-    const { Rune } = getRuneSdk(challengeNumber)
+    const { Rune } = getRuneSdk({ challengeNumber })
 
     expect(Rune.getChallengeNumber()).toEqual(10)
   })
@@ -17,7 +17,7 @@ describe("Game Challenge", () => {
       .mockImplementation(() => "badData")
     const { challengeNumber } = getUrlParams()
 
-    const { Rune } = getRuneSdk(challengeNumber)
+    const { Rune } = getRuneSdk({ challengeNumber })
 
     expect(Rune.getChallengeNumber()).toEqual(1)
   })

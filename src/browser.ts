@@ -11,7 +11,7 @@ const {
   enableInitialOverlayInBrowser,
   useDocumentForPostMessages,
 } = getUrlParams()
-const { Rune, stateMachineService } = getRuneSdk(challengeNumber)
+const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
 clearStorage()
 setupErrorLogging()

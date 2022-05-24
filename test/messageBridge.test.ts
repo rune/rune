@@ -16,10 +16,12 @@ import { StateMachineService } from "../src/internal/stateMachine"
 let Rune: RuneExport
 let stateMachineService: StateMachineService
 
+const challengeNumber = 1
+
 beforeEach(async () => {
   simulateNativeApp()
 
-  const instance = getRuneSdk(1)
+  const instance = getRuneSdk({ challengeNumber })
   stateMachineService = instance.stateMachineService
   Rune = instance.Rune
 })

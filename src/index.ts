@@ -5,7 +5,7 @@ import { RuneExport, InitInput } from "./types"
 import { createStateMachine } from "./internal/stateMachine"
 import { validateInput } from "./internal/validations"
 
-export function getRuneSdk(challengeNumber: number) {
+export function getRuneSdk({ challengeNumber }: { challengeNumber: number }) {
   const stateMachineService = createStateMachine(challengeNumber)
 
   const Rune: RuneExport = {

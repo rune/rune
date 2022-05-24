@@ -7,7 +7,7 @@ import {
 } from "./helper"
 import { getRuneSdk } from "../src"
 
-const CHALLENGE_NUMBER = 123
+const challengeNumber = 1
 
 beforeEach(async () => {
   simulateNativeApp()
@@ -15,7 +15,7 @@ beforeEach(async () => {
 
 describe("sdk", function () {
   test("ensure correct properties passed to init()", async function () {
-    const { Rune } = getRuneSdk(1)
+    const { Rune } = getRuneSdk({ challengeNumber })
 
     expect(
       await extractErrMsg(() => {
@@ -28,7 +28,7 @@ describe("sdk", function () {
   })
 
   test("ensure correct types passed to init()", async function () {
-    const { Rune } = getRuneSdk(1)
+    const { Rune } = getRuneSdk({ challengeNumber })
     expect(
       await extractErrMsg(() => {
         Rune.init({
@@ -45,7 +45,7 @@ describe("sdk", function () {
   })
 
   test("ensure score passed as number", async function () {
-    const { Rune } = getRuneSdk(1)
+    const { Rune } = getRuneSdk({ challengeNumber })
     expect(
       await extractErrMsg(() => {
         initRune(Rune, {
@@ -59,13 +59,13 @@ describe("sdk", function () {
   })
 
   test("exposed version should match npm version", async function () {
-    const { Rune } = getRuneSdk(1)
+    const { Rune } = getRuneSdk({ challengeNumber })
     const packageJson = require("../package.json")
     expect(packageJson.version).toMatch(Rune.version)
   })
 
   test("INIT event should include version matching npm version", async function () {
-    const { Rune } = getRuneSdk(1)
+    const { Rune } = getRuneSdk({ challengeNumber })
     const packageJson = require("../package.json")
 
     let version: string | undefined
@@ -82,7 +82,11 @@ describe("sdk", function () {
   })
 
   test("SCORE event should include score from game's getScore() and challenge number", async function () {
-    const { Rune, stateMachineService } = getRuneSdk(CHALLENGE_NUMBER)
+    const customChallengeNumber = 123
+
+    const { Rune, stateMachineService } = getRuneSdk({
+      challengeNumber: customChallengeNumber,
+    })
     // Init with score function
     let gameScore = 0
     const getScore = () => {
@@ -105,11 +109,14 @@ describe("sdk", function () {
 
     sendRuneAppCommand(stateMachineService, { type: "requestScore" })
     expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(CHALLENGE_NUMBER)
+    expect(eventChallengeNumber).toEqual(customChallengeNumber)
   })
 
   test("should support legacy _requestScore command", async function () {
-    const { Rune, stateMachineService } = getRuneSdk(CHALLENGE_NUMBER)
+    const customChallengeNumber = 123
+    const { Rune, stateMachineService } = getRuneSdk({
+      challengeNumber: customChallengeNumber,
+    })
     // Init with score function
     let gameScore = 0
     const getScore = () => {
@@ -132,11 +139,14 @@ describe("sdk", function () {
 
     sendRuneAppCommand(stateMachineService, { type: "_requestScore" })
     expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(CHALLENGE_NUMBER)
+    expect(eventChallengeNumber).toEqual(customChallengeNumber)
   })
 
   test("GAME_OVER event should include score from game's getScore() and challenge number", async function () {
-    const { Rune, stateMachineService } = getRuneSdk(CHALLENGE_NUMBER)
+    const customChallengeNumber = 123
+    const { Rune, stateMachineService } = getRuneSdk({
+      challengeNumber: customChallengeNumber,
+    })
     // Init with score function
     let gameScore = 0
     const getScore = () => {
@@ -160,12 +170,12 @@ describe("sdk", function () {
     sendRuneAppCommand(stateMachineService, { type: "playGame" })
     Rune.gameOver()
     expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(CHALLENGE_NUMBER)
+    expect(eventChallengeNumber).toEqual(customChallengeNumber)
   })
 
   describe("error state", () => {
     test("ERR event should be sent when init is called multiple times", () => {
-      const { Rune } = getRuneSdk(1)
+      const { Rune } = getRuneSdk({ challengeNumber })
 
       let error: string | null = null
 
@@ -184,7 +194,7 @@ describe("sdk", function () {
     })
 
     test("ERR event should be sent when game over is without initialization", () => {
-      const { Rune } = getRuneSdk(1)
+      const { Rune } = getRuneSdk({ challengeNumber })
 
       let error: string | null = null
 
@@ -200,7 +210,7 @@ describe("sdk", function () {
     })
 
     test("ERR event should be sent when  game over is called during pause", () => {
-      const { Rune } = getRuneSdk(1)
+      const { Rune } = getRuneSdk({ challengeNumber })
 
       let error: string | null = null
 
@@ -219,7 +229,7 @@ describe("sdk", function () {
     })
 
     test("ERR event should be sent when game over is called multiple times in a row", () => {
-      const { Rune, stateMachineService } = getRuneSdk(1)
+      const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
       let error: string | null = null
 
@@ -241,7 +251,7 @@ describe("sdk", function () {
   })
 
   test("WARNING event should be sent when handling unexpected events", async function () {
-    const { Rune, stateMachineService } = getRuneSdk(1)
+    const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
     initRune(Rune)
 
     let msg = ""

@@ -6,10 +6,11 @@ beforeEach(async () => {
   simulateNativeApp()
 })
 
-const CHALLENGE_NUMBER = 123
+const challengeNumber = 1
+
 describe("rng", () => {
   test("deterministicRandom() works before init()", async function () {
-    const { Rune } = getRuneSdk(1)
+    const { Rune } = getRuneSdk({ challengeNumber })
     const randomArray = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
     )
@@ -17,7 +18,9 @@ describe("rng", () => {
   })
 
   test("deterministicRandom() changes value based on challengeNumber", async function () {
-    const { Rune } = getRuneSdk(CHALLENGE_NUMBER)
+    const customChallengeNumber = 123
+
+    const { Rune } = getRuneSdk({ challengeNumber: customChallengeNumber })
 
     const randomArray = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
@@ -26,7 +29,7 @@ describe("rng", () => {
   })
 
   test("deterministicRandom() does not reset at game start", async function () {
-    const { Rune, stateMachineService } = getRuneSdk(1)
+    const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
     const randomArray1 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
@@ -43,7 +46,7 @@ describe("rng", () => {
   })
 
   test("deterministicRandom() is reset after game is over and started again", async function () {
-    const { Rune, stateMachineService } = getRuneSdk(1)
+    const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
     const randomArray1 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
@@ -62,7 +65,7 @@ describe("rng", () => {
   })
 
   test("deterministicRandom() is reset at game restart", async function () {
-    const { Rune, stateMachineService } = getRuneSdk(1)
+    const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
     const randomArray1 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)

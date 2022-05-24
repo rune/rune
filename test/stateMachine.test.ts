@@ -21,7 +21,7 @@ function testStateMachineCallbacks(
     ExpectedCallbacks
   ][]
 ) {
-  const { Rune, stateMachineService } = getRuneSdk(1)
+  const { Rune, stateMachineService } = getRuneSdk({ challengeNumber: 1 })
 
   let latestCallback: ExpectedCallbacks = null
   initRune(Rune, {

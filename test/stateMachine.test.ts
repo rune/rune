@@ -13,13 +13,15 @@ type ExpectedCallbacks =
   | "pauseGame"
   | "restartGame"
   | "gameOverMessage"
+  | "startGame" //legacy
 
 //Helper function which for each app command (or sdk game over) expects a callback to be called
 function testStateMachineCallbacks(
   steps: [
     RuneAppCommand | LegacyRuneGameCommand | "SDK_GAME_OVER",
     ExpectedCallbacks
-  ][]
+  ][],
+  useStart = false
 ) {
   const { Rune, stateMachineService } = getRuneSdk({ challengeNumber: 1 })
 
@@ -28,12 +30,20 @@ function testStateMachineCallbacks(
     pauseGame: () => {
       latestCallback = "pauseGame"
     },
-    restartGame: () => {
-      latestCallback = "restartGame"
-    },
     resumeGame: () => {
       latestCallback = "resumeGame"
     },
+    ...(useStart
+      ? {
+          startGame: () => {
+            latestCallback = "startGame"
+          },
+        }
+      : {
+          restartGame: () => {
+            latestCallback = "restartGame"
+          },
+        }),
   })
 
   //Listen for game over command, if it happens, set the latest callback to gameOverMessage
@@ -95,7 +105,7 @@ describe("stateMachine", function () {
     ])
   })
 
-  describe("legacy flow", () => {
+  describe("legacy client", () => {
     test("User starts the game, clicks pause and clicks play again", async function () {
       testStateMachineCallbacks([
         [{ type: "_startGame" }, "resumeGame"],
@@ -127,6 +137,53 @@ describe("stateMachine", function () {
         [{ type: "_pauseGame" }, "pauseGame"],
         [{ type: "_resumeGame" }, "resumeGame"],
       ])
+    })
+  })
+
+  describe("legacy game, legacy client", () => {
+    test("User starts the game, clicks pause and clicks play again", async function () {
+      testStateMachineCallbacks(
+        [
+          [{ type: "_startGame" }, "startGame"],
+          [{ type: "_pauseGame" }, "pauseGame"],
+          [{ type: "_resumeGame" }, "resumeGame"],
+        ],
+        true
+      )
+    })
+
+    test("User starts the game, clicks restart", async function () {
+      testStateMachineCallbacks(
+        [
+          [{ type: "_startGame" }, "startGame"],
+          [{ type: "_startGame" }, "startGame"],
+        ],
+        true
+      )
+    })
+
+    test("User starts the game, loses it, and starts to play again", async function () {
+      testStateMachineCallbacks(
+        [
+          [{ type: "_startGame" }, "startGame"],
+          ["SDK_GAME_OVER", "gameOverMessage"],
+          [{ type: "_startGame" }, "startGame"],
+        ],
+        true
+      )
+    })
+
+    test("User starts the game, loses it, starts to play again, pauses, resumes", async function () {
+      testStateMachineCallbacks(
+        [
+          [{ type: "_startGame" }, "startGame"],
+          ["SDK_GAME_OVER", "gameOverMessage"],
+          [{ type: "_startGame" }, "startGame"],
+          [{ type: "_pauseGame" }, "pauseGame"],
+          [{ type: "_resumeGame" }, "resumeGame"],
+        ],
+        true
+      )
     })
   })
 })

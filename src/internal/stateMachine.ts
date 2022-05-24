@@ -5,7 +5,9 @@ import { postRuneEvent } from "./messageBridge"
 import { InitInput } from "../types"
 
 export type Events =
-  | ({ type: "onGameInit" } & InitInput & { version: string })
+  | ({ type: "onGameInit" } & InitInput & {
+        version: string
+      })
   | { type: "onGameOver" }
   | { type: "onAppPause" }
   | { type: "onAppRestart" }
@@ -33,10 +35,18 @@ export function createStateMachine(challengeNumber: number) {
       initial: "LOADING",
       context: {
         rng: randomNumberGenerator(challengeNumber),
-        restartGame: () => {},
-        resumeGame: () => {},
-        getScore: () => 0,
-        pauseGame: () => {},
+        restartGame: () => {
+          throw new Error("restartGame is not initialized!")
+        },
+        resumeGame: () => {
+          throw new Error("resumeGame is not initialized!")
+        },
+        getScore: () => {
+          throw new Error("getScore is not initialized!")
+        },
+        pauseGame: () => {
+          throw new Error("pauseGame is not initialized!")
+        },
       },
       states: {
         LOADING: {
@@ -127,29 +137,32 @@ export function createStateMachine(challengeNumber: number) {
     },
     {
       actions: {
-        ASSIGN_CALLBACKS: assign(
-          (context, { resumeGame, pauseGame, restartGame, getScore }) => {
-            return {
-              ...context,
-              resumeGame,
-              pauseGame,
-              restartGame,
-              getScore,
-            }
+        ASSIGN_CALLBACKS: assign((context, initParams) => {
+          return {
+            ...context,
+            ...initParams,
           }
-        ),
+        }),
         RESET_DETERMINISTIC_RANDOMNESS: assign((context) => ({
           ...context,
           rng: randomNumberGenerator(challengeNumber),
         })),
-        CALL_RESUME_GAME: ({ resumeGame }) => {
-          resumeGame()
+        CALL_RESUME_GAME: ({ resumeGame, startGame }, event) => {
+          if (event.type === "onAppStart (legacy)" && startGame) {
+            startGame()
+          } else {
+            resumeGame()
+          }
         },
         CALL_PAUSE_GAME: ({ pauseGame }) => {
           pauseGame()
         },
-        CALL_RESTART_GAME: ({ restartGame }) => {
-          restartGame()
+        CALL_RESTART_GAME: ({ restartGame, startGame }, event) => {
+          if (event.type === "onAppStart (legacy)" && startGame) {
+            startGame()
+          } else {
+            restartGame()
+          }
         },
 
         SEND_SCORE: ({ getScore }) => {

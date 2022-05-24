@@ -4,6 +4,8 @@ export interface InitInput {
   resumeGame: () => void
   pauseGame: () => void
   getScore: () => number
+  //deprecated
+  startGame?: () => void
 }
 
 export interface RuneExport {

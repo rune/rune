@@ -17,6 +17,7 @@ export function validateInput({
   resumeGame,
   pauseGame,
   getScore,
+  startGame,
 }: Partial<InitInput> = {}) {
   if (typeof resumeGame !== "function") {
     throw new Error("Invalid resumeGame function provided to Rune.init()")
@@ -27,7 +28,7 @@ export function validateInput({
   if (typeof getScore !== "function") {
     throw new Error("Invalid getScore function provided to Rune.init()")
   }
-  if (typeof restartGame !== "function") {
+  if (typeof restartGame !== "function" && typeof startGame !== "function") {
     throw new Error("Invalid restartGame function provided to Rune.init()")
   }
 

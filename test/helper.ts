@@ -1,12 +1,11 @@
+import { InitInput, RuneExport } from "../src"
 import {
-  getRuneGameEvent,
-  InitInput,
+  RuneGameEvent,
   LegacyRuneGameCommand,
   RuneAppCommand,
-  RuneExport,
+  getRuneGameEvent,
   stringifyRuneGameCommand,
-} from "../src"
-import { RuneGameEvent } from "../src"
+} from "../src/api"
 import { messageEventHandler } from "../src/internal/setupMessageBridge"
 import { StateMachineService } from "../src/internal/stateMachine"
 
@@ -20,7 +19,9 @@ export async function extractErrMsg(fn: Function) {
   return errMsg
 }
 
-export function runePostMessageHandler(handler?: (event: RuneGameEvent) => void) {
+export function runePostMessageHandler(
+  handler?: (event: RuneGameEvent) => void
+) {
   globalThis.ReactNativeWebView = {
     postMessage: jest.fn().mockImplementation((data) => {
       const parsedEvent = getRuneGameEvent(data)

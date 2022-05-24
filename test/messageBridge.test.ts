@@ -1,5 +1,5 @@
-import { RuneExport, stringifyRuneGameCommand } from "../src"
-import { getRuneSdk } from "../src/sdk"
+import { stringifyRuneGameCommand, RuneGameEvent } from "../src/api"
+import { RuneExport, getRuneSdk } from "../src"
 import {
   messageEventHandler,
   setupMessageBridge,
@@ -11,7 +11,6 @@ import {
   runePostMessageHandler,
   simulateIframe,
 } from "./helper"
-import { RuneGameEvent } from "../src"
 import { StateMachineService } from "../src/internal/stateMachine"
 
 let Rune: RuneExport

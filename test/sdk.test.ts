@@ -5,7 +5,7 @@ import {
   sendRuneAppCommand,
   simulateNativeApp,
 } from "./helper"
-import { getRuneSdk } from "../src/sdk"
+import { getRuneSdk } from "../src"
 
 const CHALLENGE_NUMBER = 123
 

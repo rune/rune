@@ -1,4 +1,4 @@
-import { getRuneSdk } from "../src/sdk"
+import { getRuneSdk } from "../src"
 import { initRune, sendRuneAppCommand, simulateNativeApp } from "./helper"
 import { hashFromString } from "../src/internal/rng"
 

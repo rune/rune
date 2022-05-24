@@ -4,13 +4,16 @@ import {
   sendRuneAppCommand,
   simulateNativeApp,
 } from "./helper"
-import { getRuneSdk } from "../src/sdk"
-import { LegacyRuneGameCommand, RuneAppCommand } from "../src"
+import { getRuneSdk } from "../src"
+import { LegacyRuneGameCommand, RuneAppCommand } from "../src/api"
 
 type GameStates = "WAITING" | "RESUMED" | "PAUSED" | "RESTARTED" | "GAME_OVER"
 
 function testStateMachine(
-  steps: [RuneAppCommand | LegacyRuneGameCommand | "SDK_GAME_OVER", GameStates][]
+  steps: [
+    RuneAppCommand | LegacyRuneGameCommand | "SDK_GAME_OVER",
+    GameStates
+  ][]
 ) {
   const { Rune, stateMachineService } = getRuneSdk(1)
 

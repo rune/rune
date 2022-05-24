@@ -1,4 +1,4 @@
-import { getRuneSdk } from "../src/sdk"
+import { getRuneSdk } from "../src"
 import { getUrlParams } from "../src/internal/getUrlParams"
 
 describe("Game Challenge", () => {
@@ -12,7 +12,9 @@ describe("Game Challenge", () => {
   })
 
   test("should default to 1 in case the challenge number is not valid", () => {
-    jest.spyOn(URLSearchParams.prototype, "get").mockImplementation(() => "badData")
+    jest
+      .spyOn(URLSearchParams.prototype, "get")
+      .mockImplementation(() => "badData")
     const { challengeNumber } = getUrlParams()
 
     const { Rune } = getRuneSdk(challengeNumber)

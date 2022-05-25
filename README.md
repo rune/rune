@@ -18,18 +18,18 @@ Initialize the Rune SDK once your game is fully ready.
 
 ```js
 Rune.init({
-  startGame: myStartGameFunction,
-  pauseGame: myPauseGameFunction,
   resumeGame: myResumeGameFunction,
+  pauseGame: myPauseGameFunction,
+  restartGame: myRestartGameFunction,
   getScore: myGetScoreFunction,
 })
 ```
 
-At this point, the game can show animations to entice the player, but should not start the actual gameplay as the game may be preloaded. When the player wants to start your game, Rune will call the provided `startGame` function to let your game know to start the gameplay.
+At this point, the game can show animations to entice the player, but should not start the actual gameplay as the game may be preloaded. When the player wants to start your game, Rune will call the provided `resumeGame` function to let your game know to start the gameplay.
 
 Once the player loses the game, your game should call `Rune.gameOver()`. This tells Rune to show the "game over" screen. Your game should not show any "game over" screen and your game does not need to keep track of the user's highscore.
 
-When the player is ready to play again, Rune will call the `startGame` function. Your game should then reset all gameplay back to the experience as a completely new player, including resetting the score.
+When the player is ready to play again, Rune will call the `restartGame` function. Your game should then reset all gameplay back to the experience as a completely new player, including resetting the score.
 
 The player may pause the game through the Rune interface. When this happens, the `pauseGame` function is called to let your game know to freeze all gameplay. Similarly, the `resumeGame` function should unfreeze all gameplay, leaving the player in the same state as before they paused the game.
 
@@ -99,7 +99,7 @@ This is the case by default for most games.
 
 ## Audio
 
-Your game can have soundtracks and sound effects. However, your game should not play any audio before the `startGame` function is called.
+Your game can have soundtracks and sound effects. However, your game should not play any audio before the `resumeGame` function is called.
 
 ## Help
 

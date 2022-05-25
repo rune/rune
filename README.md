@@ -29,9 +29,7 @@ At this point, the game can show animations to entice the player, but should not
 
 Once the player loses the game, your game should call `Rune.gameOver()`. This tells Rune to show the "game over" screen. Your game should not show any "game over" screen and your game does not need to keep track of the user's highscore.
 
-When the player is ready to play again, Rune will call the `restartGame` function. Your game should then reset all gameplay back to the experience as a completely new player, including resetting the score.
-
-Player is also able to restart the game at any given moment, in that case Rune will also call the `restartGame` function.
+When the player is ready to play again, Rune will call the `restartGame` function. Your game should then reset all gameplay back to the experience as a completely new player, including resetting the score. The player is also able to restart the game manually, which will make Rune call the `restartGame` function.
 
 The player may pause the game through the Rune interface. When this happens, the `pauseGame` function is called to let your game know to freeze all gameplay. Similarly, the `resumeGame` function should unfreeze all gameplay, leaving the player in the same state as before they paused the game.
 

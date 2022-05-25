@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   env: {
     es6: true,
-    browser: true
+    browser: true,
   },
   parserOptions: {
     sourceType: "module",
@@ -17,7 +17,8 @@ module.exports = {
     "no-unused-vars": "off",
 
     // Used to improve developer experience
-    "no-console": "off"
+    "no-console": "off",
+    "spaced-comment": ["error", "always"],
   },
   settings: {},
   globals: {
@@ -32,15 +33,17 @@ module.exports = {
     window: "readonly",
   },
 
-  overrides: [{
-    files: ["test/*.ts"],
-    globals: {
-      jest: "readonly",
-      describe: "readonly",
-      expect: "readonly",
-      test: "readonly",
-      beforeEach: "readonly",
-      afterEach: "readonly"
-    }
-  }]
+  overrides: [
+    {
+      files: ["test/*.ts"],
+      globals: {
+        jest: "readonly",
+        describe: "readonly",
+        expect: "readonly",
+        test: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+      },
+    },
+  ],
 }

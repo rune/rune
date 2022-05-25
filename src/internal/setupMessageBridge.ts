@@ -8,10 +8,10 @@ function exhaustiveCheck(_: never) {}
 
 export function messageEventHandler(stateMachineService: StateMachineService) {
   return (event: MessageEvent) => {
-    //We only expect to get Game commands from postMessages
+    // We only expect to get Game commands from postMessages
     const command = getRuneGameCommand(event.data)
 
-    //Ignore non Rune messages
+    // Ignore non Rune messages
     if (!command) {
       return
     }
@@ -20,7 +20,7 @@ export function messageEventHandler(stateMachineService: StateMachineService) {
       throw new Error(`Received incorrect message: ${command}`)
     }
 
-    //TODO - remove the _ commands after all games/clients are migrated to v2
+    // TODO - remove the _ commands after all games/clients are migrated to v2
     switch (command.type) {
       case "pauseGame":
       case "_pauseGame":
@@ -46,10 +46,10 @@ export function setupMessageBridge(
 ) {
   const eventHandler = messageEventHandler(stateMachineService)
 
-  //According to https://github.com/react-native-webview/react-native-webview/issues/356
-  //android webview can only listen to post messages on document (while everything else uses window for that).
+  // According to https://github.com/react-native-webview/react-native-webview/issues/356
+  // android webview can only listen to post messages on document (while everything else uses window for that).
   if (useDocumentForPostMessages) {
-    //The MDN Web API docs do not even list this action, so we need to use any
+    // The MDN Web API docs do not even list this action, so we need to use any
     document.addEventListener("message" as any, eventHandler)
   } else {
     globalThis.addEventListener("message", eventHandler)

@@ -4,7 +4,7 @@ export interface InitInput {
   resumeGame: () => void
   pauseGame: () => void
   getScore: () => number
-  //deprecated
+  // deprecated
   startGame?: () => void
 }
 

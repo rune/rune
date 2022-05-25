@@ -22,7 +22,7 @@ type Context = {
 
 export type StateMachineService = ReturnType<typeof createStateMachine>
 
-//Link to state machine - https://stately.ai/registry/editor/share/ced5de88-385e-44f3-938f-ffa38580b774
+// Link to state machine - https://stately.ai/registry/editor/share/ced5de88-385e-44f3-938f-ffa38580b774
 export function createStateMachine(challengeNumber: number) {
   const machine = createMachine(
     {
@@ -216,12 +216,12 @@ export function createStateMachine(challengeNumber: number) {
   const service = interpret(machine)
 
   service.onTransition((state, event) => {
-    //As soon as state machine is initialized, it calls onTransition, but the state.changed is undefined (see https://xstate.js.org/docs/guides/states.html#state-changed)
+    // As soon as state machine is initialized, it calls onTransition, but the state.changed is undefined (see https://xstate.js.org/docs/guides/states.html#state-changed)
     if (state.changed === undefined) {
       return
     }
 
-    //If nothing has changed inside the state machine (state/context) that means that the event was not handled.
+    // If nothing has changed inside the state machine (state/context) that means that the event was not handled.
     if (!state.changed) {
       const statePath = (state.toStrings() || []).slice(-1)[0]
 

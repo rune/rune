@@ -186,4 +186,51 @@ describe("stateMachine", function () {
       )
     })
   })
+
+  describe("legacy game, new client", () => {
+    test("User starts the game, clicks pause and clicks play again", async function () {
+      testStateMachineCallbacks(
+        [
+          [{ type: "playGame" }, "startGame"],
+          [{ type: "pauseGame" }, "pauseGame"],
+          [{ type: "playGame" }, "resumeGame"],
+        ],
+        true
+      )
+    })
+
+    test("User starts the game, clicks restart", async function () {
+      testStateMachineCallbacks(
+        [
+          [{ type: "playGame" }, "startGame"],
+          [{ type: "restartGame" }, "startGame"],
+        ],
+        true
+      )
+    })
+
+    test("User starts the game, loses it, and starts to play again", async function () {
+      testStateMachineCallbacks(
+        [
+          [{ type: "playGame" }, "startGame"],
+          ["SDK_GAME_OVER", "gameOverMessage"],
+          [{ type: "playGame" }, "startGame"],
+        ],
+        true
+      )
+    })
+
+    test("User starts the game, loses it, starts to play again, pauses, resumes", async function () {
+      testStateMachineCallbacks(
+        [
+          [{ type: "playGame" }, "startGame"],
+          ["SDK_GAME_OVER", "gameOverMessage"],
+          [{ type: "playGame" }, "startGame"],
+          [{ type: "pauseGame" }, "pauseGame"],
+          [{ type: "playGame" }, "resumeGame"],
+        ],
+        true
+      )
+    })
+  })
 })

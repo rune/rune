@@ -17,6 +17,7 @@ export type Events =
 
 type Context = {
   rng: () => number
+  legacyGameStarted: boolean
 } & InitInput
 
 export type StateMachineService = ReturnType<typeof createStateMachine>
@@ -26,13 +27,12 @@ export function createStateMachine(challengeNumber: number) {
   const machine = createMachine(
     {
       tsTypes: {} as import("./stateMachine.typegen").Typegen0,
+      preserveActionOrder: true, // Ensures that assign actions are called in order (see https://xstate.js.org/docs/guides/context.html#action-order)
       schema: {
         context: {} as Context,
         events: {} as Events,
       },
 
-      id: "SDK",
-      initial: "LOADING",
       context: {
         rng: randomNumberGenerator(challengeNumber),
         restartGame: () => {
@@ -47,7 +47,11 @@ export function createStateMachine(challengeNumber: number) {
         pauseGame: () => {
           throw new Error("pauseGame is not initialized!")
         },
+        legacyGameStarted: false,
       },
+
+      id: "SDK",
+      initial: "LOADING",
       states: {
         LOADING: {
           on: {
@@ -68,13 +72,18 @@ export function createStateMachine(challengeNumber: number) {
           initial: "PAUSED",
           states: {
             PLAYING: {
+              entry: "ASSIGN_LEGACY_GAME_STARTED",
               on: {
                 onAppPause: {
                   actions: "CALL_PAUSE_GAME",
                   target: "PAUSED",
                 },
                 onGameOver: {
-                  actions: ["SEND_GAME_OVER", "RESET_DETERMINISTIC_RANDOMNESS"],
+                  actions: [
+                    "SEND_GAME_OVER",
+                    "RESET_DETERMINISTIC_RANDOMNESS",
+                    "ASSIGN_LEGACY_GAME_ENDED",
+                  ],
                   target: "GAME_OVER",
                 },
                 onAppRestart: {
@@ -147,22 +156,22 @@ export function createStateMachine(challengeNumber: number) {
           ...context,
           rng: randomNumberGenerator(challengeNumber),
         })),
-        CALL_RESUME_GAME: ({ resumeGame, startGame }, event) => {
-          if (event.type === "onAppStart (legacy)" && startGame) {
-            startGame()
-          } else {
-            resumeGame()
-          }
+        ASSIGN_LEGACY_GAME_STARTED: assign((context) => ({
+          ...context,
+          legacyGameStarted: true,
+        })),
+        ASSIGN_LEGACY_GAME_ENDED: assign((context) => ({
+          ...context,
+          legacyGameStarted: false,
+        })),
+        CALL_RESUME_GAME: ({ resumeGame, startGame, legacyGameStarted }) => {
+          startGame && !legacyGameStarted ? startGame() : resumeGame()
         },
         CALL_PAUSE_GAME: ({ pauseGame }) => {
           pauseGame()
         },
-        CALL_RESTART_GAME: ({ restartGame, startGame }, event) => {
-          if (event.type === "onAppStart (legacy)" && startGame) {
-            startGame()
-          } else {
-            restartGame()
-          }
+        CALL_RESTART_GAME: ({ restartGame, startGame }) => {
+          startGame ? startGame() : restartGame()
         },
 
         SEND_SCORE: ({ getScore }) => {

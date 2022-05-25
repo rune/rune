@@ -3,6 +3,8 @@ import typescript from "@rollup/plugin-typescript"
 import replace from "@rollup/plugin-replace"
 import { terser } from "rollup-plugin-terser"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
+import injectProcessEnv from "rollup-plugin-inject-process-env"
+
 export default [
   {
     input: "src/browser.ts",
@@ -18,6 +20,9 @@ export default [
         values: {
           globalThis: "window",
         },
+      }),
+      injectProcessEnv({
+        NODE_ENV: "production",
       }),
       typescript({ tsconfig: "./tsconfig.browser.json" }),
       terser({ format: { comments: false } }),

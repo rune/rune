@@ -5,7 +5,7 @@ import {
   simulateNativeApp,
 } from "./helper"
 import { getRuneSdk } from "../src"
-import { LegacyRuneGameCommand, RuneAppCommand } from "../src/api"
+import { LegacyRuneGameCommand, RuneAppCommand } from "../src/types"
 
 type ExpectedCallbacks =
   | null

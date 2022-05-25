@@ -5,6 +5,7 @@ import { terser } from "rollup-plugin-terser"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 
 export default [
+  //Build config used by game devs to include in index file
   {
     input: "src/browser.ts",
     output: {
@@ -22,10 +23,13 @@ export default [
         },
       }),
       typescript({ tsconfig: "./tsconfig.browser.json" }),
+      //Remove comments
       terser({ format: { comments: false } }),
+      //Allow to import packages from node_modules
       nodeResolve(),
     ],
   },
+  // Build used to expose Rune SDK as node module
   {
     input: "src/index.ts",
     output: {
@@ -33,7 +37,18 @@ export default [
       format: "es",
       file: "dist/index.js",
     },
+    //Do not inline xstate
     external: ["xstate"],
+    plugins: [typescript({ tsconfig: "./tsconfig.json" })],
+  },
+  // Build used to expose helper messages for communication with clients
+  {
+    input: "src/internal/api.ts",
+    output: {
+      sourcemap: true,
+      format: "es",
+      file: "dist/internal/api.js",
+    },
     plugins: [typescript({ tsconfig: "./tsconfig.json" })],
   },
 ]

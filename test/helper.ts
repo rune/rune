@@ -5,7 +5,7 @@ import {
   RuneAppCommand,
   getRuneGameEvent,
   stringifyRuneGameCommand,
-} from "../src/api"
+} from "../src/internal/api"
 import { messageEventHandler } from "../src/internal/setupMessageBridge"
 import { StateMachineService } from "../src/internal/stateMachine"
 

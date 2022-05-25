@@ -1,4 +1,4 @@
-import { stringifyRuneGameCommand, RuneGameEvent } from "../src/api"
+import { stringifyRuneGameCommand, RuneGameEvent } from "../src/internal/api"
 import { RuneExport, getRuneSdk } from "../src"
 import {
   messageEventHandler,

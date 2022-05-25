@@ -11,7 +11,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist/* && rollup -c",
+    "build": "yarn generateStateMachineTypes && rm -rf dist/* && rollup -c",
     "prepublishOnly": "yarn build",
     "lint": "eslint . --ext .ts",
     "typecheck": "yarn generateStateMachineTypes && tsc --noEmit",
@@ -32,6 +32,9 @@
     "url": "https://github.com/rune/rune-games-sdk/issues"
   },
   "homepage": "https://github.com/rune/rune-games-sdk#readme",
+  "dependencies": {
+    "xstate": "4.32.1"
+  },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-replace": "^4.0.0",
@@ -53,8 +56,5 @@
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {
-    "xstate": "4.32.1"
-  }
+  ]
 }

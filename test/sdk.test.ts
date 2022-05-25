@@ -19,7 +19,7 @@ describe("sdk", function () {
 
     expect(
       await extractErrMsg(() => {
-        //@ts-expect-error
+        // @ts-expect-error
         Rune.init()
       })
     ).toMatchInlineSnapshot(
@@ -49,7 +49,7 @@ describe("sdk", function () {
     expect(
       await extractErrMsg(() => {
         initRune(Rune, {
-          //@ts-expect-error
+          // @ts-expect-error
           getScore: () => {
             return "99"
           },

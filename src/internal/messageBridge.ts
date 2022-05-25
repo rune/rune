@@ -1,8 +1,8 @@
 import { LegacyRuneGameCommand, RuneAppCommand, RuneGameEvent } from "../types"
 
-//The native app only support strings for post message communication.
-//To identify if received message is used by Rune, we are prefixing all of them with RUNE_MESSAGE_PREFIX. This allows to
-//do the identification without having to JSON.parse data first.
+// The native app only support strings for post message communication.
+// To identify if received message is used by Rune, we are prefixing all of them with RUNE_MESSAGE_PREFIX. This allows to
+// do the identification without having to JSON.parse data first.
 const RUNE_MESSAGE_PREFIX = "RUNE_MSG;"
 
 export function stringifyRuneGameEvent(data: RuneGameEvent) {
@@ -17,23 +17,23 @@ export function getRuneGameCommand(data: unknown) {
 }
 
 export function postRuneEvent(data: RuneGameEvent) {
-  //We only expect to send Game events through postMessages
+  // We only expect to send Game events through postMessages
   const event = stringifyRuneGameEvent(data)
 
-  //Post message for Native app
+  // Post message for Native app
   if (globalThis.ReactNativeWebView) {
     globalThis.ReactNativeWebView.postMessage(event)
 
     return
   }
 
-  //Game is not running in iframe, don't try to send a message and notify user
+  // Game is not running in iframe, don't try to send a message and notify user
   if (globalThis.parent === (globalThis as typeof window)) {
     console.error("Rune SDK has to run in a container")
     return
   }
 
-  //Post message for iframe
+  // Post message for iframe
   globalThis.parent.postMessage(event, "*")
 }
 

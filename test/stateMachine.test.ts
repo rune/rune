@@ -13,9 +13,9 @@ type ExpectedCallbacks =
   | "pauseGame"
   | "restartGame"
   | "gameOverMessage"
-  | "startGame" //legacy
+  | "startGame" // legacy
 
-//Helper function which for each app command (or sdk game over) expects a callback to be called
+// Helper function which for each app command (or sdk game over) expects a callback to be called
 function testStateMachineCallbacks(
   steps: [
     RuneAppCommand | LegacyRuneGameCommand | "SDK_GAME_OVER",
@@ -46,7 +46,7 @@ function testStateMachineCallbacks(
         }),
   })
 
-  //Listen for game over command, if it happens, set the latest callback to gameOverMessage
+  // Listen for game over command, if it happens, set the latest callback to gameOverMessage
   runePostMessageHandler((event) => {
     if (event.type === "GAME_OVER") {
       latestCallback = "gameOverMessage"

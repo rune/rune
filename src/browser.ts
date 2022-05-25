@@ -20,5 +20,5 @@ setupIframe(enableInitialOverlayInBrowser)
 
 setupMessageBridge(stateMachineService, useDocumentForPostMessages)
 
-//Make sure to not export anything else here
+// Make sure to not export anything else here
 export default Rune

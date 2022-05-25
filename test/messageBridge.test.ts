@@ -77,7 +77,7 @@ describe("Message Bridge", () => {
 
       globalThis.dispatchEvent(messageEvent)
 
-      //Cleanup event listener to not impact other tests
+      // Cleanup event listener to not impact other tests
       globalThis.removeEventListener("message", eventHandler)
 
       expect(resumeGame).toHaveBeenCalled()
@@ -96,7 +96,7 @@ describe("Message Bridge", () => {
 
       document.dispatchEvent(messageEvent)
 
-      //Cleanup event listener to not impact other tests
+      // Cleanup event listener to not impact other tests
       document.removeEventListener("message" as any, eventHandler)
 
       expect(resumeGame).toHaveBeenCalled()
@@ -113,7 +113,7 @@ describe("Message Bridge", () => {
 
       messageEventHandler(stateMachineService)(messageEvent)
 
-      //Sanity check to confirm that no error was raised
+      // Sanity check to confirm that no error was raised
       expect(true).toEqual(true)
     })
 

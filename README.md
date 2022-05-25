@@ -31,6 +31,8 @@ Once the player loses the game, your game should call `Rune.gameOver()`. This te
 
 When the player is ready to play again, Rune will call the `restartGame` function. Your game should then reset all gameplay back to the experience as a completely new player, including resetting the score.
 
+Player is also able to restart the game at any given moment, in that case Rune will also call the `restartGame` function.
+
 The player may pause the game through the Rune interface. When this happens, the `pauseGame` function is called to let your game know to freeze all gameplay. Similarly, the `resumeGame` function should unfreeze all gameplay, leaving the player in the same state as before they paused the game.
 
 The Rune SDK may request your game's score at anytime by calling the `getScore` function. This function should return your game's score as a number.

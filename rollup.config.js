@@ -36,4 +36,14 @@ export default [
     external: ["xstate"],
     plugins: [typescript({ tsconfig: "./tsconfig.json" })],
   },
+  {
+    input: "src/api.ts",
+    output: {
+      sourcemap: true,
+      format: "es",
+      file: "dist/api.js",
+    },
+    external: ["xstate"],
+    plugins: [typescript({ tsconfig: "./tsconfig.json" })],
+  },
 ]

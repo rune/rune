@@ -2,9 +2,11 @@
 // website and the game loaded in an iframe using the postMessage api
 // or the webview in the native app.
 import { getRuneGameCommand } from "./messageBridge"
-import { RuneExport } from "../types"
+import { StateMachineService } from "./stateMachine"
 
-export function messageEventHandler(Rune: RuneExport) {
+function exhaustiveCheck(_: never) {}
+
+export function messageEventHandler(stateMachineService: StateMachineService) {
   return (event: MessageEvent) => {
     //We only expect to get Game commands from postMessages
     const command = getRuneGameCommand(event.data)
@@ -14,19 +16,35 @@ export function messageEventHandler(Rune: RuneExport) {
       return
     }
 
-    if (!command.type || !Rune[command.type]) {
+    if (!command.type) {
       throw new Error(`Received incorrect message: ${command}`)
     }
 
-    Rune[command.type]()
+    //TODO - remove the _ commands after all games/clients are migrated to v2
+    switch (command.type) {
+      case "pauseGame":
+      case "_pauseGame":
+        return stateMachineService.send("onAppPause")
+      case "requestScore":
+      case "_requestScore":
+        return stateMachineService.send("onAppRequestScore")
+      case "restartGame":
+        return stateMachineService.send("onAppRestart")
+      case "playGame":
+      case "_resumeGame":
+        return stateMachineService.send("onAppPlay")
+      case "_startGame":
+        return stateMachineService.send("onAppStart (legacy)")
+    }
+    exhaustiveCheck(command)
   }
 }
 
 export function setupMessageBridge(
-  Rune: RuneExport,
+  stateMachineService: StateMachineService,
   useDocumentForPostMessages: boolean
 ) {
-  const eventHandler = messageEventHandler(Rune)
+  const eventHandler = messageEventHandler(stateMachineService)
 
   //According to https://github.com/react-native-webview/react-native-webview/issues/356
   //android webview can only listen to post messages on document (while everything else uses window for that).

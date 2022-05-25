@@ -57,7 +57,7 @@ let isAnimating = true
 let isPlaying = false
 
 // Generate map
-const challengeNumber = Rune.getChallengeNumber();
+const challengeNumber = Rune.getChallengeNumber()
 // const nextChallengeNumber = challengeNumber + 1;
 
 // Derive rotation speed from Rune challenge number.
@@ -89,19 +89,20 @@ app.ticker.add((delta) => {
 })
 
 // Setup functions for starting the game etc.
-function startGame() {
+function restartGame() {
   // Reset score w/o changing container orientation by removing full rotations
   container.rotation = container.rotation % (Math.PI * 2)
 
   // Start actual gameplay
   isAnimating = true
-  isPlaying = true
 }
 function pauseGame() {
   isAnimating = false
+  isPlaying = false
 }
 function resumeGame() {
   isAnimating = true
+  isPlaying = true
 }
 function endGame() {
   isAnimating = false
@@ -126,7 +127,7 @@ for (const eventType of ["click", "touchstart"]) {
 // Initialize Rune SDK with the start/pause/resume functions.
 // Rune will call startGame() to let this game know to start the gameplay.
 Rune.init({
-  startGame,
+  restartGame,
   pauseGame,
   resumeGame,
   getScore,

@@ -1,5 +1,13 @@
-import { getRuneGameEvent, InitInput, RuneExport } from "../src"
-import { RuneGameEvent } from "../src/types"
+import { InitInput, RuneExport } from "../src"
+import {
+  RuneGameEvent,
+  LegacyRuneGameCommand,
+  RuneAppCommand,
+  getRuneGameEvent,
+  stringifyRuneGameCommand,
+} from "../src/api"
+import { messageEventHandler } from "../src/internal/setupMessageBridge"
+import { StateMachineService } from "../src/internal/stateMachine"
 
 export async function extractErrMsg(fn: Function) {
   let errMsg
@@ -11,7 +19,9 @@ export async function extractErrMsg(fn: Function) {
   return errMsg
 }
 
-export function runePostMessageHandler(handler?: (event: RuneGameEvent) => void) {
+export function runePostMessageHandler(
+  handler?: (event: RuneGameEvent) => void
+) {
   globalThis.ReactNativeWebView = {
     postMessage: jest.fn().mockImplementation((data) => {
       const parsedEvent = getRuneGameEvent(data)
@@ -22,6 +32,17 @@ export function runePostMessageHandler(handler?: (event: RuneGameEvent) => void)
       handler?.(parsedEvent)
     }),
   }
+}
+
+export function sendRuneAppCommand(
+  stateMachineService: StateMachineService,
+  command: RuneAppCommand | LegacyRuneGameCommand
+) {
+  messageEventHandler(stateMachineService)(
+    new MessageEvent("message", {
+      data: stringifyRuneGameCommand(command),
+    })
+  )
 }
 
 export function simulateNativeApp() {
@@ -40,7 +61,7 @@ export function simulateIframe() {
 
 export function initRune(Rune: RuneExport, overrides: Partial<InitInput> = {}) {
   Rune.init({
-    startGame: () => {},
+    restartGame: () => {},
     pauseGame: () => {},
     resumeGame: () => {},
     getScore: () => {

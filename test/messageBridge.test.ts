@@ -1,4 +1,5 @@
-import { RuneExport, stringifyRuneGameCommand, getRuneSdk } from "../src"
+import { stringifyRuneGameCommand, RuneGameEvent } from "../src/api"
+import { RuneExport, getRuneSdk } from "../src"
 import {
   messageEventHandler,
   setupMessageBridge,
@@ -10,29 +11,23 @@ import {
   runePostMessageHandler,
   simulateIframe,
 } from "./helper"
-import { RuneGameEvent } from "../src/types"
+import { StateMachineService } from "../src/internal/stateMachine"
 
 let Rune: RuneExport
+let stateMachineService: StateMachineService
+
+const challengeNumber = 1
 
 beforeEach(async () => {
-  delete globalThis.postRuneEvent
   simulateNativeApp()
-  Rune = getRuneSdk()
+
+  const instance = getRuneSdk({ challengeNumber })
+  stateMachineService = instance.stateMachineService
+  Rune = instance.Rune
 })
 
 describe("Message Bridge", () => {
   describe("Rune Game Events", () => {
-    test("should use legacy postMessage if it is available", () => {
-      globalThis.postRuneEvent = jest.fn()
-
-      initRune(Rune)
-
-      expect(globalThis.postRuneEvent).toHaveBeenCalledWith({
-        type: "INIT",
-        version: Rune.version,
-      })
-    })
-
     test("should use ReactNativeWebView postMessage if it is available", () => {
       globalThis.ReactNativeWebView = {
         postMessage: jest.fn(),
@@ -70,14 +65,14 @@ describe("Message Bridge", () => {
 
   describe("Rune Game Commands", () => {
     test("should listen to post messages on window by default", () => {
-      const startGame = jest.fn()
+      const resumeGame = jest.fn()
 
-      const eventHandler = setupMessageBridge(Rune, false)
+      const eventHandler = setupMessageBridge(stateMachineService, false)
 
-      initRune(Rune, { startGame })
+      initRune(Rune, { resumeGame })
 
       const messageEvent = new MessageEvent("message", {
-        data: stringifyRuneGameCommand({ type: "_startGame" }),
+        data: stringifyRuneGameCommand({ type: "playGame" }),
       })
 
       globalThis.dispatchEvent(messageEvent)
@@ -85,18 +80,18 @@ describe("Message Bridge", () => {
       //Cleanup event listener to not impact other tests
       globalThis.removeEventListener("message", eventHandler)
 
-      expect(startGame).toHaveBeenCalled()
+      expect(resumeGame).toHaveBeenCalled()
     })
 
     test("should listen to post messages on document in case of native app on android", () => {
-      const startGame = jest.fn()
+      const resumeGame = jest.fn()
 
-      const eventHandler = setupMessageBridge(Rune, true)
+      const eventHandler = setupMessageBridge(stateMachineService, true)
 
-      initRune(Rune, { startGame })
+      initRune(Rune, { resumeGame })
 
       const messageEvent = new MessageEvent("message", {
-        data: stringifyRuneGameCommand({ type: "_startGame" }),
+        data: stringifyRuneGameCommand({ type: "playGame" }),
       })
 
       document.dispatchEvent(messageEvent)
@@ -104,7 +99,7 @@ describe("Message Bridge", () => {
       //Cleanup event listener to not impact other tests
       document.removeEventListener("message" as any, eventHandler)
 
-      expect(startGame).toHaveBeenCalled()
+      expect(resumeGame).toHaveBeenCalled()
     })
 
     test("should silently ignore non rune commands", async () => {
@@ -116,7 +111,7 @@ describe("Message Bridge", () => {
 
       globalThis.dispatchEvent(messageEvent)
 
-      messageEventHandler(Rune)(messageEvent)
+      messageEventHandler(stateMachineService)(messageEvent)
 
       //Sanity check to confirm that no error was raised
       expect(true).toEqual(true)
@@ -132,7 +127,7 @@ describe("Message Bridge", () => {
 
       expect(
         await extractErrMsg(() => {
-          messageEventHandler(Rune)(messageEvent)
+          messageEventHandler(stateMachineService)(messageEvent)
         })
       ).toEqual(`Received incorrect message: ${badEvent}`)
     })

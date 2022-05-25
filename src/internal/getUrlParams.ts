@@ -4,6 +4,6 @@ export function getUrlParams() {
   return {
     enableInitialOverlayInBrowser: !!data.get("enableInitialOverlayInBrowser"),
     useDocumentForPostMessages: !!data.get("customPostMessages"),
-    challengeNumber: +(data.get("challengeNumber") ?? "1"),
+    challengeNumber: Number(data.get("challengeNumber")) || 1,
   }
 }

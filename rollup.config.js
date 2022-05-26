@@ -5,7 +5,7 @@ import { terser } from "rollup-plugin-terser"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 
 export default [
-  //Build config used by game devs to include in index file
+  // Build config used by game devs to include in index file
   {
     input: "src/browser.ts",
     output: {
@@ -23,9 +23,9 @@ export default [
         },
       }),
       typescript({ tsconfig: "./tsconfig.browser.json" }),
-      //Remove comments
+      // Remove comments
       terser({ format: { comments: false } }),
-      //Allow to import packages from node_modules
+      // Allow to import packages from node_modules
       nodeResolve(),
     ],
   },
@@ -37,7 +37,7 @@ export default [
       format: "es",
       file: "dist/index.js",
     },
-    //Do not inline xstate
+    // Do not inline xstate
     external: ["xstate"],
     plugins: [typescript({ tsconfig: "./tsconfig.json" })],
   },
@@ -46,7 +46,7 @@ export default [
     input: "src/internal/api.ts",
     output: {
       sourcemap: true,
-      format: "es",
+      format: "cjs", // Common js format to easily support node env
       file: "dist/internal/api.js",
     },
     plugins: [typescript({ tsconfig: "./tsconfig.json" })],

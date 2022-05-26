@@ -9,7 +9,7 @@ export function getRuneSdk({ challengeNumber }: { challengeNumber: number }) {
   const stateMachineService = createStateMachine(challengeNumber)
 
   const Rune: RuneExport = {
-    version: "2.0.0",
+    version: "2.0.1",
     init: (input) => {
       validateInput(input)
 

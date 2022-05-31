@@ -6,6 +6,9 @@ import { setupErrorLogging } from "./internal/setupErrorLogging"
 import { setupConsole } from "./internal/setupConsole"
 import { getUrlParams } from "./internal/getUrlParams"
 import { setupForceMute } from "./internal/setupForceMute/setupForceMute"
+import { checkSdkLoadedFirst } from "./internal/checkSdkLoadedFirst"
+
+checkSdkLoadedFirst()
 
 const {
   challengeNumber,

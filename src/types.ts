@@ -51,5 +51,11 @@ export type LegacyRuneGameCommand = {
 }
 
 export type RuneAppCommand = {
-  type: "playGame" | "pauseGame" | "restartGame" | "requestScore"
+  type:
+    | "playGame"
+    | "pauseGame"
+    | "restartGame"
+    | "requestScore"
+    | "enableForceMute"
+    | "disableForceMute"
 }

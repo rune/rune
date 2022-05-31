@@ -5,6 +5,7 @@ import { setupMessageBridge } from "./internal/setupMessageBridge"
 import { setupErrorLogging } from "./internal/setupErrorLogging"
 import { setupConsole } from "./internal/setupConsole"
 import { getUrlParams } from "./internal/getUrlParams"
+import { setupForceMute } from "./internal/setupForceMute/setupForceMute"
 
 const {
   challengeNumber,
@@ -17,6 +18,7 @@ clearStorage()
 setupErrorLogging()
 setupConsole()
 setupIframe(enableInitialOverlayInBrowser)
+setupForceMute()
 
 setupMessageBridge(stateMachineService, useDocumentForPostMessages)
 

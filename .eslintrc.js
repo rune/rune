@@ -17,8 +17,9 @@ module.exports = {
     "no-unused-vars": "off",
 
     // Used to improve developer experience
-    "no-console": "off",
+    "no-console": "error",
     "spaced-comment": ["error", "always"],
+    "no-undef": "off",
   },
   settings: {},
   globals: {

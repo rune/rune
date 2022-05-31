@@ -10,10 +10,9 @@ export function stringifyRuneGameEvent(data: RuneGameEvent) {
 }
 
 export function getRuneGameCommand(data: unknown) {
-  return getRuneGameMessage<{ runeGameCommand: RuneAppCommand | LegacyRuneGameCommand }>(
-    data,
-    "runeGameCommand"
-  )
+  return getRuneGameMessage<{
+    runeGameCommand: RuneAppCommand | LegacyRuneGameCommand
+  }>(data, "runeGameCommand")
 }
 
 export function postRuneEvent(data: RuneGameEvent) {
@@ -29,6 +28,7 @@ export function postRuneEvent(data: RuneGameEvent) {
 
   // Game is not running in iframe, don't try to send a message and notify user
   if (globalThis.parent === (globalThis as typeof window)) {
+    // eslint-disable-next-line no-console
     console.error("Rune SDK has to run in a container")
     return
   }

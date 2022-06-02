@@ -1,3 +1,5 @@
+import { getUrlParams } from "../getUrlParams"
+
 export const forceMute = {
-  enabled: true,
+  enabled: getUrlParams().startMuted,
 }

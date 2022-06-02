@@ -6,14 +6,16 @@ import {
 import { muteAllAudioElements } from "./html5Audio/audioElements"
 import { resetAllMediaElementMutedStates } from "./html5Audio/overrideMediaElementMute"
 
-export function enableForceMute() {
-  forceMute.enabled = true
-  muteAllMasterGainNodes()
-  muteAllAudioElements()
-}
+export function setForceMuteStatus(muted: boolean) {
+  if (muted && !forceMute.enabled) {
+    forceMute.enabled = true
+    muteAllMasterGainNodes()
+    muteAllAudioElements()
+  }
 
-export function disableForceMute() {
-  forceMute.enabled = false
-  unmuteAllMasterGainNodes()
-  resetAllMediaElementMutedStates()
+  if (!muted && forceMute.enabled) {
+    forceMute.enabled = false
+    unmuteAllMasterGainNodes()
+    resetAllMediaElementMutedStates()
+  }
 }

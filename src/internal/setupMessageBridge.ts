@@ -3,6 +3,7 @@
 // or the webview in the native app.
 import { getRuneGameCommand } from "./messageBridge"
 import { StateMachineService } from "./stateMachine"
+import { setForceMuteStatus } from "./setupForceMute/commands"
 
 function exhaustiveCheck(_: never) {}
 
@@ -35,6 +36,8 @@ export function messageEventHandler(stateMachineService: StateMachineService) {
         return stateMachineService.send("onAppPlay")
       case "_startGame":
         return stateMachineService.send("onAppStart (legacy)")
+      case "setForceMuteStatus":
+        return setForceMuteStatus(command.muted)
     }
     exhaustiveCheck(command)
   }

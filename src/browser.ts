@@ -5,11 +5,16 @@ import { setupMessageBridge } from "./internal/setupMessageBridge"
 import { setupErrorLogging } from "./internal/setupErrorLogging"
 import { setupConsole } from "./internal/setupConsole"
 import { getUrlParams } from "./internal/getUrlParams"
+import { setupForceMute } from "./internal/setupForceMute/setupForceMute"
+import { checkSdkLoadedFirst } from "./internal/checkSdkLoadedFirst"
+
+checkSdkLoadedFirst()
 
 const {
   challengeNumber,
   enableInitialOverlayInBrowser,
   useDocumentForPostMessages,
+  startMuted,
 } = getUrlParams()
 const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
@@ -17,6 +22,7 @@ clearStorage()
 setupErrorLogging()
 setupConsole()
 setupIframe(enableInitialOverlayInBrowser)
+setupForceMute(startMuted)
 
 setupMessageBridge(stateMachineService, useDocumentForPostMessages)
 

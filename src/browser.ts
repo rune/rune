@@ -14,6 +14,7 @@ const {
   challengeNumber,
   enableInitialOverlayInBrowser,
   useDocumentForPostMessages,
+  startMuted,
 } = getUrlParams()
 const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
@@ -21,7 +22,7 @@ clearStorage()
 setupErrorLogging()
 setupConsole()
 setupIframe(enableInitialOverlayInBrowser)
-setupForceMute()
+setupForceMute(startMuted)
 
 setupMessageBridge(stateMachineService, useDocumentForPostMessages)
 

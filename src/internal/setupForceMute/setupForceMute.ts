@@ -4,8 +4,10 @@ import { interceptNewAudioElements } from "./html5Audio/interceptNewAudioElement
 import { interceptNewAudioObjects } from "./html5Audio/interceptNewAudioObjects"
 import { overrideMediaElementMute } from "./html5Audio/overrideMediaElementMute"
 import { interceptAudioNodeConnectToInjectMasterGainNode } from "./webAudio/interceptAudioNodeConnectToInjectMasterGainNode"
+import { forceMute } from "./forceMute"
 
-export function setupForceMute() {
+export function setupForceMute(startMuted: boolean) {
+  forceMute.enabled = startMuted
   collectExistingDOMAudioElement()
   interceptNewDOMAudioElements()
   interceptNewAudioElements()

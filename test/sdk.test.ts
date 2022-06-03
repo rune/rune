@@ -145,7 +145,7 @@ describe("sdk", function () {
     expect(scoreEvent?.gamePlayUuid).toEqual("2")
   })
 
-  test("GAME_OVER event should include score from game's getScore() and challenge number", async function () {
+  test("GAME_OVER event should include score from game's getScore(), game play uuid and challenge number", async function () {
     const customChallengeNumber = 123
     const { Rune, stateMachineService } = getRuneSdk({
       challengeNumber: customChallengeNumber,
@@ -213,7 +213,7 @@ describe("sdk", function () {
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
 
-    test("ERR event should be sent when  game over is called during pause", () => {
+    test("ERR event should be sent when game over is called during pause", () => {
       const { Rune } = getRuneSdk({ challengeNumber })
 
       let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined

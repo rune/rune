@@ -35,7 +35,7 @@ export function createStateMachine(challengeNumber: number) {
       },
 
       context: {
-        gamePlayUuid: 'UNSET', // Game play uuid only makes sense while playing
+        gamePlayUuid: "UNSET", // Game play uuid only makes sense while playing
         rng: randomNumberGenerator(challengeNumber),
         restartGame: () => {
           throw new Error("restartGame is not initialized!")
@@ -170,7 +170,7 @@ export function createStateMachine(challengeNumber: number) {
           const { resumeGame, startGame, legacyGameStarted } = context
           startGame && !legacyGameStarted ? startGame() : resumeGame()
 
-          if (event.type === 'onAppPlay') {
+          if (event.type === "onAppPlay") {
             const gamePlayUuid = event.gamePlayUuid
 
             return {
@@ -188,7 +188,7 @@ export function createStateMachine(challengeNumber: number) {
           const { restartGame, startGame } = context
           startGame ? startGame() : restartGame()
 
-          if (event.type === 'onAppPlay' || event.type === 'onAppRestart') {
+          if (event.type === "onAppPlay" || event.type === "onAppRestart") {
             return {
               ...context,
               gamePlayUuid: event.gamePlayUuid

@@ -10,12 +10,13 @@ export type Events =
       })
   | { type: "onGameOver" }
   | { type: "onAppPause" }
-  | { type: "onAppRestart" }
+  | { type: "onAppRestart", gamePlayUuid: string }
   | { type: "onAppRequestScore" }
-  | { type: "onAppPlay" }
+  | { type: "onAppPlay", gamePlayUuid: string }
   | { type: "onAppStart (legacy)" }
 
 type Context = {
+  gamePlayUuid: string
   rng: () => number
   legacyGameStarted: boolean
 } & InitInput
@@ -34,6 +35,7 @@ export function createStateMachine(challengeNumber: number) {
       },
 
       context: {
+        gamePlayUuid: 'UNSET', // Game play uuid only makes sense while playing
         rng: randomNumberGenerator(challengeNumber),
         restartGame: () => {
           throw new Error("restartGame is not initialized!")
@@ -90,6 +92,7 @@ export function createStateMachine(challengeNumber: number) {
                   actions: [
                     "SEND_SCORE",
                     "RESET_DETERMINISTIC_RANDOMNESS",
+                    "ASSIGN_GAME_PLAY_UUID",
                     "CALL_RESTART_GAME",
                   ],
                 },
@@ -105,7 +108,7 @@ export function createStateMachine(challengeNumber: number) {
             PAUSED: {
               on: {
                 onAppPlay: {
-                  actions: "CALL_RESUME_GAME",
+                  actions: ["ASSIGN_GAME_PLAY_UUID", "CALL_RESUME_GAME"],
                   target: "PLAYING",
                 },
                 onGameOver: {
@@ -120,7 +123,7 @@ export function createStateMachine(challengeNumber: number) {
             GAME_OVER: {
               on: {
                 onAppPlay: {
-                  actions: "CALL_RESTART_GAME",
+                  actions: ["ASSIGN_GAME_PLAY_UUID", "CALL_RESTART_GAME"],
                   target: "PLAYING",
                 },
                 onGameOver: {
@@ -146,6 +149,12 @@ export function createStateMachine(challengeNumber: number) {
     },
     {
       actions: {
+        ASSIGN_GAME_PLAY_UUID: assign((context, { gamePlayUuid }) => {
+          return {
+            ...context,
+            gamePlayUuid,
+          }
+        }),
         ASSIGN_CALLBACKS: assign((context, initParams) => {
           return {
             ...context,
@@ -174,13 +183,14 @@ export function createStateMachine(challengeNumber: number) {
           startGame ? startGame() : restartGame()
         },
 
-        SEND_SCORE: ({ getScore }) => {
+        SEND_SCORE: ({ gamePlayUuid, getScore }) => {
           const score = getScore()
 
           validateScore(score)
 
           postRuneEvent({
             type: "SCORE",
+            gamePlayUuid,
             score,
             challengeNumber,
           })
@@ -188,23 +198,25 @@ export function createStateMachine(challengeNumber: number) {
         SEND_INIT: (_, { version }) => {
           postRuneEvent({ type: "INIT", version })
         },
-        SEND_ERROR: (_, event, meta) => {
+        SEND_ERROR: ({gamePlayUuid}, event, meta) => {
           const statePath = (meta.state.history?.toStrings() || []).slice(-1)[0]
 
           const errorMessage = `Fatal issue: Received ${event.type} while in ${statePath}`
 
           postRuneEvent({
             type: "ERR",
+            gamePlayUuid,
             errMsg: errorMessage,
           })
         },
-        SEND_GAME_OVER: ({ getScore }) => {
+        SEND_GAME_OVER: ({ gamePlayUuid, getScore }) => {
           const score = getScore()
 
           validateScore(score)
 
           postRuneEvent({
             type: "GAME_OVER",
+            gamePlayUuid,
             score,
             challengeNumber,
           })
@@ -215,7 +227,7 @@ export function createStateMachine(challengeNumber: number) {
 
   const service = interpret(machine)
 
-  service.onTransition((state, event) => {
+  service.onTransition(( state, event) => {
     // As soon as state machine is initialized, it calls onTransition, but the state.changed is undefined (see https://xstate.js.org/docs/guides/states.html#state-changed)
     if (state.changed === undefined) {
       return
@@ -225,9 +237,11 @@ export function createStateMachine(challengeNumber: number) {
     if (!state.changed) {
       const statePath = (state.toStrings() || []).slice(-1)[0]
 
+      const {gamePlayUuid} = state.context
       const msg = `Received ${event.type} while in ${statePath}`
       postRuneEvent({
         type: "WARNING",
+        gamePlayUuid,
         msg,
       })
     }

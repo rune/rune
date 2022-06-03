@@ -6,6 +6,7 @@ import {
   simulateNativeApp,
 } from "./helper"
 import { getRuneSdk } from "../src"
+import { RuneGameEvent } from "../src/types"
 
 const challengeNumber = 1
 
@@ -81,7 +82,7 @@ describe("sdk", function () {
     expect(packageJson.version).toBe(version)
   })
 
-  test("SCORE event should include score from game's getScore() and challenge number", async function () {
+  test("SCORE event should include score from game's getScore(), game play uuid and challenge number", async function () {
     const customChallengeNumber = 123
 
     const { Rune, stateMachineService } = getRuneSdk({
@@ -95,21 +96,20 @@ describe("sdk", function () {
     initRune(Rune, { getScore })
 
     // Override postRuneEvent to extract score
-    let eventScore: number | undefined
-    let eventChallengeNumber: number | undefined
+    let scoreEvent: Extract<RuneGameEvent, { type: 'SCORE' }> | undefined
 
     runePostMessageHandler((event) => {
       if (event.type === "SCORE") {
-        eventScore = event.score
-        eventChallengeNumber = event.challengeNumber
+        scoreEvent = event
       }
     })
     // Mock game updating its local score and extract using _requestScore
     gameScore = 100
 
     sendRuneAppCommand(stateMachineService, { type: "requestScore" })
-    expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.score).toEqual(gameScore)
+    expect(scoreEvent?.challengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.gamePlayUuid).toEqual('UNSET')
   })
 
   test("should support legacy _requestScore command", async function () {
@@ -125,21 +125,20 @@ describe("sdk", function () {
     initRune(Rune, { getScore })
 
     // Override postRuneEvent to extract score
-    let eventScore: number | undefined
-    let eventChallengeNumber: number | undefined
+    let scoreEvent: Extract<RuneGameEvent, { type: 'SCORE' }> | undefined
 
     runePostMessageHandler((event) => {
       if (event.type === "SCORE") {
-        eventScore = event.score
-        eventChallengeNumber = event.challengeNumber
+        scoreEvent = event
       }
     })
     // Mock game updating its local score and extract using _requestScore
     gameScore = 100
 
     sendRuneAppCommand(stateMachineService, { type: "_requestScore" })
-    expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.score).toEqual(gameScore)
+    expect(scoreEvent?.challengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.gamePlayUuid).toEqual('UNSET')
   })
 
   test("GAME_OVER event should include score from game's getScore() and challenge number", async function () {
@@ -155,13 +154,11 @@ describe("sdk", function () {
     initRune(Rune, { getScore })
 
     // Override postRuneEvent to extract score and challenge number
-    let eventScore: number | undefined
-    let eventChallengeNumber: number | undefined
+    let gameOverEvent: Extract<RuneGameEvent, { type: 'GAME_OVER' }> | undefined
 
     runePostMessageHandler((event) => {
       if (event.type === "GAME_OVER") {
-        eventScore = event.score
-        eventChallengeNumber = event.challengeNumber
+        gameOverEvent = event
       }
     })
 
@@ -169,8 +166,9 @@ describe("sdk", function () {
     gameScore = 100
     sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: '1' })
     Rune.gameOver()
-    expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(customChallengeNumber)
+    expect(gameOverEvent?.score).toEqual(gameScore)
+    expect(gameOverEvent?.challengeNumber).toEqual(customChallengeNumber)
+    expect(gameOverEvent?.gamePlayUuid).toEqual('1')
   })
 
   describe("error state", () => {

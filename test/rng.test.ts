@@ -37,7 +37,7 @@ describe("rng", () => {
 
     initRune(Rune)
 
-    sendRuneAppCommand(stateMachineService, { type: "playGame" })
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
 
     const randomArray2 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)
@@ -53,9 +53,9 @@ describe("rng", () => {
     )
 
     initRune(Rune)
-    sendRuneAppCommand(stateMachineService, { type: "playGame" })
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
     Rune.gameOver()
-    sendRuneAppCommand(stateMachineService, { type: "playGame" })
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "2" })
 
     // See that random numbers are identical
     const randomArray2 = [...Array(7)].map(() =>
@@ -73,8 +73,8 @@ describe("rng", () => {
 
     initRune(Rune)
 
-    sendRuneAppCommand(stateMachineService, { type: "playGame" })
-    sendRuneAppCommand(stateMachineService, { type: "restartGame" })
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+    sendRuneAppCommand(stateMachineService, { type: "restartGame", gamePlayUuid: "2" })
 
     const randomArray2 = [...Array(7)].map(() =>
       Math.round(Rune.deterministicRandom() * 10)

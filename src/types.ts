@@ -29,9 +29,10 @@ declare global {
 // "Events" sent to Rune to e.g. communicate that the game is over
 export type RuneGameEvent =
   | { type: "INIT"; version: string }
-  | { type: "GAME_OVER"; score: number; challengeNumber: number }
-  | { type: "ERR"; errMsg: string }
-  | { type: "WARNING"; msg: string }
+  | { type: "GAME_OVER"; gamePlayUuid: string; score: number; challengeNumber: number }
+  | { type: "SCORE"; gamePlayUuid: string; score: number; challengeNumber: number }
+  | { type: "ERR"; gamePlayUuid: string; errMsg: string }
+  | { type: "WARNING"; gamePlayUuid: string; msg: string }
   | {
       type: "WINDOW_ERR"
       err: {
@@ -41,7 +42,6 @@ export type RuneGameEvent =
         colno: number
       }
     }
-  | { type: "SCORE"; score: number; challengeNumber: number }
   | { type: "BROWSER_INITIAL_OVERLAY_CLICKED" }
   | { type: "BROWSER_IFRAME_LOADED" }
 
@@ -51,5 +51,6 @@ export type LegacyRuneGameCommand = {
 }
 
 export type RuneAppCommand =
-  | { type: "playGame" | "pauseGame" | "restartGame" | "requestScore" }
+  | { type: "pauseGame" | "requestScore" }
+  | { type: "playGame" | "restartGame"; gamePlayUuid: string }
   | { type: "setForceMuteStatus"; muted: boolean }

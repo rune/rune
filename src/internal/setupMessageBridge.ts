@@ -30,10 +30,11 @@ export function messageEventHandler(stateMachineService: StateMachineService) {
       case "_requestScore":
         return stateMachineService.send("onAppRequestScore")
       case "restartGame":
-        return stateMachineService.send("onAppRestart")
+        return stateMachineService.send("onAppRestart", { gamePlayUuid: command.gamePlayUuid })
       case "playGame":
+        return stateMachineService.send("onAppPlay", { gamePlayUuid: command.gamePlayUuid })
       case "_resumeGame":
-        return stateMachineService.send("onAppPlay")
+        return stateMachineService.send("onAppPlay", { gamePlayUuid: "UNKNOWN" })
       case "_startGame":
         return stateMachineService.send("onAppStart (legacy)")
       case "setForceMuteStatus":

@@ -74,34 +74,34 @@ beforeEach(async () => {
 describe("stateMachine", function () {
   test("User starts the game, clicks pause and clicks play again", async function () {
     testStateMachineCallbacks([
-      [{ type: "playGame" }, "resumeGame"],
+      [{ type: "playGame", gamePlayUuid: "1" }, "resumeGame"],
       [{ type: "pauseGame" }, "pauseGame"],
-      [{ type: "playGame" }, "resumeGame"],
+      [{ type: "playGame", gamePlayUuid: "2" }, "resumeGame"],
     ])
   })
 
   test("User starts the game, clicks restart", async function () {
     testStateMachineCallbacks([
-      [{ type: "playGame" }, "resumeGame"],
-      [{ type: "restartGame" }, "restartGame"],
+      [{ type: "playGame", gamePlayUuid: "1" }, "resumeGame"],
+      [{ type: "restartGame", gamePlayUuid: "2" }, "restartGame"],
     ])
   })
 
   test("User starts the game, loses it, and starts to play again", async function () {
     testStateMachineCallbacks([
-      [{ type: "playGame" }, "resumeGame"],
+      [{ type: "playGame", gamePlayUuid: "1" }, "resumeGame"],
       ["SDK_GAME_OVER", "gameOverMessage"],
-      [{ type: "playGame" }, "restartGame"],
+      [{ type: "playGame", gamePlayUuid: "2" }, "restartGame"],
     ])
   })
 
   test("User starts the game, loses it, starts to play again, pauses, resumes", async function () {
     testStateMachineCallbacks([
-      [{ type: "playGame" }, "resumeGame"],
+      [{ type: "playGame", gamePlayUuid: "1" }, "resumeGame"],
       ["SDK_GAME_OVER", "gameOverMessage"],
-      [{ type: "playGame" }, "restartGame"],
+      [{ type: "playGame", gamePlayUuid: "2" }, "restartGame"],
       [{ type: "pauseGame" }, "pauseGame"],
-      [{ type: "playGame" }, "resumeGame"],
+      [{ type: "playGame", gamePlayUuid: "3" }, "resumeGame"],
     ])
   })
 
@@ -191,9 +191,9 @@ describe("stateMachine", function () {
     test("User starts the game, clicks pause and clicks play again", async function () {
       testStateMachineCallbacks(
         [
-          [{ type: "playGame" }, "startGame"],
+          [{ type: "playGame", gamePlayUuid: "1" }, "startGame"],
           [{ type: "pauseGame" }, "pauseGame"],
-          [{ type: "playGame" }, "resumeGame"],
+          [{ type: "playGame", gamePlayUuid: "2" }, "resumeGame"],
         ],
         true
       )
@@ -202,8 +202,8 @@ describe("stateMachine", function () {
     test("User starts the game, clicks restart", async function () {
       testStateMachineCallbacks(
         [
-          [{ type: "playGame" }, "startGame"],
-          [{ type: "restartGame" }, "startGame"],
+          [{ type: "playGame", gamePlayUuid: "1" }, "startGame"],
+          [{ type: "restartGame", gamePlayUuid: "2" }, "startGame"],
         ],
         true
       )
@@ -212,9 +212,9 @@ describe("stateMachine", function () {
     test("User starts the game, loses it, and starts to play again", async function () {
       testStateMachineCallbacks(
         [
-          [{ type: "playGame" }, "startGame"],
+          [{ type: "playGame", gamePlayUuid: "1" }, "startGame"],
           ["SDK_GAME_OVER", "gameOverMessage"],
-          [{ type: "playGame" }, "startGame"],
+          [{ type: "playGame", gamePlayUuid: "2" }, "startGame"],
         ],
         true
       )
@@ -223,11 +223,11 @@ describe("stateMachine", function () {
     test("User starts the game, loses it, starts to play again, pauses, resumes", async function () {
       testStateMachineCallbacks(
         [
-          [{ type: "playGame" }, "startGame"],
+          [{ type: "playGame", gamePlayUuid: "1" }, "startGame"],
           ["SDK_GAME_OVER", "gameOverMessage"],
-          [{ type: "playGame" }, "startGame"],
+          [{ type: "playGame", gamePlayUuid: "2" }, "startGame"],
           [{ type: "pauseGame" }, "pauseGame"],
-          [{ type: "playGame" }, "resumeGame"],
+          [{ type: "playGame", gamePlayUuid: "3" }, "resumeGame"],
         ],
         true
       )

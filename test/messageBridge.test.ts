@@ -72,7 +72,7 @@ describe("Message Bridge", () => {
       initRune(Rune, { resumeGame })
 
       const messageEvent = new MessageEvent("message", {
-        data: stringifyRuneGameCommand({ type: "playGame" }),
+        data: stringifyRuneGameCommand({ type: "playGame", gamePlayUuid: "1" }),
       })
 
       globalThis.dispatchEvent(messageEvent)
@@ -91,7 +91,7 @@ describe("Message Bridge", () => {
       initRune(Rune, { resumeGame })
 
       const messageEvent = new MessageEvent("message", {
-        data: stringifyRuneGameCommand({ type: "playGame" }),
+        data: stringifyRuneGameCommand({ type: "playGame", gamePlayUuid: "1" }),
       })
 
       document.dispatchEvent(messageEvent)

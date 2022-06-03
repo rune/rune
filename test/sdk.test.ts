@@ -6,6 +6,7 @@ import {
   simulateNativeApp,
 } from "./helper"
 import { getRuneSdk } from "../src"
+import { RuneGameEvent } from "../src/types"
 
 const challengeNumber = 1
 
@@ -68,20 +69,20 @@ describe("sdk", function () {
     const { Rune } = getRuneSdk({ challengeNumber })
     const packageJson = require("../package.json")
 
-    let version: string | undefined
+    let initEvent: Extract<RuneGameEvent, { type: "INIT" }> | undefined
 
     runePostMessageHandler((event) => {
       if (event.type === "INIT") {
-        version = event.version
+        initEvent = event
       }
     })
 
     initRune(Rune)
 
-    expect(packageJson.version).toBe(version)
+    expect(initEvent?.version).toBe(packageJson.version)
   })
 
-  test("SCORE event should include score from game's getScore() and challenge number", async function () {
+  test("SCORE event should include score from game's getScore(), game play uuid and challenge number", async function () {
     const customChallengeNumber = 123
 
     const { Rune, stateMachineService } = getRuneSdk({
@@ -95,21 +96,22 @@ describe("sdk", function () {
     initRune(Rune, { getScore })
 
     // Override postRuneEvent to extract score
-    let eventScore: number | undefined
-    let eventChallengeNumber: number | undefined
+    let scoreEvent: Extract<RuneGameEvent, { type: "SCORE" }> | undefined
 
     runePostMessageHandler((event) => {
       if (event.type === "SCORE") {
-        eventScore = event.score
-        eventChallengeNumber = event.challengeNumber
+        scoreEvent = event
       }
     })
     // Mock game updating its local score and extract using _requestScore
     gameScore = 100
 
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+    sendRuneAppCommand(stateMachineService, { type: "restartGame", gamePlayUuid: "2" })
     sendRuneAppCommand(stateMachineService, { type: "requestScore" })
-    expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.score).toEqual(gameScore)
+    expect(scoreEvent?.challengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.gamePlayUuid).toEqual("2")
   })
 
   test("should support legacy _requestScore command", async function () {
@@ -125,24 +127,25 @@ describe("sdk", function () {
     initRune(Rune, { getScore })
 
     // Override postRuneEvent to extract score
-    let eventScore: number | undefined
-    let eventChallengeNumber: number | undefined
+    let scoreEvent: Extract<RuneGameEvent, { type: "SCORE" }> | undefined
 
     runePostMessageHandler((event) => {
       if (event.type === "SCORE") {
-        eventScore = event.score
-        eventChallengeNumber = event.challengeNumber
+        scoreEvent = event
       }
     })
     // Mock game updating its local score and extract using _requestScore
     gameScore = 100
 
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+    sendRuneAppCommand(stateMachineService, { type: "restartGame", gamePlayUuid: "2" })
     sendRuneAppCommand(stateMachineService, { type: "_requestScore" })
-    expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.score).toEqual(gameScore)
+    expect(scoreEvent?.challengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.gamePlayUuid).toEqual("2")
   })
 
-  test("GAME_OVER event should include score from game's getScore() and challenge number", async function () {
+  test("GAME_OVER event should include score from game's getScore(), game play uuid and challenge number", async function () {
     const customChallengeNumber = 123
     const { Rune, stateMachineService } = getRuneSdk({
       challengeNumber: customChallengeNumber,
@@ -155,98 +158,101 @@ describe("sdk", function () {
     initRune(Rune, { getScore })
 
     // Override postRuneEvent to extract score and challenge number
-    let eventScore: number | undefined
-    let eventChallengeNumber: number | undefined
+    let gameOverEvent: Extract<RuneGameEvent, { type: "GAME_OVER" }> | undefined
 
     runePostMessageHandler((event) => {
       if (event.type === "GAME_OVER") {
-        eventScore = event.score
-        eventChallengeNumber = event.challengeNumber
+        gameOverEvent = event
       }
     })
 
     // Mock game updating its local score and extract using gameOver
     gameScore = 100
-    sendRuneAppCommand(stateMachineService, { type: "playGame" })
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
     Rune.gameOver()
-    expect(eventScore).toEqual(gameScore)
-    expect(eventChallengeNumber).toEqual(customChallengeNumber)
+    expect(gameOverEvent?.score).toEqual(gameScore)
+    expect(gameOverEvent?.challengeNumber).toEqual(customChallengeNumber)
+    expect(gameOverEvent?.gamePlayUuid).toEqual("1")
   })
 
   describe("error state", () => {
     test("ERR event should be sent when init is called multiple times", () => {
       const { Rune } = getRuneSdk({ challengeNumber })
 
-      let error: string | null = null
+      let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined
 
       runePostMessageHandler((event) => {
         if (event.type === "ERR") {
-          error = event.errMsg
+          errEvent = event
         }
       })
 
       initRune(Rune)
       initRune(Rune)
 
-      expect(error).toEqual(
+      expect(errEvent?.errMsg).toEqual(
         "Fatal issue: Received onGameInit while in INIT.PAUSED"
       )
+      expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
 
     test("ERR event should be sent when game over is without initialization", () => {
       const { Rune } = getRuneSdk({ challengeNumber })
 
-      let error: string | null = null
+      let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined
 
       runePostMessageHandler((event) => {
         if (event.type === "ERR") {
-          error = event.errMsg
+          errEvent = event
         }
       })
 
       Rune.gameOver()
 
-      expect(error).toEqual("Fatal issue: Received onGameOver while in LOADING")
+      expect(errEvent?.errMsg).toEqual("Fatal issue: Received onGameOver while in LOADING")
+      expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
 
-    test("ERR event should be sent when  game over is called during pause", () => {
+    test("ERR event should be sent when game over is called during pause", () => {
       const { Rune } = getRuneSdk({ challengeNumber })
 
-      let error: string | null = null
+      let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined
 
       runePostMessageHandler((event) => {
         if (event.type === "ERR") {
-          error = event.errMsg
+          errEvent = event
         }
       })
 
       initRune(Rune)
       Rune.gameOver()
 
-      expect(error).toEqual(
+      expect(errEvent?.errMsg).toEqual(
         "Fatal issue: Received onGameOver while in INIT.PAUSED"
       )
+      expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
 
     test("ERR event should be sent when game over is called multiple times in a row", () => {
       const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
-      let error: string | null = null
+      let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined
 
       runePostMessageHandler((event) => {
         if (event.type === "ERR") {
-          error = event.errMsg
+          errEvent = event
         }
       })
 
       initRune(Rune)
-      sendRuneAppCommand(stateMachineService, { type: "playGame" })
+      sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
       Rune.gameOver()
       Rune.gameOver()
 
-      expect(error).toEqual(
+      expect(errEvent?.errMsg).toEqual(
         "Fatal issue: Received onGameOver while in INIT.GAME_OVER"
       )
+      expect(errEvent?.gamePlayUuid).toEqual("1")
     })
   })
 
@@ -254,14 +260,17 @@ describe("sdk", function () {
     const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
     initRune(Rune)
 
-    let msg = ""
+    let warningEvent: Extract<RuneGameEvent, { type: "WARNING" }> | undefined
     runePostMessageHandler((event) => {
       if (event.type === "WARNING") {
-        msg = event.msg
+        warningEvent = event
       }
     })
 
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
     sendRuneAppCommand(stateMachineService, { type: "pauseGame" })
-    expect(msg).toEqual("Received onAppPause while in INIT.PAUSED")
+    sendRuneAppCommand(stateMachineService, { type: "pauseGame" })
+    expect(warningEvent?.msg).toEqual("Received onAppPause while in INIT.PAUSED")
+    expect(warningEvent?.gamePlayUuid).toEqual("1")
   })
 })

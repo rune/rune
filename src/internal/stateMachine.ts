@@ -10,12 +10,13 @@ export type Events =
       })
   | { type: "onGameOver" }
   | { type: "onAppPause" }
-  | { type: "onAppRestart" }
+  | { type: "onAppRestart", gamePlayUuid: string }
   | { type: "onAppRequestScore" }
-  | { type: "onAppPlay" }
+  | { type: "onAppPlay", gamePlayUuid: string }
   | { type: "onAppStart (legacy)" }
 
 type Context = {
+  gamePlayUuid: string
   rng: () => number
   legacyGameStarted: boolean
 } & InitInput
@@ -34,6 +35,7 @@ export function createStateMachine(challengeNumber: number) {
       },
 
       context: {
+        gamePlayUuid: "UNSET", // Game play uuid only makes sense while playing
         rng: randomNumberGenerator(challengeNumber),
         restartGame: () => {
           throw new Error("restartGame is not initialized!")
@@ -164,23 +166,48 @@ export function createStateMachine(challengeNumber: number) {
           ...context,
           legacyGameStarted: false,
         })),
-        CALL_RESUME_GAME: ({ resumeGame, startGame, legacyGameStarted }) => {
+        CALL_RESUME_GAME: assign((context, event) => {
+          const { resumeGame, startGame, legacyGameStarted } = context
           startGame && !legacyGameStarted ? startGame() : resumeGame()
-        },
+
+          // TODO: Remove this checks after removing onAppStart (legacy)
+          if (event.type === "onAppPlay") {
+            const gamePlayUuid = event.gamePlayUuid
+
+            return {
+              ...context,
+              gamePlayUuid,
+            }
+          }
+
+          return context
+        }),
         CALL_PAUSE_GAME: ({ pauseGame }) => {
           pauseGame()
         },
-        CALL_RESTART_GAME: ({ restartGame, startGame }) => {
+        CALL_RESTART_GAME: assign((context, event) => {
+          const { restartGame, startGame } = context
           startGame ? startGame() : restartGame()
-        },
 
-        SEND_SCORE: ({ getScore }) => {
+          // TODO: Remove this checks after removing onAppStart (legacy)
+          if (event.type === "onAppPlay" || event.type === "onAppRestart") {
+            return {
+              ...context,
+              gamePlayUuid: event.gamePlayUuid
+            }
+          }
+
+          return context;
+        }),
+
+        SEND_SCORE: ({ gamePlayUuid, getScore }) => {
           const score = getScore()
 
           validateScore(score)
 
           postRuneEvent({
             type: "SCORE",
+            gamePlayUuid,
             score,
             challengeNumber,
           })
@@ -188,23 +215,25 @@ export function createStateMachine(challengeNumber: number) {
         SEND_INIT: (_, { version }) => {
           postRuneEvent({ type: "INIT", version })
         },
-        SEND_ERROR: (_, event, meta) => {
+        SEND_ERROR: ({ gamePlayUuid }, event, meta) => {
           const statePath = (meta.state.history?.toStrings() || []).slice(-1)[0]
 
           const errorMessage = `Fatal issue: Received ${event.type} while in ${statePath}`
 
           postRuneEvent({
             type: "ERR",
+            gamePlayUuid,
             errMsg: errorMessage,
           })
         },
-        SEND_GAME_OVER: ({ getScore }) => {
+        SEND_GAME_OVER: ({ gamePlayUuid, getScore }) => {
           const score = getScore()
 
           validateScore(score)
 
           postRuneEvent({
             type: "GAME_OVER",
+            gamePlayUuid,
             score,
             challengeNumber,
           })
@@ -225,9 +254,11 @@ export function createStateMachine(challengeNumber: number) {
     if (!state.changed) {
       const statePath = (state.toStrings() || []).slice(-1)[0]
 
+      const { gamePlayUuid } = state.context
       const msg = `Received ${event.type} while in ${statePath}`
       postRuneEvent({
         type: "WARNING",
+        gamePlayUuid,
         msg,
       })
     }

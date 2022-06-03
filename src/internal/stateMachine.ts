@@ -170,6 +170,7 @@ export function createStateMachine(challengeNumber: number) {
           const { resumeGame, startGame, legacyGameStarted } = context
           startGame && !legacyGameStarted ? startGame() : resumeGame()
 
+          // TODO: Remove this checks after removing onAppStart (legacy)
           if (event.type === "onAppPlay") {
             const gamePlayUuid = event.gamePlayUuid
 
@@ -188,6 +189,7 @@ export function createStateMachine(challengeNumber: number) {
           const { restartGame, startGame } = context
           startGame ? startGame() : restartGame()
 
+          // TODO: Remove this checks after removing onAppStart (legacy)
           if (event.type === "onAppPlay" || event.type === "onAppRestart") {
             return {
               ...context,

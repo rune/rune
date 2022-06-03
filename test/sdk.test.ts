@@ -179,65 +179,68 @@ describe("sdk", function () {
     test("ERR event should be sent when init is called multiple times", () => {
       const { Rune } = getRuneSdk({ challengeNumber })
 
-      let error: string | null = null
+      let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined
 
       runePostMessageHandler((event) => {
         if (event.type === "ERR") {
-          error = event.errMsg
+          errEvent = event
         }
       })
 
       initRune(Rune)
       initRune(Rune)
 
-      expect(error).toEqual(
+      expect(errEvent?.errMsg).toEqual(
         "Fatal issue: Received onGameInit while in INIT.PAUSED"
       )
+      expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
 
     test("ERR event should be sent when game over is without initialization", () => {
       const { Rune } = getRuneSdk({ challengeNumber })
 
-      let error: string | null = null
+      let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined
 
       runePostMessageHandler((event) => {
         if (event.type === "ERR") {
-          error = event.errMsg
+          errEvent = event
         }
       })
 
       Rune.gameOver()
 
-      expect(error).toEqual("Fatal issue: Received onGameOver while in LOADING")
+      expect(errEvent?.errMsg).toEqual("Fatal issue: Received onGameOver while in LOADING")
+      expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
 
     test("ERR event should be sent when  game over is called during pause", () => {
       const { Rune } = getRuneSdk({ challengeNumber })
 
-      let error: string | null = null
+      let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined
 
       runePostMessageHandler((event) => {
         if (event.type === "ERR") {
-          error = event.errMsg
+          errEvent = event
         }
       })
 
       initRune(Rune)
       Rune.gameOver()
 
-      expect(error).toEqual(
+      expect(errEvent?.errMsg).toEqual(
         "Fatal issue: Received onGameOver while in INIT.PAUSED"
       )
+      expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
 
     test("ERR event should be sent when game over is called multiple times in a row", () => {
       const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
-      let error: string | null = null
+      let errEvent: Extract<RuneGameEvent, { type: "ERR" }> | undefined
 
       runePostMessageHandler((event) => {
         if (event.type === "ERR") {
-          error = event.errMsg
+          errEvent = event
         }
       })
 
@@ -246,9 +249,10 @@ describe("sdk", function () {
       Rune.gameOver()
       Rune.gameOver()
 
-      expect(error).toEqual(
+      expect(errEvent?.errMsg).toEqual(
         "Fatal issue: Received onGameOver while in INIT.GAME_OVER"
       )
+      expect(errEvent?.gamePlayUuid).toEqual("1")
     })
   })
 

@@ -167,7 +167,7 @@ describe("sdk", function () {
 
     // Mock game updating its local score and extract using gameOver
     gameScore = 100
-    sendRuneAppCommand(stateMachineService, { type: "playGame" })
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: '1' })
     Rune.gameOver()
     expect(eventScore).toEqual(gameScore)
     expect(eventChallengeNumber).toEqual(customChallengeNumber)
@@ -240,7 +240,7 @@ describe("sdk", function () {
       })
 
       initRune(Rune)
-      sendRuneAppCommand(stateMachineService, { type: "playGame" })
+      sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: '1' })
       Rune.gameOver()
       Rune.gameOver()
 

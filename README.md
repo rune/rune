@@ -6,7 +6,7 @@ Tiny SDK for making your HTML5 game run inside [Rune](https://play.google.com/st
 
 ## Install
 
-Include the following line at the top of your `index.html` file:
+Include the following line in your `index.html` file before loading any other JS scripts:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@2.0/dist/browser.min.js"></script>
@@ -99,7 +99,7 @@ This is the case by default for most games.
 
 ## Audio
 
-Your game can have soundtracks and sound effects. However, your game should not play any audio before the `resumeGame` function is called.
+Your game can have music and sound effects. Rune will automatically mute your game while it is being loaded etc.
 
 ## Help
 

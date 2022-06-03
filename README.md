@@ -99,7 +99,7 @@ This is the case by default for most games.
 
 ## Audio
 
-Your game can have soundtracks and sound effects. However, your game should not play any audio before the `resumeGame` function is called.
+Your game can have music and sound effects. Rune will automatically mute your game while it is being loaded etc.
 
 ## Help
 

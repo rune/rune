@@ -200,7 +200,10 @@ export function createStateMachine(challengeNumber: number) {
           return context;
         }),
 
-        SEND_SCORE: ({ gamePlayUuid, getScore }) => {
+        // NB: Workaround for preserveActionOrder=true not working
+        // TODO: Check how to fix it
+        SEND_SCORE: assign((context) => {
+          const { gamePlayUuid, getScore } = context
           const score = getScore()
 
           validateScore(score)
@@ -211,7 +214,9 @@ export function createStateMachine(challengeNumber: number) {
             score,
             challengeNumber,
           })
-        },
+
+          return context
+        }),
         SEND_INIT: (_, { version }) => {
           postRuneEvent({ type: "INIT", version })
         },

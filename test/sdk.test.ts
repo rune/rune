@@ -82,7 +82,44 @@ describe("sdk", function () {
     expect(initEvent?.version).toBe(packageJson.version)
   })
 
-  test("SCORE event should include score from game's getScore(), game play uuid and challenge number", async function () {
+  test("SCORE event should include score from game's getScore(), game play uuid and challenge number after requesting score", async function () {
+    const customChallengeNumber = 123
+
+    const { Rune, stateMachineService } = getRuneSdk({
+      challengeNumber: customChallengeNumber,
+    })
+    // Init with mock functions to get and set score
+    let gameScore = 0
+    const getScore = () => {
+      return gameScore
+    }
+    const restartGame = () => {
+      // Mock game reseting its local score
+      gameScore = 0
+    }
+    initRune(Rune, { getScore, restartGame })
+
+    // Override postRuneEvent to extract score
+    let scoreEvent: Extract<RuneGameEvent, { type: "SCORE" }> | undefined
+
+    runePostMessageHandler((event) => {
+      if (event.type === "SCORE") {
+        scoreEvent = event
+      }
+    })
+
+    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+    // Mock game updating its local score
+    gameScore = 100
+    sendRuneAppCommand(stateMachineService, { type: "requestScore" })
+
+    // Score event should contain score achieved in the game
+    expect(scoreEvent?.score).toEqual(100)
+    expect(scoreEvent?.challengeNumber).toEqual(customChallengeNumber)
+    expect(scoreEvent?.gamePlayUuid).toEqual("1")
+  })
+
+  test("SCORE event should include score from game's getScore(), game play uuid and challenge number after game restart", async function () {
     const customChallengeNumber = 123
 
     const { Rune, stateMachineService } = getRuneSdk({

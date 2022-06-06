@@ -10,9 +10,9 @@ export type Events =
       })
   | { type: "onGameOver" }
   | { type: "onAppPause" }
-  | { type: "onAppRestart", gamePlayUuid: string }
+  | { type: "onAppRestart"; gamePlayUuid: string }
   | { type: "onAppRequestScore" }
-  | { type: "onAppPlay", gamePlayUuid: string }
+  | { type: "onAppPlay"; gamePlayUuid: string }
   | { type: "onAppStart (legacy)" }
 
 type Context = {
@@ -23,7 +23,7 @@ type Context = {
 
 export type StateMachineService = ReturnType<typeof createStateMachine>
 
-// Link to state machine - https://stately.ai/registry/editor/share/ced5de88-385e-44f3-938f-ffa38580b774
+// Link to state machine - https://stately.ai/registry/systems/8c37004d-1cc7-4c13-b5a0-9be06d1a2abc
 export function createStateMachine(challengeNumber: number) {
   const machine = createMachine(
     {
@@ -51,6 +51,8 @@ export function createStateMachine(challengeNumber: number) {
         },
         legacyGameStarted: false,
       },
+
+      // START - Exported JSON from state machine (don't remove newline below)
 
       id: "SDK",
       initial: "LOADING",
@@ -146,6 +148,8 @@ export function createStateMachine(challengeNumber: number) {
           },
         },
       },
+
+      // END - Exported JSON from state machine (don't remove newline above)
     },
     {
       actions: {

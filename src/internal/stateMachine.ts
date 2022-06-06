@@ -28,7 +28,7 @@ export function createStateMachine(challengeNumber: number) {
   const machine = createMachine(
     {
       tsTypes: {} as import("./stateMachine.typegen").Typegen0,
-      preserveActionOrder: true, // Ensures that assign actions are called in order (see https://xstate.js.org/docs/guides/context.html#action-order)
+      preserveActionOrder: true, // Ensures that assign actions are called in order (see https://xstate.js.org/docs/guides/context.html#action-order and https://github.com/statelyai/xstate/issues/3383)
       schema: {
         context: {} as Context,
         events: {} as Events,
@@ -178,6 +178,7 @@ export function createStateMachine(challengeNumber: number) {
           pauseGame()
         },
         CALL_RESTART_GAME: ({ restartGame, startGame }) => {
+          // TODO: remove startGame once all games are migrated to v2
           startGame ? startGame() : restartGame()
         },
         SEND_SCORE: ({ gamePlayUuid, getScore }) => {

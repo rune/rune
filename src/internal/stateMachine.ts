@@ -10,9 +10,9 @@ export type Events =
       })
   | { type: "onGameOver" }
   | { type: "onAppPause" }
-  | { type: "onAppRestart", gamePlayUuid: string }
+  | { type: "onAppRestart"; gamePlayUuid: string }
   | { type: "onAppRequestScore" }
-  | { type: "onAppPlay", gamePlayUuid: string }
+  | { type: "onAppPlay"; gamePlayUuid: string }
   | { type: "onAppStart (legacy)" }
 
 type Context = {
@@ -23,12 +23,12 @@ type Context = {
 
 export type StateMachineService = ReturnType<typeof createStateMachine>
 
-// Link to state machine - https://stately.ai/registry/editor/share/ced5de88-385e-44f3-938f-ffa38580b774
+// Link to state machine - https://stately.ai/registry/systems/8c37004d-1cc7-4c13-b5a0-9be06d1a2abc
 export function createStateMachine(challengeNumber: number) {
   const machine = createMachine(
     {
       tsTypes: {} as import("./stateMachine.typegen").Typegen0,
-      preserveActionOrder: true, // Ensures that assign actions are called in order (see https://xstate.js.org/docs/guides/context.html#action-order)
+      preserveActionOrder: true, // Ensures that assign actions are called in order (see https://xstate.js.org/docs/guides/context.html#action-order and https://github.com/statelyai/xstate/issues/3383)
       schema: {
         context: {} as Context,
         events: {} as Events,
@@ -51,6 +51,8 @@ export function createStateMachine(challengeNumber: number) {
         },
         legacyGameStarted: false,
       },
+
+      // START - Exported JSON from state machine (don't remove newline below)
 
       id: "SDK",
       initial: "LOADING",
@@ -91,6 +93,7 @@ export function createStateMachine(challengeNumber: number) {
                 onAppRestart: {
                   actions: [
                     "SEND_SCORE",
+                    "ASSIGN_GAME_PLAY_UUID",
                     "RESET_DETERMINISTIC_RANDOMNESS",
                     "CALL_RESTART_GAME",
                   ],
@@ -107,7 +110,7 @@ export function createStateMachine(challengeNumber: number) {
             PAUSED: {
               on: {
                 onAppPlay: {
-                  actions: "CALL_RESUME_GAME",
+                  actions: ["ASSIGN_GAME_PLAY_UUID", "CALL_RESUME_GAME"],
                   target: "PLAYING",
                 },
                 onGameOver: {
@@ -122,7 +125,7 @@ export function createStateMachine(challengeNumber: number) {
             GAME_OVER: {
               on: {
                 onAppPlay: {
-                  actions: "CALL_RESTART_GAME",
+                  actions: ["ASSIGN_GAME_PLAY_UUID", "CALL_RESTART_GAME"],
                   target: "PLAYING",
                 },
                 onGameOver: {
@@ -145,6 +148,8 @@ export function createStateMachine(challengeNumber: number) {
           },
         },
       },
+
+      // END - Exported JSON from state machine (don't remove newline above)
     },
     {
       actions: {
@@ -166,40 +171,20 @@ export function createStateMachine(challengeNumber: number) {
           ...context,
           legacyGameStarted: false,
         })),
-        CALL_RESUME_GAME: assign((context, event) => {
-          const { resumeGame, startGame, legacyGameStarted } = context
+        ASSIGN_GAME_PLAY_UUID: assign((context, event) => ({
+          ...context,
+          gamePlayUuid: event.gamePlayUuid,
+        })),
+        CALL_RESUME_GAME: ({ resumeGame, startGame, legacyGameStarted }) => {
           startGame && !legacyGameStarted ? startGame() : resumeGame()
-
-          // TODO: Remove this checks after removing onAppStart (legacy)
-          if (event.type === "onAppPlay") {
-            const gamePlayUuid = event.gamePlayUuid
-
-            return {
-              ...context,
-              gamePlayUuid,
-            }
-          }
-
-          return context
-        }),
+        },
         CALL_PAUSE_GAME: ({ pauseGame }) => {
           pauseGame()
         },
-        CALL_RESTART_GAME: assign((context, event) => {
-          const { restartGame, startGame } = context
+        CALL_RESTART_GAME: ({ restartGame, startGame }) => {
+          // TODO: remove startGame once all games are migrated to v2
           startGame ? startGame() : restartGame()
-
-          // TODO: Remove this checks after removing onAppStart (legacy)
-          if (event.type === "onAppPlay" || event.type === "onAppRestart") {
-            return {
-              ...context,
-              gamePlayUuid: event.gamePlayUuid
-            }
-          }
-
-          return context;
-        }),
-
+        },
         SEND_SCORE: ({ gamePlayUuid, getScore }) => {
           const score = getScore()
 

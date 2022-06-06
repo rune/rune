@@ -91,6 +91,7 @@ export function createStateMachine(challengeNumber: number) {
                 onAppRestart: {
                   actions: [
                     "SEND_SCORE",
+                    "ASSIGN_GAME_PLAY_UUID",
                     "RESET_DETERMINISTIC_RANDOMNESS",
                     "CALL_RESTART_GAME",
                   ],
@@ -107,7 +108,7 @@ export function createStateMachine(challengeNumber: number) {
             PAUSED: {
               on: {
                 onAppPlay: {
-                  actions: "CALL_RESUME_GAME",
+                  actions: ["ASSIGN_GAME_PLAY_UUID", "CALL_RESUME_GAME"],
                   target: "PLAYING",
                 },
                 onGameOver: {
@@ -122,7 +123,7 @@ export function createStateMachine(challengeNumber: number) {
             GAME_OVER: {
               on: {
                 onAppPlay: {
-                  actions: "CALL_RESTART_GAME",
+                  actions: ["ASSIGN_GAME_PLAY_UUID", "CALL_RESTART_GAME"],
                   target: "PLAYING",
                 },
                 onGameOver: {
@@ -166,44 +167,20 @@ export function createStateMachine(challengeNumber: number) {
           ...context,
           legacyGameStarted: false,
         })),
-        CALL_RESUME_GAME: assign((context, event) => {
-          const { resumeGame, startGame, legacyGameStarted } = context
+        ASSIGN_GAME_PLAY_UUID: assign((context, event) => ({
+          ...context,
+          gamePlayUuid: event.gamePlayUuid,
+        })),
+        CALL_RESUME_GAME: ({ resumeGame, startGame, legacyGameStarted }) => {
           startGame && !legacyGameStarted ? startGame() : resumeGame()
-
-          // TODO: Remove this checks after removing onAppStart (legacy)
-          if (event.type === "onAppPlay") {
-            const gamePlayUuid = event.gamePlayUuid
-
-            return {
-              ...context,
-              gamePlayUuid,
-            }
-          }
-
-          return context
-        }),
+        },
         CALL_PAUSE_GAME: ({ pauseGame }) => {
           pauseGame()
         },
-        CALL_RESTART_GAME: assign((context, event) => {
-          const { restartGame, startGame } = context
+        CALL_RESTART_GAME: ({ restartGame, startGame }) => {
           startGame ? startGame() : restartGame()
-
-          // TODO: Remove this checks after removing onAppStart (legacy)
-          if (event.type === "onAppPlay" || event.type === "onAppRestart") {
-            return {
-              ...context,
-              gamePlayUuid: event.gamePlayUuid
-            }
-          }
-
-          return context;
-        }),
-
-        // NB: Workaround for preserveActionOrder=true not working
-        // TODO: Check how to fix it
-        SEND_SCORE: assign((context) => {
-          const { gamePlayUuid, getScore } = context
+        },
+        SEND_SCORE: ({ gamePlayUuid, getScore }) => {
           const score = getScore()
 
           validateScore(score)
@@ -214,9 +191,7 @@ export function createStateMachine(challengeNumber: number) {
             score,
             challengeNumber,
           })
-
-          return context
-        }),
+        },
         SEND_INIT: (_, { version }) => {
           postRuneEvent({ type: "INIT", version })
         },

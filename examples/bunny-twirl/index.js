@@ -88,6 +88,17 @@ app.ticker.add((delta) => {
   }
 })
 
+// End game on click / tap (i.e. player couldn't handle more twirls)
+for (const eventType of ["click", "touchstart"]) {
+  document.body.addEventListener(eventType, function () {
+    if (!isPlaying) {
+      // Don't do anything if the game hasn't started
+    } else {
+      endGame()
+    }
+  })
+}
+
 // Setup functions for starting the game etc.
 function restartGame() {
   // Reset score w/o changing container orientation by removing full rotations
@@ -111,17 +122,6 @@ function endGame() {
 }
 function getScore() {
   return score
-}
-
-// End game on click / tap (i.e. player couldn't handle more twirls)
-for (const eventType of ["click", "touchstart"]) {
-  document.body.addEventListener(eventType, function () {
-    if (!isPlaying) {
-      // Don't do anything if the game hasn't started
-    } else {
-      endGame()
-    }
-  })
 }
 
 // Initialize Rune SDK with the start/pause/resume functions.

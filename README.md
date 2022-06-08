@@ -12,9 +12,33 @@ Include the following line in your `index.html` file before loading any other JS
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@2.2/dist/browser.min.js"></script>
 ```
 
-## Use
+## Quick Start
+Adapting your HTML5 game to run on Rune is really simple.
 
-Initialize the Rune SDK once your game is fully ready.
+```js
+
+// Your game setup code...
+
+// Initialize the Rune SDK once your game is fully ready.
+// Rune will invoke these functions based on player actions in the app interface.
+Rune.init({
+  resumeGame: myResumeGameFunction,
+  pauseGame: myPauseGameFunction,
+  restartGame: myRestartGameFunction,
+  getScore: myGetScoreFunction
+})
+
+// When the player loses the game, inform the SDK
+Rune.gameOver()
+```
+
+That's all it takes to integrate your game with Rune!
+
+## API Details
+
+
+### Rune.init
+The init function should be called after your game is fully ready. At this point, the game can show animations to entice the player, but should not start the actual gameplay as the game may be preloaded.
 
 ```js
 Rune.init({
@@ -25,19 +49,46 @@ Rune.init({
 })
 ```
 
-At this point, the game can show animations to entice the player, but should not start the actual gameplay as the game may be preloaded. When the player wants to start your game, Rune will call the provided `resumeGame` function to let your game know to start the gameplay.
+The Rune SDK uses the functions you provide to `Rune.init()` to communicate with your game.
 
-Once the player loses the game, your game should call `Rune.gameOver()`. This tells Rune to show the "game over" screen. Your game should not show any "game over" screen and your game does not need to keep track of the user's highscore.
+- #### resumeGame
+  Rune will call this function when:
+  1. The player first decides to start your game by hitting play.
+  2. The player had paused the game and subsequently presses play again.
+  
+  Your game should start / resume the gameplay.
 
-When the player is ready to play again, Rune will call the `restartGame` function. Your game should then reset all gameplay back to the experience as a completely new player, including resetting the score. The player is also able to restart the game manually, which will make Rune call the `restartGame` function.
+- #### pauseGame
+  Rune will call this function when:
+  1. The player presses the pause button while playing.
+  
+  Your game should instantly freeze all gameplay and wait until `resumeGame` is called.
 
-The player may pause the game through the Rune interface. When this happens, the `pauseGame` function is called to let your game know to freeze all gameplay. Similarly, the `resumeGame` function should unfreeze all gameplay, leaving the player in the same state as before they paused the game.
+- #### restartGame
+  Rune will call this function when:
+  1. The player presses the restart button in the middle of a game.
+  2. The player has lost a game and chooses to play it again.
 
-The Rune SDK may request your game's score at anytime by calling the `getScore` function. This function should return your game's score as a number.
+  Your game should reset all gameplay back to the experience as a completely new player, including resetting the score.
 
-Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
+- #### getScore
+  Rune may request your game's score at anytime by calling this function, which should return your game's score. For the Rune leaderboard logic to work correctly, your game's score should:
+  - be an integer
+  - be between 0 and 1 billion
+  - treat higher scores as better
 
-## Challenge Number (optional)
+### Rune.gameOver
+When the player loses or completes the game, call `Rune.gameOver()`.
+
+```js
+Rune.gameOver()
+```
+
+- Rune will check if it's a new high score and encourage the player to share your game or play again.
+- Your game should freeze until `restartGame` is called. 
+- Your game need not show a "game over" screen. Rune overlays a standardized high score interface to the user.
+
+### Rune.getChallengeNumber (optional)
 
 Rune provides a challenge number through `Rune.getChallengeNumber()` that will increment every day starting from value 1. It's optional to use the challenge number, but we strongly encourage using it to keep your game entertaining and make everyone compete under the same conditions.
 
@@ -79,6 +130,9 @@ You should only use `Rune.deterministicRandom()` for your map generation and not
 
 For instance, for a racing game with 20 predefined maps you would use method (1) above. Alternatively, if the racing game randomly generates maps by placing turns and obstacles then you would use method (2). The high-level goal is just to make sure that your game is deterministic, i.e. the same challenge number always creates the same player experience.
 
+## Example Game
+Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
+
 ## Submission
 
 When your game is ready, please zip it as a folder containing `index.html` as the entry point of the game. The folder should contain all resources that are used by the game (css, js, images, soundtracks, helper libs, etc). In other words, please make sure that the game does not fetch any external resources from the Internet except for Rune Games SDK.
@@ -86,16 +140,6 @@ When your game is ready, please zip it as a folder containing `index.html` as th
 ## Debugging
 
 Use the [Rune CLI](https://github.com/rune/rune-games-cli) to test your game's integration with the SDK.
-
-## Score
-
-For the Rune leaderboard logic to work correctly, your game's score should:
-
-- be an integer
-- be between 0 and 1 billion (i.e. no negative or extremely high values)
-- treat higher scores as better
-
-This is the case by default for most games.
 
 ## Audio
 

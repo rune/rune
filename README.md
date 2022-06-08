@@ -73,13 +73,11 @@ The Rune SDK uses the functions you provide to `Rune.init()` to communicate with
 
   For the Rune leaderboard logic to work correctly, your game's score should:
   - be an integer
-  - be between 0 and 1 billion (i.e. no negative or extremely high values)
+  - be between 0 and 1 billion
   - treat higher scores as better
 
 ### Rune.gameOver
-```js
-Rune.gameOver()
-```
+
 - When the user loses the game / dies / completes the game, call `Rune.gameOver()`.
 - Rune will automatically check if it's a new high score, display a confetti animation and encourage the user to share your game / restart and play again.
 - The game can freeze or be gently animating until `restartGame` is called by the SDK.

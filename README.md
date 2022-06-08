@@ -20,7 +20,7 @@ Adapting your HTML5 game to run on Rune is really simple.
 // Your game setup code...
 
 // Initialize the Rune SDK once your game is fully ready.
-// Rune will invoke these functions based on user actions in the app interface.
+// Rune will invoke these functions based on player actions in the app interface.
 Rune.init({
   resumeGame: myResumeGameFunction,
   pauseGame: myPauseGameFunction,
@@ -28,7 +28,7 @@ Rune.init({
   getScore: myGetScoreFunction
 })
 
-// When the user loses the game, inform the SDK
+// When the player loses the game, inform the SDK
 Rune.gameOver()
 ```
 
@@ -54,17 +54,17 @@ The Rune SDK uses the functions you provide to `Rune.init()` to communicate with
 - #### resumeGame
   `resumeGame` will be called in two scenarios:
   - When the player first decides to start your game by hitting play.
-  - If the user had paused the game at some point and subsequently presses play again.
+  - If the player had paused the game at some point and subsequently presses play again.
   
   Whenever it's called, start / resume the gameplay.
 
 - #### pauseGame
-  `pauseGame` will be called whenever the user presses the pause button during gameplay. It should instantly freeze all gameplay and wait until `resumeGame` is called.
+  `pauseGame` will be called whenever the player presses the pause button during gameplay. It should instantly freeze all gameplay and wait until `resumeGame` is called.
 
 - #### restartGame
   `restartGame` is called in two scenarios:
-  - In the middle of a game, if a user chooses to press the restart button.
-  - After a user has lost a game, when they choose to replay it again.
+  - In the middle of a game, if a player chooses to press the restart button.
+  - After a player has lost a game, when they choose to replay it again.
 
   Your game should reset all gameplay back to the experience as a completely new player, including resetting the score.
 
@@ -78,8 +78,8 @@ The Rune SDK uses the functions you provide to `Rune.init()` to communicate with
 
 ### Rune.gameOver
 
-- When the user loses the game / dies / completes the game, call `Rune.gameOver()`.
-- Rune will automatically check if it's a new high score, display a confetti animation and encourage the user to share your game / restart and play again.
+- When the player loses the game / dies / completes the game, call `Rune.gameOver()`.
+- Rune will automatically check if it's a new high score, display a confetti animation and encourage the player to share your game / restart and play again.
 - The game can freeze or be gently animating until `restartGame` is called by the SDK.
 
 ### Rune.getChallengeNumber (optional)

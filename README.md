@@ -34,10 +34,15 @@ Rune.gameOver()
 
 That's all it takes to integrate your game with Rune!
 
-## API Details
+## API
+
+1. [`Rune.init`](https://github.com/rune/rune-games-sdk#runeinit)
+2. [`Rune.gameOver`](https://github.com/rune/rune-games-sdk#runegameover)
+3. [`Rune.getChallengeNumber`](https://github.com/rune/rune-games-sdk#runegetchallengenumber-optional) (optional)
+4. [`Rune.deterministicRandom`](https://github.com/rune/rune-games-sdk#runegetchallengenumber-optional) (optional)
 
 
-### Rune.init
+### 1. Rune.init
 The init function should be called after your game is fully ready. At this point, the game can show animations to entice the player, but should not start the actual gameplay as the game may be preloaded.
 
 ```js
@@ -77,7 +82,8 @@ The Rune SDK uses the functions you provide to `Rune.init()` to communicate with
   - be between 0 and 1 billion
   - treat higher scores as better
 
-### Rune.gameOver
+
+### 2. Rune.gameOver
 When the player loses or completes the game, call `Rune.gameOver()`.
 
 ```js
@@ -88,7 +94,8 @@ Rune.gameOver()
 - Your game should freeze until `restartGame` is called. 
 - Your game need not show a "game over" screen. Rune overlays a standardized high score interface to the user.
 
-### Rune.getChallengeNumber (optional)
+
+### 3. Rune.getChallengeNumber (optional)
 
 Rune provides a challenge number through `Rune.getChallengeNumber()` that will increment every day starting from value 1. It's optional to use the challenge number, but we strongly encourage using it to keep your game entertaining and make everyone compete under the same conditions.
 
@@ -130,20 +137,25 @@ You should only use `Rune.deterministicRandom()` for your map generation and not
 
 For instance, for a racing game with 20 predefined maps you would use method (1) above. Alternatively, if the racing game randomly generates maps by placing turns and obstacles then you would use method (2). The high-level goal is just to make sure that your game is deterministic, i.e. the same challenge number always creates the same player experience.
 
+
 ## Example Game
 Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
+
 
 ## Submission
 
 When your game is ready, please zip it as a folder containing `index.html` as the entry point of the game. The folder should contain all resources that are used by the game (css, js, images, soundtracks, helper libs, etc). In other words, please make sure that the game does not fetch any external resources from the Internet except for Rune Games SDK.
 
+
 ## Debugging
 
 Use the [Rune CLI](https://github.com/rune/rune-games-cli) to test your game's integration with the SDK.
 
+
 ## Audio
 
 Your game can have music and sound effects. Rune will automatically mute your game while it is being loaded etc.
+
 
 ## Help
 

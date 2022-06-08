@@ -49,6 +49,8 @@ Rune.init({
 })
 ```
 
+The Rune SDK uses the functions you provide to `Rune.init()` to communicate with your game.
+
 - #### resumeGame
   `resumeGame` will be called in two scenarios:
   - When the player first decides to start your game by hitting play.

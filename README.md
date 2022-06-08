@@ -60,14 +60,14 @@ The Rune SDK uses the functions you provide to `Rune.init()` to communicate with
 
 - #### pauseGame
   Rune will call this function when:
-  1. The player presses the pause button during gameplay.
+  1. The player presses the pause button while playing.
   
   Your game should instantly freeze all gameplay and wait until `resumeGame` is called.
 
 - #### restartGame
   Rune will call this function when:
   1. The player presses the restart button in the middle of a game.
-  2. The player has lost a game and choose to play it again.
+  2. The player has lost a game and chooses to play it again.
 
   Your game should reset all gameplay back to the experience as a completely new player, including resetting the score.
 
@@ -81,7 +81,7 @@ The Rune SDK uses the functions you provide to `Rune.init()` to communicate with
 
 - When the player loses or completes the game, call `Rune.gameOver()`.
 - Rune will check if it's a new high score and encourage the player to share your game or play again.
-- The game should freeze until `restartGame` is called.
+- Your game should freeze until `restartGame` is called and does not need to show any "game over" screen.
 
 ### Rune.getChallengeNumber (optional)
 

@@ -79,9 +79,9 @@ The Rune SDK uses the functions you provide to `Rune.init()` to communicate with
 
 ### Rune.gameOver
 
-- When the player loses the game / dies / completes the game, call `Rune.gameOver()`.
-- Rune will automatically check if it's a new high score, display a confetti animation and encourage the player to share your game / restart and play again.
-- The game can freeze or be gently animating until `restartGame` is called by the SDK.
+- When the player loses or completes the game, call `Rune.gameOver()`.
+- Rune will check if it's a new high score and encourage the player to share your game or play again.
+- The game should freeze until `restartGame` is called.
 
 ### Rune.getChallengeNumber (optional)
 

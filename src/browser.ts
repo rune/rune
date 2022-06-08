@@ -8,6 +8,7 @@ import { getUrlParams } from "./internal/getUrlParams"
 import { setupForceMute } from "./internal/setupForceMute/setupForceMute"
 import { checkSdkLoadedFirst } from "./internal/checkSdkLoadedFirst"
 
+setupErrorLogging()
 checkSdkLoadedFirst()
 
 const {
@@ -19,7 +20,6 @@ const {
 const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
 clearStorage()
-setupErrorLogging()
 setupConsole()
 setupIframe(enableInitialOverlayInBrowser)
 setupForceMute(startMuted)

@@ -32,7 +32,7 @@ Rune.init({
 Rune.gameOver()
 ```
 
-That's all it takes to add your game to Rune!
+That's all it takes to integrate your game with Rune!
 
 ## API Details
 

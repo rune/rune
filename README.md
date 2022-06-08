@@ -78,10 +78,15 @@ The Rune SDK uses the functions you provide to `Rune.init()` to communicate with
   - treat higher scores as better
 
 ### Rune.gameOver
+When the player loses or completes the game, call `Rune.gameOver()`.
 
-- When the player loses or completes the game, call `Rune.gameOver()`.
+```js
+Rune.gameOver()
+```
+
 - Rune will check if it's a new high score and encourage the player to share your game or play again.
-- Your game should freeze until `restartGame` is called and does not need to show any "game over" screen.
+- Your game should freeze until `restartGame` is called. 
+- Your game need not show a "game over" screen. Rune overlays a standardized high score interface to the user.
 
 ### Rune.getChallengeNumber (optional)
 

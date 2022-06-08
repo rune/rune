@@ -52,26 +52,27 @@ Rune.init({
 The Rune SDK uses the functions you provide to `Rune.init()` to communicate with your game.
 
 - #### resumeGame
-  `resumeGame` will be called in two scenarios:
-  - When the player first decides to start your game by hitting play.
-  - If the player had paused the game at some point and subsequently presses play again.
+  Rune will call this function when:
+  1. The player first decides to start your game by hitting play.
+  2. The player had paused the game and subsequently presses play again.
   
-  Whenever it's called, start / resume the gameplay.
+  Your game should start / resume the gameplay.
 
 - #### pauseGame
-  `pauseGame` will be called whenever the player presses the pause button during gameplay. It should instantly freeze all gameplay and wait until `resumeGame` is called.
+  Rune will call this function when:
+  1. The player presses the pause button during gameplay.
+  
+  Your game should instantly freeze all gameplay and wait until `resumeGame` is called.
 
 - #### restartGame
-  `restartGame` is called in two scenarios:
-  - In the middle of a game, if a player chooses to press the restart button.
-  - After a player has lost a game, when they choose to replay it again.
+  Rune will call this function when:
+  1. The player presses the restart button in the middle of a game.
+  2. The player has lost a game and choose to play it again.
 
   Your game should reset all gameplay back to the experience as a completely new player, including resetting the score.
 
 - #### getScore
-  The Rune SDK may request your game's score at anytime by calling the `getScore` function. This function should return your game's score as a number.
-
-  For the Rune leaderboard logic to work correctly, your game's score should:
+  Rune may request your game's score at anytime by calling this function, which should return your game's score. For the Rune leaderboard logic to work correctly, your game's score should:
   - be an integer
   - be between 0 and 1 billion
   - treat higher scores as better

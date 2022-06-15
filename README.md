@@ -133,10 +133,6 @@ For instance, for a racing game with 20 predefined maps you would use method (1)
 ## Example Game
 Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
 
-## Submission
-
-When your game is ready, please zip it as a folder containing `index.html` as the entry point of the game. The folder should contain all resources that are used by the game (css, js, images, soundtracks, helper libs, etc). In other words, please make sure that the game does not fetch any external resources from the Internet except for Rune Games SDK.
-
 ## Debugging
 
 Use the [Rune CLI](https://github.com/rune/rune-games-cli) to test your game's integration with the SDK.

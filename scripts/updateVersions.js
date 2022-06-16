@@ -22,6 +22,12 @@ replaceInFile(
   `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${minorVersion}/dist/browser.min.js"`
 )
 
+replaceInFile(
+  "examples/breakout/index.html",
+  /"https:\/\/cdn\.jsdelivr\.net.+"/,
+  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${minorVersion}/dist/browser.min.js"`
+)
+
 function replaceInFile(path, regex, replacement) {
   fs.writeFileSync(
     path,

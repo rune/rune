@@ -1,11 +1,12 @@
 class Ball {
-  #canvas
   #radius = 0.04
-  #x
-  #y
   #dx = -0.01
   #dy = -0.01
+
+  #canvas
   #color
+  #x
+  #y
 
   constructor(canvas, color, x, y, goesRight) {
     this.#canvas = canvas

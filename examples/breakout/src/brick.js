@@ -19,6 +19,7 @@ class Brick {
 
   #height = 0.05
   #spacing = 0.05
+
   #canvas
   #row
   #column

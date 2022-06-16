@@ -1,9 +1,10 @@
 class Paddle {
-  #canvas
   #width = 0.25
   #height = 0.05
-  #position
+
+  #canvas
   #color
+  #position
 
   constructor(canvas, color, position) {
     this.#canvas = canvas

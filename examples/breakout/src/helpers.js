@@ -24,9 +24,3 @@ function getRandomIntInclusive(min, max) {
   max = Math.floor(max)
   return Math.floor(random() * (max - min + 1) + min)
 }
-
-function getNextColor() {
-  const color = colors.shift()
-  colors.push(color)
-  return color
-}

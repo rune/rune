@@ -13,6 +13,12 @@ const colors = [
   "darkgreen",
 ]
 
+function getNextColor() {
+  const color = colors.shift()
+  colors.push(color)
+  return color
+}
+
 shuffleArray(colors)
 
 const game = new Game({

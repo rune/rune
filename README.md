@@ -34,6 +34,17 @@ Rune.gameOver()
 
 That's all it takes to integrate your game with Rune!
 
+## Example Game
+Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
+
+## Submission
+
+When your game is ready, please zip it as a folder containing `index.html` as the entry point of the game. The folder should contain all resources that are used by the game (css, js, images, soundtracks, helper libs, etc). In other words, please make sure that the game does not fetch any external resources from the Internet except for Rune Games SDK.
+
+## Debugging
+
+Use the [Rune CLI](https://github.com/rune/rune-games-cli) to test your game's integration with the SDK.
+
 ## Core API
 
 - [`Rune.init`](https://github.com/rune/rune-games-sdk#runeinit)
@@ -137,17 +148,6 @@ const obstacleSpeed = Rune.deterministicRandom()
 You can use `Rune.deterministicRandom()` instead of `Math.random()` in your map generation code to ensure all players play the same map. The `Rune.deterministicRandom()` function returns a value between 0 and 1 similar to `Math.random()`.
 
 You should only use `Rune.deterministicRandom()` for your map generation and not as a generic replacement for `Math.random()`. This is because each call to `Rune.deterministicRandom()` will iterate through the random values. Any unintentional calls to `Rune.deterministicRandom()` would therefore break the deterministic randomness.
-
-## Example Game
-Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
-
-## Submission
-
-When your game is ready, please zip it as a folder containing `index.html` as the entry point of the game. The folder should contain all resources that are used by the game (css, js, images, soundtracks, helper libs, etc). In other words, please make sure that the game does not fetch any external resources from the Internet except for Rune Games SDK.
-
-## Debugging
-
-Use the [Rune CLI](https://github.com/rune/rune-games-cli) to test your game's integration with the SDK.
 
 ## Audio
 

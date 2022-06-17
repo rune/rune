@@ -43,10 +43,6 @@ cd my-game-folder
 rune start
 ```
 
-## Debugging
-
-Use the [Rune CLI](https://github.com/rune/rune-games-cli) to test your game's integration with the SDK.
-
 ## Core API
 
 - [`Rune.init`](https://github.com/rune/rune-games-sdk#runeinit)

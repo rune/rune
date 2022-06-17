@@ -29,7 +29,9 @@ export function postRuneEvent(data: RuneGameEvent) {
   // Game is not running in iframe, don't try to send a message and notify user
   if (globalThis.parent === (globalThis as typeof window)) {
     // eslint-disable-next-line no-console
-    console.error("Rune SDK has to run in a container")
+    console.error(
+      "Games using the Rune SDK must be tested using Rune CLI. See https://github.com/rune/rune-games-cli for instructions."
+    )
     return
   }
 

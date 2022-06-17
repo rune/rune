@@ -16,7 +16,6 @@ Include the following line in your `index.html` file before loading any other JS
 Adapting your HTML5 game to run on Rune is really simple.
 
 ```js
-
 // Your game setup code...
 
 // Initialize the Rune SDK once your game is fully ready.
@@ -32,14 +31,17 @@ Rune.init({
 Rune.gameOver()
 ```
 
-That's all it takes to integrate your game with Rune!
+That's all it takes to integrate your game with Rune! You can take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration.
 
-## Example Game
-Take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration or dive into the [source code](https://github.com/rune/rune-games-sdk/blob/staging/src/index.ts).
+### Running Your Game
 
-## Submission
+The [Rune CLI](https://github.com/rune/rune-games-cli) runs your game in a mock Rune app and makes debugging easy.
 
-When your game is ready, please zip it as a folder containing `index.html` as the entry point of the game. The folder should contain all resources that are used by the game (css, js, images, soundtracks, helper libs, etc). In other words, please make sure that the game does not fetch any external resources from the Internet except for Rune Games SDK.
+```shell
+npm install -g rune-games-cli
+cd my-game-folder
+rune start
+```
 
 ## Debugging
 

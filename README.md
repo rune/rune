@@ -37,7 +37,7 @@ That's all it takes to integrate your game with Rune! You can take a look at our
 
 The [Rune CLI](https://github.com/rune/rune-games-cli) runs your game in a mock Rune app and makes debugging easy.
 
-```shell
+```bash
 npm install -g rune-games-cli
 cd my-game-folder
 rune start
@@ -104,13 +104,11 @@ Rune.gameOver()
 - Your game need not show a "game over" screen. Rune overlays a standardized high score interface to the user.
 
 ## Daily Challenges (optional)
-Rune has built-in support for "daily" challenges. Daily challenges ensure two things:
-1. The game changes in some way every day — colors / maps / levels / new physics — it's completely up to your creativity.
-2. All users play the same map / version of the game everyday.
-
-It's optional to support daily challenges.
-- If your game supports challenges, Rune will automatically create daily leaderboards for it. Players really enjoy having a fresh leaderboard to climb every day.
-- We strongly encourage using it to keep your game entertaining. Dedicated players have something novel in your game everyday. They won't burn through all your levels / maps too quickly.
+Rune has built-in support for "daily" challenges. Why support daily challenges?
+1. There is something novel in your game everyday. Colors / maps / levels / new physics — it's completely up to your creativity and keeps your game entertaining for dedicated players.
+2. Your game is deterministic and all players have the same experience each day.
+3. Rune will automatically create daily leaderboards if you support challenges. Players love having a fresh leaderboard to climb every day. Since everyone plays the same map, the leaderboards are fair.
+4. Players won't burn through your maps too quickly.
 
 There are two ways to support challenges:
 
@@ -120,8 +118,6 @@ There are two ways to support challenges:
 - [`Rune.deterministicRandom`](https://github.com/rune/rune-games-sdk#runedeterministicrandom-optional)
     - Suitable for maps that are generated using randomizers
     - For example, a racing game where the turns in the race track and obstacles are generated using randomization.
-
-The high-level goal is to make sure that your game is deterministic, i.e. the same challenge number always creates the same player experience. This is especially important since players won't find it fair to compete on the daily leaderboard if they're playing a completely different map from someone else on the same leaderboard.
 
 ### Rune.getChallengeNumber
 Rune simply supplies a challenge number that is incremented daily.

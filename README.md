@@ -103,8 +103,8 @@ Rune.gameOver()
 - Your game should freeze until `restartGame` is called. 
 - Your game need not show a "game over" screen. Rune overlays a standardized high score interface to the user.
 
-## Daily Challenges API (optional)
-Rune has built in support for "daily" challenges. Daily challenges ensure two things:
+## Daily Challenges (optional)
+Rune has built-in support for "daily" challenges. Daily challenges ensure two things:
 1. The game changes in some way every day — colors / maps / levels / new physics — it's completely up to your creativity.
 2. All users play the same map / version of the game everyday.
 

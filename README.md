@@ -112,10 +112,10 @@ Rune has built-in support for "daily" challenges. Why support daily challenges?
 
 There are two ways to support challenges:
 
-- [`Rune.getChallengeNumber`](https://github.com/rune/rune-games-sdk#runegetchallengenumber-optional)
+- [`Rune.getChallengeNumber`](https://github.com/rune/rune-games-sdk#runegetchallengenumber)
     - Suitable for iterating through a fixed set of levels / maps.
     - For example, a puzzle game with 20 different puzzles.
-- [`Rune.deterministicRandom`](https://github.com/rune/rune-games-sdk#runedeterministicrandom-optional)
+- [`Rune.deterministicRandom`](https://github.com/rune/rune-games-sdk#runedeterministicrandom)
     - Suitable for maps that are generated using randomizers
     - For example, a racing game where the turns in the race track and obstacles are generated using randomization.
 

@@ -102,7 +102,7 @@ Rune.gameOver()
 ## Daily Challenges (optional)
 Rune has built-in support for daily challenges. Why support daily challenges?
 1. There's something new and exciting in your game every day. Different colors / maps / physics — it's completely up to your creativity and keeps your game entertaining for dedicated players!
-2. Rune will automatically create daily leaderboards if you support challenges. Players love having a fresh leaderboard to compete on every day!
+2. Your game will automatically get daily challenge leaderboards. Players love having a fresh leaderboard to compete on every day!
 
 There are two ways to support daily challenges:
 

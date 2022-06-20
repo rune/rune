@@ -138,7 +138,7 @@ Returns a value between 0 and 1 in a deterministic way.
 const obstacleSpeed = Rune.deterministicRandom()
 ```
 
-Rune provides a random number generator that uses the challenge number as seed. This random number generator will therefore always provide the same random values for the same challenge number.
+Rune provides a deterministic random number generator that uses the challenge number as seed. This random number generator will always provide the same random values for the same challenge number.
 
 You can use `Rune.deterministicRandom()` instead of `Math.random()` in your map generation code to ensure all players play the same map. The `Rune.deterministicRandom()` function returns a value between 0 and 1 similar to `Math.random()`.
 

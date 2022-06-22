@@ -100,23 +100,22 @@ Rune.gameOver()
 - Your game need not show a "game over" screen. Rune overlays a standardized high score interface to the user.
 
 ## Daily Challenges (optional)
-Rune has built-in support for "daily" challenges. Why support daily challenges?
-1. There is something novel in your game everyday. Colors / maps / levels / new physics — it's completely up to your creativity and keeps your game entertaining for dedicated players.
-2. Your game is deterministic and all players have the same experience each day.
-3. Rune will automatically create daily leaderboards if you support challenges. Players love having a fresh leaderboard to climb every day. Since everyone plays the same map, the leaderboards are fair.
-4. Players won't burn through your maps too quickly.
+Rune has built-in support for daily challenges. Why support daily challenges?
+1. There's something new and exciting in your game every day. Different colors / maps / physics — it's completely up to your creativity and keeps your game entertaining for dedicated players!
+2. Your game becomes deterministic, meaning that all players will have the same gameplay experience. This makes it more fun to compete!
+3. Rune will automatically add daily challenge leaderboards for your game. Players love having a fresh leaderboard to compete on every day!
 
-There are two ways to support challenges:
+There are two ways to support daily challenges:
 
 - [`Rune.getChallengeNumber`](https://github.com/rune/rune-games-sdk#runegetchallengenumber)
     - Suitable for iterating through a fixed set of levels / maps.
     - For example, a puzzle game with 20 different puzzles.
 - [`Rune.deterministicRandom`](https://github.com/rune/rune-games-sdk#runedeterministicrandom)
-    - Suitable for maps that are generated using randomizers
-    - For example, a racing game where the turns in the race track and obstacles are generated using randomization.
+    - Suitable for generating maps.
+    - For example, a racing game where the turns in the racetrack and obstacles are randomly generated.
 
 ### Rune.getChallengeNumber
-Rune simply supplies a challenge number that is incremented daily.
+Returns a challenge number that is incremented daily.
 ```js
 const challengeNumber = Rune.getChallengeNumber()
 ```
@@ -133,11 +132,14 @@ const mapId = mapIds[challengeNumber % mapIds.length] // Get deterministic mapId
 
 
 ### Rune.deterministicRandom
-Rune provides a random number generator that uses the challenge number as seed. This random number generator will therefore always provide the same random values for the same challenge number.
+
+Returns a value between 0 and 1 in a deterministic way.
 
 ```js
 const obstacleSpeed = Rune.deterministicRandom()
 ```
+
+Rune provides a deterministic random number generator that uses the challenge number as seed. This random number generator will always provide the same random values for the same challenge number.
 
 You can use `Rune.deterministicRandom()` instead of `Math.random()` in your map generation code to ensure all players play the same map. The `Rune.deterministicRandom()` function returns a value between 0 and 1 similar to `Math.random()`.
 

@@ -7,20 +7,3 @@ function roundRect(ctx, x, y, width, height, radius) {
   ctx.arcTo(x, y + height, x, y, radius)
   ctx.arcTo(x, y, x + width, y, radius)
 }
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
-    ;[array[i], array[j]] = [array[j], array[i]]
-  }
-}
-
-function getRandomArbitrary(min, max) {
-  return random() * (max - min) + min
-}
-
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(random() * (max - min + 1) + min)
-}

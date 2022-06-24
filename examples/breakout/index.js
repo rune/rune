@@ -1,66 +1,50 @@
-const colors = [
-  "blue",
-  "darkblue",
-  "cyan",
-  "darkcyan",
-  "red",
-  "darkred",
-  "orange",
-  "darkorange",
-  "magenta",
-  "darkmagenta",
-  "green",
-  "darkgreen",
-]
-
-function getNextColor() {
-  const color = colors.shift()
-  colors.push(color)
-  return color
-}
-
-shuffleArray(colors)
-
 const game = new Game({
-  onGameOver,
+  onGameOver: () => {
+    Rune.gameOver()
+  },
 
-  ballColor: getNextColor(),
+  ballColor: getRandomColor(),
   ballX: getRandomArbitrary(0.1, 0.9),
   ballY: getRandomArbitrary(0.7, 0.8),
   ballGoesRight: getRandomArbitrary(0, 1) > 0.5,
 
-  paddleColor: getNextColor(),
-  paddlePosition: getRandomArbitrary(0.2, 0.8),
-
   brickColumns: getRandomIntInclusive(3, 5),
   brickRows: getRandomIntInclusive(3, 5),
-  brickColor: getNextColor(),
+  brickColor: getRandomColor(),
+
+  paddleColor: getRandomColor(),
+  paddlePosition: getRandomArbitrary(0.2, 0.8),
 })
 
-if (Rune) {
-  Rune.init({
-    resumeGame: () => {
-      game.start()
-    },
-    pauseGame: () => {
-      game.pause()
-    },
-    restartGame: () => {
-      game.restart()
-    },
-    getScore: () => {
-      return game.score
-    },
-  })
-} else {
-  game.start()
+Rune.init({
+  resumeGame: () => {
+    game.start()
+  },
+  pauseGame: () => {
+    game.pause()
+  },
+  restartGame: () => {
+    game.restart()
+  },
+  getScore: () => {
+    return game.score
+  },
+})
+
+function getRandomColor() {
+  return `rgb(${[
+    getRandomIntInclusive(0, 200),
+    getRandomIntInclusive(0, 200),
+    getRandomIntInclusive(0, 200),
+  ].join(",")})`
 }
 
-function onGameOver() {
-  if (Rune) Rune.gameOver()
+function getRandomArbitrary(min, max) {
+  return Rune.deterministicRandom() * (max - min) + min
 }
 
-function random() {
-  if (Rune) return Rune.deterministicRandom()
-  return Math.random()
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Rune.deterministicRandom() * (max - min + 1) + min)
 }

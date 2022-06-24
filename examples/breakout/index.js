@@ -2,7 +2,6 @@ const game = new Game({
   onGameOver: () => {
     Rune.gameOver()
   },
-  options: gameOptions,
 })
 
 Rune.init({

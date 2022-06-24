@@ -1,5 +1,6 @@
 class Game {
-  _options
+  static options
+
   _paused
   _canvas
   _paddle
@@ -9,8 +10,7 @@ class Game {
   score
   onGameOver
 
-  constructor({ onGameOver, options }) {
-    this._options = options
+  constructor({ onGameOver }) {
     this.onGameOver = onGameOver
 
     this._listenToMoveEvents()
@@ -116,7 +116,7 @@ class Game {
       brickColumns,
       brickRows,
       brickColor,
-    } = this._options
+    } = Game.options
 
     this.pause()
 

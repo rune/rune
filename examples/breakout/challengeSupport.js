@@ -1,4 +1,4 @@
-const gameOptions = {
+Game.options = {
   ballColor: getRandomColor(),
   ballX: getRandomArbitrary(0.1, 0.9),
   ballY: getRandomArbitrary(0.7, 0.8),

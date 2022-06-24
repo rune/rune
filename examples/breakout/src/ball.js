@@ -1,49 +1,49 @@
 class Ball {
-  #radius = 0.04
-  #dx = -0.01
-  #dy = -0.01
+  _radius = 0.04
+  _dx = -0.01
+  _dy = -0.01
 
-  #canvas
-  #color
-  #x
-  #y
+  _canvas
+  _color
+  _x
+  _y
 
   constructor(canvas, color, x, y, goesRight) {
-    this.#canvas = canvas
-    this.#color = color
-    this.#x = x
-    this.#y = y
-    if (goesRight) this.#dx *= -1
+    this._canvas = canvas
+    this._color = color
+    this._x = x
+    this._y = y
+    if (goesRight) this._dx *= -1
   }
 
   get radius() {
-    return Math.min(this.#canvas.height, this.#canvas.width) * this.#radius
+    return Math.min(this._canvas.height, this._canvas.width) * this._radius
   }
 
   get x() {
-    return this.#canvas.width * this.#x
+    return this._canvas.width * this._x
   }
 
   get y() {
-    return this.#canvas.height * this.#y
+    return this._canvas.height * this._y
   }
 
   reflectX() {
-    this.#dx = -this.#dx
+    this._dx = -this._dx
   }
 
   reflectY() {
-    this.#dy = -this.#dy
+    this._dy = -this._dy
   }
 
   move() {
-    this.#x += this.#dx
-    this.#y += this.#dy
+    this._x += this._dx
+    this._y += this._dy
   }
 
   revertMove() {
-    this.#x -= this.#dx
-    this.#y -= this.#dy
+    this._x -= this._dx
+    this._y -= this._dy
   }
 
   isTouchingLeftWall() {
@@ -55,11 +55,11 @@ class Ball {
   }
 
   isTouchingRightWall() {
-    return this.x + this.radius >= this.#canvas.width
+    return this.x + this.radius >= this._canvas.width
   }
 
   isTouchingBottomWall() {
-    return this.y + this.radius >= this.#canvas.height
+    return this.y + this.radius >= this._canvas.height
   }
 
   isTouchingRect(rect) {
@@ -72,10 +72,10 @@ class Ball {
   }
 
   render() {
-    const ctx = this.#canvas.ctx
+    const ctx = this._canvas.ctx
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-    ctx.fillStyle = this.#color
+    ctx.fillStyle = this._color
     ctx.fill()
     ctx.closePath()
   }

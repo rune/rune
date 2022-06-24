@@ -1,27 +1,27 @@
 class Canvas {
-  #canvas = document.getElementById("canvas")
+  _canvas = document.getElementById("canvas")
 
   constructor() {
-    this.#canvas.style.backgroundColor = "white"
-    window.addEventListener("resize", () => this.#autosize())
-    this.#autosize()
+    this._canvas.style.backgroundColor = "white"
+    window.addEventListener("resize", () => this._autosize())
+    this._autosize()
   }
 
-  #autosize() {
-    this.#canvas.width = window.innerWidth
-    this.#canvas.height = window.innerHeight
+  _autosize() {
+    this._canvas.width = window.innerWidth
+    this._canvas.height = window.innerHeight
   }
 
   get width() {
-    return this.#canvas.width
+    return this._canvas.width
   }
 
   get height() {
-    return this.#canvas.height
+    return this._canvas.height
   }
 
   get ctx() {
-    return this.#canvas.getContext("2d")
+    return this._canvas.getContext("2d")
   }
 
   clear() {

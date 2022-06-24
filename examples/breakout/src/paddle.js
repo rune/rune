@@ -1,47 +1,47 @@
 class Paddle {
-  #width = 0.25
-  #height = 0.05
+  _width = 0.25
+  _height = 0.05
 
-  #canvas
-  #color
-  #position
+  _canvas
+  _color
+  _position
 
   constructor(canvas, color, position) {
-    this.#canvas = canvas
-    this.#color = color
-    this.#position = position
+    this._canvas = canvas
+    this._color = color
+    this._position = position
   }
 
   get width() {
-    return this.#canvas.width * this.#width
+    return this._canvas.width * this._width
   }
 
   get height() {
-    return Math.min(this.#canvas.height, this.#canvas.width) * this.#height
+    return Math.min(this._canvas.height, this._canvas.width) * this._height
   }
 
   get x() {
-    const x = this.#canvas.width * this.#position - this.width / 2
+    const x = this._canvas.width * this._position - this.width / 2
 
     return x < 0
       ? 0
-      : x + this.width > this.#canvas.width
-      ? this.#canvas.width - this.width
+      : x + this.width > this._canvas.width
+      ? this._canvas.width - this.width
       : x
   }
 
   get y() {
-    return this.#canvas.height - 2 * this.height
+    return this._canvas.height - 2 * this.height
   }
 
   updatePosition(x) {
-    this.#position = x / this.#canvas.width
+    this._position = x / this._canvas.width
   }
 
   render() {
-    const ctx = this.#canvas.ctx
+    const ctx = this._canvas.ctx
     roundRect(ctx, this.x, this.y, this.width, this.height, this.height / 2)
-    ctx.fillStyle = this.#color
+    ctx.fillStyle = this._color
     ctx.fill()
     ctx.closePath()
   }

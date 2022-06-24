@@ -1,107 +1,107 @@
 class Game {
-  #options
-  #paused
-  #canvas
-  #paddle
-  #bricks
-  #ball
+  _options
+  _paused
+  _canvas
+  _paddle
+  _bricks
+  _ball
 
   score
   onGameOver
 
   constructor({ onGameOver, ...options }) {
-    this.#options = options
+    this._options = options
     this.onGameOver = onGameOver
 
-    this.#listenToMoveEvents()
-    this.#reset()
-    this.#render()
+    this._listenToMoveEvents()
+    this._reset()
+    this._render()
   }
 
-  #listenToMoveEvents() {
+  _listenToMoveEvents() {
     document.addEventListener("mousemove", (e) => {
-      if (this.#paused) return
-      this.#paddle.updatePosition(e.clientX)
+      if (this._paused) return
+      this._paddle.updatePosition(e.clientX)
     })
 
     document.addEventListener("touchmove", (e) => {
-      if (this.#paused) return
-      this.#paddle.updatePosition(e.touches[0].clientX)
+      if (this._paused) return
+      this._paddle.updatePosition(e.touches[0].clientX)
     })
   }
 
-  #tick() {
-    if (this.#paused) return
+  _tick() {
+    if (this._paused) return
 
-    this.#ball.move()
+    this._ball.move()
 
     if (
-      this.#ball.isTouchingRect(this.#paddle) ||
-      this.#ball.isTouchingTopWall()
+      this._ball.isTouchingRect(this._paddle) ||
+      this._ball.isTouchingTopWall()
     ) {
-      this.#ball.revertMove()
-      this.#ball.reflectY()
+      this._ball.revertMove()
+      this._ball.reflectY()
       return
     }
 
-    if (this.#ball.isTouchingLeftWall() || this.#ball.isTouchingRightWall()) {
-      this.#ball.revertMove()
-      this.#ball.reflectX()
+    if (this._ball.isTouchingLeftWall() || this._ball.isTouchingRightWall()) {
+      this._ball.revertMove()
+      this._ball.reflectX()
       return
     }
 
     let brickWasHit = false
 
-    for (const brick of this.#bricks) {
-      if (this.#ball.isTouchingRect(brick)) {
+    for (const brick of this._bricks) {
+      if (this._ball.isTouchingRect(brick)) {
         this.score += 1
-        this.#bricks.delete(brick)
+        this._bricks.delete(brick)
         brickWasHit = true
       }
     }
 
     if (brickWasHit) {
-      this.#ball.revertMove()
-      this.#ball.reflectY()
+      this._ball.revertMove()
+      this._ball.reflectY()
       return
     }
 
-    if (this.#ball.isTouchingBottomWall() || this.#bricks.size === 0) {
-      this.#paused = true
+    if (this._ball.isTouchingBottomWall() || this._bricks.size === 0) {
+      this._paused = true
       this.onGameOver()
     }
   }
 
-  #renderScore() {
+  _renderScore() {
     const text = `Score: ${this.score}`
-    const fontSize = Math.min(this.#canvas.width, this.#canvas.height) / 10
+    const fontSize = Math.min(this._canvas.width, this._canvas.height) / 10
 
-    this.#canvas.ctx.font = `${fontSize}px Arial`
-    this.#canvas.ctx.fillStyle = "#aaa"
+    this._canvas.ctx.font = `${fontSize}px Arial`
+    this._canvas.ctx.fillStyle = "_aaa"
 
-    const { width } = this.#canvas.ctx.measureText(text)
+    const { width } = this._canvas.ctx.measureText(text)
 
-    this.#canvas.ctx.fillText(
+    this._canvas.ctx.fillText(
       text,
-      this.#canvas.width / 2 - width / 2,
-      this.#canvas.height / 2
+      this._canvas.width / 2 - width / 2,
+      this._canvas.height / 2
     )
   }
 
-  #render() {
-    this.#tick()
+  _render() {
+    this._tick()
 
-    this.#canvas.clear()
+    this._canvas.clear()
 
-    this.#renderScore()
-    this.#paddle.render()
-    this.#ball.render()
-    this.#bricks.forEach((brick) => brick.render())
+    this._renderScore()
+    this._paddle.render()
+    this._ball.render()
+    this._bricks.forEach((brick) => brick.render())
 
-    requestAnimationFrame(() => this.#render())
+    requestAnimationFrame(() => this._render())
   }
 
-  #reset() {
+  _reset() {
     const {
       paddleColor,
       paddlePosition,
@@ -112,16 +112,16 @@ class Game {
       brickColumns,
       brickRows,
       brickColor,
-    } = this.#options
+    } = this._options
 
     this.pause()
 
     this.score = 0
-    this.#canvas = new Canvas()
-    this.#paddle = new Paddle(this.#canvas, paddleColor, paddlePosition)
-    this.#ball = new Ball(this.#canvas, ballColor, ballX, ballY, ballGoesRight)
-    this.#bricks = Brick.createBricks(
-      this.#canvas,
+    this._canvas = new Canvas()
+    this._paddle = new Paddle(this._canvas, paddleColor, paddlePosition)
+    this._ball = new Ball(this._canvas, ballColor, ballX, ballY, ballGoesRight)
+    this._bricks = Brick.createBricks(
+      this._canvas,
       brickColumns,
       brickRows,
       brickColor
@@ -129,15 +129,15 @@ class Game {
   }
 
   start() {
-    this.#paused = false
+    this._paused = false
   }
 
   pause() {
-    this.#paused = true
+    this._paused = true
   }
 
   restart() {
-    this.#reset()
+    this._reset()
     this.start()
   }
 }

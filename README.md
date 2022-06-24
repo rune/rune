@@ -31,7 +31,7 @@ Rune.init({
 Rune.gameOver()
 ```
 
-That's all it takes to integrate your game with Rune! You can take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/bunny-twirl/index.js) for inspiration.
+That's all it takes to integrate your game with Rune! You can take a look at our [example game](https://github.com/rune/rune-games-sdk/blob/staging/examples/breakout/index.js) for inspiration.
 
 ### Running Your Game
 

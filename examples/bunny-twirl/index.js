@@ -124,11 +124,11 @@ function getScore() {
   return score
 }
 
-// Initialize Rune SDK with the start/pause/resume functions.
-// Rune will call startGame() to let this game know to start the gameplay.
+// Initialize the Rune SDK once your game is fully ready.
+// Rune will invoke these functions based on player actions in the app interface.
 Rune.init({
-  restartGame,
-  pauseGame,
   resumeGame,
+  pauseGame,
+  restartGame,
   getScore,
 })

@@ -9,7 +9,7 @@ class Game {
   score
   onGameOver
 
-  constructor({ onGameOver, ...options }) {
+  constructor({ onGameOver, options }) {
     this._options = options
     this.onGameOver = onGameOver
 

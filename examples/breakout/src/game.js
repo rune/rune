@@ -77,7 +77,7 @@ class Game {
     const fontSize = Math.min(this._canvas.width, this._canvas.height) / 10
 
     this._canvas.ctx.font = `${fontSize}px Arial`
-    this._canvas.ctx.fillStyle = "_aaa"
+    this._canvas.ctx.fillStyle = "#aaa"
 
     const { width } = this._canvas.ctx.measureText(text)
 

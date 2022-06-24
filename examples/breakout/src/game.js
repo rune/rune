@@ -96,9 +96,13 @@ class Game {
     this._renderScore()
     this._paddle.render()
     this._ball.render()
-    this._bricks.forEach((brick) => brick.render())
+    this._bricks.forEach((brick) => {
+      brick.render()
+    })
 
-    requestAnimationFrame(() => this._render())
+    requestAnimationFrame(() => {
+      this._render()
+    })
   }
 
   _reset() {

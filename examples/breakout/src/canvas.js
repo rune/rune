@@ -3,7 +3,9 @@ class Canvas {
 
   constructor() {
     this._canvas.style.backgroundColor = "white"
-    window.addEventListener("resize", () => this._autosize())
+    window.addEventListener("resize", () => {
+      this._autosize()
+    })
     this._autosize()
   }
 

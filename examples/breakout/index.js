@@ -39,10 +39,18 @@ const game = new Game({
 
 if (Rune) {
   Rune.init({
-    resumeGame: () => game.start(),
-    pauseGame: () => game.pause(),
-    restartGame: () => game.restart(),
-    getScore: () => game.score,
+    resumeGame: () => {
+      game.start()
+    },
+    pauseGame: () => {
+      game.pause()
+    },
+    restartGame: () => {
+      game.restart()
+    },
+    getScore: () => {
+      return game.score
+    },
   })
 } else {
   game.start()

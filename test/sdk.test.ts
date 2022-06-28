@@ -62,11 +62,15 @@ describe("sdk", function () {
   test("alternative way of providing the score using reference on getScore", async () => {
     const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
 
+    let score: number = 0
+
     function getScore() {
-      getScore.score = 33
+      getScore.score = score
     }
     getScore.canNotReturn = true as const
-    getScore.score = 0
+
+    // this line is just to make typescript happy within the context of this test
+    getScore.score = score
 
     initRune(Rune, { getScore })
 
@@ -78,8 +82,8 @@ describe("sdk", function () {
       }
     })
 
+    score = 33
     sendRuneAppCommand(stateMachineService, { type: "requestScore" })
-
     expect(scoreEvent?.score).toEqual(33)
   })
 

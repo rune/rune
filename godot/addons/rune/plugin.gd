@@ -6,5 +6,5 @@ func _enter_tree():
 	pass
 
 func _exit_tree():
-  remove_autoload_singleton("Rune")
+	remove_autoload_singleton("Rune")
 	pass

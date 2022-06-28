@@ -17,6 +17,10 @@ export interface InitInput {
   startGame?: () => void
 }
 
+export type NormalizedInitInput = Omit<InitInput, "getScore"> & {
+  getScore: () => number
+}
+
 export interface RuneExport {
   // External properties and functions
   version: string

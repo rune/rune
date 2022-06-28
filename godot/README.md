@@ -2,7 +2,8 @@
 
 ## Quick Start
 
-Add the following code to "Head Include" of your HTML5 export preset:
+Add the following code to "Head Include" in the "HTML" section of your HTML5
+export preset options:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@2.3/dist/browser.min.js"></script>

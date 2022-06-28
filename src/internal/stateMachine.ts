@@ -2,10 +2,10 @@ import { createMachine, interpret, assign } from "xstate"
 import { randomNumberGenerator } from "./rng"
 import { validateScore } from "./validations"
 import { postRuneEvent } from "./messageBridge"
-import { InitInput } from "../types"
+import { NormalizedInitInput } from "../types"
 
 export type Events =
-  | ({ type: "onGameInit" } & InitInput & {
+  | ({ type: "onGameInit" } & NormalizedInitInput & {
         version: string
       })
   | { type: "onGameOver" }
@@ -19,7 +19,7 @@ type Context = {
   gamePlayUuid: string
   rng: () => number
   legacyGameStarted: boolean
-} & InitInput
+} & NormalizedInitInput
 
 export type StateMachineService = ReturnType<typeof createStateMachine>
 

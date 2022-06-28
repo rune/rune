@@ -59,6 +59,34 @@ describe("sdk", function () {
     ).toMatchInlineSnapshot(`"Score is not a number. Received: string"`)
   })
 
+  test("alternative way of providing the score using reference on getScore", async () => {
+    const { Rune, stateMachineService } = getRuneSdk({ challengeNumber })
+
+    let score: number = 0
+
+    function getScore() {
+      getScore.score = score
+    }
+    getScore.callbackReturnValueNotSupported = true as const
+
+    // this line is just to make typescript happy within the context of this test
+    getScore.score = 0
+
+    initRune(Rune, { getScore })
+
+    let scoreEvent: Extract<RuneGameEvent, { type: "SCORE" }> | undefined
+
+    runePostMessageHandler((event) => {
+      if (event.type === "SCORE") {
+        scoreEvent = event
+      }
+    })
+
+    score = 33
+    sendRuneAppCommand(stateMachineService, { type: "requestScore" })
+    expect(scoreEvent?.score).toEqual(33)
+  })
+
   test("exposed version should match npm version", async function () {
     const { Rune } = getRuneSdk({ challengeNumber })
     const packageJson = require("../package.json")
@@ -108,7 +136,10 @@ describe("sdk", function () {
       }
     })
 
-    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+    sendRuneAppCommand(stateMachineService, {
+      type: "playGame",
+      gamePlayUuid: "1",
+    })
     // Mock game updating its local score
     gameScore = 100
     sendRuneAppCommand(stateMachineService, { type: "requestScore" })
@@ -145,10 +176,16 @@ describe("sdk", function () {
       }
     })
 
-    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+    sendRuneAppCommand(stateMachineService, {
+      type: "playGame",
+      gamePlayUuid: "1",
+    })
     // Mock game updating its local score
     gameScore = 100
-    sendRuneAppCommand(stateMachineService, { type: "restartGame", gamePlayUuid: "2" })
+    sendRuneAppCommand(stateMachineService, {
+      type: "restartGame",
+      gamePlayUuid: "2",
+    })
 
     // Score event should contain score achieved in the game
     expect(scoreEvent?.score).toEqual(100)
@@ -179,8 +216,14 @@ describe("sdk", function () {
     // Mock game updating its local score and extract using _requestScore
     gameScore = 100
 
-    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
-    sendRuneAppCommand(stateMachineService, { type: "restartGame", gamePlayUuid: "2" })
+    sendRuneAppCommand(stateMachineService, {
+      type: "playGame",
+      gamePlayUuid: "1",
+    })
+    sendRuneAppCommand(stateMachineService, {
+      type: "restartGame",
+      gamePlayUuid: "2",
+    })
     sendRuneAppCommand(stateMachineService, { type: "_requestScore" })
     expect(scoreEvent?.score).toEqual(gameScore)
     expect(scoreEvent?.challengeNumber).toEqual(customChallengeNumber)
@@ -210,7 +253,10 @@ describe("sdk", function () {
 
     // Mock game updating its local score and extract using gameOver
     gameScore = 100
-    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+    sendRuneAppCommand(stateMachineService, {
+      type: "playGame",
+      gamePlayUuid: "1",
+    })
     Rune.gameOver()
     expect(gameOverEvent?.score).toEqual(gameScore)
     expect(gameOverEvent?.challengeNumber).toEqual(customChallengeNumber)
@@ -251,7 +297,9 @@ describe("sdk", function () {
 
       Rune.gameOver()
 
-      expect(errEvent?.errMsg).toEqual("Fatal issue: Received onGameOver while in LOADING")
+      expect(errEvent?.errMsg).toEqual(
+        "Fatal issue: Received onGameOver while in LOADING"
+      )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
 
@@ -287,7 +335,10 @@ describe("sdk", function () {
       })
 
       initRune(Rune)
-      sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+      sendRuneAppCommand(stateMachineService, {
+        type: "playGame",
+        gamePlayUuid: "1",
+      })
       Rune.gameOver()
       Rune.gameOver()
 
@@ -309,10 +360,15 @@ describe("sdk", function () {
       }
     })
 
-    sendRuneAppCommand(stateMachineService, { type: "playGame", gamePlayUuid: "1" })
+    sendRuneAppCommand(stateMachineService, {
+      type: "playGame",
+      gamePlayUuid: "1",
+    })
     sendRuneAppCommand(stateMachineService, { type: "pauseGame" })
     sendRuneAppCommand(stateMachineService, { type: "pauseGame" })
-    expect(warningEvent?.msg).toEqual("Received onAppPause while in INIT.PAUSED")
+    expect(warningEvent?.msg).toEqual(
+      "Received onAppPause while in INIT.PAUSED"
+    )
     expect(warningEvent?.gamePlayUuid).toEqual("1")
   })
 })

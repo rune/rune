@@ -4,6 +4,7 @@ The SDK interface for games to interact with Rune.
 import { RuneExport, InitInput } from "./types"
 import { createStateMachine } from "./internal/stateMachine"
 import { validateInput } from "./internal/validations"
+import { normalizeInitInput } from "./internal/normalizeInitInput"
 
 export function getRuneSdk({ challengeNumber }: { challengeNumber: number }) {
   const stateMachineService = createStateMachine(challengeNumber)
@@ -11,6 +12,8 @@ export function getRuneSdk({ challengeNumber }: { challengeNumber: number }) {
   const Rune: RuneExport = {
     version: "2.2.3",
     init: (input) => {
+      normalizeInitInput(input)
+
       validateInput(input)
 
       stateMachineService.send("onGameInit", {

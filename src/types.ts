@@ -9,7 +9,7 @@ export interface InitInput {
         canNotReturn?: false
       }
     | {
-        (): number
+        (): void
         canNotReturn: true
         score: number
       }

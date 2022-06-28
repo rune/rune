@@ -11,7 +11,7 @@ export function getRuneSdk({ challengeNumber }: { challengeNumber: number }) {
   const Rune: RuneExport = {
     version: "2.2.3",
     init: (input) => {
-      if (input.getScore.canNotReturn) {
+      if (input?.getScore?.canNotReturn) {
         const originalGetScore = input.getScore
 
         input.getScore = () => {

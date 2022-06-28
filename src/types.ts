@@ -3,7 +3,16 @@ export interface InitInput {
   restartGame: () => void
   resumeGame: () => void
   pauseGame: () => void
-  getScore: () => number
+  getScore:
+    | {
+        (): number
+        canNotReturn?: false
+      }
+    | {
+        (): number
+        canNotReturn: true
+        score: number
+      }
   // deprecated
   startGame?: () => void
 }
@@ -29,8 +38,18 @@ declare global {
 // "Events" sent to Rune to e.g. communicate that the game is over
 export type RuneGameEvent =
   | { type: "INIT"; version: string }
-  | { type: "GAME_OVER"; gamePlayUuid: string; score: number; challengeNumber: number }
-  | { type: "SCORE"; gamePlayUuid: string; score: number; challengeNumber: number }
+  | {
+      type: "GAME_OVER"
+      gamePlayUuid: string
+      score: number
+      challengeNumber: number
+    }
+  | {
+      type: "SCORE"
+      gamePlayUuid: string
+      score: number
+      challengeNumber: number
+    }
   | { type: "ERR"; gamePlayUuid: string; errMsg: string }
   | { type: "WARNING"; gamePlayUuid: string; msg: string }
   | {

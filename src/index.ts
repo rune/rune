@@ -11,6 +11,15 @@ export function getRuneSdk({ challengeNumber }: { challengeNumber: number }) {
   const Rune: RuneExport = {
     version: "2.2.3",
     init: (input) => {
+      if (input.getScore.canNotReturn) {
+        const originalGetScore = input.getScore
+
+        input.getScore = () => {
+          originalGetScore()
+          return originalGetScore.score
+        }
+      }
+
       validateInput(input)
 
       stateMachineService.send("onGameInit", {

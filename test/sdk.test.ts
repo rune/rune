@@ -67,10 +67,10 @@ describe("sdk", function () {
     function getScore() {
       getScore.score = score
     }
-    getScore.canNotReturn = true as const
+    getScore.callbackReturnValueNotSupported = true as const
 
     // this line is just to make typescript happy within the context of this test
-    getScore.score = score
+    getScore.score = 0
 
     initRune(Rune, { getScore })
 

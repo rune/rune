@@ -6,11 +6,11 @@ export interface InitInput {
   getScore:
     | {
         (): number
-        canNotReturn?: false
+        callbackReturnValueNotSupported?: false
       }
     | {
         (): void
-        canNotReturn: true
+        callbackReturnValueNotSupported: true
         score: number
       }
   // deprecated

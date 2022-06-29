@@ -16,20 +16,20 @@ func rune_get_score():
 	return score
 
 func _ready():
-	
+
 	randomize()
-	
+
 	$ColorRect.color = Color(
-		Rune.deterministicRandom() * 0.75,
-		Rune.deterministicRandom() * 0.75,
-		Rune.deterministicRandom() * 0.75,
+		Rune.deterministic_random() * 0.75,
+		Rune.deterministic_random() * 0.75,
+		Rune.deterministic_random() * 0.75,
 		1
 	)
-	$HUD.update_challenge_number(str("Challenge ", Rune.getChallengeNumber()))
-	
+	$HUD.update_challenge_number(str("Challenge ", Rune.get_challenge_number()))
+
 	$HUD.start_game()
 	get_tree().paused = true
-	
+
 	Rune.init(self)
 
 

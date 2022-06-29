@@ -20,11 +20,11 @@ func game_over():
 	if(!_Rune): return
 	_Rune.gameOver()
 
-func deterministicRandom():
+func deterministic_random():
 	if(!_Rune): return 0.5
 	return _Rune.deterministicRandom()
 
-func getChallengeNumber():
+func get_challenge_number():
 	if(!_Rune): return 1
 	return _Rune.getChallengeNumber()
 

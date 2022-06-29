@@ -1,7 +1,14 @@
 extends Node
 
+var noHtmlMessage = "Games using the Rune SDK must be run in the browser and tested using the Rune CLI. See https://github.com/rune/rune-games-sdk/tree/staging/godot for instructions."
+var noRuneMessage = "It seems you forgot to include Rune SDK in HTML5 export options. See https://github.com/rune/rune-games-sdk/tree/staging/godot for instructions."
+
+func _assert_rune():
+	assert(JavaScript.create_object("Object"), noHtmlMessage)
+	assert(_Rune, noRuneMessage)
+
 func init(ref):
-	if(!_Rune): return
+	_assert_rune()
 
 	_ref = ref
 
@@ -17,15 +24,15 @@ func init(ref):
 	_Rune.init(obj)
 
 func game_over():
-	if(!_Rune): return
+	_assert_rune()
 	_Rune.gameOver()
 
 func deterministic_random():
-	if(!_Rune): return 0.5
+	_assert_rune()
 	return _Rune.deterministicRandom()
 
 func get_challenge_number():
-	if(!_Rune): return 1
+	_assert_rune()
 	return _Rune.getChallengeNumber()
 
 var _Rune = JavaScript.get_interface("Rune")

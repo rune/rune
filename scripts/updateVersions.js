@@ -11,6 +11,12 @@ replaceInFile(
 )
 
 replaceInFile(
+  "godot/README.md",
+  /"https:\/\/cdn\.jsdelivr\.net.+"/,
+  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${minorVersion}/dist/browser.min.js"`
+)
+
+replaceInFile(
   "src/index.ts",
   /version: "\d+\.\d+\.\d+"/,
   `version: "${version}"`

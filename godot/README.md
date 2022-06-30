@@ -15,8 +15,7 @@ export preset options:
 
 <img src="https://i.gyazo.com/9e8b207f5340be67144cc5a56fa7426b.png" width="600">
 
-Add these functions (names are important) in your main script
-file ([read more about how to implement these functions](https://github.com/rune/rune-games-sdk/blob/staging/README.md#core-api)):
+Add these functions (names are important) in your main script file ([read more about how to implement these functions](https://github.com/rune/rune-games-sdk/blob/staging/README.md#core-api)):
 
 - `func rune_resume_game():`
 - `func rune_pause_game():`
@@ -98,5 +97,4 @@ To run your game, you have two options:
 ## Daily Challenges (optional)
 
 You can call `Rune.get_challenge_number()` and `Rune.deterministic_random()` in
-your Godot scripts,
-[read more about Daily Challenges](https://github.com/rune/rune-games-sdk/blob/staging/README.md#daily-challenges-optional)
+your Godot scripts, [read more about Daily Challenges](https://github.com/rune/rune-games-sdk/blob/staging/README.md#daily-challenges-optional)

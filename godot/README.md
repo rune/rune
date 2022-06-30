@@ -2,6 +2,10 @@
 
 ## Quick Start
 
+Install Rune plugin for Godot by downloading [addons.zip](./addons.zip),
+unzipping it into your project, then going to
+`Project > Project Settings > Plugins` and clicking `Enable` on the `Rune`.
+
 Add the following code to "Head Include" in the "HTML" section of your HTML5
 export preset options:
 

@@ -1,4 +1,5 @@
 import { LegacyRuneGameCommand, RuneAppCommand, RuneGameEvent } from "../types"
+import { showFullScreenError } from "./showFullScreenError"
 
 // The native app only support strings for post message communication.
 // To identify if received message is used by Rune, we are prefixing all of them with RUNE_MESSAGE_PREFIX. This allows to
@@ -27,11 +28,19 @@ export function postRuneEvent(data: RuneGameEvent) {
   }
 
   // Game is not running in iframe, don't try to send a message and notify user
-  if (globalThis.parent === (globalThis as typeof window)) {
+  if (
+    globalThis.parent === (globalThis as typeof window) &&
+    data.type !== "WINDOW_ERR"
+  ) {
     // eslint-disable-next-line no-console
     console.error(
       "Games using the Rune SDK must be tested using Rune CLI. See https://github.com/rune/rune-games-cli for instructions."
     )
+
+    showFullScreenError(
+      'Games using the Rune SDK must be tested using Rune CLI. See <a href="https://github.com/rune/rune-games-cli">https://github.com/rune/rune-games-cli</a> for instructions.'
+    )
+
     return
   }
 

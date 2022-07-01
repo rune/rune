@@ -83,10 +83,7 @@ const html = emptyTemplateTag()
 
 function emptyTemplateTag() {
   return (string: TemplateStringsArray, ...placeholders: any[]) =>
-    string.reduce((acc, curr, i) => {
-      acc += curr + (placeholders[i] || "")
-      return acc
-    }, "")
+    string.reduce((acc, curr, i) => acc + curr + (placeholders[i] || ""), "")
 }
 
 function randomHtmlId() {

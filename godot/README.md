@@ -40,7 +40,7 @@ func rune_get_score():
     return score
 ```
 
-When your game is ready, call `Rune.init(self)`, for example:
+When your game has finished loading, call `Rune.init(self)`, for example:
 
 ```gdscript
 # Main.gd

@@ -1,28 +1,49 @@
-const containerId = randomHtmlId()
-const styleId = randomHtmlId()
-const closeButtonClass = randomHtmlId()
-const errorsClass = randomHtmlId()
+interface FullScreenError {
+  header: string
+  body: string
+}
 
-const errors: string[] = []
+const errors: FullScreenError[] = []
 
-export function showFullScreenError(error: string) {
-  if (!errors.includes(error)) errors.push(error)
+export function showFullScreenError(
+  error: FullScreenError,
+  { replaceLinks }: { replaceLinks?: boolean } = {}
+) {
+  if (replaceLinks) {
+    error.body = error.body.replace(
+      /(https?:\/\/\S+)/gi,
+      '<a target="_blank" href="$1">$1</a>'
+    )
+  }
+
+  if (
+    !errors.find(
+      (existingError) =>
+        existingError.header === error.header &&
+        existingError.body === error.body
+    )
+  ) {
+    errors.push(error)
+  }
+
   setTimeout(render, 0)
 }
 
 function render() {
   const container =
-    document.getElementById(containerId) ?? document.createElement("div")
-  container.id = containerId
+    document.getElementById(uniqueId("container")) ??
+    document.createElement("div")
+  container.id = uniqueId("container")
   document.body.appendChild(container)
 
   const style =
-    document.getElementById(styleId) ?? document.createElement("style")
-  style.id = styleId
+    document.getElementById(uniqueId("style")) ??
+    document.createElement("style")
+  style.id = uniqueId("style")
   document.head.appendChild(style)
 
   style.innerHTML = css`
-    #${containerId} {
+    #${uniqueId("container")} {
       position: fixed;
       top: 0;
       left: 0;
@@ -32,60 +53,80 @@ function render() {
       background-color: black;
       opacity: 0.9;
       color: #f44336;
-      font-family: Menlo, Consolas, monospace;
+      font-family: sans-serif;
       font-size: ${size(1)};
       line-height: 1.5;
       padding: ${size(2.5)};
     }
 
-    #${containerId} a {
+    #${uniqueId("container")} a {
       color: #fcc4c0;
     }
 
-    #${containerId} a:hover {
+    #${uniqueId("container")} a:hover {
       color: white;
     }
 
-    #${containerId} .${closeButtonClass} {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 10px 20px;
-      font-size: ${size(1.5)};
-      color: white;
-      font-family: sans-serif;
-      cursor: pointer;
+    #${uniqueId("container")} pre {
+      font-family: monospace;
+      margin: 0;
+      color: #fcc4c0;
+      background-color: #222;
+      display: inline-block;
+      padding: ${size(0.2)} ${size(0.4)};
+      border-radius: ${size(0.4)};
     }
 
-    #${containerId} .${errorsClass} div:not(:first-child) {
+    .${uniqueId("error")}:not(:first-child) {
       padding-top: ${size(2)};
+    }
+
+    .${uniqueId("error")} .${uniqueId("header")} {
+      font-size: ${size(1.5)};
+      padding: ${size(0.5)} 0;
+    }
+
+    .${uniqueId("error")} .${uniqueId("body")} > div:not(:first-child) {
+      padding-top: ${size(0.4)};
+    }
+
+    .${uniqueId("errorsContainer")} {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
   `
 
-  container.innerHTML = html`<div>
-    <div class="${closeButtonClass}">X</div>
-    <div class="${errorsClass}">
-      ${errors.map((error) => `<div>${error}</div>`).join("")}
+  container.innerHTML = html`
+    <div class="${uniqueId("errorsContainer")}">
+      ${errors
+        .map(
+          (error) => html`<div class="${uniqueId("error")}">
+            <div class="${uniqueId("header")}">${error.header}</div>
+            <div class="${uniqueId("body")}">${error.body}</div>
+          </div>`
+        )
+        .join("")}
     </div>
-  </div>`
-
-  const closeButton = document.getElementsByClassName(closeButtonClass).item(0)
-
-  closeButton?.addEventListener("click", () => container.remove())
+  `
 }
 
 function size(q: number) {
   return `min(${30 * q}pt, ${2 * q}vh)`
 }
 
-const css = emptyTemplateTag()
-const html = emptyTemplateTag()
+export const css = emptyTemplateTag()
+export const html = emptyTemplateTag()
 
 function emptyTemplateTag() {
   return (string: TemplateStringsArray, ...placeholders: any[]) =>
     string.reduce((acc, curr, i) => acc + curr + (placeholders[i] || ""), "")
 }
 
-function randomHtmlId() {
-  return `_${Math.round(Math.random() * 1e9)}`
+const uniqueIds: { [key: string]: string } = {}
+
+function uniqueId(id: string) {
+  if (!uniqueIds[id]) uniqueIds[id] = `_${Math.round(Math.random() * 1e9)}`
+  return uniqueIds[id]
 }

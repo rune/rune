@@ -116,12 +116,15 @@ function size(q: number) {
   return `min(${30 * q}pt, ${2 * q}vh)`
 }
 
-export const css = emptyTemplateTag()
-export const html = emptyTemplateTag()
+export const css = createSyntaxSupportTag()
+export const html = createSyntaxSupportTag()
 
-function emptyTemplateTag() {
-  return (string: TemplateStringsArray, ...placeholders: any[]) =>
-    string.reduce((acc, curr, i) => acc + curr + (placeholders[i] || ""), "")
+// This function returns an "empty" template tag that returns the string as-is,
+// these tags are used to enable syntax highlighting in the IDE and code
+// formatting with Prettier for embedded code
+function createSyntaxSupportTag() {
+  return (strings: TemplateStringsArray, ...expressions: any[]) =>
+    strings.reduce((acc, curr, i) => acc + curr + (expressions[i] || ""), "")
 }
 
 const uniqueIds: { [key: string]: string } = {}

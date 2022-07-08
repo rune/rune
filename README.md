@@ -9,7 +9,7 @@ Tiny SDK for making your HTML5 game run inside [Rune](https://play.google.com/st
 Include the following line in your `index.html` file before loading any other JS scripts:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@2.3/dist/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@2.4/dist/browser.min.js"></script>
 ```
 
 ## Quick Start

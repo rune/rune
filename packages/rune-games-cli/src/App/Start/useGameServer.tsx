@@ -1,7 +1,13 @@
 import express from "express"
-import getPort from "get-port"
+import http from "http"
 import path from "path"
 import { useState, useEffect } from "react"
+
+import { choosePort } from "../../lib/choosePort.js"
+import { getServerPort } from "../../lib/getServerPort.js"
+import { storage } from "../../lib/storage/storage.js"
+
+const preferredPort = 3001
 
 export function useGameServer({ gamePath }: { gamePath?: string }) {
   const [port, setPort] = useState<number | null>(null)
@@ -9,14 +15,21 @@ export function useGameServer({ gamePath }: { gamePath?: string }) {
   useEffect(() => {
     if (!gamePath || port) return
 
-    getPort({ port: 3001 }).then((freePort) => {
-      const gameServer = express()
+    choosePort([preferredPort, storage.get("lastRandomGamePort")]).then(
+      (portToUse) => {
+        const gameServer = express()
 
-      gameServer.use("/", express.static(path.resolve(gamePath)))
+        gameServer.use("/", express.static(path.resolve(gamePath)))
 
-      gameServer.listen(freePort, () => setPort(freePort))
-    })
+        const server = http.createServer(gameServer)
+        server.listen(portToUse, () => setPort(getServerPort(server)))
+      }
+    )
   }, [gamePath, port])
+
+  useEffect(() => {
+    if (port && port !== preferredPort) storage.set("lastRandomGamePort", port)
+  }, [port])
 
   return port ? { port } : null
 }

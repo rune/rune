@@ -10,6 +10,8 @@
     "noUncheckedIndexedAccess": true,
     "strict": true,
     "noImplicitAny": true,
+    "keyofStringsOnly": true,
+    "skipLibCheck": true,
     "jsx": "react",
     "types": ["node"],
     "outDir": "dist"

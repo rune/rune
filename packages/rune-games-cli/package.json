@@ -27,10 +27,11 @@
     "release": "scripts/release.sh"
   },
   "dependencies": {
+    "bson": "4.6.5",
     "express": "4.18.0",
-    "get-port": "6.1.2",
     "ink": "3.2.0",
     "ink-text-input": "4.0.3",
+    "is-port-reachable": "4.0.0",
     "meow": "10.1.2",
     "react": "18.0.0"
   },

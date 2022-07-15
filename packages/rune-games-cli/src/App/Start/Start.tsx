@@ -7,10 +7,10 @@ import { packageJson } from "../../lib/packageJson.js"
 import { cli } from "../cli.js"
 
 import { ExitKey } from "./ExitKey.js"
+import { getLocalUrls } from "./getLocalUrls.js"
 import { isGamePathValid } from "./isGamePathValid.js"
 import { useAppServer } from "./useAppServer.js"
 import { useGameServer } from "./useGameServer.js"
-import { useLocalUrls } from "./useLocalUrls.js"
 
 export function Start() {
   const [gamePathOrUrl, setGamePathOrUrl] = useState(cli.input[1] ?? ".")
@@ -39,14 +39,14 @@ export function Start() {
         : undefined,
   })
 
-  const appUrls = useLocalUrls(appServer?.port)
+  const appUrls = getLocalUrls(appServer?.port)
 
   const fullGamePathOrUrl = useMemo(
     () =>
       gameType === "path"
         ? path.relative(".", gamePathOrUrl) === ""
           ? "Current directory"
-          : `\`${path.resolve(gamePathOrUrl)}\``
+          : `${path.resolve(gamePathOrUrl)}`
         : gamePathOrUrl,
     [gamePathOrUrl, gameType]
   )
@@ -77,11 +77,29 @@ export function Start() {
         paddingX={4}
         paddingY={1}
         borderStyle="round"
-        borderColor={gamePathOrUrlValid ? "green" : "red"}
+        borderColor="green"
         flexDirection="column"
       >
-        <Text color="green">App is available at {appUrls.join(", ")}</Text>
-        <Text color="green">Game: {fullGamePathOrUrl}</Text>
+        <Text>
+          <Text bold color="green">
+            Test locally
+          </Text>
+          : {appUrls.localhost}
+        </Text>
+        {appUrls.ip && (
+          <Text>
+            <Text bold color="green">
+              Test on your phone
+            </Text>
+            : {appUrls.ip} (same network only)
+          </Text>
+        )}
+        <Text>
+          <Text bold color="green">
+            Game
+          </Text>
+          : {fullGamePathOrUrl}
+        </Text>
         <Box height={1} />
         <Box>
           <ExitKey />

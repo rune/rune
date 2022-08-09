@@ -16,4 +16,15 @@ export function setupErrorLogging() {
   }
 
   globalThis.addEventListener("error", errorHandler)
+
+  const alertHandler = globalThis.alert
+
+  globalThis.alert = function (message: string) {
+    postRuneEvent({
+      type: "WINDOW_ALERT",
+      message,
+    })
+
+    alertHandler(message)
+  }
 }

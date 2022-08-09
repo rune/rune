@@ -19,6 +19,17 @@ type Context = {
   rng: () => number
 } & NormalizedInitInput
 
+type EventMapping = Record<Pick<Events, "type">["type"], string>
+
+const eventMapping: EventMapping = {
+  onGameInit: "Rune.init()",
+  onGameOver: "Rune.gameOver()",
+  onAppPlay: "onAppPlay",
+  onAppPause: "onAppPause",
+  onAppRestart: "onAppRestart",
+  onAppRequestScore: "onAppRequestScore",
+}
+
 export type StateMachineService = ReturnType<typeof createStateMachine>
 
 // Link to state machine - https://stately.ai/registry/projects/1c0041ce-a4c1-4f87-b3b0-5819092b0289
@@ -170,9 +181,15 @@ export function createStateMachine(challengeNumber: number) {
           postRuneEvent({ type: "INIT", version })
         },
         SEND_ERROR: ({ gamePlayUuid }, event, meta) => {
-          const statePath = (meta.state.history?.toStrings() || []).slice(-1)[0]
+          // state.toStrings() returns a map of states ['INIT', 'INIT.PAUSED']
+          const state = (meta.state.history?.toStrings() || []).slice(-1)[0]
 
-          const errorMessage = `Fatal issue: Received ${event.type} while in ${statePath}`
+          // Splits 'INIT.PAUSED' into ['INIT', 'PAUSED']
+          const stateParts = state.split(".")
+
+          const errorMessage = `Error: Game called ${
+            eventMapping[event.type]
+          } while game was ${stateParts[stateParts.length - 1]}.`
 
           postRuneEvent({
             type: "ERR",

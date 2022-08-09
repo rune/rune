@@ -13,17 +13,15 @@ export type Events =
   | { type: "onAppRestart"; gamePlayUuid: string }
   | { type: "onAppRequestScore" }
   | { type: "onAppPlay"; gamePlayUuid: string }
-  | { type: "onAppStart (legacy)" }
 
 type Context = {
   gamePlayUuid: string
   rng: () => number
-  legacyGameStarted: boolean
 } & NormalizedInitInput
 
 export type StateMachineService = ReturnType<typeof createStateMachine>
 
-// Link to state machine - https://stately.ai/registry/systems/8c37004d-1cc7-4c13-b5a0-9be06d1a2abc
+// Link to state machine - https://stately.ai/registry/projects/1c0041ce-a4c1-4f87-b3b0-5819092b0289
 export function createStateMachine(challengeNumber: number) {
   const machine = createMachine(
     {
@@ -49,12 +47,11 @@ export function createStateMachine(challengeNumber: number) {
         pauseGame: () => {
           throw new Error("pauseGame is not initialized!")
         },
-        legacyGameStarted: false,
       },
 
       // START - Exported JSON from state machine (don't remove newline below)
 
-      id: "SDK",
+      id: "SDK (v3)",
       initial: "LOADING",
       states: {
         LOADING: {
@@ -76,31 +73,19 @@ export function createStateMachine(challengeNumber: number) {
           initial: "PAUSED",
           states: {
             PLAYING: {
-              entry: "ASSIGN_LEGACY_GAME_STARTED",
               on: {
                 onAppPause: {
                   actions: "CALL_PAUSE_GAME",
                   target: "PAUSED",
                 },
                 onGameOver: {
-                  actions: [
-                    "SEND_GAME_OVER",
-                    "RESET_DETERMINISTIC_RANDOMNESS",
-                    "ASSIGN_LEGACY_GAME_ENDED",
-                  ],
+                  actions: ["SEND_GAME_OVER", "RESET_DETERMINISTIC_RANDOMNESS"],
                   target: "GAME_OVER",
                 },
                 onAppRestart: {
                   actions: [
                     "SEND_SCORE",
                     "ASSIGN_GAME_PLAY_UUID",
-                    "RESET_DETERMINISTIC_RANDOMNESS",
-                    "CALL_RESTART_GAME",
-                  ],
-                },
-                "onAppStart (legacy)": {
-                  actions: [
-                    "SEND_SCORE",
                     "RESET_DETERMINISTIC_RANDOMNESS",
                     "CALL_RESTART_GAME",
                   ],
@@ -114,11 +99,7 @@ export function createStateMachine(challengeNumber: number) {
                   target: "PLAYING",
                 },
                 onGameOver: {
-                  target: "#SDK.ERROR",
-                },
-                "onAppStart (legacy)": {
-                  actions: "CALL_RESUME_GAME",
-                  target: "PLAYING",
+                  target: "#SDK (v3).ERROR",
                 },
               },
             },
@@ -129,11 +110,7 @@ export function createStateMachine(challengeNumber: number) {
                   target: "PLAYING",
                 },
                 onGameOver: {
-                  target: "#SDK.ERROR",
-                },
-                "onAppStart (legacy)": {
-                  actions: "CALL_RESTART_GAME",
-                  target: "PLAYING",
+                  target: "#SDK (v3).ERROR",
                 },
               },
             },
@@ -163,20 +140,12 @@ export function createStateMachine(challengeNumber: number) {
           ...context,
           rng: randomNumberGenerator(challengeNumber),
         })),
-        ASSIGN_LEGACY_GAME_STARTED: assign((context) => ({
-          ...context,
-          legacyGameStarted: true,
-        })),
-        ASSIGN_LEGACY_GAME_ENDED: assign((context) => ({
-          ...context,
-          legacyGameStarted: false,
-        })),
         ASSIGN_GAME_PLAY_UUID: assign((context, event) => ({
           ...context,
           gamePlayUuid: event.gamePlayUuid,
         })),
-        CALL_RESUME_GAME: ({ resumeGame, startGame, legacyGameStarted }) => {
-          startGame && !legacyGameStarted ? startGame() : resumeGame()
+        CALL_RESUME_GAME: ({ resumeGame }) => {
+          resumeGame()
         },
         CALL_PAUSE_GAME: ({ pauseGame }) => {
           pauseGame()

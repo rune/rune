@@ -1,7 +1,6 @@
 import { InitInput, RuneExport } from "../src"
 import {
   RuneGameEvent,
-  LegacyRuneGameCommand,
   RuneAppCommand,
   getRuneGameEvent,
   stringifyRuneGameCommand,
@@ -36,7 +35,7 @@ export function runePostMessageHandler(
 
 export function sendRuneAppCommand(
   stateMachineService: StateMachineService,
-  command: RuneAppCommand | LegacyRuneGameCommand
+  command: RuneAppCommand
 ) {
   messageEventHandler(stateMachineService)(
     new MessageEvent("message", {

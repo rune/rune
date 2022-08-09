@@ -1,6 +1,6 @@
 // getRuneGameEvent & stringifyRuneGameCommand are used by the clients to do external communication.
 import { getRuneGameMessage, stringifyRuneGameMessage } from "./messageBridge"
-import { RuneAppCommand, LegacyRuneGameCommand, RuneGameEvent } from "../types"
+import { RuneAppCommand, RuneGameEvent } from "../types"
 
 export function getRuneGameEvent(data: unknown) {
   return getRuneGameMessage<{ runeGameEvent: RuneGameEvent }>(
@@ -9,10 +9,8 @@ export function getRuneGameEvent(data: unknown) {
   )
 }
 
-export function stringifyRuneGameCommand(
-  data: RuneAppCommand | LegacyRuneGameCommand
-) {
+export function stringifyRuneGameCommand(data: RuneAppCommand) {
   return stringifyRuneGameMessage({ runeGameCommand: data })
 }
 
-export type { RuneGameEvent, RuneAppCommand, LegacyRuneGameCommand }
+export type { RuneGameEvent, RuneAppCommand }

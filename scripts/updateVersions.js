@@ -2,18 +2,17 @@ const fs = require("fs")
 
 const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"))
 const version = packageJson.version
-const minorVersion = version.split(".").slice(0, 2).join(".")
 
 replaceInFile(
   "README.md",
   /"https:\/\/cdn\.jsdelivr\.net.+"/,
-  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${minorVersion}/dist/browser.min.js"`
+  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${version}/dist/browser.min.js"`
 )
 
 replaceInFile(
   "godot/README.md",
   /"https:\/\/cdn\.jsdelivr\.net.+"/,
-  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${minorVersion}/dist/browser.min.js"`
+  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${version}/dist/browser.min.js"`
 )
 
 replaceInFile(
@@ -25,13 +24,13 @@ replaceInFile(
 replaceInFile(
   "examples/bunny-twirl/index.html",
   /"https:\/\/cdn\.jsdelivr\.net.+"/,
-  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${minorVersion}/dist/browser.min.js"`
+  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${version}/dist/browser.min.js"`
 )
 
 replaceInFile(
   "examples/breakout/index.html",
   /"https:\/\/cdn\.jsdelivr\.net.+"/,
-  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${minorVersion}/dist/browser.min.js"`
+  `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${version}/dist/browser.min.js"`
 )
 
 function replaceInFile(path, regex, replacement) {

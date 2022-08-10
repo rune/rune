@@ -65,6 +65,7 @@ export type RuneGameEvent =
         colno: number
       }
     }
+  | { type: "WINDOW_ALERT"; message: string }
   | { type: "BROWSER_INITIAL_OVERLAY_CLICKED" }
   | { type: "BROWSER_IFRAME_LOADED" }
 

@@ -242,7 +242,7 @@ describe("sdk", function () {
       initRune(Rune)
 
       expect(errEvent?.errMsg).toEqual(
-        "Fatal issue: Received onGameInit while in INIT.PAUSED"
+        "Error: Game called Rune.init() while game was PAUSED."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
@@ -261,7 +261,7 @@ describe("sdk", function () {
       Rune.gameOver()
 
       expect(errEvent?.errMsg).toEqual(
-        "Fatal issue: Received onGameOver while in LOADING"
+        "Error: Game called Rune.gameOver() while game was LOADING."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
@@ -281,7 +281,7 @@ describe("sdk", function () {
       Rune.gameOver()
 
       expect(errEvent?.errMsg).toEqual(
-        "Fatal issue: Received onGameOver while in INIT.PAUSED"
+        "Error: Game called Rune.gameOver() while game was PAUSED."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
@@ -306,7 +306,7 @@ describe("sdk", function () {
       Rune.gameOver()
 
       expect(errEvent?.errMsg).toEqual(
-        "Fatal issue: Received onGameOver while in INIT.GAME_OVER"
+        "Error: Game called Rune.gameOver() while game was GAME_OVER."
       )
       expect(errEvent?.gamePlayUuid).toEqual("1")
     })

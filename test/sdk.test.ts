@@ -193,43 +193,6 @@ describe("sdk", function () {
     expect(scoreEvent?.gamePlayUuid).toEqual("1")
   })
 
-  test("should support legacy _requestScore command", async function () {
-    const customChallengeNumber = 123
-    const { Rune, stateMachineService } = getRuneSdk({
-      challengeNumber: customChallengeNumber,
-    })
-    // Init with score function
-    let gameScore = 0
-    const getScore = () => {
-      return gameScore
-    }
-    initRune(Rune, { getScore })
-
-    // Override postRuneEvent to extract score
-    let scoreEvent: Extract<RuneGameEvent, { type: "SCORE" }> | undefined
-
-    runePostMessageHandler((event) => {
-      if (event.type === "SCORE") {
-        scoreEvent = event
-      }
-    })
-    // Mock game updating its local score and extract using _requestScore
-    gameScore = 100
-
-    sendRuneAppCommand(stateMachineService, {
-      type: "playGame",
-      gamePlayUuid: "1",
-    })
-    sendRuneAppCommand(stateMachineService, {
-      type: "restartGame",
-      gamePlayUuid: "2",
-    })
-    sendRuneAppCommand(stateMachineService, { type: "_requestScore" })
-    expect(scoreEvent?.score).toEqual(gameScore)
-    expect(scoreEvent?.challengeNumber).toEqual(customChallengeNumber)
-    expect(scoreEvent?.gamePlayUuid).toEqual("2")
-  })
-
   test("GAME_OVER event should include score from game's getScore(), game play uuid and challenge number", async function () {
     const customChallengeNumber = 123
     const { Rune, stateMachineService } = getRuneSdk({
@@ -279,7 +242,7 @@ describe("sdk", function () {
       initRune(Rune)
 
       expect(errEvent?.errMsg).toEqual(
-        "Fatal issue: Received onGameInit while in INIT.PAUSED"
+        "Error: Game called Rune.init() while game was PAUSED."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
@@ -298,7 +261,7 @@ describe("sdk", function () {
       Rune.gameOver()
 
       expect(errEvent?.errMsg).toEqual(
-        "Fatal issue: Received onGameOver while in LOADING"
+        "Error: Game called Rune.gameOver() while game was LOADING."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
@@ -318,7 +281,7 @@ describe("sdk", function () {
       Rune.gameOver()
 
       expect(errEvent?.errMsg).toEqual(
-        "Fatal issue: Received onGameOver while in INIT.PAUSED"
+        "Error: Game called Rune.gameOver() while game was PAUSED."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
     })
@@ -343,7 +306,7 @@ describe("sdk", function () {
       Rune.gameOver()
 
       expect(errEvent?.errMsg).toEqual(
-        "Fatal issue: Received onGameOver while in INIT.GAME_OVER"
+        "Error: Game called Rune.gameOver() while game was GAME_OVER."
       )
       expect(errEvent?.gamePlayUuid).toEqual("1")
     })

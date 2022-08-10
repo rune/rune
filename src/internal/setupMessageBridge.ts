@@ -24,19 +24,17 @@ export function messageEventHandler(stateMachineService: StateMachineService) {
     // TODO - remove the _ commands after all games/clients are migrated to v2
     switch (command.type) {
       case "pauseGame":
-      case "_pauseGame":
         return stateMachineService.send("onAppPause")
       case "requestScore":
-      case "_requestScore":
         return stateMachineService.send("onAppRequestScore")
       case "restartGame":
-        return stateMachineService.send("onAppRestart", { gamePlayUuid: command.gamePlayUuid })
+        return stateMachineService.send("onAppRestart", {
+          gamePlayUuid: command.gamePlayUuid,
+        })
       case "playGame":
-        return stateMachineService.send("onAppPlay", { gamePlayUuid: command.gamePlayUuid })
-      case "_resumeGame":
-        return stateMachineService.send("onAppPlay", { gamePlayUuid: "UNKNOWN" })
-      case "_startGame":
-        return stateMachineService.send("onAppStart (legacy)")
+        return stateMachineService.send("onAppPlay", {
+          gamePlayUuid: command.gamePlayUuid,
+        })
       case "setForceMuteStatus":
         return setForceMuteStatus(command.muted)
     }

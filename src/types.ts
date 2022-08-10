@@ -65,13 +65,9 @@ export type RuneGameEvent =
         colno: number
       }
     }
+  | { type: "WINDOW_ALERT"; message: string }
   | { type: "BROWSER_INITIAL_OVERLAY_CLICKED" }
   | { type: "BROWSER_IFRAME_LOADED" }
-
-// Commands sent to Game to e.g. start/stop the game
-export type LegacyRuneGameCommand = {
-  type: "_startGame" | "_resumeGame" | "_pauseGame" | "_requestScore"
-}
 
 export type RuneAppCommand =
   | { type: "pauseGame" | "requestScore" }

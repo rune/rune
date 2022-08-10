@@ -1,4 +1,4 @@
-import { LegacyRuneGameCommand, RuneAppCommand, RuneGameEvent } from "../types"
+import { RuneAppCommand, RuneGameEvent } from "../types"
 import { showFullScreenError, html } from "./showFullScreenError"
 
 // The native app only support strings for post message communication.
@@ -11,9 +11,10 @@ export function stringifyRuneGameEvent(data: RuneGameEvent) {
 }
 
 export function getRuneGameCommand(data: unknown) {
-  return getRuneGameMessage<{
-    runeGameCommand: RuneAppCommand | LegacyRuneGameCommand
-  }>(data, "runeGameCommand")
+  return getRuneGameMessage<{ runeGameCommand: RuneAppCommand }>(
+    data,
+    "runeGameCommand"
+  )
 }
 
 export function postRuneEvent(data: RuneGameEvent) {

@@ -18,7 +18,7 @@ export function setupErrorLogging() {
   globalThis.addEventListener("error", errorHandler)
 
   // Setup alert tracking. This might be useful to find more about issues related to webgl
-  const alertHandler = globalThis.alert
+  const originalWindowAlertHandler = globalThis.alert
 
   globalThis.alert = function (message: string) {
     postRuneEvent({
@@ -26,6 +26,6 @@ export function setupErrorLogging() {
       message,
     })
 
-    alertHandler(message)
+    originalWindowAlertHandler(message)
   }
 }

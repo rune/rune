@@ -23,17 +23,17 @@ func init(ref):
 
 	_Rune.init(obj)
 
-func game_over():
+func game_over() -> void:
 	_assert_rune()
 	_Rune.gameOver()
 
-func deterministic_random():
+func deterministic_random() -> float:
 	_assert_rune()
 	return _Rune.deterministicRandom()
 
-func get_challenge_number():
+func get_challenge_number() -> int:
 	_assert_rune()
-	return _Rune.getChallengeNumber()
+	return _Rune.getChallengeNumber() as int
 
 var _Rune = JavaScript.get_interface("Rune")
 var _resume_game_cb = JavaScript.create_callback(self, "_resume_game")

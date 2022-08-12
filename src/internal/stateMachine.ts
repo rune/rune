@@ -187,9 +187,10 @@ export function createStateMachine(challengeNumber: number) {
           // Splits 'INIT.PAUSED' into ['INIT', 'PAUSED']
           const stateParts = state.split(".")
 
-          const errorMessage = `Error: Game called ${
-            eventMapping[event.type]
-          } while game was ${stateParts[stateParts.length - 1]}.`
+          // Map to a more easily understood function name
+          const functionName = eventMapping[event.type]
+
+          const errorMessage = `Error: Game called ${functionName} while game was ${stateParts[stateParts.length - 1]}. Check if your game accidentally called ${functionName} at the wrong time or multiple times. This may be caused by timeouts or race conditions.`
 
           postRuneEvent({
             type: "ERR",

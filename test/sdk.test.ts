@@ -241,7 +241,7 @@ describe("sdk", function () {
       initRune(Rune)
       initRune(Rune)
 
-      expect(errEvent?.errMsg).toEqual(
+      expect(errEvent?.errMsg).toContain(
         "Error: Game called Rune.init() while game was PAUSED."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
@@ -260,7 +260,7 @@ describe("sdk", function () {
 
       Rune.gameOver()
 
-      expect(errEvent?.errMsg).toEqual(
+      expect(errEvent?.errMsg).toContain(
         "Error: Game called Rune.gameOver() while game was LOADING."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
@@ -280,7 +280,7 @@ describe("sdk", function () {
       initRune(Rune)
       Rune.gameOver()
 
-      expect(errEvent?.errMsg).toEqual(
+      expect(errEvent?.errMsg).toContain(
         "Error: Game called Rune.gameOver() while game was PAUSED."
       )
       expect(errEvent?.gamePlayUuid).toEqual("UNSET")
@@ -305,7 +305,7 @@ describe("sdk", function () {
       Rune.gameOver()
       Rune.gameOver()
 
-      expect(errEvent?.errMsg).toEqual(
+      expect(errEvent?.errMsg).toContain(
         "Error: Game called Rune.gameOver() while game was GAME_OVER."
       )
       expect(errEvent?.gamePlayUuid).toEqual("1")

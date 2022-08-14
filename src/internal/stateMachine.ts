@@ -182,14 +182,15 @@ export function createStateMachine(challengeNumber: number) {
         },
         SEND_ERROR: ({ gamePlayUuid }, event, meta) => {
           // state.toStrings() returns a map of states ['INIT', 'INIT.PAUSED']
-          const state = (meta.state.history?.toStrings() || []).slice(-1)[0]
+          const stateStrings = (meta.state.history?.toStrings() || []).slice(-1)[0]
 
-          // Splits 'INIT.PAUSED' into ['INIT', 'PAUSED']
-          const stateParts = state.split(".")
+          // Extracts e.g. 'PAUSED' from 'INIT.PAUSED'
+          const state = stateStrings.split(".").at(-1)
 
-          const errorMessage = `Error: Game called ${
-            eventMapping[event.type]
-          } while game was ${stateParts[stateParts.length - 1]}.`
+          // Map to more easily understood function name
+          const fnName = eventMapping[event.type]
+
+          const errorMessage = `Error: Game called ${fnName} while game was ${state}. Check if your game accidentally called ${fnName} at the wrong time or multiple times. This may be caused by timeouts or race conditions.`
 
           postRuneEvent({
             type: "ERR",

@@ -4,6 +4,7 @@ import { forceMute } from "../forceMute"
 const audioElements = new Set<HTMLAudioElement>()
 
 export function registerAudioElement(audioElement: HTMLAudioElement) {
+  desiredMuteStates.set(audioElement, originalMute?.get?.call(audioElement))
   originalMute?.set?.call(audioElement, forceMute.enabled)
   audioElements.add(audioElement)
 }

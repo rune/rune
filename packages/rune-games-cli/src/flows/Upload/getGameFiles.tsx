@@ -1,19 +1,25 @@
-import fs from "fs/promises"
-import globSync from "glob"
-import { promisify } from "util"
+import fs from "fs"
+import glob from "glob"
 
-const glob = promisify(globSync)
-
-export async function getGameFiles(gameDir: string) {
-  const paths = await glob(`${gameDir}/**/*`, { dot: true, nodir: true })
-
-  return Promise.all(
-    paths.map(async (path) => ({
+export function getGameFiles(gameDir: string) {
+  return glob
+    .sync(
+      `${
+        // glob can only work with forward slashes, but path module operates with
+        // double backward slashes on Windows
+        process.platform === "win32" ? gameDir.replace(/\\/g, "/") : gameDir
+      }/**/*`,
+      {
+        nodir: true,
+        // excluding files and directories that start with .
+        dot: false,
+      }
+    )
+    .map((path) => ({
       path,
-      size: (await fs.stat(path)).size,
+      size: fs.statSync(path).size,
       ...(path.endsWith("/index.html") && {
-        content: await fs.readFile(path, "utf-8"),
+        content: fs.readFileSync(path, "utf-8"),
       }),
     }))
-  )
 }

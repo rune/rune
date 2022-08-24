@@ -36,7 +36,7 @@ export function GameDirInputStep({
   } = useValidateGame()
 
   const onSubmitGameDir = useCallback(() => {
-    getGameFiles(gameDir).then(validateGame)
+    validateGame(getGameFiles(gameDir))
   }, [gameDir, validateGame])
 
   useEffect(() => {

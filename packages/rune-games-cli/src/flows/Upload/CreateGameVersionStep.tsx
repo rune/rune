@@ -1,5 +1,6 @@
 import AdmZip from "adm-zip"
 import { Box, Text, Newline } from "ink"
+import path from "path"
 import React, { useState, useEffect } from "react"
 
 import { Choose } from "../../components/Choose.js"
@@ -7,6 +8,8 @@ import { Step } from "../../components/Step.js"
 import { useCreateGameVersion } from "../../gql/useCreateGameVersion.js"
 import { useGame } from "../../gql/useGame.js"
 import { formatApolloError } from "../../lib/formatApolloError.js"
+
+import { getGameFiles } from "./getGameFiles.js"
 
 export function CreateGameVersionStep({
   gameId,
@@ -36,8 +39,12 @@ export function CreateGameVersionStep({
   useEffect(() => {
     if (typeof challengeSupport === "boolean") {
       const zip = new AdmZip()
+      const gameFiles = getGameFiles(gameDir)
 
-      zip.addLocalFolder(gameDir)
+      gameFiles.forEach((file) => {
+        const fileDir = path.dirname(path.relative(gameDir, file.path))
+        zip.addLocalFile(file.path, fileDir === "." ? "" : fileDir)
+      })
 
       createGameVersion({
         gameId,

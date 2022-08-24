@@ -43,7 +43,7 @@ cd my-game-folder
 rune start
 ```
 
-Then run `rune upload` to upload your game to millions of players! 🥳
+Once your game is working, run `rune upload` to upload your game to millions of players! 🥳
 
 ## Core API
 

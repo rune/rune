@@ -3,8 +3,8 @@ import { UncontrolledTextInput } from "ink-text-input"
 import path from "path"
 import React, { useState, useMemo } from "react"
 
+import { cli } from "../../lib/cli.js"
 import { packageJson } from "../../lib/packageJson.js"
-import { cli } from "../cli.js"
 
 import { ExitKey } from "./ExitKey.js"
 import { getLocalUrls } from "./getLocalUrls.js"

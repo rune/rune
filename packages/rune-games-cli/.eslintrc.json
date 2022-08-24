@@ -72,7 +72,19 @@
         "alphabetize": { "order": "asc", "caseInsensitive": true }
       }
     ],
-    "no-duplicate-imports": ["error", { "includeExports": true }]
+    "no-duplicate-imports": ["error", { "includeExports": true }],
+    "no-console": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "@apollo/client",
+            "message": "Please use @apollo/client/index.js instead"
+          }
+        ]
+      }
+    ]
   },
   "settings": {
     "react": { "version": "detect" }

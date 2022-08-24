@@ -1,5 +1,4 @@
 import fs from "fs"
-import semver from "semver"
 
 const packageJson = JSON.parse(
   fs.readFileSync(new URL("../package.json", import.meta.url), "utf8")
@@ -11,13 +10,12 @@ const dependencies = Object.assign(
   packageJson.devDependencies
 )
 
+const versionRegex = /^\d+\.\d+\.\d+(-[\w\d.]+)?$/
+
 const invalidVersions = Object.keys(dependencies).reduce((acc, dependency) => {
   const version = dependencies[dependency]
 
-  if (
-    !isNaN(+version[version.length - 1]) &&
-    version !== semver.valid(semver.coerce(version))
-  ) {
+  if (!version.startsWith("./") && !versionRegex.test(version)) {
     acc[dependency] = version
   }
 

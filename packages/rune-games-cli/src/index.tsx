@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import "core-js/actual/array/at.js"
+
 import { ApolloProvider } from "@apollo/client/index.js"
 import { render } from "ink"
 import React from "react"

@@ -23,17 +23,17 @@ Click the export button (Create executable) and select "Package as Loose Files".
 
 Go to the new folder created by GameMaker.
 
-Open the index.html and include the Rune SDK by adding the following code as the first child of the <head> element:
+Open the `index.html` and include the Rune SDK by adding the following code as the first child of the `<head>` element:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@2.5.1/dist/browser.min.js"></script>
 ```
 
-Open html5game/<your game>.js. This contains the obfuscated Javascript code that GameMaker generated for your game. You need to identify the restart_game(), resume_game(), pause_game() and get_score() methods from the scr_rune Script. 
+Open `html5game/your game.js`. This contains the obfuscated Javascript code that GameMaker generated for your game. You need to identify the `restart_game()`, `resume_game()`, `pause_game()` and `get_score()` methods from the `scr_rune` Script. 
 
-You can search for strings of the debug messages like "Restart game", that will still be in readable form. You can copy the section with these strings out of the main document and format it by replacing "}" with "}\n". You'll find that the names of the functions look something like "_b3".
+You can search for strings of the debug messages like "Restart game", that will still be in readable form. You can copy the section with these strings out of the main document and format it by replacing "}" with "}\n". You'll find that the names of the functions look something like `_b3`.
 
-Open html5game/tph_rune_connector.js, uncomment the Rune API calls, remove "return 1;" from the rune_challenge_nr() function and add the obfuscated function names from <your game>.js to the Rune.init call.
+Open `html5game/tph_rune_connector.js`, uncomment the Rune API calls, remove `return 1;` from the `rune_challenge_nr()` function and add the obfuscated function names from `html5game/your game.js` to the `Rune.init` call.
 
 The build is now finished, your GameMaker game can communicate with the Rune API in both directions.
 

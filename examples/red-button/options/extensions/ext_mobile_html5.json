@@ -1,0 +1,9 @@
+{
+  "extensionId": {
+    "name": "ext_mobile_html5",
+    "path": "extensions/ext_mobile_html5/ext_mobile_html5.yy"
+  },
+  "resourceVersion": "1.0",
+  "resourceType": "GMExtensionConfigSet",
+  "configurables": null
+}

@@ -1,0 +1,9 @@
+{
+  "extensionId": {
+    "name": "ext_rune_connector",
+    "path": "extensions/ext_rune_connector/ext_rune_connector.yy"
+  },
+  "resourceVersion": "1.0",
+  "resourceType": "GMExtensionConfigSet",
+  "configurables": null
+}

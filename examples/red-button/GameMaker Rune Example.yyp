@@ -1,0 +1,52 @@
+{
+  "resources": [
+    {"id":{"name":"obj_pause","path":"objects/obj_pause/obj_pause.yy",},"order":1,},
+    {"id":{"name":"ext_rune_connector","path":"extensions/ext_rune_connector/ext_rune_connector.yy",},"order":3,},
+    {"id":{"name":"scr_rune","path":"scripts/scr_rune/scr_rune.yy",},"order":4,},
+    {"id":{"name":"spr_example_red_button","path":"sprites/spr_example_red_button/spr_example_red_button.yy",},"order":10,},
+    {"id":{"name":"obj_example","path":"objects/obj_example/obj_example.yy",},"order":7,},
+    {"id":{"name":"fnt_example","path":"fonts/fnt_example/fnt_example.yy",},"order":5,},
+    {"id":{"name":"ext_mobile_html5","path":"extensions/ext_mobile_html5/ext_mobile_html5.yy",},"order":2,},
+    {"id":{"name":"scr_example_localisation","path":"scripts/scr_example_localisation/scr_example_localisation.yy",},"order":9,},
+    {"id":{"name":"rm_example","path":"rooms/rm_example/rm_example.yy",},"order":8,},
+  ],
+  "Options": [
+    {"name":"Android","path":"options/android/options_android.yy",},
+    {"name":"HTML5","path":"options/html5/options_html5.yy",},
+    {"name":"iOS","path":"options/ios/options_ios.yy",},
+    {"name":"Linux","path":"options/linux/options_linux.yy",},
+    {"name":"macOS","path":"options/mac/options_mac.yy",},
+    {"name":"Main","path":"options/main/options_main.yy",},
+    {"name":"tvOS","path":"options/tvos/options_tvos.yy",},
+    {"name":"Windows","path":"options/windows/options_windows.yy",},
+    {"name":"Windows UWP","path":"options/windowsuap/options_windowsuap.yy",},
+    {"name":"operagx","path":"options/operagx/options_operagx.yy",},
+  ],
+  "defaultScriptType": 1,
+  "isEcma": false,
+  "configs": {
+    "name": "Default",
+    "children": [],
+  },
+  "RoomOrderNodes": [
+    {"roomId":{"name":"rm_example","path":"rooms/rm_example/rm_example.yy",},},
+  ],
+  "Folders": [
+    {"folderPath":"folders/Rune/Example.yy","order":0,"resourceVersion":"1.0","name":"Example","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Rune.yy","order":16,"resourceVersion":"1.0","name":"Rune","tags":[],"resourceType":"GMFolder",},
+  ],
+  "AudioGroups": [
+    {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
+  ],
+  "TextureGroups": [
+    {"isScaled":true,"compressFormat":"bz2","autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,"resourceVersion":"1.3","name":"Default","resourceType":"GMTextureGroup",},
+  ],
+  "IncludedFiles": [],
+  "MetaData": {
+    "IDEVersion": "2022.6.1.26",
+  },
+  "resourceVersion": "1.5",
+  "name": "GameMaker Rune Example",
+  "tags": [],
+  "resourceType": "GMProject",
+}

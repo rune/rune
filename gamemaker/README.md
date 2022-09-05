@@ -15,7 +15,7 @@ Note that the value returned by `rune_challenge_nr()` is used as the random gene
 
 ## Build your game
 
-*Look at the [finished example build](./finished example build/) if any of the following steps are unclear.*
+*Look at the [finished example build](<./finished example build/>) if any of the following steps are unclear.*
 
 Select the HTML5 platform as your build target (top right corner in GMS2). 
 

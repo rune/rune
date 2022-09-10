@@ -1,2 +1,2 @@
-pause_game();
+gmcallback_pause_game();
 rune_gameover();

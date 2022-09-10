@@ -1,3 +1,3 @@
 init_localisation();
-restart_game();
+gmcallback_restart_game();
 rune_init();

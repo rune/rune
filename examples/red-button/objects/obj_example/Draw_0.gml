@@ -1,5 +1,4 @@
 draw_self();
-
 draw_set_font(fnt_example);
 draw_set_halign(fa_center);
 draw_text(540, 100, global.current_score);

@@ -1,15 +1,15 @@
-function restart_game() {
+function gmcallback_restart_game() {
 	show_debug_message("Restart game");
 	init_game();
 	global.current_score = 0;
 }
 
-function get_score() {
+function gmcallback_get_score() {
 	show_debug_message("Get score");
 	return global.current_score;
 }
 
-function resume_game() {
+function gmcallback_resume_game() {
 	show_debug_message("Resume game");
 	with obj_pause instance_destroy();
 	if variable_global_exists("pause_surface") and surface_exists(global.pause_surface) {
@@ -20,7 +20,7 @@ function resume_game() {
 	instance_activate_all();
 }
 
-function pause_game() {
+function gmcallback_pause_game() {
 	show_debug_message("Pause game");
 	global.pause = true;
 	if surface_exists(application_surface) {
@@ -33,7 +33,7 @@ function pause_game() {
 
 function init_game(){
 	random_set_seed(rune_challenge_nr()); //Use challenge nr as seed for GML random methods
-	resume_game();
+	gmcallback_resume_game();
 	
 	var rz = browser_get_device_pixel_ratio();
 	var avail_w = browser_width * rz;

@@ -1,10 +1,10 @@
 function rune_init() {
 	console.log("rune_init");
 	Rune.init({
-		restartGame: _73,
-   		getScore: _93,
-		resumeGame: _b3,
-		pauseGame: _d3
+		restartGame: gml_Script_gmcallback_restart_game,
+   		getScore: gml_Script_gmcallback_get_score,
+		resumeGame: gml_Script_gmcallback_resume_game,
+		pauseGame: gml_Script_gmcallback_pause_game
 	});
 } 
 

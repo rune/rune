@@ -1,7 +1,8 @@
 import { Text, Box, Spacer } from "ink"
 import { UncontrolledTextInput } from "ink-text-input"
 import path from "path"
-import React, { useState, useMemo } from "react"
+import qrcode from "qrcode-terminal"
+import React, { useState, useMemo, useEffect } from "react"
 
 import { cli } from "../../lib/cli.js"
 import { packageJson } from "../../lib/packageJson.js"
@@ -14,6 +15,7 @@ import { useGameServer } from "./useGameServer.js"
 
 export function Start() {
   const [gamePathOrUrl, setGamePathOrUrl] = useState(cli.input[1] ?? ".")
+  const [qrCodeText, setQrCodeText] = useState<string | null>(null)
 
   const gameType = useMemo(
     () => (gamePathOrUrl.match(/^https?:\/\//) ? "url" : "path"),
@@ -51,6 +53,10 @@ export function Start() {
     [gamePathOrUrl, gameType]
   )
 
+  useEffect(() => {
+    if (appUrls.ip) qrcode.generate(appUrls.ip, { small: true }, setQrCodeText)
+  }, [appUrls.ip])
+
   if (!gamePathOrUrlValid) {
     return (
       <Box flexDirection="column">
@@ -87,12 +93,15 @@ export function Start() {
           : {appUrls.localhost}
         </Text>
         {appUrls.ip && (
-          <Text>
-            <Text bold color="green">
-              Test on your phone
+          <>
+            <Text>
+              <Text bold color="green">
+                Test on your phone
+              </Text>
+              : {appUrls.ip} (or scan the QR code below, same network only)
             </Text>
-            : {appUrls.ip} (same network only)
-          </Text>
+            <Text>{qrCodeText}</Text>
+          </>
         )}
         <Text>
           <Text bold color="green">

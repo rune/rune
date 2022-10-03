@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.6.9",
+    "@types/qrcode-terminal": "0.12.0",
     "adm-zip": "0.5.9",
     "apollo-upload-client": "17.0.0",
     "bson": "4.6.5",
@@ -46,6 +47,7 @@
     "is-port-reachable": "4.0.0",
     "meow": "10.1.2",
     "mime-types": "2.1.35",
+    "qrcode-terminal": "0.12.0",
     "react": "17.0.2",
     "semver": "7.3.7"
   },

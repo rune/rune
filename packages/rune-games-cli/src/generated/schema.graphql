@@ -77,6 +77,7 @@ type DevTeam {
   ): GamesConnection!
   handle: String
   id: Int!
+  unsubscribedFromEmailsAt: Datetime
   updatedAt: Datetime!
 }
 
@@ -186,6 +187,7 @@ type Game {
     orderBy: [GameVersionsOrderBy!] = [PRIMARY_KEY_ASC]
   ): GameVersionsConnection!
   id: Int!
+  logoUrl: String!
 
   """
   NULL means that the challenge is disabled. Once enabled, challenge cannot be disabled.
@@ -352,6 +354,12 @@ type Mutation {
     """
     input: StartVerificationInput!
   ): StartVerificationPayload!
+  updateAllGames(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateAllGamesInput!
+  ): UpdateAllGamesPayload!
 
   """Updates a single `DevTeam` using a unique key and a patch."""
   updateDevTeamByEmail(
@@ -516,6 +524,17 @@ input StartVerificationInput {
 type StartVerificationPayload {
   clientMutationId: String
   verificationToken: String!
+}
+
+input UpdateAllGamesInput {
+  clientMutationId: String
+}
+
+type UpdateAllGamesPayload {
+  clientMutationId: String
+  errors: [String!]!
+  failedToUpdateGameIds: [Int!]!
+  updatedGameIds: [Int!]!
 }
 
 """All input for the `updateDevTeamByEmail` mutation."""

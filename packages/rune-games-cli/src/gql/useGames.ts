@@ -54,9 +54,7 @@ export function gameItemLabel({
     showDevHandle ? ` [dev: ${game.devTeam?.handle}]` : ""
   }${
     game.gameVersions.nodes[0]
-      ? ` (latest version #${
-          game.gameVersions.nodes[0].gameVersionId
-        }, ${game.gameVersions.nodes[0].status
+      ? ` (latest version: ${game.gameVersions.nodes[0].status
           .toLowerCase()
           .replace("_", " ")})`
       : " (no versions uploaded)"

@@ -48,6 +48,7 @@ export function cliCommand() {
 
   return {
     command,
+    args: cli.input.slice(1),
     commandInvalid: command && !validCommands.includes(command),
   }
 }

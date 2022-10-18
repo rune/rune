@@ -81,12 +81,26 @@ export function Login() {
     }
   }, [me, sanitizedNewHandle, updateDevTeamById])
 
+  useEffect(() => {
+    if (meError?.message.includes("[tango][AUTH_FAILED]")) {
+      storage.delete("authToken")
+    }
+  }, [meError?.message])
+
   if (alreadyHasAuthToken && meLoading) {
     return <Step status="waiting" label="Checking authorization" />
   }
 
   if (meError) {
-    return <Step status="error" label="Something went wrong" />
+    return (
+      <Step
+        status="error"
+        label={formatApolloError(meError, {
+          "[tango][AUTH_FAILED]": "Authentication failed. Please try again.",
+          default: "Something went wrong",
+        })}
+      />
+    )
   }
 
   return (

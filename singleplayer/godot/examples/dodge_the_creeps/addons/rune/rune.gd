@@ -1,5 +1,9 @@
 extends Node
 
+signal resume_game
+signal pause_game
+signal restart_game
+
 var noHtmlMessage = "Games using the Rune SDK must be run in the browser and tested using the Rune CLI. See https://github.com/rune/rune-games-sdk/tree/staging/godot for instructions."
 var noRuneMessage = "It seems you forgot to include Rune SDK in HTML5 export options. See https://github.com/rune/rune-games-sdk/tree/staging/godot for instructions."
 
@@ -69,15 +73,25 @@ var _get_score_cb = JavaScript.create_callback(self, "_get_score")
 var _ref
 
 func _resume_game(args):
-	_ref.rune_resume_game()
+	if is_initialized():
+		if _ref.has_method("rune_resume_game"):
+			_ref.rune_resume_game()
+	emit_signal("resume_game")
 
 func _pause_game(args):
-	_ref.rune_pause_game()
+	if is_initialized():
+		if _ref.has_method("rune_pause_game"):
+			_ref.rune_pause_game()
+	emit_signal("pause_game")
 
 func _restart_game(args):
 	if is_emulated():
 		_resume_game(null)
-	_ref.rune_restart_game()
+	
+	if is_initialized():
+		if _ref.has_method("rune_restart_game"):
+			_ref.rune_restart_game()
+	emit_signal("restart_game")
 
 func _get_score(args):
 	var score = _ref.rune_get_score()

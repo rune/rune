@@ -40,6 +40,25 @@ func rune_get_score():
     return score
 ```
 
+The first 3 are optional and can be replaced by connectiong to the `resume_game`, `pause_game` and `restart_game`
+signals. So you can react to them whereever you need without rerouting those calls yourself.
+
+Example:
+
+```gdscript
+# ui.gd
+
+func _ready():
+    Rune.connect("resume_game", self, "_on_rune_resume_game")
+    Rune.connect("pause_game", self, "_on_rune_pause_game")
+
+func _on_rune_resume_game():
+    _enable_input()
+
+func _on_rune_pause_game():
+    _disable_input()
+```
+
 When your game has finished loading, call `Rune.init(self)`, for example:
 
 ```gdscript
@@ -49,6 +68,9 @@ func _ready():
     some_other_game_initialization_code()
     Rune.init(self)
 ```
+
+You can call `Rune.init()` as often as you need to update which Node is considerd the main node.
+ For example when the old one no longer exists because you changed the scene.
 
 When the player loses the game, call `Rune.game_over()`, for example:
 
@@ -93,6 +115,10 @@ To run your game, you have two options:
    cd my-game-folder
    rune start
    ```
+3. For different debugging options you can run the Project directly in the editor.
+  The sdk will still work and always return valid values.
+  However, you can't change the challenge number or seed of `Rune.deterministicRandom`  
+  and the sdk will atomatically call `rune_resume_game` and `rune_restart_game` after a short delay when needed.
 
 ## Daily Challenges (optional)
 

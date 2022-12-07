@@ -22,13 +22,13 @@ replaceInFile(
 )
 
 replaceInFile(
-  "examples/bunny-twirl/index.html",
+  "../../examples/singleplayer/bunny-twirl/index.html",
   /"https:\/\/cdn\.jsdelivr\.net.+"/,
   `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${version}/dist/browser.min.js"`
 )
 
 replaceInFile(
-  "examples/breakout/index.html",
+  "../../examples/singleplayer/breakout/index.html",
   /"https:\/\/cdn\.jsdelivr\.net.+"/,
   `"https://cdn.jsdelivr.net/npm/rune-games-sdk@${version}/dist/browser.min.js"`
 )

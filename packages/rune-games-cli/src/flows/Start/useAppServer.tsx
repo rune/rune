@@ -8,11 +8,18 @@ import { getServerPort } from "../../lib/getServerPort.js"
 import { packageJson } from "../../lib/packageJson.js"
 import { rootPath } from "../../lib/rootPath.js"
 import { storage } from "../../lib/storage/storage.js"
+import { ValidationResult } from "../../lib/validateGameFiles"
 
 const appDir = path.resolve(rootPath, "app")
 const preferredPort = 3000
 
-export function useAppServer({ gameUrl }: { gameUrl?: string }) {
+export function useAppServer({
+  gameUrl,
+  multiplayer,
+}: {
+  gameUrl?: string
+  multiplayer: ValidationResult["multiplayer"]
+}) {
   const [port, setPort] = useState<number | null>(null)
 
   useEffect(() => {
@@ -26,6 +33,7 @@ export function useAppServer({ gameUrl }: { gameUrl?: string }) {
           res.json({
             cliVersion: packageJson.version,
             gameUrl,
+            multiplayer: !!multiplayer,
           })
         })
 
@@ -39,7 +47,7 @@ export function useAppServer({ gameUrl }: { gameUrl?: string }) {
         server.listen(portToUse, () => setPort(getServerPort(server)))
       }
     )
-  }, [gameUrl, port])
+  }, [gameUrl, multiplayer, port])
 
   useEffect(() => {
     if (port && port !== preferredPort) storage.set("lastRandomAppPort", port)

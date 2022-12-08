@@ -1,3 +1,4 @@
+import cors from "cors"
 import express from "express"
 import http from "http"
 import path from "path"
@@ -19,6 +20,7 @@ export function useGameServer({ gamePath }: { gamePath?: string }) {
       (portToUse) => {
         const gameServer = express()
 
+        gameServer.use(cors())
         gameServer.use("/", express.static(path.resolve(gamePath)))
 
         const server = http.createServer(gameServer)

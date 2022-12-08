@@ -8,15 +8,16 @@ import { Step } from "../../components/Step.js"
 import { useCreateGameVersion } from "../../gql/useCreateGameVersion.js"
 import { useGame } from "../../gql/useGame.js"
 import { formatApolloError } from "../../lib/formatApolloError.js"
-
-import { getGameFiles } from "./getGameFiles.js"
+import { getGameFiles } from "../../lib/getGameFiles.js"
 
 export function CreateGameVersionStep({
   gameId,
   gameDir,
+  multiplayer,
 }: {
   gameId: number
   gameDir: string
+  multiplayer: boolean
 }) {
   const { game, gameLoading } = useGame(gameId)
   const {
@@ -36,58 +37,65 @@ export function CreateGameVersionStep({
     }
   }, [game?.gameVersions.nodes])
 
+  const gameCanSupportChallenges = !multiplayer
+  const readyToUpload =
+    typeof challengeSupport === "boolean" || !gameCanSupportChallenges
+
   useEffect(() => {
-    if (typeof challengeSupport === "boolean") {
-      const zip = new AdmZip()
-      const gameFiles = getGameFiles(gameDir)
+    if (readyToUpload) {
+      getGameFiles(gameDir).then((gameFiles) => {
+        const zip = new AdmZip()
 
-      gameFiles.forEach((file) => {
-        const fileDir = path.dirname(path.relative(gameDir, file.path))
-        zip.addLocalFile(file.path, fileDir === "." ? "" : fileDir)
-      })
+        gameFiles.forEach((file) => {
+          const fileDir = path.dirname(path.relative(gameDir, file.path))
+          zip.addLocalFile(file.path, fileDir === "." ? "" : fileDir)
+        })
 
-      createGameVersion({
-        gameId,
-        challengeSupport,
-        content: {
-          name: "content.zip",
-          content: zip.toBuffer(),
-          type: "application/zip",
-        },
+        createGameVersion({
+          gameId,
+          challengeSupport,
+          content: {
+            name: "content.zip",
+            content: zip.toBuffer(),
+            type: "application/zip",
+          },
+        })
       })
     }
-  }, [challengeSupport, createGameVersion, gameDir, gameId])
+  }, [challengeSupport, createGameVersion, gameDir, gameId, readyToUpload])
 
   return (
     <Box flexDirection="column">
-      <Step
-        status={
-          gameLoading
-            ? "waiting"
-            : typeof challengeSupport === "boolean"
-            ? "success"
-            : "userInput"
-        }
-        label={
-          gameLoading
-            ? "Checking daily challenge support"
-            : typeof challengeSupport === "boolean"
-            ? `This game ${
-                challengeSupport ? "supports" : "does not support"
-              } daily challenges`
-            : "Does this game support daily challenges?"
-        }
-        view={
-          !gameLoading &&
-          challengeSupport === undefined && (
-            <Choose
-              options={["No", "Yes"]}
-              onSubmit={(response) => setChallengeSupport(response === "Yes")}
-            />
-          )
-        }
-      />
-      {typeof challengeSupport === "boolean" && (
+      {gameCanSupportChallenges && (
+        <Step
+          status={
+            gameLoading
+              ? "waiting"
+              : typeof challengeSupport === "boolean"
+              ? "success"
+              : "userInput"
+          }
+          label={
+            gameLoading
+              ? "Checking daily challenge support"
+              : typeof challengeSupport === "boolean"
+              ? `This game ${
+                  challengeSupport ? "supports" : "does not support"
+                } daily challenges`
+              : "Does this game support daily challenges?"
+          }
+          view={
+            !gameLoading &&
+            challengeSupport === undefined && (
+              <Choose
+                options={["No", "Yes"]}
+                onSubmit={(response) => setChallengeSupport(response === "Yes")}
+              />
+            )
+          }
+        />
+      )}
+      {readyToUpload && (
         <Step
           status={
             createGameVersionLoading

@@ -3,6 +3,7 @@ import TextInputImport from "ink-text-input"
 import React, { useState, useCallback, useEffect } from "react"
 
 import { Step } from "../../components/Step.js"
+import { GameType } from "../../generated/types.js"
 import { useCreateGame } from "../../gql/useCreateGame.js"
 import { formatApolloError } from "../../lib/formatApolloError.js"
 import { prepareFileUpload } from "../../lib/prepareFileUpload.js"
@@ -11,8 +12,10 @@ import { prepareFileUpload } from "../../lib/prepareFileUpload.js"
 const TextInput = TextInputImport.default as typeof TextInputImport
 
 export function CreateGameStep({
+  type,
   onComplete,
 }: {
+  type: GameType
   onComplete: (newGameId: number) => void
 }) {
   const [title, setTitle] = useState("")
@@ -42,6 +45,7 @@ export function CreateGameStep({
         title,
         description,
         ...(logoPath && { logo: prepareFileUpload(logoPath) }),
+        type,
       })
     }
   }, [
@@ -52,6 +56,7 @@ export function CreateGameStep({
     logoPathSubmitted,
     title,
     titleSubmitted,
+    type,
   ])
 
   useEffect(() => {

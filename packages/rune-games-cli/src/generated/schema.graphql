@@ -13,6 +13,7 @@ input CreateGameInput {
   description: String
   logo: Upload
   title: String!
+  type: GameType!
 }
 
 type CreateGamePayload {
@@ -151,7 +152,7 @@ type Game {
 
   """(Denormalized) Total number of comments ."""
   commentCount: Int!
-  createdAt: Datetime
+  createdAt: Datetime!
   description: String
 
   """Reads a single `DevTeam` that is related to this `Game`."""
@@ -203,7 +204,7 @@ type Game {
   """
   playCount: Int!
   title: String!
-  updatedAt: Datetime
+  updatedAt: Datetime!
 }
 
 """
@@ -226,7 +227,29 @@ input GameFile {
   size: Int!
 }
 
+enum GameType {
+  EXTERNAL
+  MULTIPLAYER
+  SINGLEPLAYER
+}
+
+type GameValidationError {
+  lintErrors: [GameValidationLintError!]
+  message: String!
+}
+
+type GameValidationLintError {
+  column: Int!
+  endColumn: Int
+  endLine: Int
+  line: Int!
+  message: String
+  ruleId: String
+}
+
 type GameVersion {
+  createdByDevTeamId: Int
+
   """Reads a single `Game` that is related to this `GameVersion`."""
   game: Game
   gameId: Int!
@@ -628,6 +651,6 @@ input ValidateGameInput {
 
 type ValidateGamePayload {
   clientMutationId: String
-  errors: [String!]!
+  errors: [GameValidationError!]!
   valid: Boolean!
 }

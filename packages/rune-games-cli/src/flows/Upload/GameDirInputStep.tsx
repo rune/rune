@@ -5,10 +5,12 @@ import path from "path"
 import React, { useState, useMemo, useCallback, useEffect } from "react"
 
 import { Step } from "../../components/Step.js"
-import { useValidateGame } from "../../gql/useValidateGame.js"
 import { cli } from "../../lib/cli.js"
-
-import { getGameFiles } from "./getGameFiles.js"
+import { getGameFiles } from "../../lib/getGameFiles.js"
+import {
+  validateGameFiles,
+  ValidationResult,
+} from "../../lib/validateGameFiles.js"
 
 // @ts-ignore
 const TextInput = TextInputImport.default as typeof TextInputImport
@@ -16,7 +18,7 @@ const TextInput = TextInputImport.default as typeof TextInputImport
 export function GameDirInputStep({
   onComplete,
 }: {
-  onComplete: (gameDir: string) => void
+  onComplete: (args: { gameDir: string; multiplayer: boolean }) => void
 }) {
   const [gameDir, setGameDir] = useState(
     () => cli.input[1] ?? path.resolve(".")
@@ -28,20 +30,24 @@ export function GameDirInputStep({
         : path.resolve(gameDir),
     [gameDir]
   )
-  const {
-    validateGame,
-    validateGameResult,
-    validateGameLoading,
-    validateGameError,
-  } = useValidateGame()
+
+  const [validateGameResult, setValidateGameResult] =
+    useState<ValidationResult | null>(null)
 
   const onSubmitGameDir = useCallback(() => {
-    validateGame(getGameFiles(gameDir))
-  }, [gameDir, validateGame])
+    getGameFiles(gameDir).then(validateGameFiles).then(setValidateGameResult)
+  }, [gameDir])
 
   useEffect(() => {
-    if (validateGameResult?.valid) onComplete(gameDir)
-  }, [gameDir, onComplete, validateGameResult?.valid])
+    if (validateGameResult?.valid) {
+      onComplete({ gameDir, multiplayer: !!validateGameResult.multiplayer })
+    }
+  }, [
+    gameDir,
+    onComplete,
+    validateGameResult?.multiplayer,
+    validateGameResult?.valid,
+  ])
 
   return (
     <>
@@ -53,7 +59,7 @@ export function GameDirInputStep({
             <Box flexDirection="column">
               {validateGameResult?.errors.map((error, i) => (
                 <Text key={i} color="red">
-                  {figures.line} {error}
+                  {figures.line} {error.message}
                 </Text>
               ))}
             </Box>
@@ -61,22 +67,10 @@ export function GameDirInputStep({
         />
       )}
       <Step
-        status={
-          validateGameLoading
-            ? "waiting"
-            : validateGameError
-            ? "error"
-            : validateGameResult?.valid
-            ? "success"
-            : "userInput"
-        }
+        status={validateGameResult?.valid ? "success" : "userInput"}
         label={
-          validateGameLoading
-            ? "Validating game files"
-            : validateGameResult?.valid
+          validateGameResult?.valid
             ? `Using game files from ${gameDirFormatted}`
-            : validateGameError
-            ? "Something went wrong"
             : validateGameResult?.valid === false
             ? "Update your game to fix these issues 😄"
             : "Enter the game directory"

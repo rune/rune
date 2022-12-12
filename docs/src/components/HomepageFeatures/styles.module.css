@@ -1,0 +1,95 @@
+.features p {
+  font-size: 1.1rem;
+}
+
+.mobileReadyScreens {
+  display: flex;
+  overflow-y: hidden;
+  max-height: 70vw;
+  position: relative;
+}
+
+@media screen and (min-width: 997px) {
+  .mobileReadyScreens {
+    max-height: 420px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .mobileReadyScreens {
+    max-height: 490px;
+  }
+}
+
+.phoneOutline {
+  align-self: flex-start;
+  position: relative;
+  box-sizing: border-box;
+  border: 11px solid var(--ifm-color-primary-contrast-foreground);
+  overflow: hidden;
+  border-bottom: 0;
+  border-radius: 35px;
+  background: #000;
+  margin-top: 5%;
+  margin-left: -20%;
+  box-shadow: 0 0.15rem 1rem rgba(0, 0, 0, 0.45);
+}
+
+.phoneOutline:first-child {
+  margin-top: 20%;
+  margin-left: 0;
+}
+
+.phoneOutline:last-child {
+  margin-top: 15%;
+  z-index: -1;
+}
+
+.phoneOutline:first-child,
+.phoneOutline:last-child {
+  box-shadow: none;
+}
+
+.phoneOutline img,
+.phoneOutline video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 499/1080;
+}
+
+.mobileReadyText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.engageContainer {
+  background: #59028b url(/img/llama-pattern.svg);
+  color: #fff;
+  margin-top: -1px;
+  padding-bottom: 1rem;
+}
+
+.engageContainer img {
+  width: 100px;
+  aspect-ratio: 1;
+}
+
+.engageContent {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin: 1rem 0 0 0;
+  padding: 1rem 0 0 0;
+}
+
+@media screen and (min-width: 997px) {
+  .engageContent {
+    display: block;
+    padding: 0;
+  }
+  .engageContainer img {
+    margin: 1rem 0;
+  }
+}

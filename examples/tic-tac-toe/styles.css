@@ -1,0 +1,152 @@
+body,
+html {
+  padding: 0;
+  margin: 0;
+  background: #333;
+}
+
+main {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+#board {
+  width: 90vw;
+  max-width: min(90vh, 600px);
+  aspect-ratio: 1;
+  column-count: 3;
+  column-gap: 0;
+}
+
+#board.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  column-count: 1;
+}
+
+.loading:before,
+.loading:after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin: 10px;
+  background: url(x.svg) no-repeat center;
+  background-size: contain;
+  animation: left 1s infinite ease-in-out;
+}
+
+.loading:after {
+  background-image: url(o.svg);
+  animation-name: right;
+}
+
+.loading button {
+  display: none;
+}
+
+@keyframes right {
+  0%,
+  100% {
+    transform: translate(-20px);
+  }
+  50% {
+    transform: translate(20px);
+  }
+}
+
+@keyframes left {
+  0%,
+  100% {
+    transform: translate(20px);
+  }
+  50% {
+    transform: translate(-20px);
+  }
+}
+
+button {
+  position: relative;
+  background: transparent;
+  border: 5px solid #e6e6e620;
+  border-left: 0;
+  border-top: 0;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: max(8%, 8px);
+}
+
+button:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  transition: all 1s ease-out;
+}
+
+button.loser:before {
+  opacity: 0.2;
+  scale: 0.8;
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+button[data-player="0"]:before {
+  background-image: url(x.svg);
+  animation: scale-in 0.2s ease-in-out;
+}
+
+button[data-player="1"]:before {
+  background-image: url(o.svg);
+  animation: scale-in 0.2s ease-in-out;
+}
+
+button:nth-child(3n) {
+  border-bottom: 0;
+}
+
+button:nth-child(7),
+button:nth-child(8),
+button:nth-child(9) {
+  border-right: 0;
+}
+
+button:not([disabled]) {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  button:not([disabled]):after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -10%;
+    margin-left: -10%;
+    width: 20%;
+    border-radius: 50%;
+    background: #e6e6e6;
+    aspect-ratio: 1;
+    transition: all 0.15s ease-in-out;
+    scale: 0;
+  }
+
+  button:hover:after {
+    scale: 1;
+  }
+}

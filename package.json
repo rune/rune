@@ -7,13 +7,20 @@
   ],
   "scripts": {
     "build": "yarn workspaces run build",
-    "lint": "yarn workspaces run lint",
+    "lint": "eslint .",
     "test": "yarn workspaces run test",
     "typecheck": "yarn workspaces run typecheck"
   },
   "devDependencies": {
-    "eslint": "^7.22.0",
-    "eslint-config-prettier": "^8.1.0",
-    "prettier": "^2.2.1"
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-eslint-plugin": "^5.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-rune": "0.1.0",
+    "prettier": "^2.8.0"
   }
 }

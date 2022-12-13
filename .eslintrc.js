@@ -1,50 +1,61 @@
+"use strict"
+
 module.exports = {
   root: true,
-  env: {
-    es6: true,
-    browser: true,
-  },
   parserOptions: {
-    sourceType: "module",
+    ecmaVersion: 2021,
   },
-  parser: "@typescript-eslint/parser",
   extends: ["eslint:recommended", "prettier"],
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "prettier"],
+  env: {
+    node: true,
+  },
   rules: {
-    "no-throw-literal": "error",
-
-    // Used for communicating with the game and Rune
-    "no-unused-vars": "off",
-
-    // Used to improve developer experience
-    "no-console": "error",
-    "spaced-comment": ["error", "always"],
-    "no-undef": "off",
+    "prettier/prettier": ["error"],
   },
-  settings: {},
-  globals: {
-    console: "readonly",
-    exports: "readonly",
-    module: "readonly",
-    process: "readonly",
-    Promise: "readonly",
-    require: "readonly",
-    setTimeout: "readonly",
-    globalThis: "readonly",
-    window: "readonly",
-  },
-
   overrides: [
     {
-      files: ["test/*.ts"],
-      globals: {
-        jest: "readonly",
-        describe: "readonly",
-        expect: "readonly",
-        test: "readonly",
-        beforeEach: "readonly",
-        afterEach: "readonly",
+      files: ["packages/eslint-plugin-rune/**/*.js"],
+      extends: ["plugin:eslint-plugin/recommended"],
+    },
+    {
+      files: [
+        "packages/eslint-plugin-rune/**/*.spec.js",
+        "packages/eslint-plugin-rune/test/createConfigTester.js",
+      ],
+      env: { mocha: true },
+    },
+    {
+      files: ["packages/eslint-plugin-rune/test/samples/*.js"],
+      extends: ["plugin:rune/logic"],
+    },
+    {
+      files: ["singleplayer/**/*.js", "multiplayer/**/*.js"],
+      extends: ["plugin:rune/recommended"],
+      env: {
+        browser: true,
       },
+      globals: {
+        Rune: "readonly", // TODO: this should be part of rune/recommended
+      },
+    },
+    {
+      files: ["docs/**/*.js"],
+      parserOptions: {
+        sourceType: "module",
+      },
+      plugins: ["react"],
+      extends: ["plugin:react/recommended"],
+      settings: {
+        react: {
+          version: "detect",
+        },
+      },
+    },
+    {
+      files: ["**/*.ts"],
+      parser: "@typescript-eslint/parser",
+      extends: ["plugin:@typescript-eslint/recommended"],
     },
   ],
 }

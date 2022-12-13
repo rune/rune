@@ -27,7 +27,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: ".node-version"
           cache: "yarn"
       - name: Install dependencies
         run: yarn --frozen-lockfile --non-interactive --silent

@@ -9,7 +9,10 @@
     "build": "yarn workspaces run build",
     "lint": "eslint .",
     "test": "yarn workspaces run test",
-    "typecheck": "yarn workspaces run typecheck"
+    "typecheck": "yarn workspaces run typecheck",
+    "example-breakout": "rune start singleplayer/examples/breakout",
+    "example-bunny-twirl": "rune start singleplayer/examples/bunny-twirl",
+    "example-tic-tac-toe": "rune start multiplayer/examples/tic-tac-toe"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.45.0",

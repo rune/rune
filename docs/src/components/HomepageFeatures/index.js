@@ -106,8 +106,8 @@ function Engage() {
               <div>
                 <h2>Engaging</h2>
                 <p>
-                  Keep your players coming back long after release with Rune's
-                  built-in <strong>leaderboards</strong> and{" "}
+                  Keep your players coming back long after release with
+                  Rune&apos;s built-in <strong>leaderboards</strong> and{" "}
                   <strong>daily challenges</strong>.
                 </p>
               </div>
@@ -155,7 +155,7 @@ Rune.gameOver()
           </CodeBlock>
         </div>
         <div className={`${clsx("col col--6")} ${styles.superEasyText}`}>
-          <h2>It's super easy</h2>
+          <h2>It&apos;s super easy</h2>
           <p>
             Integrating the Rune SDK is only a{" "}
             <strong>handful lines of code</strong> and can be done in a matter

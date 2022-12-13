@@ -1,5 +1,7 @@
 # Rune Games SDK
 
+[![npm](https://img.shields.io/npm/v/rune-games-sdk)](https://www.npmjs.com/package/rune-games-sdk) [![GitHub Workflow Status (staging)](https://img.shields.io/github/workflow/status/rune/rune-games-sdk/CI/staging)](https://github.com/rune/rune-games-sdk/actions/workflows/CI.yml?query=branch%3Astaging)
+
 Tiny SDK for making your HTML5 game run inside Rune for [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan) and [iOS](https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364).
 
 ## Documentation

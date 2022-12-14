@@ -1,0 +1,58 @@
+name: Release NPM packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version-bump:
+        type: choice
+        description: Version bump
+        default: "patch"
+        options:
+          - major
+          - minor
+          - patch
+          - premajor
+          - preminor
+          - prepatch
+          - prerelease
+
+jobs:
+  npm:
+    name: Release changed NPM packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".node-version"
+          cache: "yarn"
+
+      - name: Git Identity
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install npm dependencies
+        run: yarn install --prefer-offline --frozen-lockfile --non-interactive --silent
+
+      - name: Build
+        run: yarn build
+
+      - name: Update versions
+        run: yarn lerna version ${{ inputs.version-bump }} --yes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to NPM
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+          yarn lerna publish from-package
+          rm .npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

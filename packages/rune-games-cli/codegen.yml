@@ -1,0 +1,34 @@
+schema: ${SCHEMA_PATH:https://tango-production.rune.ai/dev/graphql}
+overwrite: true
+generates:
+  src/generated/schema.graphql:
+    plugins:
+      - schema-ast
+  src/generated/types.ts:
+    documents:
+      - src/**/*.{js,ts,tsx}
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-apollo-client-helpers
+      - typed-document-node
+    config:
+      declarationKind: "interface"
+      exportFragmentSpreadSubTypes: true
+      avoidOptionals:
+        object: false
+        field: true
+      namingConvention:
+        enumValues: keep
+      scalars:
+        Datetime: string
+        Upload: "{ content: Buffer, name: string, type: string }"
+      nonOptionalTypename: true
+      dedupeFragments: true
+  src/generated/operations.ts:
+    documents:
+      - src/**/*.{js,ts,tsx}
+    plugins:
+      - named-operations-object
+    config:
+      identifierName: operations

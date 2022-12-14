@@ -1,4 +1,4 @@
-import { type ESLint } from "eslint"
+import type { ESLint } from "eslint"
 
 export { rules } from "./rules"
 

@@ -9,6 +9,11 @@
     "eslintplugin",
     "eslint-plugin"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rune/rune-games-sdk.git",
+    "directory": "packages/eslint-plugin-rune"
+  },
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
   "files": [

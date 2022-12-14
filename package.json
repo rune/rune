@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "prepare": "husky install",
     "build": "yarn workspaces run build",
     "lint": "eslint .",
     "test": "yarn workspaces run test",
@@ -17,10 +18,14 @@
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-eslint-plugin": "^5.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-rune": "0.1.0",
+    "husky": "7.0.2",
+    "lint-staged": "12.4.1",
     "prettier": "^2.8.0"
   }
 }

@@ -1,6 +1,2 @@
-.idea/
-node_modules/
 __temp/
-
-dist/
 cjs/

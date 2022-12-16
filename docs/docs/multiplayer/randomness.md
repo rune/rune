@@ -21,9 +21,9 @@ Rune solves this problem by implementing a deterministic pseudorandom number gen
 
 What's great about it is that the game can do optimistic updates which leads to a really fast game, and that cheating is hard as the player client only knows how to generate their own numbers and cannot know what the other players will get.
 
-## Great, but sounds complicated?
+## Things to keep in mind
 
-Yes, but not for your game! Rune solves this transparently and in the majority of cases **you can keep using `Math.random()`** as you would in any other game. There are some specific things to keep in mind:
+Rune solves this transparently and in the majority of cases **you can keep using `Math.random()`** as you would in any other game. There are some specific things to keep in mind however:
 
 ### Keep all shared state in `logic.js`
 
@@ -31,4 +31,7 @@ This isn't limited to randomness, but is especially important here, as only the 
 
 ### Shared random
 
-If your games needs deterministic shared randomness, meaning that the randomness is determined by the order an action is taken, regardless of who makes an action. This can be solved in different ways depending on the needs. One way is to use `Math.random()` in `setup()` to set a shared random state to be used in your own number generator, another is to generate all state that depends on randomness in `setup()`.
+If your games needs deterministic shared randomness, meaning that the randomness is determined by the order an action is taken, regardless of who makes an action. This can be solved in different ways depending on the needs:
+
+- Set a shared random state in `setup()` using `Math.random()` to be used in your own number generator.
+- Generate all state that depends on randomness in `setup()` such as the board in a collaborative minesweeper game.

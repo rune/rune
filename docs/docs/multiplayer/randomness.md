@@ -4,6 +4,12 @@ sidebar_position: 6
 
 # Randomness
 
+:::tip
+
+**TL;DR**: just use `Math.random()`.
+
+:::
+
 Most games involve some kind of randomness, for example to roll a die in the case of Yahtzee. However, randomness introduces some problems:
 
 - True randomness is inherently **not deterministic**, which is not compatible with Rune's distributed game state model.
@@ -13,11 +19,11 @@ Most games involve some kind of randomness, for example to roll a die in the cas
 
 Rune solves this problem by implementing a deterministic pseudorandom number generator. In simpler words this means the Rune server tells each player client to calculate random numbers. For every action the player takes, the server verifies that the random numbers being generated are in fact generated in the way the server told it to.
 
-What's great about it is that the game can do optimistic updates which leads to a really fast game, and that cheating is hard as the player client only knows how to generate their own numbers and cannot know what the other players will get. However, the main drawback with this is that in some cases a technically sophisticated player might be able to "peek" at their next die/card etc (also known as a lookahead attack).
+What's great about it is that the game can do optimistic updates which leads to a really fast game, and that cheating is hard as the player client only knows how to generate their own numbers and cannot know what the other players will get.
 
-## Great, but sounds complicated
+## Great, but sounds complicated?
 
-Yes, but not for your game! Rune solves this transparently and in the majority of cases **you can keep using `Math.random()`** as you would in any other game. There are some specific gotchas that is good to know about:
+Yes, but not for your game! Rune solves this transparently and in the majority of cases **you can keep using `Math.random()`** as you would in any other game. There are some specific things to keep in mind:
 
 ### Keep all shared state in `logic.js`
 

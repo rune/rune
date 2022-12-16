@@ -14,6 +14,13 @@ const config = {
   onBrokenMarkdownLinks: "warn",
   favicon: "https://www.rune.ai/favicon.ico",
 
+  scripts: [
+    {
+      src: "https://scripts.simpleanalyticscdn.com/latest.js",
+      defer: true,
+    },
+  ],
+
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "rune", // Usually your GitHub org/user name.

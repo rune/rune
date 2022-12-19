@@ -39,7 +39,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install npm dependencies
-        run: yarn install --prefer-offline --frozen-lockfile --non-interactive --silent
+        run: yarn --prefer-offline --frozen-lockfile --non-interactive --ignore-scripts --silent
 
       - name: Build
         run: yarn build

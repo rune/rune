@@ -30,7 +30,7 @@ jobs:
           node-version-file: ".node-version"
           cache: "yarn"
       - name: Install dependencies
-        run: yarn --frozen-lockfile --non-interactive --silent
+        run: yarn --prefer-offline --frozen-lockfile --non-interactive --ignore-scripts --silent
         working-directory: docs
       - name: Build website
         run: yarn build

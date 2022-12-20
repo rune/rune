@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky install && yarn build",
     "build": "yarn workspaces run build",
     "lint": "eslint .",
     "test": "yarn workspaces run test",

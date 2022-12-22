@@ -111,14 +111,18 @@ const logicConfig: ESLint.ConfigData = {
     "no-restricted-properties": [
       2,
       {
-        object: "Math",
-        property: "random",
-        message:
-          "Math.random() is not deterministic and may not be in logic.js.",
+        object: "Rune",
+        property: "init",
+        message: "Rune.init() is restricted to client-only code.",
       },
       {
         object: "Rune",
-        property: "init",
+        property: "initClient",
+        message: "Rune.init() is restricted to client-only code.",
+      },
+      {
+        object: "Rune",
+        property: "deterministicRandom",
         message: "Rune.init() is restricted to client-only code.",
       },
     ],

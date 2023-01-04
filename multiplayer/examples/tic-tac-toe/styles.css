@@ -4,7 +4,8 @@ html {
   margin: 0;
   background: #333;
   color: #e6e6e6;
-  font-family: "Visitor TT2 BRK", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 main {
@@ -160,16 +161,16 @@ button:not([disabled]) {
 
 ul {
   list-style: none;
-  font-size: max(1rem, 8vw);
+  font-size: max(1rem, 5vw);
   margin: 1em 0;
   padding: 0;
+  font-weight: bold;
 }
 
 li {
   opacity: 0.5;
-  line-height: 1;
-  display: flex;
-  align-items: center;
+  line-height: 1.7;
+  text-transform: uppercase;
 }
 
 li.current {
@@ -179,8 +180,9 @@ li.current {
 li:before {
   content: "";
   display: inline-block;
-  width: 0.5em;
-  height: 0.5em;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
   margin-right: 0.5em;
   background-repeat: no-repeat;
   background-size: contain;

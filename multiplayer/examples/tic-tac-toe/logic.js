@@ -27,14 +27,14 @@ Rune.initLogic({
   maxPlayers: 2,
   setup: (players) => ({
     players,
-    currentPlayerId: players[0],
+    lastPlayerId: null,
     cells: new Array(9).fill(null),
     winCombo: null,
   }),
   actions: {
     claimCell: (cellIndex, { game, playerId }) => {
       // Cannot play during someone else's turn or claim existing cells
-      if (game.cells[cellIndex] !== null || playerId !== game.currentPlayerId) {
+      if (game.cells[cellIndex] !== null || playerId === game.lastPlayerId) {
         throw Rune.invalidAction()
       }
 
@@ -44,9 +44,7 @@ Rune.initLogic({
       // Game is over if someone won or if there are no available moves
       const gameOver =
         game.winCombo || game.cells.findIndex((cell) => cell === null) === -1
-      game.currentPlayerId = gameOver
-        ? null
-        : game.players.find((id) => id !== playerId)
+      game.lastPlayerId = playerId
 
       if (gameOver) {
         Rune.gameOver()

@@ -16,6 +16,9 @@ on:
           - prepatch
           - prerelease
 
+permissions:
+  contents: write
+
 jobs:
   npm:
     name: Release changed NPM packages

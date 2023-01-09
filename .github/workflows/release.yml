@@ -2,19 +2,6 @@ name: Release NPM packages
 
 on:
   workflow_dispatch:
-    inputs:
-      version-bump:
-        type: choice
-        description: Version bump
-        default: "patch"
-        options:
-          - major
-          - minor
-          - patch
-          - premajor
-          - preminor
-          - prepatch
-          - prerelease
 
 permissions:
   contents: write
@@ -47,15 +34,10 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Update versions
-        run: yarn lerna version ${{ inputs.version-bump }} --yes
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Publish to NPM
         run: |
-          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
-          yarn lerna publish from-package
+          echo '//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}' > .npmrc
+          yarn lerna publish from-package --yes
           rm .npmrc
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

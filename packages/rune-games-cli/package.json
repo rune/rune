@@ -25,7 +25,7 @@
   "scripts": {
     "rune": "STAGE=local ts-node --esm src",
     "build": "rm -rf dist && tsc && chmod +x dist/index.js",
-    "build:cjs": "rm -rf cjs && tsc --project tsconfig-cjs.json && echo '{ \"type\": \"commonjs\" }' > cjs/package.json",
+    "build:cjs": "rm -rf cjs && tsc --project tsconfig-cjs.json && echo '{ \"type\": \"commonjs\" }' > cjs/package.json && git checkout cjs/lib/rootPath.js",
     "prepublishOnly": "yarn build && yarn build:cjs",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",

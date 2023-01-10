@@ -17,7 +17,7 @@
   },
   "author": "Rune AI Inc.",
   "bin": {
-    "rune": "./dist/index.js"
+    "rune": "./bin/rune.mjs"
   },
   "engines": {
     "node": ">=14.17"

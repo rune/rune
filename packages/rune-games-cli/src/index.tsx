@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import "core-js/actual/array/at.js"
 
 import { ApolloProvider } from "@apollo/client/index.js"

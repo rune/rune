@@ -35,7 +35,7 @@ Rune.initLogic({
   maxPlayers: 4,
   setup: (players) => {
     const scores = {}
-    for (playerId in players) {
+    for (let playerId in players) {
       scores[playerId] = 0
     }
     return { scores }

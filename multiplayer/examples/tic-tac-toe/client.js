@@ -1,10 +1,11 @@
 const board = document.getElementById("board")
+const playersList = document.getElementById("players")
 
-let buttons
+let buttons, playerItems
 
 Rune.initClient({
-  visualUpdate: ({ newGame, yourPlayerId }) => {
-    const { cells, players, winCombo, currentPlayerId } = newGame
+  visualUpdate: ({ newGame, players: playerData, yourPlayerId }) => {
+    const { cells, players, winCombo, lastPlayerId } = newGame
 
     board.className = "" // Remove loading class
 
@@ -19,7 +20,7 @@ Rune.initClient({
         return button
       })
     }
-
+    const hasPlayableCells = cells.findIndex((cell) => cell === null) !== -1
     buttons.forEach((button, i) => {
       const cell = cells[i]
 
@@ -28,16 +29,33 @@ Rune.initClient({
       button.setAttribute("data-player", player !== -1 ? player : "")
 
       // Dim non-winning cells
-      button.className = (winCombo ? !winCombo.includes(i) : !currentPlayerId)
+      button.className = (winCombo ? !winCombo.includes(i) : !hasPlayableCells)
         ? "loser"
         : ""
 
       // Disable button if cell is claimed or not player's turn
-      if (currentPlayerId !== yourPlayerId || cell) {
+      if (lastPlayerId === yourPlayerId || cell) {
         button.setAttribute("disabled", "disabled")
       } else {
         button.removeAttribute("disabled")
       }
+    })
+
+    // Initialize player list item elements if not already created
+    if (!playerItems) {
+      playerItems = players.map((_, i) => {
+        const li = document.createElement("li")
+        li.setAttribute("data-player", i)
+        playersList.appendChild(li)
+        return li
+      })
+    }
+
+    players.forEach((id, i) => {
+      const li = playerItems[i]
+      const player = playerData[id]
+      li.className = id !== lastPlayerId ? "current" : ""
+      li.textContent = player && player.displayName
     })
   },
 })

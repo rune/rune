@@ -5,6 +5,7 @@ import semver from "semver"
 
 import { extractMultiplayerMetadata } from "./extractMultiplayerMetadata.js"
 import { FileInfo } from "./getGameFiles.js"
+import { rootPath } from "./rootPath.js"
 
 import LintMessage = Linter.LintMessage
 
@@ -19,6 +20,7 @@ export const validationOptions = {
 const eslint = new ESLint({
   useEslintrc: false,
   allowInlineConfig: false,
+  resolvePluginsRelativeTo: rootPath,
   baseConfig: {
     root: true,
     extends: ["plugin:rune/logic"],

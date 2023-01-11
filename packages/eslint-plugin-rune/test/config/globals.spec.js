@@ -14,6 +14,7 @@ test("globals", {
     "Math.sin()",
     "Math.pow()",
     "Math.log()",
+    "Math.random()",
     "123 * Math.PI",
     "const matematik = {}; Object.assign(matematik, { hest: 'snel' })",
     "isNaN(12)",
@@ -25,7 +26,8 @@ test("globals", {
   invalid: [
     ["Rune.init()", "restrictedObjectProperty"],
     ["Prune.initLogic()", "undef"],
-    ["Math.random()", "restrictedObjectProperty"],
+    ["Rune.initClient()", "restrictedObjectProperty"],
+    ["Rune.deterministicRandom(1)", "restrictedObjectProperty"],
     ["Object.assign(window, { hest: 'snel' })", "undef"],
     ['require("hest")', "undef"],
     ['eval("hest")', "undef"],

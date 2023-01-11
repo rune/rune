@@ -1,6 +1,6 @@
 {
   "name": "rune-games-cli",
-  "version": "3.0.2",
+  "version": "4.0.1",
   "description": "Easy way to test your HTML5 game before releasing it on Rune.",
   "license": "MIT",
   "keywords": [
@@ -17,7 +17,7 @@
   },
   "author": "Rune AI Inc.",
   "bin": {
-    "rune": "./dist/index.js"
+    "rune": "./bin/rune.mjs"
   },
   "engines": {
     "node": ">=14.17"
@@ -25,7 +25,7 @@
   "scripts": {
     "rune": "STAGE=local ts-node --esm src",
     "build": "rm -rf dist && tsc && chmod +x dist/index.js",
-    "build:cjs": "rm -rf cjs && tsc --project tsconfig-cjs.json && echo '{ \"type\": \"commonjs\" }' > cjs/package.json",
+    "build:cjs": "rm -rf cjs && tsc --project tsconfig-cjs.json && echo '{ \"type\": \"commonjs\" }' > cjs/package.json && git checkout cjs/lib/rootPath.js",
     "prepublishOnly": "yarn build && yarn build:cjs",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
@@ -44,8 +44,8 @@
     "cors": "2.8.5",
     "cross-fetch": "3.1.5",
     "date-fns": "2.29.1",
-    "eslint": "^8.19.0",
-    "eslint-plugin-rune": "0.1.0",
+    "eslint": "7.22.0",
+    "eslint-plugin-rune": "0.1.3",
     "express": "4.18.0",
     "figures": "4.0.1",
     "form-data": "4.0.0",

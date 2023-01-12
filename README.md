@@ -13,7 +13,7 @@ Tiny SDK for making your HTML5 game run inside Rune for [Android](https://play.g
 ## Packages
 
 - [`eslint-plugin-rune`](https://github.com/rune/rune-games-sdk/tree/staging/packages/eslint-plugin-rune) – collection of rules and configuration for writing safe logic code for the Rune Multiplayer SDK
-- [`rune-games-cli`](https://github.com/rune/rune-games-sdk/tree/staging/packages/eslint-plugin-rune) – command line tool to develop and upload your HTML5 game for Rune
+- [`rune-games-cli`](https://github.com/rune/rune-games-sdk/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
 
 ## Examples
 

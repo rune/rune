@@ -9,7 +9,7 @@ sidebar_position: 1
 Include the following line in your `index.html` file before loading any other JS scripts:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3/singleplayer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/singleplayer.js"></script>
 ```
 
 ## Quick Start

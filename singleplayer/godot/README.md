@@ -10,7 +10,7 @@ Add the following code to "Head Include" in the "HTML" section of your HTML5
 export preset options:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3/singleplayer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/singleplayer.js"></script>
 ```
 
 <img src="https://i.gyazo.com/9e8b207f5340be67144cc5a56fa7426b.png" width="600">

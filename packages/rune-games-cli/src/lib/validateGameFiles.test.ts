@@ -184,7 +184,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.0/dist/multiplayer.js"></script>
               </html>`,
         },
       ],
@@ -203,7 +203,7 @@ describe("validateGameFiles", () => {
           content: `
               <html>
                 <script src="logic.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.0/dist/multiplayer.js"></script>
               </html>`,
         },
       ],
@@ -225,7 +225,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.0/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },
@@ -252,7 +252,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.0/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },
@@ -296,7 +296,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.0/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },
@@ -345,7 +345,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.0/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },
@@ -405,7 +405,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.0/dist/multiplayer.js"></script>
                 <script src="src/logic.js"></script>
               </html>`,
         },

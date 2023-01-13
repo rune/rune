@@ -1,10 +1,11 @@
 const board = document.getElementById("board")
 const playersList = document.getElementById("players")
+const selectSound = new Audio("select.wav")
 
 let buttons, playerItems
 
 Rune.initClient({
-  visualUpdate: ({ newGame, players: playerData, yourPlayerId }) => {
+  visualUpdate: ({ newGame, players: playerData, yourPlayerId, action }) => {
     const { cells, players, winCombo, lastPlayerId } = newGame
 
     board.className = "" // Remove loading class
@@ -57,5 +58,9 @@ Rune.initClient({
       li.className = id !== lastPlayerId ? "current" : ""
       li.textContent = player && player.displayName
     })
+
+    if (action && action.action === "claimCell") {
+      selectSound.play()
+    }
   },
 })

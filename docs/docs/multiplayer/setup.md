@@ -15,7 +15,7 @@ The Multiplayer SDK is currently in beta. There will be some rough edges, and so
 Include the following lines in your `index.html` file before loading any other JS scripts:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3/multiplayer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer.js"></script>
 <script src="logic.js"></script>
 ```
 

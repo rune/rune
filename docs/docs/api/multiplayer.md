@@ -35,7 +35,7 @@ Rune.initLogic({
     myAction: (payload, { game, playerId }) => {
       // Check it's not the other player's turn
       if (game.lastPlayerTurn !== playerId) {
-        throw Rune.invalidAction()
+        throw Rune.invalidAction
       }
 
       // Increase score and switch turn
@@ -79,9 +79,9 @@ The `actions` option is an object with actions functions exposed to the UI integ
 
 By default a game will end if a player leaves (see [Joining and Leaving](multiplayer/joining-leaving.md#minimum-and-maximum-players)), but by defining the `playerJoined`/`playerLeft` events you can [Support Players Joining Midgame](multiplayer/joining-leaving.md#supporting-players-joining-midgame).
 
-## `Rune.invalidAction()`
+## `Rune.invalidAction`
 
-Whenever a player tries to do an action that is not allowed, the action handler should reject it by calling `throw Rune.invalidAction()` which will cancel the action and potentially roll back optimistic updates.
+Whenever a player tries to do an action that is not allowed, the action handler should reject it by calling `throw Rune.invalidAction` which will cancel the action and potentially roll back optimistic updates.
 
 ```js
 // logic.js
@@ -89,7 +89,7 @@ Rune.initLogic({
   actions: {
     myAction: (payload, { game, playerId }) => {
       if (!isValidAction(payload)) {
-        throw Rune.invalidAction()
+        throw Rune.invalidAction
       }
     },
   },

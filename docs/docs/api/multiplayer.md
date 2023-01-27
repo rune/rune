@@ -24,9 +24,9 @@ The `initLogic` function should be called directly at the top level of your `log
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
-  setup: (players) => {
+  setup: (playersIds) => {
     const scores = {}
-    for (playerId in players) {
+    for (let playerId of playerIds) {
       scores[playerId] = 0
     }
     return { scores }

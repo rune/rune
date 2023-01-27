@@ -33,9 +33,9 @@ function isVictoryOrDraw(game) {
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
-  setup: (players) => {
+  setup: (playerIds) => {
     const scores = {}
-    for (let playerId in players) {
+    for (let playerId of playerIds) {
       scores[playerId] = 0
     }
     return { scores }

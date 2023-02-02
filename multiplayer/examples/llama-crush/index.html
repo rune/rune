@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <ul id="players"></ul>
+      <aside>
+        <nav>
+          <button id="shuffle-button" type="button">🔀</button>
+          <button id="hammer-button" type="button">🔨</button>
+        </nav>
+        <div id="round"></div>
+        <ol id="turns"></ol>
+      </aside>
+      <div id="board" class="loading">
+        <div id="frames"></div>
+        <div id="tiles"></div>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer.js"></script>
+    <script src="logic.js"></script>
+    <script src="client.js"></script>
+  </body>
+</html>

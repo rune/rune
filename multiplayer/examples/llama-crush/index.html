@@ -6,21 +6,32 @@
     />
     <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
-  <body>
+  <body class="loading">
     <main>
-      <ul id="players"></ul>
-      <aside>
+      <header>
         <nav>
-          <button id="shuffle-button" type="button">🔀</button>
-          <button id="hammer-button" type="button">🔨</button>
+          <ol id="rounds"></ol>
         </nav>
-        <div id="round"></div>
-        <ol id="turns"></ol>
-      </aside>
-      <div id="board" class="loading">
+        <ul id="players"></ul>
+        <ol id="moves"></ol>
+      </header>
+      <div id="board">
         <div id="frames"></div>
         <div id="tiles"></div>
       </div>
+      <footer>
+        <nav>
+          <button id="shuffle-button" type="button">
+            <img src="shuffle.svg" alt="Shuffle" />
+            <ol id="shuffles"></ol>
+          </button>
+          <button id="extra-move-button" type="button">
+            <img src="extra-move.svg" alt="Extra move" />
+            <ol id="extra-moves"></ol>
+          </button>
+          <!-- <button id="hammer-button" type="button">🔨</button> -->
+        </nav>
+      </footer>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer.js"></script>
     <script src="logic.js"></script>

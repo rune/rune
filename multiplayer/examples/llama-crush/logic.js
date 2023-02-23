@@ -2,10 +2,18 @@ const getConfig = () => ({
   rows: 7,
   cols: 7,
   numberOfTiles: 6,
-  turnsPerRound: 2,
-  numberOfRounds: 5,
+  startingMovesPerRound: 2,
+  numberOfRounds: 10,
+  numberOfSpecialActions: 3,
 })
-const { rows, cols, numberOfTiles, turnsPerRound, numberOfRounds } = getConfig()
+const {
+  rows,
+  cols,
+  numberOfTiles,
+  startingMovesPerRound,
+  numberOfRounds,
+  numberOfSpecialActions,
+} = getConfig()
 
 const getRandomTile = () => Math.ceil(Math.random() * numberOfTiles)
 
@@ -28,11 +36,9 @@ const getIndexForCoordinates = (row, col) => {
 const areCellsNeighbors = (index1, index2) => {
   const coords1 = getCoordinatesForIndex(index1)
   const coords2 = getCoordinatesForIndex(index2)
-  return (
-    Math.abs(coords1.row - coords2.row) <= 1 &&
-    Math.abs(coords1.col - coords2.col) <= 1 &&
-    index1 !== index2
-  )
+  const deltaY = Math.abs(coords1.row - coords2.row)
+  const deltaX = Math.abs(coords1.col - coords2.col)
+  return (deltaY === 1 && deltaX === 0) || (deltaY === 0 && deltaX === 1)
 }
 
 const match3 = (cells) => {
@@ -113,7 +119,10 @@ const matchAndFillRecursively = (cells) => {
     }
     const moved = removeIndices(
       cells,
-      clusters.flat().sort((a, b) => a - b)
+      clusters
+        .flat()
+        .filter((t, i, arr) => arr.indexOf(t) === i)
+        .sort((a, b) => a - b)
     )
     const added = fillEmptyIndices(cells)
     changes.push({ removed: clusters, moved, added })
@@ -138,9 +147,9 @@ const getScoreForChange = (change) =>
 const getScoreForChanges = (changes) =>
   changes.map((change) => getScoreForChange(change)).reduce((a, b) => a + b, 0)
 
-const getLowestScore = (scores) =>
-  Object.values(scores).reduce(
-    (a, b) => Math.min(a, b),
+const getLowestScore = (players) =>
+  Object.values(players).reduce(
+    (acc, player) => Math.min(acc, player.score),
     Number.MAX_SAFE_INTEGER
   )
 
@@ -154,11 +163,21 @@ Rune.initLogic({
     return {
       playerIds,
       currentPlayerIndex,
-      turnsPlayed: 0,
+      movesPlayed: 0,
+      movesPerRound: startingMovesPerRound,
       roundsPlayed: 0,
       startingScore: 0,
       cells,
-      scores: Object.fromEntries(playerIds.map((id) => [id, 0])),
+      players: Object.fromEntries(
+        playerIds.map((id) => [
+          id,
+          {
+            score: 0,
+            shufflesRemaining: numberOfSpecialActions,
+            extraMovesRemaining: numberOfSpecialActions,
+          },
+        ])
+      ),
       changes: [],
     }
   },
@@ -172,45 +191,48 @@ Rune.initLogic({
         throw Rune.invalidAction()
       }
 
-      const { turnsPerRound, numberOfRounds } = getConfig()
+      const { startingMovesPerRound, numberOfRounds } = getConfig()
 
       const changes = swapAndMatch(game.cells, sourceIndex, targetIndex)
       if (changes.length === 0) {
         throw Rune.invalidAction()
       }
       game.changes = changes
-      game.turnsPlayed++
-      game.scores[playerId] += getScoreForChanges(changes)
+      game.movesPlayed++
+      game.players[playerId].score += getScoreForChanges(changes)
 
-      if (game.turnsPlayed >= turnsPerRound) {
+      if (game.movesPlayed >= game.movesPerRound) {
         game.currentPlayerIndex =
           (game.currentPlayerIndex + 1) % game.playerIds.length
-        game.turnsPlayed = 0
+        game.movesPlayed = 0
+        game.movesPerRound = startingMovesPerRound
         if (game.currentPlayerIndex === 0) {
           game.roundsPlayed++
-          game.startingScore = getLowestScore(game.scores)
+          game.startingScore = getLowestScore(game.players)
         }
       }
-
       if (game.roundsPlayed >= numberOfRounds) {
         Rune.gameOver()
       }
     },
-    remove: ({ index }, { game, playerId }) => {
-      if (playerId !== game.playerIds[game.currentPlayerIndex]) {
-        throw Rune.invalidAction()
-      }
+    // remove: ({ index }, { game, playerId }) => {
+    //   if (playerId !== game.playerIds[game.currentPlayerIndex]) {
+    //     throw Rune.invalidAction()
+    //   }
 
-      const removed = [index]
-      const moved = removeIndices(game.cells, removed)
-      const added = fillEmptyIndices(game.cells)
-      const changes = matchAndFillRecursively(game.cells)
-      changes.unshift({ removed: [removed], moved, added })
-      game.changes = changes
-      game.scores[playerId] += getScoreForChanges(changes)
-    },
+    //   const removed = [index]
+    //   const moved = removeIndices(game.cells, removed)
+    //   const added = fillEmptyIndices(game.cells)
+    //   const changes = matchAndFillRecursively(game.cells)
+    //   changes.unshift({ removed: [removed], moved, added })
+    //   game.changes = changes
+    //   game.players[playerId].score += getScoreForChanges(changes)
+    // },
     shuffle: (_, { game, playerId }) => {
-      if (playerId !== game.playerIds[game.currentPlayerIndex]) {
+      if (
+        playerId !== game.playerIds[game.currentPlayerIndex] ||
+        game.players[playerId].shufflesRemaining <= 0
+      ) {
         throw Rune.invalidAction()
       }
       while (true) {
@@ -238,24 +260,42 @@ Rune.initLogic({
           break
         }
       }
+      game.players[playerId].shufflesRemaining--
+    },
+    extraMove: (_, { game, playerId }) => {
+      if (
+        playerId !== game.playerIds[game.currentPlayerIndex] ||
+        game.players[playerId].extraMovesRemaining <= 0
+      ) {
+        throw Rune.invalidAction()
+      }
+      game.movesPerRound++
+      game.players[playerId].extraMovesRemaining--
+      game.changes = []
     },
   },
   events: {
     playerJoined: (playerId, { game }) => {
+      const { numberOfSpecialActions } = getConfig()
       game.playerIds.push(playerId)
-      game.scores[playerId] = game.startingScore
+      game.players[playerId] = {
+        score: game.startingScore,
+        shufflesRemaining: numberOfSpecialActions,
+        extraMovesRemaining: numberOfSpecialActions,
+      }
     },
     playerLeft: (playerId, { game }) => {
-      const { numberOfRounds } = getConfig()
+      const { numberOfRounds, startingMovesPerRound } = getConfig()
       const playerIndex = game.playerIds.indexOf(playerId)
       game.playerIds.splice(playerIndex, 1)
-      delete game.scores[playerId]
+      delete game.players[playerId]
       if (game.currentPlayerIndex === playerIndex) {
-        game.turnsPlayed = 0
+        game.movesPlayed = 0
+        game.movesPerRound = startingMovesPerRound
         if (playerIndex === game.playerIds.length) {
           game.currentPlayerIndex = 0
           game.roundsPlayed++
-          game.startingScore = getLowestScore(game.scores)
+          game.startingScore = getLowestScore(game.players)
 
           if (game.roundsPlayed >= numberOfRounds) {
             Rune.gameOver()

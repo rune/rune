@@ -1,11 +1,14 @@
 const board = document.getElementById("board")
 const framesElement = document.getElementById("frames")
 const tilesElement = document.getElementById("tiles")
-const turnsList = document.getElementById("turns")
-const roundElement = document.getElementById("round")
+const movesList = document.getElementById("moves")
+const roundsList = document.getElementById("rounds")
 const playersList = document.getElementById("players")
-const hammerButton = document.getElementById("hammer-button")
+// const hammerButton = document.getElementById("hammer-button")
 const shuffleButton = document.getElementById("shuffle-button")
+const shufflesList = document.getElementById("shuffles")
+const extraMoveButton = document.getElementById("extra-move-button")
+const extraMovesList = document.getElementById("extra-moves")
 const popSound = new Audio("pop.m4a")
 const popEchoSound = new Audio("pop-echo.mp3")
 const startupSound = new Audio("startup.wav")
@@ -18,7 +21,13 @@ const playSoundSafely = (sound) => {
   }
 }
 
-let tiles, frames, playerItems, turnsItems
+let tiles,
+  frames,
+  playerItems,
+  roundsItems,
+  shufflesItems,
+  extraMovesItems,
+  movesItems = []
 
 const getPosition = (index) => {
   const { row, col } = getCoordinatesForIndex(index)
@@ -42,18 +51,24 @@ const getCoordinatesForTouch = (touch) => {
 let yourTurn = false
 let cells = null
 let sourceCoordinates = null
-let isHammering = false
+// let isHammering = false
 let isUpdating = false
 
-hammerButton.onclick = () => {
-  if (yourTurn && !isUpdating) {
-    isHammering = true
-  }
-}
+// hammerButton.onclick = () => {
+//   if (yourTurn && !isUpdating) {
+//     isHammering = true
+//   }
+// }
 
 shuffleButton.onclick = () => {
   if (yourTurn && !isUpdating) {
     Rune.actions.shuffle()
+  }
+}
+
+extraMoveButton.onclick = () => {
+  if (yourTurn && !isUpdating) {
+    Rune.actions.extraMove()
   }
 }
 
@@ -63,12 +78,12 @@ board.ontouchstart = (e) => {
   const [touch] = e.touches
   if (!yourTurn && !isUpdating) {
     return
-  } else if (isHammering) {
-    const { row, col } = getCoordinatesForTouch(touch)
-    isHammering = false
-    Rune.actions.remove({
-      index: getIndexForCoordinates(row, col),
-    })
+    // } else if (isHammering) {
+    //   const { row, col } = getCoordinatesForTouch(touch)
+    //   isHammering = false
+    //   Rune.actions.remove({
+    //     index: getIndexForCoordinates(row, col),
+    //   })
   } else {
     sourceCoordinates = getCoordinatesForTouch(touch)
   }
@@ -103,6 +118,7 @@ board.ontouchmove = (e) => {
     })
   }
 }
+
 board.ontouchend = () => {
   sourceCoordinates = null
 }
@@ -169,13 +185,6 @@ const renderBoard = () => {
     const tile = cells[i]
     setTile(element, tile)
     positionCellElement(element, i)
-
-    // Disable cell if cell is claimed or not player's turn
-    if (yourTurn) {
-      element.setAttribute("disabled", "disabled")
-    } else {
-      element.removeAttribute("disabled")
-    }
   })
 }
 
@@ -201,18 +210,31 @@ const animateChanges = async (changes) => {
   }
 }
 
-const setTurnsPlayed = (turns) => {
-  turnsItems.forEach((element, i) => {
-    element.className = i < turns ? "filled" : ""
+const setFilled = (items, filledCount) =>
+  items.forEach((element, i) => {
+    element.className =
+      i < filledCount ? "filled" : i === filledCount ? "current" : ""
   })
+
+const setMovesPlayed = (movesPlayed, movesPerRound) => {
+  setFilled(movesItems, movesPlayed)
+  movesList.setAttribute("title", `Move ${movesPlayed}/${movesPerRound}`)
 }
 
 const setRoundsPlayed = (roundsPlayed) => {
-  roundElement.textContent = `${Math.min(
-    roundsPlayed + 1,
-    numberOfRounds
-  )}/${numberOfRounds}`
+  setFilled(roundsItems, roundsPlayed)
+  roundsList.setAttribute(
+    "data-round",
+    Math.min(numberOfRounds, roundsPlayed + 1)
+  )
 }
+
+const appendNewElements = (elementCount, targetElement, tagName) =>
+  new Array(elementCount).fill(null).map((_, i) => {
+    const child = document.createElement(tagName)
+    targetElement.appendChild(child)
+    return child
+  })
 
 const visualUpdate = async ({
   newGame,
@@ -223,10 +245,11 @@ const visualUpdate = async ({
   const {
     playerIds,
     currentPlayerIndex,
-    turnsPlayed,
+    movesPlayed,
+    movesPerRound,
     roundsPlayed,
     changes,
-    scores,
+    players,
   } = newGame
   cells = newGame.cells
   yourTurn = playerIds.indexOf(yourPlayerId) === currentPlayerIndex
@@ -275,36 +298,67 @@ const visualUpdate = async ({
   }
 
   // Initialize turn list item elements if not already created
-  if (!turnsItems) {
-    turnsItems = new Array(turnsPerRound).fill(null).map((_, i) => {
-      const li = document.createElement("li")
-      turnsList.appendChild(li)
-      return li
+  if (movesPerRound > movesItems.length) {
+    movesItems = movesItems.concat(
+      appendNewElements(movesPerRound - movesItems.length, movesList, "li")
+    )
+  } else if (movesPerRound < movesItems.length) {
+    movesItems.splice(movesPerRound).forEach((element) => {
+      element.parentElement.removeChild(element)
     })
   }
 
+  roundsItems ||= appendNewElements(numberOfRounds, roundsList, "li")
+  shufflesItems ||= appendNewElements(
+    numberOfSpecialActions,
+    shufflesList,
+    "li"
+  )
+  extraMovesItems ||= appendNewElements(
+    numberOfSpecialActions,
+    extraMovesList,
+    "li"
+  )
+
   const updatePlayerState = () => {
+    const leaderPlayerId = playerIds.reduce(
+      (a, b) => (players[a].score < players[b].score ? b : a),
+      playerIds[0]
+    )
     playerIds.forEach((id, i) => {
       let li = playerItems[i]
       const player = playerData[id]
       const isCurrentPlayer = i === currentPlayerIndex
       const position =
         (i + playerIds.length - currentPlayerIndex) % playerIds.length
-      li.className = isCurrentPlayer
-        ? "current"
-        : position === playerIds.length - 1
-        ? "previous"
-        : ""
-      li.lastChild.textContent = player && player.displayName
-      li.setAttribute("data-score", scores[id])
+      const wasLeader = li.classList.contains("leader")
+      li.className = isCurrentPlayer ? "current" : ""
+      if (id === leaderPlayerId) {
+        li.classList.add("leader")
+      } else if (wasLeader) {
+        li.classList.add("previous-leader")
+      }
+      li.lastChild.textContent =
+        id === yourPlayerId ? "You" : player && player.displayName
+      li.setAttribute("data-score", players[id].score)
       li.style.left = isCurrentPlayer
         ? "50%"
         : `${((playerIds.length - position) / playerIds.length) * 100}%`
     })
-    setTurnsPlayed(turnsPlayed)
+    const { shufflesRemaining, extraMovesRemaining } =
+      players[playerIds[currentPlayerIndex]]
+    setFilled(shufflesItems, shufflesRemaining)
+    setFilled(extraMovesItems, extraMovesRemaining)
+    shuffleButton.className =
+      shufflesRemaining > 0 && yourTurn ? "" : "disabled"
+    extraMoveButton.className =
+      extraMovesRemaining > 0 && yourTurn ? "" : "disabled"
+    setMovesPlayed(movesPlayed, movesPerRound)
     setRoundsPlayed(roundsPlayed)
-    const becameYourTurn = board.className == "disabled" && yourTurn
-    board.className = yourTurn ? "" : "disabled"
+
+    const becameYourTurn =
+      document.body.className !== "current-player-turn" && yourTurn
+    document.body.className = yourTurn ? "current-player-turn" : ""
     if (becameYourTurn) {
       playSoundSafely(startupSound)
     }
@@ -316,7 +370,7 @@ const visualUpdate = async ({
       swapTiles(sourceIndex, targetIndex)
       await sleep(400)
     }
-    setTurnsPlayed(turnsPlayed || turnsPerRound)
+    setMovesPlayed(movesPlayed || movesPerRound, movesPerRound)
     await animateChanges(changes)
   }
   renderBoard()

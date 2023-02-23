@@ -168,6 +168,7 @@ Rune.initLogic({
       roundsPlayed: 0,
       startingScore: 0,
       cells,
+      highlightedCells: {},
       players: Object.fromEntries(
         playerIds.map((id) => [
           id,
@@ -200,6 +201,7 @@ Rune.initLogic({
       game.changes = changes
       game.movesPlayed++
       game.players[playerId].score += getScoreForChanges(changes)
+      game.highlightedCells = {}
 
       if (game.movesPlayed >= game.movesPerRound) {
         game.currentPlayerIndex =
@@ -271,6 +273,21 @@ Rune.initLogic({
       }
       game.movesPerRound++
       game.players[playerId].extraMovesRemaining--
+      game.changes = []
+    },
+    highlight: ({ index }, { game, playerId }) => {
+      if (
+        playerId === game.playerIds[game.currentPlayerIndex] ||
+        index < 0 ||
+        index >= game.cells.length
+      ) {
+        throw Rune.invalidAction()
+      }
+      if (game.highlightedCells[index] === playerId) {
+        delete game.highlightedCells[index]
+      } else {
+        game.highlightedCells[index] = playerId
+      }
       game.changes = []
     },
   },

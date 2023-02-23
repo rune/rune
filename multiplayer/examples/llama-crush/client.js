@@ -75,18 +75,18 @@ extraMoveButton.onclick = () => {
 board.ontouchstart = (e) => {
   e.stopPropagation()
   e.preventDefault()
-  const [touch] = e.touches
-  if (!yourTurn && !isUpdating) {
+  if (isUpdating) {
     return
-    // } else if (isHammering) {
-    //   const { row, col } = getCoordinatesForTouch(touch)
-    //   isHammering = false
-    //   Rune.actions.remove({
-    //     index: getIndexForCoordinates(row, col),
-    //   })
-  } else {
-    sourceCoordinates = getCoordinatesForTouch(touch)
   }
+  const [touch] = e.touches
+  sourceCoordinates = getCoordinatesForTouch(touch)
+  // if (yourTurn && isHammering) {
+  //   const { row, col } = getCoordinatesForTouch(touch)
+  //   isHammering = false
+  //   Rune.actions.remove({
+  //     index: getIndexForCoordinates(row, col),
+  //   })
+  // }
 }
 
 board.ontouchmove = (e) => {
@@ -98,7 +98,6 @@ board.ontouchmove = (e) => {
     (targetCoordinates && sourceCoordinates.row !== targetCoordinates.row) ||
     sourceCoordinates.col !== targetCoordinates.col
   ) {
-    // TODO: limit to neighbor tiles
     const sourceIndex = getIndexForCoordinates(
       sourceCoordinates.row,
       sourceCoordinates.col
@@ -107,6 +106,9 @@ board.ontouchmove = (e) => {
       targetCoordinates.row,
       targetCoordinates.col
     )
+    if (!areCellsNeighbors(sourceIndex, targetIndex)) {
+      return
+    }
     sourceCoordinates = null
     const changes = swapAndMatch(cells.slice(0), sourceIndex, targetIndex)
     if (changes.length === 0) {
@@ -119,7 +121,21 @@ board.ontouchmove = (e) => {
   }
 }
 
-board.ontouchend = () => {
+board.ontouchend = (e) => {
+  if (!yourTurn && sourceCoordinates) {
+    const targetCoordinates = getCoordinatesForTouch(e.changedTouches[0])
+    if (
+      sourceCoordinates.row === targetCoordinates.row &&
+      sourceCoordinates.col === targetCoordinates.col
+    ) {
+      Rune.actions.highlight({
+        index: getIndexForCoordinates(
+          targetCoordinates.row,
+          targetCoordinates.col
+        ),
+      })
+    }
+  }
   sourceCoordinates = null
 }
 
@@ -250,6 +266,7 @@ const visualUpdate = async ({
     roundsPlayed,
     changes,
     players,
+    highlightedCells,
   } = newGame
   cells = newGame.cells
   yourTurn = playerIds.indexOf(yourPlayerId) === currentPlayerIndex
@@ -363,6 +380,13 @@ const visualUpdate = async ({
       playSoundSafely(startupSound)
     }
   }
+
+  frames.forEach((frame, i) => {
+    frame.setAttribute(
+      "data-highlight",
+      highlightedCells[i] ? playerIds.indexOf(highlightedCells[i]) : ""
+    )
+  })
 
   if (action) {
     if (action.action === "swap") {

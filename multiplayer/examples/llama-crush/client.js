@@ -34,12 +34,10 @@ const getPosition = (index) => {
   return { top: `${(row * 100) / rows}%`, left: `${(col * 100) / cols}%` }
 }
 
-const getCoordinatesForTouch = (touch) => {
+const getCoordinatesForEvent = (e) => {
   const boardRect = board.getBoundingClientRect()
-  const col = Math.floor(((touch.pageX - boardRect.x) * cols) / boardRect.width)
-  const row = Math.floor(
-    ((touch.pageY - boardRect.y) * rows) / boardRect.height
-  )
+  const col = Math.floor(((e.pageX - boardRect.x) * cols) / boardRect.width)
+  const row = Math.floor(((e.pageY - boardRect.y) * rows) / boardRect.height)
 
   if (col < 0 || col >= cols || row < 0 || row >= rows) {
     return null
@@ -72,16 +70,15 @@ extraMoveButton.onclick = () => {
   }
 }
 
-board.ontouchstart = (e) => {
+board.onpointerdown = (e) => {
   e.stopPropagation()
   e.preventDefault()
   if (isUpdating) {
     return
   }
-  const [touch] = e.touches
-  sourceCoordinates = getCoordinatesForTouch(touch)
+  sourceCoordinates = getCoordinatesForEvent(e)
   // if (yourTurn && isHammering) {
-  //   const { row, col } = getCoordinatesForTouch(touch)
+  //   const { row, col } = getCoordinatesForEvent(touch)
   //   isHammering = false
   //   Rune.actions.remove({
   //     index: getIndexForCoordinates(row, col),
@@ -89,11 +86,11 @@ board.ontouchstart = (e) => {
   // }
 }
 
-board.ontouchmove = (e) => {
+board.onpointermove = (e) => {
   if (!sourceCoordinates) {
     return
   }
-  const targetCoordinates = getCoordinatesForTouch(e.touches[0])
+  const targetCoordinates = getCoordinatesForEvent(e)
   if (
     (targetCoordinates && sourceCoordinates.row !== targetCoordinates.row) ||
     sourceCoordinates.col !== targetCoordinates.col
@@ -121,9 +118,9 @@ board.ontouchmove = (e) => {
   }
 }
 
-board.ontouchend = (e) => {
+board.onpointerup = (e) => {
   if (!yourTurn && sourceCoordinates) {
-    const targetCoordinates = getCoordinatesForTouch(e.changedTouches[0])
+    const targetCoordinates = getCoordinatesForEvent(e)
     if (
       sourceCoordinates.row === targetCoordinates.row &&
       sourceCoordinates.col === targetCoordinates.col

@@ -159,10 +159,11 @@ Rune.initLogic({
   setup: (playerIds) => {
     const cells = new Array(rows * cols).fill(null).map(() => getRandomTile())
     matchAndFillRecursively(cells)
-    const currentPlayerIndex = Math.floor(Math.random() * playerIds.length)
     return {
-      playerIds,
-      currentPlayerIndex,
+      playerIds: playerIds
+        .slice()
+        .sort(() => (0.5 - Math.random() < 0 ? -1 : 1)),
+      currentPlayerIndex: 0,
       movesPlayed: 0,
       movesPerRound: startingMovesPerRound,
       roundsPlayed: 0,

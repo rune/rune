@@ -467,6 +467,56 @@ header nav:before {
   display: none;
 }
 
+#board .message {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  right: 0;
+  font-size: 2rem;
+  background: #030306cc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: skew-in 2s;
+}
+
+#board .message span {
+  background: linear-gradient(180deg, #ffed4f 20.03%, #ff9458 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+#board .message span.extra-move {
+  background: linear-gradient(180deg, #aea7ff 20.03%, #7f58ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+@keyframes skew-in {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  20%,
+  80% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scaleY(1.5);
+  }
+}
+
 #frames > *,
 #tiles > * {
   position: absolute;

@@ -223,14 +223,28 @@ const animateChanges = async (changes) => {
   }
 }
 
-const setFilled = (items, filledCount) =>
+const setFilled = (items, filledCount, useCurrent = true) =>
   items.forEach((element, i) => {
     element.className =
-      i < filledCount ? "filled" : i === filledCount ? "current" : ""
+      i < filledCount
+        ? "filled"
+        : i === filledCount && useCurrent
+        ? "current"
+        : ""
   })
 
-const setMovesPlayed = (movesPlayed, movesPerRound) => {
-  setFilled(movesItems, movesPlayed)
+const setMovesPlayed = (movesPlayed, movesPerRound, useCurrent = true) => {
+  // Initialize turn list item elements if not already created
+  if (movesPerRound > movesItems.length) {
+    movesItems = movesItems.concat(
+      appendNewElements(movesPerRound - movesItems.length, movesList, "li")
+    )
+  } else if (movesPerRound < movesItems.length) {
+    movesItems.splice(movesPerRound).forEach((element) => {
+      element.parentElement.removeChild(element)
+    })
+  }
+  setFilled(movesItems, movesPlayed, useCurrent)
   movesList.setAttribute("title", `Move ${movesPlayed}/${movesPerRound}`)
 }
 
@@ -249,8 +263,30 @@ const appendNewElements = (elementCount, targetElement, tagName) =>
     return child
   })
 
+const showMessage = async (messageType) => {
+  const messageElement = document.createElement("div")
+  const innerMessageElement = document.createElement("span")
+  switch (messageType) {
+    case "extra-move":
+      innerMessageElement.textContent = "Extra Move!"
+      break
+    case "your-turn":
+      innerMessageElement.textContent = "Your Turn!"
+      break
+    default:
+      throw new Error(`Invalid message type "${messageType}"`)
+  }
+  innerMessageElement.className = messageType
+  messageElement.className = "message"
+  messageElement.appendChild(innerMessageElement)
+  board.appendChild(messageElement)
+  await sleep(2000)
+  board.removeChild(messageElement)
+}
+
 const visualUpdate = async ({
   newGame,
+  oldGame,
   action,
   players: playerData,
   yourPlayerId,
@@ -311,17 +347,6 @@ const visualUpdate = async ({
     )
   }
 
-  // Initialize turn list item elements if not already created
-  if (movesPerRound > movesItems.length) {
-    movesItems = movesItems.concat(
-      appendNewElements(movesPerRound - movesItems.length, movesList, "li")
-    )
-  } else if (movesPerRound < movesItems.length) {
-    movesItems.splice(movesPerRound).forEach((element) => {
-      element.parentElement.removeChild(element)
-    })
-  }
-
   roundsItems ||= appendNewElements(numberOfRounds, roundsList, "li")
   shufflesItems ||= appendNewElements(
     numberOfSpecialActions,
@@ -334,7 +359,7 @@ const visualUpdate = async ({
     "li"
   )
 
-  const updatePlayerState = () => {
+  const updatePlayerState = async () => {
     const leaderPlayerId = playerIds.reduce(
       (a, b) => (players[a].score < players[b].score ? b : a),
       playerIds[0]
@@ -372,10 +397,12 @@ const visualUpdate = async ({
 
     const becameYourTurn =
       document.body.className !== "current-player-turn" && yourTurn
-    document.body.className = yourTurn ? "current-player-turn" : ""
     if (becameYourTurn) {
+      document.body.className = ""
       playSoundSafely(startupSound)
+      await showMessage("your-turn")
     }
+    document.body.className = yourTurn ? "current-player-turn" : ""
   }
 
   frames.forEach((frame, i) => {
@@ -386,16 +413,27 @@ const visualUpdate = async ({
   })
 
   if (action) {
-    if (action.action === "swap") {
-      const { sourceIndex, targetIndex } = action.params
-      swapTiles(sourceIndex, targetIndex)
-      await sleep(400)
+    switch (action.action) {
+      case "swap": {
+        const { sourceIndex, targetIndex } = action.params
+        swapTiles(sourceIndex, targetIndex)
+        await sleep(400)
+        if (!movesPlayed) {
+          setMovesPlayed(oldGame.movesPerRound, oldGame.movesPerRound, false)
+        } else {
+          setMovesPlayed(movesPlayed, movesPerRound, false)
+        }
+        break
+      }
+      case "extraMove": {
+        await showMessage("extra-move")
+        break
+      }
     }
-    setMovesPlayed(movesPlayed || movesPerRound, movesPerRound)
     await animateChanges(changes)
   }
   renderBoard()
-  updatePlayerState()
+  await updatePlayerState()
 }
 
 const renderQueue = []

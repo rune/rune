@@ -241,6 +241,9 @@ footer li:nth-child(2) {
   border: 3px solid;
   border-radius: 50%;
   box-sizing: border-box;
+  background-image: url(avatar-placeholder.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .current-player-turn #players li.current img {

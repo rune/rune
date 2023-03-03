@@ -150,9 +150,7 @@ const createCellElement = () => {
 
 const createPlayerElement = (playerIndex) => {
   const element = document.createElement("li")
-  const img = document.createElement("img")
-  img.setAttribute("src", "avatar.svg")
-  element.appendChild(img)
+  element.appendChild(document.createElement("img"))
   const name = document.createElement("span")
   element.appendChild(name)
   element.setAttribute("data-player", playerIndex)
@@ -379,6 +377,7 @@ const visualUpdate = async ({
       }
       li.lastChild.textContent =
         id === yourPlayerId ? "You" : player && player.displayName
+      li.firstChild.setAttribute("src", player.avatarUrl)
       li.setAttribute("data-score", players[id].score)
       li.style.left = isCurrentPlayer
         ? "50%"

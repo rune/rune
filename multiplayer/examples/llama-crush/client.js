@@ -1,3 +1,4 @@
+const boardInner = document.getElementById("board-inner")
 const board = document.getElementById("board")
 const framesElement = document.getElementById("frames")
 const tilesElement = document.getElementById("tiles")
@@ -12,6 +13,24 @@ const extraMovesList = document.getElementById("extra-moves")
 const popSound = new Audio("pop.m4a")
 const popEchoSound = new Audio("pop-echo.mp3")
 const startupSound = new Audio("startup.wav")
+
+let resizeTimer = null
+
+const resizeObserver = new ResizeObserver(() => {
+  clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(
+    () => {
+      board.style.width = `${Math.min(
+        boardInner.scrollHeight,
+        boardInner.scrollWidth
+      )}px`
+      resizeTimer = null
+    },
+    resizeTimer ? 200 : 0
+  )
+})
+
+resizeObserver.observe(boardInner)
 
 const playSoundSafely = (sound) => {
   try {

@@ -459,13 +459,29 @@ header nav:before {
   font-size: 1.2rem;
 }
 
-#board {
-  align-self: center;
+#board-outer {
   position: relative;
-  width: 94vw;
+  margin: 0.5rem;
+  flex: 1;
+}
+
+#board-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+#board {
+  position: relative;
+  width: 100%;
   aspect-ratio: 1;
+  max-height: 100%;
   max-width: min(60vh, 500px);
-  margin: 0.5rem 0;
+  margin: 0 auto;
   transition: opacity 0.3s;
 }
 

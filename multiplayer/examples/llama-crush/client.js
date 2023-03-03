@@ -70,15 +70,13 @@ extraMoveButton.onclick = () => {
   }
 }
 
-board.onpointerdown = (e) => {
-  e.stopPropagation()
-  e.preventDefault()
+const handlePointerStart = (coordinates) => {
   if (isUpdating) {
     return
   }
-  sourceCoordinates = getCoordinatesForEvent(e)
+  sourceCoordinates = coordinates
   // if (yourTurn && isHammering) {
-  //   const { row, col } = getCoordinatesForEvent(touch)
+  //   const { row, col } = getCoordinatesForEvent(e)
   //   isHammering = false
   //   Rune.actions.remove({
   //     index: getIndexForCoordinates(row, col),
@@ -86,23 +84,19 @@ board.onpointerdown = (e) => {
   // }
 }
 
-board.onpointermove = (e) => {
+const handlePointerMove = (coordinates) => {
   if (!sourceCoordinates) {
     return
   }
-  const targetCoordinates = getCoordinatesForEvent(e)
   if (
-    (targetCoordinates && sourceCoordinates.row !== targetCoordinates.row) ||
-    sourceCoordinates.col !== targetCoordinates.col
+    (coordinates && sourceCoordinates.row !== coordinates.row) ||
+    sourceCoordinates.col !== coordinates.col
   ) {
     const sourceIndex = getIndexForCoordinates(
       sourceCoordinates.row,
       sourceCoordinates.col
     )
-    const targetIndex = getIndexForCoordinates(
-      targetCoordinates.row,
-      targetCoordinates.col
-    )
+    const targetIndex = getIndexForCoordinates(coordinates.row, coordinates.col)
     if (!areCellsNeighbors(sourceIndex, targetIndex)) {
       return
     }
@@ -118,23 +112,34 @@ board.onpointermove = (e) => {
   }
 }
 
-board.onpointerup = (e) => {
+const handlePointerEnd = (coordinates) => {
   if (!yourTurn && sourceCoordinates) {
-    const targetCoordinates = getCoordinatesForEvent(e)
     if (
-      sourceCoordinates.row === targetCoordinates.row &&
-      sourceCoordinates.col === targetCoordinates.col
+      sourceCoordinates.row === coordinates.row &&
+      sourceCoordinates.col === coordinates.col
     ) {
       Rune.actions.highlight({
-        index: getIndexForCoordinates(
-          targetCoordinates.row,
-          targetCoordinates.col
-        ),
+        index: getIndexForCoordinates(coordinates.row, coordinates.col),
       })
     }
   }
   sourceCoordinates = null
 }
+
+board.ontouchstart = (e) =>
+  handlePointerStart(getCoordinatesForEvent(e.touches[0]))
+
+board.onmousedown = (e) => handlePointerStart(getCoordinatesForEvent(e))
+
+board.ontouchmove = (e) =>
+  handlePointerMove(getCoordinatesForEvent(e.touches[0]))
+
+board.onmousemove = (e) => handlePointerMove(getCoordinatesForEvent(e))
+
+board.ontouchend = (e) =>
+  handlePointerEnd(getCoordinatesForEvent(e.changedTouches[0]))
+
+board.onmouseup = (e) => handlePointerEnd(getCoordinatesForEvent(e))
 
 const positionCellElement = (element, index) => {
   const position = getPosition(index)

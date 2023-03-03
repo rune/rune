@@ -148,9 +148,9 @@ This argument is the previous game state. Usually this can be ignored, but it's 
 
 Your player id, if the current user is a spectator this argument is undefined.
 
-#### `players: Record<string, { playerId: string, displayName: string }>`
+#### `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>`
 
-The `players` argument is an object of the current players, useful to display their names in the game.
+The `players` argument is an object of the current players, useful to display their names and avatars in the game.
 
 :::caution
 

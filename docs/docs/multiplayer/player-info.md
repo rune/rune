@@ -16,6 +16,14 @@ Here’s the values for each player:
 - `avatarUrl: string`
 - `playerId: string` (same as key, just provided for simplicity)
 
+## Avatars
+
+Using avatars is a great way to personalize the UI to show who's turn it is or in a leaderboard. Since the avatar is loaded over the network there might be a slight delay during which you might want to display a placeholder – and we got you covered!
+
+![Avatar placeholder](/img/avatar-placeholder.svg)
+
+Right click and select download either as [SVG](/img/avatar-placeholder.svg) or [PNG](/img/avatar-placeholder.png).
+
 ## Your Player ID
 
 In the `visualUpdate` function the client will always get their player ID as well as `yourPlayerId`. This can be used to find their own info in the `players` object.

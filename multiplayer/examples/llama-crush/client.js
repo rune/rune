@@ -238,10 +238,17 @@ const setFilled = (items, filledCount, useCurrent = true) =>
 
 const setMovesPlayed = (movesPlayed, movesPerRound, useCurrent = true) => {
   // Initialize turn list item elements if not already created
+  let extraMovesItems = []
   if (movesPerRound > movesItems.length) {
+    const numToInsert = movesPerRound - movesItems.length
     movesItems = movesItems.concat(
-      appendNewElements(movesPerRound - movesItems.length, movesList, "li")
+      appendNewElements(numToInsert, movesList, "li")
     )
+    if (movesPerRound > startingMovesPerRound) {
+      extraMovesItems = movesItems.slice(
+        Math.max(startingMovesPerRound, movesItems.length - numToInsert)
+      )
+    }
   } else if (movesPerRound < movesItems.length) {
     movesItems.splice(movesPerRound).forEach((element) => {
       element.parentElement.removeChild(element)
@@ -249,6 +256,9 @@ const setMovesPlayed = (movesPlayed, movesPerRound, useCurrent = true) => {
   }
   setFilled(movesItems, movesPlayed, useCurrent)
   movesList.setAttribute("title", `Move ${movesPlayed}/${movesPerRound}`)
+  extraMovesItems.forEach((element) => {
+    element.classList.add("extra")
+  })
 }
 
 const setRoundsPlayed = (roundsPlayed) => {

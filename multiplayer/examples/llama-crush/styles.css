@@ -415,6 +415,43 @@ header nav:before {
   box-shadow: 0 0 4px #fbca45;
 }
 
+#moves li.extra {
+  position: relative;
+  animation: zoom-in 0.6s;
+  z-index: 1;
+}
+
+@keyframes zoom-in {
+  0% {
+    opacity: 0;
+    transform: scale(8);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  60% {
+    transform: scale(0.8);
+  }
+
+  70% {
+    transform: scale(1.1);
+  }
+
+  80% {
+    transform: scale(0.92);
+  }
+
+  90% {
+    transform: scale(1.03);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
 #moves:after {
   content: attr(title);
   display: block;

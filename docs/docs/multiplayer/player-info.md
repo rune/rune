@@ -13,6 +13,7 @@ Info about the players is captured by a `players` object, which has an ID for ea
 Here’s the values for each player:
 
 - `displayName: string`
+- `avatarUrl: string`
 - `playerId: string` (same as key, just provided for simplicity)
 
 ## Your Player ID

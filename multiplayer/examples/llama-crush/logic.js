@@ -3,7 +3,7 @@ const getConfig = () => ({
   cols: 7,
   numberOfTiles: 6,
   startingMovesPerRound: 2,
-  numberOfRounds: 10,
+  numberOfRounds: 5,
   numberOfSpecialActions: 3,
 })
 const {

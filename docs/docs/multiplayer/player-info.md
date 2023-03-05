@@ -18,7 +18,7 @@ Here’s the values for each player:
 
 ## Avatars
 
-Using avatars is a great way to personalize the UI to show who's turn it is or in a leaderboard. Since the avatar is loaded over the network there might be a slight delay during which you might want to display a placeholder – and we got you covered!
+Using avatars is a great way to personalize the UI to show whose turn it is or in a leaderboard. Since the avatar is loaded over the network there might be a slight delay during which you might want to display a placeholder – and we got you covered!
 
 ![Avatar placeholder](/img/avatar-placeholder.svg)
 

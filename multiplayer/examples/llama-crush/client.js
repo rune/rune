@@ -90,7 +90,7 @@ extraMoveButton.onclick = () => {
 }
 
 const handlePointerStart = (coordinates) => {
-  if (isUpdating) {
+  if (!yourTurn || isUpdating) {
     return
   }
   sourceCoordinates = coordinates
@@ -131,17 +131,7 @@ const handlePointerMove = (coordinates) => {
   }
 }
 
-const handlePointerEnd = (coordinates) => {
-  if (!yourTurn && sourceCoordinates) {
-    if (
-      sourceCoordinates.row === coordinates.row &&
-      sourceCoordinates.col === coordinates.col
-    ) {
-      Rune.actions.highlight({
-        index: getIndexForCoordinates(coordinates.row, coordinates.col),
-      })
-    }
-  }
+const handlePointerEnd = () => {
   sourceCoordinates = null
 }
 
@@ -153,12 +143,18 @@ board.onmousedown = (e) => handlePointerStart(getCoordinatesForEvent(e))
 board.ontouchmove = (e) =>
   handlePointerMove(getCoordinatesForEvent(e.touches[0]))
 
-board.onmousemove = (e) => handlePointerMove(getCoordinatesForEvent(e))
+board.onmousemove = (e) => handlePointerMove()
 
-board.ontouchend = (e) =>
-  handlePointerEnd(getCoordinatesForEvent(e.changedTouches[0]))
+board.onmouseup = board.ontouchend = handlePointerEnd
 
-board.onmouseup = (e) => handlePointerEnd(getCoordinatesForEvent(e))
+board.onclick = (e) => {
+  if (!yourTurn) {
+    const coordinates = getCoordinatesForEvent(e)
+    Rune.actions.highlight({
+      index: getIndexForCoordinates(coordinates.row, coordinates.col),
+    })
+  }
+}
 
 const positionCellElement = (element, index) => {
   const position = getPosition(index)

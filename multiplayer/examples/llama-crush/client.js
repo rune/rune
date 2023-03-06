@@ -116,14 +116,10 @@ const handlePointerMove = (coordinates) => {
       sourceCoordinates.col
     )
     const targetIndex = getIndexForCoordinates(coordinates.row, coordinates.col)
-    if (!areCellsNeighbors(sourceIndex, targetIndex)) {
+    if (!isValidMove(cells, sourceIndex, targetIndex)) {
       return
     }
     sourceCoordinates = null
-    const changes = swapAndMatch(cells.slice(0), sourceIndex, targetIndex)
-    if (changes.length === 0) {
-      return
-    }
     Rune.actions.swap({
       sourceIndex,
       targetIndex,
@@ -224,7 +220,10 @@ const sleep = (duration) =>
 
 const animateChanges = async (changes) => {
   for (let i = 0; i < changes.length; i++) {
-    const { added, moved, removed } = changes[i]
+    const { added, moved, removed, message } = changes[i]
+    if (message) {
+      await showMessage(message)
+    }
     removed
       .flat()
       .filter((t, i, arr) => arr.indexOf(t) === i)
@@ -297,6 +296,9 @@ const showMessage = async (messageType) => {
   switch (messageType) {
     case "extra-move":
       innerMessageElement.textContent = "Extra Move!"
+      break
+    case "out-of-moves":
+      innerMessageElement.textContent = "Out of Moves!"
       break
     case "your-turn":
       innerMessageElement.textContent = "Your Turn!"

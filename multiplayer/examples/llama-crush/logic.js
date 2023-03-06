@@ -263,6 +263,7 @@ Rune.initLogic({
           break
         }
       }
+      game.highlightedCells = {}
       game.players[playerId].shufflesRemaining--
     },
     extraMove: (_, { game, playerId }) => {

@@ -45,8 +45,9 @@ function areCellsNeighbors(index1, index2) {
 }
 
 function seekMatchBoundary(cells, originIndex, step, shouldSeekHorizontally) {
-  const { cols } = getConfig()
+  const { cols, numberOfTiles } = getConfig()
   let current = originIndex
+  const tile = cells[originIndex] % numberOfTiles
   while (true) {
     const next = current + step
     if (
@@ -54,7 +55,7 @@ function seekMatchBoundary(cells, originIndex, step, shouldSeekHorizontally) {
         ? Math.floor(next / cols) === Math.floor(originIndex / cols)
         : next % cols === originIndex % cols) &&
       next in cells &&
-      cells[next] === cells[originIndex]
+      cells[next] % numberOfTiles === tile
     ) {
       current = next
     } else {
@@ -116,7 +117,10 @@ function match3(cells) {
     let cluster = []
     for (let col = 0; col < cols; col++) {
       const index = getIndexForCoordinates(row, col)
-      if (cluster.length !== 0 && cells[cluster[0]] !== cells[index]) {
+      if (
+        cluster.length !== 0 &&
+        cells[cluster[0]] % numberOfTiles !== cells[index] % numberOfTiles
+      ) {
         cluster = []
       }
       cluster.push(index)
@@ -130,7 +134,10 @@ function match3(cells) {
     let cluster = []
     for (let row = 0; row < rows; row++) {
       const index = getIndexForCoordinates(row, col)
-      if (cluster.length !== 0 && cells[cluster[0]] !== cells[index]) {
+      if (
+        cluster.length !== 0 &&
+        cells[cluster[0]] % numberOfTiles !== cells[index] % numberOfTiles
+      ) {
         cluster = []
       }
       cluster.push(index)
@@ -139,7 +146,20 @@ function match3(cells) {
       }
     }
   }
-  return clusters
+
+  return clusters.reduce((acc, current) => {
+    for (const item of acc) {
+      for (const index of current) {
+        if (item.includes(index)) {
+          item.push(...current.filter((i) => i !== index))
+          item.sort((a, b) => a - b)
+          return acc
+        }
+      }
+    }
+    acc.push(current)
+    return acc
+  }, [])
 }
 
 function removeIndices(cells, indices) {
@@ -179,26 +199,6 @@ function fillEmptyIndices(cells) {
   return added
 }
 
-function matchAndFillRecursively(cells) {
-  let changes = []
-  while (true) {
-    const clusters = match3(cells)
-    if (clusters.length === 0) {
-      break
-    }
-    const moved = removeIndices(
-      cells,
-      clusters
-        .flat()
-        .filter((t, i, arr) => arr.indexOf(t) === i)
-        .sort((a, b) => a - b)
-    )
-    const added = fillEmptyIndices(cells)
-    changes.push({ removed: clusters, moved, added })
-  }
-  return changes
-}
-
 function swapIndices(cells, sourceIndex, targetIndex) {
   const sourceTile = cells[sourceIndex]
   cells[sourceIndex] = cells[targetIndex]
@@ -207,7 +207,112 @@ function swapIndices(cells, sourceIndex, targetIndex) {
 }
 
 const swapAndMatch = (cells, sourceIndex, targetIndex) => {
-  return matchAndFillRecursively(swapIndices(cells, sourceIndex, targetIndex))
+  swapIndices(cells, sourceIndex, targetIndex)
+  let changes = []
+  let firstPass = true
+  while (true) {
+    const clusters = match3(cells)
+    if (clusters.length === 0) {
+      break
+    }
+    const removed = clusters.filter((arr) => arr.length <= 3)
+    const indicesToRemove = removed
+      .flat()
+      .filter((t, i, arr) => arr.indexOf(t) === i)
+    const cleared = []
+    for (const index of clusters.flat()) {
+      const tile = cells[index]
+      let indices
+      switch (Math.floor((tile - 1) / numberOfTiles)) {
+        // Horizontal arrow
+        case 1: {
+          indices = new Array(cols)
+            .fill(Math.floor(index / cols) * cols)
+            .map((start, i) => start + i)
+          break
+        }
+        // Vertical arrow
+        case 2: {
+          indices = new Array(cols)
+            .fill(index % cols)
+            .map((start, i) => start + cols * i)
+          break
+        }
+        // Bomb
+        case 3: {
+          indices = [
+            index,
+            index - 1, // left
+            index + 1, // right
+            index - cols, // top
+            index + cols, // bottom
+            index - cols - 1, // top left
+            index - cols + 1, // top right
+            index + cols - 1, // bottom left
+            index + cols + 1, // bottom right
+          ].filter((value, i, arr) => {
+            const c1 = getCoordinatesForIndex(value)
+            const c2 = getCoordinatesForIndex(arr[0])
+            return (
+              value >= 0 &&
+              value < cols * rows &&
+              Math.abs(c1.row - c2.row) <= 1 &&
+              Math.abs(c1.col - c2.col) <= 1
+            )
+          })
+          break
+        }
+        default: {
+          continue
+        }
+      }
+      cleared.push({ tile, index, indices })
+      indicesToRemove.push(...indices)
+    }
+    // These are special tiles that either become line clearers or bombs
+    const merged = clusters.filter((arr) => arr.length > 3)
+    for (const i in merged) {
+      const arr = merged[i]
+      const isVertical =
+        arr.findIndex(
+          (index, i, arr) => i !== 0 && index - arr[i - 1] !== cols
+        ) === -1
+      const mergedIndex = isVertical
+        ? arr[arr.length - 1]
+        : firstPass && arr.includes(sourceIndex)
+        ? sourceIndex
+        : firstPass && arr.includes(targetIndex)
+        ? targetIndex
+        : arr[Math.floor(Math.random() * arr.length)]
+      cells[mergedIndex] =
+        ((cells[mergedIndex] - 1) % numberOfTiles) +
+        1 +
+        (arr.length === 4 ? (isVertical ? 2 : 1) : 3) * numberOfTiles
+      if (indicesToRemove.includes(mergedIndex)) {
+        indicesToRemove.splice(indicesToRemove.indexOf(mergedIndex), 1)
+      }
+
+      arr.splice(arr.indexOf(mergedIndex), 1)
+      merged[i] = {
+        index: mergedIndex,
+        tile: cells[mergedIndex],
+        vertical: isVertical,
+        indices: arr,
+      }
+      indicesToRemove.push(...arr)
+    }
+
+    const moved = removeIndices(
+      cells,
+      indicesToRemove
+        .filter((t, i, arr) => arr.indexOf(t) === i)
+        .sort((a, b) => a - b)
+    )
+    const added = fillEmptyIndices(cells)
+    changes.push({ removed, merged, cleared, moved, added })
+    firstPass = false
+  }
+  return changes
 }
 
 function shuffle(sourceCells) {
@@ -234,7 +339,14 @@ function shuffle(sourceCells) {
 }
 
 const getScoreForChange = (change) =>
-  change.removed.reduce((sum, cluster) => sum + cluster.length ** 2, 0)
+  change.removed
+    .concat(
+      change.merged
+        .concat(change.cleared)
+        .map(({ index, indices }) => [index].concat(indices))
+    )
+    .flat()
+    .filter((t, i, arr) => arr.indexOf(t) === i).length
 
 const getScoreForChanges = (changes) =>
   changes.map((change) => getScoreForChange(change)).reduce((a, b) => a + b, 0)
@@ -303,6 +415,8 @@ Rune.initLogic({
 
         game.changes.push({
           removed: [],
+          merged: [],
+          cleared: [],
           moved,
           added: {},
           message: "out-of-moves",
@@ -348,7 +462,9 @@ Rune.initLogic({
 
       const { moved, cells } = shuffle(game.cells)
 
-      game.changes = [{ removed: [], moved, added: {} }]
+      game.changes = [
+        { removed: [], moved, added: {}, merged: [], cleared: [] },
+      ]
       game.cells = cells
       game.highlightedCells = {}
       game.players[playerId].shufflesRemaining--

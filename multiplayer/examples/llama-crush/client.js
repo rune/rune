@@ -139,7 +139,7 @@ board.onmousedown = (e) => handlePointerStart(getCoordinatesForEvent(e))
 board.ontouchmove = (e) =>
   handlePointerMove(getCoordinatesForEvent(e.touches[0]))
 
-board.onmousemove = (e) => handlePointerMove()
+board.onmousemove = (e) => handlePointerMove(getCoordinatesForEvent(e))
 
 board.onmouseup = board.ontouchend = handlePointerEnd
 
@@ -184,15 +184,25 @@ const swapTiles = (sourceIndex, targetIndex) => {
 
 const removeTile = (index) => {
   const element = tiles[index]
-  element.className = "removed"
+  element.classList.add("removed")
   tiles[index] = null
   setTimeout(() => {
     element.parentElement.removeChild(element)
   }, 1000)
 }
 
+const setMatchedTile = (index) => {
+  tiles[index].classList.add("matched")
+}
+
 const setTile = (element, tile) => {
   element.setAttribute("data-tile", tile === null ? "" : tile)
+  element.classList.remove("matched")
+}
+
+const setMergedTile = (element, tile, isVertical = false) => {
+  element.classList.toggle("vertical", isVertical)
+  element.setAttribute("data-merged-tile", tile === null ? "" : tile)
 }
 
 const addTile = (index, tile) => {
@@ -220,15 +230,47 @@ const sleep = (duration) =>
 
 const animateChanges = async (changes) => {
   for (let i = 0; i < changes.length; i++) {
-    const { added, moved, removed, message } = changes[i]
+    const { added, moved, removed, merged, cleared, message } = changes[i]
     if (message) {
       await showMessage(message)
     }
+    const movedEntries = Object.entries(moved)
     removed
+      .concat(merged.map((m) => m.indices.concat(m.index)))
       .flat()
-      .filter((t, i, arr) => arr.indexOf(t) === i)
+      .forEach((index) => setMatchedTile(index))
+    cleared.forEach(({ index, tile, indices }) => {
+      const type = Math.floor((tile - 1) / numberOfTiles)
+      const startNr = indices.indexOf(index)
+      indices.forEach((i, nr) => {
+        const element = tiles[i]
+        setTimeout(
+          () => element.classList.add("cleared"),
+          type === 3 ? 200 : Math.abs(startNr - nr) * 25
+        )
+      })
+    })
+    await sleep(400)
+    removed
+      .concat(cleared.map((c) => c.indices))
+      .flat()
+      .filter(
+        (t, i, arr) =>
+          arr.indexOf(t) === i &&
+          !merged.find(
+            ({ index, indices }) => t === index || indices.includes(t)
+          )
+      )
       .forEach((index) => removeTile(index))
-    Object.entries(moved)
+    merged.forEach(({ index, tile, indices, vertical }) => {
+      setMergedTile(tiles[index], tile, vertical)
+      indices.forEach((i) => {
+        positionCellElement(tiles[i], index)
+        removeTile(i)
+      })
+    })
+    await sleep(merged.length === 0 ? 200 : 300)
+    movedEntries
       .map(([targetIndex, sourceIndex]) => [targetIndex, tiles[sourceIndex]])
       .forEach(([targetIndex, element]) => {
         positionCellElement(element, targetIndex)

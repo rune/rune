@@ -609,26 +609,26 @@ header nav:before {
 
 #frames > *[data-highlight="0"]:before {
   border-color: #1ec593;
-  box-shadow: inset 0 0 1rem #1ec593;
-  background-color: #1f2e55;
+  box-shadow: inset 0 0 1rem #1ec593, 0 0 0.6rem #1ec593;
+  background-color: rgba(55, 198, 146, 0.3);
 }
 
 #frames > *[data-highlight="1"]:before {
   border-color: #7c40de;
-  box-shadow: inset 0 0 1rem #7c40de;
-  background-color: #1f2e55;
+  box-shadow: inset 0 0 1rem #7c40de, 0 0 0.6rem #7c40de;
+  background-color: rgba(124, 65, 221, 0.3);
 }
 
 #frames > *[data-highlight="2"]:before {
   border-color: #e2466b;
-  box-shadow: inset 0 0 1rem #e2466b;
-  background-color: #1f2e55;
+  box-shadow: inset 0 0 1rem #e2466b, 0 0 0.6rem #e2466b;
+  background-color: rgba(226, 70, 107, 0.3);
 }
 
 #frames > *[data-highlight="3"]:before {
   border-color: #e0953d;
-  box-shadow: inset 0 0 1rem #e0953d;
-  background-color: #1f2e55;
+  box-shadow: inset 0 0 1rem #e0953d, 0 0 0.6rem #e0953d;
+  background-color: rgba(212, 142, 59, 0.3);
 }
 
 #tiles > * {

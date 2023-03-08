@@ -525,6 +525,7 @@ Rune.initLogic({
       if (game.currentPlayerIndex === playerIndex) {
         game.movesPlayed = 0
         game.movesPerRound = startingMovesPerRound
+        game.highlightedCells = {}
         if (playerIndex === game.playerIds.length) {
           game.currentPlayerIndex = 0
           game.roundsPlayed++

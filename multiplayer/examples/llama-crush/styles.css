@@ -526,11 +526,14 @@ header nav:before {
 #board .message {
   position: absolute;
   z-index: 2;
-  left: 0;
-  top: 20%;
-  bottom: 20%;
-  right: 0;
+  left: 1rem;
+  top: 50%;
+  right: 1rem;
+  border-radius: 8px;
+  margin-top: -3rem;
+  height: 6rem;
   font-size: 2rem;
+  line-height: 1;
   background: #030306cc;
   display: flex;
   align-items: center;
@@ -540,6 +543,8 @@ header nav:before {
 }
 
 #board .message span {
+  text-align: center;
+  margin-top: 0.2em;
   background: linear-gradient(180deg, #ffed4f 20.03%, #ff9458 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -569,8 +574,8 @@ header nav:before {
     transform: scaleY(0);
   }
 
-  20%,
-  80% {
+  15%,
+  85% {
     opacity: 1;
     transform: scaleY(1);
   }

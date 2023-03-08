@@ -258,41 +258,43 @@ const animateChanges = async (changes) => {
       await showMessage(message)
     }
     const movedEntries = Object.entries(moved)
-    removed
-      .concat(merged.map((m) => m.indices.concat(m.index)))
-      .flat()
-      .forEach((index) => setMatchedTile(index))
-    cleared.forEach(({ index, tile, indices }) => {
-      const type = Math.floor((tile - 1) / numberOfTiles)
-      const startNr = indices.indexOf(index)
-      indices.forEach((i, nr) => {
-        const element = tiles[i]
-        setTimeout(
-          () => element.classList.add("cleared"),
-          type === 3 ? 200 : Math.abs(startNr - nr) * 25
-        )
-      })
-    })
-    await sleep(350)
-    removed
-      .concat(cleared.map((c) => c.indices))
-      .flat()
-      .filter(
-        (t, i, arr) =>
-          arr.indexOf(t) === i &&
-          !merged.find(
-            ({ index, indices }) => t === index || indices.includes(t)
+    if (removed.length || merged.length || cleared.length) {
+      removed
+        .concat(merged.map((m) => m.indices.concat(m.index)))
+        .flat()
+        .forEach((index) => setMatchedTile(index))
+      cleared.forEach(({ index, tile, indices }) => {
+        const type = Math.floor((tile - 1) / numberOfTiles)
+        const startNr = indices.indexOf(index)
+        indices.forEach((i, nr) => {
+          const element = tiles[i]
+          setTimeout(
+            () => element.classList.add("cleared"),
+            type === 3 ? 200 : Math.abs(startNr - nr) * 25
           )
-      )
-      .forEach((index) => removeTile(index))
-    merged.forEach(({ index, tile, indices, vertical }) => {
-      setMergedTile(tiles[index], tile, vertical)
-      indices.forEach((i) => {
-        positionCellElement(tiles[i], index)
-        removeTile(i)
+        })
       })
-    })
-    await sleep(merged.length === 0 ? 250 : 350)
+      await sleep(350)
+      removed
+        .concat(cleared.map((c) => c.indices))
+        .flat()
+        .filter(
+          (t, i, arr) =>
+            arr.indexOf(t) === i &&
+            !merged.find(
+              ({ index, indices }) => t === index || indices.includes(t)
+            )
+        )
+        .forEach((index) => removeTile(index))
+      merged.forEach(({ index, tile, indices, vertical }) => {
+        setMergedTile(tiles[index], tile, vertical)
+        indices.forEach((i) => {
+          positionCellElement(tiles[i], index)
+          removeTile(i)
+        })
+      })
+      await sleep(merged.length === 0 ? 250 : 350)
+    }
     movedEntries
       .map(([targetIndex, sourceIndex]) => [targetIndex, tiles[sourceIndex]])
       .forEach(([targetIndex, element]) => {
@@ -378,7 +380,7 @@ const showMessage = async (messageType) => {
   messageElement.className = "message"
   messageElement.appendChild(innerMessageElement)
   board.appendChild(messageElement)
-  await sleep(2000)
+  await sleep(1000)
   board.removeChild(messageElement)
 }
 
@@ -398,7 +400,6 @@ const visualUpdate = async ({
     changes,
     players,
     highlightedCells,
-    gameOver,
   } = newGame
   cells = newGame.cells
   yourTurn = playerIds.indexOf(yourPlayerId) === currentPlayerIndex

@@ -372,6 +372,7 @@ const visualUpdate = async ({
     changes,
     players,
     highlightedCells,
+    gameOver,
   } = newGame
   cells = newGame.cells
   yourTurn = playerIds.indexOf(yourPlayerId) === currentPlayerIndex
@@ -507,6 +508,9 @@ const visualUpdate = async ({
   }
   renderBoard()
   await updatePlayerState()
+  if (gameOver && Rune.showGameOverPopUp) {
+    Rune.showGameOverPopUp()
+  }
 }
 
 const renderQueue = []

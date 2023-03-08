@@ -357,6 +357,12 @@ const getLowestScore = (players) =>
     Number.MAX_SAFE_INTEGER
   )
 
+const getScores = (players) =>
+  Object.entries(players).reduce((acc, [id, player]) => {
+    acc[id] = player.score
+    return acc
+  }, {})
+
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
@@ -389,6 +395,7 @@ Rune.initLogic({
         ])
       ),
       changes: [],
+      gameOver: false,
     }
   },
   actions: {
@@ -435,8 +442,13 @@ Rune.initLogic({
         }
       }
 
-      if (game.roundsPlayed >= numberOfRounds) {
-        Rune.gameOver()
+      game.gameOver = game.roundsPlayed >= numberOfRounds
+
+      if (game.gameOver) {
+        Rune.gameOver({
+          players: getScores(game.players),
+          delayPopUp: true,
+        })
       }
     },
     // remove: ({ index }, { game, playerId }) => {
@@ -518,9 +530,13 @@ Rune.initLogic({
           game.currentPlayerIndex = 0
           game.roundsPlayed++
           game.startingScore = getLowestScore(game.players)
+          game.gameOver = game.roundsPlayed >= numberOfRounds
 
-          if (game.roundsPlayed >= numberOfRounds) {
-            Rune.gameOver()
+          if (game.gameOver) {
+            Rune.gameOver({
+              players: getScores(game.players),
+              delayPopUp: true,
+            })
           }
         }
       }

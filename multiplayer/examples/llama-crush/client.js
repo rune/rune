@@ -292,7 +292,7 @@ const animateChanges = async (changes) => {
         removeTile(i)
       })
     })
-    await sleep(merged.length === 0 ? 200 : 300)
+    await sleep(merged.length === 0 ? 250 : 350)
     movedEntries
       .map(([targetIndex, sourceIndex]) => [targetIndex, tiles[sourceIndex]])
       .forEach(([targetIndex, element]) => {

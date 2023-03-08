@@ -116,14 +116,15 @@ const handlePointerMove = (coordinates) => {
       sourceCoordinates.col
     )
     const targetIndex = getIndexForCoordinates(coordinates.row, coordinates.col)
-    if (!isValidMove(cells, sourceIndex, targetIndex)) {
-      return
-    }
     sourceCoordinates = null
-    Rune.actions.swap({
-      sourceIndex,
-      targetIndex,
-    })
+    if (isValidMove(cells, sourceIndex, targetIndex)) {
+      Rune.actions.swap({
+        sourceIndex,
+        targetIndex,
+      })
+    } else if (areCellsNeighbors(sourceIndex, targetIndex)) {
+      renderInvalidMove(sourceIndex, targetIndex)
+    }
   }
 }
 
@@ -150,6 +151,28 @@ board.onclick = (e) => {
       index: getIndexForCoordinates(coordinates.row, coordinates.col),
     })
   }
+}
+
+const deltaToDirection = {
+  [-1]: "left",
+  1: "right",
+  [-cols]: "up",
+  [cols]: "down",
+}
+async function renderInvalidMove(index1, index2) {
+  isUpdating = true
+  ;[
+    [index1, index2],
+    [index2, index1],
+  ].forEach(([index1, index2]) => {
+    tiles[index1].className = `invalid-move-${
+      deltaToDirection[index2 - index1]
+    }`
+  })
+  await sleep(600)
+  tiles[index1].className = ""
+  tiles[index2].className = ""
+  isUpdating = false
 }
 
 const positionCellElement = (element, index) => {
@@ -250,7 +273,7 @@ const animateChanges = async (changes) => {
         )
       })
     })
-    await sleep(400)
+    await sleep(350)
     removed
       .concat(cleared.map((c) => c.indices))
       .flat()
@@ -278,7 +301,7 @@ const animateChanges = async (changes) => {
       })
     Object.entries(added).forEach(([index, tile]) => addTile(index, tile))
     playSoundSafely(removed.length >= 2 ? popEchoSound : popSound)
-    await sleep(i === changes.length - 1 ? 500 : 800)
+    await sleep(i === changes.length - 1 ? 300 : 500)
   }
 }
 

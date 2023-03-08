@@ -633,7 +633,7 @@ header nav:before {
 
 #tiles > * {
   scale: 1;
-  transition: all 0.6s;
+  transition: all 0.3s, scale 0.5s, opacity 0.5s;
 }
 
 #tiles > *.removed {
@@ -667,6 +667,69 @@ header nav:before {
   40%,
   80% {
     background: radial-gradient(circle at center, #b6ff6d, #b6ff6d00);
+  }
+}
+
+#tiles > *.invalid-move-up,
+#tiles > *.invalid-move-down,
+#tiles > *.invalid-move-left,
+#tiles > *.invalid-move-right {
+  animation: invalid-move-right 0.6s ease-in-out;
+}
+
+#tiles > *.invalid-move-up {
+  animation-name: invalid-move-up;
+}
+
+#tiles > *.invalid-move-down {
+  animation-name: invalid-move-down;
+}
+
+#tiles > *.invalid-move-left {
+  animation-name: invalid-move-left;
+}
+
+@keyframes invalid-move-up {
+  50% {
+    transform: translateY(-100%);
+  }
+
+  from,
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes invalid-move-down {
+  50% {
+    transform: translateY(100%);
+  }
+
+  from,
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes invalid-move-left {
+  50% {
+    transform: translateX(-100%);
+  }
+
+  from,
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes invalid-move-right {
+  50% {
+    transform: translateX(100%);
+  }
+
+  from,
+  to {
+    transform: translateX(0);
   }
 }
 

@@ -539,7 +539,7 @@ header nav:before {
   align-items: center;
   justify-content: center;
   opacity: 0;
-  animation: skew-in 2s;
+  animation: skew-in 1.5s;
 }
 
 #board .message span {

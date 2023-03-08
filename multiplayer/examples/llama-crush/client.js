@@ -370,6 +370,9 @@ const showMessage = async (messageType) => {
     case "your-turn":
       innerMessageElement.textContent = "Your Turn!"
       break
+    case "last-round":
+      innerMessageElement.textContent = "Last Round!"
+      break
     case "shuffle":
       innerMessageElement.textContent = "Shuffle!"
       break
@@ -380,7 +383,7 @@ const showMessage = async (messageType) => {
   messageElement.className = "message"
   messageElement.appendChild(innerMessageElement)
   board.appendChild(messageElement)
-  await sleep(1000)
+  await sleep(1500)
   board.removeChild(messageElement)
 }
 
@@ -539,7 +542,12 @@ const visualUpdate = async ({
   }
   renderBoard()
   await updatePlayerState()
-  if (isGameOver(newGame) && Rune.showGameOverPopUp) {
+  if (
+    roundsPlayed === numberOfRounds - 1 &&
+    oldGame.roundsPlayed !== roundsPlayed
+  ) {
+    await showMessage("last-round")
+  } else if (isGameOver(newGame) && Rune.showGameOverPopUp) {
     Rune.showGameOverPopUp()
   }
 }

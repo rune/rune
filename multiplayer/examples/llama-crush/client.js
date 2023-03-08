@@ -345,6 +345,9 @@ const showMessage = async (messageType) => {
     case "your-turn":
       innerMessageElement.textContent = "Your Turn!"
       break
+    case "shuffle":
+      innerMessageElement.textContent = "Shuffle!"
+      break
     default:
       throw new Error(`Invalid message type "${messageType}"`)
   }
@@ -501,6 +504,10 @@ const visualUpdate = async ({
       }
       case "extraMove": {
         await showMessage("extra-move")
+        break
+      }
+      case "shuffle": {
+        await showMessage("shuffle")
         break
       }
     }

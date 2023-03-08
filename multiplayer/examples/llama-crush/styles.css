@@ -555,6 +555,14 @@ header nav:before {
   text-fill-color: transparent;
 }
 
+#board .message span.shuffle {
+  background: linear-gradient(180deg, #7effa2 20.03%, #00702d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
 @keyframes skew-in {
   0% {
     opacity: 0;

@@ -283,7 +283,7 @@ const swapAndMatch = (cells, sourceIndex, targetIndex) => {
         ? sourceIndex
         : firstPass && arr.includes(targetIndex)
         ? targetIndex
-        : arr[Math.floor(Math.random() * arr.length)]
+        : arr[Math.floor(arr.length / 2)]
       cells[mergedIndex] =
         ((cells[mergedIndex] - 1) % numberOfTiles) +
         1 +

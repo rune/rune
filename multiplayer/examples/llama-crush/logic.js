@@ -363,6 +363,8 @@ const getScores = (players) =>
     return acc
   }, {})
 
+const isGameOver = (game) => game.roundsPlayed >= numberOfRounds
+
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
@@ -395,7 +397,6 @@ Rune.initLogic({
         ])
       ),
       changes: [],
-      gameOver: false,
     }
   },
   actions: {
@@ -442,9 +443,7 @@ Rune.initLogic({
         }
       }
 
-      game.gameOver = game.roundsPlayed >= numberOfRounds
-
-      if (game.gameOver) {
+      if (isGameOver(game)) {
         Rune.gameOver({
           players: getScores(game.players),
           delayPopUp: true,
@@ -530,9 +529,8 @@ Rune.initLogic({
           game.currentPlayerIndex = 0
           game.roundsPlayed++
           game.startingScore = getLowestScore(game.players)
-          game.gameOver = game.roundsPlayed >= numberOfRounds
 
-          if (game.gameOver) {
+          if (isGameOver(game)) {
             Rune.gameOver({
               players: getScores(game.players),
               delayPopUp: true,

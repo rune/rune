@@ -508,7 +508,7 @@ const visualUpdate = async ({
   }
   renderBoard()
   await updatePlayerState()
-  if (gameOver && Rune.showGameOverPopUp) {
+  if (isGameOver(newGame) && Rune.showGameOverPopUp) {
     Rune.showGameOverPopUp()
   }
 }

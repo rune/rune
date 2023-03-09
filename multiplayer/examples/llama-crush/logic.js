@@ -372,6 +372,32 @@ const getScores = (players) =>
 
 const isGameOver = (game) => game.roundsPlayed >= numberOfRounds
 
+const advanceToNextPlayer = (game) => {
+  const { startingMovesPerRound, numberOfRounds } = getConfig()
+  if (game.currentPlayerIndex === game.playerIds.length - 1) {
+    game.roundsPlayed++
+    if (isGameOver(game)) {
+      return Rune.gameOver({
+        players: getScores(game.players),
+        delayPopUp: true,
+      })
+    }
+    game.currentPlayerIndex = 0
+    game.startingScore = getLowestScore(game.players)
+  } else {
+    game.currentPlayerIndex++
+  }
+
+  game.movesPlayed = 0
+  game.movesPerRound = startingMovesPerRound
+  if (game.roundsPlayed === numberOfRounds - 1) {
+    const playerId = game.playerIds[game.currentPlayerIndex]
+    game.movesPerRound += game.players[playerId].extraMovesRemaining
+    game.players[playerId].extraMovesRemaining = 0
+  }
+  return game
+}
+
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
@@ -416,8 +442,6 @@ Rune.initLogic({
         throw Rune.invalidAction()
       }
 
-      const { startingMovesPerRound, numberOfRounds } = getConfig()
-
       const changes = swapAndMatch(game.cells, sourceIndex, targetIndex)
 
       game.changes = changes
@@ -440,21 +464,7 @@ Rune.initLogic({
       }
 
       if (game.movesPlayed >= game.movesPerRound) {
-        game.currentPlayerIndex =
-          (game.currentPlayerIndex + 1) % game.playerIds.length
-        game.movesPlayed = 0
-        game.movesPerRound = startingMovesPerRound
-        if (game.currentPlayerIndex === 0) {
-          game.roundsPlayed++
-          game.startingScore = getLowestScore(game.players)
-        }
-      }
-
-      if (isGameOver(game)) {
-        Rune.gameOver({
-          players: getScores(game.players),
-          delayPopUp: true,
-        })
+        advanceToNextPlayer(game)
       }
     },
     // remove: ({ index }, { game, playerId }) => {
@@ -525,28 +535,13 @@ Rune.initLogic({
       }
     },
     playerLeft: (playerId, { game }) => {
-      const { numberOfRounds, startingMovesPerRound } = getConfig()
       const playerIndex = game.playerIds.indexOf(playerId)
       game.playerIds.splice(playerIndex, 1)
       delete game.players[playerId]
       if (game.currentPlayerIndex === playerIndex) {
-        game.movesPlayed = 0
-        game.movesPerRound = startingMovesPerRound
-        game.highlightedCells = {}
-        if (playerIndex === game.playerIds.length) {
-          game.currentPlayerIndex = 0
-          game.roundsPlayed++
-          game.startingScore = getLowestScore(game.players)
-
-          if (isGameOver(game)) {
-            Rune.gameOver({
-              players: getScores(game.players),
-              delayPopUp: true,
-            })
-          }
-        }
-      }
-      if (game.currentPlayerIndex > playerIndex) {
+        game.currentPlayerIndex--
+        advanceToNextPlayer(game)
+      } else if (game.currentPlayerIndex > playerIndex) {
         game.currentPlayerIndex--
       }
     },

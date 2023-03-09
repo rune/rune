@@ -338,15 +338,22 @@ function shuffle(sourceCells) {
   return { moved, cells }
 }
 
-const getScoreForChange = (change) =>
-  change.removed
-    .concat(
-      change.merged
-        .concat(change.cleared)
-        .map(({ index, indices }) => [index].concat(indices))
-    )
+function getScoreForChange({ removed, merged, cleared }) {
+  const clusters = removed.concat(
+    merged.map(({ index, indices }) => [index].concat(indices))
+  )
+  const matched = clusters.flat()
+  let sum = clusters.reduce((sum, cluster) => sum + cluster.length ** 2, 0)
+  for (const index of cleared
+    .map(({ indices }) => indices)
     .flat()
-    .filter((t, i, arr) => arr.indexOf(t) === i).length
+    .filter((t, i, arr) => arr.indexOf(t) === i)) {
+    if (!matched.includes(index)) {
+      sum += 3
+    }
+  }
+  return sum
+}
 
 const getScoreForChanges = (changes) =>
   changes.map((change) => getScoreForChange(change)).reduce((a, b) => a + b, 0)

@@ -551,7 +551,7 @@ const visualUpdate = async ({
     oldGame.roundsPlayed !== roundsPlayed
   ) {
     await showMessage("last-round")
-  } else if (isGameOver(newGame) && Rune.showGameOverPopUp) {
+  } else if (isGameOver(newGame)) {
     Rune.showGameOverPopUp()
   }
 }

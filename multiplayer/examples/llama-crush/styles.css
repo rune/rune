@@ -484,7 +484,6 @@ header nav:before {
   width: 100%;
   aspect-ratio: 1;
   max-height: 100%;
-  max-width: min(60vh, 500px);
   margin: 0 auto;
   transition: opacity 0.3s;
   overflow: hidden;

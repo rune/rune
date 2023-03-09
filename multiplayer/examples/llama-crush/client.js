@@ -14,16 +14,28 @@ const popSound = new Audio("pop.m4a")
 const popEchoSound = new Audio("pop-echo.mp3")
 const startupSound = new Audio("startup.wav")
 
+const style = document.createElement("style")
+style.type = "text/css"
+document.getElementsByTagName("head")[0].appendChild(style)
+
 let resizeTimer = null
 
 const resizeObserver = new ResizeObserver(() => {
   clearTimeout(resizeTimer)
   resizeTimer = setTimeout(
     () => {
-      board.style.width = `${Math.min(
-        boardInner.scrollHeight,
-        boardInner.scrollWidth
-      )}px`
+      const boardWidth =
+        Math.floor(
+          Math.min(boardInner.scrollHeight, boardInner.scrollWidth) / rows
+        ) * rows
+      board.style.width = `${boardWidth}px`
+      if (style.sheet.rules.length !== 0) {
+        style.sheet.deleteRule(0)
+      }
+      style.sheet.insertRule(
+        `#frames > *, #tiles > * { width: ${boardWidth / rows}px; }`,
+        0
+      )
       resizeTimer = null
     },
     resizeTimer ? 200 : 0
@@ -172,16 +184,10 @@ async function renderInvalidMove(index1, index2) {
 
 const positionCellElement = (element, index) => {
   const { row, col } = getCoordinatesForIndex(index)
-  element.style.transform = `translate3d(${Math.abs(col) * 100}%, ${
-    row * 100
-  }%, 0)`
+  element.style.transform = `translate(${Math.abs(col) * 100}%, ${row * 100}%)`
 }
 
-const createCellElement = () => {
-  const element = document.createElement("div")
-  element.style.width = `${100 / rows}%`
-  return element
-}
+const createCellElement = () => document.createElement("div")
 
 const createPlayerElement = (playerIndex) => {
   const element = document.createElement("li")
@@ -229,7 +235,7 @@ const addTile = (index, tile) => {
   setTile(element, tile)
   tiles[index] = element
   const { col } = getCoordinatesForIndex(index)
-  element.style.transform = `translate3d(${col * 100}%, -100%, 0)`
+  element.style.transform = `translate(${col * 100}%, -100%)`
   tilesElement.appendChild(element)
   setTimeout(() => {
     positionCellElement(element, index)

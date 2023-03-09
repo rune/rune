@@ -487,6 +487,7 @@ header nav:before {
   max-width: min(60vh, 500px);
   margin: 0 auto;
   transition: opacity 0.3s;
+  overflow: hidden;
 }
 
 #board:after {
@@ -642,29 +643,26 @@ header nav:before {
 
 #tiles > * {
   scale: 1;
-  transition: all 0.3s, scale 0.5s, opacity 0.5s;
+  transition: transform 0.3s, scale 0.5s, opacity 0.5s;
 }
 
-#tiles > *.removed {
-  opacity: 0;
-  scale: 0;
-}
-
-#tiles > *.added {
-  transform: translateY(-20vh);
-}
-
+#tiles > *.cleared,
 #tiles > *.matched {
   animation: flash-highlight 0.6s ease-in-out;
 }
 
 #tiles > *.matched:after {
-  transition: scale 0.4s ease-in-out;
-  scale: 1.12;
+  transition: transform 0.4s ease-in-out;
+  transform: scale(1.12);
 }
 
-#tiles > *.cleared {
-  animation: flash-highlight 0.6s ease-in-out;
+#tiles > *.removed {
+  opacity: 0;
+}
+
+#tiles > *.removed:after {
+  transition: transform 0.4s ease-in-out;
+  transform: scale(0);
 }
 
 @keyframes flash-highlight {
@@ -678,22 +676,22 @@ header nav:before {
   }
 }
 
-#tiles > *.invalid-move-up,
-#tiles > *.invalid-move-down,
-#tiles > *.invalid-move-left,
-#tiles > *.invalid-move-right {
+#tiles > *.invalid-move-up:after,
+#tiles > *.invalid-move-down:after,
+#tiles > *.invalid-move-left:after,
+#tiles > *.invalid-move-right:after {
   animation: invalid-move-right 0.6s ease-in-out;
 }
 
-#tiles > *.invalid-move-up {
+#tiles > *.invalid-move-up:after {
   animation-name: invalid-move-up;
 }
 
-#tiles > *.invalid-move-down {
+#tiles > *.invalid-move-down:after {
   animation-name: invalid-move-down;
 }
 
-#tiles > *.invalid-move-left {
+#tiles > *.invalid-move-left:after {
   animation-name: invalid-move-left;
 }
 

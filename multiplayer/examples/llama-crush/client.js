@@ -48,11 +48,6 @@ let tiles,
   extraMovesItems,
   movesItems = []
 
-const getPosition = (index) => {
-  const { row, col } = getCoordinatesForIndex(index)
-  return { top: `${(row * 100) / rows}%`, left: `${(col * 100) / cols}%` }
-}
-
 const getCoordinatesForEvent = (e) => {
   const boardRect = board.getBoundingClientRect()
   const col = Math.floor(((e.pageX - boardRect.x) * cols) / boardRect.width)
@@ -176,9 +171,8 @@ async function renderInvalidMove(index1, index2) {
 }
 
 const positionCellElement = (element, index) => {
-  const position = getPosition(index)
-  element.style.top = position.top
-  element.style.left = position.left
+  const { row, col } = getCoordinatesForIndex(index)
+  element.style.transform = `translate(${Math.abs(col) * 100}%, ${row * 100}%)`
 }
 
 const createCellElement = () => {
@@ -230,13 +224,13 @@ const setMergedTile = (element, tile, isVertical = false) => {
 
 const addTile = (index, tile) => {
   const element = createCellElement(index)
-  element.className = "added"
   setTile(element, tile)
   tiles[index] = element
-  positionCellElement(element, index)
+  const { col } = getCoordinatesForIndex(index)
+  element.style.transform = `translate(${col * 100}%, -100%)`
   tilesElement.appendChild(element)
   setTimeout(() => {
-    element.className = ""
+    positionCellElement(element, index)
   }, 20)
 }
 

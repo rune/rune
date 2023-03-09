@@ -336,7 +336,10 @@ const setMovesPlayed = (movesPlayed, movesPerRound, useCurrent = true) => {
     })
   }
   setFilled(movesItems, movesPlayed, useCurrent)
-  movesList.setAttribute("title", `Move ${movesPlayed}/${movesPerRound}`)
+  movesList.setAttribute(
+    "title",
+    `Move ${Math.min(movesPlayed + 1, movesPerRound)}/${movesPerRound}`
+  )
   extraMovesItems.forEach((element) => {
     element.classList.add("extra")
   })

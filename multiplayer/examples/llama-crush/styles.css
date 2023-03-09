@@ -18,6 +18,10 @@ html {
     "Segoe UI Symbol";
 }
 
+button:focus {
+  outline: 0;
+}
+
 main {
   display: flex;
   flex-direction: column;

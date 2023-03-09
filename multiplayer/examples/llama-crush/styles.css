@@ -172,7 +172,7 @@ footer li:nth-child(2) {
   left: 50%;
   margin-left: -2.6rem;
   width: 2.5rem;
-  height: 2.5rem;
+  aspect-ratio: 1;
   background: url("first-badge.svg") no-repeat;
   background-size: contain;
   opacity: 0;
@@ -241,7 +241,7 @@ footer li:nth-child(2) {
 
 #players li img {
   width: 4rem;
-  height: 4rem;
+  aspect-ratio: 1;
   border: 3px solid;
   border-radius: 50%;
   box-sizing: border-box;
@@ -262,7 +262,7 @@ footer li:nth-child(2) {
   display: flex;
   justify-content: center;
   width: 2rem;
-  height: 2rem;
+  aspect-ratio: 1;
   border-radius: 50%;
   box-sizing: border-box;
   margin: 0 0 0 0.5rem;
@@ -974,4 +974,48 @@ header nav:before {
 #tiles > *[data-merged-tile="24"]:before,
 #tiles > *[data-tile="24"]:after {
   background-image: url(bombs/yellow.svg);
+}
+
+@media (max-height: 700px) {
+  header {
+    height: 11rem;
+  }
+
+  header nav {
+    padding-top: 0.3rem;
+  }
+
+  header nav:before,
+  #rounds {
+    position: relative;
+    top: 0.6rem;
+  }
+
+  #players {
+    margin-bottom: 0.5rem;
+  }
+
+  #players li img {
+    width: 3rem;
+    border-width: 2px;
+  }
+
+  #players li:before {
+    width: 2rem;
+  }
+
+  #players li:after {
+    border-width: 2px;
+    width: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  #players li span {
+    font-size: 0.9rem;
+  }
+
+  footer {
+    height: 2.5rem;
+  }
 }

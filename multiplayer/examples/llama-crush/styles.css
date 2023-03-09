@@ -597,6 +597,8 @@ header nav:before {
   aspect-ratio: 1;
   padding: 0;
   margin: 0;
+  top: 0;
+  left: 0;
 }
 
 #frames > *:before {
@@ -642,18 +644,12 @@ header nav:before {
 }
 
 #tiles > * {
-  scale: 1;
   transition: transform 0.3s, scale 0.5s, opacity 0.5s;
 }
 
 #tiles > *.cleared,
 #tiles > *.matched {
   animation: flash-highlight 0.6s ease-in-out;
-}
-
-#tiles > *.matched:after {
-  transition: transform 0.4s ease-in-out;
-  transform: scale(1.12);
 }
 
 #tiles > *.removed {

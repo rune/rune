@@ -172,7 +172,9 @@ async function renderInvalidMove(index1, index2) {
 
 const positionCellElement = (element, index) => {
   const { row, col } = getCoordinatesForIndex(index)
-  element.style.transform = `translate(${Math.abs(col) * 100}%, ${row * 100}%)`
+  element.style.transform = `translate3d(${Math.abs(col) * 100}%, ${
+    row * 100
+  }%, 0)`
 }
 
 const createCellElement = () => {
@@ -227,7 +229,7 @@ const addTile = (index, tile) => {
   setTile(element, tile)
   tiles[index] = element
   const { col } = getCoordinatesForIndex(index)
-  element.style.transform = `translate(${col * 100}%, -100%)`
+  element.style.transform = `translate3d(${col * 100}%, -100%, 0)`
   tilesElement.appendChild(element)
   setTimeout(() => {
     positionCellElement(element, index)

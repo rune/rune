@@ -409,7 +409,8 @@ const visualUpdate = async ({
     highlightedCells,
   } = newGame
   cells = newGame.cells
-  yourTurn = playerIds.indexOf(yourPlayerId) === currentPlayerIndex
+  const gameOver = isGameOver(newGame)
+  yourTurn = !gameOver && playerIds.indexOf(yourPlayerId) === currentPlayerIndex
 
   // Initialize frame elements if not already created
   if (!frames) {
@@ -551,7 +552,7 @@ const visualUpdate = async ({
     oldGame.roundsPlayed !== roundsPlayed
   ) {
     await showMessage("last-round")
-  } else if (isGameOver(newGame)) {
+  } else if (gameOver) {
     Rune.showGameOverPopUp()
   }
 }

@@ -145,7 +145,7 @@ board.onmousemove = (e) => handlePointerMove(getCoordinatesForEvent(e))
 board.onmouseup = board.ontouchend = handlePointerEnd
 
 board.onclick = (e) => {
-  if (!yourTurn) {
+  if (!yourTurn && !isUpdating) {
     const coordinates = getCoordinatesForEvent(e)
     Rune.actions.highlight({
       index: getIndexForCoordinates(coordinates.row, coordinates.col),

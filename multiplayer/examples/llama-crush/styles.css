@@ -262,7 +262,7 @@ footer li:nth-child(2) {
   display: flex;
   justify-content: center;
   width: 2rem;
-  aspect-ratio: 1;
+  height: 2rem;
   border-radius: 50%;
   box-sizing: border-box;
   margin: 0 0 0 0.5rem;
@@ -1000,6 +1000,7 @@ header nav:before {
   #players li:after {
     border-width: 2px;
     width: 1.5rem;
+    height: 1.5rem;
     font-size: 1rem;
     line-height: 1.5rem;
   }

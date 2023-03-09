@@ -245,6 +245,7 @@ const renderBoard = () => {
     const tile = cells[i]
     setTile(element, tile)
     positionCellElement(element, i)
+    element.removeAttribute("data-merged-tile")
   })
 }
 

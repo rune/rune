@@ -246,6 +246,7 @@ const renderBoard = () => {
     setTile(element, tile)
     positionCellElement(element, i)
     element.removeAttribute("data-merged-tile")
+    element.removeAttribute("data-swap-player")
   })
 }
 
@@ -525,6 +526,17 @@ const visualUpdate = async ({
     switch (action.action) {
       case "swap": {
         const { sourceIndex, targetIndex } = action.params
+        const sourceElement = tiles[sourceIndex]
+        if (
+          oldGame.playerIds.indexOf(yourPlayerId) !== oldGame.currentPlayerIndex
+        ) {
+          sourceElement.setAttribute(
+            "data-swap-player",
+            oldGame.currentPlayerIndex + 1
+          )
+          await sleep(300)
+        }
+
         swapTiles(sourceIndex, targetIndex)
         await sleep(400)
         if (!movesPlayed) {

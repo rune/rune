@@ -12,7 +12,7 @@ const extraMoveButton = document.getElementById("extra-move-button")
 const extraMovesList = document.getElementById("extra-moves")
 const popSound = new Audio("pop.m4a")
 const popEchoSound = new Audio("pop-echo.mp3")
-const startupSound = new Audio("startup.wav")
+const confirmationAlertSound = new Audio("confirmation-alert.mp3")
 const whooshSound = new Audio("whoosh.mp3")
 
 const style = document.createElement("style")
@@ -515,7 +515,7 @@ const visualUpdate = async ({
       document.body.className !== "current-player-turn" && yourTurn
     if (becameYourTurn) {
       document.body.className = ""
-      playSoundSafely(startupSound)
+      playSoundSafely(confirmationAlertSound)
       await showMessage("your-turn")
     }
     document.body.className = yourTurn ? "current-player-turn" : ""

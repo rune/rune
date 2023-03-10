@@ -220,7 +220,8 @@ const swapAndMatch = (cells, sourceIndex, targetIndex) => {
       .flat()
       .filter((t, i, arr) => arr.indexOf(t) === i)
     const cleared = []
-    for (const index of clusters.flat()) {
+    const triggered = clusters.flat()
+    for (const index of triggered) {
       const tile = cells[index]
       let indices
       switch (Math.floor((tile - 1) / numberOfTiles)) {
@@ -268,6 +269,11 @@ const swapAndMatch = (cells, sourceIndex, targetIndex) => {
       }
       cleared.push({ tile, index, indices })
       indicesToRemove.push(...indices)
+      for (const i of indices) {
+        if (cells[i] >= numberOfTiles && !triggered.includes(i)) {
+          triggered.push(i)
+        }
+      }
     }
     // These are special tiles that either become line clearers or bombs
     const merged = clusters.filter((arr) => arr.length > 3)

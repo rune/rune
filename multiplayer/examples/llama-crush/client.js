@@ -13,6 +13,7 @@ const extraMovesList = document.getElementById("extra-moves")
 const popSound = new Audio("pop.m4a")
 const popEchoSound = new Audio("pop-echo.mp3")
 const startupSound = new Audio("startup.wav")
+const whooshSound = new Audio("whoosh.mp3")
 
 const style = document.createElement("style")
 style.type = "text/css"
@@ -306,7 +307,9 @@ const animateChanges = async (changes) => {
         tiles[targetIndex] = element
       })
     Object.entries(added).forEach(([index, tile]) => addTile(index, tile))
-    playSoundSafely(removed.length >= 2 ? popEchoSound : popSound)
+    if (removed.length || merged.length) {
+      playSoundSafely(removed.length >= 2 ? popEchoSound : popSound)
+    }
     await sleep(i === changes.length - 1 ? 300 : 500)
   }
 }
@@ -554,6 +557,7 @@ const visualUpdate = async ({
       }
       case "shuffle": {
         await showMessage("shuffle")
+        playSoundSafely(whooshSound)
         break
       }
     }

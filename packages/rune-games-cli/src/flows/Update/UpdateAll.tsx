@@ -1,9 +1,11 @@
+import { ApolloError } from "@apollo/client/errors/index.js"
 import { Box, Text } from "ink"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 
 import { Step } from "../../components/Step.js"
 import { useGames } from "../../gql/useGames.js"
 import { useUpdateGameSdk } from "../../gql/useUpdateGameSdk.js"
+import { formatApolloError } from "../../lib/formatApolloError.js"
 
 export function UpdateAll() {
   const { updateGameSdk } = useUpdateGameSdk()
@@ -59,13 +61,20 @@ export function UpdateAll() {
                 },
               ])
             }
-          } catch (err) {
+          } catch (error) {
             setFailures((prev) => [
               ...prev,
               {
                 gameId,
                 gameVersionId,
-                error: JSON.stringify(err),
+                error:
+                  error instanceof ApolloError
+                    ? formatApolloError(error, {
+                        "[tango][UPDATE_GAME_SDK_FAILED_SOME_GAMES_IN_REVIEW]":
+                          "Cannot update any games while some games are in review",
+                        default: error.message,
+                      })
+                    : JSON.stringify(error),
               },
             ])
           }
@@ -82,7 +91,9 @@ export function UpdateAll() {
       label={
         done
           ? failures.length
-            ? "Some games failed to update"
+            ? successes.length
+              ? "Some games failed to update"
+              : "All games failed to update"
             : "Finished updating all games"
           : progressText
       }

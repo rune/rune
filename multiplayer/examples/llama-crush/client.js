@@ -499,8 +499,9 @@ const visualUpdate = async ({
         ? "50%"
         : `${((playerIds.length - position) / playerIds.length) * 100}%`
     })
+
     const { shufflesRemaining, extraMovesRemaining } =
-      players[playerIds[currentPlayerIndex]]
+      players[yourPlayerId || playerIds[currentPlayerIndex]]
     setFilled(shufflesItems, shufflesRemaining)
     setFilled(extraMovesItems, extraMovesRemaining)
     shuffleButton.className =

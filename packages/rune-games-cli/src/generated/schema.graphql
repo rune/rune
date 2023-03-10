@@ -204,6 +204,7 @@ type Game {
   """
   playCount: Int!
   title: String!
+  type: GameType!
   updatedAt: Datetime!
 }
 
@@ -254,6 +255,10 @@ type GameVersion {
   game: Game
   gameId: Int!
   gameVersionId: Int!
+  multiplayerMaxPlayers: Int!
+  multiplayerMinPlayers: Int!
+  multiplayerSupportsPlayerJoining: Boolean!
+  multiplayerSupportsPlayerLeaving: Boolean!
   status: GameVersionStatus!
   supportsChallenge: Boolean!
 }
@@ -377,12 +382,6 @@ type Mutation {
     """
     input: StartVerificationInput!
   ): StartVerificationPayload!
-  updateAllGames(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: UpdateAllGamesInput!
-  ): UpdateAllGamesPayload!
 
   """Updates a single `DevTeam` using a unique key and a patch."""
   updateDevTeamByEmail(
@@ -413,6 +412,12 @@ type Mutation {
     """
     input: UpdateGameInput!
   ): UpdateGamePayload!
+  updateGameSdk(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateGameSdkInput!
+  ): UpdateGameSdkPayload!
   validateGame(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -549,17 +554,6 @@ type StartVerificationPayload {
   verificationToken: String!
 }
 
-input UpdateAllGamesInput {
-  clientMutationId: String
-}
-
-type UpdateAllGamesPayload {
-  clientMutationId: String
-  errors: [String!]!
-  failedToUpdateGameIds: [Int!]!
-  updatedGameIds: [Int!]!
-}
-
 """All input for the `updateDevTeamByEmail` mutation."""
 input UpdateDevTeamByEmailInput {
   """
@@ -639,6 +633,18 @@ input UpdateGameInput {
 type UpdateGamePayload {
   clientMutationId: String
   game: Game!
+}
+
+input UpdateGameSdkInput {
+  clientMutationId: String
+  gameId: Int!
+  gameVersionId: Int!
+}
+
+type UpdateGameSdkPayload {
+  clientMutationId: String
+  error: String
+  success: Boolean!
 }
 
 """The `Upload` scalar type represents a file upload."""

@@ -51,8 +51,11 @@ Rune.initLogic({
         game.gameOver = true
 
         if (game.winCombo) {
+          // Last person to make a move is the winner
           const winner = game.lastPlayerId
+          // The other one must be the loser
           const loser = game.players.find((id) => id !== winner)
+
           Rune.gameOver({
             players: {
               [winner]: "WON",
@@ -61,6 +64,7 @@ Rune.initLogic({
             delayPopUp: true,
           })
         } else {
+          // Game is a draw
           Rune.gameOver({
             players: {
               [game.players[0]]: "LOST",

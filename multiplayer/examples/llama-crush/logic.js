@@ -425,16 +425,14 @@ Rune.initLogic({
       startingScore: 0,
       cells,
       highlightedCells: {},
-      players: Object.fromEntries(
-        playerIds.map((id) => [
-          id,
-          {
-            score: 0,
-            shufflesRemaining: numberOfSpecialActions,
-            extraMovesRemaining: numberOfSpecialActions,
-          },
-        ])
-      ),
+      players: playerIds.reduce((acc, id) => {
+        acc[id] = {
+          score: 0,
+          shufflesRemaining: numberOfSpecialActions,
+          extraMovesRemaining: numberOfSpecialActions,
+        }
+        return acc
+      }, {}),
       changes: [],
     }
   },

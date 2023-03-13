@@ -112,7 +112,7 @@ const handlePointerStart = (coordinates) => {
 }
 
 const handlePointerMove = (coordinates) => {
-  if (!sourceCoordinates) {
+  if (!sourceCoordinates || !coordinates) {
     return
   }
   if (
@@ -153,10 +153,10 @@ board.onmousemove = (e) => handlePointerMove(getCoordinatesForEvent(e))
 board.onmouseup = board.ontouchend = handlePointerEnd
 
 board.onclick = (e) => {
-  if (isUpdating) {
+  const coordinates = getCoordinatesForEvent(e)
+  if (isUpdating || !coordinates) {
     return
   }
-  const coordinates = getCoordinatesForEvent(e)
   const index = getIndexForCoordinates(coordinates.row, coordinates.col)
   if (!yourTurn) {
     Rune.actions.highlight({ index })

@@ -10,7 +10,7 @@ inform Rune that the game ended. As a result, Rune will overlay a standardized
 game over popup to the user.
 
 This popup contents will vary depending on the options you pass. The main
-difference is whether the game defines its result in terms of winners and losers
+choice is whether the game has winners/losers or assigns each player a score.
 or does it want to give each player a score.
 
 ### Delaying Game Over Popup

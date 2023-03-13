@@ -40,8 +40,7 @@ spectator.
 ### Player Scores
 
 If your game assigns each player with a score, Rune will show a leaderboard
-in the game over popup, highlighting the current player. In case there were many
-players, the one with the highest score is the winner.
+in the game over popup, highlighting the current player. The player with with the highest score wins.
 
 |                                                                                                           |                                                                                                           |                                                                                                           |
 | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |

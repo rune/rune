@@ -133,7 +133,7 @@ score. Mixing `WON`/`LOST` and scores at the same time is not allowed. All
 players present in the game at the moment the game ends must be mentioned in
 the `players` object.
 
-### `delayPopUp?: boolean | undefined`
+### `delayPopUp?: boolean`
 
 Optional. Set to `true` if you want to instruct Rune to delay showing of the
 game over popup until you call `Rune.showGameOverPopUp()`.

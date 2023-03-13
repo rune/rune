@@ -128,7 +128,7 @@ Rune.initLogic({
 ### `players: Record<string, "WON" | "LOST" | number>`
 
 `players` is an object with player IDs as keys and the game result as values.
-The game result for each player can be either `WON`/`LOST` or an integer player
+The game result for each player can be either `WON`/`LOST` or an integer score (higher is better)
 score. Mixing `WON`/`LOST` and scores at the same time is not allowed. All
 players present in the game at the moment the game ends must be mentioned in
 the `players` object.

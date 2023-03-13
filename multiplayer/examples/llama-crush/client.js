@@ -493,17 +493,14 @@ const visualUpdate = async ({
     )
   }
 
-  roundsItems ||= appendNewElements(numberOfRounds, roundsList, "li")
-  shufflesItems ||= appendNewElements(
-    numberOfSpecialActions,
-    shufflesList,
-    "li"
-  )
-  extraMovesItems ||= appendNewElements(
-    numberOfSpecialActions,
-    extraMovesList,
-    "li"
-  )
+  roundsItems =
+    roundsItems || appendNewElements(numberOfRounds, roundsList, "li")
+  shufflesItems =
+    shufflesItems ||
+    appendNewElements(numberOfSpecialActions, shufflesList, "li")
+  extraMovesItems =
+    extraMovesItems ||
+    appendNewElements(numberOfSpecialActions, extraMovesList, "li")
 
   const updatePlayerState = async () => {
     const leaderPlayerId = playerIds.reduce(

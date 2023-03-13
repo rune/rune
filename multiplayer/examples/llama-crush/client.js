@@ -426,7 +426,6 @@ async function showSpecialTileHint(index) {
     element.classList.remove("hint")
   })
   board.removeChild(messageElement)
-  board.classList.remove("has-tooltip")
   isUpdating = false
 }
 

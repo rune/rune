@@ -10,7 +10,7 @@ This popup contents will vary depending on the options you pass. The main choice
 
 ### Delaying Game Over Popup
 
-If you pass [`delayPopUp: true`](../api/multiplayer.md#delaypopup-boolean--undefined) to `Rune.gameOver()`, Rune will not show the game popup immediately. This is useful if you want to e.g. display some animation or just make sure that the players can see the final game state before the game over popup is shown. In this case, you should call [`Rune.showGameOverPopUp()`](../api/multiplayer.md#runeshowgameoverpopup) in your `client.js`. If you don't do it, Rune will still show it automatically after some default delay.
+If you pass [`delayPopUp: true`](../api/multiplayer.md#delaypopup-boolean--undefined) to `Rune.gameOver()`, Rune will not show the game popup immediately. This is useful if you want to e.g. display some animation or just make sure that the players can see the final game state before the game over popup is shown. In this case, you should call [`Rune.showGameOverPopUp()`](../api/multiplayer.md#runeshowgameoverpopup) in your `client.js`. If you don't do it, Rune will still show it automatically after a few seconds.
 
 ### Winners and Losers
 

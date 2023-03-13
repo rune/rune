@@ -615,11 +615,13 @@ header nav:before {
 
 .tooltip.right {
   margin-left: 1rem;
+  margin-left: min(1rem, 2vw);
   transform-origin: bottom left;
 }
 
 .tooltip.left {
   margin-left: -6rem;
+  margin-left: min(-6rem, -12vw);
   transform-origin: bottom right;
 }
 

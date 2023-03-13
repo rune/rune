@@ -30,6 +30,7 @@ Rune.initLogic({
     lastPlayerId: null,
     cells: new Array(9).fill(null),
     winCombo: null,
+    gameOver: false,
   }),
   actions: {
     claimCell: (cellIndex, { game, playerId }) => {
@@ -47,7 +48,31 @@ Rune.initLogic({
       game.lastPlayerId = playerId
 
       if (gameOver) {
-        Rune.gameOver()
+        game.gameOver = true
+
+        if (game.winCombo) {
+          // Last person to make a move is the winner
+          const winner = game.lastPlayerId
+          // The other one must be the loser
+          const loser = game.players.find((id) => id !== winner)
+
+          Rune.gameOver({
+            players: {
+              [winner]: "WON",
+              [loser]: "LOST",
+            },
+            delayPopUp: true,
+          })
+        } else {
+          // Game is a draw
+          Rune.gameOver({
+            players: {
+              [game.players[0]]: "LOST",
+              [game.players[1]]: "LOST",
+            },
+            delayPopUp: true,
+          })
+        }
       }
     },
   },

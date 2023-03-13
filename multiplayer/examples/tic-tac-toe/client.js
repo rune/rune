@@ -6,7 +6,7 @@ let buttons, playerItems
 
 Rune.initClient({
   visualUpdate: ({ newGame, players: playerData, yourPlayerId, action }) => {
-    const { cells, players, winCombo, lastPlayerId } = newGame
+    const { cells, players, winCombo, lastPlayerId, gameOver } = newGame
 
     board.className = "" // Remove loading class
 
@@ -61,6 +61,12 @@ Rune.initClient({
 
     if (action && action.action === "claimCell") {
       selectSound.play()
+    }
+
+    if (gameOver) {
+      setTimeout(() => {
+        Rune.showGameOverPopUp()
+      }, 1500)
     }
   },
 })

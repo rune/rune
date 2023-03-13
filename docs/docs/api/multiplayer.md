@@ -132,7 +132,7 @@ Optional. Set to `true` if you want to instruct Rune to delay showing of the gam
 
 ## `Rune.showGameOverPopUp()`
 
-If you set `delayPopUp` to `true` in `Rune.gameOver()`, you should call this function in your **client** code to show the game over popup.
+If you set `delayPopUp` to `true` in `Rune.gameOver()`, you should call this function in your `client.js` to show the game over popup.
 
 ## `Rune.initClient(options)`
 

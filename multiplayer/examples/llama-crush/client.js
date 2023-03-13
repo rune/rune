@@ -153,11 +153,15 @@ board.onmousemove = (e) => handlePointerMove(getCoordinatesForEvent(e))
 board.onmouseup = board.ontouchend = handlePointerEnd
 
 board.onclick = (e) => {
-  if (!yourTurn && !isUpdating) {
-    const coordinates = getCoordinatesForEvent(e)
-    Rune.actions.highlight({
-      index: getIndexForCoordinates(coordinates.row, coordinates.col),
-    })
+  if (isUpdating) {
+    return
+  }
+  const coordinates = getCoordinatesForEvent(e)
+  const index = getIndexForCoordinates(coordinates.row, coordinates.col)
+  if (!yourTurn) {
+    Rune.actions.highlight({ index })
+  } else if (cells[index] > numberOfTiles) {
+    showSpecialTileHint(index)
   }
 }
 
@@ -396,6 +400,34 @@ const showMessage = async (messageType) => {
   board.appendChild(messageElement)
   await sleep(1500)
   board.removeChild(messageElement)
+}
+
+async function showSpecialTileHint(index) {
+  const { row, col } = getCoordinatesForIndex(index)
+  isUpdating = true
+
+  const messageElement = document.createElement("div")
+  messageElement.textContent = "Match me with the same color!"
+  messageElement.className = `tooltip ${
+    index % cols > cols / 2 ? "left" : "right"
+  }`
+  messageElement.style.top = `${(row / rows) * 100}%`
+  messageElement.style.left = `${(col / cols) * 100}%`
+  board.appendChild(messageElement)
+
+  const sameColorFrames = frames.filter(
+    (_, i) => cells[i] % numberOfTiles === cells[index] % numberOfTiles
+  )
+  sameColorFrames.forEach((element) => {
+    element.classList.add("hint")
+  })
+  await sleep(2000)
+  sameColorFrames.forEach((element) => {
+    element.classList.remove("hint")
+  })
+  board.removeChild(messageElement)
+  board.classList.remove("has-tooltip")
+  isUpdating = false
 }
 
 const visualUpdate = async ({

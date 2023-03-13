@@ -486,7 +486,6 @@ header nav:before {
   max-height: 100%;
   margin: 0 auto;
   transition: opacity 0.3s;
-  overflow: hidden;
 }
 
 #board:after {
@@ -590,6 +589,64 @@ header nav:before {
   }
 }
 
+.tooltip {
+  position: absolute;
+  width: 7rem;
+  padding: 4px 8px;
+  background: #d9fdff;
+  font-family: "Open Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  font-weight: 600;
+  font-size: 0.7rem;
+  color: #000;
+  border-radius: 9px;
+  margin-top: -2rem;
+  z-index: 2;
+  animation: pop-reveal 2s ease-in-out;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.tooltip.right {
+  margin-left: 1rem;
+  transform-origin: bottom left;
+}
+
+.tooltip.left {
+  margin-left: -6rem;
+  transform-origin: bottom right;
+}
+
+.tooltip:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 100%;
+  width: 12px;
+  height: 5px;
+  background: url(tooltip-tail.svg) no-repeat;
+}
+
+.tooltip.right:after {
+  left: 10%;
+}
+
+.tooltip.left:after {
+  right: 10%;
+  transform: rotateY(180deg);
+}
+
+@keyframes pop-reveal {
+  0%,
+  to {
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 #frames > *,
 #tiles > * {
   position: absolute;
@@ -651,6 +708,11 @@ header nav:before {
   animation: flash-highlight 0.6s ease-in-out;
 }
 
+#frames > *.hint:before {
+  animation: flash-hint 1.5s ease-in-out;
+  animation-delay: 0.5s;
+}
+
 #tiles > *.removed {
   opacity: 0;
 }
@@ -668,6 +730,18 @@ header nav:before {
   40%,
   80% {
     background: radial-gradient(circle at center, #00b2ff, #00b2ff30);
+  }
+}
+
+@keyframes flash-hint {
+  0%,
+  to {
+  }
+
+  40%,
+  80% {
+    border-color: white;
+    box-shadow: inset 0 0 1rem #1ec593, 0 0 0.6rem #1ec593;
   }
 }
 

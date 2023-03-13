@@ -37,7 +37,7 @@ spectator.
 | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
 | ![](https://user-images.githubusercontent.com/7106681/224114798-de66f739-d7a0-45b5-be6c-e597fdcfa6b0.PNG) | ![](https://user-images.githubusercontent.com/7106681/224114770-e0c78fce-b4dd-49d6-83e0-972cf86e706b.PNG) | ![](https://user-images.githubusercontent.com/7106681/224114768-dc1b5933-28b7-42d3-980f-49b6b510f045.PNG) |
 
-### Player scores
+### Player Scores
 
 If your game wants to give each player a score, the Rune will show a leaderboard
 in the game over popup, highlighting the current player. In case there were many

@@ -16,14 +16,14 @@ If you pass [`delayPopUp: true`](../api/multiplayer.md#delaypopup-boolean--undef
 
 We support all kinds of combinations of winners and losers and the game over popup will change accordingly. You can have a single winner/loser, many winners/losers or have everyone win or lose. The UI will also look different depending on whether the current player is among the winners, losers or is a spectator.
 
-|                                                                                                           |                                                                                                           |                                                                                                           |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| ![](https://user-images.githubusercontent.com/7106681/224114798-de66f739-d7a0-45b5-be6c-e597fdcfa6b0.PNG) | ![](https://user-images.githubusercontent.com/7106681/224114770-e0c78fce-b4dd-49d6-83e0-972cf86e706b.PNG) | ![](https://user-images.githubusercontent.com/7106681/224114768-dc1b5933-28b7-42d3-980f-49b6b510f045.PNG) |
+| Single winner, you won                            | Many winners, you lost                            | Many winners, spectator                             |
+| ------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
+| ![](/img/gameOverExamples/singleWinnerYouWon.png) | ![](/img/gameOverExamples/manyWinnersYouLost.png) | ![](/img/gameOverExamples/manyWinnersSpectator.png) |
 
 ### Player Scores
 
 If your game assigns each player with a score, Rune will show a leaderboard in the game over popup, highlighting the current player. The player with with the highest score wins.
 
-|                                                                                                           |                                                                                                           |                                                                                                           |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| ![](https://user-images.githubusercontent.com/7106681/224114746-2708afe3-3545-44e7-9a2c-5c28e8dbbfd1.PNG) | ![](https://user-images.githubusercontent.com/7106681/224114741-4f046eaf-e6e2-4fc0-b832-feada6b821a1.PNG) | ![](https://user-images.githubusercontent.com/7106681/224114732-a1bd0502-4673-459d-b865-ba60ae9c6cac.PNG) |
+| Ranked, you're 1st                            | Ranked, you're 2nd                             | Ranked, single player                       |
+| --------------------------------------------- | ---------------------------------------------- | ------------------------------------------- |
+| ![](/img/gameOverExamples/rankedYouFirst.png) | ![](/img/gameOverExamples/rankedYouSecond.png) | ![](/img/gameOverExamples/rankedSingle.png) |

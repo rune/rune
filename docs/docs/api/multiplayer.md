@@ -98,10 +98,7 @@ Rune.initLogic({
 
 ## `Rune.gameOver(options)`
 
-When the game has ended, the action handler should call `Rune.gameOver`. Your
-game doesn't need to show a "game over" screen. Rune overlays a standardized
-game over popup to the user. See more in the
-[Game Over](../multiplayer/game-over.md) guide.
+When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](../multiplayer/game-over.md) guide.
 
 ```js
 // logic.js
@@ -127,21 +124,15 @@ Rune.initLogic({
 
 ### `players: Record<string, "WON" | "LOST" | number>`
 
-`players` is an object with player IDs as keys and the game result as values.
-The game result for each player can be either `WON`/`LOST` or an integer score (higher is better)
-score. Mixing `WON`/`LOST` and scores at the same time is not allowed. All
-players present in the game at the moment the game ends must be mentioned in
-the `players` object.
+`players` is an object with player IDs as keys and the game result as values. The game result for each player can be either `WON`/`LOST` or an integer score (higher is better) score. Mixing `WON`/`LOST` and scores at the same time is not allowed. All players present in the game at the moment the game ends must be mentioned in the `players` object.
 
 ### `delayPopUp?: boolean`
 
-Optional. Set to `true` if you want to instruct Rune to delay showing of the
-game over popup until you call `Rune.showGameOverPopUp()`.
+Optional. Set to `true` if you want to instruct Rune to delay showing of the game over popup until you call `Rune.showGameOverPopUp()`.
 
 ## `Rune.showGameOverPopUp()`
 
-If you set `delayPopUp` to `true` in `Rune.gameOver()`, you should call this
-function in your **client** code to show the game over popup.
+If you set `delayPopUp` to `true` in `Rune.gameOver()`, you should call this function in your **client** code to show the game over popup.
 
 ## `Rune.initClient(options)`
 

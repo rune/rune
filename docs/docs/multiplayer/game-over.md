@@ -13,7 +13,7 @@ This popup contents will vary depending on the options you pass. The main
 difference is whether the game defines its result in terms of winners and losers
 or does it want to give each player a score.
 
-### Delaying the game over popup
+### Delaying Game Over Popup
 
 If you pass
 [`delayPopUp: true`](../api/multiplayer.md#delaypopup-boolean--undefined)

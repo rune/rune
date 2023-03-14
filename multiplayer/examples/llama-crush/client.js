@@ -10,10 +10,6 @@ const shuffleButton = document.getElementById("shuffle-button")
 const shufflesList = document.getElementById("shuffles")
 const extraMoveButton = document.getElementById("extra-move-button")
 const extraMovesList = document.getElementById("extra-moves")
-const popSound = new Audio("pop.m4a")
-const popEchoSound = new Audio("pop-echo.mp3")
-const confirmationAlertSound = new Audio("confirmation-alert.mp3")
-const whooshSound = new Audio("whoosh.mp3")
 
 const style = document.createElement("style")
 style.type = "text/css"
@@ -45,7 +41,21 @@ const resizeObserver = new ResizeObserver(() => {
 
 resizeObserver.observe(boardInner)
 
-const playSoundSafely = (sound) => {
+const sounds = {
+  "your-turn": new Audio("sounds/your-turn.wav"),
+  arrow: new Audio("sounds/arrow.wav"),
+  bomb: new Audio("sounds/bomb.wav"),
+  "extra-move": new Audio("sounds/extra-move.wav"),
+  "match-1": new Audio("sounds/match-1.wav"),
+  "match-2": new Audio("sounds/match-2.wav"),
+  "match-3": new Audio("sounds/match-3.wav"),
+  "match-arrow": new Audio("sounds/match-arrow.wav"),
+  "match-bomb": new Audio("sounds/match-bomb.wav"),
+  shuffle: new Audio("sounds/shuffle.wav"),
+  swap: new Audio("sounds/swap.wav"),
+}
+const playSound = (name) => {
+  const sound = sounds[name]
   try {
     sound.play()
   } catch (_e) {
@@ -132,6 +142,7 @@ const handlePointerMove = (coordinates) => {
       })
     } else if (areCellsNeighbors(sourceIndex, targetIndex)) {
       renderInvalidMove(sourceIndex, targetIndex)
+      playSound("swap")
     }
   }
 }
@@ -283,7 +294,31 @@ const animateChanges = async (changes) => {
           )
         })
       })
+
+      if (removed.length || merged.length) {
+        playSound(`match-${Math.min(i + 1, 3)}`)
+      }
+
+      if (
+        cleared.find(({ tile }) => Math.floor((tile - 1) / numberOfTiles) !== 3)
+      ) {
+        playSound("arrow")
+      }
+
       await sleep(350)
+
+      if (
+        cleared.find(({ tile }) => Math.floor((tile - 1) / numberOfTiles) === 3)
+      ) {
+        playSound("bomb")
+      }
+
+      if (merged.find(({ indices }) => indices.length === 4)) {
+        playSound("match-bomb")
+      } else if (merged.length) {
+        playSound("match-arrow")
+      }
+
       removed
         .concat(cleared.map((c) => c.indices))
         .flat()
@@ -311,9 +346,6 @@ const animateChanges = async (changes) => {
         tiles[targetIndex] = element
       })
     Object.entries(added).forEach(([index, tile]) => addTile(index, tile))
-    if (removed.length || merged.length) {
-      playSoundSafely(removed.length >= 2 ? popEchoSound : popSound)
-    }
     await sleep(i === changes.length - 1 ? 300 : 500)
   }
 }
@@ -544,7 +576,7 @@ const visualUpdate = async ({
       document.body.className !== "current-player-turn" && yourTurn
     if (becameYourTurn) {
       document.body.className = ""
-      playSoundSafely(confirmationAlertSound)
+      playSound("your-turn")
       await showMessage("your-turn")
     }
     document.body.className = yourTurn ? "current-player-turn" : ""
@@ -573,6 +605,7 @@ const visualUpdate = async ({
         }
 
         swapTiles(sourceIndex, targetIndex)
+        playSound("swap")
         await sleep(400)
         if (!movesPlayed) {
           setMovesPlayed(oldGame.movesPerRound, oldGame.movesPerRound, false)
@@ -582,12 +615,13 @@ const visualUpdate = async ({
         break
       }
       case "extraMove": {
+        playSound("extra-move")
         await showMessage("extra-move")
         break
       }
       case "shuffle": {
         await showMessage("shuffle")
-        playSoundSafely(whooshSound)
+        playSound("shuffle")
         break
       }
     }

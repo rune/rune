@@ -320,14 +320,25 @@ const animateScore = (indices, playerIndex, scoreDelta = 0) =>
         top: Math.round(tileRect.top + tileRect.height / 2),
       }
     })
+
     const duration = 400
+    const particleFrames = 100
+    let lastParticleFrame = 0
     const start = performance.now()
     const frameSize = canvas.width / cols / window.devicePixelRatio
     const addParticles = () => {
-      const progress = Math.min(duration, performance.now() - start) / duration
-      const easedProgress = easeInOut(progress)
+      const currentParticleFrame =
+        particleFrames *
+        (Math.min(duration, performance.now() - start) / duration)
+      for (
+        let i = lastParticleFrame;
+        i < currentParticleFrame || (i === 0 && lastParticleFrame === 0);
+        i++
+      ) {
+        const progress = i / particleFrames
 
-      if (progress !== 1) {
+        const easedProgress = easeInOut(progress)
+
         sources.forEach((source) => {
           const radius = frameSize * (0.1 + (1 - progress) * 0.15)
           const x = tween(
@@ -336,14 +347,12 @@ const animateScore = (indices, playerIndex, scoreDelta = 0) =>
             Math.pow(easedProgress, 0.7)
           )
           const y = tween(source.top, target.top, easedProgress)
-          const count = Math.ceil(Math.random() * 5)
-          for (let i = 0; i < count; i++) {
-            spawnParticle(x, y, radius)
-          }
+          spawnParticle(x, y, radius)
         })
       }
-      if (progress < 1) {
-        setTimeout(addParticles, 10)
+      lastParticleFrame = currentParticleFrame
+      if (currentParticleFrame < particleFrames) {
+        requestAnimationFrame(addParticles)
       } else {
         scores[playerIndex] += scoreDelta
         playerItems[playerIndex].setAttribute("data-score", scores[playerIndex])

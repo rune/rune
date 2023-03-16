@@ -262,9 +262,9 @@ const spawnParticle = function (x, y, radius) {
     x,
     y,
     radius,
-    wander: 0.1,
+    wander: 0.13,
     theta: Math.random() * Math.PI * 2,
-    drag: 0.85,
+    drag: 0.82,
     color: particleColors[Math.floor(Math.random() * particleColors.length)],
     vx: 0,
     vy: 0,
@@ -275,7 +275,7 @@ const moveParticles = function () {
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i]
 
-    if (p.radius < 1) {
+    if (p.radius < 0.5) {
       particles.splice(i, 1)
     } else {
       p.x += p.vx

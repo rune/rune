@@ -10,6 +10,10 @@ const shuffleButton = document.getElementById("shuffle-button")
 const shufflesList = document.getElementById("shuffles")
 const extraMoveButton = document.getElementById("extra-move-button")
 const extraMovesList = document.getElementById("extra-moves")
+const body = document.getElementsByTagName("body")[0]
+const canvas = document.createElement("canvas")
+body.appendChild(canvas)
+const ctx = canvas.getContext("2d")
 
 const style = document.createElement("style")
 style.type = "text/css"
@@ -18,6 +22,10 @@ document.getElementsByTagName("head")[0].appendChild(style)
 let resizeTimer = null
 
 const resizeObserver = new ResizeObserver(() => {
+  canvas.width = window.innerWidth * window.devicePixelRatio
+  canvas.height = window.innerHeight * window.devicePixelRatio
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+
   clearTimeout(resizeTimer)
   resizeTimer = setTimeout(
     () => {
@@ -69,7 +77,8 @@ let tiles,
   roundsItems,
   shufflesItems,
   extraMovesItems,
-  movesItems = []
+  movesItems = [],
+  scores = []
 
 const getCoordinatesForEvent = (e) => {
   const boardRect = board.getBoundingClientRect()
@@ -232,6 +241,126 @@ const removeTile = (index) => {
   }, 1000)
 }
 
+const easeInOut = (n) => 1 - (Math.cos(Math.PI * n) + 1) / 2
+
+const tween = (from, to, progress) => from + (to - from) * progress
+
+const particleColors = [
+  "#69D2E7",
+  "#A7DBD8",
+  "#E0E4CC",
+  "#F38630",
+  "#FA6900",
+  "#FF4E50",
+  "#F9D423",
+]
+
+const particles = []
+
+const spawnParticle = function (x, y, radius) {
+  particles.push({
+    x,
+    y,
+    radius,
+    wander: 0.1,
+    theta: Math.random() * Math.PI * 2,
+    drag: 0.85,
+    color: particleColors[Math.floor(Math.random() * particleColors.length)],
+    vx: 0,
+    vy: 0,
+  })
+}
+
+const moveParticles = function () {
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i]
+
+    if (p.radius < 1) {
+      particles.splice(i, 1)
+    } else {
+      p.x += p.vx
+      p.y += p.vy
+
+      p.vx *= p.drag
+      p.vy *= p.drag
+
+      p.theta += (Math.random() - 0.5) * p.wander
+      p.vx += Math.sin(p.theta) * 0.1
+      p.vy += Math.cos(p.theta) * 0.1
+
+      p.radius *= 0.95
+    }
+  }
+}
+
+const drawParticles = function () {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.globalCompositeOperation = "lighter"
+
+  for (var i = particles.length - 1; i >= 0; i--) {
+    const { x, y, radius, color } = particles[i]
+    ctx.beginPath()
+    ctx.arc(x, y, radius, 0, Math.PI * 2)
+    ctx.fillStyle = color
+    ctx.fill()
+  }
+}
+
+const animateScore = (indices, playerIndex, scoreDelta = 0) =>
+  new Promise((resolve) => {
+    const [avatarRect] = playerItems[playerIndex].firstChild.getClientRects()
+    const target = {
+      left: Math.round(avatarRect.left + avatarRect.width) - 5,
+      top: Math.round(avatarRect.top) + 10,
+    }
+    const sources = indices.map((index) => {
+      const [tileRect] = frames[index].getClientRects()
+      return {
+        left: Math.round(tileRect.left + tileRect.width / 2),
+        top: Math.round(tileRect.top + tileRect.height / 2),
+      }
+    })
+    const duration = 400
+    const start = performance.now()
+    const frameSize = canvas.width / cols / window.devicePixelRatio
+    const addParticles = () => {
+      const progress = Math.min(duration, performance.now() - start) / duration
+      const easedProgress = easeInOut(progress)
+
+      if (progress !== 1) {
+        sources.forEach((source) => {
+          const radius = frameSize * (0.1 + (1 - progress) * 0.15)
+          const x = tween(
+            source.left,
+            target.left,
+            Math.pow(easedProgress, 0.7)
+          )
+          const y = tween(source.top, target.top, easedProgress)
+          const count = Math.ceil(Math.random() * 5)
+          for (let i = 0; i < count; i++) {
+            spawnParticle(x, y, radius)
+          }
+        })
+      }
+      if (progress < 1) {
+        setTimeout(addParticles, 10)
+      } else {
+        scores[playerIndex] += scoreDelta
+        playerItems[playerIndex].setAttribute("data-score", scores[playerIndex])
+        resolve()
+      }
+    }
+    addParticles()
+    const step = () => {
+      drawParticles()
+      if (particles.length > 0) {
+        moveParticles()
+        requestAnimationFrame(step)
+      }
+    }
+    step()
+  })
+
 const setMatchedTile = (index) => {
   tiles[index].classList.add("matched")
 }
@@ -271,9 +400,10 @@ const renderBoard = () => {
 const sleep = (duration) =>
   new Promise((resolve) => setTimeout(resolve, duration))
 
-const animateChanges = async (changes) => {
+const animateChanges = async (changes, playerIndex) => {
   for (let i = 0; i < changes.length; i++) {
-    const { added, moved, removed, merged, cleared, message } = changes[i]
+    const change = changes[i]
+    const { added, moved, removed, merged, cleared, message } = change
     if (message) {
       await showMessage(message)
     }
@@ -306,6 +436,18 @@ const animateChanges = async (changes) => {
       }
 
       await sleep(350)
+      animateScore(
+        removed
+          .concat(
+            merged
+              .concat(cleared)
+              .flat()
+              .map(({ index, indices }) => indices.concat(index))
+          )
+          .flat(),
+        playerIndex,
+        getScoreForChange(change)
+      )
 
       if (
         cleared.find(({ tile }) => Math.floor((tile - 1) / numberOfTiles) === 3)
@@ -534,7 +676,7 @@ const visualUpdate = async ({
     extraMovesItems ||
     appendNewElements(numberOfSpecialActions, extraMovesList, "li")
 
-  const updatePlayerState = async () => {
+  const updatePlayerState = async (currentPlayerIndex) => {
     const leaderPlayerId = playerIds.reduce(
       (a, b) => (players[a].score < players[b].score ? b : a),
       playerIds[0]
@@ -556,6 +698,7 @@ const visualUpdate = async ({
         id === yourPlayerId ? "You" : player && player.displayName
       li.firstChild.setAttribute("src", player.avatarUrl)
       li.setAttribute("data-score", players[id].score)
+      scores[i] = players[id].score
       li.style.left = isCurrentPlayer
         ? "50%"
         : `${((playerIds.length - position) / playerIds.length) * 100}%`
@@ -572,14 +715,13 @@ const visualUpdate = async ({
     setMovesPlayed(movesPlayed, movesPerRound)
     setRoundsPlayed(roundsPlayed)
 
-    const becameYourTurn =
-      document.body.className !== "current-player-turn" && yourTurn
+    const becameYourTurn = body.className !== "current-player-turn" && yourTurn
     if (becameYourTurn) {
-      document.body.className = ""
+      body.className = ""
       playSound("your-turn")
       await showMessage("your-turn")
     }
-    document.body.className = yourTurn ? "current-player-turn" : ""
+    body.className = yourTurn ? "current-player-turn" : ""
   }
 
   frames.forEach((frame, i) => {
@@ -609,9 +751,11 @@ const visualUpdate = async ({
         await sleep(400)
         if (!movesPlayed) {
           setMovesPlayed(oldGame.movesPerRound, oldGame.movesPerRound, false)
+          await sleep(400)
         } else {
           setMovesPlayed(movesPlayed, movesPerRound, false)
         }
+
         break
       }
       case "extraMove": {
@@ -625,10 +769,10 @@ const visualUpdate = async ({
         break
       }
     }
-    await animateChanges(changes)
+    await animateChanges(changes, oldGame.currentPlayerIndex)
   }
   renderBoard()
-  await updatePlayerState()
+  await updatePlayerState(currentPlayerIndex)
   if (
     roundsPlayed === numberOfRounds - 1 &&
     oldGame.roundsPlayed !== roundsPlayed

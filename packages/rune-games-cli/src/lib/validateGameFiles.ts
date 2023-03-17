@@ -4,14 +4,14 @@ import path from "path"
 import semver from "semver"
 
 import { extractMultiplayerMetadata } from "./extractMultiplayerMetadata.js"
-import { FileInfo } from "./getGameFiles.js"
+import { FileInfo, findShortestPathFileThatEndsWith } from "./getGameFiles.js"
 import { rootPath } from "./rootPath.js"
 
 import LintMessage = Linter.LintMessage
 
 export const validationOptions = {
   sdkUrlStart: "https://cdn.jsdelivr.net/npm/rune-games-sdk",
-  sdkVersionRegex: /rune-games-sdk@(\d\.\d(\.\d)?)/,
+  sdkVersionRegex: /rune-games-sdk@(\d(\.\d(\.\d)?)?)/,
   minSdkVersion: "4.5.0",
   maxFiles: 1000,
   maxSizeMb: 25,
@@ -61,12 +61,8 @@ export async function validateGameFiles(
     errors.push({ message: `Game size must be less than ${maxSizeMb}MB` })
   }
 
-  const indexHtml = files.find(
-    (file) => file.path === "index.html" || file.path.endsWith("/index.html")
-  )
-  const logicJs = files.find(
-    (file) => file.path === "logic.js" || file.path.endsWith("/logic.js")
-  )
+  const indexHtml = findShortestPathFileThatEndsWith(files, "index.html")
+  const logicJs = findShortestPathFileThatEndsWith(files, "logic.js")
 
   let multiplayerValidationResult: ValidationResult["multiplayer"]
 
@@ -112,7 +108,14 @@ export async function validateGameFiles(
         .getAttribute("src")
         ?.match(sdkVersionRegex)?.[1]
 
-      const sdkVersionCoerced = semver.coerce(sdkVersion)
+      if (!sdkVersion) {
+        errors.push({ message: `Rune SDK must specify a version` })
+      }
+
+      const [major, minor, patch] = (sdkVersion ?? "")?.split(".")
+      const maxedOutSdkVersion = `${major}.${minor ?? 999}.${patch ?? 999}`
+
+      const sdkVersionCoerced = semver.coerce(sdkVersion && maxedOutSdkVersion)
       const minSdkVersionCoerced = semver.coerce(minSdkVersion)
 
       if (

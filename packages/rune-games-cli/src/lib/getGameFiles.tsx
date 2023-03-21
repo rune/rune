@@ -34,3 +34,15 @@ export async function getGameFiles(gameDir: string): Promise<FileInfo[]> {
     }))
   )
 }
+
+export function findShortestPathFileThatEndsWith(
+  files: FileInfo[],
+  fileName: string
+) {
+  return files
+    .filter(
+      (file) => file.path === fileName || file.path.endsWith(`/${fileName}`)
+    )
+    .sort((a, b) => a.path.length - b.path.length)
+    .at(0)
+}

@@ -4,7 +4,11 @@ import qrcode from "qrcode-terminal"
 import React, { useState, useMemo, useEffect } from "react"
 
 import { cli } from "../../lib/cli.js"
-import { getGameFiles, FileInfo } from "../../lib/getGameFiles.js"
+import {
+  getGameFiles,
+  FileInfo,
+  findShortestPathFileThatEndsWith,
+} from "../../lib/getGameFiles.js"
 import { packageJson } from "../../lib/packageJson.js"
 import {
   validateGameFiles,
@@ -26,7 +30,7 @@ export function Start() {
   const [ignoreValidation, setIgnoreValidation] = useState(false)
 
   const logicJsFile = useMemo(
-    () => gameFiles.find((file) => file.path.endsWith("/logic.js")),
+    () => findShortestPathFileThatEndsWith(gameFiles, "logic.js"),
     [gameFiles]
   )
 

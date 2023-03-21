@@ -65,6 +65,151 @@ describe("validateGameFiles", () => {
 
     await check(
       [
+        { path: "media/background.png", size: 1 * 1e6 },
+        { path: "src/game.js", size: 1 * 1e6 },
+        {
+          path: "src/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.4/dist/browser.min.js"></script>
+                  <script src="src/game.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [
+          {
+            message:
+              "Rune SDK is below minimum version (included 4.4, min 4.5.0)",
+          },
+        ],
+      }
+    )
+
+    await check(
+      [
+        { path: "media/background.png", size: 1 * 1e6 },
+        { path: "src/game.js", size: 1 * 1e6 },
+        {
+          path: "src/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3/dist/browser.min.js"></script>
+                  <script src="src/game.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [
+          {
+            message:
+              "Rune SDK is below minimum version (included 3, min 4.5.0)",
+          },
+        ],
+      }
+    )
+
+    await check(
+      [
+        { path: "media/background.png", size: 1 * 1e6 },
+        { path: "src/game.js", size: 1 * 1e6 },
+        {
+          path: "src/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/dist/browser.min.js"></script>
+                  <script src="src/game.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+        },
+      ],
+      {
+        valid: true,
+        errors: [],
+      }
+    )
+
+    await check(
+      [
+        { path: "media/background.png", size: 1 * 1e6 },
+        { path: "src/game.js", size: 1 * 1e6 },
+        {
+          path: "src/nestedFolder/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                INVALID CONTENT
+              </html>`,
+        },
+        {
+          path: "src/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/dist/browser.min.js"></script>
+                  <script src="src/game.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+        },
+      ],
+      {
+        // valid because we should only look at the root index.html
+        valid: true,
+        errors: [],
+      }
+    )
+
+    await check(
+      [
+        { path: "media/background.png", size: 1 * 1e6 },
+        { path: "src/game.js", size: 1 * 1e6 },
+        {
+          path: "src/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk/dist/browser.min.js"></script>
+                  <script src="src/game.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [{ message: "Rune SDK must specify a version" }],
+      }
+    )
+
+    await check(
+      [
         { path: "media/background.png", size: 10 * 1e6 },
         { path: "src/game.js", size: 10 * 1e6 },
         {

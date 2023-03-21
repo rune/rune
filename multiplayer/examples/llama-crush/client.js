@@ -2,6 +2,7 @@ const boardInner = document.getElementById("board-inner")
 const board = document.getElementById("board")
 const framesElement = document.getElementById("frames")
 const tilesElement = document.getElementById("tiles")
+const moveHintElement = document.getElementById("move-hint")
 const movesList = document.getElementById("moves")
 const roundsList = document.getElementById("rounds")
 const playersList = document.getElementById("players")
@@ -612,6 +613,46 @@ async function showSpecialTileHint(index) {
   isUpdating = false
 }
 
+function findPossibleMoves(cells) {
+  let moves = []
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const index = getIndexForCoordinates(row, col)
+      if (isValidMove(cells, index, index + 1)) {
+        moves.push([index, index + 1])
+      }
+      if (isValidMove(cells, index, index + cols)) {
+        moves.push([index, index + cols])
+      }
+    }
+  }
+  return moves
+}
+
+async function showHint(playerIndex) {
+  const moves = findPossibleMoves(cells)
+  const [index1, index2] = moves[Math.floor(Math.random() * moves.length)]
+  const direction = deltaToDirection[index2 - index1]
+  const { row, col } = getCoordinatesForIndex(index1)
+
+  moveHintElement.style.top = `${(row / rows) * 100}%`
+  moveHintElement.style.left = `${(col / cols) * 100}%`
+  moveHintElement.style.width = `${(1 / cols) * 100}%`
+  moveHintElement.setAttribute("data-swap-player", playerIndex + 1)
+  moveHintElement.className = `move-${direction}`
+  await sleep(1500)
+  moveHintElement.className = ""
+  moveHintElement.removeAttribute("data-swap-player")
+}
+
+let hintInterval = null
+
+function scheduleMoveHint(playerIndex) {
+  hintInterval = setInterval(() => {
+    showHint(playerIndex)
+  }, 20000)
+}
+
 const visualUpdate = async ({
   newGame,
   oldGame,
@@ -619,6 +660,7 @@ const visualUpdate = async ({
   players: playerData,
   yourPlayerId,
 }) => {
+  clearTimeout(hintInterval)
   const {
     playerIds,
     currentPlayerIndex,
@@ -729,6 +771,10 @@ const visualUpdate = async ({
       body.className = ""
       playSound("your-turn")
       await showMessage("your-turn")
+      if (roundsPlayed === 0) {
+        await sleep(300)
+        showHint(currentPlayerIndex)
+      }
     }
     body.className = yourTurn ? "current-player-turn" : ""
   }
@@ -789,6 +835,9 @@ const visualUpdate = async ({
     await showMessage("last-round")
   } else if (gameOver) {
     Rune.showGameOverPopUp()
+  }
+  if (yourTurn) {
+    scheduleMoveHint(currentPlayerIndex)
   }
 }
 

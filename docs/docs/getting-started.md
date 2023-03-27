@@ -36,7 +36,7 @@ That's all it takes to integrate your game with Rune! You can take a look at our
 
 :::tip
 
-Rune also supports **multiplayer**, which has a slightly [different setup](multiplayer/setup.md) and [API](api/multiplayer.md).
+Rune also supports **multiplayer**, which has a slightly [different setup](multiplayer/setup.md) and [API](multiplayer/api-reference.md).
 
 :::
 

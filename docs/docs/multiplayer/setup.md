@@ -4,12 +4,6 @@ sidebar_position: 1
 
 # Multiplayer Setup
 
-:::caution
-
-The Multiplayer SDK is currently in beta. There will be some rough edges, and some APIs might change.
-
-:::
-
 ## Install
 
 Include the following lines in your `index.html` file before loading any other JS scripts:

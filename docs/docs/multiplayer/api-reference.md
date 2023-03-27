@@ -4,12 +4,6 @@ sidebar_position: 99
 
 # API Reference
 
-:::caution
-
-The Multiplayer SDK is currently in beta. There will be some rough edges, and some APIs might change.
-
-:::
-
 Rune methods for writing multiplayer games. The SDK is split into two parts:
 
 - **Game logic**, this code needs to be located in a file called `logic.js`

@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Multiplayer Setup
+# Intro
 
 ## Install
 
@@ -92,4 +92,6 @@ Rune.initClient({
 - [Read about syncing game state](syncing-game-state.md)
 - [Get inspired by the kinds of games that are supported](supported-games.md)
 - [View example games](examples.md)
-- [Explore Rune Multiplayer SDK API docs](api/multiplayer.md)
+- [Explore the API reference](api/multiplayer.md)
+- [Test your game with the Rune CLI](cli.md)
+- [Publish your game](publishing.md)

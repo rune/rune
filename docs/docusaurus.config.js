@@ -69,7 +69,7 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "getting-started",
+            docId: "multiplayer/intro",
             position: "left",
             label: "Docs",
           },

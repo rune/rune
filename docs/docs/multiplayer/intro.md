@@ -4,6 +4,18 @@ sidebar_position: 1
 
 # Intro
 
+## Why use Rune?
+
+Reach an audience of millions and have Rune handle all the complexity of building a multiplayer game! Here's some things you **don't have to worry about** if you use Rune:
+
+- Netcode
+- Hosting servers
+- Game version mismatches
+- Voice chat
+- Matchmaking
+- Conflict resolution
+- Spectating
+
 ## Install
 
 Include the following lines in your `index.html` file before loading any other JS scripts:

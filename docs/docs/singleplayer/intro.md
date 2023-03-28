@@ -4,6 +4,12 @@ sidebar_position: 1
 
 # Intro
 
+:::caution
+
+We're focusing most of our energy on the [Multiplayer SDK](multiplayer/intro.md) so don't expect any updates on the singleplayer side.
+
+:::
+
 ## Install
 
 Include the following line in your `index.html` file before loading any other JS scripts:

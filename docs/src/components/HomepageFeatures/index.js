@@ -61,19 +61,12 @@ function MobileReady() {
         </div>
         <div className={`${clsx("col col--6")} ${styles.mobileReadyText}`}>
           <div className="padding-vert--md">
-            <h2>Mobile and global reach</h2>
+            <h2>Mobile multiplayer</h2>
             <p>
               Building a game is fun, but having tons of people actually playing
-              it makes the whole thing twice as fun. Rune makes your HTML5 games
-              playable on mobile with an instant reach of{" "}
-              <strong>5+ million players</strong>.
-            </p>
-            <p>
-              We promote your game for free on our social channels and also
-              provide valuable analytics and feedback on your game.
-            </p>
-            <p>
-              No pesky ads or nags – <strong>just pure fun</strong>.
+              it makes everything twice as fun. Rune makes it easy to make{" "}
+              <strong>multiplayer HTML5 games for mobile</strong> reaching
+              million of players!
             </p>
           </div>
         </div>
@@ -89,13 +82,25 @@ function Engage() {
         <div className="row">
           <div className={clsx("col col--4")}>
             <div className={styles.engageContent}>
-              <img src={socialCircular} />
+              <img src={sharableCircular} />
               <div>
                 <h2>Social</h2>
                 <p>
-                  Rune includes <strong>messaging</strong> and{" "}
-                  <strong>voice chat</strong> so players can play together with{" "}
-                  <strong>multiplayer support</strong>.
+                  Rune has <strong>messaging</strong> and{" "}
+                  <strong>voice chat</strong> so players can hang out together
+                  and talk about your game.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className={clsx("col col--4")}>
+            <div className={styles.engageContent}>
+              <img src={socialCircular} />
+              <div>
+                <h2>Fast & Reliable</h2>
+                <p>
+                  Our <strong>predict-rollback netcode</strong> update clients
+                  immediately with the server resolving any conflicts.
                 </p>
               </div>
             </div>
@@ -104,26 +109,10 @@ function Engage() {
             <div className={styles.engageContent}>
               <img src={engagingCircular} />
               <div>
-                <h2>Engaging</h2>
+                <h2>Free</h2>
                 <p>
-                  Keep your players coming back long after release with
-                  Rune&apos;s built-in <strong>leaderboards</strong> and{" "}
-                  <strong>daily challenges</strong>.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className={clsx("col col--4")}>
-            <div className={styles.engageContent}>
-              <img src={sharableCircular} />
-              <div>
-                <h2>Shareable</h2>
-                <p>
-                  Players can comment, and{" "}
-                  <strong>
-                    share your game to friends without having to install the app
-                  </strong>{" "}
-                  or sign up.
+                  We pay for servers, voice chat, and everything else. It's{" "}
+                  <strong>100% free</strong> to launch your game on Rune.
                 </p>
               </div>
             </div>
@@ -140,33 +129,30 @@ function SuperEasy() {
       <div className="row padding-top--lg">
         <div className={clsx("col col--6")}>
           <CodeBlock language="js">
-            {`// Your game setup code...
-
-Rune.init({
-  resumeGame: () => game.resume(),
-  pauseGame: () => game.pause(),
-  restartGame: () => game.restart(),
-  getScore: () => game.score,
-})
-
-// When the player loses the game, inform the SDK
-Rune.gameOver()
+            {`// Example action
+shootBall: ({ direction, speed }, { game }) => {
+  game.ballPosition = game.ballPosition + (direction * speed)
+  
+  if (scoredGoal(game.ballPosition)) {
+    Rune.gameOver()
+  }
+}
 `}
           </CodeBlock>
         </div>
         <div className={`${clsx("col col--6")} ${styles.superEasyText}`}>
           <h2>It&apos;s super easy</h2>
           <p>
-            Integrating the Rune SDK is only a{" "}
-            <strong>handful lines of code</strong> and can be done in a matter
-            of minutes. The game can be built in any framework that export to
-            HTML, such as Unity, Godot, Defold or GameMaker.
+            Write your game logic as actions using the expressiveness and
+            simplicity of JavaScript. Your game client can be built in any
+            framework that exports to web such as Phaser, PixiJS, PlayCanvas,
+            Unity, or Godot.
           </p>
           <p>
             <strong>We solve the difficult and boring parts</strong> like
-            collaborative real-time networking, global distribution, user
-            accounts, voice chat, etc so that you can focus on the game play.
-            Just upload your game and Rune will do the rest...
+            networking, server hosting, user accounts, voice chat, etc. so that
+            you can focus on the game logic. Just upload your game and Rune will
+            do the rest...
           </p>
         </div>
       </div>

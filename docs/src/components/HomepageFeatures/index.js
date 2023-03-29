@@ -130,7 +130,7 @@ function SuperEasy() {
         <div className={clsx("col col--6")}>
           <CodeBlock language="js">
             {`// Example action
-shootBall: ({ direction, speed }, { game }) => {
+kickBall: ({ direction, speed }, { game }) => {
   game.ballPosition = game.ballPosition + (direction * speed)
   
   if (scoredGoal(game.ballPosition)) {

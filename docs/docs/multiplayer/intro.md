@@ -28,7 +28,7 @@ Include the following lines in your `index.html` file before loading any other J
 
 ## Game Logic
 
-Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](syncing-game-state.md). Add an action that modifies this `game` state and calls `Rune.initLogic()`.  For instance, to give all players a score and have an action that just increments the score:
+Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize.  For instance, to give all players a score and have an action that just increments the score:
 
 ```js
 // logic.js

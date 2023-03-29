@@ -99,7 +99,7 @@ function Engage() {
               <div>
                 <h2>Fast & Reliable</h2>
                 <p>
-                  Our <strong>predict-rollback netcode</strong> update clients
+                  Our <strong>predict-rollback netcode</strong> updates clients
                   immediately with the server resolving any conflicts.
                 </p>
               </div>

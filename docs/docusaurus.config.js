@@ -97,16 +97,12 @@ const config = {
             title: "Docs",
             items: [
               {
-                label: "Getting Started",
-                to: "/docs/getting-started",
-              },
-              {
                 label: "Singleplayer SDK",
-                to: "/docs/api/singleplayer",
+                to: "/docs/singleplayer/intro",
               },
               {
                 label: "Multiplayer SDK",
-                to: "/docs/api/multiplayer",
+                to: "/docs/multiplayer/intro",
               },
             ],
           },

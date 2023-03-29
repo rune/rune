@@ -28,46 +28,41 @@ Include the following lines in your `index.html` file before loading any other J
 
 ## Game Logic
 
-Create a file named `logic.js` that will be responsible for [syncing game information](syncing-game-state.md) among the players:
+Create a file named `logic.js` that will be responsible for [syncing game information](syncing-game-state.md) among the players. Write a `setup` function that returns initial values for the `game` state that’s synced across players. For instance, give all players a score:
 
 ```js
-// logic.js
-
-function isVictoryOrDraw(game) {
-  // Check winner
+function setup(playerIds) {
+  const scores = {}
+  for (let playerId of playerIds) {
+    scores[playerId] = 0
+  }
+  return { scores }
 }
+```
 
+Define one or more action functions that modify the `game` state. E.g. here's an action that just increments the score:
+
+```js
+function incrementScore(playerIdToIncrement, { game }) {
+  game.scores[playerIdToIncrement]++
+}
+```
+
+Call `Rune.initLogic()` and provide these functions.
+
+
+```js
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
-  setup: (playerIds) => {
-    const scores = {}
-    for (let playerId of playerIds) {
-      scores[playerId] = 0
-    }
-    return { scores }
-  },
+  setup,
   actions: {
-    myAction: (payload, { game, playerId }) => {
-      // Check it's not the other player's turn
-      if (game.lastPlayerTurn !== playerId) {
-        throw Rune.invalidAction()
-      }
-
-      // Increase score and switch turn
-      game.scores[playerId]++
-      game.lastPlayerTurn = playerId
-
-      // Determine if game has ended
-      if (isVictoryOrDraw(game)) {
-        Rune.gameOver()
-      }
-    },
-  },
+    incrementScore
+  }
 })
 ```
 
-## UI Integration
+## Rendering
 
 Next, integrate your game UI to [react to game state changes](api/multiplayer.md#runeinitclientoptions) and [send actions to the logic layer](api/multiplayer.md#runeinitclientoptions). This code may live anywhere except in `logic.js`; the docs will refer to `client.js`:
 
@@ -78,12 +73,12 @@ Next, integrate your game UI to [react to game state changes](api/multiplayer.md
 
 // Trigger an action based on user input
 button.onClick = () => {
-  Rune.actions.myAction({
-    myId: "button",
+  Rune.actions.incrementScore({
+    playerIdToIncrement: "player1",
   })
 }
 
-// Initialize the Rune SDK once your game is fully ready.
+// Initialize the Rune SDK once your game is fully ready
 Rune.initClient({
   visualUpdate: ({
     newGame,
@@ -94,7 +89,7 @@ Rune.initClient({
     event,
     rollbacks,
   }) => {
-    // Update interface based on game state from logic.js.
+    // Update game based on game state from logic.js
     render(newGame)
   },
 })

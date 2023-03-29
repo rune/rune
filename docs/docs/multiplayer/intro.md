@@ -53,7 +53,7 @@ Rune.initLogic({
 
 ## Rendering
 
-Next, integrate your game UI to [react to game state changes](api/multiplayer.md#runeinitclientoptions) and [send actions to the logic layer](api/multiplayer.md#runeinitclientoptions). This code may live anywhere except in `logic.js`; the docs will refer to `client.js`:
+Next, integrate your game UI to [react to game state changes](api-reference.md#runeinitclientoptions) and [send actions to the logic layer](api-reference.md#runeinitclientoptions). This code may live anywhere except in `logic.js`; the docs will refer to `client.js`:
 
 ```js
 // client.js
@@ -89,6 +89,6 @@ Rune.initClient({
 - [Read about syncing game state](syncing-game-state.md)
 - [Get inspired by the kinds of games that are supported](supported-games.md)
 - [View example games](examples.md)
-- [Explore the API reference](api/multiplayer.md)
+- [Explore the API reference](api-reference.md)
 - [Test your game with the Rune CLI](cli.md)
 - [Publish your game](publishing.md)

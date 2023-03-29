@@ -40,5 +40,5 @@ Rune.gameOver()
 
 ## Next steps
 
-- [View example games](singleplayer/examples.md)
-- [Explore the API reference](api/singleplayer.md)
+- [View example games](examples.md)
+- [Explore the API reference](api-reference.md)

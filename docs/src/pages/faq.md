@@ -43,7 +43,7 @@ Your game just needs to integrate Rune’s minimal SDK written in JavaScript. We
 
 ### What Is the Rune SDK?
 
-The [Rune SDK](/docs/api/singleplayer) is a small JavaScript library that your game imports to integrate with Rune. The SDK will tell your game e.g. when to start/pause the gameplay. It’s very simple and takes just a few minutes to integrate.
+The [Rune SDK](/docs/multiplayer/intro) is a small JavaScript library that you can use to make multiplayer HTML5 games for mobile.
 
 ### Does Rune Host the Games?
 

@@ -19,6 +19,20 @@ jobs:
       - run: yarn build
       - run: yarn rune --version
       - run: yarn test
+  test-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".node-version"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn --prefer-offline --frozen-lockfile --non-interactive --ignore-scripts --silent
+        working-directory: docs
+      - name: Build website
+        run: yarn build
+        working-directory: docs
   typecheck:
     runs-on: ubuntu-latest
     steps:

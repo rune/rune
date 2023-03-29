@@ -1,8 +1,4 @@
 {
   "label": "Singleplayer",
-  "position": 2,
-  "link": {
-    "type": "doc",
-    "id": "singleplayer/setup"
-  }
+  "position": 2
 }

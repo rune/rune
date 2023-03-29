@@ -1,14 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 99
 ---
 
-# Multiplayer SDK
-
-:::caution
-
-The Multiplayer SDK is currently in beta. There will be some rough edges, and some APIs might change.
-
-:::
+# API Reference
 
 Rune methods for writing multiplayer games. The SDK is split into two parts:
 
@@ -98,7 +92,7 @@ Rune.initLogic({
 
 ## `Rune.gameOver(options)`
 
-When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](../multiplayer/game-over.md) guide.
+When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](game-over.md) guide.
 
 ```js
 // logic.js

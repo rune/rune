@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 5
 ---
 
 # Command Line Interface
@@ -44,13 +44,9 @@ You should see something like
 ╰──────────────────────────────────────────────────────────────────────────╯
 ```
 
-When you open this URL you should see your game running inside a mock Rune app.
-Press the ⚙️ icon to open the developer tools. There you can e.g. change the game
-challenge number.
-
-<img src="https://user-images.githubusercontent.com/7106681/166223264-81029004-c985-49e6-b486-1d134686354e.png" width="250" /> <img src="https://user-images.githubusercontent.com/7106681/166223386-1d04ba1d-bde7-40c8-a94b-b4d12b13249b.png" width="250" />
-
-When developing for the Multiplayer SDK, the developer tools will instead enable you to emulate network latency and run many instances of the game side by side.
+When you open this URL you should see your multiplayer game running inside a mock Rune app.
+To simulate the multiplayer experience, the Rune CLI runs many instances of your game side-by-side.  
+Press the ⚙️ icon to open the developer tools, which allows you to emulate network latency, game restarts, etc.
 
 <img width="500" src="https://user-images.githubusercontent.com/378279/207116826-1a0cb459-444b-4e84-a3b0-21631797cbc3.png"/>
 

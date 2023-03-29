@@ -6,11 +6,11 @@ sidebar_position: 2
 
 Underlying all multiplayer gaming is syncing game information. This page will use the simple example of Tic Tac Toe to explain how the game state is synced across players.
 
-## Separation into Logic and Rendering
+## Separation into Game Logic and Rendering
 
 Multiplayer games are generally separated into game logic and rendering. This separation has many benefits, including being able to run dedicated servers that only have game logic. Rune multiplayer games are also separated into logic and rendering.
 
-### Logic
+### Game Logic
 
 The logic is stored in a single file, `logic.js`, and initialized by running `Rune.initLogic()` with `minPlayers`, `maxPlayers`, `setup` and `actions`. The `minPlayers` and `maxPlayers` values ensure the game only have to consider a number of players between those two values. All other cases are Rune, incl. automatically making remaining people in the room spectators (more info in [Joining and Leaving](joining-leaving.md)).
 
@@ -22,35 +22,35 @@ Only `logic.js` file can modify the `game` state. The `setup` and `actions` func
 
 The remaining parts of the code are hopefully self-explanatory. Some code like the `isVictoryOrDraw` function is left out as it’s not important in this context.
 
-```jsx
+```js
 Rune.initLogic({
-	minPlayers: 2,
-	maxPlayers: 2,
-	setup: (players) => {
-		return {
-			cells: Array(9).fill(null),
-			// Allow either player to start
-			lastPlayerTurn: undefined,
-		}
-	},
-	actions: {
-		markCell: ({ cellId }, { game, playerId }) => {
-			// Check it's not the other player's turn and unmarked cell
-			if (game.lastPlayerTurn !== playerId || game.cells[cellId]) {
-				throw Rune.invalidAction()
-			}
+  minPlayers: 2,
+  maxPlayers: 2,
+  setup: (players) => {
+    return {
+      cells: Array(9).fill(null),
+      // Allow either player to start
+      lastPlayerTurn: undefined,
+    }
+  },
+  actions: {
+    markCell: ({ cellId }, { game, playerId }) => {
+      // Check it's not the other player's turn and unmarked cell
+      if (game.lastPlayerTurn !== playerId || game.cells[cellId]) {
+        throw Rune.invalidAction()
+      }
 
-			// Update cell and switch turn
-			game.cells[cellId] = playerId
-			game.lastPlayerTurn = playerId
+      // Update cell and switch turn
+      game.cells[cellId] = playerId
+      game.lastPlayerTurn = playerId
 
-			// Determine if game has ended
-			const winner = isVictoryOrDraw(game)
-			if (winner !== undefined) {
-				Rune.gameOver()
-			}
-		},
-	},
+      // Determine if game has ended
+      const winner = isVictoryOrDraw(game)
+      if (winner !== undefined) {
+        Rune.gameOver()
+      }
+    },
+  },
 })
 ```
 
@@ -60,17 +60,17 @@ The game state should be rendered for the player to interact with. That’s the 
 
 The `client.js` also binds the UI to call the `actions`. For instance, for Tic Tac Toe, tapping on a cell would trigger `Rune.actions.markCell({ cellId })`.
 
-```jsx
+```js
 const visualUpdate = ({
-	oldGame,
-	newGame,
-	action,
-	event,
-	players,
-	yourPlayerId,
-	rollbacks,
+  oldGame,
+  newGame,
+  action,
+  event,
+  players,
+  yourPlayerId,
+  rollbacks,
 }) => {
-	// TODO: Update animations, graphics, UI, sound effects
+  // TODO: Update animations, graphics, UI, sound effects
 }
 
 Rune.initClient({ visualUpdate })

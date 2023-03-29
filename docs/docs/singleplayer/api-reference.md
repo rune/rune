@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 99
 ---
 
-# Singleplayer SDK
+# API Reference
 
 Rune methods for writing singleplayer games.
 

@@ -2,7 +2,13 @@
 sidebar_position: 1
 ---
 
-# Singleplayer Setup
+# Intro
+
+:::caution
+
+We're focusing most of our energy on the [Multiplayer SDK](multiplayer/intro.md) so don't expect any updates on the singleplayer side.
+
+:::
 
 ## Install
 
@@ -35,4 +41,4 @@ Rune.gameOver()
 ## Next steps
 
 - [View example games](singleplayer/examples.md)
-- [Explore Rune Singleplayer SDK API docs](api/singleplayer.md)
+- [Explore the API reference](api/singleplayer.md)

@@ -111,7 +111,7 @@ function Engage() {
               <div>
                 <h2>Free</h2>
                 <p>
-                  We pay for servers, voice chat, and everything else. It's{" "}
+                  We pay for servers, voice chat, and everything else. It&apos;s{" "}
                   <strong>100% free</strong> to launch your game on Rune.
                 </p>
               </div>

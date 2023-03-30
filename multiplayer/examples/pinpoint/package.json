@@ -1,0 +1,44 @@
+{
+  "name": "pinpoint",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+  "dependencies": {
+    "@photo-sphere-viewer/core": "^5.1.4",
+    "@photo-sphere-viewer/cubemap-tiles-adapter": "^5.1.4",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/styled-components": "^5.1.26",
+    "ol": "^7.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "rune-games-sdk": "^4.5.1",
+    "sass": "^1.60.0",
+    "styled-components": "^5.3.6",
+    "typescript": "^4.4.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

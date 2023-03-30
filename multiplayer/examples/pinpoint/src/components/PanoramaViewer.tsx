@@ -1,6 +1,6 @@
 import "@photo-sphere-viewer/core/index.scss"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useLayoutEffect } from "react"
 import { Viewer } from "@photo-sphere-viewer/core"
 import {
   CubemapTilesAdapter,
@@ -9,6 +9,7 @@ import {
 import { CubemapPanorama } from "@photo-sphere-viewer/cubemap-adapter"
 import { Panorama } from "./types"
 import { remap } from "../lib/remap"
+import styled from "styled-components/macro"
 
 const zoomRanges = [
   [180, 50],
@@ -25,10 +26,30 @@ function mapFovToZoom(
   return zoom > 100 ? 100 : zoom < 0 ? 0 : zoom
 }
 
+const portal = document.createElement("div")
+portal.style.width = "100%"
+portal.style.height = "100%"
+document.getElementById("hidden")?.appendChild(portal)
+
+const viewer = new Viewer({
+  container: portal,
+  adapter: [CubemapTilesAdapter, { flipTopBottom: true }],
+  navbar: false,
+  moveInertia: false,
+})
+
 export function PanoramaViewer({ name, view, levels }: Panorama) {
   // eslint-disable-next-line no-restricted-globals
   const baseUrl = `https://games-staging.rune.ai/panoramas-test/${name}`
   const containerRef = useRef<HTMLDivElement | null>(null)
+
+  useLayoutEffect(() => {
+    containerRef.current?.appendChild(portal)
+
+    return () => {
+      document.getElementById("hidden")?.appendChild(portal)
+    }
+  }, [])
 
   const panorama = useMemo<
     Omit<CubemapMultiTilesPanorama, "baseUrl"> & {
@@ -68,33 +89,25 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
     [baseUrl, levels, view]
   )
 
-  const [viewer, setViewer] = useState<Viewer | undefined>()
-
-  useEffect(() => {
-    if (!containerRef.current) return
-
-    setViewer(
-      new Viewer({
-        container: containerRef.current,
-        adapter: [CubemapTilesAdapter, { flipTopBottom: true }],
-        navbar: false,
-      })
-    )
-  }, [])
-
-  useEffect(() => () => viewer?.destroy(), [viewer])
-
   useEffect(() => {
     if (!viewer) return
 
-    viewer.setOptions({ minFov: view.minFov, maxFov: view.maxFov })
+    viewer.setOptions({
+      minFov: view.minFov,
+      maxFov: view.maxFov,
+    })
+
     viewer.setPanorama(panorama, {
-      transition: false,
+      transition: true,
       yaw: ((2 * Math.PI) / 360) * view.hLookAt,
       pitch: (-Math.PI / 2 / 90) * view.vLookAt,
       zoom: mapFovToZoom(90, view),
     })
-  }, [panorama, view, viewer])
+  }, [panorama, view])
 
-  return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
+  return <Root ref={containerRef} />
 }
+
+const Root = styled.div`
+  flex: 1;
+`

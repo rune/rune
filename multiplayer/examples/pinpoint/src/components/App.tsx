@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from "react"
 import { PanoramaViewer } from "./PanoramaViewer"
 import { Panorama } from "./types"
 import { Rune } from "../lib/Rune"
+import styled from "styled-components/macro"
 
 export function pickRandom<T>(arr: T[]) {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -28,15 +29,29 @@ export function App() {
   }, [])
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
-      {!panorama ? (
-        <button onClick={pickPanorama}>pick panorama</button>
-      ) : (
-        <>
+    <Root>
+      <Header>
+        {!panorama ? (
+          <button onClick={pickPanorama}>pick panorama</button>
+        ) : (
           <button onClick={() => Rune.actions.setPanorama(null)}>clear</button>
-          <PanoramaViewer {...panorama} />
-        </>
-      )}
-    </div>
+        )}
+      </Header>
+      {!!panorama && <PanoramaViewer {...panorama} />}
+    </Root>
   )
 }
+
+const Root = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+`

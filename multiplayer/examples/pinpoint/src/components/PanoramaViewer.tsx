@@ -90,8 +90,8 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
     viewer.setOptions({ minFov: view.minFov, maxFov: view.maxFov })
     viewer.setPanorama(panorama, {
       transition: false,
-      yaw: ((2 * Math.PI) / 360) * (view.hLookAt + 1),
-      pitch: (-Math.PI / 2 / 90) * (view.vLookAt + 1),
+      yaw: ((2 * Math.PI) / 360) * view.hLookAt,
+      pitch: (-Math.PI / 2 / 90) * view.vLookAt,
       zoom: mapFovToZoom(90, view),
     })
   }, [panorama, view, viewer])

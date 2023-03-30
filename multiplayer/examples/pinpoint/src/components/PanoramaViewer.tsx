@@ -17,6 +17,14 @@ const zoomRanges = [
   [15, 0],
 ]
 
+function mapFovToZoom(
+  fov: number,
+  { minFov, maxFov }: { minFov: number; maxFov: number }
+) {
+  const zoom = remap(fov, [minFov, maxFov], [100, 0])
+  return zoom > 100 ? 100 : zoom < 0 ? 0 : zoom
+}
+
 export function PanoramaViewer({ name, view, levels }: Panorama) {
   // eslint-disable-next-line no-restricted-globals
   const baseUrl = `https://games-staging.rune.ai/panoramas-test/${name}`
@@ -47,14 +55,8 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
           nbTiles: level.tiles,
           range: zoomRange,
           zoomRange: [
-            Math.max(
-              remap(zoomRange[0], [view.minFov, view.maxFov], [100, 0]),
-              0
-            ),
-            Math.min(
-              remap(zoomRange[1], [view.minFov, view.maxFov], [100, 0]),
-              100
-            ),
+            mapFovToZoom(zoomRange[0], view),
+            mapFovToZoom(zoomRange[1], view),
           ],
         }
       }),
@@ -63,7 +65,7 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
           face === "top" ? "up" : face === "bottom" ? "down" : face
         }-${col}-${row}.jpg`,
     }),
-    [baseUrl, levels, view.maxFov, view.minFov]
+    [baseUrl, levels, view]
   )
 
   const [viewer, setViewer] = useState<Viewer | undefined>()
@@ -85,23 +87,14 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
   useEffect(() => {
     if (!viewer) return
 
-    viewer.setPanorama(panorama, { transition: false })
     viewer.setOptions({ minFov: view.minFov, maxFov: view.maxFov })
-    viewer.animate({
-      yaw: ((2 * Math.PI) / 360) * view.hLookAt,
-      pitch: (-Math.PI / 2 / 90) * view.vLookAt,
-      zoom: remap(view.fov, [view.minFov, view.maxFov], [100, 0]),
-      speed: 0,
+    viewer.setPanorama(panorama, {
+      transition: false,
+      yaw: ((2 * Math.PI) / 360) * (view.hLookAt + 1),
+      pitch: (-Math.PI / 2 / 90) * (view.vLookAt + 1),
+      zoom: mapFovToZoom(90, view),
     })
-  }, [
-    panorama,
-    view.fov,
-    view.hLookAt,
-    view.maxFov,
-    view.minFov,
-    view.vLookAt,
-    viewer,
-  ])
+  }, [panorama, view, viewer])
 
   return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
 }

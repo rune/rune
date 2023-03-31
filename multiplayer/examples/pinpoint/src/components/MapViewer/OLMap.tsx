@@ -13,6 +13,7 @@ import { Point } from "ol/geom"
 import { createEmpty, extend } from "ol/extent"
 import { flagLayer } from "./layers/flagLayer"
 import { guessLayer } from "./layers/guessLayer"
+import { guessLineLayer } from "./layers/guessLineLayer"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -22,6 +23,7 @@ export type Pin =
   | {
       type: "guess"
       location: Coordinate
+      targetLocation: Coordinate
       avatarUrl: string
       distanceText: string
     }
@@ -75,6 +77,14 @@ export function OLMap({
 
   useEffect(() => {
     const layerGroup = new LayerGroup()
+
+    for (const pin of pins ?? []) {
+      if (pin.type === "guess") {
+        layerGroup
+          .getLayers()
+          .push(guessLineLayer(pin.location, pin.targetLocation))
+      }
+    }
 
     for (const pin of pins ?? []) {
       const source = new VectorSource({

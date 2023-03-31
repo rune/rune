@@ -20,6 +20,7 @@ export function MapViewer() {
         type: "guess" as const,
         avatarUrl: avatarUrl,
         location: pickBestGuessRepresentation(target, location),
+        targetLocation: target,
         distanceText: `${Math.round(calculateDistanceKm(target, location))}km`,
       })),
     ]

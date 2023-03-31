@@ -6,10 +6,12 @@
   "dependencies": {
     "@photo-sphere-viewer/core": "^5.1.4",
     "@photo-sphere-viewer/cubemap-tiles-adapter": "^5.1.4",
+    "@types/lodash": "^4.14.192",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/styled-components": "^5.1.26",
+    "lodash": "^4.17.21",
     "ol": "^7.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

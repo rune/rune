@@ -3,7 +3,8 @@ import { OLMap, Pin } from "./OLMap"
 import { generateAvatarUrl } from "../../lib/avatar"
 import { getRandomArbitrary } from "../../lib/getRandomArbitrary"
 import { Coordinate } from "ol/coordinate"
-import { calculateDistance } from "../../lib/calculateDistance"
+import { calculateDistanceKm } from "../../lib/calculateDistanceKm"
+import { pickBestGuessRepresentation } from "../../lib/pickBestGuessRepresentation"
 
 export function MapViewer() {
   const center = useMemo(() => [-74.01, 40.71], [])
@@ -18,8 +19,8 @@ export function MapViewer() {
       ...guesses.map(([avatarUrl, location]) => ({
         type: "guess" as const,
         avatarUrl: avatarUrl,
-        location: location,
-        distanceText: `${Math.round(calculateDistance(target, location))}km`,
+        location: pickBestGuessRepresentation(target, location),
+        distanceText: `${Math.round(calculateDistanceKm(target, location))}km`,
       })),
     ]
   }, [guesses, target])

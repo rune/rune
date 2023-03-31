@@ -41,7 +41,7 @@ const viewer = new Viewer({
 export function PanoramaViewer({ name, view, levels }: Panorama) {
   // eslint-disable-next-line no-restricted-globals
   const baseUrl = `https://games-staging.rune.ai/panoramas-test/${name}`
-  const containerRef = useRef<HTMLDivElement | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     containerRef.current?.appendChild(portal)

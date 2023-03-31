@@ -1,22 +1,16 @@
 import { Coordinate } from "ol/coordinate"
 
+// From: https://stackoverflow.com/a/21623206
 export function calculateDistanceKm(from: Coordinate, to: Coordinate) {
   const [lon1, lat1] = from
   const [lon2, lat2] = to
 
-  const dLat = deg2rad(lat2 - lat1)
-  const dLon = deg2rad(lon2 - lon1)
+  const p = 0.017453292519943295
+  const c = Math.cos
   const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2)
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    0.5 -
+    c((lat2 - lat1) * p) / 2 +
+    (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2
 
-  return 6371 * c
-}
-
-function deg2rad(deg: number) {
-  return deg * (Math.PI / 180)
+  return 12742 * Math.asin(Math.sqrt(a))
 }

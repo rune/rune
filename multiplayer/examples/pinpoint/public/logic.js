@@ -1,8 +1,9 @@
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
-  setup: () => ({
+  setup: (players) => ({
     panorama: null,
+    players,
   }),
   actions: {
     setPanorama: (panorama, { game }) => {
@@ -10,7 +11,6 @@ Rune.initLogic({
     },
   },
   events: {
-    playerJoined: () => {},
     playerLeft: () => {},
   },
 })

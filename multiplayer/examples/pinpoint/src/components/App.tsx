@@ -15,8 +15,9 @@ export function App() {
 
   useEffect(() => {
     Rune.initClient({
-      visualUpdate: ({ newGame }) => {
+      visualUpdate: ({ newGame, players }) => {
         setPanorama(newGame.panorama)
+        console.log(JSON.stringify([players, newGame], null, 2))
       },
     })
   }, [])

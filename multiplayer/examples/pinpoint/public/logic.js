@@ -47,14 +47,15 @@ Rune.initLogic({
       })
 
       if (game.guesses.length === game.playerIds.length * numRounds) {
-        const players = {}
-
-        for (const guess of game.guesses) {
-          if (!players[guess.playerId]) players[guess.playerId] = 0
-          players[guess.playerId] += guess.score
-        }
-
-        Rune.gameOver({ players })
+        Rune.gameOver({
+          players: game.guesses.reduce(
+            (acc, guess) => ({
+              ...acc,
+              [guess.playerId]: (acc[guess.playerId] ?? 0) + guess.score,
+            }),
+            {}
+          ),
+        })
       }
     },
     nextRound: (_, { game }) => {

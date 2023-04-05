@@ -109,7 +109,7 @@ export function PanoramaView({
       {meLastOneLeft && !meLastOneLeftHidden && (
         <LabelContainer location="center">
           <Label>
-            You're the last one left. It's time to guess the location! 📍
+            You're the last one left. It's time to guess the location!&nbsp;📍
           </Label>
         </LabelContainer>
       )}

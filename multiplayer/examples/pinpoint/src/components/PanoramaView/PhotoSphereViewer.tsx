@@ -105,7 +105,7 @@ export function PhotoSphereViewer({
     })
 
     viewer.setPanorama(panorama, {
-      transition: false,
+      transition: true,
       showLoader: false,
       yaw: ((2 * Math.PI) / 360) * view.hLookAt,
       pitch: (-Math.PI / 2 / 90) * view.vLookAt,

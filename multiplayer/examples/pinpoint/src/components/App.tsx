@@ -1,75 +1,66 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { PanoramaViewer } from "./PanoramaViewer"
-import { Panorama } from "./types"
+import React, { useEffect, useState, useMemo } from "react"
 import { Rune } from "../lib/Rune"
 import styled from "styled-components/macro"
-import { MapViewer } from "./MapViewer/MapViewer"
-
-export function pickRandom<T>(arr: T[]) {
-  return arr[Math.floor(Math.random() * arr.length)]
-}
+import { Players } from "rune-games-sdk/multiplayer"
+import { PanoramaView } from "./PanoramaView/PanoramaView"
+import { GameState } from "../types/GameState"
+import { MyPlayerIdContext, PlayersContext, GameContext } from "../context"
+import { GuessingMapView } from "./MapView/GuessingMapView"
+import { ScoreboardView } from "./ScoreboardView/ScoreboardView"
 
 export function App() {
-  const [view, setView] = useState<"panorama" | "map">("map")
-  const [panorama, setPanorama] = useState<Panorama | null>(null)
+  const [game, setGame] = useState<GameState>()
+  const [players, setPlayers] = useState<Players>()
+  const [myPlayerId, setMyPlayerId] = useState<string>()
 
   useEffect(() => {
     Rune.initClient({
-      visualUpdate: ({ newGame, players }) => {
-        setPanorama(newGame.panorama)
-        console.log(JSON.stringify([players, newGame], null, 2))
+      visualUpdate: ({ newGame, players, yourPlayerId }) => {
+        setGame(newGame as GameState)
+        setPlayers(players)
+        setMyPlayerId(yourPlayerId)
       },
     })
   }, [])
 
-  const pickPanorama = useCallback(() => {
-    // eslint-disable-next-line no-restricted-globals
-    fetch(`https://games-staging.rune.ai/panoramas-test/index.json`)
-      .then((r) => r.json())
-      .then((panoramas: Panorama[]) =>
-        Rune.actions.setPanorama(pickRandom(panoramas))
-      )
-  }, [])
+  const [view, setView] = useState<"panorama" | "map">("panorama")
+
+  const roundFinished = useMemo(
+    () =>
+      game?.guesses.filter((guess) => guess.round === game?.currentRound)
+        .length === game?.playerIds.length,
+    [game?.currentRound, game?.guesses, game?.playerIds.length]
+  )
+
+  const currentRoundPanoramaName =
+    game?.rounds[game?.currentRound]?.panorama.name
+
+  useEffect(() => {
+    setView("panorama")
+  }, [currentRoundPanoramaName])
+
+  if (!game || !players) return null
 
   return (
-    <Root>
-      <Header>
-        <select
-          value={view}
-          onChange={(e) => setView(e.target.value as typeof view)}
-        >
-          <option value="map">Map</option>
-          <option value="panorama">Panorama</option>
-        </select>
-
-        {view === "panorama" &&
-          (!panorama ? (
-            <button onClick={pickPanorama}>pick panorama</button>
-          ) : (
-            <button onClick={() => Rune.actions.setPanorama(null)}>
-              clear
-            </button>
-          ))}
-      </Header>
-      {view === "map" ? (
-        <MapViewer />
-      ) : view === "panorama" ? (
-        !!panorama && <PanoramaViewer {...panorama} />
-      ) : null}
-    </Root>
+    <GameContext.Provider value={game}>
+      <PlayersContext.Provider value={players}>
+        <MyPlayerIdContext.Provider value={myPlayerId}>
+          <Root>
+            {roundFinished ? (
+              <ScoreboardView />
+            ) : view === "panorama" ? (
+              <PanoramaView onOpenMapClick={() => setView("map")} />
+            ) : view === "map" ? (
+              <GuessingMapView onBackClick={() => setView("panorama")} />
+            ) : null}
+          </Root>
+        </MyPlayerIdContext.Provider>
+      </PlayersContext.Provider>
+    </GameContext.Provider>
   )
 }
 
 const Root = styled.div`
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-`
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
 `

@@ -23,20 +23,22 @@ export type Pin =
   | {
       type: "guess"
       location: Coordinate
-      targetLocation: Coordinate
+      targetLocation?: Coordinate
       avatarUrl: string
-      distanceText: string
+      distanceText?: string
     }
 
 export function OLMap({
   center,
   zoom,
   pins,
+  autoFitPins,
   onClick,
 }: {
   center: Coordinate
   zoom: number
   pins?: Pin[]
+  autoFitPins?: boolean
   onClick?: (coords: Coordinate) => void
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -50,7 +52,7 @@ export function OLMap({
         controls: [],
         target: containerRef.current,
         layers: [new TileLayer({ source: new OSM() })],
-        view: new View({ center: [0, 0], zoom: 0 }),
+        view: new View({ center: [0, 0], zoom: 0, enableRotation: false }),
       })
     )
   }, [])
@@ -69,7 +71,8 @@ export function OLMap({
 
   useEffect(() => {
     map?.getView().setCenter(center)
-  }, [center, map])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [center[0], center[1], map])
 
   useEffect(() => {
     map?.getView().setZoom(zoom)
@@ -79,7 +82,7 @@ export function OLMap({
     const layerGroup = new LayerGroup()
 
     for (const pin of pins ?? []) {
-      if (pin.type === "guess") {
+      if (pin.type === "guess" && pin.targetLocation) {
         layerGroup
           .getLayers()
           .push(guessLineLayer(pin.location, pin.targetLocation))
@@ -108,6 +111,8 @@ export function OLMap({
   }, [map, pins])
 
   useEffect(() => {
+    if (!pins?.length || !autoFitPins) return
+
     const pinsExtent = (pins ?? []).reduce(
       (extent, pin) => extend(extent, [...pin.location, ...pin.location]),
       createEmpty()
@@ -116,7 +121,7 @@ export function OLMap({
     map
       ?.getView()
       .fit(pinsExtent, { size: map?.getSize(), padding: [100, 100, 100, 100] })
-  }, [map, pins])
+  }, [autoFitPins, map, pins])
 
   return <Root ref={containerRef}></Root>
 }

@@ -7872,10 +7872,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.5.1.tgz#d2965e1e320769824e08de5d2ddaf592a0f953f2"
-  integrity sha512-ptN9a3lXDciyFR1HEv44hrEG2uso1+0DKnAflXuqkn/fpGKzPJ9rOTwqiAHt56X4P/eYFTxBvokBYt8JoSuumw==
+rune-games-sdk@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.6.0.tgz#b2eb1da196f6ef00ac8e63669720cfbbe650663c"
+  integrity sha512-hOsq+shh280P8cKn/yQl/rXGzh1Pail3XrUx0L44keZmXwDilkOSVxpIcPLT038r1wsrj/kgAO7dm6QeZgl8Hw==
   dependencies:
     base-64 "1.0.0"
     lodash "4.17.21"

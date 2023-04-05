@@ -6,10 +6,11 @@ import {
   CubemapTilesAdapter,
   CubemapMultiTilesPanorama,
 } from "@photo-sphere-viewer/cubemap-tiles-adapter"
-import { CubemapPanorama } from "@photo-sphere-viewer/cubemap-adapter"
-import { Panorama } from "./types"
-import { remap } from "../lib/remap"
+import { Cubemap } from "@photo-sphere-viewer/cubemap-adapter"
+
+import { remap } from "../../lib/remap"
 import styled from "styled-components/macro"
+import { Panorama } from "../../types/Panorama"
 
 const zoomRanges = [
   [180, 50],
@@ -38,9 +39,15 @@ const viewer = new Viewer({
   moveInertia: false,
 })
 
-export function PanoramaViewer({ name, view, levels }: Panorama) {
+export function PhotoSphereViewer({
+  baseUrl,
+  panorama: { name, view, levels },
+}: {
+  baseUrl: string
+  panorama: Panorama
+}) {
   // eslint-disable-next-line no-restricted-globals
-  const baseUrl = `https://games-staging.rune.ai/panoramas-test/${name}`
+  const panoramaUrl = `${baseUrl}/${name}`
   const containerRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
@@ -52,18 +59,16 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
   }, [])
 
   const panorama = useMemo<
-    Omit<CubemapMultiTilesPanorama, "baseUrl"> & {
-      baseUrl: CubemapPanorama
-    }
+    Omit<CubemapMultiTilesPanorama, "baseUrl"> & { baseUrl: Cubemap }
   >(
     () => ({
       baseUrl: {
-        left: `${baseUrl}/small/left.jpg`,
-        right: `${baseUrl}/small/right.jpg`,
-        front: `${baseUrl}/small/front.jpg`,
-        back: `${baseUrl}/small/back.jpg`,
-        top: `${baseUrl}/small/up.jpg`,
-        bottom: `${baseUrl}/small/down.jpg`,
+        left: `${panoramaUrl}/small/left.jpg`,
+        right: `${panoramaUrl}/small/right.jpg`,
+        front: `${panoramaUrl}/small/front.jpg`,
+        back: `${panoramaUrl}/small/back.jpg`,
+        top: `${panoramaUrl}/small/up.jpg`,
+        bottom: `${panoramaUrl}/small/down.jpg`,
       },
       levels: levels.map((level, i) => {
         const zoomRange = [
@@ -82,15 +87,17 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
         }
       }),
       tileUrl: (face, col, row, level) =>
-        `${baseUrl}/tiles/${level + 2}/${
+        `${panoramaUrl}/tiles/${level + 2}/${
           face === "top" ? "up" : face === "bottom" ? "down" : face
         }-${col}-${row}.jpg`,
     }),
-    [baseUrl, levels, view]
+    [panoramaUrl, levels, view]
   )
 
   useEffect(() => {
     if (!viewer) return
+
+    if (viewer.config.panorama?.baseUrl.back === panorama.baseUrl.back) return
 
     viewer.setOptions({
       minFov: view.minFov,
@@ -98,7 +105,8 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
     })
 
     viewer.setPanorama(panorama, {
-      transition: true,
+      transition: false,
+      showLoader: false,
       yaw: ((2 * Math.PI) / 360) * view.hLookAt,
       pitch: (-Math.PI / 2 / 90) * view.vLookAt,
       zoom: mapFovToZoom(90, view),
@@ -109,5 +117,6 @@ export function PanoramaViewer({ name, view, levels }: Panorama) {
 }
 
 const Root = styled.div`
-  flex: 1;
+  width: 100%;
+  height: 100%;
 `

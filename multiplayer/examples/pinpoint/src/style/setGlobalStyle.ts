@@ -1,7 +1,15 @@
+// @ts-ignore
+import font from "./Lexend.ttf"
+
 const style = document.createElement("style")
 
 // language=CSS
 style.innerHTML = `
+  @font-face {
+    font-family: "Lexend";
+    src: url('${font}');
+  }
+  
   html,
   body,
   #root {
@@ -13,6 +21,7 @@ style.innerHTML = `
 
   body {
     line-height: 130%;
+    font-family: "Lexend", sans-serif;
   }
 
   * {
@@ -22,5 +31,3 @@ style.innerHTML = `
 `
 
 document.head.appendChild(style)
-
-export default {}

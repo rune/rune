@@ -13,7 +13,7 @@ const textPadding = 15
 export function guessLayer(
   source: VectorSource,
   avatarUrl: string,
-  distanceText: string
+  distanceText?: string
 ) {
   return new VectorLayer({
     source,
@@ -43,7 +43,7 @@ export function guessLayer(
           displacement: [0, avatarSize / 2 + (pinSize / 3) * 2],
         }),
       }),
-      distanceTextStyle(distanceText),
+      ...(distanceText ? [distanceTextStyle(distanceText)] : []),
     ],
   })
 }

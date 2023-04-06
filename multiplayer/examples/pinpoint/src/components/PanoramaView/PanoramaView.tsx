@@ -55,6 +55,8 @@ export function PanoramaView({
     }
   }, [isFlagSet, isSpectator, myGuess, overlay, shouldShowHint])
 
+  useEffect(() => setOverlay(null), [game.sessionId])
+
   useEffect(() => {
     if (overlay === "startOfRound") setFlag("startOfRoundShown")
     else if (overlay === "hint") setFlag("panoramaHintShown")

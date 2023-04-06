@@ -9,7 +9,7 @@ export function SimpleCSSTransition({
 }: {
   visible: boolean
   duration: number
-  children: ReactElement<{ ref: any; animationDuration: number }>
+  children: ReactElement | ReactElement[]
 }) {
   const ref = useRef(null)
 

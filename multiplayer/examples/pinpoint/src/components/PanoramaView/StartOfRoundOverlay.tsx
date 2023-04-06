@@ -5,8 +5,12 @@ import mapImg from "./img/map.svg"
 import { useAtomValue } from "jotai"
 import { $game } from "../../state/game"
 import { $players } from "../../state/players"
+import {
+  simpleCSSTransitionStyles,
+  SimpleCSSTransition,
+} from "../animation/SimpleCSSTransition"
 
-export function StartOfRoundOverlay() {
+export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
   const game = useAtomValue($game)!
   const players = useAtomValue($players)!
 
@@ -15,10 +19,9 @@ export function StartOfRoundOverlay() {
   const playersArray = useMemo(() => Object.values(players), [players])
 
   return (
-    <>
-      <Background />
-      <Content>
-        <Root>
+    <SimpleCSSTransition visible={visible} duration={250}>
+      <Root>
+        <Box>
           <HeaderMapImg src={mapImg} />
           <Heading>Guess the Location!</Heading>
           <Label>
@@ -32,24 +35,26 @@ export function StartOfRoundOverlay() {
               <Name>{playersArray[0].displayName}</Name>
             )}
           </PlayersContainer>
-        </Root>
-      </Content>
-    </>
+        </Box>
+      </Root>
+    </SimpleCSSTransition>
   )
 }
 
-const Background = styled(Overlay)`
-  background: linear-gradient(0deg, #01a491, #01a491), #d8f1e8;
-  opacity: 0.5;
-`
-
-const Content = styled(Overlay)`
+const Root = styled(Overlay)`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
+  background: linear-gradient(
+      0deg,
+      rgba(1, 164, 145, 0.5),
+      rgba(1, 164, 145, 0.5)
+    ),
+    rgba(216, 241, 232, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
 `
 
-const Root = styled.div`
+const Box = styled.div`
   position: relative;
   width: 90%;
   border-radius: 35px;

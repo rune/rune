@@ -10,6 +10,10 @@ import { $game } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
 import { useFlags } from "../../state/flags"
+import {
+  simpleCSSTransitionStyles,
+  SimpleCSSTransition,
+} from "../animation/SimpleCSSTransition"
 
 export function PanoramaView({
   onOpenMapClick,
@@ -53,9 +57,7 @@ export function PanoramaView({
     } else if (shouldShowHint) {
       setOverlay("hint")
     }
-  }, [isFlagSet, isSpectator, myGuess, overlay, shouldShowHint])
-
-  useEffect(() => setOverlay(null), [game.sessionId])
+  }, [isFlagSet, isSpectator, myGuess, overlay, shouldShowHint, game.sessionId])
 
   useEffect(() => {
     if (overlay === "startOfRound") setFlag("startOfRoundShown")
@@ -109,13 +111,15 @@ export function PanoramaView({
   return (
     <Root>
       <PhotoSphereViewer baseUrl={game.panoramasUrl} panorama={panorama} />
-      {overlay === "startOfRound" && <StartOfRoundOverlay />}
-      {overlay === "hint" && <PanoramaControlsHint />}
+      <StartOfRoundOverlay visible={overlay === "startOfRound"} />
+      <PanoramaControlsHint visible={overlay === "hint"} />
       <MapBtnContainer onClick={onOpenMapClick}>
-        {latestGuess && latestGuessShown && (
-          <LatestGuess>
-            {players[latestGuess.playerId].displayName} made a guess
-          </LatestGuess>
+        {latestGuess && (
+          <SimpleCSSTransition visible={latestGuessShown} duration={250}>
+            <LatestGuess>
+              {players[latestGuess.playerId].displayName} made a guess
+            </LatestGuess>
+          </SimpleCSSTransition>
         )}
         <MapBtn src={mapBtnImg} />
         {game.playerIds.length > 1 && (
@@ -129,13 +133,16 @@ export function PanoramaView({
           <Label>You are spectating 👀</Label>
         </LabelContainer>
       )}
-      {meLastOneLeft && !meLastOneLeftHidden && (
+      <SimpleCSSTransition
+        visible={meLastOneLeft && !meLastOneLeftHidden}
+        duration={250}
+      >
         <LabelContainer location="center">
           <Label>
             You're the last one left. It's time to guess the location!&nbsp;📍
           </Label>
         </LabelContainer>
-      )}
+      </SimpleCSSTransition>
     </Root>
   )
 }
@@ -170,6 +177,10 @@ const MapBtnLabel = styled.div`
 `
 
 const LatestGuess = styled.div`
+  ${simpleCSSTransitionStyles(
+    { maxWidth: 0, opacity: 0 },
+    { maxWidth: "75vw", opacity: 1 }
+  )};
   position: absolute;
   right: calc(100% - 20px);
   margin-bottom: 5px;
@@ -181,12 +192,12 @@ const LatestGuess = styled.div`
   padding: 5px 25px 5px 10px;
   border-radius: 17px;
   z-index: 0;
-  max-width: 75vw;
   overflow: hidden;
   text-overflow: ellipsis;
 `
 
 const LabelContainer = styled(Overlay)<{ location: "top" | "center" }>`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   display: flex;
   flex-direction: column;
   align-items: center;

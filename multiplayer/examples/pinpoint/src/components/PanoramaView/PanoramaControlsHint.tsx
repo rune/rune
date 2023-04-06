@@ -4,12 +4,15 @@ import arrowLeft from "./img/hintArrowLeft.svg"
 import arrowRight from "./img/hintArrowRight.svg"
 import arrowUp from "./img/hintArrowUp.svg"
 import arrowDown from "./img/hintArrowDown.svg"
+import {
+  SimpleCSSTransition,
+  simpleCSSTransitionStyles,
+} from "../animation/SimpleCSSTransition"
 
-export function PanoramaControlsHint() {
+export function PanoramaControlsHint({ visible }: { visible: boolean }) {
   return (
-    <>
-      <Background />
-      <Content>
+    <SimpleCSSTransition visible={visible} duration={250}>
+      <Root>
         <Top>
           <img src={arrowLeft} />
           <Text>swipe to turn</Text>
@@ -20,18 +23,14 @@ export function PanoramaControlsHint() {
           <Text>pinch to zoom</Text>
           <img src={arrowUp} />
         </Bottom>
-      </Content>
-    </>
+      </Root>
+    </SimpleCSSTransition>
   )
 }
 
-const Background = styled(Overlay)`
-  background-color: black;
-  opacity: 0.4;
-  pointer-events: none;
-`
-
-const Content = styled(Overlay)`
+const Root = styled(Overlay)`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   padding: 10px;

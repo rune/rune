@@ -1,12 +1,14 @@
-import React, { useContext, useMemo } from "react"
-import { GameContext, PlayersContext } from "../../context"
+import React, { useMemo } from "react"
 import styled from "styled-components/macro"
 import { Overlay } from "../Overlay"
 import mapImg from "./img/map.svg"
+import { useAtomValue } from "jotai"
+import { $game, $players } from "../../state/state"
 
 export function StartOfRoundOverlay() {
-  const game = useContext(GameContext)
-  const players = useContext(PlayersContext)
+  const game = useAtomValue($game)!
+  const players = useAtomValue($players)!
+
   const round = game.currentRound
   const maxRound = game.rounds.length
   const playersArray = useMemo(() => Object.values(players), [players])

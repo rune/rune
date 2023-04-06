@@ -1,20 +1,22 @@
 import styled from "styled-components/macro"
 import { PhotoSphereViewer } from "./PhotoSphereViewer"
-import React, { useState, useContext, useEffect, useMemo } from "react"
-import { GameContext, MyPlayerIdContext, PlayersContext } from "../../context"
+import React, { useState, useEffect, useMemo } from "react"
 import { StartOfRoundOverlay } from "./StartOfRoundOverlay"
 import { PanoramaControlsHint } from "./PanoramaControlsHint"
 import mapBtnImg from "./img/mapBtn.svg"
 import { Overlay } from "../Overlay"
+import { useAtomValue } from "jotai"
+import { $game, $players, $myPlayerId } from "../../state/state"
 
 export function PanoramaView({
   onOpenMapClick,
 }: {
   onOpenMapClick: () => void
 }) {
-  const game = useContext(GameContext)
-  const myPlayerId = useContext(MyPlayerIdContext)
-  const players = useContext(PlayersContext)
+  const game = useAtomValue($game)!
+  const players = useAtomValue($players)!
+  const myPlayerId = useAtomValue($myPlayerId)
+
   const isSpectator = !myPlayerId
   const round = game.currentRound
   const panorama = game.rounds[game.currentRound].panorama

@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useMemo } from "react"
 import { Rune } from "../lib/Rune"
 import styled from "styled-components/macro"
-import { Players } from "rune-games-sdk/multiplayer"
 import { PanoramaView } from "./PanoramaView/PanoramaView"
 import { GameState } from "../types/GameState"
-import { MyPlayerIdContext, PlayersContext, GameContext } from "../context"
 import { GuessingMapView } from "./MapView/GuessingMapView"
 import { ScoreboardView } from "./ScoreboardView/ScoreboardView"
+import { useAtom, useSetAtom } from "jotai"
+import { $game, $myPlayerId, $players } from "../state/state"
 
 export function App() {
-  const [game, setGame] = useState<GameState>()
-  const [players, setPlayers] = useState<Players>()
-  const [myPlayerId, setMyPlayerId] = useState<string>()
+  const [game, setGame] = useAtom($game)
+  const [players, setPlayers] = useAtom($players)
+  const setMyPlayerId = useSetAtom($myPlayerId)
 
   useEffect(() => {
     Rune.initClient({
@@ -21,7 +21,7 @@ export function App() {
         setMyPlayerId(yourPlayerId)
       },
     })
-  }, [])
+  }, [setGame, setMyPlayerId, setPlayers])
 
   const [view, setView] = useState<"panorama" | "map">("panorama")
 
@@ -42,21 +42,15 @@ export function App() {
   if (!game || !players) return null
 
   return (
-    <GameContext.Provider value={game}>
-      <PlayersContext.Provider value={players}>
-        <MyPlayerIdContext.Provider value={myPlayerId}>
-          <Root>
-            {roundFinished ? (
-              <ScoreboardView />
-            ) : view === "panorama" ? (
-              <PanoramaView onOpenMapClick={() => setView("map")} />
-            ) : view === "map" ? (
-              <GuessingMapView onBackClick={() => setView("panorama")} />
-            ) : null}
-          </Root>
-        </MyPlayerIdContext.Provider>
-      </PlayersContext.Provider>
-    </GameContext.Provider>
+    <Root>
+      {roundFinished ? (
+        <ScoreboardView />
+      ) : view === "panorama" ? (
+        <PanoramaView onOpenMapClick={() => setView("map")} />
+      ) : view === "map" ? (
+        <GuessingMapView onBackClick={() => setView("panorama")} />
+      ) : null}
+    </Root>
   )
 }
 

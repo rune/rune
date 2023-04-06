@@ -1,23 +1,24 @@
 import styled from "styled-components/macro"
 import { OLMap, Pin } from "../OLMap/OLMap"
-import React, { useContext, useMemo, useState, useEffect } from "react"
-import { GameContext, MyPlayerIdContext, PlayersContext } from "../../context"
+import React, { useMemo, useState, useEffect } from "react"
 import { Coordinate } from "ol/coordinate"
 import { RoundInfo } from "./RoundInfo"
 import { Overlay } from "../Overlay"
 import backButtonImg from "./img/backButton.svg"
 import { Rune } from "../../lib/Rune"
+import { useAtomValue } from "jotai"
+import { $game, $players, $myPlayerId } from "../../state/state"
 
 export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
-  const game = useContext(GameContext)
+  const game = useAtomValue($game)!
+  const players = useAtomValue($players)!
+  const myPlayerId = useAtomValue($myPlayerId)
+
   const round = game.currentRound
   const guesses = useMemo(
     () => game.guesses.filter((guess) => guess.round === round),
     [game.guesses, round]
   )
-  const players = useContext(PlayersContext)
-
-  const myPlayerId = useContext(MyPlayerIdContext)
   const myGuess = useMemo(
     () => guesses.find((guess) => guess.playerId === myPlayerId),
     [guesses, myPlayerId]

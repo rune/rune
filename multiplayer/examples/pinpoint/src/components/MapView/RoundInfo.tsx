@@ -1,15 +1,17 @@
 import styled from "styled-components/macro"
-import React, { useContext, useMemo } from "react"
-import { GameContext, PlayersContext, MyPlayerIdContext } from "../../context"
+import React, { useMemo } from "react"
 import invitePlayerImg from "./img/invitePlayer.svg"
 import avatarCheckmarkImg from "./img/avatarCheckmark.svg"
 import { Rune } from "../../lib/Rune"
+import { useAtomValue } from "jotai"
+import { $game, $players, $myPlayerId } from "../../state/state"
 
 export function RoundInfo() {
-  const game = useContext(GameContext)
+  const game = useAtomValue($game)!
+  const players = useAtomValue($players)!
+  const myPlayerId = useAtomValue($myPlayerId)
+
   const round = game.currentRound
-  const players = useContext(PlayersContext)
-  const myPlayerId = useContext(MyPlayerIdContext)
   const guesses = useMemo(
     () => game.guesses.filter((guess) => guess.round === round),
     [game.guesses, round]

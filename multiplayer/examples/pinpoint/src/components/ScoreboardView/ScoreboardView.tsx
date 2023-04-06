@@ -1,7 +1,6 @@
 import styled from "styled-components/macro"
 import { OLMap, Pin } from "../OLMap/OLMap"
-import { useContext, useMemo, useState, useEffect } from "react"
-import { GameContext, PlayersContext, MyPlayerIdContext } from "../../context"
+import { useMemo, useState, useEffect } from "react"
 import { Overlay } from "../Overlay"
 import greenCircleImg from "./img/greenCircle.svg"
 import sortBy from "lodash/sortBy"
@@ -9,17 +8,20 @@ import { CTA } from "../MapView/GuessingMapView"
 import playIcon from "./img/play.svg"
 import { Rune } from "../../lib/Rune"
 import { pickBestGuessRepresentation } from "../../lib/pickBestGuessRepresentation"
+import { useAtomValue } from "jotai"
+import { $game, $players, $myPlayerId } from "../../state/state"
 
 export function ScoreboardView() {
-  const game = useContext(GameContext)
+  const game = useAtomValue($game)!
+  const players = useAtomValue($players)!
+  const myPlayerId = useAtomValue($myPlayerId)
+
   const round = game.currentRound
   const panorama = game.rounds[round].panorama
   const guesses = useMemo(
     () => game.guesses.filter((guess) => guess.round === round),
     [round, game.guesses]
   )
-  const players = useContext(PlayersContext)
-  const myPlayerId = useContext(MyPlayerIdContext)
   const isSpectator = !myPlayerId
 
   const pins = useMemo<Pin[]>(() => {

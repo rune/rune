@@ -3,7 +3,8 @@ import styled from "styled-components/macro"
 import { Overlay } from "../Overlay"
 import mapImg from "./img/map.svg"
 import { useAtomValue } from "jotai"
-import { $game, $players } from "../../state/state"
+import { $game } from "../../state/game"
+import { $players } from "../../state/players"
 
 export function StartOfRoundOverlay() {
   const game = useAtomValue($game)!

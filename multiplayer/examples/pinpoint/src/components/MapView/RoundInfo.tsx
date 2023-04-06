@@ -4,7 +4,9 @@ import invitePlayerImg from "./img/invitePlayer.svg"
 import avatarCheckmarkImg from "./img/avatarCheckmark.svg"
 import { Rune } from "../../lib/Rune"
 import { useAtomValue } from "jotai"
-import { $game, $players, $myPlayerId } from "../../state/state"
+import { $game } from "../../state/game"
+import { $players } from "../../state/players"
+import { $myPlayerId } from "../../state/myPlayerId"
 
 export function RoundInfo() {
   const game = useAtomValue($game)!

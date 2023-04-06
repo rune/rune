@@ -9,7 +9,9 @@ import playIcon from "./img/play.svg"
 import { Rune } from "../../lib/Rune"
 import { pickBestGuessRepresentation } from "../../lib/pickBestGuessRepresentation"
 import { useAtomValue } from "jotai"
-import { $game, $players, $myPlayerId } from "../../state/state"
+import { $game } from "../../state/game"
+import { $players } from "../../state/players"
+import { $myPlayerId } from "../../state/myPlayerId"
 
 export function ScoreboardView() {
   const game = useAtomValue($game)!

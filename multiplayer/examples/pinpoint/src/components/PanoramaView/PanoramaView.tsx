@@ -6,7 +6,9 @@ import { PanoramaControlsHint } from "./PanoramaControlsHint"
 import mapBtnImg from "./img/mapBtn.svg"
 import { Overlay } from "../Overlay"
 import { useAtomValue } from "jotai"
-import { $game, $players, $myPlayerId } from "../../state/state"
+import { $game } from "../../state/game"
+import { $players } from "../../state/players"
+import { $myPlayerId } from "../../state/myPlayerId"
 
 export function PanoramaView({
   onOpenMapClick,

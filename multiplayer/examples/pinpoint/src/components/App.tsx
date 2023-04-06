@@ -6,7 +6,9 @@ import { GameState } from "../types/GameState"
 import { GuessingMapView } from "./MapView/GuessingMapView"
 import { ScoreboardView } from "./ScoreboardView/ScoreboardView"
 import { useAtom, useSetAtom } from "jotai"
-import { $game, $myPlayerId, $players } from "../state/state"
+import { $game } from "../state/game"
+import { $players } from "../state/players"
+import { $myPlayerId } from "../state/myPlayerId"
 
 export function App() {
   const [game, setGame] = useAtom($game)

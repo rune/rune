@@ -11,6 +11,10 @@ import { $game } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
 import { useFlags } from "../../state/flags"
+import {
+  simpleCSSTransitionStyles,
+  SimpleCSSTransition,
+} from "../animation/SimpleCSSTransition"
 
 export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const game = useAtomValue($game)!
@@ -97,7 +101,10 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
           </>
         )}
         <BackButton src={backButtonImg} onClick={onBackClick} />
-        {!myGuess && pickedLocation && (
+        <SimpleCSSTransition
+          visible={!myGuess && !!pickedLocation}
+          duration={250}
+        >
           <CTAContainer>
             <CTA
               onClick={() => {
@@ -108,7 +115,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
               Confirm Guess
             </CTA>
           </CTAContainer>
-        )}
+        </SimpleCSSTransition>
       </MapContainer>
       <RoundInfo />
     </Root>
@@ -154,6 +161,7 @@ const BackButton = styled.img`
 `
 
 const CTAContainer = styled.div`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   position: absolute;
   bottom: 35px;
 `

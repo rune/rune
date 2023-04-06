@@ -7,6 +7,10 @@ import { useAtomValue } from "jotai"
 import { $game } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
+import {
+  simpleCSSTransitionStyles,
+  SimpleCSSTransition,
+} from "../animation/SimpleCSSTransition"
 
 export function RoundInfo() {
   const game = useAtomValue($game)!
@@ -39,11 +43,14 @@ export function RoundInfo() {
         <Player>
           <AvatarContainer>
             <Avatar src={myPlayer.avatarUrl} />
-            {guesses.find((guess) => guess.playerId === myPlayerId) && (
+            <SimpleCSSTransition
+              visible={!!guesses.find((guess) => guess.playerId === myPlayerId)}
+              duration={250}
+            >
               <AvatarCheckmarkContainer>
                 <AvatarCheckmark src={avatarCheckmarkImg} />
               </AvatarCheckmarkContainer>
-            )}
+            </SimpleCSSTransition>
           </AvatarContainer>
           <Name>You</Name>
         </Player>
@@ -51,11 +58,16 @@ export function RoundInfo() {
           <Player key={player.playerId}>
             <AvatarContainer>
               <Avatar src={player.avatarUrl} />
-              {guesses.find((guess) => guess.playerId === player.playerId) && (
+              <SimpleCSSTransition
+                visible={
+                  !!guesses.find((guess) => guess.playerId === player.playerId)
+                }
+                duration={250}
+              >
                 <AvatarCheckmarkContainer>
                   <AvatarCheckmark src={avatarCheckmarkImg} />
                 </AvatarCheckmarkContainer>
-              )}
+              </SimpleCSSTransition>
             </AvatarContainer>
             <Name>{player.displayName}</Name>
           </Player>
@@ -120,6 +132,7 @@ const AvatarPlaceholder = styled.img`
 `
 
 const AvatarCheckmarkContainer = styled.div`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   position: absolute;
   width: 17vw;
   height: 17vw;

@@ -88,18 +88,12 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
             myGuess ? undefined : (location) => setPickedLocation(location)
           }
         />
-        {hintShown && (
-          <>
-            <DarkBackground />
-            <Hint>Tap to place your guess</Hint>
-          </>
-        )}
-        {myGuessShown && (
-          <>
-            <DarkBackground />
-            <Hint>You already guessed!</Hint>
-          </>
-        )}
+        <SimpleCSSTransition visible={hintShown} duration={250}>
+          <Hint>Tap to place your guess</Hint>
+        </SimpleCSSTransition>
+        <SimpleCSSTransition visible={myGuessShown} duration={250}>
+          <Hint>You already guessed!</Hint>
+        </SimpleCSSTransition>
         <BackButton src={backButtonImg} onClick={onBackClick} />
         <SimpleCSSTransition
           visible={!myGuess && !!pickedLocation}
@@ -136,13 +130,9 @@ const MapContainer = styled.div`
   justify-content: center;
 `
 
-const DarkBackground = styled(Overlay)`
-  background-color: black;
-  opacity: 0.5;
-  pointer-events: none;
-`
-
 const Hint = styled(Overlay)`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;

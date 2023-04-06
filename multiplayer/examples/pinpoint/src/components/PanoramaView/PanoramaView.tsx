@@ -1,6 +1,6 @@
 import styled from "styled-components/macro"
 import { PhotoSphereViewer } from "./PhotoSphereViewer"
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect, useMemo, useRef } from "react"
 import { StartOfRoundOverlay } from "./StartOfRoundOverlay"
 import { PanoramaControlsHint } from "./PanoramaControlsHint"
 import mapBtnImg from "./img/mapBtn.svg"
@@ -77,7 +77,12 @@ export function PanoramaView({
 
   const [latestGuessShown, setLatestGuessShown] = useState(false)
 
+  const latestGuessRef = useRef(latestGuess)
   useEffect(() => {
+    if (latestGuessRef.current === latestGuess) return
+
+    latestGuessRef.current = latestGuess
+
     if (latestGuess && latestGuess.playerId !== myPlayerId) {
       setLatestGuessShown(true)
       const handle = setTimeout(() => setLatestGuessShown(false), 2000)

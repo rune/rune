@@ -77,20 +77,37 @@ export function ScoreboardView() {
             <Subheader>
               Round {round + 1}/{game.rounds.length}
             </Subheader>
-            <Items>
-              {scores.map((item) => (
-                <Item key={item.player.playerId}>
-                  <Avatar src={item.player.avatarUrl} />
-                  <Name>
-                    {item.player.playerId === myPlayerId
-                      ? "You"
-                      : item.player.displayName}
-                  </Name>
-                  <Score>{item.score}</Score>
-                  {round > 0 && <LatestScore>+{item.latestScore}</LatestScore>}
-                </Item>
-              ))}
-            </Items>
+            {scores.length === 1 ? (
+              <BigItem>
+                <Avatar size="big" src={scores[0].player.avatarUrl} />
+                <Name>
+                  {scores[0].player.playerId === myPlayerId
+                    ? "You"
+                    : scores[0].player.displayName}
+                </Name>
+                <Score>{scores[0].score}</Score>
+                {round > 0 && (
+                  <LatestScoreRight>+{scores[0].latestScore}</LatestScoreRight>
+                )}
+              </BigItem>
+            ) : (
+              <Items>
+                {scores.map((item) => (
+                  <Item key={item.player.playerId}>
+                    <Avatar size="small" src={item.player.avatarUrl} />
+                    <Name>
+                      {item.player.playerId === myPlayerId
+                        ? "You"
+                        : item.player.displayName}
+                    </Name>
+                    <Score>{item.score}</Score>
+                    {round > 0 && (
+                      <LatestScore>+{item.latestScore}</LatestScore>
+                    )}
+                  </Item>
+                ))}
+              </Items>
+            )}
             {!isSpectator && round < game.rounds.length - 1 && (
               <BottomContainer>
                 <CTA onClick={() => Rune.actions.nextRound()}>
@@ -149,6 +166,20 @@ const Subheader = styled.div`
   padding-bottom: 30px;
 `
 
+const BigItem = styled.div`
+  background: linear-gradient(0deg, #d8f1e8, #d8f1e8), #d2d2d2;
+  border-radius: 15px;
+  padding: 23px 34px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  > :not(:first-child) {
+    margin-top: 10px;
+  }
+  width: 190px;
+`
+
 const Items = styled.div`
   display: flex;
   flex-direction: column;
@@ -170,9 +201,9 @@ const Item = styled.div`
   position: relative;
 `
 
-const Avatar = styled.img`
-  width: 50px;
-  height: 50px;
+const Avatar = styled.img<{ size: "big" | "small" }>`
+  width: ${({ size }) => (size === "big" ? 70 : 50)}px;
+  height: ${({ size }) => (size === "big" ? 70 : 50)}px;
 `
 
 const Name = styled.div`
@@ -203,6 +234,12 @@ const LatestScore = styled.div`
   position: absolute;
   right: 35px;
   top: 2px;
+`
+
+const LatestScoreRight = styled(LatestScore)`
+  top: inherit;
+  bottom: 25px;
+  right: 25px;
 `
 
 const BottomContainer = styled.div`

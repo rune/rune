@@ -17,6 +17,7 @@ Rune.initLogic({
     }
 
     return {
+      sessionId: Math.round(Math.random() * 1e9),
       panoramasUrl,
       playerIds,
       rounds,

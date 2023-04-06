@@ -9,6 +9,7 @@ import { useAtomValue } from "jotai"
 import { $game } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
+import { useFlags } from "../../state/flags"
 
 export function PanoramaView({
   onOpenMapClick,
@@ -18,6 +19,7 @@ export function PanoramaView({
   const game = useAtomValue($game)!
   const players = useAtomValue($players)!
   const myPlayerId = useAtomValue($myPlayerId)
+  const { isFlagSet, setFlag } = useFlags()
 
   const isSpectator = !myPlayerId
   const round = game.currentRound
@@ -33,28 +35,45 @@ export function PanoramaView({
   const latestGuess = useMemo(() => guesses.at(-1), [guesses])
 
   const [overlay, setOverlay] = useState<
-    "spectator" | "startOfRound" | "hint" | "mapBtn" | null
+    "spectator" | "startOfRound" | "hint" | null
   >(null)
 
+  const shouldShowHint = useMemo(
+    () => round === 0 && !isFlagSet("panoramaHintShown"),
+    [isFlagSet, round]
+  )
+
   useEffect(() => {
-    if (isSpectator) setOverlay("spectator")
-    else setOverlay(myGuess ? "mapBtn" : "startOfRound")
-  }, [isSpectator, myGuess, panorama.name])
+    if (overlay !== null) return
+
+    if (isSpectator) {
+      setOverlay("spectator")
+    } else if (!myGuess && !isFlagSet("startOfRoundShown")) {
+      setOverlay("startOfRound")
+    } else if (shouldShowHint) {
+      setOverlay("hint")
+    }
+  }, [isFlagSet, isSpectator, myGuess, overlay, shouldShowHint])
+
+  useEffect(() => {
+    if (overlay === "startOfRound") setFlag("startOfRoundShown")
+    else if (overlay === "hint") setFlag("panoramaHintShown")
+  }, [overlay, setFlag])
 
   useEffect(() => {
     if (overlay === "startOfRound") {
       const handle = setTimeout(
-        () => setOverlay(round === 0 ? "hint" : "mapBtn"),
+        () => setOverlay(shouldShowHint ? "hint" : null),
         2000
       )
       return () => clearTimeout(handle)
     }
 
     if (overlay === "hint") {
-      const handle = setTimeout(() => setOverlay("mapBtn"), 2000)
+      const handle = setTimeout(() => setOverlay(null), 2000)
       return () => clearTimeout(handle)
     }
-  }, [round, overlay])
+  }, [round, overlay, shouldShowHint])
 
   const [latestGuessShown, setLatestGuessShown] = useState(false)
 
@@ -90,21 +109,19 @@ export function PanoramaView({
       <PhotoSphereViewer baseUrl={game.panoramasUrl} panorama={panorama} />
       {overlay === "startOfRound" && <StartOfRoundOverlay />}
       {overlay === "hint" && <PanoramaControlsHint />}
-      {overlay === "mapBtn" && (
-        <MapBtnContainer onClick={onOpenMapClick}>
-          {latestGuess && latestGuessShown && (
-            <LatestGuess>
-              {players[latestGuess.playerId].displayName} made a guess
-            </LatestGuess>
-          )}
-          <MapBtn src={mapBtnImg} />
-          {game.playerIds.length > 1 && (
-            <MapBtnLabel>
-              {guesses.length}/{game.playerIds.length}
-            </MapBtnLabel>
-          )}
-        </MapBtnContainer>
-      )}
+      <MapBtnContainer onClick={onOpenMapClick}>
+        {latestGuess && latestGuessShown && (
+          <LatestGuess>
+            {players[latestGuess.playerId].displayName} made a guess
+          </LatestGuess>
+        )}
+        <MapBtn src={mapBtnImg} />
+        {game.playerIds.length > 1 && (
+          <MapBtnLabel>
+            {guesses.length}/{game.playerIds.length}
+          </MapBtnLabel>
+        )}
+      </MapBtnContainer>
       {overlay === "spectator" && (
         <LabelContainer location="top">
           <Label>You are spectating 👀</Label>

@@ -10,11 +10,13 @@ import { useAtomValue } from "jotai"
 import { $game } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
+import { useFlags } from "../../state/flags"
 
 export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const game = useAtomValue($game)!
   const players = useAtomValue($players)!
   const myPlayerId = useAtomValue($myPlayerId)
+  const { isFlagSet, setFlag } = useFlags()
 
   const round = game.currentRound
   const guesses = useMemo(
@@ -31,14 +33,17 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   )
 
   const [pickedLocation, setPickedLocation] = useState<Coordinate>()
-  const [hintShown, setHintShown] = useState(round === 0 && !myGuess)
+  const [hintShown, setHintShown] = useState(
+    round === 0 && !myGuess && !isFlagSet("mapHintShown")
+  )
 
   useEffect(() => {
     if (hintShown) {
+      setFlag("mapHintShown")
       const handle = setTimeout(() => setHintShown(false), 2000)
       return () => clearTimeout(handle)
     }
-  }, [hintShown])
+  }, [hintShown, setFlag])
 
   const pins = useMemo<Pin[]>(() => {
     if (!myPlayer) return []

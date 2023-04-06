@@ -9,11 +9,13 @@ import { useAtom, useSetAtom } from "jotai"
 import { $game } from "../state/game"
 import { $players } from "../state/players"
 import { $myPlayerId } from "../state/myPlayerId"
+import { useFlags } from "../state/flags"
 
 export function App() {
   const [game, setGame] = useAtom($game)
   const [players, setPlayers] = useAtom($players)
   const setMyPlayerId = useSetAtom($myPlayerId)
+  const { unsetFlag } = useFlags()
 
   useEffect(() => {
     Rune.initClient({
@@ -34,12 +36,10 @@ export function App() {
     [game?.currentRound, game?.guesses, game?.playerIds.length]
   )
 
-  const currentRoundPanoramaName =
-    game?.rounds[game?.currentRound]?.panorama.name
-
   useEffect(() => {
+    unsetFlag("startOfRoundShown")
     setView("panorama")
-  }, [currentRoundPanoramaName])
+  }, [game?.sessionId, game?.currentRound, unsetFlag])
 
   if (!game || !players) return null
 

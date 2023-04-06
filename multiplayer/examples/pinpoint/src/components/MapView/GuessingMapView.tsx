@@ -45,6 +45,16 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
     }
   }, [hintShown, setFlag])
 
+  const [myGuessShown, setMyGuessShown] = useState(false)
+
+  useEffect(() => {
+    if (myGuess) {
+      setMyGuessShown(true)
+      const handle = setTimeout(() => setMyGuessShown(false), 2000)
+      return () => clearTimeout(handle)
+    }
+  }, [myGuess])
+
   const pins = useMemo<Pin[]>(() => {
     if (!myPlayer) return []
 
@@ -80,7 +90,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
             <Hint>Tap to place your guess</Hint>
           </>
         )}
-        {myGuess && (
+        {myGuessShown && (
           <>
             <DarkBackground />
             <Hint>You already guessed!</Hint>

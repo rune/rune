@@ -38,9 +38,7 @@ export function PanoramaView({
   )
   const latestGuess = useMemo(() => guesses.at(-1), [guesses])
 
-  const [overlay, setOverlay] = useState<
-    "spectator" | "startOfRound" | "hint" | null
-  >(null)
+  const [overlay, setOverlay] = useState<"startOfRound" | "hint" | null>(null)
 
   const shouldShowHint = useMemo(
     () => round === 0 && !isFlagSet("panoramaHintShown"),
@@ -48,11 +46,9 @@ export function PanoramaView({
   )
 
   useEffect(() => {
-    if (overlay !== null) return
+    if (overlay !== null || isSpectator) return
 
-    if (isSpectator) {
-      setOverlay("spectator")
-    } else if (!myGuess && !isFlagSet("startOfRoundShown")) {
+    if (!myGuess && !isFlagSet("startOfRoundShown")) {
       setOverlay("startOfRound")
     } else if (shouldShowHint) {
       setOverlay("hint")
@@ -113,22 +109,24 @@ export function PanoramaView({
       <PhotoSphereViewer baseUrl={game.panoramasUrl} panorama={panorama} />
       <StartOfRoundOverlay visible={overlay === "startOfRound"} />
       <PanoramaControlsHint visible={overlay === "hint"} />
-      <MapBtnContainer onClick={onOpenMapClick}>
-        {latestGuess && (
-          <SimpleCSSTransition visible={latestGuessShown} duration={250}>
-            <LatestGuess>
-              {players[latestGuess.playerId].displayName} made a guess
-            </LatestGuess>
-          </SimpleCSSTransition>
-        )}
-        <MapBtn src={mapBtnImg} />
-        {game.playerIds.length > 1 && (
-          <MapBtnLabel>
-            {guesses.length}/{game.playerIds.length}
-          </MapBtnLabel>
-        )}
-      </MapBtnContainer>
-      {overlay === "spectator" && (
+      {!isSpectator && (
+        <MapBtnContainer onClick={onOpenMapClick}>
+          {latestGuess && (
+            <SimpleCSSTransition visible={latestGuessShown} duration={250}>
+              <LatestGuess>
+                {players[latestGuess.playerId].displayName} made a guess
+              </LatestGuess>
+            </SimpleCSSTransition>
+          )}
+          <MapBtn src={mapBtnImg} />
+          {game.playerIds.length > 1 && (
+            <MapBtnLabel>
+              {guesses.length}/{game.playerIds.length}
+            </MapBtnLabel>
+          )}
+        </MapBtnContainer>
+      )}
+      {isSpectator && (
         <LabelContainer location="top">
           <Label>You are spectating 👀</Label>
         </LabelContainer>

@@ -22,6 +22,7 @@ import {
   scoreboardAnimationStepTimings,
   ScoreboardAnimationStep,
 } from "../animation/config"
+import { formatDistance } from "../../lib/formatDistance"
 
 export function ScoreboardView() {
   const game = useAtomValue($game)!
@@ -49,7 +50,7 @@ export function ScoreboardView() {
         location: pickBestGuessRepresentation(target, guess.location),
         targetLocation: target,
         avatarUrl: players[guess.playerId].avatarUrl,
-        distanceText: `${Math.round(guess.distance)}km`,
+        distanceText: formatDistance(guess.distance),
       })),
     ]
   }, [guesses, panorama.latitude, panorama.longitude, players])

@@ -111,24 +111,24 @@ export function ScoreboardView() {
             </Subheader>
 
             <SimpleCSSTransition
-              visible={animationStep >= ScoreboardAnimationStep.old}
+              visible={animationStep >= ScoreboardAnimationStep.oldScores}
               duration={timings.default}
             >
               <ListContainer>
                 <ScoreList
                   scores={
-                    animationStep >= ScoreboardAnimationStep.reorder
+                    animationStep >= ScoreboardAnimationStep.newScoreOrder
                       ? scoresOrdered
                       : scoresOrderedByPrevious
                   }
                   myPlayerId={myPlayerId}
                   show={
-                    animationStep >= ScoreboardAnimationStep.new
+                    animationStep >= ScoreboardAnimationStep.newScores
                       ? "score"
                       : "previousScore"
                   }
                   showLatestScore={
-                    animationStep >= ScoreboardAnimationStep.latest
+                    animationStep >= ScoreboardAnimationStep.latestScore
                   }
                 />
               </ListContainer>

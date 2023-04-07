@@ -7,10 +7,10 @@ export const timings = {
 export enum ScoreboardAnimationStep {
   map,
   background,
-  old,
-  latest,
-  new,
-  reorder,
+  oldScores,
+  latestScore,
+  newScores,
+  newScoreOrder,
   cta,
 }
 
@@ -19,9 +19,9 @@ export const scoreboardAnimationStepTimings: {
 } = {
   [ScoreboardAnimationStep.map]: 2000,
   [ScoreboardAnimationStep.background]: 1000,
-  [ScoreboardAnimationStep.old]: 1000,
-  [ScoreboardAnimationStep.latest]: 250,
-  [ScoreboardAnimationStep.new]: 1000,
-  [ScoreboardAnimationStep.reorder]: 1000,
+  [ScoreboardAnimationStep.oldScores]: 1000,
+  [ScoreboardAnimationStep.latestScore]: 250,
+  [ScoreboardAnimationStep.newScores]: 1000,
+  [ScoreboardAnimationStep.newScoreOrder]: 1000,
   [ScoreboardAnimationStep.cta]: 0,
 }

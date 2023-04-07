@@ -4,6 +4,10 @@ import { useMemo } from "react"
 import sortBy from "lodash/sortBy"
 import { AnimatedNumber } from "./AnimatedNumber"
 import { timings } from "../animation/config"
+import {
+  simpleCSSTransitionStyles,
+  SimpleCSSTransition,
+} from "../animation/SimpleCSSTransition"
 
 const itemHeight = 70
 const itemGap = 10
@@ -44,9 +48,9 @@ export function ScoreList({
       <Score>
         <AnimatedNumber value={scores[0][show]} />
       </Score>
-      {showLatestScore && (
+      <SimpleCSSTransition visible={showLatestScore} duration={timings.default}>
         <LatestScoreRight>+{scores[0].latestScore}</LatestScoreRight>
-      )}
+      </SimpleCSSTransition>
     </BigItem>
   ) : (
     <Items>
@@ -61,7 +65,12 @@ export function ScoreList({
           <Score>
             <AnimatedNumber value={item[show]} />
           </Score>
-          {showLatestScore && <LatestScore>+{item.latestScore}</LatestScore>}
+          <SimpleCSSTransition
+            visible={showLatestScore}
+            duration={timings.default}
+          >
+            <LatestScore>+{item.latestScore}</LatestScore>
+          </SimpleCSSTransition>
         </Item>
       ))}
     </Items>
@@ -133,6 +142,7 @@ const Score = styled.div`
 `
 
 const LatestScore = styled.div`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   color: #1e6252;
   font-size: 13px;
   font-weight: 700;

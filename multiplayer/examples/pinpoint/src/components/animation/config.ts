@@ -1,4 +1,5 @@
 export const timings = {
+  defaultDelay: 2000,
   default: 250,
   scoreReorder: 500,
   scoreIncrement: 1000,

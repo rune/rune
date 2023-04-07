@@ -65,13 +65,13 @@ export function PanoramaView({
     if (overlay === "startOfRound") {
       const handle = setTimeout(
         () => setOverlay(shouldShowHint ? "hint" : null),
-        2000
+        timings.defaultDelay
       )
       return () => clearTimeout(handle)
     }
 
     if (overlay === "hint") {
-      const handle = setTimeout(() => setOverlay(null), 2000)
+      const handle = setTimeout(() => setOverlay(null), timings.defaultDelay)
       return () => clearTimeout(handle)
     }
   }, [round, overlay, shouldShowHint])
@@ -86,7 +86,10 @@ export function PanoramaView({
 
     if (latestGuess && latestGuess.playerId !== myPlayerId) {
       setLatestGuessShown(true)
-      const handle = setTimeout(() => setLatestGuessShown(false), 2000)
+      const handle = setTimeout(
+        () => setLatestGuessShown(false),
+        timings.defaultDelay
+      )
       return () => clearTimeout(handle)
     }
   }, [latestGuess, myPlayerId])
@@ -105,7 +108,10 @@ export function PanoramaView({
   useEffect(() => {
     if (meLastOneLeft) {
       setMeLastOneLeftHidden(false)
-      const handle = setTimeout(() => setMeLastOneLeftHidden(true), 2000)
+      const handle = setTimeout(
+        () => setMeLastOneLeftHidden(true),
+        timings.defaultDelay
+      )
       return () => clearTimeout(handle)
     }
   }, [meLastOneLeft])

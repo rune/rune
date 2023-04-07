@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { timings } from "../animation/config"
+import { animate } from "../../lib/animate"
 
 export function AnimatedNumber({ value }: { value: number }) {
   const [renderedValue, setRenderedValue] = useState(value)
@@ -7,30 +8,14 @@ export function AnimatedNumber({ value }: { value: number }) {
 
   useEffect(() => {
     if (prevValue.current === value) return
-    const duration = timings.scoreIncrement
     const oldValue = prevValue.current
-
     prevValue.current = value
 
-    let handle = requestAnimationFrame(tick)
-    let start = Date.now()
+    const dispose = animate(0, timings.scoreIncrement, (step) => {
+      setRenderedValue(Math.round(easeOutExpo(step) * (value - oldValue)))
+    })
 
-    function tick() {
-      setRenderedValue(() => {
-        const newValue =
-          oldValue +
-          easeOutExpo((Date.now() - start) / duration) * (value - oldValue)
-
-        if (newValue >= value) {
-          return value
-        }
-
-        handle = requestAnimationFrame(tick)
-        return Math.round(newValue)
-      })
-    }
-
-    return () => cancelAnimationFrame(handle)
+    return () => dispose()
   }, [value])
 
   return <>{renderedValue}</>

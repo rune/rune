@@ -14,6 +14,10 @@ import { createEmpty, extend } from "ol/extent"
 import { flagLayer } from "./layers/flagLayer"
 import { guessLayer } from "./layers/guessLayer"
 import { guessLineLayer } from "./layers/guessLineLayer"
+import { guessDistanceLayer } from "./layers/guessDistanceLayer"
+import VectorLayer from "ol/layer/Vector"
+import { animate } from "../../lib/animate"
+import { timings } from "../animation/config"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -79,13 +83,16 @@ export function OLMap({
   }, [map, zoom])
 
   useEffect(() => {
+    const lines: VectorLayer<VectorSource>[] = []
+    const distances: VectorLayer<VectorSource>[] = []
+
     const layerGroup = new LayerGroup()
 
     for (const pin of pins ?? []) {
       if (pin.type === "guess" && pin.targetLocation) {
-        layerGroup
-          .getLayers()
-          .push(guessLineLayer(pin.location, pin.targetLocation))
+        const line = guessLineLayer(pin.location, pin.targetLocation)
+        lines.push(line)
+        layerGroup.getLayers().push(line)
       }
     }
 
@@ -97,16 +104,42 @@ export function OLMap({
       if (pin.type === "flag") {
         layerGroup.getLayers().push(flagLayer(source))
       } else if (pin.type === "guess") {
-        layerGroup
-          .getLayers()
-          .push(guessLayer(source, pin.avatarUrl, pin.distanceText))
+        layerGroup.getLayers().push(guessLayer(source, pin.avatarUrl))
+
+        if (pin.distanceText) {
+          const distance = guessDistanceLayer(source, pin.distanceText)
+          distances.push(distance)
+          layerGroup.getLayers().push(distance)
+        }
       }
     }
 
     map?.getLayers().push(layerGroup)
 
+    lines.forEach((line) => line.setOpacity(0))
+    const dispose1 = animate(
+      timings.mapLineDelay,
+      timings.default,
+      (opacity) => {
+        lines.forEach((line) => line.setOpacity(opacity))
+        map?.renderSync()
+      }
+    )
+
+    distances.forEach((distance) => distance.setOpacity(0))
+    const dispose2 = animate(
+      timings.mapDistanceDelay,
+      timings.default,
+      (opacity) => {
+        distances.forEach((distance) => distance.setOpacity(opacity))
+        map?.renderSync()
+      }
+    )
+
     return () => {
       map?.getLayers().remove(layerGroup)
+      dispose1()
+      dispose2()
     }
   }, [map, pins])
 

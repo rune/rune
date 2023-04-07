@@ -34,10 +34,13 @@ Rune.initLogic({
 
       if (existingGuess) throw Rune.invalidAction()
 
-      const distance = calculateDistanceKm(location, [
-        game.rounds[game.currentRound].panorama.longitude,
-        game.rounds[game.currentRound].panorama.latitude,
-      ])
+      const distance =
+        Math.round(
+          calculateDistanceKm(location, [
+            game.rounds[game.currentRound].panorama.longitude,
+            game.rounds[game.currentRound].panorama.latitude,
+          ]) * 1e4
+        ) / 1e4
 
       game.guesses.push({
         playerId,

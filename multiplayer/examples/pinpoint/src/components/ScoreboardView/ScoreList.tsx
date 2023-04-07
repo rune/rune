@@ -1,5 +1,10 @@
 import styled from "styled-components/macro"
 import { Player } from "rune-games-sdk/multiplayer"
+import { useMemo } from "react"
+import sortBy from "lodash/sortBy"
+
+const itemHeight = 70
+const itemGap = 10
 
 export function ScoreList({
   scores,
@@ -17,6 +22,15 @@ export function ScoreList({
   show: "score" | "previousScore"
   showLatestScore: boolean
 }) {
+  const scoresFixedOrder = useMemo(
+    () =>
+      sortBy(scores, (item) => item.player.playerId).map((item, i) => ({
+        ...item,
+        offset: (scores.indexOf(item) - i) * (itemHeight + itemGap),
+      })),
+    [scores]
+  )
+
   return scores.length === 1 ? (
     <BigItem>
       <Avatar size="big" src={scores[0].player.avatarUrl} />
@@ -32,8 +46,8 @@ export function ScoreList({
     </BigItem>
   ) : (
     <Items>
-      {scores.map((item) => (
-        <Item key={item.player.playerId}>
+      {scoresFixedOrder.map((item) => (
+        <Item key={item.player.playerId} offset={item.offset}>
           <Avatar size="small" src={item.player.avatarUrl} />
           <Name>
             {item.player.playerId === myPlayerId
@@ -68,11 +82,11 @@ const Items = styled.div`
   width: 100%;
   align-items: center;
   > :not(:first-child) {
-    margin-top: 10px;
+    margin-top: ${itemGap}px;
   }
 `
 
-const Item = styled.div`
+const Item = styled.div<{ offset: number }>`
   background: linear-gradient(0deg, #d8f1e8, #d8f1e8), #d2d2d2;
   border-radius: 15px;
   padding: 10px 30px;
@@ -81,6 +95,9 @@ const Item = styled.div`
   justify-content: space-between;
   width: 90%;
   position: relative;
+  height: ${itemHeight}px;
+  top: ${({ offset }) => offset}px;
+  transition: top 0.5s ease-in-out;
 `
 
 const Avatar = styled.img<{ size: "big" | "small" }>`

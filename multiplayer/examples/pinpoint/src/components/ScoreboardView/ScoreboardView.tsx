@@ -12,6 +12,25 @@ import { useAtomValue } from "jotai"
 import { $game } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
+import { ScoreList } from "./ScoreList"
+
+enum AnimationStep {
+  map,
+  background,
+  old,
+  latest,
+  new,
+  cta,
+}
+
+const timings: { [S in AnimationStep]: number } = {
+  [AnimationStep.map]: 2000,
+  [AnimationStep.background]: 1000,
+  [AnimationStep.old]: 1000,
+  [AnimationStep.latest]: 1000,
+  [AnimationStep.new]: 1000,
+  [AnimationStep.cta]: 0,
+}
 
 export function ScoreboardView() {
   const game = useAtomValue($game)!
@@ -46,73 +65,73 @@ export function ScoreboardView() {
 
   const scores = useMemo(
     () =>
-      sortBy(
-        Object.values(players).map((player) => {
-          const guesses = game.guesses.filter(
-            (guess) => guess.playerId === player.playerId
-          )
-          return {
-            player,
-            score: guesses.reduce((acc, guess) => acc + guess.score, 0),
-            latestScore: guesses.at(-1)?.score ?? 0,
-          }
-        }),
-        (item) => -item.score
-      ),
+      Object.values(players).map((player) => {
+        const guesses = game.guesses.filter(
+          (guess) => guess.playerId === player.playerId
+        )
+        const score = guesses.reduce((acc, guess) => acc + guess.score, 0)
+        const latestScore = guesses.at(-1)?.score ?? 0
+        const previousScore = score - latestScore
+        return {
+          player,
+          score,
+          latestScore,
+          previousScore,
+        }
+      }),
     [game.guesses, players]
   )
 
-  const [scoreboardShown, setScoreboardShown] = useState(false)
+  const scoresOrderedByPrevious = useMemo(
+    () => sortBy(scores, (item) => -item.previousScore),
+    [scores]
+  )
+  const scoresOrdered = useMemo(
+    () => sortBy(scores, (item) => -item.score),
+    [scores]
+  )
+
+  const [animationStep, setAnimationStep] = useState<AnimationStep>(0)
 
   useEffect(() => {
-    const handle = setTimeout(() => setScoreboardShown(true), 2000)
+    if (animationStep === Object.values(AnimationStep).length / 2 - 1) return
+    const handle = setTimeout(
+      () => setAnimationStep((step) => step + 1),
+      timings[animationStep]
+    )
     return () => clearTimeout(handle)
-  }, [])
+  }, [animationStep])
 
   return (
     <Root>
       <OLMap center={[0, 0]} zoom={0} pins={pins} autoFitPins />
-      {scoreboardShown && (
+      {animationStep >= AnimationStep.background && (
         <>
           <WhiteBackground />
           <GreenCircle src={greenCircleImg} />
-          <Content>
-            <Header>Scoreboard</Header>
-            <Subheader>
-              Round {round + 1}/{game.rounds.length}
-            </Subheader>
-            {scores.length === 1 ? (
-              <BigItem>
-                <Avatar size="big" src={scores[0].player.avatarUrl} />
-                <Name>
-                  {scores[0].player.playerId === myPlayerId
-                    ? "You"
-                    : scores[0].player.displayName}
-                </Name>
-                <Score>{scores[0].score}</Score>
-                {round > 0 && (
-                  <LatestScoreRight>+{scores[0].latestScore}</LatestScoreRight>
-                )}
-              </BigItem>
-            ) : (
-              <Items>
-                {scores.map((item) => (
-                  <Item key={item.player.playerId}>
-                    <Avatar size="small" src={item.player.avatarUrl} />
-                    <Name>
-                      {item.player.playerId === myPlayerId
-                        ? "You"
-                        : item.player.displayName}
-                    </Name>
-                    <Score>{item.score}</Score>
-                    {round > 0 && (
-                      <LatestScore>+{item.latestScore}</LatestScore>
-                    )}
-                  </Item>
-                ))}
-              </Items>
-            )}
-            {!isSpectator && round < game.rounds.length - 1 && (
+        </>
+      )}
+      {animationStep >= AnimationStep.old && (
+        <Content>
+          <Header>Scoreboard</Header>
+          <Subheader>
+            Round {round + 1}/{game.rounds.length}
+          </Subheader>
+          <ScoreList
+            scores={
+              animationStep >= AnimationStep.new
+                ? scoresOrdered
+                : scoresOrderedByPrevious
+            }
+            myPlayerId={myPlayerId}
+            show={
+              animationStep >= AnimationStep.new ? "score" : "previousScore"
+            }
+            showLatestScore={animationStep >= AnimationStep.latest}
+          />
+          {animationStep >= AnimationStep.cta &&
+            !isSpectator &&
+            round < game.rounds.length - 1 && (
               <BottomContainer>
                 <CTA onClick={() => Rune.actions.nextRound()}>
                   <PlayIcon src={playIcon} />
@@ -123,8 +142,7 @@ export function ScoreboardView() {
                 </InviteLink>
               </BottomContainer>
             )}
-          </Content>
-        </>
+        </Content>
       )}
     </Root>
   )
@@ -168,82 +186,6 @@ const Subheader = styled.div`
   font-weight: 400;
   color: #f8fffc;
   padding-bottom: 30px;
-`
-
-const BigItem = styled.div`
-  background: linear-gradient(0deg, #d8f1e8, #d8f1e8), #d2d2d2;
-  border-radius: 15px;
-  padding: 23px 34px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  > :not(:first-child) {
-    margin-top: 10px;
-  }
-  width: 190px;
-`
-
-const Items = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  > :not(:first-child) {
-    margin-top: 10px;
-  }
-`
-
-const Item = styled.div`
-  background: linear-gradient(0deg, #d8f1e8, #d8f1e8), #d2d2d2;
-  border-radius: 15px;
-  padding: 10px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 90%;
-  position: relative;
-`
-
-const Avatar = styled.img<{ size: "big" | "small" }>`
-  width: ${({ size }) => (size === "big" ? 70 : 50)}px;
-  height: ${({ size }) => (size === "big" ? 70 : 50)}px;
-`
-
-const Name = styled.div`
-  font-size: 13px;
-  font-weight: 400;
-  color: #01a491;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 20px;
-`
-
-const Score = styled.div`
-  background-color: #01a491;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 45px;
-  color: #f8fffc;
-  width: 55px;
-  text-align: center;
-`
-
-const LatestScore = styled.div`
-  color: #1e6252;
-  font-size: 13px;
-  font-weight: 700;
-  position: absolute;
-  right: 35px;
-  top: 2px;
-`
-
-const LatestScoreRight = styled(LatestScore)`
-  top: inherit;
-  bottom: 25px;
-  right: 25px;
 `
 
 const BottomContainer = styled.div`

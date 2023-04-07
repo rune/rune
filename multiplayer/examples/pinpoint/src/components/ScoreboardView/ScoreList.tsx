@@ -2,6 +2,8 @@ import styled from "styled-components/macro"
 import { Player } from "rune-games-sdk/multiplayer"
 import { useMemo } from "react"
 import sortBy from "lodash/sortBy"
+import { AnimatedNumber } from "./AnimatedNumber"
+import { timings } from "../animation/config"
 
 const itemHeight = 70
 const itemGap = 10
@@ -39,7 +41,9 @@ export function ScoreList({
           ? "You"
           : scores[0].player.displayName}
       </Name>
-      <Score>{scores[0][show]}</Score>
+      <Score>
+        <AnimatedNumber value={scores[0][show]} />
+      </Score>
       {showLatestScore && (
         <LatestScoreRight>+{scores[0].latestScore}</LatestScoreRight>
       )}
@@ -54,7 +58,9 @@ export function ScoreList({
               ? "You"
               : item.player.displayName}
           </Name>
-          <Score>{item[show]}</Score>
+          <Score>
+            <AnimatedNumber value={item[show]} />
+          </Score>
           {showLatestScore && <LatestScore>+{item.latestScore}</LatestScore>}
         </Item>
       ))}
@@ -97,7 +103,7 @@ const Item = styled.div<{ offset: number }>`
   position: relative;
   height: ${itemHeight}px;
   top: ${({ offset }) => offset}px;
-  transition: top 0.5s ease-in-out;
+  transition: top ${timings.scoreReorder}ms ease-in-out;
 `
 
 const Avatar = styled.img<{ size: "big" | "small" }>`

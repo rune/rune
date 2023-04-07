@@ -17,24 +17,11 @@ import {
   simpleCSSTransitionStyles,
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
-
-enum AnimationStep {
-  map,
-  background,
-  old,
-  latest,
-  new,
-  cta,
-}
-
-const timings: { [S in AnimationStep]: number } = {
-  [AnimationStep.map]: 2000,
-  [AnimationStep.background]: 1000,
-  [AnimationStep.old]: 1000,
-  [AnimationStep.latest]: 1000,
-  [AnimationStep.new]: 1000,
-  [AnimationStep.cta]: 0,
-}
+import {
+  timings,
+  scoreboardAnimationStepTimings,
+  ScoreboardAnimationStep,
+} from "../animation/config"
 
 export function ScoreboardView() {
   const game = useAtomValue($game)!
@@ -95,13 +82,14 @@ export function ScoreboardView() {
     [scores]
   )
 
-  const [animationStep, setAnimationStep] = useState<AnimationStep>(0)
+  const [animationStep, setAnimationStep] = useState<ScoreboardAnimationStep>(0)
 
   useEffect(() => {
-    if (animationStep === Object.values(AnimationStep).length / 2 - 1) return
+    if (animationStep === Object.values(ScoreboardAnimationStep).length / 2 - 1)
+      return
     const handle = setTimeout(
       () => setAnimationStep((step) => step + 1),
-      timings[animationStep]
+      scoreboardAnimationStepTimings[animationStep]
     )
     return () => clearTimeout(handle)
   }, [animationStep])
@@ -110,8 +98,8 @@ export function ScoreboardView() {
     <Root>
       <OLMap center={[0, 0]} zoom={0} pins={pins} autoFitPins />
       <SimpleCSSTransition
-        visible={animationStep >= AnimationStep.background}
-        duration={250}
+        visible={animationStep >= ScoreboardAnimationStep.background}
+        duration={timings.default}
       >
         <ContentRoot>
           <WhiteBackground />
@@ -123,34 +111,36 @@ export function ScoreboardView() {
             </Subheader>
 
             <SimpleCSSTransition
-              visible={animationStep >= AnimationStep.old}
-              duration={250}
+              visible={animationStep >= ScoreboardAnimationStep.old}
+              duration={timings.default}
             >
               <ListContainer>
                 <ScoreList
                   scores={
-                    animationStep >= AnimationStep.new
+                    animationStep >= ScoreboardAnimationStep.reorder
                       ? scoresOrdered
                       : scoresOrderedByPrevious
                   }
                   myPlayerId={myPlayerId}
                   show={
-                    animationStep >= AnimationStep.new
+                    animationStep >= ScoreboardAnimationStep.new
                       ? "score"
                       : "previousScore"
                   }
-                  showLatestScore={animationStep >= AnimationStep.latest}
+                  showLatestScore={
+                    animationStep >= ScoreboardAnimationStep.latest
+                  }
                 />
               </ListContainer>
             </SimpleCSSTransition>
 
             <SimpleCSSTransition
               visible={
-                animationStep >= AnimationStep.cta &&
+                animationStep >= ScoreboardAnimationStep.cta &&
                 !isSpectator &&
                 round < game.rounds.length - 1
               }
-              duration={250}
+              duration={timings.default}
             >
               <BottomContainer>
                 <CTA onClick={() => Rune.actions.nextRound()}>

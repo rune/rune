@@ -11,6 +11,7 @@ import {
   simpleCSSTransitionStyles,
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
+import { timings } from "../animation/config"
 
 export function RoundInfo() {
   const game = useAtomValue($game)!
@@ -45,7 +46,7 @@ export function RoundInfo() {
             <Avatar src={myPlayer.avatarUrl} />
             <SimpleCSSTransition
               visible={!!guesses.find((guess) => guess.playerId === myPlayerId)}
-              duration={250}
+              duration={timings.default}
             >
               <AvatarCheckmarkContainer>
                 <AvatarCheckmark src={avatarCheckmarkImg} />
@@ -62,7 +63,7 @@ export function RoundInfo() {
                 visible={
                   !!guesses.find((guess) => guess.playerId === player.playerId)
                 }
-                duration={250}
+                duration={timings.default}
               >
                 <AvatarCheckmarkContainer>
                   <AvatarCheckmark src={avatarCheckmarkImg} />

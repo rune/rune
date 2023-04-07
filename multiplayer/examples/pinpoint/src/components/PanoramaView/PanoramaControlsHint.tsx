@@ -8,10 +8,11 @@ import {
   SimpleCSSTransition,
   simpleCSSTransitionStyles,
 } from "../animation/SimpleCSSTransition"
+import { timings } from "../animation/config"
 
 export function PanoramaControlsHint({ visible }: { visible: boolean }) {
   return (
-    <SimpleCSSTransition visible={visible} duration={250}>
+    <SimpleCSSTransition visible={visible} duration={timings.default}>
       <Root>
         <Top>
           <img src={arrowLeft} />

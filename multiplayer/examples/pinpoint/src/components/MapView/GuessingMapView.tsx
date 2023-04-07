@@ -15,6 +15,7 @@ import {
   simpleCSSTransitionStyles,
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
+import { timings } from "../animation/config"
 
 export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const game = useAtomValue($game)!
@@ -88,16 +89,16 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
             myGuess ? undefined : (location) => setPickedLocation(location)
           }
         />
-        <SimpleCSSTransition visible={hintShown} duration={250}>
+        <SimpleCSSTransition visible={hintShown} duration={timings.default}>
           <Hint>Tap to place your guess</Hint>
         </SimpleCSSTransition>
-        <SimpleCSSTransition visible={myGuessShown} duration={250}>
+        <SimpleCSSTransition visible={myGuessShown} duration={timings.default}>
           <Hint>You already guessed!</Hint>
         </SimpleCSSTransition>
         <BackButton src={backButtonImg} onClick={onBackClick} />
         <SimpleCSSTransition
           visible={!myGuess && !!pickedLocation}
-          duration={250}
+          duration={timings.default}
         >
           <CTAContainer>
             <CTA

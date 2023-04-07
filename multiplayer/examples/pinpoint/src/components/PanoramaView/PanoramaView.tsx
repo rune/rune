@@ -14,6 +14,7 @@ import {
   simpleCSSTransitionStyles,
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
+import { timings } from "../animation/config"
 
 export function PanoramaView({
   onOpenMapClick,
@@ -117,7 +118,10 @@ export function PanoramaView({
       {!isSpectator && (
         <MapBtnContainer onClick={onOpenMapClick}>
           {latestGuess && (
-            <SimpleCSSTransition visible={latestGuessShown} duration={250}>
+            <SimpleCSSTransition
+              visible={latestGuessShown}
+              duration={timings.default}
+            >
               <LatestGuess>
                 {players[latestGuess.playerId].displayName} made a guess
               </LatestGuess>
@@ -138,7 +142,7 @@ export function PanoramaView({
       )}
       <SimpleCSSTransition
         visible={meLastOneLeft && !meLastOneLeftHidden}
-        duration={250}
+        duration={timings.default}
       >
         <LabelContainer location="center">
           <Label>

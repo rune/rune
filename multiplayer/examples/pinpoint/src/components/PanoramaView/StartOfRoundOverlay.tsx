@@ -9,6 +9,7 @@ import {
   simpleCSSTransitionStyles,
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
+import { timings } from "../animation/config"
 
 export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
   const game = useAtomValue($game)!
@@ -19,7 +20,7 @@ export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
   const playersArray = useMemo(() => Object.values(players), [players])
 
   return (
-    <SimpleCSSTransition visible={visible} duration={250}>
+    <SimpleCSSTransition visible={visible} duration={timings.default}>
       <Root>
         <Box>
           <HeaderMapImg src={mapImg} />

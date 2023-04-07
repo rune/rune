@@ -183,6 +183,9 @@ const ContentRoot = styled.div`
 const ListContainer = styled.div`
   width: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   ${simpleCSSTransitionStyles({ right: "-100%" }, { right: 0 })};
 `
 

@@ -1,10 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { timings } from "../animation/config"
 
-function easeOutExpo(x: number): number {
-  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x)
-}
-
 export function AnimatedNumber({ value }: { value: number }) {
   const [renderedValue, setRenderedValue] = useState(value)
   const prevValue = useRef(value)
@@ -38,4 +34,8 @@ export function AnimatedNumber({ value }: { value: number }) {
   }, [value])
 
   return <>{renderedValue}</>
+}
+
+function easeOutExpo(x: number): number {
+  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x)
 }

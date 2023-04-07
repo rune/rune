@@ -3,21 +3,22 @@ export function animate(
   duration: number,
   onUpdate: (value: number) => void
 ) {
-  let handle = requestAnimationFrame(tick)
+  let timeoutHandle = setTimeout(tick, delay)
+  let animateHandle: number
   const start = Date.now() + delay
 
   function tick() {
-    if (Date.now() < start) {
-      handle = requestAnimationFrame(tick)
-      return
-    }
+    console.log("tick")
 
     const newValue = Math.min(1, (Date.now() - start) / duration)
 
     onUpdate(newValue)
 
-    if (newValue < 1) handle = requestAnimationFrame(tick)
+    if (newValue < 1) animateHandle = requestAnimationFrame(tick)
   }
 
-  return () => cancelAnimationFrame(handle)
+  return () => {
+    clearTimeout(timeoutHandle)
+    cancelAnimationFrame(animateHandle)
+  }
 }

@@ -12,7 +12,9 @@ export function AnimatedNumber({ value }: { value: number }) {
     prevValue.current = value
 
     const dispose = animate(0, timings.scoreIncrement, (step) => {
-      setRenderedValue(Math.round(easeOutExpo(step) * (value - oldValue)))
+      setRenderedValue(
+        oldValue + Math.round(easeOutExpo(step) * (value - oldValue))
+      )
     })
 
     return () => dispose()

@@ -122,7 +122,7 @@ export function OLMap({
       timings.default,
       (opacity) => {
         lines.forEach((line) => line.setOpacity(opacity))
-        map?.renderSync()
+        map?.render()
       }
     )
 
@@ -132,7 +132,7 @@ export function OLMap({
       timings.default,
       (opacity) => {
         distances.forEach((distance) => distance.setOpacity(opacity))
-        map?.renderSync()
+        map?.render()
       }
     )
 

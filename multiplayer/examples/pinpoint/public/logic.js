@@ -59,6 +59,7 @@ Rune.initLogic({
             }),
             {}
           ),
+          delayPopUp: true,
         })
       }
     },

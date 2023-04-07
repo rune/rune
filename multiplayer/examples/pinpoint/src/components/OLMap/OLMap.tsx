@@ -116,31 +116,31 @@ export function OLMap({
 
     map?.getLayers().push(layerGroup)
 
-    lines.forEach((line) => line.setOpacity(0))
-    const dispose1 = animate(
-      timings.mapLineDelay,
-      timings.default,
-      (opacity) => {
-        lines.forEach((line) => line.setOpacity(opacity))
-        map?.render()
-      }
-    )
+    const disposeCallbacks: (() => void)[] = [
+      () => map?.getLayers().remove(layerGroup),
+    ]
 
-    distances.forEach((distance) => distance.setOpacity(0))
-    const dispose2 = animate(
-      timings.mapDistanceDelay,
-      timings.default,
-      (opacity) => {
-        distances.forEach((distance) => distance.setOpacity(opacity))
-        map?.render()
-      }
-    )
-
-    return () => {
-      map?.getLayers().remove(layerGroup)
-      dispose1()
-      dispose2()
+    if (lines.length > 0) {
+      lines.forEach((line) => line.setOpacity(0))
+      disposeCallbacks.push(
+        animate(timings.mapLineDelay, timings.default, (opacity) => {
+          lines.forEach((line) => line.setOpacity(opacity))
+          map?.render()
+        })
+      )
     }
+
+    if (distances.length > 0) {
+      distances.forEach((distance) => distance.setOpacity(0))
+      disposeCallbacks.push(
+        animate(timings.mapDistanceDelay, timings.default, (opacity) => {
+          distances.forEach((distance) => distance.setOpacity(opacity))
+          map?.render()
+        })
+      )
+    }
+
+    return () => disposeCallbacks.forEach((cb) => cb())
   }, [map, pins])
 
   useEffect(() => {

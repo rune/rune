@@ -8,8 +8,6 @@ export function animate(
   const start = Date.now() + delay
 
   function tick() {
-    console.log("tick")
-
     const newValue = Math.min(1, (Date.now() - start) / duration)
 
     onUpdate(newValue)

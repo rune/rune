@@ -13,6 +13,10 @@ import { $game } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
 import { ScoreList } from "./ScoreList"
+import {
+  simpleCSSTransitionStyles,
+  SimpleCSSTransition,
+} from "../animation/SimpleCSSTransition"
 
 enum AnimationStep {
   map,
@@ -105,33 +109,49 @@ export function ScoreboardView() {
   return (
     <Root>
       <OLMap center={[0, 0]} zoom={0} pins={pins} autoFitPins />
-      {animationStep >= AnimationStep.background && (
-        <>
+      <SimpleCSSTransition
+        visible={animationStep >= AnimationStep.background}
+        duration={250}
+      >
+        <ContentRoot>
           <WhiteBackground />
           <GreenCircle src={greenCircleImg} />
-        </>
-      )}
-      {animationStep >= AnimationStep.old && (
-        <Content>
-          <Header>Scoreboard</Header>
-          <Subheader>
-            Round {round + 1}/{game.rounds.length}
-          </Subheader>
-          <ScoreList
-            scores={
-              animationStep >= AnimationStep.new
-                ? scoresOrdered
-                : scoresOrderedByPrevious
-            }
-            myPlayerId={myPlayerId}
-            show={
-              animationStep >= AnimationStep.new ? "score" : "previousScore"
-            }
-            showLatestScore={animationStep >= AnimationStep.latest}
-          />
-          {animationStep >= AnimationStep.cta &&
-            !isSpectator &&
-            round < game.rounds.length - 1 && (
+          <Content>
+            <Header>Scoreboard</Header>
+            <Subheader>
+              Round {round + 1}/{game.rounds.length}
+            </Subheader>
+
+            <SimpleCSSTransition
+              visible={animationStep >= AnimationStep.old}
+              duration={250}
+            >
+              <ListContainer>
+                <ScoreList
+                  scores={
+                    animationStep >= AnimationStep.new
+                      ? scoresOrdered
+                      : scoresOrderedByPrevious
+                  }
+                  myPlayerId={myPlayerId}
+                  show={
+                    animationStep >= AnimationStep.new
+                      ? "score"
+                      : "previousScore"
+                  }
+                  showLatestScore={animationStep >= AnimationStep.latest}
+                />
+              </ListContainer>
+            </SimpleCSSTransition>
+
+            <SimpleCSSTransition
+              visible={
+                animationStep >= AnimationStep.cta &&
+                !isSpectator &&
+                round < game.rounds.length - 1
+              }
+              duration={250}
+            >
               <BottomContainer>
                 <CTA onClick={() => Rune.actions.nextRound()}>
                   <PlayIcon src={playIcon} />
@@ -141,9 +161,10 @@ export function ScoreboardView() {
                   Invite more friends!
                 </InviteLink>
               </BottomContainer>
-            )}
-        </Content>
-      )}
+            </SimpleCSSTransition>
+          </Content>
+        </ContentRoot>
+      </SimpleCSSTransition>
     </Root>
   )
 }
@@ -153,6 +174,16 @@ const Root = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
+`
+
+const ContentRoot = styled.div`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
+`
+
+const ListContainer = styled.div`
+  width: 100%;
+  position: relative;
+  ${simpleCSSTransitionStyles({ right: "-100%" }, { right: 0 })};
 `
 
 const WhiteBackground = styled(Overlay)`
@@ -189,6 +220,7 @@ const Subheader = styled.div`
 `
 
 const BottomContainer = styled.div`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   display: flex;
   flex: 1;
   flex-direction: column;

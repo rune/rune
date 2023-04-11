@@ -4,6 +4,7 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@photo-sphere-viewer/core": "^5.1.4",
     "@photo-sphere-viewer/cubemap-tiles-adapter": "^5.1.4",
     "@types/lodash": "^4.14.192",

@@ -1,4 +1,10 @@
-import { useRef, useEffect, useState } from "react"
+import {
+  useRef,
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react"
 import Map from "ol/Map"
 import TileLayer from "ol/layer/Tile"
 import OSM from "ol/source/OSM"
@@ -18,6 +24,7 @@ import { guessDistanceLayer } from "./layers/guessDistanceLayer"
 import VectorLayer from "ol/layer/Vector"
 import { animate } from "../../lib/animate"
 import { timings } from "../animation/config"
+import { Pixel } from "ol/pixel"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -36,21 +43,31 @@ export type Pin =
       distanceText?: string
     }
 
-export function OLMap({
-  center,
-  zoom,
-  pins,
-  autoFitPins,
-  onClick,
-}: {
-  center: Coordinate
-  zoom: number
-  pins?: Pin[]
-  autoFitPins?: boolean
-  onClick?: (coords: Coordinate) => void
-}) {
+export interface MapRef {
+  getPixelFromCoordinate: (coordinate: Coordinate) => Pixel | undefined
+}
+
+export const OLMap = forwardRef<
+  MapRef,
+  {
+    center: Coordinate
+    zoom: number
+    pins?: Pin[]
+    autoFitPins?: boolean
+    onClick?: (coords: Coordinate) => void
+  }
+>(({ center, zoom, pins, autoFitPins, onClick }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<Map | null>(null)
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getPixelFromCoordinate: (coordinate: Coordinate) =>
+        map?.getPixelFromCoordinate(coordinate),
+    }),
+    [map]
+  )
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -163,7 +180,7 @@ export function OLMap({
   }, [autoFitPins, map, pins])
 
   return <Root ref={containerRef}></Root>
-}
+})
 
 const Root = styled.div`
   width: 100%;

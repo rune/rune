@@ -1,6 +1,6 @@
 import styled from "styled-components/macro"
-import { OLMap, Pin } from "../OLMap/OLMap"
-import React, { useMemo, useState, useEffect } from "react"
+import { OLMap, Pin, MapRef } from "../OLMap/OLMap"
+import React, { useMemo, useState, useEffect, useRef, useCallback } from "react"
 import { Coordinate } from "ol/coordinate"
 import { RoundInfo } from "./RoundInfo"
 import { Overlay } from "../Overlay"
@@ -16,6 +16,13 @@ import {
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
 import { timings } from "../animation/config"
+import { Player, PlayerEvent } from "@lottiefiles/react-lottie-player"
+
+import confettiAnimation from "./lottie/98540-celebrate.json"
+import { Pixel } from "ol/pixel"
+import { avatarSize } from "../OLMap/layers/guessLayer"
+
+const confettiSize = 300
 
 export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const game = useAtomValue($game)!
@@ -79,19 +86,38 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
     ]
   }, [myGuess, myPlayer, pickedLocation])
 
+  const mapRef = useRef<MapRef>(null)
+  const [confetti, setConfetti] = useState<Pixel>()
+
+  const onMapClick = useCallback(
+    (location: Coordinate) => {
+      if (myGuess) setAlreadyGuessedShown(true)
+      else setPickedLocation(location)
+    },
+    [myGuess]
+  )
+
+  const onConfirmClick = useCallback(() => {
+    if (!pickedLocation) return
+    Rune.actions.makeGuess(pickedLocation)
+    setConfetti(mapRef.current?.getPixelFromCoordinate(pickedLocation))
+  }, [pickedLocation])
+
+  const onConfettiEvent = useCallback((e: PlayerEvent) => {
+    if (e === "complete") setConfetti(undefined)
+  }, [])
+
   if (!myPlayer) return null
 
   return (
     <Root>
       <MapContainer>
         <OLMap
+          ref={mapRef}
           center={[0, 0]}
           zoom={0}
           pins={pins}
-          onClick={(location) => {
-            if (myGuess) setAlreadyGuessedShown(true)
-            else setPickedLocation(location)
-          }}
+          onClick={onMapClick}
         />
         <SimpleCSSTransition visible={hintShown} duration={timings.default}>
           <Hint>Tap to place your guess</Hint>
@@ -108,15 +134,21 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
           duration={timings.default}
         >
           <CTAContainer>
-            <CTA
-              onClick={() => {
-                Rune.actions.makeGuess(pickedLocation)
-              }}
-            >
-              Confirm Guess
-            </CTA>
+            <CTA onClick={onConfirmClick}>Confirm Guess</CTA>
           </CTAContainer>
         </SimpleCSSTransition>
+        {confetti && (
+          <Confetti
+            autoplay
+            keepLastFrame
+            src={confettiAnimation}
+            onEvent={onConfettiEvent}
+            style={{
+              top: confetti[1] - (confettiSize / 2) * 1.2 - avatarSize / 2,
+              left: confetti[0] - confettiSize / 2,
+            }}
+          />
+        )}
       </MapContainer>
       <RoundInfo />
     </Root>
@@ -175,4 +207,11 @@ export const CTA = styled.div`
   > :not(:first-child) {
     margin-left: 14px;
   }
+`
+
+const Confetti = styled(Player)`
+  position: absolute;
+  width: ${confettiSize}px;
+  height: ${confettiSize}px;
+  pointer-events: none;
 `

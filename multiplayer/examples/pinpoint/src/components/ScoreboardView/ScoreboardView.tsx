@@ -9,7 +9,7 @@ import playIcon from "./img/play.svg"
 import { Rune } from "../../lib/Rune"
 import { pickBestGuessRepresentation } from "../../lib/pickBestGuessRepresentation"
 import { useAtomValue } from "jotai"
-import { $game } from "../../state/game"
+import { $game, $guesses } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
 import { ScoreList } from "./ScoreList"
@@ -31,10 +31,7 @@ export function ScoreboardView() {
 
   const round = game.currentRound
   const panorama = game.rounds[round].panorama
-  const guesses = useMemo(
-    () => game.guesses.filter((guess) => guess.round === round),
-    [round, game.guesses]
-  )
+  const guesses = useAtomValue($guesses)
   const isSpectator = !myPlayerId
 
   const pins = useMemo<Pin[]>(() => {

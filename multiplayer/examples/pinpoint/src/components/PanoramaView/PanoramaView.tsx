@@ -6,7 +6,7 @@ import { PanoramaControlsHint } from "./PanoramaControlsHint"
 import mapBtnImg from "./img/mapBtn.svg"
 import { Overlay } from "../Overlay"
 import { useAtomValue } from "jotai"
-import { $game } from "../../state/game"
+import { $game, $myGuess, $guesses } from "../../state/game"
 import { $players } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
 import { useFlags } from "../../state/flags"
@@ -30,14 +30,8 @@ export function PanoramaView({
   const isSpectator = !myPlayerId
   const round = game.currentRound
   const panorama = game.rounds[game.currentRound].panorama
-  const guesses = useMemo(
-    () => game.guesses.filter((guess) => guess.round === round),
-    [game.guesses, round]
-  )
-  const myGuess = useMemo(
-    () => guesses.find((guess) => guess.playerId === myPlayerId),
-    [guesses, myPlayerId]
-  )
+  const guesses = useAtomValue($guesses)
+  const myGuess = useAtomValue($myGuess)
 
   const [overlay, setOverlay] = useState<"startOfRound" | "hint" | null>(null)
 

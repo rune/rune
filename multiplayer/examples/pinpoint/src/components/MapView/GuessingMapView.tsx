@@ -7,9 +7,8 @@ import { Overlay } from "../Overlay"
 import backButtonImg from "./img/backButton.svg"
 import { Rune } from "../../lib/Rune"
 import { useAtomValue } from "jotai"
-import { $game } from "../../state/game"
-import { $players } from "../../state/players"
-import { $myPlayerId } from "../../state/myPlayerId"
+import { $game, $myGuess } from "../../state/game"
+import { $players, $myPlayer } from "../../state/players"
 import { useFlags } from "../../state/flags"
 import {
   simpleCSSTransitionStyles,
@@ -28,22 +27,11 @@ const confettiSize = 300
 export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const game = useAtomValue($game)!
   const players = useAtomValue($players)!
-  const myPlayerId = useAtomValue($myPlayerId)
   const { isFlagSet, setFlag } = useFlags()
 
   const round = game.currentRound
-  const guesses = useMemo(
-    () => game.guesses.filter((guess) => guess.round === round),
-    [game.guesses, round]
-  )
-  const myGuess = useMemo(
-    () => guesses.find((guess) => guess.playerId === myPlayerId),
-    [guesses, myPlayerId]
-  )
-  const myPlayer = useMemo(
-    () => (myPlayerId ? players[myPlayerId] : undefined),
-    [players, myPlayerId]
-  )
+  const myGuess = useAtomValue($myGuess)
+  const myPlayer = useAtomValue($myPlayer)
 
   const [pickedLocation, setPickedLocation] = useState<Coordinate>()
   const [hintShown, setHintShown] = useState(

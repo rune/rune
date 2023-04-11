@@ -1,21 +1,19 @@
-import { useState, useRef, useEffect, useMemo } from "react"
+import { useState, useRef, useEffect } from "react"
 import { timings } from "../animation/config"
-import { useAtomValue } from "jotai"
-import { $game } from "../../state/game"
+import { useAtomValue, atom } from "jotai"
+import { $guesses } from "../../state/game"
 import { $myPlayerId } from "../../state/myPlayerId"
 
+const $latestGuessByOtherPlayer = atom((get) => {
+  const guesses = get($guesses)
+  const myPlayerId = get($myPlayerId)
+
+  return guesses.filter((guess) => guess.playerId !== myPlayerId).at(-1)
+})
+
 export function useLatestGuess() {
-  const game = useAtomValue($game)!
-  const round = game.currentRound
-  const myPlayerId = useAtomValue($myPlayerId)
-  const guesses = useMemo(
-    () => game.guesses.filter((guess) => guess.round === round),
-    [game.guesses, round]
-  )
-  const latestGuess = useMemo(
-    () => guesses.filter((guess) => guess.playerId !== myPlayerId).at(-1),
-    [guesses, myPlayerId]
-  )
+  const latestGuess = useAtomValue($latestGuessByOtherPlayer)
+
   const [latestGuessShown, setLatestGuessShown] = useState(false)
 
   const latestGuessRef = useRef(latestGuess)

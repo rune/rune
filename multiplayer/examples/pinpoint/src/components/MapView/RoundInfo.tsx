@@ -4,8 +4,8 @@ import invitePlayerImg from "./img/invitePlayer.svg"
 import avatarCheckmarkImg from "./img/avatarCheckmark.svg"
 import { Rune } from "../../lib/Rune"
 import { useAtomValue } from "jotai"
-import { $game } from "../../state/game"
-import { $players } from "../../state/players"
+import { $game, $guesses } from "../../state/game"
+import { $players, $myPlayer } from "../../state/players"
 import { $myPlayerId } from "../../state/myPlayerId"
 import {
   simpleCSSTransitionStyles,
@@ -19,14 +19,8 @@ export function RoundInfo() {
   const myPlayerId = useAtomValue($myPlayerId)
 
   const round = game.currentRound
-  const guesses = useMemo(
-    () => game.guesses.filter((guess) => guess.round === round),
-    [game.guesses, round]
-  )
-  const myPlayer = useMemo(
-    () => (myPlayerId ? players[myPlayerId] : undefined),
-    [players, myPlayerId]
-  )
+  const guesses = useAtomValue($guesses)
+  const myPlayer = useAtomValue($myPlayer)
   const remainingPlayers = useMemo(
     () =>
       Object.values(players).filter(({ playerId }) => playerId !== myPlayerId),

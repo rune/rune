@@ -48,6 +48,7 @@ export function ScoreboardView() {
       ...guesses.map((guess) => ({
         type: "guess" as const,
         location: pickBestGuessRepresentation(target, guess.location),
+        confirmed: true,
         targetLocation: target,
         avatarUrl: players[guess.playerId].avatarUrl,
         distanceText: formatDistance(guess.distance),

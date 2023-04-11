@@ -23,10 +23,14 @@ import { timings } from "../animation/config"
 useGeographic()
 
 export type Pin =
-  | { type: "flag"; location: Coordinate }
+  | {
+      type: "flag"
+      location: Coordinate
+    }
   | {
       type: "guess"
       location: Coordinate
+      confirmed: boolean
       targetLocation?: Coordinate
       avatarUrl: string
       distanceText?: string
@@ -104,7 +108,9 @@ export function OLMap({
       if (pin.type === "flag") {
         layerGroup.getLayers().push(flagLayer(source))
       } else if (pin.type === "guess") {
-        layerGroup.getLayers().push(guessLayer(source, pin.avatarUrl))
+        layerGroup
+          .getLayers()
+          .push(guessLayer(source, pin.avatarUrl, pin.confirmed))
 
         if (pin.distanceText) {
           const distance = guessDistanceLayer(source, pin.distanceText)

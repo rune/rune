@@ -10,7 +10,7 @@ export function guessDistanceLayer(source: VectorSource, distanceText: string) {
   })
 }
 
-export const textStyle = "700 13px sans-serif"
+export const textStyle = "700 13px Lexend"
 export const textPadding = 15
 
 function distanceTextStyle(text: string) {
@@ -45,7 +45,7 @@ function distanceTextStyle(text: string) {
       font: textStyle,
       fill: new Fill({ color: "#01a491" }),
       offsetX: offset + width / 2,
-      offsetY: -(avatarSize / 2 + (pinSize / 3) * 2) - 1,
+      offsetY: -(avatarSize / 2 + (pinSize / 3) * 2),
     }),
   })
 }

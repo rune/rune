@@ -50,18 +50,17 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
     }
   }, [hintShown, setFlag])
 
-  const [myGuessShown, setMyGuessShown] = useState(false)
+  const [alreadyGuessedShown, setAlreadyGuessedShown] = useState(false)
 
   useEffect(() => {
-    if (myGuess) {
-      setMyGuessShown(true)
+    if (alreadyGuessedShown) {
       const handle = setTimeout(
-        () => setMyGuessShown(false),
+        () => setAlreadyGuessedShown(false),
         timings.defaultDelay
       )
       return () => clearTimeout(handle)
     }
-  }, [myGuess])
+  }, [alreadyGuessedShown])
 
   const pins = useMemo<Pin[]>(() => {
     if (!myPlayer) return []
@@ -70,14 +69,15 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
 
     if (!location) return []
 
-    return [{ type: "guess", location, avatarUrl: myPlayer.avatarUrl }]
+    return [
+      {
+        type: "guess",
+        location,
+        confirmed: !!myGuess,
+        avatarUrl: myPlayer.avatarUrl,
+      },
+    ]
   }, [myGuess, myPlayer, pickedLocation])
-
-  const myGuessLocationShifted = useMemo(() => {
-    if (!myGuess) return null
-    const [x, y] = myGuess.location
-    return [x, y + 0.07]
-  }, [myGuess])
 
   if (!myPlayer) return null
 
@@ -85,17 +85,21 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
     <Root>
       <MapContainer>
         <OLMap
-          center={myGuessLocationShifted ?? [0, 0]}
-          zoom={myGuess ? 10 : 0}
+          center={[0, 0]}
+          zoom={0}
           pins={pins}
-          onClick={
-            myGuess ? undefined : (location) => setPickedLocation(location)
-          }
+          onClick={(location) => {
+            if (myGuess) setAlreadyGuessedShown(true)
+            else setPickedLocation(location)
+          }}
         />
         <SimpleCSSTransition visible={hintShown} duration={timings.default}>
           <Hint>Tap to place your guess</Hint>
         </SimpleCSSTransition>
-        <SimpleCSSTransition visible={myGuessShown} duration={timings.default}>
+        <SimpleCSSTransition
+          visible={alreadyGuessedShown}
+          duration={timings.default}
+        >
           <Hint>You already guessed!</Hint>
         </SimpleCSSTransition>
         <BackButton src={backButtonImg} onClick={onBackClick} />
@@ -107,7 +111,6 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
             <CTA
               onClick={() => {
                 Rune.actions.makeGuess(pickedLocation)
-                onBackClick()
               }}
             >
               Confirm Guess

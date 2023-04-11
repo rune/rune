@@ -21,6 +21,7 @@ import { Player, PlayerEvent } from "@lottiefiles/react-lottie-player"
 import confettiAnimation from "./lottie/98540-celebrate.json"
 import { Pixel } from "ol/pixel"
 import { avatarSize } from "../OLMap/layers/guessLayer"
+import { useLatestGuess } from "../PanoramaView/useLatestGuess"
 
 const confettiSize = 300
 
@@ -107,6 +108,8 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
     if (e === "complete") setConfetti(undefined)
   }, [])
 
+  const { latestGuess, latestGuessShown } = useLatestGuess()
+
   if (!myPlayer) return null
 
   return (
@@ -148,6 +151,16 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
               left: confetti[0] - confettiSize / 2,
             }}
           />
+        )}
+        {latestGuess && (
+          <SimpleCSSTransition
+            visible={latestGuessShown}
+            duration={timings.default}
+          >
+            <LatestGuess>
+              {players[latestGuess.playerId].displayName} made a guess
+            </LatestGuess>
+          </SimpleCSSTransition>
         )}
       </MapContainer>
       <RoundInfo />
@@ -192,7 +205,7 @@ const BackButton = styled.img`
 const CTAContainer = styled.div`
   ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   position: absolute;
-  bottom: 35px;
+  bottom: 45px;
 `
 
 export const CTA = styled.div`
@@ -214,4 +227,16 @@ const Confetti = styled(Player)`
   width: ${confettiSize}px;
   height: ${confettiSize}px;
   pointer-events: none;
+`
+
+const LatestGuess = styled.div`
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
+  position: absolute;
+  bottom: 7px;
+  background-color: rgba(1, 164, 145, 0.8);
+  border-radius: 17px;
+  font-weight: 700;
+  font-size: 11px;
+  color: white;
+  padding: 5px 10px;
 `

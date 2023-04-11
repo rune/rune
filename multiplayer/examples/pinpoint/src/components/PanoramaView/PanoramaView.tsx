@@ -1,6 +1,6 @@
 import styled from "styled-components/macro"
 import { PhotoSphereViewer } from "./PhotoSphereViewer"
-import React, { useState, useEffect, useMemo, useRef } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { StartOfRoundOverlay } from "./StartOfRoundOverlay"
 import { PanoramaControlsHint } from "./PanoramaControlsHint"
 import mapBtnImg from "./img/mapBtn.svg"
@@ -15,6 +15,7 @@ import {
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
 import { timings } from "../animation/config"
+import { useLatestGuess } from "./useLatestGuess"
 
 export function PanoramaView({
   onOpenMapClick,
@@ -37,7 +38,6 @@ export function PanoramaView({
     () => guesses.find((guess) => guess.playerId === myPlayerId),
     [guesses, myPlayerId]
   )
-  const latestGuess = useMemo(() => guesses.at(-1), [guesses])
 
   const [overlay, setOverlay] = useState<"startOfRound" | "hint" | null>(null)
 
@@ -76,24 +76,6 @@ export function PanoramaView({
     }
   }, [round, overlay, shouldShowHint])
 
-  const [latestGuessShown, setLatestGuessShown] = useState(false)
-
-  const latestGuessRef = useRef(latestGuess)
-  useEffect(() => {
-    if (latestGuessRef.current === latestGuess) return
-
-    latestGuessRef.current = latestGuess
-
-    if (latestGuess && latestGuess.playerId !== myPlayerId) {
-      setLatestGuessShown(true)
-      const handle = setTimeout(
-        () => setLatestGuessShown(false),
-        timings.defaultDelay
-      )
-      return () => clearTimeout(handle)
-    }
-  }, [latestGuess, myPlayerId])
-
   const meLastOneLeft = useMemo(
     () =>
       !isSpectator &&
@@ -115,6 +97,8 @@ export function PanoramaView({
       return () => clearTimeout(handle)
     }
   }, [meLastOneLeft])
+
+  const { latestGuess, latestGuessShown } = useLatestGuess()
 
   return (
     <Root>

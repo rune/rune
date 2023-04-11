@@ -96,16 +96,6 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 
 ## StateSync Event
 
-One of the requirements for games running on Rune is to support initializing the game at any possible moment: at the start of the game / in a middle of a fight / in a menu / in a game over state / etc.
-This is necessary since user can join the game as a spectator (or as a player if game supports [dynamic players](joining-leaving.md)) while game is already running.
+Games running on Rune should support initializing the game at any possible moment as someone can join as a spectator/player at any time. This could happen e.g. at the start of the game, in the middle of a match, or after game over. This initialization is done using the `stateSync` event. Additionally, the `stateSync` event is also used when restarting the game, reconnecting after an unexpected disconnect, or if the game crashes.
 
-In Rune this is implemented by using the `stateSync` event. This event always contains the current game state & players.
-
-`stateSync` event is used in the following scenarios:
-* Joining the room. When the game is loaded, it will wait for `stateSync`.
-* Restarting game (`stateSync` is sent from the server with the initial state returned by `setup` function).
-* Handling disconnects/reconnects. When user restores connection with the server it will wait for `stateSync` event before allowing to continue playing the game.
-* Handling client issues. If client crashes/reloads, it will request and wait for `stateSync`.
-
-Assuming your game is built in reactive way (always rerenders according to `visualUpdate` `newGame` argument) you don't need to worry about `stateSync` event.
-If your game has side effects, then you might need to specifically handle this event.
+Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `visualUpdate`'s `newGame` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.

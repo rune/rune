@@ -79,13 +79,13 @@ export function PanoramaView({
     [game.playerIds.length, guesses.length, isSpectator, myGuess]
   )
 
-  const [meLastOneLeftHidden, setMeLastOneLeftHidden] = useState(false)
+  const [meLastOneLeftShown, setMeLastOneLeftShown] = useState(false)
 
   useEffect(() => {
     if (meLastOneLeft) {
-      setMeLastOneLeftHidden(false)
+      setMeLastOneLeftShown(true)
       const handle = setTimeout(
-        () => setMeLastOneLeftHidden(true),
+        () => setMeLastOneLeftShown(false),
         timings.defaultDelay
       )
       return () => clearTimeout(handle)
@@ -125,7 +125,7 @@ export function PanoramaView({
         </LabelContainer>
       )}
       <SimpleCSSTransition
-        visible={meLastOneLeft && !meLastOneLeftHidden}
+        visible={meLastOneLeftShown}
         duration={timings.default}
       >
         <LabelContainer location="center">

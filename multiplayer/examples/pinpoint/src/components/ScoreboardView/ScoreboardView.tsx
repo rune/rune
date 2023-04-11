@@ -22,6 +22,7 @@ import {
   scoreboardAnimationStepTimings,
   ScoreboardAnimationStep,
 } from "../animation/config"
+import { sounds } from "../../sounds/sounds"
 import { formatDistance } from "../../lib/formatDistance"
 
 export function ScoreboardView() {
@@ -33,6 +34,10 @@ export function ScoreboardView() {
   const panorama = game.rounds[round].panorama
   const guesses = useAtomValue($guesses)
   const isSpectator = !myPlayerId
+
+  useEffect(() => {
+    sounds.resultsMap.play()
+  }, [])
 
   const pins = useMemo<Pin[]>(() => {
     const target = [panorama.longitude, panorama.latitude]
@@ -91,6 +96,12 @@ export function ScoreboardView() {
       scoreboardAnimationStepTimings[animationStep]
     )
     return () => clearTimeout(handle)
+  }, [animationStep])
+
+  useEffect(() => {
+    if (animationStep === ScoreboardAnimationStep.newScores) {
+      sounds.scoreIncrease.play()
+    }
   }, [animationStep])
 
   return (

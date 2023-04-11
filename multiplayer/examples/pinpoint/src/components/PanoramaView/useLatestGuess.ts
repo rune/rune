@@ -3,6 +3,7 @@ import { timings } from "../animation/config"
 import { useAtomValue, atom } from "jotai"
 import { $guesses } from "../../state/game"
 import { $myPlayerId } from "../../state/myPlayerId"
+import { sounds } from "../../sounds/sounds"
 
 const $latestGuessByOtherPlayer = atom((get) => {
   const guesses = get($guesses)
@@ -22,7 +23,10 @@ export function useLatestGuess() {
 
     latestGuessRef.current = latestGuess
 
-    if (latestGuess) setLatestGuessShown(true)
+    if (latestGuess) {
+      setLatestGuessShown(true)
+      sounds.otherPlayerGuess.play()
+    }
   }, [latestGuess])
 
   useEffect(() => {

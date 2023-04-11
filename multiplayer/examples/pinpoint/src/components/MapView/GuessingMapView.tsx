@@ -7,7 +7,7 @@ import { Overlay } from "../Overlay"
 import backButtonImg from "./img/backButton.svg"
 import { Rune } from "../../lib/Rune"
 import { useAtomValue } from "jotai"
-import { $game, $myGuess } from "../../state/game"
+import { $game, $myGuess, $guesses } from "../../state/game"
 import { $players, $myPlayer } from "../../state/players"
 import { useFlags } from "../../state/flags"
 import {
@@ -21,6 +21,7 @@ import confettiAnimation from "./lottie/98540-celebrate.json"
 import { Pixel } from "ol/pixel"
 import { avatarSize } from "../OLMap/layers/guessLayer"
 import { useLatestGuess } from "../PanoramaView/useLatestGuess"
+import { sounds } from "../../sounds/sounds"
 
 const confettiSize = 300
 
@@ -30,6 +31,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const { isFlagSet, setFlag } = useFlags()
 
   const round = game.currentRound
+  const guesses = useAtomValue($guesses)
   const myGuess = useAtomValue($myGuess)
   const myPlayer = useAtomValue($myPlayer)
 
@@ -86,11 +88,20 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
     [myGuess]
   )
 
+  const lastGuessBeforeEndOfRound = useMemo(
+    () => game.playerIds.length === guesses.length + 1,
+    [game.playerIds.length, guesses.length]
+  )
+
   const onConfirmClick = useCallback(() => {
     if (!pickedLocation) return
+
     Rune.actions.makeGuess(pickedLocation)
+
     setConfetti(mapRef.current?.getPixelFromCoordinate(pickedLocation))
-  }, [pickedLocation])
+
+    if (!lastGuessBeforeEndOfRound) sounds.guessSubmit.play()
+  }, [lastGuessBeforeEndOfRound, pickedLocation])
 
   const onConfettiEvent = useCallback((e: PlayerEvent) => {
     if (e === "complete") setConfetti(undefined)

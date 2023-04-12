@@ -121,7 +121,7 @@ export function PanoramaView({
       )}
       {isSpectator && (
         <LabelContainer location="top">
-          <Label>You are spectating 👀</Label>
+          <Label>You are spectating&nbsp;👀</Label>
         </LabelContainer>
       )}
       <SimpleCSSTransition

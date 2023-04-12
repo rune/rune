@@ -1,3 +1,4 @@
+import "ol/ol.css"
 import {
   useRef,
   useEffect,
@@ -6,15 +7,12 @@ import {
   useImperativeHandle,
 } from "react"
 import Map from "ol/Map"
-import TileLayer from "ol/layer/Tile"
-import OSM from "ol/source/OSM"
 import { useGeographic } from "ol/proj"
-import styled from "styled-components/macro"
-import View from "ol/View"
+import styled, { createGlobalStyle, css } from "styled-components/macro"
 import { Coordinate } from "ol/coordinate"
 import LayerGroup from "ol/layer/Group"
 import VectorSource from "ol/source/Vector"
-import { Feature, MapBrowserEvent } from "ol"
+import { Feature, MapBrowserEvent, View } from "ol"
 import { Point } from "ol/geom"
 import { createEmpty, extend } from "ol/extent"
 import { flagLayer } from "./layers/flagLayer"
@@ -25,6 +23,9 @@ import VectorLayer from "ol/layer/Vector"
 import { animate } from "../../lib/animate"
 import { timings } from "../animation/config"
 import { Pixel } from "ol/pixel"
+import { applyStyle } from "ol-mapbox-style"
+import { Attribution } from "ol/control"
+import VectorTileLayer from "ol/layer/VectorTile"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -72,11 +73,23 @@ export const OLMap = forwardRef<
   useEffect(() => {
     if (!containerRef.current) return
 
+    const attribution = new Attribution({ collapsible: false })
+
+    const vectorTileLayer = new VectorTileLayer({
+      declutter: true,
+      className: "base",
+    })
+
+    applyStyle(
+      vectorTileLayer,
+      "https://api.maptiler.com/maps/streets-v2/style.json?key=Bf09W8HTCpSRogf4976b"
+    )
+
     setMap(
       new Map({
-        controls: [],
+        controls: [attribution],
+        layers: [vectorTileLayer],
         target: containerRef.current,
-        layers: [new TileLayer({ source: new OSM() })],
         view: new View({ center: [0, 0], zoom: 0, enableRotation: false }),
       })
     )
@@ -104,6 +117,8 @@ export const OLMap = forwardRef<
   }, [map, zoom])
 
   useEffect(() => {
+    if (!map) return
+
     const lines: VectorLayer<VectorSource>[] = []
     const distances: VectorLayer<VectorSource>[] = []
 
@@ -137,10 +152,10 @@ export const OLMap = forwardRef<
       }
     }
 
-    map?.getLayers().push(layerGroup)
+    map.getLayers().push(layerGroup)
 
     const disposeCallbacks: (() => void)[] = [
-      () => map?.getLayers().remove(layerGroup),
+      () => map.getLayers().remove(layerGroup),
     ]
 
     if (lines.length > 0) {
@@ -148,7 +163,7 @@ export const OLMap = forwardRef<
       disposeCallbacks.push(
         animate(timings.mapLineDelay, timings.default, (opacity) => {
           lines.forEach((line) => line.setOpacity(opacity))
-          map?.render()
+          map.render()
         })
       )
     }
@@ -158,7 +173,7 @@ export const OLMap = forwardRef<
       disposeCallbacks.push(
         animate(timings.mapDistanceDelay, timings.default, (opacity) => {
           distances.forEach((distance) => distance.setOpacity(opacity))
-          map?.render()
+          map.render()
         })
       )
     }
@@ -176,13 +191,24 @@ export const OLMap = forwardRef<
 
     map
       ?.getView()
-      .fit(pinsExtent, { size: map?.getSize(), padding: [100, 100, 100, 100] })
+      .fit(pinsExtent, { size: map.getSize(), padding: [100, 100, 100, 100] })
   }, [autoFitPins, map, pins])
 
-  return <Root ref={containerRef}></Root>
+  return (
+    <>
+      <AttributionStyle />
+      <Root ref={containerRef} />
+    </>
+  )
 })
 
 const Root = styled.div`
   width: 100%;
   height: 100%;
 `
+
+const AttributionStyle = createGlobalStyle`${css`
+  .ol-attribution ul {
+    font-size: 8px;
+  }
+`}`

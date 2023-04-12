@@ -99,3 +99,5 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 Games running on Rune should support initializing the game at any possible moment as someone can join as a spectator/player at any time. This could happen e.g. at the start of the game, in the middle of a match, or after game over. This initialization is done using the `stateSync` event. Additionally, the `stateSync` event is also used when restarting the game, reconnecting after an unexpected disconnect, or if the game crashes.
 
 Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `visualUpdate`'s `newGame` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.
+
+You can test your game using the [Rune CLI](cli.md) by adding players/spectators joining at various times during your game session.  

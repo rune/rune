@@ -23,9 +23,9 @@ import VectorLayer from "ol/layer/Vector"
 import { animate } from "../../lib/animate"
 import { timings } from "../animation/config"
 import { Pixel } from "ol/pixel"
-import { applyStyle } from "ol-mapbox-style"
 import { Attribution } from "ol/control"
-import VectorTileLayer from "ol/layer/VectorTile"
+import TileLayer from "ol/layer/Tile"
+import { XYZ } from "ol/source"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -75,20 +75,27 @@ export const OLMap = forwardRef<
 
     const attribution = new Attribution({ collapsible: false })
 
-    const vectorTileLayer = new VectorTileLayer({
-      declutter: true,
-      className: "base",
-    })
+    // const vectorTileLayer = new VectorTileLayer({
+    //   declutter: true,
+    //   className: "base",
+    // })
+    //
+    // applyStyle(
+    //   vectorTileLayer,
+    //   "https://api.maptiler.com/maps/streets-v2/style.json?key=Bf09W8HTCpSRogf4976b"
+    // )
 
-    applyStyle(
-      vectorTileLayer,
-      "https://api.maptiler.com/maps/streets-v2/style.json?key=Bf09W8HTCpSRogf4976b"
-    )
+    const tileLayer = new TileLayer({
+      source: new XYZ({
+        url: "https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=Bf09W8HTCpSRogf4976b",
+        tilePixelRatio: 2,
+      }),
+    })
 
     setMap(
       new Map({
         controls: [attribution],
-        layers: [vectorTileLayer],
+        layers: [tileLayer],
         target: containerRef.current,
         view: new View({ center: [0, 0], zoom: 0, enableRotation: false }),
       })

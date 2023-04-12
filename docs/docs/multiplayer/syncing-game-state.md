@@ -93,3 +93,11 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 - The `visualUpdate` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.
 - The `game` state must be <1 MB and any `action` payload below <100 KB to avoid unnecessary network bandwidth usage.
 - The `game` state must be JSON-serializable (e.g. no classes/functions) so it can be sent over the network.
+
+## StateSync Event
+
+Games running on Rune should support initializing the game at any possible moment as someone can join as a spectator/player at any time. This could happen e.g. at the start of the game, in the middle of a match, or after game over. This initialization is done using the `stateSync` event. Additionally, the `stateSync` event is also used when restarting the game, reconnecting after an unexpected disconnect, or if the game crashes.
+
+Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `visualUpdate`'s `newGame` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.
+
+You can test your game using the [Rune CLI](cli.md) by adding players/spectators joining at various times during your game session.  

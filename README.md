@@ -4,11 +4,10 @@ Tiny SDK for making your HTML5 game run inside Rune for [Android](https://play.g
 
 ## Documentation
 
-- [Getting started](https://developers.rune.ai/docs/getting-started)
-- [Singleplayer setup](https://developers.rune.ai/docs/singleplayer/setup)
-- [Singleplayer SDK](https://developers.rune.ai/docs/api/singleplayer)
-- [Multiplayer setup](https://developers.rune.ai/docs/multiplayer/setup)
-- [Multiplayer SDK](https://developers.rune.ai/docs/api/multiplayer)
+- [Multiplayer intro](https://developers.rune.ai/docs/multiplayer/intro)
+- [Multiplayer SDK](https://developers.rune.ai/docs/multiplayer/api-reference)
+- [Singleplayer intro](https://developers.rune.ai/docs/singleplayer/intro)
+- [Singleplayer SDK](https://developers.rune.ai/docs/singleplayer/api-reference)
 
 ## Packages
 

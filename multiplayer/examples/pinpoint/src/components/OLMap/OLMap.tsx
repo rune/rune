@@ -1,3 +1,4 @@
+import "ol/ol.css"
 import {
   useRef,
   useEffect,
@@ -6,15 +7,12 @@ import {
   useImperativeHandle,
 } from "react"
 import Map from "ol/Map"
-import TileLayer from "ol/layer/Tile"
-import OSM from "ol/source/OSM"
 import { useGeographic } from "ol/proj"
-import styled from "styled-components/macro"
-import View from "ol/View"
+import styled, { createGlobalStyle, css } from "styled-components/macro"
 import { Coordinate } from "ol/coordinate"
 import LayerGroup from "ol/layer/Group"
 import VectorSource from "ol/source/Vector"
-import { Feature, MapBrowserEvent } from "ol"
+import { Feature, MapBrowserEvent, View } from "ol"
 import { Point } from "ol/geom"
 import { createEmpty, extend } from "ol/extent"
 import { flagLayer } from "./layers/flagLayer"
@@ -25,6 +23,8 @@ import VectorLayer from "ol/layer/Vector"
 import { animate } from "../../lib/animate"
 import { timings } from "../animation/config"
 import { Pixel } from "ol/pixel"
+import olms from "ol-mapbox-style"
+import { Attribution } from "ol/control"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -72,14 +72,26 @@ export const OLMap = forwardRef<
   useEffect(() => {
     if (!containerRef.current) return
 
-    setMap(
-      new Map({
-        controls: [],
-        target: containerRef.current,
-        layers: [new TileLayer({ source: new OSM() })],
-        view: new View({ center: [0, 0], zoom: 0, enableRotation: false }),
-      })
-    )
+    const myAPIKey = "e9cf25f026794fa6b42860ee635316d8"
+
+    const attribution = new Attribution({ collapsible: false })
+
+    const map = new Map({
+      controls: [attribution],
+      target: containerRef.current,
+      // layers: [new TileLayer({ source: new OSM() })],
+      view: new View({ center: [0, 0], zoom: 0, enableRotation: false }),
+    })
+
+    setMap(map)
+
+    olms(
+      map,
+      `https://maps.geoapify.com/v1/styles/osm-bright/style.json?apiKey=${myAPIKey}`
+    ).then((map) => {
+      console.log(map)
+      // you will get ol.Map instance here
+    })
   }, [])
 
   useEffect(() => {
@@ -179,10 +191,21 @@ export const OLMap = forwardRef<
       .fit(pinsExtent, { size: map?.getSize(), padding: [100, 100, 100, 100] })
   }, [autoFitPins, map, pins])
 
-  return <Root ref={containerRef}></Root>
+  return (
+    <>
+      <AttributionStyle />
+      <Root ref={containerRef} />
+    </>
+  )
 })
 
 const Root = styled.div`
   width: 100%;
   height: 100%;
 `
+
+const AttributionStyle = createGlobalStyle`${css`
+  .ol-attribution ul {
+    font-size: 8px;
+  }
+`}`

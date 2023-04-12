@@ -18,6 +18,7 @@
     "jotai": "^2.0.3",
     "lodash": "^4.17.21",
     "ol": "^7.3.0",
+    "ol-mapbox-style": "^10.4.0",
     "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

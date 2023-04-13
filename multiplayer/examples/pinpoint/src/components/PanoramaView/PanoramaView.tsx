@@ -1,6 +1,6 @@
 import styled from "styled-components/macro"
 import { PhotoSphereViewer } from "./PhotoSphereViewer"
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect, useMemo, useCallback } from "react"
 import { StartOfRoundOverlay } from "./StartOfRoundOverlay"
 import { PanoramaControlsHint } from "./PanoramaControlsHint"
 import mapBtnImg from "./img/mapBtn.svg"
@@ -63,11 +63,6 @@ export function PanoramaView({
       )
       return () => clearTimeout(handle)
     }
-
-    if (overlay === "hint") {
-      const handle = setTimeout(() => setOverlay(null), timings.delayLong)
-      return () => clearTimeout(handle)
-    }
   }, [round, overlay, shouldShowHint])
 
   const meLastOneLeft = useMemo(
@@ -81,9 +76,17 @@ export function PanoramaView({
 
   const { latestGuess, latestGuessShown } = useLatestGuess()
 
+  const onFirstInteraction = useCallback(() => {
+    setOverlay((overlay) => (overlay === "hint" ? null : overlay))
+  }, [])
+
   return (
     <Root>
-      <PhotoSphereViewer baseUrl={game.panoramasUrl} panorama={panorama} />
+      <PhotoSphereViewer
+        baseUrl={game.panoramasUrl}
+        panorama={panorama}
+        onFirstInteraction={onFirstInteraction}
+      />
       <StartOfRoundOverlay visible={overlay === "startOfRound"} />
       <PanoramaControlsHint visible={overlay === "hint"} />
       {!isSpectator && (

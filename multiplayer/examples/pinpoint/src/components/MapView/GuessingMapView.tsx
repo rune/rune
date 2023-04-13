@@ -41,11 +41,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   )
 
   useEffect(() => {
-    if (hintShown) {
-      setFlag("mapHintShown")
-      const handle = setTimeout(() => setHintShown(false), timings.delayLong)
-      return () => clearTimeout(handle)
-    }
+    if (hintShown) setFlag("mapHintShown")
   }, [hintShown, setFlag])
 
   const [alreadyGuessedShown, setAlreadyGuessedShown] = useState(false)
@@ -82,6 +78,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
 
   const onMapClick = useCallback(
     (location: Coordinate) => {
+      setHintShown(false)
       if (myGuess) setAlreadyGuessedShown(true)
       else setPickedLocation(location)
     },
@@ -109,6 +106,8 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
 
   const { latestGuess, latestGuessShown } = useLatestGuess()
 
+  const onFirstInteraction = useCallback(() => setHintShown(false), [])
+
   if (!myPlayer) return null
 
   return (
@@ -120,6 +119,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
           zoom={0}
           pins={pins}
           onClick={onMapClick}
+          onFirstInteraction={onFirstInteraction}
         />
         <SimpleCSSTransition visible={hintShown} duration={timings.default}>
           <Hint>Tap to place your guess</Hint>

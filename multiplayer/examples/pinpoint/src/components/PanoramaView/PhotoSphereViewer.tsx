@@ -42,9 +42,11 @@ const viewer = new Viewer({
 export function PhotoSphereViewer({
   baseUrl,
   panorama: { name, view, levels },
+  onFirstInteraction,
 }: {
   baseUrl: string
   panorama: Panorama
+  onFirstInteraction?: () => void
 }) {
   // eslint-disable-next-line no-restricted-globals
   const panoramaUrl = `${baseUrl}/${name}`
@@ -94,6 +96,9 @@ export function PhotoSphereViewer({
     [panoramaUrl, levels, view]
   )
 
+  const onFirstInteractionRef = useRef(onFirstInteraction)
+  onFirstInteractionRef.current = onFirstInteraction
+
   useEffect(() => {
     if (!viewer) return
 
@@ -104,13 +109,30 @@ export function PhotoSphereViewer({
       maxFov: view.maxFov,
     })
 
-    viewer.setPanorama(panorama, {
-      transition: true,
-      showLoader: false,
-      yaw: ((2 * Math.PI) / 360) * view.hLookAt,
-      pitch: (-Math.PI / 2 / 90) * view.vLookAt,
-      zoom: mapFovToZoom(90, view),
-    })
+    function onInteraction() {
+      onFirstInteractionRef.current?.()
+
+      viewer.removeEventListener("position-updated", onInteraction)
+      viewer.removeEventListener("zoom-updated", onInteraction)
+    }
+
+    viewer
+      .setPanorama(panorama, {
+        transition: true,
+        showLoader: false,
+        yaw: ((2 * Math.PI) / 360) * view.hLookAt,
+        pitch: (-Math.PI / 2 / 90) * view.vLookAt,
+        zoom: mapFovToZoom(90, view),
+      })
+      .then(() => {
+        viewer.addEventListener("position-updated", onInteraction)
+        viewer.addEventListener("zoom-updated", onInteraction)
+      })
+
+    return () => {
+      viewer.removeEventListener("position-updated", onInteraction)
+      viewer.removeEventListener("zoom-updated", onInteraction)
+    }
   }, [panorama, view])
 
   return <Root ref={containerRef} />

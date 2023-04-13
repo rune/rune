@@ -157,9 +157,11 @@ export function ScoreboardView() {
                   <PlayIcon src={playIcon} />
                   <span>Next Round</span>
                 </CTA>
-                <InviteLink onClick={() => Rune.showInvitePlayers()}>
-                  Invite more friends!
-                </InviteLink>
+                {Object.keys(players).length < 4 && (
+                  <InviteLink onClick={() => Rune.showInvitePlayers()}>
+                    Invite more friends!
+                  </InviteLink>
+                )}
               </BottomContainer>
             </SimpleCSSTransition>
           </Content>

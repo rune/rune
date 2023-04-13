@@ -128,6 +128,7 @@ const Name = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 20px;
+  flex: 1;
 `
 
 const Score = styled.div`
@@ -147,8 +148,10 @@ const LatestScore = styled.div`
   font-size: 13px;
   font-weight: 700;
   position: absolute;
-  right: 35px;
+  right: 30px;
   top: 2px;
+  width: 55px;
+  text-align: center;
 `
 
 const LatestScoreRight = styled(LatestScore)`

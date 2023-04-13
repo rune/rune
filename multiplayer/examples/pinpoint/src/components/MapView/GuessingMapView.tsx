@@ -213,7 +213,7 @@ export const CTA = styled.div`
   color: white;
   background-color: #f0750b;
   border-radius: 40px;
-  padding: 8px 42px;
+  padding: 10px 40px;
   display: flex;
   align-items: center;
   > :not(:first-child) {

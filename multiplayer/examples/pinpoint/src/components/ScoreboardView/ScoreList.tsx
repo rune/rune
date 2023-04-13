@@ -30,7 +30,11 @@ export function ScoreList({
 }) {
   const scoresFixedOrder = useMemo(
     () =>
-      sortBy(scores, (item) => item.player.playerId).map((item, i) => ({
+      sortBy(
+        scores,
+        (item) => -item.previousScore,
+        (item) => item.player.playerId
+      ).map((item, i) => ({
         ...item,
         offset: (scores.indexOf(item) - i) * (itemHeight + itemGap),
       })),

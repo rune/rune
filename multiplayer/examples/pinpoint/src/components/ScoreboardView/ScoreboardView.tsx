@@ -127,7 +127,8 @@ export function ScoreboardView() {
               <ListContainer>
                 <ScoreList
                   scores={
-                    animationStep >= ScoreboardAnimationStep.newScoreOrder
+                    animationStep >= ScoreboardAnimationStep.newScoreOrder ||
+                    round === 0
                       ? scoresOrdered
                       : scoresOrderedByPrevious
                   }

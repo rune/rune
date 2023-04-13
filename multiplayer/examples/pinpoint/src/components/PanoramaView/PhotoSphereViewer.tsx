@@ -129,9 +129,23 @@ export function PhotoSphereViewer({
         viewer.addEventListener("zoom-updated", onInteraction)
       })
 
+    function onZoomUpdated(e: { zoomLevel: number }) {
+      // adjust zoom speed to approximate linear zoom behavior
+      viewer.setOptions({
+        zoomSpeed: remap(
+          viewer.dataHelper.zoomLevelToFov(e.zoomLevel),
+          [0, 180],
+          [0.15, 1]
+        ),
+      })
+    }
+
+    viewer.addEventListener("zoom-updated", onZoomUpdated)
+
     return () => {
       viewer.removeEventListener("position-updated", onInteraction)
       viewer.removeEventListener("zoom-updated", onInteraction)
+      viewer.removeEventListener("zoom-updated", onZoomUpdated as any)
     }
   }, [panorama, view])
 

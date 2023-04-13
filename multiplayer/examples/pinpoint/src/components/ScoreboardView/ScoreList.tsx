@@ -157,5 +157,5 @@ const LatestScore = styled.div`
 const LatestScoreRight = styled(LatestScore)`
   top: inherit;
   bottom: 25px;
-  right: 20px;
+  right: 10px;
 `

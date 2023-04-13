@@ -216,6 +216,7 @@ export const create: Rule.RuleModule["create"] = (context) => {
            */
           if (
             node.parent.object !== node ||
+            node.parent.parent.type === "BinaryExpression" ||
             isRuntimeGlobalVariable(
               findVariable(node.parent.object.name, context.getScope())
             )

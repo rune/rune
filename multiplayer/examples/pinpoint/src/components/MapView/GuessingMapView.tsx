@@ -43,7 +43,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   useEffect(() => {
     if (hintShown) {
       setFlag("mapHintShown")
-      const handle = setTimeout(() => setHintShown(false), timings.defaultDelay)
+      const handle = setTimeout(() => setHintShown(false), timings.delayLong)
       return () => clearTimeout(handle)
     }
   }, [hintShown, setFlag])
@@ -54,7 +54,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
     if (alreadyGuessedShown) {
       const handle = setTimeout(
         () => setAlreadyGuessedShown(false),
-        timings.defaultDelay
+        timings.delayShort
       )
       return () => clearTimeout(handle)
     }

@@ -33,7 +33,7 @@ export function useLatestGuess() {
     if (latestGuess && latestGuessShown) {
       const handle = setTimeout(
         () => setLatestGuessShown(false),
-        timings.defaultDelay
+        timings.delayLong
       )
       return () => clearTimeout(handle)
     }

@@ -59,13 +59,13 @@ export function PanoramaView({
     if (overlay === "startOfRound") {
       const handle = setTimeout(
         () => setOverlay(shouldShowHint ? "hint" : null),
-        timings.defaultDelay
+        timings.delayShort
       )
       return () => clearTimeout(handle)
     }
 
     if (overlay === "hint") {
-      const handle = setTimeout(() => setOverlay(null), timings.defaultDelay)
+      const handle = setTimeout(() => setOverlay(null), timings.delayLong)
       return () => clearTimeout(handle)
     }
   }, [round, overlay, shouldShowHint])
@@ -86,7 +86,7 @@ export function PanoramaView({
       setMeLastOneLeftShown(true)
       const handle = setTimeout(
         () => setMeLastOneLeftShown(false),
-        timings.defaultDelay
+        timings.delayLong
       )
       return () => clearTimeout(handle)
     }

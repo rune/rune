@@ -79,19 +79,6 @@ export function PanoramaView({
     [game.playerIds.length, guesses.length, isSpectator, myGuess]
   )
 
-  const [meLastOneLeftShown, setMeLastOneLeftShown] = useState(false)
-
-  useEffect(() => {
-    if (meLastOneLeft) {
-      setMeLastOneLeftShown(true)
-      const handle = setTimeout(
-        () => setMeLastOneLeftShown(false),
-        timings.delayLong
-      )
-      return () => clearTimeout(handle)
-    }
-  }, [meLastOneLeft])
-
   const { latestGuess, latestGuessShown } = useLatestGuess()
 
   return (
@@ -120,15 +107,12 @@ export function PanoramaView({
         </MapBtnContainer>
       )}
       {isSpectator && (
-        <LabelContainer location="top">
+        <LabelContainer>
           <Label>You are spectating&nbsp;👀</Label>
         </LabelContainer>
       )}
-      <SimpleCSSTransition
-        visible={meLastOneLeftShown}
-        duration={timings.default}
-      >
-        <LabelContainer location="center">
+      <SimpleCSSTransition visible={meLastOneLeft} duration={timings.default}>
+        <LabelContainer>
           <Label>
             You're the last one left. It's time to guess the location!&nbsp;📍
           </Label>
@@ -187,13 +171,12 @@ const LatestGuess = styled.div`
   text-overflow: ellipsis;
 `
 
-const LabelContainer = styled(Overlay)<{ location: "top" | "center" }>`
+const LabelContainer = styled(Overlay)`
   ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: ${({ location }) =>
-    location === "top" ? "flex-start" : "center"};
+  justify-content: flex-start;
   padding: 20px 0;
   pointer-events: none;
 `

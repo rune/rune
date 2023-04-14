@@ -205,7 +205,9 @@ const BackButton = styled.img`
 const CTAContainer = styled.div`
   ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   position: absolute;
-  bottom: 45px;
+  bottom: 25px;
+  // clickable padding to prevent touching the map near the button
+  padding: 20px;
 `
 
 export const CTA = styled.div`

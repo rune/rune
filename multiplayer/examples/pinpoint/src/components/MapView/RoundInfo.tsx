@@ -81,6 +81,8 @@ export function RoundInfo() {
 const Root = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #d8f1e8;
+  padding-bottom: env(safe-area-inset-bottom, 20px);
 `
 
 const Header = styled.div`
@@ -96,7 +98,6 @@ const Header = styled.div`
 const Players = styled.div`
   display: flex;
   padding: 10px 2vw 5px;
-  background-color: #d8f1e8;
 `
 
 const Player = styled.div`

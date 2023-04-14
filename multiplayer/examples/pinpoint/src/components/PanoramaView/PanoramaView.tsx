@@ -136,17 +136,18 @@ const MapBtnContainer = styled.div`
 `
 
 const MapBtn = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 24vw;
+  height: 24vw;
   z-index: 0;
 `
 
 const MapBtnLabel = styled.div`
-  font-size: 8px;
+  font-size: 2.2vw;
+  line-height: 2.2vw;
+  bottom: 5vw;
   font-weight: 700;
   color: #1e6252;
   position: absolute;
-  bottom: 8px;
 `
 
 const LatestGuess = styled.div`

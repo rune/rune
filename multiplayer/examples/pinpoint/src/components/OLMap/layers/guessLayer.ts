@@ -46,9 +46,10 @@ export function guessLayer(
               image: new Icon({
                 anchor: [0.5, 0.5],
                 src: avatarUrl,
-                width: avatarSize - avatarBorder,
-                height: avatarSize - avatarBorder,
                 displacement: [0, avatarSize / 2 + (pinSize / 3) * 2],
+                // size and scale are used instead of width/height to avoid android issue which sometimes ignores width/height for some reason
+                size: [420, 420],
+                scale: (avatarSize - avatarBorder) / 420,
               }),
             }),
           ]

@@ -11,6 +11,7 @@ test("variable scope", {
     "const hest = 'snel'; if (hest = 'klad') { Rune.initLogic(); }",
     "const hest = 'snel'; if (hest === 'klad') { Rune.initLogic(hest); }",
     "const hest = 'snel'; () => { if (hest === 'snel') { return 'klad'; } }",
+    "const hest = { snel: true }; () => { if (hest.snel === true) { return 'klad'; } }",
     "parseInt('1')",
     "let hest; hest === undefined",
     "const hest = null",

@@ -41,29 +41,26 @@ export function PanoramaView({
   )
 
   useEffect(() => {
-    if (overlay !== null) return
+    if (!isFlagSet("startOfRoundShown")) setOverlay("startOfRound")
+  }, [round, game.sessionId, isFlagSet])
 
-    if (!myGuess && !isFlagSet("startOfRoundShown")) {
-      setOverlay("startOfRound")
-    } else if (shouldShowHint) {
+  useEffect(() => {
+    if (overlay === "startOfRound") {
+      const handle = setTimeout(() => setOverlay(null), timings.delayShort)
+      return () => clearTimeout(handle)
+    }
+  }, [overlay, game.sessionId])
+
+  useEffect(() => {
+    if (!overlay && isFlagSet("startOfRoundShown") && shouldShowHint) {
       setOverlay("hint")
     }
-  }, [isFlagSet, myGuess, overlay, shouldShowHint, game.sessionId])
+  }, [isFlagSet, overlay, shouldShowHint])
 
   useEffect(() => {
     if (overlay === "startOfRound") setFlag("startOfRoundShown")
     else if (overlay === "hint") setFlag("panoramaHintShown")
   }, [overlay, setFlag])
-
-  useEffect(() => {
-    if (overlay === "startOfRound") {
-      const handle = setTimeout(
-        () => setOverlay(shouldShowHint ? "hint" : null),
-        timings.delayShort
-      )
-      return () => clearTimeout(handle)
-    }
-  }, [round, overlay, shouldShowHint])
 
   const meLastOneLeft = useMemo(
     () =>

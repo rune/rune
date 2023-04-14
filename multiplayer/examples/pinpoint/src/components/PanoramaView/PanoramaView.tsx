@@ -41,14 +41,14 @@ export function PanoramaView({
   )
 
   useEffect(() => {
-    if (overlay !== null || isSpectator) return
+    if (overlay !== null) return
 
     if (!myGuess && !isFlagSet("startOfRoundShown")) {
       setOverlay("startOfRound")
     } else if (shouldShowHint) {
       setOverlay("hint")
     }
-  }, [isFlagSet, isSpectator, myGuess, overlay, shouldShowHint, game.sessionId])
+  }, [isFlagSet, myGuess, overlay, shouldShowHint, game.sessionId])
 
   useEffect(() => {
     if (overlay === "startOfRound") setFlag("startOfRoundShown")
@@ -89,26 +89,24 @@ export function PanoramaView({
       />
       <StartOfRoundOverlay visible={overlay === "startOfRound"} />
       <PanoramaControlsHint visible={overlay === "hint"} />
-      {!isSpectator && (
-        <MapBtnContainer onClick={onOpenMapClick}>
-          {latestGuess && (
-            <SimpleCSSTransition
-              visible={latestGuessShown}
-              duration={timings.default}
-            >
-              <LatestGuess>
-                {players[latestGuess.playerId].displayName} made a guess
-              </LatestGuess>
-            </SimpleCSSTransition>
-          )}
-          <MapBtn src={mapBtnImg} />
-          {game.playerIds.length > 1 && (
-            <MapBtnLabel>
-              {guesses.length}/{game.playerIds.length}
-            </MapBtnLabel>
-          )}
-        </MapBtnContainer>
-      )}
+      <MapBtnContainer onClick={onOpenMapClick}>
+        {latestGuess && (
+          <SimpleCSSTransition
+            visible={latestGuessShown}
+            duration={timings.default}
+          >
+            <LatestGuess>
+              {players[latestGuess.playerId].displayName} made a guess
+            </LatestGuess>
+          </SimpleCSSTransition>
+        )}
+        <MapBtn src={mapBtnImg} />
+        {game.playerIds.length > 1 && (
+          <MapBtnLabel>
+            {guesses.length}/{game.playerIds.length}
+          </MapBtnLabel>
+        )}
+      </MapBtnContainer>
       {isSpectator && (
         <LabelContainer>
           <Label>You are spectating&nbsp;👀</Label>

@@ -22,6 +22,7 @@ import { Pixel } from "ol/pixel"
 import { avatarSize } from "../OLMap/layers/guessLayer"
 import { useLatestGuess } from "../PanoramaView/useLatestGuess"
 import { sounds } from "../../sounds/sounds"
+import { $myPlayerId } from "../../state/myPlayerId"
 
 const confettiSize = 300
 
@@ -31,13 +32,14 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const { isFlagSet, setFlag } = useFlags()
 
   const round = game.currentRound
+  const isSpectator = !useAtomValue($myPlayerId)
   const guesses = useAtomValue($guesses)
   const myGuess = useAtomValue($myGuess)
   const myPlayer = useAtomValue($myPlayer)
 
   const [pickedLocation, setPickedLocation] = useState<Coordinate>()
   const [hintShown, setHintShown] = useState(
-    round === 0 && !myGuess && !isFlagSet("mapHintShown")
+    round === 0 && !myGuess && !isFlagSet("mapHintShown") && !isSpectator
   )
 
   useEffect(() => {
@@ -78,11 +80,12 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
 
   const onMapClick = useCallback(
     (location: Coordinate) => {
+      if (isSpectator) return
       setHintShown(false)
       if (myGuess) setAlreadyGuessedShown(true)
       else setPickedLocation(location)
     },
-    [myGuess]
+    [isSpectator, myGuess]
   )
 
   const lastGuessBeforeEndOfRound = useMemo(
@@ -107,8 +110,6 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const { latestGuess, latestGuessShown } = useLatestGuess()
 
   const onFirstInteraction = useCallback(() => setHintShown(false), [])
-
-  if (!myPlayer) return null
 
   return (
     <Root>

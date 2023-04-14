@@ -89,6 +89,10 @@ export const OLMap = forwardRef<
 
     const tileLayer = new TileLayer({
       source: new XYZ({
+        attributions: [
+          '<a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a>',
+          '<a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
+        ],
         url: "https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=Bf09W8HTCpSRogf4976b",
         tilePixelRatio: 2,
       }),
@@ -232,7 +236,10 @@ const Root = styled.div`
 `
 
 const AttributionStyle = createGlobalStyle`${css`
-  .ol-attribution ul {
-    font-size: 8px;
+  .ol-attribution {
+    background: rgba(255, 255, 255, 0.5) !important;
+    ul {
+      font-size: 8px;
+    }
   }
 `}`

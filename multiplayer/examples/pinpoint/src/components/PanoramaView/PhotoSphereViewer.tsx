@@ -37,6 +37,7 @@ const viewer = new Viewer({
   container: portal,
   adapter: [CubemapTilesAdapter, { flipTopBottom: true }],
   navbar: false,
+  loadingTxt: "",
 })
 
 export function PhotoSphereViewer({

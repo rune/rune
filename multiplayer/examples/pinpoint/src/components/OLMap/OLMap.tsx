@@ -26,7 +26,6 @@ import { Pixel } from "ol/pixel"
 import { Attribution } from "ol/control"
 import TileLayer from "ol/layer/Tile"
 import { XYZ } from "ol/source"
-import { DoubleClickZoom } from "ol/interaction"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -98,20 +97,14 @@ export const OLMap = forwardRef<
       }),
     })
 
-    const map = new Map({
-      controls: [attribution],
-      layers: [tileLayer],
-      target: containerRef.current,
-      view: new View({ center: [0, 0], zoom: 0, enableRotation: false }),
-    })
-
-    map.getInteractions().forEach((interaction) => {
-      if (interaction instanceof DoubleClickZoom) {
-        map.removeInteraction(interaction)
-      }
-    })
-
-    setMap(map)
+    setMap(
+      new Map({
+        controls: [attribution],
+        layers: [tileLayer],
+        target: containerRef.current,
+        view: new View({ center: [0, 0], zoom: 0, enableRotation: false }),
+      })
+    )
   }, [])
 
   useEffect(() => {

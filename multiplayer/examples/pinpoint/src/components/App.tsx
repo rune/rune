@@ -41,7 +41,7 @@ export function App() {
     setView("panorama")
   }, [game?.sessionId, game?.currentRound, unsetFlag])
 
-  if (!game || !players) return null
+  if (!game || !players) return <Root />
 
   return (
     <Root>
@@ -59,4 +59,11 @@ export function App() {
 const Root = styled.div`
   width: 100%;
   height: 100%;
+
+  background: linear-gradient(
+      0deg,
+      rgba(1, 164, 145, 0.5),
+      rgba(1, 164, 145, 0.5)
+    ),
+    rgba(216, 241, 232, 0.5);
 `

@@ -149,6 +149,7 @@ function getPanoramas() {
           tiles: 2,
         },
       ],
+      authorName: "Saša Stojanović",
     },
     {
       name: "wat-kiri-wong-nakhon-sawan-thailand",
@@ -168,6 +169,7 @@ function getPanoramas() {
           tiles: 2,
         },
       ],
+      authorName: "Jedsada Puangsaichai",
     },
     {
       name: "shaanxi-xian-the-eighth-wonder-of-the-world-museum-1-of-the-first-qin-emperor-terracotta-army-and-horses",
@@ -192,6 +194,7 @@ function getPanoramas() {
           tiles: 4,
         },
       ],
+      authorName: "yunzen liu",
     },
     {
       name: "trujillanos-square-spain",
@@ -221,6 +224,7 @@ function getPanoramas() {
           tiles: 8,
         },
       ],
+      authorName: "Lorenzo Valles Vila",
     },
     {
       name: "cas-borbuintze",
@@ -250,6 +254,7 @@ function getPanoramas() {
           tiles: 8,
         },
       ],
+      authorName: "Lukas Bischoff",
     },
     {
       name: "fachada-da-pusada-encontro-das-aguas-em-goncalves-mg",
@@ -274,6 +279,7 @@ function getPanoramas() {
           tiles: 4,
         },
       ],
+      authorName: "Luciano Correa | Vista Panoramica",
     },
     {
       name: "matala-beach-caves",
@@ -298,6 +304,7 @@ function getPanoramas() {
           tiles: 4,
         },
       ],
+      authorName: "Nick Spar",
     },
     {
       name: "teylers-museum-haarlem-the-oval-room",
@@ -322,6 +329,7 @@ function getPanoramas() {
           tiles: 4,
         },
       ],
+      authorName: "Henk-Jan de Jong",
     },
     {
       name: "swords-in-rock-3-norway",
@@ -346,6 +354,7 @@ function getPanoramas() {
           tiles: 4,
         },
       ],
+      authorName: "Alex Mayer",
     },
     {
       name: "prague-from-a-balloon",
@@ -365,6 +374,7 @@ function getPanoramas() {
           tiles: 2,
         },
       ],
+      authorName: "Jeffrey Martin",
     },
   ]
 }

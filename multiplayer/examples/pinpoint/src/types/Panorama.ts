@@ -14,4 +14,5 @@ export interface Panorama {
     size: number
     tiles: number
   }[]
+  authorName: string
 }

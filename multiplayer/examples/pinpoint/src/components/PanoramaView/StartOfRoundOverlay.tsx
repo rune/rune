@@ -18,6 +18,7 @@ export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
   const round = game.currentRound
   const maxRound = game.rounds.length
   const playersArray = useMemo(() => Object.values(players), [players])
+  const panorama = game.rounds[game.currentRound].panorama
 
   return (
     <SimpleCSSTransition visible={visible} duration={timings.default}>
@@ -36,6 +37,7 @@ export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
               <Name>{playersArray[0].displayName}</Name>
             )}
           </PlayersContainer>
+          <LabelSmall>Photo by {panorama.authorName}</LabelSmall>
         </Box>
       </Root>
     </SimpleCSSTransition>
@@ -77,17 +79,30 @@ const HeaderMapImg = styled.img`
 const Heading = styled.div`
   font-size: 20px;
   font-weight: 700;
+  margin-bottom: 5px;
 `
 
 const Label = styled.div`
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   font-size: 14px;
   font-weight: 300;
-  padding: 5px 0 15px;
+`
+
+const LabelSmall = styled(Label)`
+  font-size: 11px;
+  font-weight: 300;
 `
 
 const PlayersContainer = styled.div`
   background-color: #cff2e8;
   border-radius: 43px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   padding: 10px 14px;
   display: flex;
   align-items: center;

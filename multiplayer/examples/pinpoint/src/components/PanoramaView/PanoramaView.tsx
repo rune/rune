@@ -46,7 +46,7 @@ export function PanoramaView({
 
   useEffect(() => {
     if (overlay === "startOfRound") {
-      const handle = setTimeout(() => setOverlay(null), timings.delayShort)
+      const handle = setTimeout(() => setOverlay(null), timings.delayLong)
       return () => clearTimeout(handle)
     }
   }, [overlay, game.sessionId])

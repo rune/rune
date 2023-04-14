@@ -1,6 +1,6 @@
 import styled from "styled-components/macro"
 import { OLMap, Pin } from "../OLMap/OLMap"
-import { useMemo, useState, useEffect } from "react"
+import { useMemo, useState, useEffect, useCallback, useRef } from "react"
 import { Overlay } from "../Overlay"
 import greenCircleImg from "./img/greenCircle.svg"
 import sortBy from "lodash/sortBy"
@@ -104,11 +104,32 @@ export function ScoreboardView() {
     }
   }, [animationStep])
 
+  const [overlayHidden, setOverlayHidden] = useState(false)
+
+  const timeoutHandleRef = useRef<ReturnType<typeof setTimeout>>()
+
+  const onMapInteraction = useCallback(() => {
+    setOverlayHidden(true)
+    clearTimeout(timeoutHandleRef.current)
+    timeoutHandleRef.current = setTimeout(
+      () => setOverlayHidden(false),
+      timings.delayShort
+    )
+  }, [])
+
   return (
     <Root>
-      <OLMap center={[0, 0]} zoom={0} pins={pins} autoFitPins />
+      <OLMap
+        center={[0, 0]}
+        zoom={0}
+        pins={pins}
+        autoFitPins
+        onInteraction={onMapInteraction}
+      />
       <SimpleCSSTransition
-        visible={animationStep >= ScoreboardAnimationStep.background}
+        visible={
+          animationStep >= ScoreboardAnimationStep.background && !overlayHidden
+        }
         duration={timings.default}
       >
         <ContentRoot>
@@ -181,6 +202,7 @@ const Root = styled.div`
 
 const ContentRoot = styled.div`
   ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
+  pointer-events: none;
 `
 
 const ListContainer = styled.div`
@@ -194,7 +216,7 @@ const ListContainer = styled.div`
 
 const WhiteBackground = styled(Overlay)`
   background-color: white;
-  opacity: 0.8;
+  opacity: 0.6;
 `
 
 const GreenCircle = styled.img`
@@ -230,7 +252,8 @@ const BottomContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-bottom: 40px;
   align-items: center;
   > :not(:first-child) {
     margin-top: 25px;

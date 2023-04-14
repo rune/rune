@@ -109,7 +109,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
 
   const { latestGuess, latestGuessShown } = useLatestGuess()
 
-  const onFirstInteraction = useCallback(() => setHintShown(false), [])
+  const onInteraction = useCallback(() => setHintShown(false), [])
 
   return (
     <Root>
@@ -120,7 +120,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
           zoom={0}
           pins={pins}
           onClick={onMapClick}
-          onFirstInteraction={onFirstInteraction}
+          onInteraction={onInteraction}
         />
         <SimpleCSSTransition visible={hintShown} duration={timings.default}>
           <Hint>Tap to place your guess</Hint>
@@ -222,6 +222,7 @@ export const CTA = styled.div`
   > :not(:first-child) {
     margin-left: 14px;
   }
+  pointer-events: auto;
 `
 
 const Confetti = styled(Player)`

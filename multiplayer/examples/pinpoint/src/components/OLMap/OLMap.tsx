@@ -57,9 +57,9 @@ export const OLMap = forwardRef<
     pins?: Pin[]
     autoFitPins?: boolean
     onClick?: (coords: Coordinate) => void
-    onFirstInteraction?: () => void
+    onInteraction?: () => void
   }
->(({ center, zoom, pins, autoFitPins, onClick, onFirstInteraction }, ref) => {
+>(({ center, zoom, pins, autoFitPins, onClick, onInteraction }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<Map | null>(null)
 
@@ -124,13 +124,17 @@ export const OLMap = forwardRef<
     return () => map?.un("click", handler)
   }, [map, onClick])
 
-  const onFirstInteractionRef = useRef(onFirstInteraction)
-  onFirstInteractionRef.current = onFirstInteraction
+  const onInteractionRef = useRef(onInteraction)
+  onInteractionRef.current = onInteraction
 
   useEffect(() => {
-    map?.getView().once("change", () => {
-      onFirstInteractionRef.current?.()
-    })
+    function handler() {
+      onInteractionRef.current?.()
+    }
+
+    map?.getView().on("change", handler)
+
+    return () => map?.getView().un("change", handler)
   }, [map])
 
   useEffect(() => () => map?.dispose(), [map])

@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react"
-import { Rune } from "../lib/Rune"
 import styled from "styled-components/macro"
 import { PanoramaView } from "./PanoramaView/PanoramaView"
-import { GameState } from "../types/GameState"
 import { GuessingMapView } from "./MapView/GuessingMapView"
 import { ScoreboardView } from "./ScoreboardView/ScoreboardView"
 import { useAtom, useSetAtom } from "jotai"
@@ -20,7 +18,7 @@ export function App() {
   useEffect(() => {
     Rune.initClient({
       visualUpdate: ({ newGame, players, yourPlayerId }) => {
-        setGame(newGame as GameState)
+        setGame(newGame)
         setPlayers(players)
         setMyPlayerId(yourPlayerId)
       },

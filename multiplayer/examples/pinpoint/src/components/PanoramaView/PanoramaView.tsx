@@ -16,6 +16,7 @@ import {
 } from "../animation/SimpleCSSTransition"
 import { timings } from "../animation/config"
 import { useLatestGuess } from "./useLatestGuess"
+import { panoramasUrl } from "../../logic/logic"
 
 export function PanoramaView({
   onOpenMapClick,
@@ -80,7 +81,7 @@ export function PanoramaView({
   return (
     <Root>
       <PhotoSphereViewer
-        baseUrl={game.panoramasUrl}
+        baseUrl={panoramasUrl}
         panorama={panorama}
         onFirstInteraction={onFirstInteraction}
       />

@@ -10,7 +10,7 @@ import { Cubemap } from "@photo-sphere-viewer/cubemap-adapter"
 
 import { remap } from "../../lib/remap"
 import styled from "styled-components/macro"
-import { Panorama } from "../../types/Panorama"
+import { Panorama } from "../../logic/types/Panorama"
 import { timings } from "../animation/config"
 
 const zoomRanges = [

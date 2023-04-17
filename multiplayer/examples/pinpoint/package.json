@@ -7,6 +7,7 @@
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@photo-sphere-viewer/core": "^5.1.4",
     "@photo-sphere-viewer/cubemap-tiles-adapter": "^5.1.4",
+    "@rollup/plugin-typescript": "^11.1.0",
     "@types/howler": "^2.2.7",
     "@types/lodash": "^4.14.192",
     "@types/node": "^16.7.13",
@@ -23,14 +24,16 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.5",
+    "rollup": "^3.20.4",
+    "rollup-plugin-strip-exports": "^2.0.7",
     "rune-games-sdk": "^4.6.0",
     "sass": "^1.60.0",
     "styled-components": "^5.3.6",
     "typescript": "^4.4.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "rollup -c --watch & react-scripts start",
+    "build": "rollup -c && react-scripts build"
   },
   "eslintConfig": {
     "extends": [

@@ -3,7 +3,6 @@ import { Coordinate } from "ol/coordinate"
 
 export interface GameState {
   sessionId: number
-  panoramasUrl: string
   playerIds: string[]
   rounds: { panorama: Panorama }[]
   currentRound: number

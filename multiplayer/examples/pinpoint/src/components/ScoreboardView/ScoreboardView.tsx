@@ -267,4 +267,5 @@ const InviteLink = styled.div`
   font-size: 13px;
   font-weight: 400;
   color: #01a491;
+  pointer-events: auto;
 `

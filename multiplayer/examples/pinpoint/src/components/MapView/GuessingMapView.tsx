@@ -154,7 +154,6 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
           <Confetti
             autoplay
             keepLastFrame
-            speed={0.1}
             src={confettiAnimation}
             onEvent={onConfettiEvent}
             style={{

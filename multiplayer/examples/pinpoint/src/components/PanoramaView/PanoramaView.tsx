@@ -128,8 +128,8 @@ const Root = styled.div`
 `
 const MapBtnContainer = styled.div`
   position: absolute;
-  bottom: 15px;
-  right: 20px;
+  bottom: 8px;
+  right: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -137,15 +137,15 @@ const MapBtnContainer = styled.div`
 `
 
 const MapBtn = styled.img`
-  width: 24vw;
-  height: 24vw;
+  width: 28vw;
+  height: 28vw;
   z-index: 0;
 `
 
 const MapBtnLabel = styled.div`
-  font-size: 2.2vw;
-  line-height: 2.2vw;
-  bottom: 5vw;
+  font-size: 3vw;
+  line-height: 3vw;
+  bottom: 6vw;
   font-weight: 700;
   color: #1e6252;
   position: absolute;

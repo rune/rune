@@ -81,7 +81,7 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #d8f1e8;
-  padding-bottom: env(safe-area-inset-bottom, 20px);
+  padding-bottom: min(env(safe-area-inset-bottom), 10px);
 `
 
 const Header = styled.div`

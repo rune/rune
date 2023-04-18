@@ -46,6 +46,7 @@ export type Pin =
 
 export interface MapRef {
   getPixelFromCoordinate: (coordinate: Coordinate) => Pixel | undefined
+  getView: () => View | undefined
 }
 
 export const OLMap = forwardRef<
@@ -67,6 +68,7 @@ export const OLMap = forwardRef<
     () => ({
       getPixelFromCoordinate: (coordinate: Coordinate) =>
         map?.getPixelFromCoordinate(coordinate),
+      getView: () => map?.getView(),
     }),
     [map]
   )

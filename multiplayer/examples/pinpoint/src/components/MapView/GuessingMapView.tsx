@@ -5,7 +5,7 @@ import { Coordinate } from "ol/coordinate"
 import { RoundInfo } from "./RoundInfo"
 import { Overlay } from "../Overlay"
 import backButtonImg from "./img/backButton.svg"
-import { useAtomValue } from "jotai"
+import { useAtomValue, useAtom } from "jotai"
 import { $game, $myGuess, $guesses } from "../../state/game"
 import { $players, $myPlayer } from "../../state/players"
 import { useFlags } from "../../state/flags"
@@ -22,6 +22,7 @@ import { avatarSize } from "../OLMap/layers/guessLayer"
 import { useLatestGuess } from "../PanoramaView/useLatestGuess"
 import { sounds } from "../../sounds/sounds"
 import { $myPlayerId } from "../../state/myPlayerId"
+import { $pendingGuess, $guessingMapView } from "../../state/guessingMap"
 
 const confettiSize = 300
 
@@ -36,10 +37,11 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const myGuess = useAtomValue($myGuess)
   const myPlayer = useAtomValue($myPlayer)
 
-  const [pickedLocation, setPickedLocation] = useState<Coordinate>()
+  const [pendingGuess, setPendingGuess] = useAtom($pendingGuess)
   const [hintShown, setHintShown] = useState(
     round === 0 && !myGuess && !isFlagSet("mapHintShown") && !isSpectator
   )
+  const [guessingMapView, setGuessingMapView] = useAtom($guessingMapView)
 
   useEffect(() => {
     if (hintShown) setFlag("mapHintShown")
@@ -60,7 +62,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const pins = useMemo<Pin[]>(() => {
     if (!myPlayer) return []
 
-    const location = myGuess?.location ?? pickedLocation
+    const location = myGuess?.location ?? pendingGuess
 
     if (!location) return []
 
@@ -72,7 +74,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
         avatarUrl: myPlayer.avatarUrl,
       },
     ]
-  }, [myGuess, myPlayer, pickedLocation])
+  }, [myGuess, myPlayer, pendingGuess])
 
   const mapRef = useRef<MapRef>(null)
   const [confetti, setConfetti] = useState<Pixel>()
@@ -82,9 +84,9 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
       if (isSpectator) return
       setHintShown(false)
       if (myGuess) setAlreadyGuessedShown(true)
-      else setPickedLocation(location)
+      else setPendingGuess(location)
     },
-    [isSpectator, myGuess]
+    [isSpectator, myGuess, setPendingGuess]
   )
 
   const lastGuessBeforeEndOfRound = useMemo(
@@ -93,14 +95,14 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   )
 
   const onConfirmClick = useCallback(() => {
-    if (!pickedLocation) return
+    if (!pendingGuess) return
 
-    Rune.actions.makeGuess(pickedLocation)
+    Rune.actions.makeGuess(pendingGuess)
 
-    setConfetti(mapRef.current?.getPixelFromCoordinate(pickedLocation))
+    setConfetti(mapRef.current?.getPixelFromCoordinate(pendingGuess))
 
     if (!lastGuessBeforeEndOfRound) sounds.guessSubmit.play()
-  }, [lastGuessBeforeEndOfRound, pickedLocation])
+  }, [lastGuessBeforeEndOfRound, pendingGuess])
 
   const onConfettiEvent = useCallback((e: PlayerEvent) => {
     if (e === "complete") setConfetti(undefined)
@@ -108,15 +110,24 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
 
   const { latestGuess, latestGuessShown } = useLatestGuess()
 
-  const onInteraction = useCallback(() => setHintShown(false), [])
+  const onInteraction = useCallback(() => {
+    setHintShown(false)
+
+    const view = mapRef.current?.getView()
+    const [center, zoom] = [view?.getCenter(), view?.getZoom()]
+
+    if (center && zoom) {
+      setGuessingMapView({ center, zoom })
+    }
+  }, [setGuessingMapView])
 
   return (
     <Root>
       <MapContainer>
         <OLMap
           ref={mapRef}
-          center={[0, 0]}
-          zoom={0}
+          center={guessingMapView.center}
+          zoom={guessingMapView.zoom}
           pins={pins}
           onClick={onMapClick}
           onInteraction={onInteraction}
@@ -132,7 +143,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
         </SimpleCSSTransition>
         <BackButton src={backButtonImg} onClick={onBackClick} />
         <SimpleCSSTransition
-          visible={!myGuess && !!pickedLocation}
+          visible={!myGuess && !!pendingGuess}
           duration={timings.default}
         >
           <CTAContainer>

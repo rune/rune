@@ -8,12 +8,15 @@ import { $game } from "../state/game"
 import { $players } from "../state/players"
 import { $myPlayerId } from "../state/myPlayerId"
 import { useFlags } from "../state/flags"
+import { $pendingGuess, $guessingMapView } from "../state/guessingMap"
 
 export function App() {
   const [game, setGame] = useAtom($game)
   const [players, setPlayers] = useAtom($players)
   const setMyPlayerId = useSetAtom($myPlayerId)
   const { unsetFlag } = useFlags()
+  const setPendingGuess = useSetAtom($pendingGuess)
+  const setGuessingMapView = useSetAtom($guessingMapView)
 
   useEffect(() => {
     Rune.initClient({
@@ -37,7 +40,15 @@ export function App() {
   useEffect(() => {
     unsetFlag("startOfRoundShown")
     setView("panorama")
-  }, [game?.sessionId, game?.currentRound, unsetFlag])
+    setPendingGuess(null)
+    setGuessingMapView({ center: [0, 0], zoom: 0 })
+  }, [
+    game?.sessionId,
+    game?.currentRound,
+    unsetFlag,
+    setPendingGuess,
+    setGuessingMapView,
+  ])
 
   if (!game || !players) return <Root />
 

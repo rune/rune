@@ -42,10 +42,6 @@ export function ScoreboardView() {
     const target = [panorama.longitude, panorama.latitude]
 
     return [
-      {
-        type: "flag" as const,
-        location: target,
-      },
       ...guesses.map((guess) => ({
         type: "guess" as const,
         location: pickBestGuessRepresentation(target, guess.location),
@@ -54,6 +50,10 @@ export function ScoreboardView() {
         avatarUrl: players[guess.playerId].avatarUrl,
         distanceText: formatDistance(guess.distance),
       })),
+      {
+        type: "flag" as const,
+        location: target,
+      },
     ]
   }, [guesses, panorama.latitude, panorama.longitude, players])
 

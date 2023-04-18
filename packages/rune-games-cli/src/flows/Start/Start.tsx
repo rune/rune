@@ -57,7 +57,9 @@ export function Start() {
         .then(([indexHtml, logicJs]) => {
           const gameFiles = [
             { content: indexHtml, path: "index.html", size: indexHtml.length },
-            { content: logicJs, path: "logic.js", size: logicJs.length },
+            ...(logicJs
+              ? [{ content: logicJs, path: "logic.js", size: logicJs.length }]
+              : []),
           ]
 
           setGameFiles(gameFiles)

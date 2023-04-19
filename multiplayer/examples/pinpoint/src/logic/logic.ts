@@ -5,7 +5,6 @@ import { calculateDistanceKm } from "../lib/calculateDistanceKm"
 import { calculateScore } from "../lib/calculateScore"
 import { getPanoramas } from "./data/getPanoramas"
 
-export const panoramasUrl = "https://games-staging.rune.ai/panoramas-test"
 const numRounds = 5
 
 Rune.initLogic({

@@ -25,7 +25,6 @@
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.5",
     "rollup": "^3.20.4",
-    "rollup-plugin-strip-exports": "^2.0.7",
     "rune-games-sdk": "^4.6.0",
     "sass": "^1.60.0",
     "styled-components": "^5.3.6",

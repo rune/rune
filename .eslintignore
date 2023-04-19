@@ -5,3 +5,5 @@ singleplayer/examples
 packages/rune-games-cli/app/
 packages/rune-games-cli/__temp/
 packages/rune-games-cli/src/generated/
+packages/rune-games-cli/cjs/
+multiplayer/examples/sudoku/

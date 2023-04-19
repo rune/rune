@@ -23,6 +23,7 @@
     "rollup": "^3.20.4",
     "rune-games-sdk": "^4.6.0",
     "styled-components": "^5.3.6",
+    "sudoku-gen": "^1.0.0",
     "typescript": "^4.4.2"
   },
   "scripts": {

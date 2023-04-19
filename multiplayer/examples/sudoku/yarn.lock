@@ -8314,6 +8314,11 @@ sucrase@^3.29.0:
     pirates "^4.0.1"
     ts-interface-checker "^0.1.9"
 
+sudoku-gen@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/sudoku-gen/-/sudoku-gen-1.0.0.tgz#742160e8c6d9bcb6ac0e8319d8f86ba9bb1a36b7"
+  integrity sha512-mqYlD/bNy8rgyt3N98+aRezeN580IbcaTLpmqkX5WePDObqCvZ+0skIn+I8d3ijcEA/ftt10/a6qQXsnkYWYTQ==
+
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"

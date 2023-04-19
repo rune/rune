@@ -12,5 +12,3 @@ yarn-error.log
 !.vscode/tasks.json
 .idea
 dist/
-
-multiplayer/examples/pinpoint/public/logic.js

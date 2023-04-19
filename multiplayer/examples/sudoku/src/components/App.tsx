@@ -1,48 +1,25 @@
 import React, { useEffect } from "react"
 import styled from "styled-components/macro"
-import { getSudoku } from "sudoku-gen"
-
-const sudoku = getSudoku("easy")
-
-const board = sudoku.puzzle.split("").reduce((acc, cell, i) => {
-  const row = Math.floor(i / 9)
-  const col = i % 9
-
-  if (!acc[row]) acc[row] = []
-  acc[row][col] = cell
-
-  return acc
-}, [] as string[][])
+import { Board } from "./Board"
+import { GameState } from "../logic/types/GameState"
 
 export function App() {
+  const [game, setGame] = React.useState<GameState | undefined>()
+
   useEffect(() => {
     Rune.initClient({
       visualUpdate: ({ newGame, players, yourPlayerId }) => {
         console.log("visualUpdate", { newGame, players, yourPlayerId })
+        setGame(newGame)
       },
     })
   }, [])
 
+  if (!game) return null
+
   return (
     <Root>
-      {board.map((row, i) => (
-        <div style={{ display: "flex" }} key={i}>
-          {row.map((cell, j) => (
-            <div
-              key={j}
-              style={{
-                width: `${100 / 9}vw`,
-                height: `${100 / 9}vw`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {cell}
-            </div>
-          ))}
-        </div>
-      ))}
+      <Board sudoku={game.sudoku} />
     </Root>
   )
 }
@@ -50,4 +27,5 @@ export function App() {
 const Root = styled.div`
   width: 100%;
   height: 100%;
+  background: linear-gradient(180deg, #1e2e44 0%, #423e3d 100%);
 `

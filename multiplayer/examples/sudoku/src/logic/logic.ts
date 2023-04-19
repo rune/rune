@@ -1,14 +1,16 @@
 /* eslint no-undef: 0 */
 
+import { getSudoku } from "sudoku-gen"
+
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
-  setup: () => {
-    return {}
-  },
+  setup: () => ({
+    sudoku: getSudoku("hard"),
+  }),
   actions: {},
-  events: {},
+  events: {
+    playerJoined: () => {},
+    playerLeft: () => {},
+  },
 })
-
-// todo: remove once we have 1 import
-export {}

@@ -4,6 +4,8 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-typescript": "^11.1.0",
     "@types/howler": "^2.2.7",
     "@types/lodash": "^4.14.192",

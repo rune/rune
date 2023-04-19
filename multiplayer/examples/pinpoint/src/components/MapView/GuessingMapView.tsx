@@ -184,6 +184,10 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: absolute;
+  top: 0;
+  background: linear-gradient(0deg, rgba(1, 164, 145, 1), rgba(1, 164, 145, 1)),
+    rgba(216, 241, 232, 1);
 `
 
 const MapContainer = styled.div`

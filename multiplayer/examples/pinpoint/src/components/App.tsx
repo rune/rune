@@ -56,11 +56,15 @@ export function App() {
     <Root>
       {roundFinished ? (
         <ScoreboardView />
-      ) : view === "panorama" ? (
-        <PanoramaView onOpenMapClick={() => setView("map")} />
-      ) : view === "map" ? (
-        <GuessingMapView onBackClick={() => setView("panorama")} />
-      ) : null}
+      ) : (
+        <>
+          {/* we're always keeping panorama rendered in the background to avoid a white flash */}
+          <PanoramaView onOpenMapClick={() => setView("map")} />
+          {view === "map" && (
+            <GuessingMapView onBackClick={() => setView("panorama")} />
+          )}
+        </>
+      )}
     </Root>
   )
 }

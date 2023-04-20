@@ -10,7 +10,7 @@ export function Digits() {
 
   if (!yourSelection || !board) return null
 
-  const assumedValueAge = board[cellPointer(yourSelection)].valueAge
+  const clientValueLock = board[cellPointer(yourSelection)].valueLock
 
   return (
     <Root>
@@ -18,7 +18,7 @@ export function Digits() {
         {range(1, 6).map((value) => (
           <Digit
             key={value}
-            onClick={() => Rune.actions.setValue({ value, assumedValueAge })}
+            onClick={() => Rune.actions.setValue({ value, clientValueLock })}
           >
             {value}
           </Digit>
@@ -28,14 +28,14 @@ export function Digits() {
         {range(6, 10).map((value) => (
           <Digit
             key={value}
-            onClick={() => Rune.actions.setValue({ value, assumedValueAge })}
+            onClick={() => Rune.actions.setValue({ value, clientValueLock })}
           >
             {value}
           </Digit>
         ))}
         <Digit
           onClick={() =>
-            Rune.actions.setValue({ value: null, assumedValueAge })
+            Rune.actions.setValue({ value: null, clientValueLock })
           }
         >
           {"<"}

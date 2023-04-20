@@ -40,7 +40,7 @@ Rune.initLogic({
 
       const board: Cell[] = sudoku.puzzle.split("").map((value, index) => ({
         value: value === "-" ? null : parseInt(value),
-        valueAge: 0,
+        valueLock: Math.random(),
         fixed: value !== "-",
         correctValue: parseInt(sudoku.solution[index]),
       }))
@@ -55,18 +55,17 @@ Rune.initLogic({
 
       game.playerState[playerId].selection = coordinate
     },
-    setValue: ({ value, assumedValueAge }, { game, playerId }) => {
+    setValue: ({ value, clientValueLock }, { game, playerId }) => {
       if (!game.sudoku) throw Rune.invalidAction()
 
       const selection = game.playerState[playerId].selection
       const cell = game.sudoku.board[cellPointer(selection)]
 
       if (cell.fixed) throw Rune.invalidAction()
-
-      if (cell.valueAge !== assumedValueAge) throw Rune.invalidAction()
+      if (cell.valueLock !== clientValueLock) throw Rune.invalidAction()
 
       cell.value = value
-      cell.valueAge++
+      cell.valueLock = Math.random()
     },
   },
   events: {

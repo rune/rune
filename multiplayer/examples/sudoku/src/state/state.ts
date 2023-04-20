@@ -15,7 +15,7 @@ export const $state = atom<
 export const $board = atom((get) => get($state)?.game.sudoku?.board)
 
 export const $selections = atom((get) =>
-  Object.entries(get($state)?.game.players ?? {}).reduce<{
+  Object.entries(get($state)?.game.playerState ?? {}).reduce<{
     [index: number]: string[] | undefined
   }>(
     (acc, [playerId, { selection }]) => ({
@@ -31,7 +31,7 @@ export const $selections = atom((get) =>
 export const $yourPlayerId = atom((get) => get($state)?.yourPlayerId)
 
 export const $colors = atom((get) =>
-  Object.entries(get($state)?.game.players ?? {}).reduce<{
+  Object.entries(get($state)?.game.playerState ?? {}).reduce<{
     [playerId: string]: Color
   }>(
     (acc, [playerId, { color }]) => ({

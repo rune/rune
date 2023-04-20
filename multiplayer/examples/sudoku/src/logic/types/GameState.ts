@@ -17,7 +17,7 @@ export interface GameState {
     difficulty: Difficulty
     board: Cell[]
   } | null
-  players: {
+  playerState: {
     [playerId: string]: {
       color: Color
       selection: Coordinate

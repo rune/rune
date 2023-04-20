@@ -22,7 +22,7 @@ Rune.initLogic({
   maxPlayers: 4,
   setup: (playerIds) => ({
     sudoku: null,
-    players: playerIds.reduce(
+    playerState: playerIds.reduce(
       (acc, playerId, index) => ({
         ...acc,
         [playerId]: {
@@ -52,14 +52,14 @@ Rune.initLogic({
     select: (coordinate, { game, playerId }) => {
       if (!game.sudoku) throw Rune.invalidAction()
 
-      game.players[playerId].selection = coordinate
+      game.playerState[playerId].selection = coordinate
     },
   },
   events: {
     playerJoined: (playerId, { game }) => {
       const freeColor = possibleColors.find(
         (possibleColor) =>
-          !Object.values(game.players).find(
+          !Object.values(game.playerState).find(
             ({ color }) =>
               color[0] === possibleColor[0] &&
               color[1] === possibleColor[1] &&
@@ -69,7 +69,7 @@ Rune.initLogic({
 
       const freeCornerCell = cornerCells.find(
         (cornerCell) =>
-          !Object.values(game.players).find(
+          !Object.values(game.playerState).find(
             ({ selection }) =>
               selection.row === cornerCell.row &&
               selection.col === cornerCell.col
@@ -79,13 +79,13 @@ Rune.initLogic({
       if (!freeColor || !freeCornerCell)
         throw new Error("Couldn't find free color or free corner cell")
 
-      game.players[playerId] = {
+      game.playerState[playerId] = {
         color: freeColor,
         selection: freeCornerCell,
       }
     },
     playerLeft: (playerId, { game }) => {
-      delete game.players[playerId]
+      delete game.playerState[playerId]
     },
   },
 })

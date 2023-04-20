@@ -13,9 +13,10 @@ export function Cell({ row, col }: { row: number; col: number }) {
 
   if (!board) return null
 
+  const cell = board[cellPointer({ row, col })]
+
   return (
     <Root onClick={() => Rune.actions.select({ row, col })}>
-      <Value>{board[cellPointer({ row, col })].value}</Value>
       {!!selections?.length && (
         <Highlight
           withBorder={selections.includes(yourPlayerId ?? "")}
@@ -24,6 +25,7 @@ export function Cell({ row, col }: { row: number; col: number }) {
           }
         />
       )}
+      <Value revealed={cell.revealed}>{cell.value}</Value>
     </Root>
   )
 }
@@ -37,10 +39,11 @@ const Root = styled.div`
   background-color: #0b1c24;
 `
 
-const Value = styled.div`
-  color: #995618;
+const Value = styled.div<{ revealed: boolean }>`
+  color: ${({ revealed }) => (revealed ? "#995618" : "#F8D5AF")};
   font-weight: 600;
   font-size: 7vw;
+  z-index: 0;
 `
 
 const Highlight = styled.div<{ tint: Color; withBorder: boolean }>`

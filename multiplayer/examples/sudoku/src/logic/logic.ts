@@ -1,7 +1,6 @@
-/* eslint no-undef: 0 */
-
 import { getSudoku } from "sudoku-gen"
 import { Coordinate, Color, Cell } from "./types/GameState"
+import { cellPointer } from "../lib/cellPointer"
 
 const possibleColors: Color[] = [
   [65, 156, 85],
@@ -41,6 +40,7 @@ Rune.initLogic({
 
       const board: Cell[] = sudoku.puzzle.split("").map((value, index) => ({
         value: value === "-" ? null : parseInt(value),
+        revealed: value !== "-",
         correctValue: parseInt(sudoku.solution[index]),
       }))
 
@@ -53,6 +53,18 @@ Rune.initLogic({
       if (!game.sudoku) throw Rune.invalidAction()
 
       game.playerState[playerId].selection = coordinate
+    },
+    setValue: (value, { game, playerId }) => {
+      if (!game.sudoku) throw Rune.invalidAction()
+
+      // todo: "use-first" conflict resolution logic (based on current value passed from client?)
+
+      const selection = game.playerState[playerId].selection
+      const cell = game.sudoku.board[cellPointer(selection)]
+
+      if (cell.revealed) throw Rune.invalidAction()
+
+      cell.value = value
     },
   },
   events: {

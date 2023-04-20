@@ -2,6 +2,7 @@ import { Difficulty } from "sudoku-gen/dist/types/difficulty.type"
 
 export interface Cell {
   value: number | null
+  revealed: boolean
   correctValue: number
 }
 
@@ -28,4 +29,5 @@ export interface GameState {
 export interface GameActions {
   startGame: (difficulty: Difficulty) => void
   select: (coordinate: Coordinate) => void
+  setValue: (value: number | null) => void
 }

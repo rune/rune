@@ -3,6 +3,7 @@ import styled from "styled-components/macro"
 import { Board } from "./Board/Board"
 import { useAtom } from "jotai"
 import { $state } from "../state/state"
+import { Digits } from "./Digits"
 
 export function App() {
   const [state, setState] = useAtom($state)
@@ -34,6 +35,7 @@ export function App() {
   return (
     <Root>
       <Board />
+      <Digits />
     </Root>
   )
 }
@@ -47,4 +49,8 @@ const Root = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  > :not(:first-child) {
+    margin-top: 12vw;
+  }
 `

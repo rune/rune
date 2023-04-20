@@ -52,9 +52,5 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-
-  > :not(:first-child) {
-    margin-top: 12vw;
-  }
+  justify-content: space-evenly;
 `

@@ -28,6 +28,12 @@ export const $selections = atom((get) =>
   )
 )
 
+export const $yourSelection = atom((get) => {
+  const yourPlayerId = get($yourPlayerId)
+  if (!yourPlayerId) return undefined
+  return get($state)?.game.playerState[yourPlayerId].selection
+})
+
 export const $yourPlayerId = atom((get) => get($state)?.yourPlayerId)
 
 export const $colors = atom((get) =>

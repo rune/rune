@@ -40,7 +40,8 @@ Rune.initLogic({
 
       const board: Cell[] = sudoku.puzzle.split("").map((value, index) => ({
         value: value === "-" ? null : parseInt(value),
-        revealed: value !== "-",
+        valueAge: 0,
+        fixed: value !== "-",
         correctValue: parseInt(sudoku.solution[index]),
       }))
 
@@ -54,17 +55,18 @@ Rune.initLogic({
 
       game.playerState[playerId].selection = coordinate
     },
-    setValue: (value, { game, playerId }) => {
+    setValue: ({ value, assumedValueAge }, { game, playerId }) => {
       if (!game.sudoku) throw Rune.invalidAction()
-
-      // todo: "use-first" conflict resolution logic (based on current value passed from client?)
 
       const selection = game.playerState[playerId].selection
       const cell = game.sudoku.board[cellPointer(selection)]
 
-      if (cell.revealed) throw Rune.invalidAction()
+      if (cell.fixed) throw Rune.invalidAction()
+
+      if (cell.valueAge !== assumedValueAge) throw Rune.invalidAction()
 
       cell.value = value
+      cell.valueAge++
     },
   },
   events: {

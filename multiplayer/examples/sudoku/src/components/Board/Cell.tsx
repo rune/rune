@@ -25,7 +25,7 @@ export function Cell({ row, col }: { row: number; col: number }) {
           }
         />
       )}
-      <Value revealed={cell.revealed}>{cell.value}</Value>
+      <Value fixed={cell.fixed}>{cell.value}</Value>
     </Root>
   )
 }
@@ -39,8 +39,8 @@ const Root = styled.div`
   background-color: #0b1c24;
 `
 
-const Value = styled.div<{ revealed: boolean }>`
-  color: ${({ revealed }) => (revealed ? "#995618" : "#F8D5AF")};
+const Value = styled.div<{ fixed: boolean }>`
+  color: ${({ fixed }) => (fixed ? "#995618" : "#F8D5AF")};
   font-weight: 600;
   font-size: 7vw;
   z-index: 0;

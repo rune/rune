@@ -10,7 +10,11 @@ export function App() {
 
   useEffect(() => {
     Rune.initClient({
-      visualUpdate: ({ newGame, players, yourPlayerId }) => {
+      visualUpdate: ({ newGame, players, yourPlayerId, rollbacks }) => {
+        if (rollbacks.length) {
+          // TODO: handle rollback by showing alert
+          console.error(JSON.stringify(rollbacks))
+        }
         setState({ game: newGame, players, yourPlayerId })
       },
     })

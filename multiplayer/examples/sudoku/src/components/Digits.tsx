@@ -1,23 +1,45 @@
 import styled from "styled-components/macro"
 import range from "lodash/range"
+import { $yourSelection, $board } from "../state/state"
+import { useAtomValue } from "jotai"
+import { cellPointer } from "../lib/cellPointer"
 
 export function Digits() {
+  const yourSelection = useAtomValue($yourSelection)
+  const board = useAtomValue($board)
+
+  if (!yourSelection || !board) return null
+
+  const assumedValueAge = board[cellPointer(yourSelection)].valueAge
+
   return (
     <Root>
       <Row>
         {range(1, 6).map((value) => (
-          <Digit key={value} onClick={() => Rune.actions.setValue(value)}>
+          <Digit
+            key={value}
+            onClick={() => Rune.actions.setValue({ value, assumedValueAge })}
+          >
             {value}
           </Digit>
         ))}
       </Row>
       <Row>
         {range(6, 10).map((value) => (
-          <Digit key={value} onClick={() => Rune.actions.setValue(value)}>
+          <Digit
+            key={value}
+            onClick={() => Rune.actions.setValue({ value, assumedValueAge })}
+          >
             {value}
           </Digit>
         ))}
-        <Digit onClick={() => Rune.actions.setValue(null)}>{"<"}</Digit>
+        <Digit
+          onClick={() =>
+            Rune.actions.setValue({ value: null, assumedValueAge })
+          }
+        >
+          {"<"}
+        </Digit>
       </Row>
     </Root>
   )

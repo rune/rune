@@ -1,5 +1,5 @@
 import { getSudoku } from "sudoku-gen"
-import { Coordinate, Color, Cell } from "./types/GameState"
+import { Coordinate, Color } from "./types/GameState"
 import { cellPointer } from "../lib/cellPointer"
 
 const possibleColors: Color[] = [
@@ -38,16 +38,14 @@ Rune.initLogic({
 
       const sudoku = getSudoku(difficulty)
 
-      const board: Cell[] = sudoku.puzzle.split("").map((value, index) => ({
-        value: value === "-" ? null : parseInt(value),
-        valueLock: Math.random(),
-        fixed: value !== "-",
-        correctValue: parseInt(sudoku.solution[index]),
-      }))
-
       game.sudoku = {
         difficulty,
-        board,
+        board: sudoku.puzzle.split("").map((value, index) => ({
+          value: value === "-" ? null : parseInt(value),
+          valueLock: Math.random(),
+          fixed: value !== "-",
+          correctValue: parseInt(sudoku.solution[index]),
+        })),
       }
     },
     select: (coordinate, { game, playerId }) => {

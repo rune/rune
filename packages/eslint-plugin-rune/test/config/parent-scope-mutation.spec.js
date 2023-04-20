@@ -46,6 +46,7 @@ test("variable scope", {
     // These are unsafe and ways to circumvent the intention of the rule, but still allowed
     "const hest = ['snel']; const klap = (hest) => { hest.push('klad') }; (() => { klap(hest) })()",
     "[Rune].map((r) => { r.hest = 'snel' })",
+    "const getSeedsByDifficulty = (seeds, difficulty) => seeds.filter((seed) => !difficulty || seed.difficulty === difficulty);",
   ],
   invalid: [
     "let hest; (() => { hest = 'snel' })()",

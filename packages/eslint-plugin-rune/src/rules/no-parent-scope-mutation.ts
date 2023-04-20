@@ -119,12 +119,13 @@ export const create: Rule.RuleModule["create"] = (context) => {
 
   return {
     UnaryExpression(node) {
-      if (
-        node.operator === "delete" &&
-        node.argument.type === "MemberExpression" &&
-        node.argument.object.type === "Identifier"
-      ) {
-        checkGlobalVariableMutation(node, node.argument.object.name)
+      if (node.operator === "delete") {
+        switch (node.argument.type) {
+          case "Identifier":
+          case "MemberExpression":
+            checkPatternVariableName(node, node.argument)
+            break
+        }
       }
     },
     UpdateExpression(node) {
@@ -197,17 +198,6 @@ export const create: Rule.RuleModule["create"] = (context) => {
         case "AssignmentExpression":
           checkLocalVariableMutation(node, node.name)
           break
-        case "UnaryExpression": {
-          /*
-           * Checking types of variables are ok.
-           * OK: typeof global
-           */
-          if (node.parent.operator === "typeof") {
-            return
-          }
-          checkLocalVariableMutation(node, node.name)
-          break
-        }
 
         case "MemberExpression": {
           /*

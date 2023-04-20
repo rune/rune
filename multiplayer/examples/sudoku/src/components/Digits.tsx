@@ -69,7 +69,7 @@ const Digit = styled.div`
   height: 13vw;
 
   background: linear-gradient(180deg, #965a1c 0%, #9f4a09 100%);
-  box-shadow: 0 4px 5px #1e2832;
+  box-shadow: 0 1.25vw 1.56vw #1e2832;
   border-radius: 1vw;
 
   font-size: 7.5vw;

@@ -23,9 +23,9 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   > :not(:first-child) {
-    margin-top: 1px;
+    margin-top: 0.3vw;
     :nth-child(3n + 1) {
-      margin-top: 3px;
+      margin-top: 0.9vw;
     }
   }
 `
@@ -34,9 +34,9 @@ const Row = styled.div`
   display: flex;
   flex: 1;
   > :not(:first-child) {
-    margin-left: 1px;
+    margin-left: 0.3vw;
     :nth-child(3n + 1) {
-      margin-left: 3px;
+      margin-left: 0.9vw;
     }
   }
 `

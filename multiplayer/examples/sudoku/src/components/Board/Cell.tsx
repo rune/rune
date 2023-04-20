@@ -51,9 +51,13 @@ const Highlight = styled.div<{ tint: Color; withBorder: boolean }>`
   width: 100%;
   height: 100%;
   background: rgba(${({ tint }) => tint.join(", ")}, 0.3);
+
   ${({ withBorder, tint }) =>
     withBorder &&
     css`
-      border: 3px solid rgb(${tint.join(", ")});
+      width: calc(100% + 1.8vw);
+      height: calc(100% + 1.8vw);
+      border: 0.9vw solid rgb(${tint.join(", ")});
+      z-index: 1;
     `};
 `

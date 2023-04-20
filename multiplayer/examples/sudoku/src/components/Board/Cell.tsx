@@ -17,14 +17,17 @@ export function Cell({ row, col }: { row: number; col: number }) {
 
   return (
     <Root onClick={() => Rune.actions.select({ row, col })}>
-      {!!selections?.length && (
-        <Highlight
-          withBorder={selections.includes(yourPlayerId ?? "")}
-          tint={
-            selections.length === 1 ? colors[selections[0]] : [255, 255, 255]
-          }
-        />
-      )}
+      <Highlight
+        withBorder={!!selections?.includes(yourPlayerId ?? "")}
+        tint={
+          selections
+            ? selections.length === 1
+              ? colors[selections[0]]
+              : [150, 150, 150]
+            : null
+        }
+      />
+
       <Value fixed={cell.fixed}>{cell.value}</Value>
     </Root>
   )
@@ -43,21 +46,23 @@ const Value = styled.div<{ fixed: boolean }>`
   color: ${({ fixed }) => (fixed ? "#995618" : "#F8D5AF")};
   font-weight: 600;
   font-size: 7vw;
-  z-index: 0;
+  z-index: 1;
 `
 
-const Highlight = styled.div<{ tint: Color; withBorder: boolean }>`
+const Highlight = styled.div<{ tint: Color | null; withBorder: boolean }>`
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(${({ tint }) => tint.join(", ")}, 0.3);
+  background: ${({ tint }) =>
+    tint ? `rgba(${tint.join(", ")}, 0.3)` : "transparent"};
+  transition: all 0.2s ease-out;
 
   ${({ withBorder, tint }) =>
     withBorder &&
     css`
       width: calc(100% + 1.8vw);
       height: calc(100% + 1.8vw);
-      border: 0.9vw solid rgb(${tint.join(", ")});
+      border: 0.9vw solid ${tint ? `rgb(${tint.join(", ")})` : "transparent"};
       z-index: 1;
     `};
 `

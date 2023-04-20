@@ -6,35 +6,24 @@ import {
   VisualUpdateEvent,
   Players,
 } from "rune-games-sdk/multiplayer"
-import { GameState } from "./GameState"
+import { GameState, GameActions } from "./GameState"
 
 declare global {
   const Rune: RuneClient
 }
 
 declare module "rune-games-sdk/multiplayer" {
-  interface Actions {
-    // makeGuess: (
-    //   location: Coordinate,
-    //   { game, playerId }: { game: GameState; playerId: PlayerId }
-    // ) => void
-    // nextRound: (
-    //   _: void,
-    //   { game, playerId }: { game: GameState; playerId: PlayerId }
-    // ) => void
-  }
-
-  interface ClientActions {
-    // makeGuess: (location: Coordinate) => void
-    // nextRound: () => void
-  }
-
   interface RuneShared {
     initLogic: (params: {
       minPlayers: number
       maxPlayers: number
       setup: (playerIds: PlayerId[]) => GameState
-      actions: Actions
+      actions: {
+        [key in keyof GameActions]: (
+          params: Parameters<GameActions[key]>[0],
+          { game, playerId }: { game: GameState; playerId: PlayerId }
+        ) => void
+      }
       events?: {
         playerJoined?: (
           playerId: PlayerId,
@@ -62,7 +51,7 @@ declare module "rune-games-sdk/multiplayer" {
         rollbacks: VisualUpdateAction[]
       }) => void
     }) => void
-    actions: ClientActions
+    actions: GameActions
     version: string
     openExternalApp: (url: string) => void
     clipboardWrite: (text: string) => Promise<{ success: boolean }>

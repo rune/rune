@@ -1,15 +1,15 @@
 import styled from "styled-components/macro"
 import React from "react"
 import range from "lodash/range"
-import { Sudoku } from "sudoku-gen/dist/types/sudoku.type"
+import { Cell } from "./Cell"
 
-export function Board({ sudoku }: { sudoku: Sudoku }) {
+export function Board() {
   return (
     <Root>
       {range(0, 9).map((row) => (
         <Row key={row}>
           {range(0, 9).map((col) => (
-            <Cell key={col}>{sudoku.puzzle[row * 9 + col]}</Cell>
+            <Cell key={col} row={row} col={col} />
           ))}
         </Row>
       ))}
@@ -18,8 +18,8 @@ export function Board({ sudoku }: { sudoku: Sudoku }) {
 }
 
 const Root = styled.div`
-  width: 100vw;
-  height: 100vw;
+  width: 95vw;
+  height: 95vw;
   display: flex;
   flex-direction: column;
   > :not(:first-child) {
@@ -39,15 +39,4 @@ const Row = styled.div`
       margin-left: 3px;
     }
   }
-`
-
-const Cell = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  background-color: #0b1c24;
-  color: #995618;
-  font-weight: 600;
-  font-size: 24px;
 `

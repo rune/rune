@@ -2,6 +2,8 @@ import { getSudoku } from "sudoku-gen"
 import { Coordinate, Color } from "./lib/types/GameState"
 import { cellPointer } from "./lib/cellPointer"
 import { highlightDuplicates } from "./lib/highlightDuplicates"
+import { findDuplicates } from "./lib/findDuplicates"
+import { isBoardFilled } from "./lib/isBoardFilled"
 
 const possibleColors: Color[] = [
   [65, 156, 85],
@@ -66,7 +68,18 @@ Rune.initLogic({
 
       cell.value = value
       cell.valueLock = Math.random()
-      highlightDuplicates(game.sudoku.board)
+
+      const duplicates = findDuplicates(game.sudoku.board)
+      highlightDuplicates(game.sudoku.board, duplicates)
+
+      if (isBoardFilled(game.sudoku.board) && duplicates.length === 0) {
+        // TODO: game over and highlight contributions
+        // Rune.gameOver({
+        //   players: Object.keys(game.playerState).reduce<
+        //     GameOverOptions["players"]
+        //   >((acc, playerId) => ({ ...acc, [playerId]: "WON" }), {}),
+        // })
+      }
     },
   },
   events: {

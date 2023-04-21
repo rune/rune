@@ -2,9 +2,10 @@ import { Cell } from "./types/GameState"
 import { findDuplicates } from "./findDuplicates"
 import { cellPointer } from "./cellPointer"
 
-export function highlightDuplicates(board: Cell[]) {
-  const duplicates = findDuplicates(board)
-
+export function highlightDuplicates(
+  board: Cell[],
+  duplicates: ReturnType<typeof findDuplicates>
+) {
   board.forEach((cell, index) => {
     const { row, col } = cellPointer(index)
     cell.error = duplicates.some(

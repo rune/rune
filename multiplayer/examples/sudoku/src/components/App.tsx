@@ -4,6 +4,7 @@ import { Board } from "./Board/Board"
 import { useAtom } from "jotai"
 import { $state } from "../state/state"
 import { Digits } from "./Digits/Digits"
+import { StartGame } from "./StartGame/StartGame"
 
 export function App() {
   const [state, setState] = useAtom($state)
@@ -24,15 +25,7 @@ export function App() {
 
   return (
     <Root>
-      {!state.game.sudoku && (
-        <div style={{ color: "white", position: "absolute", zIndex: 1 }}>
-          <div>choose difficulty</div>
-          <div onClick={() => Rune.actions.startGame("easy")}>easy</div>
-          <div onClick={() => Rune.actions.startGame("medium")}>medium</div>
-          <div onClick={() => Rune.actions.startGame("hard")}>hard</div>
-          <div onClick={() => Rune.actions.startGame("expert")}>expert</div>
-        </div>
-      )}
+      {!state.game.sudoku && <StartGame />}
       <Board />
       <Digits />
     </Root>

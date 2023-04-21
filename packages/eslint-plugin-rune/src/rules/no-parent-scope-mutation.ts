@@ -11,7 +11,6 @@ export const meta: Rule.RuleModule["meta"] = {
   schema: [],
   messages: {
     noParentScopeMutation: "Variables from parent scope may not be mutated.",
-    noGlobalVariableMutation: "Global variables may not be mutated.",
   },
 }
 
@@ -27,6 +26,26 @@ export const create: Rule.RuleModule["create"] = (context) => {
       return findVariable(name, scope.upper)
     }
     return null
+  }
+
+  const resolveVariable = (
+    variable: Scope.Variable | null
+  ): Scope.Variable | null => {
+    if (!variable) {
+      return null
+    }
+    const [def] = variable.defs
+    if (
+      def?.node?.type === "VariableDeclarator" &&
+      def.node.init?.type === "Identifier"
+    ) {
+      const ref = findVariable(def.node.init.name, variable.scope)
+      if (ref !== variable) {
+        return resolveVariable(ref)
+      }
+      return ref
+    }
+    return variable
   }
 
   const findFunctionScope = (scope: Scope.Scope): Scope.Scope => {
@@ -51,7 +70,7 @@ export const create: Rule.RuleModule["create"] = (context) => {
     variableName: string
   ) => {
     const scope = context.getScope()
-    const variable = findVariable(variableName, scope)
+    const variable = resolveVariable(findVariable(variableName, scope))
     if (
       variable && // undefined variables are handled by builtin rule
       (isRuntimeGlobalVariable(variable) ||
@@ -64,25 +83,10 @@ export const create: Rule.RuleModule["create"] = (context) => {
     }
   }
 
-  const checkGlobalVariableMutation = (
-    reportNode: Node,
-    variableName: string
-  ) => {
-    const scope = context.getScope()
-    const variable = findVariable(variableName, scope)
-
-    if (!variable || isRuntimeGlobalVariable(variable)) {
-      context.report({
-        node: reportNode,
-        messageId: "noGlobalVariableMutation",
-      })
-    }
-  }
-
   const checkPatternVariableName = (sourceNode: Node, node: Pattern): void => {
     switch (node.type) {
       case "Identifier": {
-        checkGlobalVariableMutation(node, node.name)
+        checkLocalVariableMutation(node, node.name)
         break
       }
       case "MemberExpression": {
@@ -133,7 +137,7 @@ export const create: Rule.RuleModule["create"] = (context) => {
         node.argument.type === "MemberExpression" &&
         node.argument.object.type === "Identifier"
       ) {
-        checkGlobalVariableMutation(node, node.argument.object.name)
+        checkLocalVariableMutation(node, node.argument.object.name)
       } else if (node.argument.type === "Identifier") {
         checkLocalVariableMutation(node, node.argument.name)
       }
@@ -145,28 +149,6 @@ export const create: Rule.RuleModule["create"] = (context) => {
        * NOK: global = 'value'
        */
       checkPatternVariableName(node, node.left)
-      /*
-       * Re-assigning a local variable to local variable is ok, but global is not.
-       * OK: local = local
-       * NOK: local = global
-       */
-      if (
-        node.left.type === "Identifier" &&
-        node.right.type === "MemberExpression" &&
-        node.right.object.type === "Identifier"
-      ) {
-        checkGlobalVariableMutation(node, node.right.object.name)
-      }
-    },
-    VariableDeclarator(node) {
-      if (node.init?.type === "Identifier") {
-        /*
-         * Initializing a variable with static or local variable is ok, but a global is not.
-         * OK: local = 'value'
-         * NOK: local = global
-         */
-        checkGlobalVariableMutation(node, node.init.name)
-      }
     },
     MemberExpression(node) {
       /*
@@ -195,10 +177,6 @@ export const create: Rule.RuleModule["create"] = (context) => {
     },
     Identifier(node) {
       switch (node.parent.type) {
-        case "AssignmentExpression":
-          checkLocalVariableMutation(node, node.name)
-          break
-
         case "MemberExpression": {
           /*
            * Allow mutating local objects with Object functions but not globals.
@@ -218,12 +196,12 @@ export const create: Rule.RuleModule["create"] = (context) => {
           ) {
             const [arg] = node.parent.parent.arguments
             if (arg.type === "Identifier") {
-              checkGlobalVariableMutation(node.parent.parent, arg.name)
+              checkLocalVariableMutation(node.parent.parent, arg.name)
             } else if (
               arg.type === "MemberExpression" &&
               arg.object.type === "Identifier"
             ) {
-              checkGlobalVariableMutation(node.parent.parent, arg.object.name)
+              checkLocalVariableMutation(node.parent.parent, arg.object.name)
             }
           }
           break

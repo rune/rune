@@ -5,6 +5,7 @@ import { useAtomValue } from "jotai"
 import { cellPointer } from "../../lib/cellPointer"
 import { useMemo } from "react"
 import { UnusedDigits } from "./UnusedDigits"
+import backspaceImg from "./backspace.svg"
 
 export function Digits() {
   const yourSelection = useAtomValue($yourSelection)
@@ -60,7 +61,7 @@ export function Digits() {
             Rune.actions.setValue({ value: null, clientValueLock })
           }
         >
-          <Label>{"<"}</Label>
+          <BackspaceImg src={backspaceImg} />
         </Digit>
       </Row>
     </Root>
@@ -103,4 +104,8 @@ const Label = styled.div`
   font-size: 7.5vw;
   font-weight: 600;
   color: #f5d6c1;
+`
+
+const BackspaceImg = styled.img`
+  width: 8.5vw;
 `

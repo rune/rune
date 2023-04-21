@@ -1,11 +1,11 @@
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 import range from "lodash/range"
 
 export function UnusedDigits({ count }: { count: number }) {
   return (
     <Root>
-      {range(count).map((i) => (
-        <Circle key={i} />
+      {range(9).map((i) => (
+        <Circle key={i} visible={i < count} />
       ))}
     </Root>
   )
@@ -13,15 +13,25 @@ export function UnusedDigits({ count }: { count: number }) {
 
 const Root = styled.div`
   display: flex;
+  align-items: center;
   height: 0.65vw;
-  > :not(:first-child) {
-    margin-left: 0.35vw;
-  }
 `
 
-const Circle = styled.div`
-  width: 0.65vw;
-  height: 0.65vw;
+const Circle = styled.div<{ visible: boolean }>`
+  transition: all 0.2s ease-out;
+  ${({ visible }) =>
+    visible
+      ? css`
+          width: 0.65vw;
+          height: 0.65vw;
+          :not(:first-child) {
+            margin-left: 0.35vw;
+          }
+        `
+      : css`
+          width: 0;
+          height: 0;
+        `};
   border-radius: 0.65vw;
   background: #f5d6c1;
 `

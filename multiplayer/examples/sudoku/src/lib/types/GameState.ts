@@ -6,6 +6,7 @@ export interface Cell {
   fixed: boolean
   correctValue: number
   error: boolean
+  lastModifiedByPlayerId: string | null
 }
 
 export interface Coordinate {
@@ -16,6 +17,7 @@ export interface Coordinate {
 export type Color = [number, number, number]
 
 export interface GameState {
+  gameOver: boolean
   sudoku: {
     difficulty: Difficulty
     board: Cell[]

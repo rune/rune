@@ -5,7 +5,15 @@ import { $board, $selections, $yourPlayerId, $colors } from "../../state/state"
 import { cellPointer } from "../../lib/cellPointer"
 import React from "react"
 
-export function Cell({ row, col }: { row: number; col: number }) {
+export function Cell({
+  row,
+  col,
+  gameOver,
+}: {
+  row: number
+  col: number
+  gameOver: boolean
+}) {
   const board = useAtomValue($board)
   const selections = useAtomValue($selections)[cellPointer({ row, col })]
   const yourPlayerId = useAtomValue($yourPlayerId)
@@ -18,9 +26,11 @@ export function Cell({ row, col }: { row: number; col: number }) {
   return (
     <Root onClick={() => Rune.actions.select({ row, col })}>
       <Highlight
-        withBorder={!!selections?.includes(yourPlayerId ?? "")}
+        withBorder={!gameOver && !!selections?.includes(yourPlayerId ?? "")}
         tint={
-          selections
+          gameOver && cell.lastModifiedByPlayerId
+            ? colors[cell.lastModifiedByPlayerId]
+            : selections
             ? selections.length === 1
               ? colors[selections[0]]
               : [150, 150, 150]

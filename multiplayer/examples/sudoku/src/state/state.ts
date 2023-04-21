@@ -14,6 +14,8 @@ export const $state = atom<
 
 export const $board = atom((get) => get($state)?.game.sudoku?.board)
 
+export const $gameOver = atom((get) => !!get($state)?.game.gameOver)
+
 export const $selections = atom((get) =>
   Object.entries(get($state)?.game.playerState ?? {}).reduce<{
     [index: number]: string[] | undefined

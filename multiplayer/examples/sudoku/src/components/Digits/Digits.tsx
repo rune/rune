@@ -29,18 +29,20 @@ export function Digits() {
     )
   }, [board])
 
-  if (!yourSelection || !board) return null
+  function setValue(value: number | null) {
+    if (!board || !yourSelection) return
 
-  const clientValueLock = board[cellPointer(yourSelection)].valueLock
+    Rune.actions.setValue({
+      value,
+      clientValueLock: board[cellPointer(yourSelection)].valueLock,
+    })
+  }
 
   return (
     <Root>
       <Row>
         {range(1, 6).map((value) => (
-          <Digit
-            key={value}
-            onClick={() => Rune.actions.setValue({ value, clientValueLock })}
-          >
+          <Digit key={value} onClick={() => setValue(value)}>
             <Label>{value}</Label>
             <UnusedDigits count={remainingDigits[value]} />
           </Digit>
@@ -48,19 +50,12 @@ export function Digits() {
       </Row>
       <Row>
         {range(6, 10).map((value) => (
-          <Digit
-            key={value}
-            onClick={() => Rune.actions.setValue({ value, clientValueLock })}
-          >
+          <Digit key={value} onClick={() => setValue(value)}>
             <Label>{value}</Label>
             <UnusedDigits count={remainingDigits[value]} />
           </Digit>
         ))}
-        <Digit
-          onClick={() =>
-            Rune.actions.setValue({ value: null, clientValueLock })
-          }
-        >
+        <Digit onClick={() => setValue(null)}>
           <BackspaceImg src={backspaceImg} />
         </Digit>
       </Row>

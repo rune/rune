@@ -19,7 +19,7 @@ export function Cell({
   const yourPlayerId = useAtomValue($yourPlayerId)
   const colors = useAtomValue($colors)
 
-  if (!board) return null
+  if (!board) return <Root />
 
   const cell = board[cellPointer({ row, col })]
 

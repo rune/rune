@@ -22,22 +22,17 @@ export function App() {
 
   if (!state?.game) return null
 
-  if (!state.game.sudoku) {
-    return (
-      <Root>
-        <div style={{ color: "white" }}>
+  return (
+    <Root>
+      {!state.game.sudoku && (
+        <div style={{ color: "white", position: "absolute", zIndex: 1 }}>
           <div>choose difficulty</div>
           <div onClick={() => Rune.actions.startGame("easy")}>easy</div>
           <div onClick={() => Rune.actions.startGame("medium")}>medium</div>
           <div onClick={() => Rune.actions.startGame("hard")}>hard</div>
           <div onClick={() => Rune.actions.startGame("expert")}>expert</div>
         </div>
-      </Root>
-    )
-  }
-
-  return (
-    <Root>
+      )}
       <Board />
       <Digits />
     </Root>

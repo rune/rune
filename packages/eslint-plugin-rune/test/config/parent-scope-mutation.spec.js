@@ -83,10 +83,11 @@ test("variable scope", {
     "let rune = Rune; Object.assign(rune, { hest: true })",
     "Object.assign(Rune, { hest: true })",
     "Object.assign(Rune.initLogic, { hest: true })",
+    "let deeply = {}; () => Object.assign(deeply.nested.p.r.o.p.e.r.t.y, { hest: true })",
     "Object.defineProperty(Rune, 'hest', { value: true })",
     "Object.defineProperties(Rune, { hest: { value: true } })",
     "Object.__defineGetter__(Rune, () => 'hest')",
     "Object.__defineSetter__(Rune, () => 'hest')",
     "Object.setPrototypeOf(Rune, { hest: true })",
-  ],
+  ].map((s) => [s, "noParentScopeMutation"]),
 })

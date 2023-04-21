@@ -195,13 +195,10 @@ export const create: Rule.RuleModule["create"] = (context) => {
             node.parent.parent.type === "CallExpression"
           ) {
             const [arg] = node.parent.parent.arguments
-            if (arg.type === "Identifier") {
-              checkLocalVariableMutation(node.parent.parent, arg.name)
-            } else if (
-              arg.type === "MemberExpression" &&
-              arg.object.type === "Identifier"
-            ) {
-              checkLocalVariableMutation(node.parent.parent, arg.object.name)
+            switch (arg.type) {
+              case "Identifier":
+              case "MemberExpression":
+                checkPatternVariableName(node, arg)
             }
           }
           break

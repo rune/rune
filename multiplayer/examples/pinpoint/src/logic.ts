@@ -1,9 +1,9 @@
 /* eslint no-undef: 0 */
 
-import { pickRandom } from "../lib/pickRandom"
-import { calculateDistanceKm } from "../lib/calculateDistanceKm"
-import { calculateScore } from "../lib/calculateScore"
-import { getPanoramas } from "./data/getPanoramas"
+import { pickRandom } from "./lib/pickRandom"
+import { calculateDistanceKm } from "./lib/calculateDistanceKm"
+import { calculateScore } from "./lib/calculateScore"
+import { getPanoramas } from "./lib/data/getPanoramas"
 
 const numRounds = 5
 

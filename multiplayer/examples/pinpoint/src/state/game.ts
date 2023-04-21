@@ -1,5 +1,5 @@
 import { atom } from "jotai"
-import { GameState } from "../logic/types/GameState"
+import { GameState } from "../lib/types/GameState"
 import { $myPlayerId } from "./myPlayerId"
 
 export const $game = atom<GameState | undefined>(undefined)

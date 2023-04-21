@@ -17,7 +17,7 @@ import {
 import { timings } from "../animation/config"
 import { useLatestGuess } from "./useLatestGuess"
 
-import { panoramasUrl } from "../../logic/panoramasUrl"
+import { panoramasUrl } from "../../lib/panoramasUrl"
 
 export function PanoramaView({
   onOpenMapClick,

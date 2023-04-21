@@ -10,7 +10,7 @@ import { Cubemap } from "@photo-sphere-viewer/cubemap-adapter"
 
 import { remap } from "../../lib/remap"
 import styled from "styled-components/macro"
-import { Panorama } from "../../logic/types/Panorama"
+import { Panorama } from "../../lib/types/Panorama"
 import { timings } from "../animation/config"
 
 const zoomRanges = [
@@ -143,7 +143,7 @@ export function PhotoSphereViewer({
 
     viewer.addEventListener("zoom-updated", onZoomUpdated)
 
-    function onDoubleClick(e: any) {
+    function onDoubleClick() {
       const zoom = viewer.dataHelper.fovToZoomLevel(
         viewer.dataHelper.zoomLevelToFov(viewer.getZoomLevel()) - 20
       )

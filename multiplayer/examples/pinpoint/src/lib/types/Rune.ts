@@ -7,7 +7,7 @@ import {
   Players,
 } from "rune-games-sdk/multiplayer"
 import { GameState } from "./GameState"
-import { Coordinate } from "ol/coordinate"
+import { GameActions } from "./GameActions"
 
 declare global {
   const Rune: RuneClient
@@ -20,12 +20,8 @@ declare module "rune-games-sdk/multiplayer" {
       maxPlayers: number
       setup: (playerIds: PlayerId[]) => GameState
       actions: {
-        makeGuess: (
-          location: Coordinate,
-          { game, playerId }: { game: GameState; playerId: PlayerId }
-        ) => void
-        nextRound: (
-          _: void,
+        [key in keyof GameActions]: (
+          params: Parameters<GameActions[key]>[0],
           { game, playerId }: { game: GameState; playerId: PlayerId }
         ) => void
       }
@@ -56,10 +52,7 @@ declare module "rune-games-sdk/multiplayer" {
         rollbacks: VisualUpdateAction[]
       }) => void
     }) => void
-    actions: {
-      makeGuess: (location: Coordinate) => void
-      nextRound: () => void
-    }
+    actions: GameActions
     version: string
     openExternalApp: (url: string) => void
     clipboardWrite: (text: string) => Promise<{ success: boolean }>

@@ -7,6 +7,7 @@ const { ESLint } = require("eslint")
  * @type {object}
  * @property {string} [ruleId]
  * @property {string} [messageId]
+ * @property {1|2} [severity]
  */
 /**
  * @typedef InvalidCodeTestNormalized
@@ -16,7 +17,7 @@ const { ESLint } = require("eslint")
  */
 /**
  * @typedef InvalidCodeTest
- * @type {string|[string, string]|InvalidCodeTestNormalized}
+ * @type {string|[string, string]|[string, string, 1|2]|InvalidCodeTestNormalized}
  */
 /**
  * @typedef TestSuite
@@ -33,7 +34,10 @@ const normalizeInvalidCodeTest = (test) => {
   if (typeof test === "string") {
     return { code: test, errors: [{}] }
   } else if (Array.isArray(test)) {
-    return { code: test[0], errors: [{ messageId: test[1] }] }
+    return {
+      code: test[0],
+      errors: [{ messageId: test[1], severity: test[2] || 2 }],
+    }
   }
   return test
 }
@@ -59,7 +63,7 @@ const createConfigTester = (baseConfig = {}) => {
             it(code, async () => {
               const [result] = await eslint.lintText(code)
               assert.deepEqual(
-                result.messages.filter((m) => m.severity >= 2),
+                result.messages.filter((m) => m.severity >= 1),
                 []
               )
             })

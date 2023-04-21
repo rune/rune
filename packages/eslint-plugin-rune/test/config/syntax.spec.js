@@ -68,7 +68,7 @@ test("syntax", {
     "let hest = {}; hest.aaa ?? 'bbb'",
   ],
   invalid: [
-    ["var hest = 'snel'", "unexpectedVar"],
+    ["var hest = 'snel'", "unexpectedVar", 1],
     ["try { throw new Error('hest') } catch (_e) { }", "restrictedSyntax"],
     ["try { throw new Error('hest') } finally { }", "restrictedSyntax"],
     ['this.hest = "snel"', "restrictedSyntax"],

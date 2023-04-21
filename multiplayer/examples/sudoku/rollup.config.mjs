@@ -4,7 +4,7 @@ import commonjs from "@rollup/plugin-commonjs"
 
 export default [
   {
-    input: "src/logic/logic.ts",
+    input: "src/logic.ts",
     output: { file: "public/logic.js", format: "es" },
     plugins: [
       nodeResolve(),

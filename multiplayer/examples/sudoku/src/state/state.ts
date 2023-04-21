@@ -1,4 +1,4 @@
-import { GameState, Color } from "../logic/types/GameState"
+import { GameState, Color } from "../lib/types/GameState"
 import { atom } from "jotai"
 import { Players, PlayerId } from "rune-games-sdk/multiplayer"
 import { cellPointer } from "../lib/cellPointer"

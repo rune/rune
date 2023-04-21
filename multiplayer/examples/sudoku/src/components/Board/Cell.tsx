@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components/macro"
-import { Color } from "../../logic/types/GameState"
+import { Color } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
 import { $board, $selections, $yourPlayerId, $colors } from "../../state/state"
 import { cellPointer } from "../../lib/cellPointer"
@@ -27,7 +27,7 @@ export function Cell({ row, col }: { row: number; col: number }) {
             : null
         }
       />
-
+      <ErrorHighlight enabled={cell.error} />
       <Value fixed={cell.fixed}>{cell.value}</Value>
     </Root>
   )
@@ -65,4 +65,12 @@ const Highlight = styled.div<{ tint: Color | null; withBorder: boolean }>`
       border: 0.9vw solid ${tint ? `rgb(${tint.join(", ")})` : "transparent"};
       z-index: 1;
     `};
+`
+
+const ErrorHighlight = styled.div<{ enabled: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: border-color 0.2s ease-out;
+  border: 0.6vw solid ${({ enabled }) => (enabled ? "#ff3939" : "transparent")};
 `

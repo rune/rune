@@ -6,7 +6,8 @@ import {
   VisualUpdateEvent,
   Players,
 } from "rune-games-sdk/multiplayer"
-import { GameState, GameActions } from "./GameState"
+import { GameState } from "./GameState"
+import { GameActions } from "./GameActions"
 
 declare global {
   const Rune: RuneClient

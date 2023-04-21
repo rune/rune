@@ -1,6 +1,7 @@
 import { getSudoku } from "sudoku-gen"
-import { Coordinate, Color } from "./types/GameState"
-import { cellPointer } from "../lib/cellPointer"
+import { Coordinate, Color } from "./lib/types/GameState"
+import { cellPointer } from "./lib/cellPointer"
+import { highlightDuplicates } from "./lib/highlightDuplicates"
 
 const possibleColors: Color[] = [
   [65, 156, 85],
@@ -45,6 +46,7 @@ Rune.initLogic({
           valueLock: Math.random(),
           fixed: value !== "-",
           correctValue: parseInt(sudoku.solution[index]),
+          error: false,
         })),
       }
     },
@@ -64,6 +66,7 @@ Rune.initLogic({
 
       cell.value = value
       cell.valueLock = Math.random()
+      highlightDuplicates(game.sudoku.board)
     },
   },
   events: {

@@ -1,4 +1,4 @@
-import { Coordinate } from "../logic/types/GameState"
+import { Coordinate } from "./types/GameState"
 
 export function cellPointer(coordinate: Coordinate): number
 export function cellPointer(index: number): Coordinate

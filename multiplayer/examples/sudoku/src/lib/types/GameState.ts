@@ -5,6 +5,7 @@ export interface Cell {
   valueLock: number
   fixed: boolean
   correctValue: number
+  error: boolean
 }
 
 export interface Coordinate {
@@ -25,10 +26,4 @@ export interface GameState {
       selection: Coordinate
     }
   }
-}
-
-export interface GameActions {
-  startGame: (difficulty: Difficulty) => void
-  select: (coordinate: Coordinate) => void
-  setValue: (args: { value: number | null; clientValueLock: number }) => void
 }

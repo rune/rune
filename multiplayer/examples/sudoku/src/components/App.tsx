@@ -3,7 +3,7 @@ import styled from "styled-components/macro"
 import { Board } from "./Board/Board"
 import { useAtom } from "jotai"
 import { $state } from "../state/state"
-import { Digits } from "./Digits"
+import { Digits } from "./Digits/Digits"
 
 export function App() {
   const [state, setState] = useAtom($state)

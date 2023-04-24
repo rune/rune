@@ -31,14 +31,15 @@ export function Cell({
 
   const cell = board[cellPointer({ row, col })]
 
-  const tint: Color | null =
-    gameOver && cell.lastModifiedByPlayerId
+  const tint: Color | null = gameOver
+    ? cell.lastModifiedByPlayerId
       ? colors[cell.lastModifiedByPlayerId]
-      : selections
-      ? selections.length === 1
-        ? colors[selections[0]]
-        : [150, 150, 150]
       : null
+    : selections
+    ? selections.length === 1
+      ? colors[selections[0]]
+      : [150, 150, 150]
+    : null
 
   return (
     <Root

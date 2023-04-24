@@ -7,6 +7,8 @@ import React from "react"
 import { rel } from "../../style/rel"
 import { $onboardingVisible } from "../../state/$onboardingVisible"
 
+import { $animatingHints } from "../../state/$animatingHints"
+
 export function Cell({
   row,
   col,
@@ -21,6 +23,7 @@ export function Cell({
   const yourPlayerId = useAtomValue($yourPlayerId)
   const colors = useAtomValue($colors)
   const onboardingVisible = useAtomValue($onboardingVisible)
+  const animatingHints = useAtomValue($animatingHints)
 
   if (!board) return <Root />
 
@@ -46,7 +49,9 @@ export function Cell({
       ) : (
         <>
           <Highlight tint={tint} />
-          <Value fixed={cell.fixed}>{cell.value}</Value>
+          {!animatingHints[cellPointer({ row, col })] && (
+            <Value fixed={cell.fixed}>{cell.value}</Value>
+          )}
           <ErrorHighlight enabled={cell.error} />
           <HighlightBorder
             visible={!gameOver && !!selections?.includes(yourPlayerId ?? "")}

@@ -1,16 +1,34 @@
 import { Coordinate } from "../../lib/types/GameState"
-import { useAtomValue } from "jotai"
+import { useAtomValue, useSetAtom } from "jotai"
 import { $boardRef } from "../../state/$boardRef"
-import { useMemo, useEffect, useState } from "react"
+import { useMemo, useState, useLayoutEffect, useEffect } from "react"
 import { calculateBoardRect, Rect } from "../../lib/calculateBoardRect"
 import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { randomString } from "../../lib/randomString"
+import { cellPointer } from "../../lib/cellPointer"
+import { $animatingHints } from "../../state/$animatingHints"
 
 export function Hint({ hint }: { hint: Coordinate }) {
   const boardRef = useAtomValue($boardRef)
   const animationKey = useMemo(() => randomString(10), [])
   const [visible, setVisible] = useState(true)
+  const setAnimatingHints = useSetAtom($animatingHints)
+
+  useLayoutEffect(() => {
+    setAnimatingHints((prev) => ({ ...prev, [cellPointer(hint)]: true }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const handle = setTimeout(
+      () =>
+        setAnimatingHints((prev) => ({ ...prev, [cellPointer(hint)]: false })),
+      Math.round((step(5) / 100) * total)
+    )
+    return () => clearTimeout(handle)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const handle = setTimeout(() => setVisible(false), total)
@@ -45,7 +63,7 @@ export function Hint({ hint }: { hint: Coordinate }) {
 const timings = [400, 600, 400, 600, 400, 600, 400]
 const total = timings.reduce((a, b) => a + b, 0)
 const step = (i: number) =>
-  (timings.slice(0, i).reduce((a, b) => a + b, 0) / total) * 100
+  Math.round((timings.slice(0, i).reduce((a, b) => a + b, 0) / total) * 100)
 
 const Root = styled.div<{
   animationKey: string
@@ -53,13 +71,6 @@ const Root = styled.div<{
 }>`
   @keyframes ${({ animationKey }) => animationKey} {
     ${({ frames }) => css`
-      ${step(0)} % {
-        opacity: 0;
-        top: ${frames[0].y}px;
-        left: ${frames[0].x}px;
-        width: ${frames[0].width}px;
-        height: ${frames[0].height}px;
-      }
       ${step(1)}% {
         opacity: 1;
         top: ${frames[0].y}px;
@@ -115,6 +126,12 @@ const Root = styled.div<{
   position: absolute;
   background-color: rgba(63, 255, 220, 0.5);
   border: ${rel(2)} solid #3fffdc;
-  opacity: 0;
+  ${({ frames }) => css`
+    opacity: 0;
+    top: ${frames[0].y}px;
+    left: ${frames[0].x}px;
+    width: ${frames[0].width}px;
+    height: ${frames[0].height}px;
+  `};
   animation: ${({ animationKey }) => animationKey} ${total}ms ease-in forwards;
 `

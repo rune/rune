@@ -104,4 +104,5 @@ const Label = styled.div`
 
 const BackspaceImg = styled.img`
   width: ${rel(27)};
+  height: ${rel(27)};
 `

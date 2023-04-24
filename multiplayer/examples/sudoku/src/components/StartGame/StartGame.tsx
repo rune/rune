@@ -108,6 +108,7 @@ const Option = styled.div<{ active: boolean }>`
 
 const Checkmark = styled.img<{ visible: boolean }>`
   width: ${rel(24)};
+  height: ${rel(24)};
   margin: 0 ${rel(15)} 0 ${rel(17)};
   visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
 `

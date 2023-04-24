@@ -1,13 +1,14 @@
-import React, { RefObject, useState, useLayoutEffect, useEffect } from "react"
+import React, { useState, useLayoutEffect, useEffect } from "react"
 import styled from "styled-components/macro"
 import { Coordinate } from "../lib/types/GameState"
 import { rel } from "../style/rel"
-import { useAtom } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import {
   SimpleCSSTransition,
   simpleCSSTransitionStyles,
 } from "./animation/SimpleCSSTransition"
 import { $onboardingVisible } from "../state/$onboardingVisible"
+import { $boardRef } from "../state/$boardRef"
 
 const ranges: [Coordinate, Coordinate][] = [
   [
@@ -24,16 +25,13 @@ const ranges: [Coordinate, Coordinate][] = [
   ],
 ]
 
-export function Onboarding({
-  boardRef,
-}: {
-  boardRef: RefObject<HTMLDivElement>
-}) {
+export function Onboarding() {
   const [rangeRects, setRangeRects] = useState<
     ({ x: number; y: number; width: number; height: number } | undefined)[]
   >([])
   const [visibleHighlight, setVisibleHighlight] = useState(0)
   const [onboardingVisible, setOnboardingVisible] = useAtom($onboardingVisible)
+  const boardRef = useAtomValue($boardRef)
 
   useLayoutEffect(() => {
     function cutout(from: Coordinate, to: Coordinate) {
@@ -41,7 +39,7 @@ export function Onboarding({
         `cell-${from.row}-${from.col}`,
         `cell-${to.row}-${to.col}`,
       ].map((pointer) =>
-        boardRef.current
+        boardRef
           ?.querySelector(`[data-pointer="${pointer}"]`)
           ?.getBoundingClientRect()
       )

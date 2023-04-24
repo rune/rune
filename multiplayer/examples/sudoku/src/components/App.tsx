@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components/macro"
 import { Board } from "./Board/Board"
 import { useAtom } from "jotai"
@@ -10,7 +10,6 @@ import { $game } from "../state/$game"
 
 export function App() {
   const [game, setGame] = useAtom($game)
-  const boardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     Rune.initClient({
@@ -29,10 +28,10 @@ export function App() {
   return (
     <Root>
       <ControlPanel />
-      <Board ref={boardRef} />
+      <Board />
       <Digits />
       {!game.game.sudoku && <StartGame />}
-      {!!game.game.sudoku && <Onboarding boardRef={boardRef} />}
+      {!!game.game.sudoku && <Onboarding />}
     </Root>
   )
 }

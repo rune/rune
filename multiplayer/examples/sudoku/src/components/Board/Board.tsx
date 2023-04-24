@@ -1,16 +1,18 @@
 import styled from "styled-components/macro"
-import React, { forwardRef } from "react"
+import React from "react"
 import { Cell } from "./Cell"
-import { useAtomValue } from "jotai"
+import { useAtomValue, useSetAtom } from "jotai"
 import { $gameOver } from "../../state/$game"
 import { range } from "../../lib/range"
 import { rel } from "../../style/rel"
+import { $boardRef } from "../../state/$boardRef"
 
-export const Board = forwardRef<HTMLDivElement, {}>((_, ref) => {
+export function Board() {
   const gameOver = useAtomValue($gameOver)
+  const setBoardRef = useSetAtom($boardRef)
 
   return (
-    <Root ref={ref}>
+    <Root ref={setBoardRef}>
       {range(9).map((row) => (
         <Row key={row}>
           {range(9).map((col) => (
@@ -20,7 +22,7 @@ export const Board = forwardRef<HTMLDivElement, {}>((_, ref) => {
       ))}
     </Root>
   )
-})
+}
 
 const Root = styled.div`
   width: ${rel(304)};

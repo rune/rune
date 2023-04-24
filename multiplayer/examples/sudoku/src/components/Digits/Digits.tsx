@@ -1,5 +1,5 @@
 import styled from "styled-components/macro"
-import { $yourSelection, $board } from "../../state/state"
+import { $yourSelection, $board } from "../../state/$game"
 import { useAtomValue } from "jotai"
 import { cellPointer } from "../../lib/cellPointer"
 import { useMemo } from "react"

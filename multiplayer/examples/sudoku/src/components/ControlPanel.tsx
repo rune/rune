@@ -1,6 +1,6 @@
 import styled from "styled-components/macro"
 import { useAtomValue } from "jotai"
-import { $hints } from "../state/state"
+import { $hints } from "../state/$game"
 import { maxHints } from "../lib/maxHints"
 
 export function ControlPanel() {

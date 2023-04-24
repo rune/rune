@@ -2,7 +2,7 @@ import styled from "styled-components/macro"
 import React, { forwardRef } from "react"
 import { Cell } from "./Cell"
 import { useAtomValue } from "jotai"
-import { $gameOver } from "../../state/state"
+import { $gameOver } from "../../state/$game"
 import { range } from "../../lib/range"
 import { rel } from "../../style/rel"
 

@@ -1,16 +1,11 @@
 import styled from "styled-components/macro"
 import { Color } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
-import {
-  $board,
-  $selections,
-  $yourPlayerId,
-  $colors,
-  $onboardingVisible,
-} from "../../state/state"
+import { $board, $selections, $yourPlayerId, $colors } from "../../state/$game"
 import { cellPointer } from "../../lib/cellPointer"
 import React from "react"
 import { rel } from "../../style/rel"
+import { $onboardingVisible } from "../../state/$onboardingVisible"
 
 export function Cell({
   row,

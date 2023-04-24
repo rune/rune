@@ -3,11 +3,11 @@ import styled from "styled-components/macro"
 import { Coordinate } from "../lib/types/GameState"
 import { rel } from "../style/rel"
 import { useAtom } from "jotai"
-import { $onboardingVisible } from "../state/state"
 import {
   SimpleCSSTransition,
   simpleCSSTransitionStyles,
 } from "./animation/SimpleCSSTransition"
+import { $onboardingVisible } from "../state/$onboardingVisible"
 
 const ranges: [Coordinate, Coordinate][] = [
   [

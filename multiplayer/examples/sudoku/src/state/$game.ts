@@ -3,9 +3,7 @@ import { atom } from "jotai"
 import { Players, PlayerId } from "rune-games-sdk/multiplayer"
 import { cellPointer } from "../lib/cellPointer"
 
-export const $onboardingVisible = atom(true)
-
-export const $state = atom<
+export const $game = atom<
   | {
       game: GameState
       players: Players
@@ -14,12 +12,12 @@ export const $state = atom<
   | undefined
 >(undefined)
 
-export const $board = atom((get) => get($state)?.game.sudoku?.board)
+export const $board = atom((get) => get($game)?.game.sudoku?.board)
 
-export const $gameOver = atom((get) => !!get($state)?.game.gameOver)
+export const $gameOver = atom((get) => !!get($game)?.game.gameOver)
 
 export const $selections = atom((get) =>
-  Object.entries(get($state)?.game.playerState ?? {}).reduce<{
+  Object.entries(get($game)?.game.playerState ?? {}).reduce<{
     [index: number]: string[] | undefined
   }>(
     (acc, [playerId, { selection }]) => ({
@@ -35,13 +33,13 @@ export const $selections = atom((get) =>
 export const $yourSelection = atom((get) => {
   const yourPlayerId = get($yourPlayerId)
   if (!yourPlayerId) return undefined
-  return get($state)?.game.playerState[yourPlayerId].selection
+  return get($game)?.game.playerState[yourPlayerId].selection
 })
 
-export const $yourPlayerId = atom((get) => get($state)?.yourPlayerId)
+export const $yourPlayerId = atom((get) => get($game)?.yourPlayerId)
 
 export const $colors = atom((get) =>
-  Object.entries(get($state)?.game.playerState ?? {}).reduce<{
+  Object.entries(get($game)?.game.playerState ?? {}).reduce<{
     [playerId: string]: Color
   }>(
     (acc, [playerId, { color }]) => ({
@@ -52,4 +50,4 @@ export const $colors = atom((get) =>
   )
 )
 
-export const $hints = atom((get) => get($state)?.game.hints ?? [])
+export const $hints = atom((get) => get($game)?.game.hints ?? [])

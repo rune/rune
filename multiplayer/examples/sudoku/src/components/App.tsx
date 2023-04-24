@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from "react"
 import styled from "styled-components/macro"
 import { Board } from "./Board/Board"
 import { useAtom } from "jotai"
-import { $state } from "../state/state"
 import { Digits } from "./Digits/Digits"
 import { StartGame } from "./StartGame/StartGame"
 import { Onboarding } from "./Onboarding"
 import { ControlPanel } from "./ControlPanel"
+import { $game } from "../state/$game"
 
 export function App() {
-  const [state, setState] = useAtom($state)
+  const [game, setGame] = useAtom($game)
   const boardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -19,23 +19,25 @@ export function App() {
           // TODO: handle rollback by showing alert
           console.error(JSON.stringify(rollbacks))
         }
-        setState({ game: newGame, players, yourPlayerId })
+        setGame({ game: newGame, players, yourPlayerId })
       },
     })
-  }, [setState])
+  }, [setGame])
 
-  if (!state?.game) return null
+  if (!game?.game) return null
 
   return (
     <Root>
       <ControlPanel />
       <Board ref={boardRef} />
       <Digits />
-      {!state.game.sudoku && <StartGame />}
-      {!!state.game.sudoku && <Onboarding boardRef={boardRef} />}
+      {!game.game.sudoku && <StartGame />}
+      {!!game.game.sudoku && <Onboarding boardRef={boardRef} />}
     </Root>
   )
 }
+
+// TODO: figure out font rendering on iOS issue
 
 const Root = styled.div`
   width: 100%;

@@ -1,7 +1,13 @@
 import styled, { css } from "styled-components/macro"
 import { Color } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
-import { $board, $selections, $yourPlayerId, $colors } from "../../state/state"
+import {
+  $board,
+  $selections,
+  $yourPlayerId,
+  $colors,
+  $onboardingVisible,
+} from "../../state/state"
 import { cellPointer } from "../../lib/cellPointer"
 import React from "react"
 import { rel } from "../../style/rel"
@@ -19,25 +25,31 @@ export function Cell({
   const selections = useAtomValue($selections)[cellPointer({ row, col })]
   const yourPlayerId = useAtomValue($yourPlayerId)
   const colors = useAtomValue($colors)
+  const onboardingVisible = useAtomValue($onboardingVisible)
 
   if (!board) return <Root />
 
   const cell = board[cellPointer({ row, col })]
 
   return (
-    <Root onClick={() => Rune.actions.select({ row, col })}>
-      <Highlight
-        withBorder={!gameOver && !!selections?.includes(yourPlayerId ?? "")}
-        tint={
-          gameOver && cell.lastModifiedByPlayerId
-            ? colors[cell.lastModifiedByPlayerId]
-            : selections
-            ? selections.length === 1
-              ? colors[selections[0]]
-              : [150, 150, 150]
-            : null
-        }
-      />
+    <Root
+      onClick={() => Rune.actions.select({ row, col })}
+      data-pointer={`cell-${row}-${col}`}
+    >
+      {!onboardingVisible && (
+        <Highlight
+          withBorder={!gameOver && !!selections?.includes(yourPlayerId ?? "")}
+          tint={
+            gameOver && cell.lastModifiedByPlayerId
+              ? colors[cell.lastModifiedByPlayerId]
+              : selections
+              ? selections.length === 1
+                ? colors[selections[0]]
+                : [150, 150, 150]
+              : null
+          }
+        />
+      )}
       <ErrorHighlight enabled={cell.error} />
       <Value fixed={cell.fixed}>{cell.value}</Value>
     </Root>

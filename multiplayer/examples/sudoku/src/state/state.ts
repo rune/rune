@@ -3,6 +3,8 @@ import { atom } from "jotai"
 import { Players, PlayerId } from "rune-games-sdk/multiplayer"
 import { cellPointer } from "../lib/cellPointer"
 
+export const $onboardingVisible = atom(true)
+
 export const $state = atom<
   | {
       game: GameState

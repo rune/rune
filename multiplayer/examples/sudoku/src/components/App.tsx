@@ -1,13 +1,16 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components/macro"
 import { Board } from "./Board/Board"
-import { useAtom } from "jotai"
-import { $state } from "../state/state"
+import { useAtom, useAtomValue } from "jotai"
+import { $state, $onboardingVisible } from "../state/state"
 import { Digits } from "./Digits/Digits"
 import { StartGame } from "./StartGame/StartGame"
+import { Onboarding } from "./Onboarding"
 
 export function App() {
   const [state, setState] = useAtom($state)
+  const boardRef = useRef<HTMLDivElement>(null)
+  const onboardingVisible = useAtomValue($onboardingVisible)
 
   useEffect(() => {
     Rune.initClient({
@@ -26,8 +29,11 @@ export function App() {
   return (
     <Root>
       {!state.game.sudoku && <StartGame />}
-      <Board />
+      <Board ref={boardRef} />
       <Digits />
+      {!!state.game.sudoku && onboardingVisible && (
+        <Onboarding boardRef={boardRef} />
+      )}
     </Root>
   )
 }

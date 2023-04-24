@@ -30,9 +30,7 @@ export function App() {
       {!state.game.sudoku && <StartGame />}
       <Board ref={boardRef} />
       <Digits />
-      {!!state.game.sudoku && !state.game.gameOver && (
-        <Onboarding boardRef={boardRef} />
-      )}
+      {!!state.game.sudoku && <Onboarding boardRef={boardRef} />}
     </Root>
   )
 }

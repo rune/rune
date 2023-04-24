@@ -6,6 +6,7 @@ import { useMemo } from "react"
 import { UnusedDigits } from "./UnusedDigits"
 import backspaceImg from "./backspace.svg"
 import { range } from "../../lib/range"
+import { rel } from "../../style/rel"
 
 export function Digits() {
   const yourSelection = useAtomValue($yourSelection)
@@ -67,14 +68,14 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   > :not(:first-child) {
-    margin-top: 4vw;
+    margin-top: ${rel(12)};
   }
 `
 
 const Row = styled.div`
   display: flex;
   > :not(:first-child) {
-    margin-left: 4vw;
+    margin-left: ${rel(12)};
   }
 `
 
@@ -84,23 +85,23 @@ const Digit = styled.div`
   align-items: center;
   justify-content: center;
   > :not(:first-child) {
-    margin-top: 2.2vw;
+    margin-top: ${rel(8)};
   }
 
-  width: 13vw;
-  height: 13vw;
+  width: ${rel(44)};
+  height: ${rel(44)};
 
   background: linear-gradient(180deg, #965a1c 0%, #9f4a09 100%);
-  box-shadow: 0 1.25vw 1.56vw #1e2832;
-  border-radius: 1vw;
+  box-shadow: 0 ${rel(4)} ${rel(5)} #1e2832;
+  border-radius: ${rel(4)};
 `
 
 const Label = styled.div`
-  font-size: 7.5vw;
+  font-size: ${rel(24)};
   font-weight: 600;
   color: #f5d6c1;
 `
 
 const BackspaceImg = styled.img`
-  width: 8.5vw;
+  width: ${rel(27)};
 `

@@ -4,6 +4,7 @@ import { Cell } from "./Cell"
 import { useAtomValue } from "jotai"
 import { $gameOver } from "../../state/state"
 import { range } from "../../lib/range"
+import { rel } from "../../style/rel"
 
 export function Board() {
   const gameOver = useAtomValue($gameOver)
@@ -22,14 +23,14 @@ export function Board() {
 }
 
 const Root = styled.div`
-  width: 95vw;
-  height: 95vw;
+  width: ${rel(304)};
+  height: ${rel(304)};
   display: flex;
   flex-direction: column;
   > :not(:first-child) {
-    margin-top: 0.3vw;
+    margin-top: ${rel(1)};
     :nth-child(3n + 1) {
-      margin-top: 0.9vw;
+      margin-top: ${rel(3)};
     }
   }
 `
@@ -38,9 +39,9 @@ const Row = styled.div`
   display: flex;
   flex: 1;
   > :not(:first-child) {
-    margin-left: 0.3vw;
+    margin-left: ${rel(1)};
     :nth-child(3n + 1) {
-      margin-left: 0.9vw;
+      margin-left: ${rel(3)};
     }
   }
 `

@@ -4,6 +4,7 @@ import { useAtomValue } from "jotai"
 import { $board, $selections, $yourPlayerId, $colors } from "../../state/state"
 import { cellPointer } from "../../lib/cellPointer"
 import React from "react"
+import { rel } from "../../style/rel"
 
 export function Cell({
   row,
@@ -55,7 +56,7 @@ const Root = styled.div`
 const Value = styled.div<{ fixed: boolean }>`
   color: ${({ fixed }) => (fixed ? "#995618" : "#F8D5AF")};
   font-weight: 600;
-  font-size: 7vw;
+  font-size: ${rel(24)};
   z-index: 1;
 `
 
@@ -70,9 +71,10 @@ const Highlight = styled.div<{ tint: Color | null; withBorder: boolean }>`
   ${({ withBorder, tint }) =>
     withBorder &&
     css`
-      width: calc(100% + 1.8vw);
-      height: calc(100% + 1.8vw);
-      border: 0.9vw solid ${tint ? `rgb(${tint.join(", ")})` : "transparent"};
+      width: calc(100% + ${rel(6)});
+      height: calc(100% + ${rel(6)});
+      border: ${rel(3)} solid
+        ${tint ? `rgb(${tint.join(", ")})` : "transparent"};
       z-index: 1;
     `};
 `
@@ -82,6 +84,7 @@ const ErrorHighlight = styled.div<{ enabled: boolean }>`
   width: 100%;
   height: 100%;
   transition: border-color 0.2s ease-out;
-  border: 0.6vw solid ${({ enabled }) => (enabled ? "#ff3939" : "transparent")};
+  border: ${rel(2)} solid
+    ${({ enabled }) => (enabled ? "#ff3939" : "transparent")};
   z-index: 1;
 `

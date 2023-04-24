@@ -1,11 +1,11 @@
 import styled from "styled-components/macro"
-import range from "lodash/range"
 import { $yourSelection, $board } from "../../state/state"
 import { useAtomValue } from "jotai"
 import { cellPointer } from "../../lib/cellPointer"
 import { useMemo } from "react"
 import { UnusedDigits } from "./UnusedDigits"
 import backspaceImg from "./backspace.svg"
+import { range } from "../../lib/range"
 
 export function Digits() {
   const yourSelection = useAtomValue($yourSelection)

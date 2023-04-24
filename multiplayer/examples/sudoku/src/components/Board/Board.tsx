@@ -1,18 +1,18 @@
 import styled from "styled-components/macro"
 import React from "react"
-import range from "lodash/range"
 import { Cell } from "./Cell"
 import { useAtomValue } from "jotai"
 import { $gameOver } from "../../state/state"
+import { range } from "../../lib/range"
 
 export function Board() {
   const gameOver = useAtomValue($gameOver)
 
   return (
     <Root>
-      {range(0, 9).map((row) => (
+      {range(9).map((row) => (
         <Row key={row}>
-          {range(0, 9).map((col) => (
+          {range(9).map((col) => (
             <Cell key={col} row={row} col={col} gameOver={gameOver} />
           ))}
         </Row>

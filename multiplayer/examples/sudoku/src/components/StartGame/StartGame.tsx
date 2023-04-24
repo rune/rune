@@ -4,7 +4,7 @@ import checkmarkImg from "./checkmark.svg"
 import starImg from "./star.svg"
 import { rel } from "../../style/rel"
 import { Difficulty } from "sudoku-gen/dist/types/difficulty.type"
-import range from "lodash/range"
+import { range } from "../../lib/range"
 
 const options: {
   label: string

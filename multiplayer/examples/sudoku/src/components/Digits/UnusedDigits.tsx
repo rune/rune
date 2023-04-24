@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components/macro"
-import range from "lodash/range"
+import { range } from "../../lib/range"
 
 export function UnusedDigits({ count }: { count: number }) {
   return (

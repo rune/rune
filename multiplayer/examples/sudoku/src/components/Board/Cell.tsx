@@ -83,4 +83,5 @@ const ErrorHighlight = styled.div<{ enabled: boolean }>`
   height: 100%;
   transition: border-color 0.2s ease-out;
   border: 0.6vw solid ${({ enabled }) => (enabled ? "#ff3939" : "transparent")};
+  z-index: 1;
 `

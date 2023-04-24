@@ -1,15 +1,18 @@
 import React, { useEffect } from "react"
 import styled from "styled-components/macro"
 import { Board } from "./Board/Board"
-import { useAtom } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import { Digits } from "./Digits/Digits"
 import { StartGame } from "./StartGame/StartGame"
 import { Onboarding } from "./Onboarding"
 import { ControlPanel } from "./ControlPanel"
 import { $game } from "../state/$game"
+import { Hints } from "./Hints/Hints"
+import { $onboardingVisible } from "../state/$onboardingVisible"
 
 export function App() {
   const [game, setGame] = useAtom($game)
+  const onboardingVisible = useAtomValue($onboardingVisible)
 
   useEffect(() => {
     Rune.initClient({
@@ -30,13 +33,17 @@ export function App() {
       <ControlPanel />
       <Board />
       <Digits />
-      {!game.game.sudoku && <StartGame />}
-      {!!game.game.sudoku && <Onboarding />}
+      {game.game.sudoku ? (
+        <>
+          <Onboarding />
+          {!onboardingVisible && <Hints />}
+        </>
+      ) : (
+        <StartGame />
+      )}
     </Root>
   )
 }
-
-// TODO: figure out font rendering on iOS issue
 
 const Root = styled.div`
   width: 100%;

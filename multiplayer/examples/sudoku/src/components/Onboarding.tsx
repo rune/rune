@@ -9,6 +9,7 @@ import {
 } from "./animation/SimpleCSSTransition"
 import { $onboardingVisible } from "../state/$onboardingVisible"
 import { $boardRef } from "../state/$boardRef"
+import { calculateBoardRect, Rect } from "../lib/calculateBoardRect"
 
 const ranges: [Coordinate, Coordinate][] = [
   [
@@ -26,35 +27,17 @@ const ranges: [Coordinate, Coordinate][] = [
 ]
 
 export function Onboarding() {
-  const [rangeRects, setRangeRects] = useState<
-    ({ x: number; y: number; width: number; height: number } | undefined)[]
-  >([])
+  const [rangeRects, setRangeRects] = useState<Rect[]>([])
   const [visibleHighlight, setVisibleHighlight] = useState(0)
   const [onboardingVisible, setOnboardingVisible] = useAtom($onboardingVisible)
   const boardRef = useAtomValue($boardRef)
 
   useLayoutEffect(() => {
-    function cutout(from: Coordinate, to: Coordinate) {
-      const [topLeft, bottomRight] = [
-        `cell-${from.row}-${from.col}`,
-        `cell-${to.row}-${to.col}`,
-      ].map((pointer) =>
-        boardRef
-          ?.querySelector(`[data-pointer="${pointer}"]`)
-          ?.getBoundingClientRect()
-      )
+    if (!boardRef) return
 
-      if (!topLeft || !bottomRight) return
-
-      return {
-        x: topLeft.left,
-        y: topLeft.top,
-        width: bottomRight.right - topLeft.left,
-        height: bottomRight.bottom - topLeft.top,
-      }
-    }
-
-    setRangeRects(ranges.map(([from, to]) => cutout(from, to)))
+    setRangeRects(
+      ranges.map(([from, to]) => calculateBoardRect(boardRef, from, to))
+    )
   }, [boardRef])
 
   useEffect(() => {
@@ -73,9 +56,9 @@ export function Onboarding() {
           <defs>
             <mask id="cutout">
               <rect width="100%" height="100%" fill="white" />
-              {rangeRects.map(
-                (rect, i) => rect && <rect key={i} {...rect} fill="black" />
-              )}
+              {rangeRects.map((rect, i) => (
+                <rect key={i} {...rect} fill="black" />
+              ))}
             </mask>
           </defs>
           <rect
@@ -87,21 +70,18 @@ export function Onboarding() {
             mask="url(#cutout)"
           />
         </svg>
-        {rangeRects.map(
-          (cutout, i) =>
-            cutout && (
-              <Highlight
-                key={i}
-                visible={i === visibleHighlight}
-                style={{
-                  left: cutout.x,
-                  top: cutout.y,
-                  width: `calc(${cutout.width}px + ${rel(8)})`,
-                  height: `calc(${cutout.height}px + ${rel(8)})`,
-                }}
-              />
-            )
-        )}
+        {rangeRects.map((cutout, i) => (
+          <Highlight
+            key={i}
+            visible={i === visibleHighlight}
+            style={{
+              left: cutout.x,
+              top: cutout.y,
+              width: `calc(${cutout.width}px + ${rel(8)})`,
+              height: `calc(${cutout.height}px + ${rel(8)})`,
+            }}
+          />
+        ))}
         <Text>
           Every row, column and 3x3 grid should contain the numbers 1-9.
         </Text>

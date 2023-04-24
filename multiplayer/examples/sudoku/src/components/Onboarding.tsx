@@ -2,8 +2,12 @@ import React, { RefObject, useState, useLayoutEffect, useEffect } from "react"
 import styled from "styled-components/macro"
 import { Coordinate } from "../lib/types/GameState"
 import { rel } from "../style/rel"
-import { useSetAtom } from "jotai"
+import { useAtom } from "jotai"
 import { $onboardingVisible } from "../state/state"
+import {
+  SimpleCSSTransition,
+  simpleCSSTransitionStyles,
+} from "./animation/SimpleCSSTransition"
 
 const ranges: [Coordinate, Coordinate][] = [
   [
@@ -29,7 +33,7 @@ export function Onboarding({
     ({ x: number; y: number; width: number; height: number } | undefined)[]
   >([])
   const [visibleHighlight, setVisibleHighlight] = useState(0)
-  const setOnboardingVisible = useSetAtom($onboardingVisible)
+  const [onboardingVisible, setOnboardingVisible] = useAtom($onboardingVisible)
 
   useLayoutEffect(() => {
     function cutout(from: Coordinate, to: Coordinate) {
@@ -65,44 +69,46 @@ export function Onboarding({
   }, [rangeRects.length, setOnboardingVisible, visibleHighlight])
 
   return (
-    <Root>
-      <svg width="100%" height="100%">
-        <defs>
-          <mask id="cutout">
-            <rect width="100%" height="100%" fill="white" />
-            {rangeRects.map(
-              (rect, i) => rect && <rect key={i} {...rect} fill="black" />
-            )}
-          </mask>
-        </defs>
-        <rect
-          x="0"
-          y="0"
-          width="100%"
-          height="100%"
-          fill="rgba(75, 110, 135, 0.8)"
-          mask="url(#cutout)"
-        />
-      </svg>
-      {rangeRects.map(
-        (cutout, i) =>
-          cutout && (
-            <Highlight
-              key={i}
-              visible={i === visibleHighlight}
-              style={{
-                left: cutout.x,
-                top: cutout.y,
-                width: `calc(${cutout.width}px + ${rel(8)})`,
-                height: `calc(${cutout.height}px + ${rel(8)})`,
-              }}
-            />
-          )
-      )}
-      <Text>
-        Every row, column and 3x3 grid should contain the numbers 1-9.
-      </Text>
-    </Root>
+    <SimpleCSSTransition visible={onboardingVisible} duration={400}>
+      <Root>
+        <svg width="100%" height="100%">
+          <defs>
+            <mask id="cutout">
+              <rect width="100%" height="100%" fill="white" />
+              {rangeRects.map(
+                (rect, i) => rect && <rect key={i} {...rect} fill="black" />
+              )}
+            </mask>
+          </defs>
+          <rect
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            fill="rgba(75, 110, 135, 0.8)"
+            mask="url(#cutout)"
+          />
+        </svg>
+        {rangeRects.map(
+          (cutout, i) =>
+            cutout && (
+              <Highlight
+                key={i}
+                visible={i === visibleHighlight}
+                style={{
+                  left: cutout.x,
+                  top: cutout.y,
+                  width: `calc(${cutout.width}px + ${rel(8)})`,
+                  height: `calc(${cutout.height}px + ${rel(8)})`,
+                }}
+              />
+            )
+        )}
+        <Text>
+          Every row, column and 3x3 grid should contain the numbers 1-9.
+        </Text>
+      </Root>
+    </SimpleCSSTransition>
   )
 }
 
@@ -112,6 +118,7 @@ const Root = styled.div`
   height: 100%;
   z-index: 1;
   overflow: hidden;
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
 `
 
 const Highlight = styled.div<{ visible: boolean }>`

@@ -51,3 +51,5 @@ export const $colors = atom((get) =>
     {}
   )
 )
+
+export const $hints = atom((get) => get($state)?.game.hints ?? [])

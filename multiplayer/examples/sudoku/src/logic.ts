@@ -5,6 +5,8 @@ import { highlightDuplicates } from "./lib/highlightDuplicates"
 import { findDuplicates } from "./lib/findDuplicates"
 import { isBoardFilled } from "./lib/isBoardFilled"
 import { GameOverOptions } from "rune-games-sdk/multiplayer"
+import { getRandomItem } from "./lib/getRandomItem"
+import { maxHints } from "./lib/maxHints"
 
 const possibleColors: Color[] = [
   [65, 156, 85],
@@ -36,6 +38,7 @@ Rune.initLogic({
       }),
       {}
     ),
+    hints: [],
   }),
   actions: {
     startGame: (difficulty, { game }) => {
@@ -84,17 +87,28 @@ Rune.initLogic({
       cell.valueLock = Math.random()
       cell.lastModifiedByPlayerId = playerId
 
-      const duplicates = findDuplicates(game.sudoku.board)
-      highlightDuplicates(game.sudoku.board, duplicates)
+      calculateErrorsOrGameOver(game)
+    },
+    showHint: (_, { game, playerId }) => {
+      if (!game.sudoku) throw Rune.invalidAction()
+      if (game.hints.length === maxHints) throw Rune.invalidAction()
 
-      if (isBoardFilled(game.sudoku.board) && duplicates.length === 0) {
-        game.gameOver = true
-        Rune.gameOver({
-          players: Object.keys(game.playerState).reduce<
-            GameOverOptions["players"]
-          >((acc, playerId) => ({ ...acc, [playerId]: "WON" }), {}),
-        })
-      }
+      const emptyOrIncorrectCell = getRandomItem(
+        game.sudoku.board.filter(
+          (cell) => !cell.value || cell.value !== cell.correctValue
+        )
+      )
+
+      if (!emptyOrIncorrectCell) return
+
+      emptyOrIncorrectCell.value = emptyOrIncorrectCell.correctValue
+      emptyOrIncorrectCell.fixed = true
+      emptyOrIncorrectCell.lastModifiedByPlayerId = null
+      game.hints.push(
+        cellPointer(game.sudoku.board.indexOf(emptyOrIncorrectCell))
+      )
+
+      calculateErrorsOrGameOver(game)
     },
   },
   events: {
@@ -131,3 +145,20 @@ Rune.initLogic({
     },
   },
 })
+
+function calculateErrorsOrGameOver(game: GameState) {
+  if (!game.sudoku) throw Rune.invalidAction()
+
+  const duplicates = findDuplicates(game.sudoku.board)
+  highlightDuplicates(game.sudoku.board, duplicates)
+
+  if (isBoardFilled(game.sudoku.board) && duplicates.length === 0) {
+    game.gameOver = true
+    Rune.gameOver({
+      players: Object.keys(game.playerState).reduce<GameOverOptions["players"]>(
+        (acc, playerId) => ({ ...acc, [playerId]: "WON" }),
+        {}
+      ),
+    })
+  }
+}

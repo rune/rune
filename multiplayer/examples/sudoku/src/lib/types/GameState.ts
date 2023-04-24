@@ -28,4 +28,5 @@ export interface GameState {
       selection: Coordinate
     }
   }
+  hints: Coordinate[]
 }

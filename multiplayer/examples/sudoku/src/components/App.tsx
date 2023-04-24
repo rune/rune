@@ -6,6 +6,7 @@ import { $state } from "../state/state"
 import { Digits } from "./Digits/Digits"
 import { StartGame } from "./StartGame/StartGame"
 import { Onboarding } from "./Onboarding"
+import { ControlPanel } from "./ControlPanel"
 
 export function App() {
   const [state, setState] = useAtom($state)
@@ -27,9 +28,10 @@ export function App() {
 
   return (
     <Root>
-      {!state.game.sudoku && <StartGame />}
+      <ControlPanel />
       <Board ref={boardRef} />
       <Digits />
+      {!state.game.sudoku && <StartGame />}
       {!!state.game.sudoku && <Onboarding boardRef={boardRef} />}
     </Root>
   )

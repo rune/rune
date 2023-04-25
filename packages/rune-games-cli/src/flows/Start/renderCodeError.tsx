@@ -1,15 +1,20 @@
+import { Linter } from "eslint"
 import { Text } from "ink"
 import React from "react"
+
+import Severity = Linter.Severity
 
 const spaceRegex = /^\s+/
 
 export function renderErrorCodeLine({
+  severity,
   code,
   line,
   column,
   endLine,
   endColumn,
 }: {
+  severity: Severity
   code: string
   line: number
   column: number
@@ -30,7 +35,7 @@ export function renderErrorCodeLine({
   return (
     <Text color="cyan">
       {line}:{column} {content.slice(0, column - 1)}
-      <Text backgroundColor="red">
+      <Text backgroundColor={severity === 2 ? "red" : "yellow"}>
         {content.slice(column - 1, endColumn - 1)}
       </Text>
       {content.slice(endColumn - 1)}

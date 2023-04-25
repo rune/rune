@@ -7,6 +7,7 @@ export interface Cell {
   correctValue: number
   error: boolean
   lastModifiedByPlayerId: string | null
+  notes: number[]
 }
 
 export interface Coordinate {

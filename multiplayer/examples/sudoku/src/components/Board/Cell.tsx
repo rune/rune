@@ -8,6 +8,7 @@ import { rel } from "../../style/rel"
 import { $onboardingVisible } from "../../state/$onboardingVisible"
 
 import { $animatingHints } from "../../state/$animatingHints"
+import { range } from "../../lib/range"
 
 export function Cell({
   row,
@@ -45,12 +46,27 @@ export function Cell({
       data-pointer={`cell-${row}-${col}`}
     >
       {onboardingVisible ? (
-        cell.fixed && <Value fixed={cell.fixed}>{cell.value}</Value>
+        cell.fixed && <Value fixed>{cell.value}</Value>
       ) : (
         <>
           <Highlight tint={tint} />
           {!animatingHints[cellPointer({ row, col })] && (
             <Value fixed={cell.fixed}>{cell.value}</Value>
+          )}
+          {cell.notes.length > 0 && (
+            <Notes>
+              {range(3).map((row) => (
+                <NoteRow key={row}>
+                  {range(3).map((col) =>
+                    ((note) => (
+                      <Note key={col} visible={cell.notes.includes(note)}>
+                        {note}
+                      </Note>
+                    ))(row * 3 + col + 1)
+                  )}
+                </NoteRow>
+              ))}
+            </Notes>
           )}
           <ErrorHighlight enabled={cell.error} />
           <HighlightBorder
@@ -106,4 +122,31 @@ const HighlightBorder = styled.div<{ visible: boolean; tint: Color | null }>`
     ${({ tint }) => (tint ? `rgb(${tint.join(", ")})` : "transparent")};
   z-index: 1;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
+`
+
+const Notes = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const NoteRow = styled.div`
+  display: flex;
+  flex: 1;
+`
+
+const Note = styled.div<{ visible: boolean }>`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+  font-size: ${rel(10)};
+  line-height: ${rel(10)};
+  font-weight: 600;
+  color: #f8d5af;
+
+  visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
 `

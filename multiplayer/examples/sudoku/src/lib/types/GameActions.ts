@@ -6,4 +6,5 @@ export interface GameActions {
   select: (coordinate: Coordinate) => void
   setValue: (args: { value: number | null; clientValueLock: number }) => void
   showHint: () => void
+  toggleNote: (arg: { value: number | null }) => void
 }

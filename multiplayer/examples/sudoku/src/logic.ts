@@ -66,11 +66,14 @@ Rune.initLogic({
           //           Math.random() * Object.keys(game.playerState).length
           //         )
           //       ],
+          notes: [],
         })),
       }
     },
     select: (coordinate, { game, playerId }) => {
       if (!game.sudoku) throw Rune.invalidAction()
+      if (!game.sudoku.board.at(cellPointer(coordinate)))
+        throw Rune.invalidAction()
 
       game.playerState[playerId].selection = coordinate
     },
@@ -78,14 +81,16 @@ Rune.initLogic({
       if (!game.sudoku) throw Rune.invalidAction()
 
       const selection = game.playerState[playerId].selection
-      const cell = game.sudoku.board[cellPointer(selection)]
+      const cell = game.sudoku.board.at(cellPointer(selection))
 
+      if (!cell) throw Rune.invalidAction()
       if (cell.fixed) throw Rune.invalidAction()
       if (cell.valueLock !== clientValueLock) throw Rune.invalidAction()
 
       cell.value = value
       cell.valueLock = Math.random()
       cell.lastModifiedByPlayerId = playerId
+      cell.notes = []
 
       calculateErrorsOrGameOver(game)
     },
@@ -104,11 +109,29 @@ Rune.initLogic({
       emptyOrIncorrectCell.value = emptyOrIncorrectCell.correctValue
       emptyOrIncorrectCell.fixed = true
       emptyOrIncorrectCell.lastModifiedByPlayerId = null
+      emptyOrIncorrectCell.notes = []
       game.hints.push(
         cellPointer(game.sudoku.board.indexOf(emptyOrIncorrectCell))
       )
 
       calculateErrorsOrGameOver(game)
+    },
+    toggleNote: ({ value }, { game, playerId }) => {
+      if (!game.sudoku) throw Rune.invalidAction()
+
+      const selection = game.playerState[playerId].selection
+      const cell = game.sudoku.board.at(cellPointer(selection))
+
+      if (!cell) throw Rune.invalidAction()
+      if (cell.value) throw Rune.invalidAction()
+
+      if (value === null) {
+        cell.notes = []
+      } else {
+        cell.notes = cell.notes.includes(value)
+          ? cell.notes.filter((note) => note !== value)
+          : [...cell.notes, value]
+      }
     },
   },
   events: {

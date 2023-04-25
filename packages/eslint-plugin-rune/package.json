@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-rune",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "ESlint rules for Rune Multiplayer SDK",
   "license": "MIT",
   "author": "Rune AI Inc.",

@@ -209,10 +209,12 @@ async function validateMultiplayerLogicJsContent({
         const result = results.at(0)
 
         if (result) {
-          if (result.messages.length > 0) {
+          const lintErrors = result.messages.filter((err) => err.severity === 2)
+
+          if (lintErrors.length > 0) {
             errors.push({
               message: "logic.js contains invalid code",
-              lintErrors: result.messages,
+              lintErrors,
             })
           }
         } else {

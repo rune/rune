@@ -9,33 +9,33 @@ export function findDuplicates(board: Cell[]) {
   )[] = []
 
   for (let row = 0; row < 9; row++) {
-    const numbers = new Set<number>()
+    const numbers: number[] = []
 
     for (let col = 0; col < 9; col++) {
       const { value } = board[cellPointer({ row, col })]
 
       if (value) {
-        if (numbers.has(value)) result.push({ row, value })
-        else numbers.add(value)
+        if (numbers.includes(value)) result.push({ row, value })
+        else numbers.push(value)
       }
     }
   }
 
   for (let col = 0; col < 9; col++) {
-    const numbers = new Set<number>()
+    const numbers: number[] = []
 
     for (let row = 0; row < 9; row++) {
       const { value } = board[cellPointer({ row, col })]
 
       if (value) {
-        if (numbers.has(value)) result.push({ col, value })
-        else numbers.add(value)
+        if (numbers.includes(value)) result.push({ col, value })
+        else numbers.push(value)
       }
     }
   }
 
   for (let sector = 0; sector < 9; sector++) {
-    const numbers = new Set<number>()
+    const numbers: number[] = []
 
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
@@ -48,8 +48,8 @@ export function findDuplicates(board: Cell[]) {
           ]
 
         if (value) {
-          if (numbers.has(value)) result.push({ sector, value })
-          else numbers.add(value)
+          if (numbers.includes(value)) result.push({ sector, value })
+          else numbers.push(value)
         }
       }
     }

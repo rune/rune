@@ -2,7 +2,7 @@ import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { useCallback, useMemo } from "react"
 import { cellPointer } from "../../lib/cellPointer"
-import { useAtomValue } from "jotai/index"
+import { useAtomValue } from "jotai"
 import { $yourSelection, $board, $gameOver } from "../../state/$game"
 import { $inputMode } from "../../state/$inputMode"
 import { range } from "../../lib/range"
@@ -84,6 +84,9 @@ const Root = styled.div<{ disabled: boolean; notesMode: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  > :not(:first-child) {
+    margin-top: ${rel(2)};
+  }
 
   width: ${rel(44)};
   height: ${rel(44)};

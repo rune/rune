@@ -79,7 +79,7 @@ const Badge = styled.div`
   justify-content: center;
 
   background-color: #985719;
-  font-size: ${rel(12)};
+  font-size: ${rel(11)};
   font-weight: 300;
   color: #a4a9a5;
 `

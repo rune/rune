@@ -3,8 +3,19 @@ const style = document.createElement("style")
 // language=CSS
 style.innerHTML = `
   @font-face {
-    font-family: "Montserrat";
-    src: url('${require("./Montserrat.ttf")}');
+    font-family: "Lato";
+    font-weight: 400;
+    src: url('${require("./Lato-Regular.ttf")}');
+  }
+  @font-face {
+    font-family: "Lato";
+    font-weight: 300;
+    src: url('${require("./Lato-Light.ttf")}');
+  }
+  @font-face {
+    font-family: "Lato";
+    font-weight: 600;
+    src: url('${require("./Lato-Bold.ttf")}');
   }
   
   html,
@@ -17,13 +28,13 @@ style.innerHTML = `
   }
 
   body {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Lato", sans-serif;
   }
 
   * {
     user-select: none;
     box-sizing: border-box;
-    line-height: 130%;
+    line-height: 100%;
   }
 `
 

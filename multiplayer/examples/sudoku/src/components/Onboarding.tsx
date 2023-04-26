@@ -120,5 +120,6 @@ const Text = styled.div`
   bottom: 10%;
   font-size: ${rel(16)};
   font-weight: 600;
+  line-height: 130%;
   color: white;
 `

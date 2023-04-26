@@ -42,12 +42,17 @@ export function Onboarding() {
 
   useEffect(() => {
     if (rangeRects.length > 0 && visibleHighlight === rangeRects.length) {
-      setOnboardingVisible(false)
+      if (onboardingVisible) setOnboardingVisible(false)
     } else {
       const handle = setTimeout(() => setVisibleHighlight((i) => i + 1), 2000)
       return () => clearTimeout(handle)
     }
-  }, [rangeRects.length, setOnboardingVisible, visibleHighlight])
+  }, [
+    onboardingVisible,
+    rangeRects.length,
+    setOnboardingVisible,
+    visibleHighlight,
+  ])
 
   return (
     <SimpleCSSTransition visible={onboardingVisible} duration={400}>

@@ -30,7 +30,7 @@ export function StartGame() {
   return (
     <Root>
       <Box>
-        <Header>Change Difficulty</Header>
+        <Header>Set Difficulty</Header>
         <Content>
           {options.map((option) => (
             <Option

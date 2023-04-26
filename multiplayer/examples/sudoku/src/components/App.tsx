@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components/macro"
 import { Board } from "./Board/Board"
 import { useAtom, useAtomValue } from "jotai"
@@ -9,10 +9,12 @@ import { ControlPanel } from "./ControlPanel/ControlPanel"
 import { $game } from "../state/$game"
 import { Hints } from "./Hints/Hints"
 import { $onboardingVisible } from "../state/$onboardingVisible"
+import { totalBlipsDuration } from "./Board/useSuccessBlip"
 
 export function App() {
   const [game, setGame] = useAtom($game)
   const onboardingVisible = useAtomValue($onboardingVisible)
+  const [gen, setGen] = useState(0)
 
   useEffect(() => {
     Rune.initClient({
@@ -26,10 +28,22 @@ export function App() {
     })
   }, [setGame])
 
+  useEffect(() => {
+    if (game?.game.gameOver) {
+      const handle = setTimeout(
+        () => Rune.showGameOverPopUp(),
+        totalBlipsDuration + 2000
+      )
+      return () => clearTimeout(handle)
+    } else {
+      setGen((gen) => gen + 1)
+    }
+  }, [game?.game.gameOver])
+
   if (!game?.game) return null
 
   return (
-    <Root>
+    <Root key={gen}>
       <ControlPanel />
       <Board />
       <Digits />

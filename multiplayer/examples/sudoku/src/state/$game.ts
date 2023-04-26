@@ -51,3 +51,5 @@ export const $colors = atom((get) =>
 )
 
 export const $hints = atom((get) => get($game)?.game.hints ?? [])
+
+export const $successes = atom((get) => get($game)?.game.successes ?? [])

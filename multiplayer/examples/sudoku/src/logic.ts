@@ -7,6 +7,7 @@ import { isBoardFilled } from "./lib/isBoardFilled"
 import { GameOverOptions } from "rune-games-sdk/multiplayer"
 import { getRandomItem } from "./lib/getRandomItem"
 import { maxHints } from "./lib/maxHints"
+import { range } from "./lib/range"
 
 const possibleColors: Color[] = [
   [65, 156, 85],
@@ -39,6 +40,7 @@ Rune.initLogic({
       {}
     ),
     hints: [],
+    successes: [],
   }),
   actions: {
     startGame: (difficulty, { game }) => {
@@ -93,6 +95,7 @@ Rune.initLogic({
       cell.notes = []
 
       calculateErrorsOrGameOver(game)
+      calculateSuccesses(game, selection)
     },
     showHint: (_, { game, playerId }) => {
       if (!game.sudoku) throw Rune.invalidAction()
@@ -115,6 +118,10 @@ Rune.initLogic({
       )
 
       calculateErrorsOrGameOver(game)
+      calculateSuccesses(
+        game,
+        cellPointer(game.sudoku.board.indexOf(emptyOrIncorrectCell))
+      )
     },
     toggleNote: ({ value }, { game, playerId }) => {
       if (!game.sudoku) throw Rune.invalidAction()
@@ -182,6 +189,44 @@ function calculateErrorsOrGameOver(game: GameState) {
         (acc, playerId) => ({ ...acc, [playerId]: "WON" }),
         {}
       ),
+      delayPopUp: true,
     })
+  }
+}
+
+function calculateSuccesses(game: GameState, cellCoords: Coordinate) {
+  function isCellFilledAndNoError(pointer: Coordinate) {
+    const cell = game.sudoku?.board.at(cellPointer(pointer))
+    return cell && cell.value && !cell.error
+  }
+
+  if (
+    range(9).every((row) =>
+      isCellFilledAndNoError({ row, col: cellCoords.col })
+    )
+  ) {
+    game.successes.push({ col: cellCoords.col })
+  }
+
+  if (
+    range(9).every((col) =>
+      isCellFilledAndNoError({ row: cellCoords.row, col })
+    )
+  ) {
+    game.successes.push({ row: cellCoords.row })
+  }
+
+  const section =
+    Math.floor(cellCoords.row / 3) * 3 + Math.floor(cellCoords.col / 3)
+
+  if (
+    range(9).every((index) =>
+      isCellFilledAndNoError({
+        row: Math.floor(section / 3) * 3 + Math.floor(index / 3),
+        col: (section % 3) * 3 + (index % 3),
+      })
+    )
+  ) {
+    game.successes.push({ section })
   }
 }

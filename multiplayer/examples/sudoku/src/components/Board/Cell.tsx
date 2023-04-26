@@ -3,12 +3,17 @@ import { Color } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
 import { $board, $selections, $yourPlayerId, $colors } from "../../state/$game"
 import { cellPointer } from "../../lib/cellPointer"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { rel } from "../../style/rel"
 import { $onboardingVisible } from "../../state/$onboardingVisible"
 
 import { $animatingHints } from "../../state/$animatingHints"
 import { range } from "../../lib/range"
+import {
+  useSuccessBlip,
+  blipDuration,
+  totalBlipsDuration,
+} from "./useSuccessBlip"
 
 export function Cell({
   row,
@@ -25,12 +30,24 @@ export function Cell({
   const colors = useAtomValue($colors)
   const onboardingVisible = useAtomValue($onboardingVisible)
   const animatingHints = useAtomValue($animatingHints)
+  const { successBlip } = useSuccessBlip({ row, col })
+  const [gameOverMode, setGameOverMode] = useState(false)
+
+  useEffect(() => {
+    if (gameOver) {
+      const handle = setTimeout(
+        () => setGameOverMode(true),
+        totalBlipsDuration + 500
+      )
+      return () => clearTimeout(handle)
+    }
+  }, [gameOver])
 
   if (!board) return <Root />
 
   const cell = board[cellPointer({ row, col })]
 
-  const tint: Color | null = gameOver
+  const tint: Color | null = gameOverMode
     ? cell.lastModifiedByPlayerId
       ? colors[cell.lastModifiedByPlayerId]
       : null
@@ -44,6 +61,7 @@ export function Cell({
     <Root
       onClick={() => Rune.actions.select({ row, col })}
       data-pointer={`cell-${row}-${col}`}
+      blip={successBlip}
     >
       {onboardingVisible ? (
         cell.fixed && <Value fixed>{cell.value}</Value>
@@ -79,13 +97,14 @@ export function Cell({
   )
 }
 
-const Root = styled.div`
+const Root = styled.div<{ blip?: boolean }>`
   position: relative;
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: #0b1c24;
+  transition: background-color ${blipDuration}ms ease-out;
+  background-color: ${({ blip }) => (blip ? "#245b75" : "#0b1c24")};
 `
 
 const Highlight = styled.div<{ tint: Color | null }>`

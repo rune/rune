@@ -1,6 +1,6 @@
 import styled from "styled-components/macro"
 import { useAtomValue, useAtom } from "jotai"
-import { $hints } from "../../state/$game"
+import { $hints, $gameOver } from "../../state/$game"
 import { maxHints } from "../../lib/maxHints"
 import { $inputMode } from "../../state/$inputMode"
 import penIcon from "./pen.svg"
@@ -10,6 +10,7 @@ import { rel } from "../../style/rel"
 import { useCallback } from "react"
 
 export function ControlPanel() {
+  const gameOver = useAtomValue($gameOver)
   const hints = useAtomValue($hints)
   const hintsLeft = maxHints - hints.length
   const [inputMode, setInputMode] = useAtom($inputMode)
@@ -18,9 +19,11 @@ export function ControlPanel() {
     setInputMode((inputMode) => (inputMode === "value" ? "note" : "value"))
   }, [setInputMode])
 
+  const hintsDisabled = hintsLeft === 0 || gameOver
+
   const showHint = useCallback(() => {
-    if (hintsLeft > 0) Rune.actions.showHint()
-  }, [hintsLeft])
+    if (!hintsDisabled) Rune.actions.showHint()
+  }, [hintsDisabled])
 
   return (
     <Root>
@@ -28,7 +31,7 @@ export function ControlPanel() {
         <Img src={inputMode === "note" ? penActiveIcon : penIcon} />
         <Label>Notes</Label>
       </Button>
-      <Button disabled={hintsLeft === 0} onClick={showHint}>
+      <Button disabled={hintsDisabled} onClick={showHint}>
         <Img src={bulbIcon} />
         <Label>Hint</Label>
         {hintsLeft > 0 && <Badge>{hintsLeft}</Badge>}

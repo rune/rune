@@ -3,7 +3,7 @@ import { rel } from "../../style/rel"
 import { useCallback, useMemo } from "react"
 import { cellPointer } from "../../lib/cellPointer"
 import { useAtomValue } from "jotai/index"
-import { $yourSelection, $board } from "../../state/$game"
+import { $yourSelection, $board, $gameOver } from "../../state/$game"
 import { $inputMode } from "../../state/$inputMode"
 import { range } from "../../lib/range"
 import { UnusedDigits } from "./UnusedDigits"
@@ -14,6 +14,7 @@ export function Digit({ value }: { value: number | null }) {
   const board = useAtomValue($board)
   const inputMode = useAtomValue($inputMode)
   const cell = board && yourSelection && board[cellPointer(yourSelection)]
+  const gameOver = useAtomValue($gameOver)
 
   const remainingDigits = useMemo(() => {
     return (board ?? []).reduce<{ [digit: number]: number }>(
@@ -35,10 +36,11 @@ export function Digit({ value }: { value: number | null }) {
 
   const disabled = useMemo(
     () =>
-      inputMode === "note"
+      gameOver ||
+      (inputMode === "note"
         ? !!cell?.value || (value === null && cell?.notes.length === 0)
-        : !!cell?.fixed || cell?.value === value,
-    [cell?.fixed, cell?.notes.length, cell?.value, inputMode, value]
+        : !!cell?.fixed || cell?.value === value),
+    [cell?.fixed, cell?.notes.length, cell?.value, gameOver, inputMode, value]
   )
 
   const noteEnabled = useMemo(

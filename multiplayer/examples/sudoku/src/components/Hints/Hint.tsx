@@ -8,12 +8,17 @@ import { rel } from "../../style/rel"
 import { randomString } from "../../lib/randomString"
 import { cellPointer } from "../../lib/cellPointer"
 import { $animatingHints } from "../../state/$animatingHints"
+import {
+  simpleCSSTransitionStyles,
+  SimpleCSSTransition,
+} from "../animation/SimpleCSSTransition"
 
 export function Hint({ hint }: { hint: Coordinate }) {
   const boardRef = useAtomValue($boardRef)
   const animationKey = useMemo(() => randomString(10), [])
   const [visible, setVisible] = useState(true)
   const setAnimatingHints = useSetAtom($animatingHints)
+  const [labelVisible, setLabelVisible] = useState(true)
 
   useLayoutEffect(() => {
     setAnimatingHints((prev) => ({ ...prev, [cellPointer(hint)]: true }))
@@ -28,6 +33,14 @@ export function Hint({ hint }: { hint: Coordinate }) {
     )
     return () => clearTimeout(handle)
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const handle = setTimeout(
+      () => setLabelVisible(false),
+      Math.round((step(2) / 100) * total)
+    )
+    return () => clearTimeout(handle)
   }, [])
 
   useEffect(() => {
@@ -57,7 +70,15 @@ export function Hint({ hint }: { hint: Coordinate }) {
 
   if (!frames || !visible) return null
 
-  return <Root animationKey={animationKey} frames={frames} />
+  return (
+    <Root animationKey={animationKey} frames={frames}>
+      <SimpleCSSTransition visible={labelVisible} duration={200}>
+        <LabelBox>
+          <Label>Hint Used!</Label>
+        </LabelBox>
+      </SimpleCSSTransition>
+    </Root>
+  )
 }
 
 const timings = [400, 600, 400, 600, 400, 600, 400]
@@ -134,4 +155,26 @@ const Root = styled.div<{
     height: ${frames[0].height}px;
   `};
   animation: ${({ animationKey }) => animationKey} ${total}ms ease-in forwards;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const LabelBox = styled.div`
+  background: rgba(11, 28, 36, 0.8);
+  border-radius: ${rel(16)};
+  padding: ${rel(10)};
+  ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
+`
+
+const Label = styled.div`
+  font-size: ${rel(32)};
+  font-weight: 600;
+
+  background: linear-gradient(180deg, #00a486 0%, #75ffcd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 `

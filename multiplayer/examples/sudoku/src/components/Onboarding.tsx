@@ -108,7 +108,7 @@ const Highlight = styled.div<{ visible: boolean }>`
   border: ${rel(4)} solid #ff9c3a;
   margin: -${rel(4)};
   border-radius: ${rel(4)};
-  filter: drop-shadow(0px ${rel(4)} ${rel(5)} rgba(0, 0, 0, 0.67));
+  filter: drop-shadow(0 ${rel(4)} ${rel(5)} rgba(0, 0, 0, 0.67));
   transition: opacity 0.4s ease-out;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
 `

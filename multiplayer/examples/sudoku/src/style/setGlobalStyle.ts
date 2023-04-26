@@ -17,13 +17,13 @@ style.innerHTML = `
   }
 
   body {
-    line-height: 130%;
     font-family: "Montserrat", sans-serif;
   }
 
   * {
     user-select: none;
     box-sizing: border-box;
+    line-height: 130%;
   }
 `
 

@@ -82,9 +82,6 @@ const Root = styled.div<{ disabled: boolean; notesMode: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  > :not(:first-child) {
-    margin-top: ${rel(8)};
-  }
 
   width: ${rel(44)};
   height: ${rel(44)};
@@ -112,6 +109,7 @@ const Label = styled.div`
   font-size: ${rel(24)};
   font-weight: 600;
   color: #f5d6c1;
+  line-height: 100%;
 `
 
 const BackspaceImg = styled.img`

@@ -144,7 +144,6 @@ const Note = styled.div<{ visible: boolean }>`
   justify-content: center;
 
   font-size: ${rel(10)};
-  line-height: ${rel(10)};
   font-weight: 600;
   color: #f8d5af;
 

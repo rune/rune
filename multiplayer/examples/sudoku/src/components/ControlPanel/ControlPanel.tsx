@@ -50,9 +50,6 @@ const Button = styled.div<{ active?: boolean; disabled?: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  > :not(:first-child) {
-    margin-top: ${rel(2)};
-  }
   color: ${({ active }) => (active ? "#FF9846" : "#a4a9a5")};
   opacity: ${({ disabled }) => (disabled ? 0.2 : 1)};
 `
@@ -81,6 +78,5 @@ const Badge = styled.div`
   background-color: #985719;
   font-size: ${rel(12)};
   font-weight: 300;
-  line-height: 100%;
   color: #a4a9a5;
 `

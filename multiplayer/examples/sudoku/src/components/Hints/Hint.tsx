@@ -12,6 +12,7 @@ import {
   simpleCSSTransitionStyles,
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
+import { sounds } from "../../sounds/sounds"
 
 export function Hint({ hint }: { hint: Coordinate }) {
   const boardRef = useAtomValue($boardRef)
@@ -26,11 +27,10 @@ export function Hint({ hint }: { hint: Coordinate }) {
   }, [])
 
   useEffect(() => {
-    const handle = setTimeout(
-      () =>
-        setAnimatingHints((prev) => ({ ...prev, [cellPointer(hint)]: false })),
-      Math.round((step(5) / 100) * total)
-    )
+    const handle = setTimeout(() => {
+      setAnimatingHints((prev) => ({ ...prev, [cellPointer(hint)]: false }))
+      sounds.hint.play()
+    }, Math.round((step(5) / 100) * total))
     return () => clearTimeout(handle)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

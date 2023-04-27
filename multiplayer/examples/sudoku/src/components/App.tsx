@@ -15,6 +15,7 @@ import { $lastPlayerActivity } from "../state/$lastPlayerActivity"
 import { $lastSetValueRollback } from "../state/$lastSetValueRollback"
 import { $inputMode } from "../state/$inputMode"
 import { $animatingHints } from "../state/$animatingHints"
+import { sounds } from "../sounds/sounds"
 
 export function App() {
   const [game, setGame] = useAtom($game)
@@ -53,6 +54,23 @@ export function App() {
 
         if (rollbacks.some((r) => r.action === "setValue")) {
           setLastSetValueRollback(new Date())
+        }
+
+        if (action?.action === "setValue") {
+          if ((action.params as any).value) {
+            if (newGame.sudoku?.board.filter((c) => c.error).length) {
+              sounds.error.play()
+            } else {
+              sounds.setValue.play()
+            }
+          } else {
+            sounds.backspace.play()
+          }
+        } else if (action?.action === "toggleNote") {
+          if ((action.params as any).value) sounds.note.play()
+          else sounds.backspace.play()
+        } else if (action?.action === "startGame") {
+          sounds.setDifficulty.play()
         }
       },
     })

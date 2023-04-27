@@ -2,6 +2,7 @@ import { Coordinate } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
 import { $successes } from "../../state/$game"
 import { useRef, useState, useEffect } from "react"
+import { sounds } from "../../sounds/sounds"
 
 const blipDelay = 400
 export const blipDuration = 200
@@ -16,6 +17,14 @@ export function useSuccessBlip({ row, col }: Coordinate) {
   useEffect(() => {
     if (successes.length > processedSuccessesLength.current) {
       const handles: ReturnType<typeof setTimeout>[] = []
+
+      if (row === 0 && col === 0) {
+        handles.push(
+          setTimeout(() => {
+            sounds.success.play()
+          }, blipDelay)
+        )
+      }
 
       for (const success of successes.slice(processedSuccessesLength.current)) {
         if ("row" in success && success.row === row) {

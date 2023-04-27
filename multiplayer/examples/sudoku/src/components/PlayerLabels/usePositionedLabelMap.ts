@@ -40,6 +40,10 @@ export function usePositionedLabelMap(labelMap: LabelMap) {
       let cost = 0
 
       for (const position of positions) {
+        const largerRect = {
+          ...position.rect,
+          width: position.rect.width + position.label.cellRect.width,
+        }
         const otherPositions = positions.filter((p) => p !== position)
 
         if (checkRectOutOfBounds(position.rect)) {
@@ -55,6 +59,10 @@ export function usePositionedLabelMap(labelMap: LabelMap) {
           }
 
           if (checkRectsIntersect(position.rect, otherPosition.rect)) {
+            cost += 10
+          }
+
+          if (checkRectsIntersect(largerRect, otherPosition.rect)) {
             cost += 10
           }
 

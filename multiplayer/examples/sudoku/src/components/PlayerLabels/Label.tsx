@@ -43,8 +43,10 @@ export function Label({
 
   useEffect(() => {
     const avatarRect = ref.current?.getBoundingClientRect()
-    if (avatarRect)
+
+    if (avatarRect) {
       onSizeChangedRef.current(avatarRect.width, avatarRect.height)
+    }
   }, [])
 
   useEffect(() => {

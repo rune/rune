@@ -4,7 +4,7 @@ import { Color } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
 import { $players, $yourPlayerId } from "../../state/$game"
 import { $lastPlayerActivity } from "../../state/$lastPlayerActivity"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { Direction } from "./types"
 
 export function Label({
@@ -30,6 +30,7 @@ export function Label({
   const lastPlayerActivity = useAtomValue($lastPlayerActivity)[playerId]
   const [nameVisible, setNameVisible] = useState(true)
   const ref = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(0)
 
   useEffect(() => {
     setNameVisible(true)
@@ -42,10 +43,20 @@ export function Label({
 
   useEffect(() => {
     const nameRect = ref.current?.querySelector("div")?.getBoundingClientRect()
-    if (nameRect) onSizeChangedRef.current(nameRect.width, nameRect.height)
+
+    if (nameRect) {
+      onSizeChangedRef.current(nameRect.width, nameRect.height)
+      setWidth(nameRect.width)
+    }
   }, [])
 
-  // todo: reverse text direction if out of bounds
+  const actualDirection = useMemo(() => {
+    return direction === "right" && x + width > window.innerWidth
+      ? "left"
+      : direction === "left" && x - width < 0
+      ? "right"
+      : direction
+  }, [direction, width, x])
 
   if (!displayName || !avatarUrl) return null
 
@@ -54,7 +65,7 @@ export function Label({
       <Name
         visible={nameVisible}
         tint={color}
-        direction={direction}
+        direction={actualDirection}
         bold={playerId === yourPlayerId}
       >
         {displayName}

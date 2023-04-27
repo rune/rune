@@ -83,8 +83,6 @@ export function usePositionedLabelMap(labelMap: LabelMap) {
       }
     }
 
-    console.log(bestCombination)
-
     const positionedLabelMap = { ...labelMap }
 
     bestCombination?.positions.forEach((p) => {

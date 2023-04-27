@@ -1,15 +1,15 @@
 import React, { useState, useLayoutEffect, useEffect } from "react"
 import styled from "styled-components/macro"
-import { Coordinate } from "../lib/types/GameState"
-import { rel } from "../style/rel"
+import { Coordinate } from "../../lib/types/GameState"
+import { rel } from "../../style/rel"
 import { useAtom, useAtomValue } from "jotai"
 import {
   SimpleCSSTransition,
   simpleCSSTransitionStyles,
-} from "./animation/SimpleCSSTransition"
-import { $onboardingVisible } from "../state/$onboardingVisible"
-import { $boardRef } from "../state/$boardRef"
-import { calculateBoardRect, Rect } from "../lib/calculateBoardRect"
+} from "../animation/SimpleCSSTransition"
+import { $onboardingVisible } from "../../state/$onboardingVisible"
+import { $boardRef } from "../../state/$boardRef"
+import { calculateBoardRect, Rect } from "../../lib/calculateBoardRect"
 
 const ranges: [Coordinate, Coordinate][] = [
   [

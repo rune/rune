@@ -8,6 +8,7 @@ import { GameOverOptions } from "rune-games-sdk/multiplayer"
 import { getRandomItem } from "./lib/getRandomItem"
 import { maxHints } from "./lib/maxHints"
 import { range } from "./lib/range"
+import { randomString } from "./lib/randomString"
 
 const possibleColors: Color[] = [
   [65, 156, 85],
@@ -27,6 +28,7 @@ Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (playerIds) => ({
+    session: randomString(10),
     gameOver: false,
     sudoku: null,
     playerState: playerIds.reduce<GameState["playerState"]>(
@@ -97,7 +99,7 @@ Rune.initLogic({
       calculateErrorsOrGameOver(game)
       calculateSuccesses(game, selection)
     },
-    showHint: (_, { game, playerId }) => {
+    showHint: (_, { game }) => {
       if (!game.sudoku) throw Rune.invalidAction()
       if (game.hints.length === maxHints) throw Rune.invalidAction()
 

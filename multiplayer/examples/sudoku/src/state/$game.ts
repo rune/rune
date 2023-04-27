@@ -12,6 +12,8 @@ export const $game = atom<
   | undefined
 >(undefined)
 
+export const $session = atom((get) => get($game)?.game.session)
+
 export const $players = atom((get) => get($game)?.players)
 
 export const $board = atom((get) => get($game)?.game.sudoku?.board)

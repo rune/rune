@@ -18,6 +18,7 @@ export interface Coordinate {
 export type Color = [number, number, number]
 
 export interface GameState {
+  session: string
   gameOver: boolean
   sudoku: {
     difficulty: Difficulty

@@ -1,8 +1,8 @@
 export const corners = [
-  "top-left",
   "top-right",
-  "bottom-left",
+  "top-left",
   "bottom-right",
+  "bottom-left",
 ] as const
 
 export const cornerCombinations = corners.flatMap((c1) =>

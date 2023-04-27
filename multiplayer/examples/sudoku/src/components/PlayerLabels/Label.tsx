@@ -30,7 +30,7 @@ export function Label({
   const lastPlayerActivity = useAtomValue($lastPlayerActivity)[playerId]
   const [nameVisible, setNameVisible] = useState(true)
   const ref = useRef<HTMLDivElement>(null)
-  const [width, setWidth] = useState(0)
+  const [nameWidth, setNameWidth] = useState(0)
 
   useEffect(() => {
     setNameVisible(true)
@@ -42,21 +42,23 @@ export function Label({
   onSizeChangedRef.current = onSizeChanged
 
   useEffect(() => {
-    const nameRect = ref.current?.querySelector("div")?.getBoundingClientRect()
+    const avatarRect = ref.current?.getBoundingClientRect()
+    if (avatarRect)
+      onSizeChangedRef.current(avatarRect.width, avatarRect.height)
+  }, [])
 
-    if (nameRect) {
-      onSizeChangedRef.current(nameRect.width, nameRect.height)
-      setWidth(nameRect.width)
-    }
+  useEffect(() => {
+    const nameRect = ref.current?.querySelector("div")?.getBoundingClientRect()
+    if (nameRect) setNameWidth(nameRect.width)
   }, [])
 
   const actualDirection = useMemo(() => {
-    return direction === "right" && x + width > window.innerWidth
+    return direction === "right" && x + nameWidth >= window.innerWidth
       ? "left"
-      : direction === "left" && x - width < 0
+      : direction === "left" && x - nameWidth <= 0
       ? "right"
       : direction
-  }, [direction, width, x])
+  }, [direction, nameWidth, x])
 
   if (!displayName || !avatarUrl) return null
 

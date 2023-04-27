@@ -3,11 +3,16 @@ import { useRef } from "react"
 import { Label } from "./Label"
 import { useLabelMap } from "./useLabelMap"
 import { usePositionedLabelMap } from "./usePositionedLabelMap"
+import { useAtomValue } from "jotai"
+import { $gameOver } from "../../state/$game"
 
 export function PlayerLabels() {
   const rootRef = useRef<HTMLDivElement>(null)
   const { labelMap, setLabelMap } = useLabelMap()
   const { positionedLabelMap } = usePositionedLabelMap(labelMap)
+  const gameOver = useAtomValue($gameOver)
+
+  if (gameOver) return null
 
   return (
     <Root ref={rootRef}>

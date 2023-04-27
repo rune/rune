@@ -3,7 +3,7 @@ import { Color } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
 import { $board, $selections, $yourPlayerId, $colors } from "../../state/$game"
 import { cellPointer } from "../../lib/cellPointer"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { rel } from "../../style/rel"
 import { $onboardingVisible } from "../../state/$onboardingVisible"
 
@@ -43,6 +43,11 @@ export function Cell({
     }
   }, [gameOver])
 
+  const onClick = useCallback(() => {
+    if (gameOver) return
+    Rune.actions.select({ row, col })
+  }, [col, gameOver, row])
+
   if (!board) return <Root />
 
   const cell = board[cellPointer({ row, col })]
@@ -59,7 +64,7 @@ export function Cell({
 
   return (
     <Root
-      onClick={() => Rune.actions.select({ row, col })}
+      onClick={onClick}
       data-pointer={`cell-${row}-${col}`}
       blip={successBlip}
     >

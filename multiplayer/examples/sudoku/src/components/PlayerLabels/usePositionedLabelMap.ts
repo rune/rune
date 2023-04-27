@@ -39,16 +39,14 @@ export function usePositionedLabelMap(labelMap: LabelMap) {
 
       let cost = 0
 
-      const remainingPositions = [...positions]
-
-      while (remainingPositions.length > 0) {
-        const position = remainingPositions.pop()!
+      for (const position of positions) {
+        const otherPositions = positions.filter((p) => p !== position)
 
         if (checkRectOutOfBounds(position.rect)) {
           cost += 100
         }
 
-        for (const otherPosition of remainingPositions) {
+        for (const otherPosition of otherPositions) {
           if (
             position.corner.x === otherPosition.corner.x &&
             position.corner.y === otherPosition.corner.y

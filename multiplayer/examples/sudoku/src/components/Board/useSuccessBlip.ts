@@ -1,5 +1,5 @@
 import { Coordinate } from "../../lib/types/GameState"
-import { useAtomValue } from "jotai/index"
+import { useAtomValue } from "jotai"
 import { $successes } from "../../state/$game"
 import { useRef, useState, useEffect } from "react"
 

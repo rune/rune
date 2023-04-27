@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components/macro"
 import { Board } from "./Board/Board"
-import { useAtom, useAtomValue } from "jotai"
+import { useAtom, useAtomValue, useSetAtom } from "jotai"
 import { Digits } from "./Digits/Digits"
 import { StartGame } from "./StartGame/StartGame"
 import { Onboarding } from "./Onboarding"
@@ -10,15 +10,39 @@ import { $game } from "../state/$game"
 import { Hints } from "./Hints/Hints"
 import { $onboardingVisible } from "../state/$onboardingVisible"
 import { totalBlipsDuration } from "./Board/useSuccessBlip"
+import { PlayerLabels } from "./PlayerLabels/PlayerLabels"
+import { $lastPlayerActivity } from "../state/$lastPlayerActivity"
 
 export function App() {
   const [game, setGame] = useAtom($game)
   const onboardingVisible = useAtomValue($onboardingVisible)
   const [gen, setGen] = useState(0)
+  const setLastPlayerActivity = useSetAtom($lastPlayerActivity)
 
   useEffect(() => {
     Rune.initClient({
-      visualUpdate: ({ newGame, players, yourPlayerId, rollbacks }) => {
+      visualUpdate: ({
+        newGame,
+        players,
+        yourPlayerId,
+        rollbacks,
+        action,
+        event,
+      }) => {
+        const lastActivityPlayerId =
+          action?.action === "setValue" ||
+          action?.action === "select" ||
+          action?.action === "toggleNote"
+            ? action.playerId
+            : event?.event === "playerJoined" && event.params.playerId
+
+        if (lastActivityPlayerId) {
+          setLastPlayerActivity((prev) => ({
+            ...prev,
+            [lastActivityPlayerId]: new Date(),
+          }))
+        }
+
         if (rollbacks.length) {
           // TODO: handle rollback by showing alert
           console.error(JSON.stringify(rollbacks))
@@ -26,7 +50,7 @@ export function App() {
         setGame({ game: newGame, players, yourPlayerId })
       },
     })
-  }, [setGame])
+  }, [setGame, setLastPlayerActivity])
 
   useEffect(() => {
     if (game?.game.gameOver) {
@@ -50,7 +74,12 @@ export function App() {
       {game.game.sudoku ? (
         <>
           <Onboarding />
-          {!onboardingVisible && <Hints />}
+          {!onboardingVisible && (
+            <>
+              <PlayerLabels />
+              <Hints />
+            </>
+          )}
         </>
       ) : (
         <StartGame />

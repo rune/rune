@@ -12,12 +12,16 @@ export const $game = atom<
   | undefined
 >(undefined)
 
+export const $players = atom((get) => get($game)?.players)
+
 export const $board = atom((get) => get($game)?.game.sudoku?.board)
 
 export const $gameOver = atom((get) => !!get($game)?.game.gameOver)
 
+export const $playerState = atom((get) => get($game)?.game.playerState)
+
 export const $selections = atom((get) =>
-  Object.entries(get($game)?.game.playerState ?? {}).reduce<{
+  Object.entries(get($playerState) ?? []).reduce<{
     [index: number]: string[] | undefined
   }>(
     (acc, [playerId, { selection }]) => ({

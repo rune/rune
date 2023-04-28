@@ -10,6 +10,7 @@ import {
 import { $onboardingVisible } from "../../state/$onboardingVisible"
 import { $boardRef } from "../../state/$boardRef"
 import { calculateBoardRect, Rect } from "../../lib/calculateBoardRect"
+import closeIcon from "./close.svg"
 
 const ranges: [Coordinate, Coordinate][] = [
   [
@@ -57,6 +58,9 @@ export function Onboarding() {
   return (
     <SimpleCSSTransition visible={onboardingVisible} duration={400}>
       <Root>
+        <CloseBtn onClick={() => setOnboardingVisible(false)}>
+          <CloseIcon src={closeIcon} />
+        </CloseBtn>
         <svg width="100%" height="100%">
           <defs>
             <mask id="cutout">
@@ -122,4 +126,15 @@ const Text = styled.div`
   font-weight: 600;
   line-height: 130%;
   color: white;
+`
+
+const CloseBtn = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: ${rel(14)};
+`
+const CloseIcon = styled.img`
+  width: ${rel(14)};
+  height: ${rel(14)};
 `

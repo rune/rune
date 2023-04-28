@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components/macro"
 import { range } from "../../lib/range"
-import { rel } from "../../style/rel"
+import { relWhole } from "../../style/rel"
 
 export function UnusedDigits({ count }: { count: number }) {
   return (
@@ -14,8 +14,11 @@ export function UnusedDigits({ count }: { count: number }) {
 
 const Root = styled.div`
   display: flex;
-  align-items: center;
-  height: ${rel(2)};
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: calc((${relWhole(2)} + ${relWhole(0.7 * 2)}) * 4);
+  height: calc((${relWhole(2)} + ${relWhole(0.5 * 2)}) * 3);
 `
 
 const Circle = styled.div<{ visible: boolean }>`
@@ -23,11 +26,9 @@ const Circle = styled.div<{ visible: boolean }>`
   ${({ visible }) =>
     visible
       ? css`
-          width: ${rel(2)};
-          height: ${rel(2)};
-          :not(:first-child) {
-            margin-left: ${rel(1.5)};
-          }
+          width: ${relWhole(2)};
+          height: ${relWhole(2)};
+          margin: ${relWhole(0.5)} ${relWhole(0.7)};
         `
       : css`
           width: 0;

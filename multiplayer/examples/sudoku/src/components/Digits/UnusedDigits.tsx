@@ -32,7 +32,8 @@ const Circle = styled.div<{ visible: boolean }>`
         `
       : css`
           width: 0;
-          height: 0;
+          height: ${relWhole(2)};
+          margin: ${relWhole(0.5)} 0;
         `};
   border-radius: 50%;
   background: #f5d6c1;

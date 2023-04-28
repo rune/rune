@@ -2,6 +2,7 @@ import { GameState, Color } from "../lib/types/GameState"
 import { atom } from "jotai"
 import { Players, PlayerId } from "rune-games-sdk/multiplayer"
 import { cellPointer } from "../lib/cellPointer"
+import { $onboardingVisible } from "./$onboardingVisible"
 
 export const $game = atom<
   | {
@@ -16,7 +17,12 @@ export const $session = atom((get) => get($game)?.game.session)
 
 export const $players = atom((get) => get($game)?.players)
 
-export const $board = atom((get) => get($game)?.game.sudoku?.board)
+export const $board = atom((get) => {
+  const onboardingVisible = get($onboardingVisible)
+  return onboardingVisible
+    ? get($game)?.game.onboardingBoard
+    : get($game)?.game.sudoku?.board
+})
 
 export const $gameOver = atom((get) => !!get($game)?.game.gameOver)
 

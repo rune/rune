@@ -1,4 +1,4 @@
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 import { Color } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
 import { $board, $selections, $yourPlayerId, $colors } from "../../state/$game"
@@ -69,7 +69,9 @@ export function Cell({
       blip={successBlip}
     >
       {onboardingVisible ? (
-        cell.fixed && <Value fixed>{cell.value}</Value>
+        <Value fixed={cell.fixed} blink={!cell.fixed}>
+          {cell.value}
+        </Value>
       ) : (
         <>
           <Highlight tint={tint} />
@@ -121,11 +123,18 @@ const Highlight = styled.div<{ tint: Color | null }>`
   transition: all 0.2s ease-out;
 `
 
-const Value = styled.div<{ fixed: boolean }>`
+const Value = styled.div<{ fixed: boolean; blink?: boolean }>`
   position: absolute;
   color: ${({ fixed }) => (fixed ? "#995618" : "#F8D5AF")};
   font-weight: 600;
   font-size: ${rel(24)};
+  
+  ${({ blink }) =>
+    blink &&
+    css`
+      opacity: 0;
+      animation: onboardingCellBlink 2.5s ease-in-out infinite;
+    `}};
 `
 
 const ErrorHighlight = styled.div<{ enabled: boolean }>`

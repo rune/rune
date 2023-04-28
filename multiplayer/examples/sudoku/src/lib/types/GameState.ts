@@ -19,6 +19,7 @@ export type Color = [number, number, number]
 
 export interface GameState {
   session: string
+  onboardingBoard: Cell[]
   gameOver: boolean
   sudoku: {
     difficulty: Difficulty

@@ -27,6 +27,10 @@ Rune.initLogic({
   maxPlayers: 4,
   setup: (playerIds) => ({
     session: randomString(10),
+    onboardingBoard: boardFromSudoku({
+      sudoku: getSudoku("easy"),
+      solved: true,
+    }),
     gameOver: false,
     sudoku: null,
     playerState: playerIds.reduce<GameState["playerState"]>(
@@ -50,7 +54,7 @@ Rune.initLogic({
 
       game.sudoku = {
         difficulty,
-        board: boardFromSudoku(sudoku),
+        board: boardFromSudoku({ sudoku: sudoku, solved: false }),
       }
     },
     select: (coordinate, { game, playerId }) => {

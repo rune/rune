@@ -45,7 +45,7 @@ export function Onboarding() {
     if (rangeRects.length > 0 && visibleHighlight === rangeRects.length) {
       if (onboardingVisible) setOnboardingVisible(false)
     } else {
-      const handle = setTimeout(() => setVisibleHighlight((i) => i + 1), 2000)
+      const handle = setTimeout(() => setVisibleHighlight((i) => i + 1), 2500)
       return () => clearTimeout(handle)
     }
   }, [

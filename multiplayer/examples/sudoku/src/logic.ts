@@ -13,7 +13,7 @@ import { randomString } from "./lib/randomString"
 const possibleColors: Color[] = [
   [65, 156, 85],
   [88, 142, 192],
-  [209, 122, 42],
+  [224, 190, 70],
   [198, 98, 188],
 ]
 

@@ -16,6 +16,7 @@ import { $lastSetValueRollback } from "../state/$lastSetValueRollback"
 import { $inputMode } from "../state/$inputMode"
 import { $animatingHints } from "../state/$animatingHints"
 import { sounds } from "../sounds/sounds"
+import { cellPointer } from "../lib/cellPointer"
 
 export function App() {
   const [game, setGame] = useAtom($game)
@@ -58,7 +59,10 @@ export function App() {
 
         if (action?.action === "setValue") {
           if ((action.params as any).value) {
-            if (newGame.sudoku?.board.filter((c) => c.error).length) {
+            const selection = newGame.playerState[action.playerId].selection
+            const cell = newGame.sudoku?.board.at(cellPointer(selection))
+
+            if (cell?.error) {
               sounds.error.play()
             } else {
               sounds.setValue.play()

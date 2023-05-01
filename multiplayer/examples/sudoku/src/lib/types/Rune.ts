@@ -2,7 +2,6 @@ import {
   RuneClient,
   PlayerId,
   GameOverOptions,
-  VisualUpdateAction,
   VisualUpdateEvent,
   Players,
 } from "rune-games-sdk/multiplayer"
@@ -40,16 +39,24 @@ declare module "rune-games-sdk/multiplayer" {
     gameOver: (options?: GameOverOptions) => void
   }
 
+  type VisualUpdateActionTyped = {
+    [K in keyof GameActions]: {
+      action: K
+      playerId: PlayerId
+      params: Parameters<GameActions[K]>[0]
+    }
+  }[keyof GameActions]
+
   interface RuneClient extends RuneShared {
     initClient: (params: {
       visualUpdate: (params: {
         oldGame: GameState
         newGame: GameState
-        action?: VisualUpdateAction
+        action?: VisualUpdateActionTyped
         event?: VisualUpdateEvent
         yourPlayerId: PlayerId | undefined
         players: Players
-        rollbacks: VisualUpdateAction[]
+        rollbacks: VisualUpdateActionTyped[]
       }) => void
     }) => void
     actions: GameActions

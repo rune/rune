@@ -14,58 +14,46 @@ export function useSuccessBlip({ row, col }: Coordinate) {
   const processedSuccessesLength = useRef(successes.length)
   const [successBlip, setSuccessBlip] = useState(false)
 
+  const handlesRef = useRef<ReturnType<typeof setTimeout>[]>([])
+
+  function timeout(callback: () => void, delay: number) {
+    handlesRef.current.push(setTimeout(callback, delay))
+  }
+
   useEffect(() => {
     if (successes.length > processedSuccessesLength.current) {
-      const handles: ReturnType<typeof setTimeout>[] = []
-
       if (row === 0 && col === 0) {
-        handles.push(
-          setTimeout(() => {
-            sounds.success.play()
-          }, blipDelay)
-        )
+        timeout(() => sounds.success.play(), blipDelay)
       }
 
       for (const success of successes.slice(processedSuccessesLength.current)) {
         if ("row" in success && success.row === row) {
-          handles.push(
-            setTimeout(() => {
-              setSuccessBlip(true)
-              handles.push(
-                setTimeout(() => setSuccessBlip(false), blipDuration)
-              )
-            }, blipDelay + col * (blipDuration / 2))
-          )
+          timeout(() => {
+            setSuccessBlip(true)
+            timeout(() => setSuccessBlip(false), blipDuration)
+          }, blipDelay + col * (blipDuration / 2))
         } else if ("col" in success && success.col === col) {
-          handles.push(
-            setTimeout(() => {
-              setSuccessBlip(true)
-              handles.push(
-                setTimeout(() => setSuccessBlip(false), blipDuration)
-              )
-            }, blipDelay + row * (blipDuration / 2))
-          )
+          timeout(() => {
+            setSuccessBlip(true)
+            timeout(() => setSuccessBlip(false), blipDuration)
+          }, blipDelay + row * (blipDuration / 2))
         } else if (
           "section" in success &&
           success.section === Math.floor(row / 3) * 3 + Math.floor(col / 3)
         ) {
-          handles.push(
-            setTimeout(() => {
-              setSuccessBlip(true)
-              handles.push(
-                setTimeout(() => setSuccessBlip(false), blipDuration)
-              )
-            }, blipDelay + ((row % 3) * 3 + (col % 3)) * (blipDuration / 2))
-          )
+          timeout(() => {
+            setSuccessBlip(true)
+            timeout(() => setSuccessBlip(false), blipDuration)
+          }, blipDelay + ((row % 3) * 3 + (col % 3)) * (blipDuration / 2))
         }
       }
 
       processedSuccessesLength.current = successes.length
-
-      return () => handles.forEach(clearTimeout)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successes.length])
+
+  useEffect(() => () => handlesRef.current.forEach(clearTimeout), [])
 
   return { successBlip }
 }

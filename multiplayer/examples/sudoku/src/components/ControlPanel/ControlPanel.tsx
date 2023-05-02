@@ -8,6 +8,7 @@ import penActiveIcon from "./penActive.svg"
 import bulbIcon from "./bulb.svg"
 import { rel } from "../../style/rel"
 import { useCallback } from "react"
+import { sounds } from "../../sounds/sounds"
 
 export function ControlPanel() {
   const gameOver = useAtomValue($gameOver)
@@ -16,6 +17,7 @@ export function ControlPanel() {
   const [inputMode, setInputMode] = useAtom($inputMode)
 
   const toggleInputMode = useCallback(() => {
+    sounds.note.play()
     setInputMode((inputMode) => (inputMode === "value" ? "note" : "value"))
   }, [setInputMode])
 

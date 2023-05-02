@@ -58,7 +58,7 @@ export function App() {
         }
 
         if (action?.action === "setValue") {
-          if ((action.params as any).value) {
+          if (action.params.value) {
             const selection = newGame.playerState[action.playerId].selection
             const cell = newGame.sudoku?.board.at(cellPointer(selection))
 
@@ -71,7 +71,7 @@ export function App() {
             sounds.backspace.play()
           }
         } else if (action?.action === "toggleNote") {
-          if ((action.params as any).value) sounds.note.play()
+          if (action.params.value) sounds.setValue.play()
           else sounds.backspace.play()
         } else if (action?.action === "startGame") {
           sounds.setDifficulty.play()

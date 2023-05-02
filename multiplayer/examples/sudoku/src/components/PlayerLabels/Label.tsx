@@ -29,13 +29,18 @@ export function Label({
   const avatarUrl = players?.[playerId]?.avatarUrl
   const lastPlayerActivity = useAtomValue($lastPlayerActivity)[playerId]
   const [nameVisible, setNameVisible] = useState(true)
+  const [avatarVisible, setAvatarVisible] = useState(true)
   const ref = useRef<HTMLDivElement>(null)
   const [nameWidth, setNameWidth] = useState(0)
 
   useEffect(() => {
     setNameVisible(true)
-    const handle = setTimeout(() => setNameVisible(false), 1000)
-    return () => clearTimeout(handle)
+    setAvatarVisible(true)
+    const handles = [
+      setTimeout(() => setNameVisible(false), 1000),
+      setTimeout(() => setAvatarVisible(false), 3000),
+    ]
+    return () => handles.forEach(clearTimeout)
   }, [lastPlayerActivity])
 
   const onSizeChangedRef = useRef(onSizeChanged)
@@ -65,7 +70,12 @@ export function Label({
   if (!displayName || !avatarUrl) return null
 
   return (
-    <Root ref={ref} style={{ left: x, top: y }} bringToTop={nameVisible}>
+    <Root
+      ref={ref}
+      style={{ left: x, top: y }}
+      bringToTop={nameVisible}
+      visible={avatarVisible}
+    >
       <Name
         visible={nameVisible}
         tint={color}
@@ -74,12 +84,12 @@ export function Label({
       >
         {displayName}
       </Name>
-      <Avatar tint={color} src={avatarUrl} />
+      <Avatar big={nameVisible} tint={color} src={avatarUrl} />
     </Root>
   )
 }
 
-const Root = styled.div<{ bringToTop: boolean }>`
+const Root = styled.div<{ bringToTop: boolean; visible: boolean }>`
   position: absolute;
   width: ${rel(22)};
   height: ${rel(22)};
@@ -87,12 +97,19 @@ const Root = styled.div<{ bringToTop: boolean }>`
   z-index: ${({ bringToTop }) => (bringToTop ? 1 : 0)};
 
   transition: all 0.2s ease-out;
+  opacity: ${({ visible }) => (visible ? 1 : 0)};
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
-const Avatar = styled.img<{ tint: Color }>`
+const Avatar = styled.img<{ tint: Color; big: boolean }>`
   position: absolute;
-  width: ${rel(22)};
-  height: ${rel(22)};
+  ${({ big }) => css`
+    width: ${rel(big ? 22 : 11)};
+    height: ${rel(big ? 22 : 11)};
+  `};
   border-radius: 50%;
   border: ${rel(2)} solid ${({ tint }) => `rgb(${tint.join(", ")})`};
   background-color: ${({ tint }) => `rgb(${tint.join(", ")})`};

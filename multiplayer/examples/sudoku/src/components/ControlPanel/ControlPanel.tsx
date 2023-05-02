@@ -6,15 +6,18 @@ import { $inputMode } from "../../state/$inputMode"
 import penIcon from "./pen.svg"
 import penActiveIcon from "./penActive.svg"
 import bulbIcon from "./bulb.svg"
+import bulbActiveIcon from "./bulbActive.svg"
 import { rel } from "../../style/rel"
-import { useCallback } from "react"
+import { useCallback, useState, useEffect } from "react"
 import { sounds } from "../../sounds/sounds"
+import { total as totalHintDuration } from "../Hints/Hint"
 
 export function ControlPanel() {
   const gameOver = useAtomValue($gameOver)
   const hints = useAtomValue($hints)
   const hintsLeft = maxHints - hints.length
   const [inputMode, setInputMode] = useAtom($inputMode)
+  const [hintAnimating, setHintAnimating] = useState(false)
 
   const toggleInputMode = useCallback(() => {
     sounds.note.play()
@@ -27,14 +30,29 @@ export function ControlPanel() {
     if (!hintsDisabled) Rune.actions.showHint()
   }, [hintsDisabled])
 
+  useEffect(() => {
+    if (hints.length > 0) {
+      setHintAnimating(true)
+      const handle = setTimeout(
+        () => setHintAnimating(false),
+        totalHintDuration
+      )
+      return () => clearTimeout(handle)
+    }
+  }, [hints.length])
+
   return (
     <Root>
       <Button active={inputMode === "note"} onClick={toggleInputMode}>
         <Img src={inputMode === "note" ? penActiveIcon : penIcon} />
         <Label>Notes</Label>
       </Button>
-      <Button disabled={hintsDisabled} onClick={showHint}>
-        <Img src={bulbIcon} />
+      <Button
+        active={hintAnimating}
+        disabled={hintsDisabled}
+        onClick={showHint}
+      >
+        <Img src={hintAnimating ? bulbActiveIcon : bulbIcon} />
         <Label>Hint</Label>
         {hintsLeft > 0 && <Badge>{hintsLeft}</Badge>}
       </Button>
@@ -56,7 +74,7 @@ const Button = styled.div<{ active?: boolean; disabled?: boolean }>`
   align-items: center;
   justify-content: center;
   color: ${({ active }) => (active ? "#FF9846" : "#a4a9a5")};
-  opacity: ${({ disabled }) => (disabled ? 0.2 : 1)};
+  opacity: ${({ active, disabled }) => (!active && disabled ? 0.2 : 1)};
 `
 
 const Img = styled.img`

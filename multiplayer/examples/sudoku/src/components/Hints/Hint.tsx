@@ -82,7 +82,7 @@ export function Hint({ hint }: { hint: Coordinate }) {
 }
 
 const timings = [400, 600, 400, 600, 400, 600, 400]
-const total = timings.reduce((a, b) => a + b, 0)
+export const total = timings.reduce((a, b) => a + b, 0)
 const step = (i: number) =>
   Math.round((timings.slice(0, i).reduce((a, b) => a + b, 0) / total) * 100)
 

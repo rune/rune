@@ -69,7 +69,7 @@ button.onClick = () => {
 
 // Initialize the Rune SDK once your game is fully ready
 Rune.initClient({
-  visualUpdate: ({
+  onChange: ({
     newGame,
     oldGame,
     yourPlayerId,

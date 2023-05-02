@@ -26,6 +26,6 @@ Right click and select download either as [SVG](/img/avatar-placeholder.svg) or 
 
 ## Your Player ID
 
-In the `visualUpdate` function the client will always get their player ID as well as `yourPlayerId`. This can be used to find their own info in the `players` object.
+In the `onChange` function the client will always get their player ID as well as `yourPlayerId`. This can be used to find their own info in the `players` object.
 
 Importantly, `yourPlayerId` will be undefined if they themselves are a spectator!

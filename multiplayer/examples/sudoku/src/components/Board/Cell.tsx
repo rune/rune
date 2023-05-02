@@ -3,7 +3,7 @@ import { Color } from "../../lib/types/GameState"
 import { useAtomValue } from "jotai"
 import { $board, $selections, $yourPlayerId, $colors } from "../../state/$game"
 import { cellPointer } from "../../lib/cellPointer"
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { rel } from "../../style/rel"
 import { $onboardingVisible } from "../../state/$onboardingVisible"
 
@@ -14,6 +14,11 @@ import {
   blipDuration,
   totalBlipsDuration,
 } from "./useSuccessBlip"
+import {
+  isInOnboardingRange,
+  ranges,
+  frameDuration,
+} from "../Onboarding/Onboarding"
 
 export function Cell({
   row,
@@ -48,6 +53,18 @@ export function Cell({
     Rune.actions.select({ row, col })
   }, [col, gameOver, row])
 
+  const onboardingRevealDelay = useMemo(
+    () =>
+      isInOnboardingRange({ row, col }, ranges[0])
+        ? 0
+        : isInOnboardingRange({ row, col }, ranges[1])
+        ? frameDuration
+        : isInOnboardingRange({ row, col }, ranges[2])
+        ? 2 * frameDuration
+        : undefined,
+    [col, row]
+  )
+
   if (!board) return <Root />
 
   const cell = board[cellPointer({ row, col })]
@@ -69,9 +86,16 @@ export function Cell({
       blip={successBlip}
     >
       {onboardingVisible ? (
-        <Value fixed={cell.fixed} blink={!cell.fixed}>
-          {cell.value}
-        </Value>
+        (cell.fixed || onboardingRevealDelay !== undefined) && (
+          <Value
+            fixed={cell.fixed}
+            onboardingRevealDelay={
+              cell.fixed ? undefined : onboardingRevealDelay
+            }
+          >
+            {cell.value}
+          </Value>
+        )
       ) : (
         <>
           <Highlight tint={tint} />
@@ -123,17 +147,17 @@ const Highlight = styled.div<{ tint: Color | null }>`
   transition: all 0.2s ease-out;
 `
 
-const Value = styled.div<{ fixed: boolean; blink?: boolean }>`
+const Value = styled.div<{ fixed: boolean; onboardingRevealDelay?: number }>`
   position: absolute;
   color: ${({ fixed }) => (fixed ? "#995618" : "#F8D5AF")};
   font-weight: 600;
   font-size: ${rel(24)};
   
-  ${({ blink }) =>
-    blink &&
+  ${({ onboardingRevealDelay }) =>
+    onboardingRevealDelay !== undefined &&
     css`
       opacity: 0;
-      animation: onboardingCellBlink 2.5s ease-in-out infinite;
+      animation: ${`${frameDuration}ms ease-in-out ${onboardingRevealDelay}ms forwards onboardingCellReveal`};
     `}};
 `
 

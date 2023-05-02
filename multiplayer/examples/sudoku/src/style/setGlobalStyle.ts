@@ -38,25 +38,19 @@ style.innerHTML = `
     box-sizing: border-box;
     line-height: 100%;
   }
-
-  @keyframes onboardingCellBlink {
+  
+  @keyframes onboardingCellReveal {
     0% {
       opacity: 0;
     }
-    20% {
+    40%{
       opacity: 0;
     }
-    30% {
+    60%{
       opacity: 1;
-    }
-    70% {
-      opacity: 1;
-    }
-    80% {
-      opacity: 0;
     }
     100% {
-      opacity: 0;
+      opacity: 1;
     }
   }
 `

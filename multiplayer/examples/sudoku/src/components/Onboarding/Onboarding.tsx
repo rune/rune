@@ -12,7 +12,7 @@ import { $boardRef } from "../../state/$boardRef"
 import { calculateBoardRect, Rect } from "../../lib/calculateBoardRect"
 import closeIcon from "./close.svg"
 
-const ranges: [Coordinate, Coordinate][] = [
+export const ranges: [Coordinate, Coordinate][] = [
   [
     { row: 4, col: 0 },
     { row: 4, col: 8 },
@@ -26,6 +26,20 @@ const ranges: [Coordinate, Coordinate][] = [
     { row: 2, col: 2 },
   ],
 ]
+export const frameDuration = 2500
+
+export function isInOnboardingRange(
+  cell: Coordinate,
+  range: [Coordinate, Coordinate]
+) {
+  const [from, to] = range
+  return (
+    cell.row >= from.row &&
+    cell.row <= to.row &&
+    cell.col >= from.col &&
+    cell.col <= to.col
+  )
+}
 
 export function Onboarding() {
   const [rangeRects, setRangeRects] = useState<Rect[]>([])
@@ -45,7 +59,10 @@ export function Onboarding() {
     if (rangeRects.length > 0 && visibleHighlight === rangeRects.length) {
       if (onboardingVisible) setOnboardingVisible(false)
     } else {
-      const handle = setTimeout(() => setVisibleHighlight((i) => i + 1), 2500)
+      const handle = setTimeout(
+        () => setVisibleHighlight((i) => i + 1),
+        frameDuration
+      )
       return () => clearTimeout(handle)
     }
   }, [

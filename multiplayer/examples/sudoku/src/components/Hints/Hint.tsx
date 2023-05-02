@@ -13,6 +13,8 @@ import {
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
 import { sounds } from "../../sounds/sounds"
+import { Player } from "@lottiefiles/react-lottie-player"
+import lottieExplosion from "./lottieExplosion.json"
 
 export function Hint({ hint }: { hint: Coordinate }) {
   const boardRef = useAtomValue($boardRef)
@@ -20,6 +22,7 @@ export function Hint({ hint }: { hint: Coordinate }) {
   const [visible, setVisible] = useState(true)
   const setAnimatingHints = useSetAtom($animatingHints)
   const [labelVisible, setLabelVisible] = useState(true)
+  const [explosionVisible, setExplosionVisible] = useState(false)
 
   useLayoutEffect(() => {
     setAnimatingHints((prev) => ({ ...prev, [cellPointer(hint)]: true }))
@@ -30,6 +33,7 @@ export function Hint({ hint }: { hint: Coordinate }) {
     const handle = setTimeout(() => {
       setAnimatingHints((prev) => ({ ...prev, [cellPointer(hint)]: false }))
       sounds.hint.play()
+      setExplosionVisible(true)
     }, Math.round((step(5) / 100) * total))
     return () => clearTimeout(handle)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,13 +75,26 @@ export function Hint({ hint }: { hint: Coordinate }) {
   if (!frames || !visible) return null
 
   return (
-    <Root animationKey={animationKey} frames={frames}>
-      <SimpleCSSTransition visible={labelVisible} duration={200}>
-        <LabelBox>
-          <Label>Hint Used!</Label>
-        </LabelBox>
-      </SimpleCSSTransition>
-    </Root>
+    <>
+      <Root animationKey={animationKey} frames={frames}>
+        <SimpleCSSTransition visible={labelVisible} duration={200}>
+          <LabelBox>
+            <Label>Hint Used!</Label>
+          </LabelBox>
+        </SimpleCSSTransition>
+      </Root>
+      {explosionVisible && (
+        <LottieExplosion
+          autoplay
+          src={lottieExplosion}
+          keepLastFrame
+          style={{
+            left: frames[2].x + frames[2].width / 2,
+            top: frames[2].y + frames[2].height / 2,
+          }}
+        />
+      )}
+    </>
   )
 }
 
@@ -177,4 +194,12 @@ const Label = styled.div`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+`
+
+const LottieExplosion = styled(Player)`
+  position: absolute;
+  width: ${rel(100)};
+  height: ${rel(100)};
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 `

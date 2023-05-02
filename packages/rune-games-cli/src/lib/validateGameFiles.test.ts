@@ -397,7 +397,8 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer.js"></script>
+                <!-- multiplayer-dev.js is also detected as multiplayer -->
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer-dev.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },

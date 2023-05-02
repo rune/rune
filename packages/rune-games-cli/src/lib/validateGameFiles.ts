@@ -86,7 +86,10 @@ export async function validateGameFiles(
         message: "Game index.html must include Rune SDK script",
       })
     } else {
-      if (sdkScript.getAttribute("src")?.endsWith("/multiplayer.js")) {
+      if (
+        sdkScript.getAttribute("src")?.endsWith("/multiplayer.js") ||
+        sdkScript.getAttribute("src")?.endsWith("/multiplayer-dev.js")
+      ) {
         multiplayerValidationResult = {}
 
         await validateMultiplayer({

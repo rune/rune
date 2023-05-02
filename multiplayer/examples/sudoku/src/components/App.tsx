@@ -105,14 +105,12 @@ export function App() {
     setLastSetValueRollback,
   ])
 
-  if (!game?.game) return null
-
   return (
     <Root key={session}>
       <ControlPanel />
       <Board />
       <Digits />
-      {game.game.sudoku ? (
+      {game?.game.sudoku ? (
         <>
           <Onboarding />
           {!onboardingVisible && (

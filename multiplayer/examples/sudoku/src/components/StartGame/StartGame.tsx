@@ -5,6 +5,8 @@ import starImg from "./star.svg"
 import { rel } from "../../style/rel"
 import { Difficulty } from "sudoku-gen/dist/types/difficulty.type"
 import { range } from "../../lib/range"
+import { useAtomValue } from "jotai"
+import { $game } from "../../state/$game"
 
 const options: {
   label: string
@@ -18,6 +20,8 @@ const options: {
 ]
 
 export function StartGame() {
+  const game = useAtomValue($game)
+
   const [difficulty, setDifficulty] = useState<Difficulty>()
 
   useEffect(() => {
@@ -26,6 +30,8 @@ export function StartGame() {
       return () => clearTimeout(handle)
     }
   }, [difficulty])
+
+  if (!game) return <Root />
 
   return (
     <Root>

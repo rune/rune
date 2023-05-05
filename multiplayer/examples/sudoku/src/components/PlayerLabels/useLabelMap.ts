@@ -37,8 +37,7 @@ export function useLabelMap() {
           : acc
       }, {})
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boardRef, JSON.stringify(playerState)])
+  }, [boardRef, playerState])
 
   return { labelMap, setLabelMap }
 }

@@ -65,7 +65,7 @@ export function Cell({
     [col, row]
   )
 
-  if (!board) return <Root />
+  if (!board) return <Root data-pointer={`cell-${row}-${col}`} />
 
   const cell = board[cellPointer({ row, col })]
 

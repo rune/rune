@@ -1,5 +1,4 @@
 import { Cell } from "./types/GameState"
-import { range } from "./range"
 import { doesCellHaveDuplicates } from "./doesCellHaveDuplicates"
 
 export function calculateValidValues(board: Cell[]) {
@@ -11,10 +10,10 @@ export function calculateValidValues(board: Cell[]) {
 
       cell.validValues = []
 
-      range(1, 10).forEach((note) => {
+      for (let note = 1; note <= 9; note++) {
         cell.value = note
         if (!doesCellHaveDuplicates(board, cell)) cell.validValues.push(note)
-      })
+      }
 
       cell.value = currentValue
     }

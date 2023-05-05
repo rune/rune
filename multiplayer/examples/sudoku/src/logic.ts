@@ -7,6 +7,7 @@ import { randomString } from "./lib/randomString"
 import { calculateErrorsOrGameOver } from "./lib/calculateErrorsOrGameOver"
 import { calculateSuccesses } from "./lib/calculateSuccesses"
 import { boardFromSudoku } from "./lib/boardFromSudoku"
+import { calculateValidValues } from "./lib/calculateValidValues"
 
 const possibleColors: Color[] = [
   [65, 156, 85],
@@ -56,6 +57,7 @@ Rune.initLogic({
         difficulty,
         board: boardFromSudoku({ sudoku: sudoku, solved: false }),
       }
+      calculateValidValues(game.sudoku.board)
     },
     select: (coordinate, { game, playerId }) => {
       if (!game.sudoku) throw Rune.invalidAction()
@@ -81,6 +83,7 @@ Rune.initLogic({
 
       calculateErrorsOrGameOver(game)
       calculateSuccesses(game, selection)
+      calculateValidValues(game.sudoku.board)
     },
     showHint: (_, { game }) => {
       if (!game.sudoku) throw Rune.invalidAction()
@@ -107,6 +110,7 @@ Rune.initLogic({
         game,
         cellPointer(game.sudoku.board.indexOf(emptyOrIncorrectCell))
       )
+      calculateValidValues(game.sudoku.board)
     },
     toggleNote: ({ value }, { game, playerId }) => {
       if (!game.sudoku) throw Rune.invalidAction()

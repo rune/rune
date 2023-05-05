@@ -19,5 +19,6 @@ export function boardFromSudoku({
     error: false,
     lastModifiedByPlayerId: null,
     notes: [],
+    validValues: [],
   }))
 }

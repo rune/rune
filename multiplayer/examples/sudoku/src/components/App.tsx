@@ -17,6 +17,7 @@ import { $inputMode } from "../state/$inputMode"
 import { $animatingHints } from "../state/$animatingHints"
 import { sounds } from "../sounds/sounds"
 import { cellPointer } from "../lib/cellPointer"
+import { useSecretModeTrigger } from "../state/$secretMode"
 
 export function App() {
   const [game, setGame] = useAtom($game)
@@ -26,6 +27,8 @@ export function App() {
   const setLastSetValueRollback = useSetAtom($lastSetValueRollback)
   const setInputMode = useSetAtom($inputMode)
   const setAnimatingHints = useSetAtom($animatingHints)
+
+  useSecretModeTrigger()
 
   useEffect(() => {
     Rune.initClient({

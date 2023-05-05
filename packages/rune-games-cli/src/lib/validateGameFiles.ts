@@ -12,7 +12,7 @@ import LintMessage = Linter.LintMessage
 export const validationOptions = {
   sdkUrlStart: "https://cdn.jsdelivr.net/npm/rune-games-sdk",
   sdkVersionRegex: /rune-games-sdk@(\d(\.\d(\.\d)?)?)/,
-  minSdkVersion: "4.5.0",
+  minSdkVersion: "4.8.1",
   maxFiles: 1000,
   maxSizeMb: 25,
 }

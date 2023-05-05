@@ -87,7 +87,7 @@ describe("validateGameFiles", () => {
         errors: [
           {
             message:
-              "Rune SDK is below minimum version (included 4.4, min 4.5.0)",
+              "Rune SDK is below minimum version (included 4.4, min 4.8.1)",
           },
         ],
       }
@@ -117,7 +117,7 @@ describe("validateGameFiles", () => {
         errors: [
           {
             message:
-              "Rune SDK is below minimum version (included 3, min 4.5.0)",
+              "Rune SDK is below minimum version (included 3, min 4.8.1)",
           },
         ],
       }
@@ -221,7 +221,7 @@ describe("validateGameFiles", () => {
                 <head>
                   <title>Game</title>
                   <script src="src/game.js"></script>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/browser.min.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/browser.min.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -329,7 +329,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
               </html>`,
         },
       ],
@@ -348,7 +348,7 @@ describe("validateGameFiles", () => {
           content: `
               <html>
                 <script src="logic.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
               </html>`,
         },
       ],
@@ -370,7 +370,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },
@@ -398,7 +398,7 @@ describe("validateGameFiles", () => {
           content: `
               <html>
                 <!-- multiplayer-dev.js is also detected as multiplayer -->
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer-dev.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer-dev.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },
@@ -442,7 +442,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },
@@ -491,7 +491,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
         },
@@ -551,7 +551,7 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/multiplayer.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
                 <script src="src/logic.js"></script>
               </html>`,
         },

@@ -114,7 +114,9 @@ export function Cell({
                       opacity={
                         secretMode
                           ? cell.validValues.includes(note)
-                            ? 0.25
+                            ? cell.validValues.length === 1
+                              ? 1
+                              : 0.25
                             : 0
                           : cell.notes.includes(note)
                           ? 1

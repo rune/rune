@@ -2,6 +2,7 @@ import { atom, useSetAtom } from "jotai"
 import { useEffect, useState, useRef } from "react"
 
 export const $secretMode = atom(false)
+
 const lock = [4, 3, 4]
 
 export function useSecretModeTrigger() {

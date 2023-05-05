@@ -23,7 +23,7 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.5.0/dist/browser.min.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/browser.min.js"></script>
                   <script src="src/game.js"></script>
                 </head>
                 <body></body>
@@ -57,7 +57,7 @@ describe("validateGameFiles", () => {
         errors: [
           {
             message:
-              "Rune SDK is below minimum version (included 4.4.5, min 4.5.0)",
+              "Rune SDK is below minimum version (included 4.4.5, min 4.8.1)",
           },
         ],
       }

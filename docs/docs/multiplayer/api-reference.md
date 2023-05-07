@@ -130,12 +130,12 @@ If you set `delayPopUp` to `true` in `Rune.gameOver()`, you should call this fun
 
 ## `Rune.initClient(options)`
 
-The `initClient` function should be called after your game is fully ready, but should not start the actual gameplay until `visualUpdate` is called.
+The `initClient` function should be called after your game is fully ready, but should not start the actual gameplay until `onChange` is called.
 
 ```js
 // client.js
 Rune.initClient({
-  visualUpdate: ({
+  onChange: ({
     newGame,
     oldGame,
     yourPlayerId,
@@ -149,11 +149,11 @@ Rune.initClient({
 })
 ```
 
-### `visualUpdate: () => void`
+### `onChange: () => void`
 
 #### `newGame: any`
 
-This argument is the current game state. Your `visualUpdate()` function should update the UI to reflect its values.
+This argument is the current game state. Your `onChange()` function should update the UI to reflect its values.
 
 #### `oldGame: any`
 

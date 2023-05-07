@@ -56,12 +56,12 @@ Rune.initLogic({
 
 ### Rendering
 
-The game state should be rendered for the player to interact with. That’s the responsibility of `client.js`, which calls `Rune.initClient` with a `visualUpdate` callback function. Whenever an `action` is performed, the `visualUpdate` function is called with read-only info for updating the game experience (animations, graphics, UI, sound effects). The `visualUpdate` has all the info you might need to update your game, including the `action` / `event` that triggered it, the old and new game states, info about the `players`, etc.
+The game state should be rendered for the player to interact with. That’s the responsibility of `client.js`, which calls `Rune.initClient` with a `onChange` callback function. Whenever an `action` is performed, the `onChange` function is called with read-only info for updating the game experience (animations, graphics, UI, sound effects). The `onChange` has all the info you might need to update your game, including the `action` / `event` that triggered it, the old and new game states, info about the `players`, etc.
 
 The `client.js` also binds the UI to call the `actions`. For instance, for Tic Tac Toe, tapping on a cell would trigger `Rune.actions.markCell({ cellId })`.
 
 ```js
-const visualUpdate = ({
+const onChange = ({
   oldGame,
   newGame,
   action,
@@ -73,14 +73,14 @@ const visualUpdate = ({
   // TODO: Update animations, graphics, UI, sound effects
 }
 
-Rune.initClient({ visualUpdate })
+Rune.initClient({ onChange })
 ```
 
 ## High-Level Game Syncing Flow
 
 Rune does a lot of magic behind the scenes to sync the game state. Here’s a simplified overview of how it works:
 
-1. A client performs an `action` by interacting with the game (e.g. clicking a cell in Tic Tac Toe). The client optimistically updates `game` state by calling the associated `action` function (i.e. `clickCell` in the case of Tic Tac Toe) and calls `visualUpdate` to update the graphics etc.
+1. A client performs an `action` by interacting with the game (e.g. clicking a cell in Tic Tac Toe). The client optimistically updates `game` state by calling the associated `action` function (i.e. `clickCell` in the case of Tic Tac Toe) and calls `onChange` to update the graphics etc.
 2. The `action` is immediately sent to the server. The server runs the associated `actions` function provided by the game, thereby checking that the `action` is valid and whether the game ends.
 3. If the `action` is valid, the server updates its groundtruth `game` state and sends the `action` out to all connected clients. If the `action` is not valid, it’s ignored.
 4. Each client computes the new `game` state using the `action` payload and the associated function in `actions`. It’s much cheaper bandwidth-wise to send the `action` than the entire `game` state. The client who sent the `action` will also receive the same `action` payload from the server as an acknowledgement message.
@@ -90,7 +90,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 - Game logic must be written in a subset of JavaScript, see [Logic Restrictions](logic-restrictions.md). The client showing the visual interface can be written in any game engine as long as it uses the JS logic underneath.
 - Max 3 actions per player per second.
 - Actions must be synchronous, fast and be memory efficient – execute in <10ms and consume <5MB memory.
-- The `visualUpdate` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.
+- The `onChange` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.
 - The `game` state must be <1 MB and any `action` payload below <100 KB to avoid unnecessary network bandwidth usage.
 - The `game` state must be JSON-serializable (e.g. no classes/functions) so it can be sent over the network.
 
@@ -98,6 +98,6 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 
 Games running on Rune should support initializing the game at any possible moment as someone can join as a spectator/player at any time. This could happen e.g. at the start of the game, in the middle of a match, or after game over. This initialization is done using the `stateSync` event. Additionally, the `stateSync` event is also used when restarting the game, reconnecting after an unexpected disconnect, or if the game crashes.
 
-Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `visualUpdate`'s `newGame` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.
+Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `onChange`'s `newGame` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.
 
 You can test your game using the [Rune CLI](cli.md) by adding players/spectators joining at various times during your game session.  

@@ -67,21 +67,13 @@ button.onClick = () => {
   })
 }
 
+// Callback for updating game visuals when the game state changes
+function onChange({ oldGame, newGame, yourPlayerId, players, action, event }) {
+  ...
+}
+
 // Initialize the Rune SDK once your game is fully ready
-Rune.initClient({
-  onChange: ({
-    newGame,
-    oldGame,
-    yourPlayerId,
-    players,
-    action,
-    event,
-    rollbacks,
-  }) => {
-    // Update game based on game state from logic.js
-    render(newGame)
-  },
-})
+Rune.initClient({ onChange })
 ```
 
 ## Next steps

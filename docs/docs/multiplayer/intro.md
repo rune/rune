@@ -67,7 +67,7 @@ button.onClick = () => {
   })
 }
 
-// Callback for updating game visuals when the game state changes
+// Callback you define for updating your game visuals when game state changes
 function onChange({ oldGame, newGame, yourPlayerId, players, action, event }) {
   ...
 }

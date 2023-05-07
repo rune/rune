@@ -67,9 +67,9 @@ button.onClick = () => {
   })
 }
 
-// Callback you define for updating your game visuals when game state changes
+// Callback you define for when something changes
 function onChange({ oldGame, newGame, yourPlayerId, players, action, event }) {
-  ...
+  // Your game visuals update code...
 }
 
 // Initialize the Rune SDK once your game is fully ready

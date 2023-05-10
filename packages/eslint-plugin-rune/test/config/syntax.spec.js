@@ -66,6 +66,8 @@ test("syntax", {
     "switch('hest') { case 'hest': break; default: break; }",
     "let hest = {}; hest.aaa?.bbb",
     "let hest = {}; hest.aaa ?? 'bbb'",
+    'export const hest = "snel"',
+    'export default "hest"',
   ],
   invalid: [
     ["var hest = 'snel'", "unexpectedVar", 1],
@@ -84,9 +86,7 @@ test("syntax", {
     ['import { snel as klad } from "hest"', "restrictedSyntax"],
     ['import * as snel from "hest"', "restrictedSyntax"],
     ['import "hest"', "restrictedSyntax"],
-    ['export const hest = "snel"', "restrictedSyntax"],
     ['export * from "hest"', "restrictedSyntax"],
     ['export { snel } from "hest"', "restrictedSyntax"],
-    ['export default "hest"', "restrictedSyntax"],
   ],
 })

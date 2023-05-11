@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "multiplayer/vite-template"
   ],
   "scripts": {
     "prepare": "husky install && yarn build",
@@ -16,8 +17,8 @@
     "example-tic-tac-toe": "rune start multiplayer/examples/tic-tac-toe"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-eslint-plugin": "^5.0.0",

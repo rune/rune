@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    /* Target node 14 */
+    "module": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "target": "ES2020",
+    "skipLibCheck": true,
+    "moduleResolution": "node16",
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": true,
+    "outDir": "dist",
+    "declaration": true
+  },
+  "include": ["src"]
+}

@@ -115,7 +115,7 @@ export async function validateGameFiles(
         errors.push({ message: `Rune SDK must specify a version` })
       }
 
-      const [major, minor, patch] = (sdkVersion ?? "")?.split(".")
+      const [major, minor, patch] = (sdkVersion ?? "").split(".")
       const maxedOutSdkVersion = `${major}.${minor ?? 999}.${patch ?? 999}`
 
       const sdkVersionCoerced = semver.coerce(sdkVersion && maxedOutSdkVersion)

@@ -5016,6 +5016,11 @@ ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.4.tgz#a291c0c6178ff1b960befe47fcdec301674a6324"
   integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
+immer@10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-10.0.1.tgz#9065aeb856a39670a6f19b449a1222218bc8cf24"
+  integrity sha512-zg++jJLsKKTwXGeSYIw0HgChSYQGtu0UDTnbKx5aGLYgte4CwTmH9eJDYyQ6FheyUtBe+lQW9FrGxya1G+Dtmg==
+
 immer@^9.0.7:
   version "9.0.21"
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.21.tgz#1e025ea31a40f24fb064f1fef23e931496330176"
@@ -6145,7 +6150,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==
 
-lodash@4.17.21, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.7.0:
+lodash@^4.17.20, lodash@^4.17.21, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -7838,13 +7843,13 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.6.0.tgz#b2eb1da196f6ef00ac8e63669720cfbbe650663c"
-  integrity sha512-hOsq+shh280P8cKn/yQl/rXGzh1Pail3XrUx0L44keZmXwDilkOSVxpIcPLT038r1wsrj/kgAO7dm6QeZgl8Hw==
+rune-games-sdk@^4.9.1:
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.9.1.tgz#49ee96e1bcbd4ddc049d023ea6df6b470b647f15"
+  integrity sha512-2Ws4RX+yUQ6HXAdC2UL/t+ziuanVS/+mUHDNyfxMMV2R7WuBzxEr/PWFexK5ji+Z1mLHfi8a91hXuL9kO9iEdQ==
   dependencies:
     base-64 "1.0.0"
-    lodash "4.17.21"
+    immer "10.0.1"
     rune-msgpack "1.0.0"
     xstate "4.32.1"
 

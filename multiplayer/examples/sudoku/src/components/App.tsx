@@ -32,7 +32,7 @@ export function App() {
 
   useEffect(() => {
     Rune.initClient({
-      visualUpdate: ({
+      onChange: ({
         newGame,
         players,
         yourPlayerId,

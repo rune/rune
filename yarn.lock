@@ -9556,16 +9556,6 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4:
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.8.2.tgz#4cf84d7430d66e7ef2077f89202dd88d66deaa2c"
-  integrity sha512-DClIM23f+srPjSgxgoVMP+S9fm8mmzdaiFoGFhJjzD2dVvjr62P+NqTssjH7uAokgUuR4bQHuW3Hu04CC7XbMg==
-  dependencies:
-    base-64 "1.0.0"
-    immer "10.0.1"
-    rune-msgpack "1.0.0"
-    xstate "4.32.1"
-
 rune-games-sdk@^4.8.2-snapshot.64:
   version "4.8.2-snapshot.64"
   resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.8.2-snapshot.64.tgz#44b8e696a56677383f2afdd8397b25d39120ad20"

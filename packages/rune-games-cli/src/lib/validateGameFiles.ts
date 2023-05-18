@@ -1,5 +1,6 @@
 import { ESLint, Linter } from "eslint"
 import { parse, valid } from "node-html-parser"
+import path from "path"
 import semver from "semver"
 
 import { extractMultiplayerMetadata } from "./extractMultiplayerMetadata.js"
@@ -95,6 +96,7 @@ export async function validateGameFiles(
           multiplayerValidationResult,
           errors,
           logicJs,
+          indexHtml,
         })
       }
 
@@ -141,16 +143,24 @@ async function validateMultiplayer({
   multiplayerValidationResult,
   errors,
   logicJs,
+  indexHtml,
 }: {
   multiplayerValidationResult: NonNullable<ValidationResult["multiplayer"]>
   errors: ValidationError[]
   logicJs: FileInfo | undefined
+  indexHtml: FileInfo
 }) {
   if (!logicJs) {
     errors.push({
       message: "logic.js must be included in the game files",
     })
   } else {
+    if (path.dirname(indexHtml.path) !== path.dirname(logicJs.path)) {
+      errors.push({
+        message: "logic.js must be in the same directory as index.html",
+      })
+    }
+
     await validateMultiplayerLogicJsContent({
       logicJs,
       multiplayerValidationResult,

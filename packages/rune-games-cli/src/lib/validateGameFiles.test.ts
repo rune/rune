@@ -545,6 +545,7 @@ describe("validateGameFiles", () => {
       {
         valid: false,
         errors: [
+          { message: "logic.js must be in the same directory as index.html" },
           {
             message: "logic.js content has not been provided for validation",
           },
@@ -561,7 +562,7 @@ describe("validateGameFiles", () => {
           content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
-                <script src="client.js"></script>
+                <script type="module" src="client.js"></script>
               </html>`,
         },
         {

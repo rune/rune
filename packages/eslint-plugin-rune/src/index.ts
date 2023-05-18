@@ -130,7 +130,7 @@ const logicConfig: ESLint.ConfigData = {
       "error",
       {
         selector:
-          "ImportDeclaration,ExportNamedDeclaration,ExportAllDeclaration,ExportDefaultDeclaration",
+          "ImportDeclaration,ExportNamedDeclaration[source],ExportAllDeclaration[source],ExportDefaultDeclaration[source]",
         message: "Rune logic must be contained in a single file.",
       },
       {

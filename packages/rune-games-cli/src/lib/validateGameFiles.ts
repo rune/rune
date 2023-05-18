@@ -1,6 +1,5 @@
 import { ESLint, Linter } from "eslint"
-import { parse, valid, HTMLElement } from "node-html-parser"
-import path from "path"
+import { parse, valid } from "node-html-parser"
 import semver from "semver"
 
 import { extractMultiplayerMetadata } from "./extractMultiplayerMetadata.js"
@@ -94,10 +93,8 @@ export async function validateGameFiles(
 
         await validateMultiplayer({
           multiplayerValidationResult,
-          scripts,
           errors,
           logicJs,
-          indexHtml,
         })
       }
 
@@ -142,51 +139,23 @@ export async function validateGameFiles(
 
 async function validateMultiplayer({
   multiplayerValidationResult,
-  scripts,
   errors,
   logicJs,
-  indexHtml,
 }: {
   multiplayerValidationResult: NonNullable<ValidationResult["multiplayer"]>
-  scripts: HTMLElement[]
   errors: ValidationError[]
   logicJs: FileInfo | undefined
-  indexHtml: FileInfo
 }) {
-  const logicScript = scripts.find(
-    (script) =>
-      script.getAttribute("src") === "logic.js" ||
-      script.getAttribute("src")?.endsWith("/logic.js")
-  )
-
-  if (!logicScript) {
+  if (!logicJs) {
     errors.push({
-      message: "logic.js file is not included in index.html",
+      message: "logic.js must be included in the game files",
     })
   } else {
-    if (scripts.indexOf(logicScript) !== 1) {
-      errors.push({
-        message: "logic.js must be the second script in index.html",
-      })
-    }
-
-    if (!logicJs) {
-      errors.push({
-        message: "logic.js must be included in the game files",
-      })
-    } else {
-      if (path.dirname(indexHtml.path) !== path.dirname(logicJs.path)) {
-        errors.push({
-          message: "logic.js must be in the same directory as index.html",
-        })
-      }
-
-      await validateMultiplayerLogicJsContent({
-        logicJs,
-        multiplayerValidationResult,
-        errors,
-      })
-    }
+    await validateMultiplayerLogicJsContent({
+      logicJs,
+      multiplayerValidationResult,
+      errors,
+    })
   }
 
   return multiplayerValidationResult

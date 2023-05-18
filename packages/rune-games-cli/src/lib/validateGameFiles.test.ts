@@ -329,24 +329,6 @@ describe("validateGameFiles", () => {
           size: 1 * 1e6,
           content: `
               <html>
-                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
-              </html>`,
-        },
-      ],
-      {
-        valid: false,
-        errors: [{ message: "logic.js file is not included in index.html" }],
-        multiplayer: {},
-      }
-    )
-
-    await check(
-      [
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
-              <html>
                 <script src="logic.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
               </html>`,
@@ -355,7 +337,6 @@ describe("validateGameFiles", () => {
       {
         valid: false,
         errors: [
-          { message: "logic.js must be the second script in index.html" },
           { message: "logic.js must be included in the game files" },
           { message: "Rune SDK must be the first script in index.html" },
         ],
@@ -570,6 +551,53 @@ describe("validateGameFiles", () => {
           },
         ],
         multiplayer: {},
+      }
+    )
+
+    await check(
+      [
+        {
+          path: "index.html",
+          size: 1 * 1e6,
+          content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
+                <script type="module" src="client.js"></script>
+              </html>`,
+        },
+        {
+          path: "logic.js",
+          size: 1 * 1e6,
+          // language=JavaScript
+          content: `
+              Rune.initLogic({
+                minPlayers: 2,
+                maxPlayers: 4,
+                setup: () => {
+                  return { cells: Array(25).fill(null) }
+                },
+                actions: {},
+                events: {
+                  playerJoined: () => {},
+                  playerLeft () {},
+                },
+              })`,
+        },
+        {
+          path: "client.js",
+          size: 1 * 1e6,
+          content: "import 'logic.js';",
+        },
+      ],
+      {
+        valid: true,
+        errors: [],
+        multiplayer: {
+          handlesPlayerJoined: true,
+          handlesPlayerLeft: true,
+          maxPlayers: 4,
+          minPlayers: 2,
+        },
       }
     )
 

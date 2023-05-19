@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rollup -c && react-scripts build"
+    "build": "./copy-sounds.sh && rollup -c && react-scripts build"
   },
   "eslintConfig": {
     "extends": [

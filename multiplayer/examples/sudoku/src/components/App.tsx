@@ -28,57 +28,61 @@ export function App() {
   const setAnimatingHints = useSetAtom($animatingHints)
 
   useEffect(() => {
-    Rune.initClient({
-      onChange: ({
-        newGame,
-        players,
-        yourPlayerId,
-        rollbacks,
-        action,
-        event,
-      }) => {
-        setGame({ game: newGame, players, yourPlayerId })
+    import("../logic").then(() => {
+      Rune.initClient({
+        onChange: ({
+          newGame,
+          players,
+          yourPlayerId,
+          rollbacks,
+          action,
+          event,
+        }) => {
+          setGame({ game: newGame, players, yourPlayerId })
 
-        const lastActivityPlayerId =
-          action?.action === "setValue" ||
-          action?.action === "select" ||
-          action?.action === "toggleNote"
-            ? action.playerId
-            : event?.event === "playerJoined" && event.params.playerId
+          const lastActivityPlayerId =
+            action?.action === "setValue" ||
+            action?.action === "select" ||
+            action?.action === "toggleNote"
+              ? action.playerId
+              : event?.event === "playerJoined" && event.params.playerId
 
-        if (lastActivityPlayerId) {
-          setLastPlayerActivity((prev) => ({
-            ...prev,
-            [lastActivityPlayerId]: new Date(),
-          }))
-        }
-
-        if (rollbacks.some((r) => r.action === "setValue")) {
-          setLastSetValueRollback(new Date())
-        }
-
-        if (action?.action === "setValue") {
-          if (action.params.value) {
-            const selection = newGame.playerState[action.playerId].selection
-            const cell = newGame.sudoku?.board.at(cellPointer(selection))
-
-            if (cell?.error) {
-              sounds.error.play()
-            } else {
-              sounds.setValue.play()
-            }
-          } else {
-            sounds.backspace.play()
+          if (lastActivityPlayerId) {
+            setLastPlayerActivity((prev) => ({
+              ...prev,
+              [lastActivityPlayerId]: new Date(),
+            }))
           }
-        } else if (action?.action === "toggleNote") {
-          if (action.params.value) sounds.setValue.play()
-          else sounds.backspace.play()
-        } else if (action?.action === "startGame") {
-          sounds.setDifficulty.play()
-        }
-      },
+
+          if (rollbacks.some((r) => r.action === "setValue")) {
+            setLastSetValueRollback(new Date())
+          }
+
+          if (action?.action === "setValue") {
+            if (action.params.value) {
+              const selection = newGame.playerState[action.playerId].selection
+              const cell = newGame.sudoku?.board.at(cellPointer(selection))
+
+              if (cell?.error) {
+                sounds.error.play()
+              } else {
+                sounds.setValue.play()
+              }
+            } else {
+              sounds.backspace.play()
+            }
+          } else if (action?.action === "toggleNote") {
+            if (action.params.value) sounds.setValue.play()
+            else sounds.backspace.play()
+          } else if (action?.action === "startGame") {
+            sounds.setDifficulty.play()
+          }
+        },
+      })
     })
-  }, [setGame, setLastPlayerActivity, setLastSetValueRollback])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (game?.game.gameOver) {

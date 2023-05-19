@@ -1,3 +1,22 @@
+/* eslint-disable  @typescript-eslint/no-non-null-assertion */
+import type { OnChange } from "rune-games-sdk/multiplayer"
+import type { BoardChange, Cells, GameActions, GameState } from "./types"
+import {
+  rows,
+  cols,
+  numberOfTiles,
+  startingMovesPerRound,
+  numberOfRounds,
+  numberOfSpecialActions,
+} from "./logic/config"
+import { getScoreForChange, isGameOver, isValidMove } from "./logic/game"
+import {
+  areCellsNeighbors,
+  getCoordinatesForIndex,
+  getIndexForCoordinates,
+} from "./logic/board"
+import { playSound } from "./sounds"
+
 const boardInner = document.getElementById("board-inner")
 const board = document.getElementById("board")
 const framesElement = document.getElementById("frames")
@@ -6,7 +25,6 @@ const moveHintElement = document.getElementById("move-hint")
 const movesList = document.getElementById("moves")
 const roundsList = document.getElementById("rounds")
 const playersList = document.getElementById("players")
-// const hammerButton = document.getElementById("hammer-button")
 const shuffleButton = document.getElementById("shuffle-button")
 const shufflesList = document.getElementById("shuffles")
 const extraMoveButton = document.getElementById("extra-move-button")
@@ -16,11 +34,30 @@ const canvas = document.createElement("canvas")
 body.appendChild(canvas)
 const ctx = canvas.getContext("2d")
 
+if (
+  !board ||
+  !boardInner ||
+  !framesElement ||
+  !tilesElement ||
+  !moveHintElement ||
+  !movesList ||
+  !roundsList ||
+  !playersList ||
+  !shuffleButton ||
+  !shufflesList ||
+  !extraMoveButton ||
+  !extraMovesList ||
+  !body ||
+  !ctx
+) {
+  throw new Error("Missing required HTML elements")
+}
+
 const style = document.createElement("style")
 style.type = "text/css"
 document.getElementsByTagName("head")[0].appendChild(style)
 
-let resizeTimer = null
+let resizeTimer: ReturnType<typeof setTimeout> | undefined
 
 const resizeObserver = new ResizeObserver(() => {
   canvas.width = window.innerWidth * window.devicePixelRatio
@@ -35,14 +72,14 @@ const resizeObserver = new ResizeObserver(() => {
           Math.min(boardInner.scrollHeight, boardInner.scrollWidth) / rows
         ) * rows
       board.style.width = `${boardWidth}px`
-      if (style.sheet.rules.length !== 0) {
-        style.sheet.deleteRule(0)
+      if (style.sheet?.rules.length !== 0) {
+        style.sheet?.deleteRule(0)
       }
-      style.sheet.insertRule(
+      style.sheet?.insertRule(
         `#frames > *, #tiles > * { width: ${boardWidth / rows}px; }`,
         0
       )
-      resizeTimer = null
+      resizeTimer = undefined
     },
     resizeTimer ? 200 : 0
   )
@@ -50,38 +87,21 @@ const resizeObserver = new ResizeObserver(() => {
 
 resizeObserver.observe(boardInner)
 
-const sounds = {
-  "your-turn": new Audio("sounds/your-turn.wav"),
-  arrow: new Audio("sounds/arrow.wav"),
-  bomb: new Audio("sounds/bomb.wav"),
-  "extra-move": new Audio("sounds/extra-move.wav"),
-  "match-1": new Audio("sounds/match-1.wav"),
-  "match-2": new Audio("sounds/match-2.wav"),
-  "match-3": new Audio("sounds/match-3.wav"),
-  "match-arrow": new Audio("sounds/match-arrow.wav"),
-  "match-bomb": new Audio("sounds/match-bomb.wav"),
-  shuffle: new Audio("sounds/shuffle.wav"),
-  swap: new Audio("sounds/swap.wav"),
-}
-const playSound = (name) => {
-  const sound = sounds[name]
-  try {
-    sound.play()
-  } catch (_e) {
-    // Sounds may be blocked by browser
-  }
+interface Coordinates {
+  row: number
+  col: number
 }
 
-let tiles,
-  frames,
-  playerItems,
-  roundsItems,
-  shufflesItems,
-  extraMovesItems,
-  movesItems = [],
-  scores = []
+let tiles: (HTMLElement | null)[],
+  frames: HTMLElement[],
+  playerItems: HTMLElement[],
+  roundsItems: HTMLElement[],
+  shufflesItems: HTMLElement[],
+  extraMovesItems: HTMLElement[],
+  movesItems: HTMLElement[] = []
+const scores: number[] = []
 
-const getCoordinatesForEvent = (e) => {
+const getCoordinatesForEvent = (e: MouseEvent | Touch) => {
   const boardRect = board.getBoundingClientRect()
   const col = Math.floor(((e.pageX - boardRect.x) * cols) / boardRect.width)
   const row = Math.floor(((e.pageY - boardRect.y) * rows) / boardRect.height)
@@ -94,16 +114,9 @@ const getCoordinatesForEvent = (e) => {
 }
 
 let yourTurn = false
-let cells = null
-let sourceCoordinates = null
-// let isHammering = false
+let cells: Cells
+let sourceCoordinates: Coordinates | null = null
 let isUpdating = false
-
-// hammerButton.onclick = () => {
-//   if (yourTurn && !isUpdating) {
-//     isHammering = true
-//   }
-// }
 
 shuffleButton.onclick = () => {
   if (yourTurn && !isUpdating) {
@@ -117,21 +130,14 @@ extraMoveButton.onclick = () => {
   }
 }
 
-const handlePointerStart = (coordinates) => {
+const handlePointerStart = (coordinates: Coordinates | null) => {
   if (!yourTurn || isUpdating) {
     return
   }
   sourceCoordinates = coordinates
-  // if (yourTurn && isHammering) {
-  //   const { row, col } = getCoordinatesForEvent(e)
-  //   isHammering = false
-  //   Rune.actions.remove({
-  //     index: getIndexForCoordinates(row, col),
-  //   })
-  // }
 }
 
-const handlePointerMove = (coordinates) => {
+const handlePointerMove = (coordinates: Coordinates | null) => {
   if (!sourceCoordinates || !coordinates) {
     return
   }
@@ -192,59 +198,60 @@ const deltaToDirection = {
   [-cols]: "up",
   [cols]: "down",
 }
-async function renderInvalidMove(index1, index2) {
+async function renderInvalidMove(index1: number, index2: number) {
   isUpdating = true
   ;[
     [index1, index2],
     [index2, index1],
   ].forEach(([index1, index2]) => {
-    tiles[index1].className = `invalid-move-${
+    tiles[index1]!.className = `invalid-move-${
       deltaToDirection[index2 - index1]
     }`
   })
   await sleep(600)
-  tiles[index1].className = ""
-  tiles[index2].className = ""
+  tiles[index1]!.className = ""
+  tiles[index2]!.className = ""
   isUpdating = false
 }
 
-const positionCellElement = (element, index) => {
+const positionCellElement = (element: HTMLElement, index: number) => {
   const { row, col } = getCoordinatesForIndex(index)
   element.style.transform = `translate(${Math.abs(col) * 100}%, ${row * 100}%)`
 }
 
 const createCellElement = () => document.createElement("div")
 
-const createPlayerElement = (playerIndex) => {
+const createPlayerElement = (playerIndex: number) => {
   const element = document.createElement("li")
   element.appendChild(document.createElement("img"))
   const name = document.createElement("span")
   element.appendChild(name)
-  element.setAttribute("data-player", playerIndex)
+  element.setAttribute("data-player", playerIndex.toString())
   return element
 }
 
-const swapTiles = (sourceIndex, targetIndex) => {
-  const sourceElement = tiles[sourceIndex]
-  const targetElement = tiles[targetIndex]
+const swapTiles = (sourceIndex: number, targetIndex: number) => {
+  const sourceElement = tiles[sourceIndex]!
+  const targetElement = tiles[targetIndex]!
   positionCellElement(sourceElement, targetIndex)
   positionCellElement(targetElement, sourceIndex)
   tiles[sourceIndex] = targetElement
   tiles[targetIndex] = sourceElement
 }
 
-const removeTile = (index) => {
+const removeTile = (index: number) => {
   const element = tiles[index]
-  element.classList.add("removed")
+  element?.classList.add("removed")
   tiles[index] = null
   setTimeout(() => {
-    element.parentElement.removeChild(element)
+    element?.parentElement?.removeChild(element)
   }, 1000)
 }
 
-const easeInOut = (n) => 1 - (Math.cos(Math.PI * n) + 1) / 2
+const easeInOut = (n: number) => 1 - (Math.cos(Math.PI * n) + 1) / 2
 
-const tween = (from, to, progress) => from + (to - from) * progress
+const tween = (from: number, to: number, progress: number) =>
+  from + (to - from) * progress
 
 const particleColors = [
   "#69D2E7",
@@ -256,9 +263,21 @@ const particleColors = [
   "#F9D423",
 ]
 
-const particles = []
+interface Particle {
+  x: number
+  y: number
+  radius: number
+  wander: number
+  theta: number
+  drag: number
+  color: string
+  vx: number
+  vy: number
+}
 
-const spawnParticle = function (x, y, radius) {
+const particles: Particle[] = []
+
+const spawnParticle = function (x: number, y: number, radius: number) {
   particles.push({
     x,
     y,
@@ -298,7 +317,7 @@ const drawParticles = function () {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ctx.globalCompositeOperation = "lighter"
 
-  for (var i = particles.length - 1; i >= 0; i--) {
+  for (let i = particles.length - 1; i >= 0; i--) {
     const { x, y, radius, color } = particles[i]
     ctx.beginPath()
     ctx.arc(x, y, radius, 0, Math.PI * 2)
@@ -307,9 +326,11 @@ const drawParticles = function () {
   }
 }
 
-const animateScore = (indices, playerIndex, scoreDelta = 0) =>
+const animateScore = (indices: number[], playerIndex: number, scoreDelta = 0) =>
   new Promise((resolve) => {
-    const [avatarRect] = playerItems[playerIndex].firstChild.getClientRects()
+    const [avatarRect] = (
+      playerItems[playerIndex]?.firstChild as HTMLElement
+    )?.getClientRects()
     const target = {
       left: Math.round(avatarRect.left + avatarRect.width) - 5,
       top: Math.round(avatarRect.top) + 10,
@@ -356,8 +377,11 @@ const animateScore = (indices, playerIndex, scoreDelta = 0) =>
         requestAnimationFrame(addParticles)
       } else {
         scores[playerIndex] += scoreDelta
-        playerItems[playerIndex].setAttribute("data-score", scores[playerIndex])
-        resolve()
+        playerItems[playerIndex].setAttribute(
+          "data-score",
+          scores[playerIndex].toString()
+        )
+        resolve(null)
       }
     }
     addParticles()
@@ -371,22 +395,26 @@ const animateScore = (indices, playerIndex, scoreDelta = 0) =>
     step()
   })
 
-const setMatchedTile = (index) => {
-  tiles[index].classList.add("matched")
+const setMatchedTile = (index: number) => {
+  tiles[index]?.classList.add("matched")
 }
 
-const setTile = (element, tile) => {
-  element.setAttribute("data-tile", tile === null ? "" : tile)
+const setTile = (element: HTMLElement, tile: number | null) => {
+  element.setAttribute("data-tile", tile === null ? "" : tile.toString())
   element.classList.remove("matched")
 }
 
-const setMergedTile = (element, tile, isVertical = false) => {
+const setMergedTile = (
+  element: HTMLElement,
+  tile: number | null,
+  isVertical = false
+) => {
   element.classList.toggle("vertical", isVertical)
-  element.setAttribute("data-merged-tile", tile === null ? "" : tile)
+  element.setAttribute("data-merged-tile", tile === null ? "" : tile.toString())
 }
 
-const addTile = (index, tile) => {
-  const element = createCellElement(index)
+const addTile = (index: number, tile: number) => {
+  const element = createCellElement()
   setTile(element, tile)
   tiles[index] = element
   const { col } = getCoordinatesForIndex(index)
@@ -399,6 +427,9 @@ const addTile = (index, tile) => {
 
 const renderBoard = () => {
   tiles.forEach((element, i) => {
+    if (!element) {
+      return
+    }
     const tile = cells[i]
     setTile(element, tile)
     positionCellElement(element, i)
@@ -407,10 +438,13 @@ const renderBoard = () => {
   })
 }
 
-const sleep = (duration) =>
+const sleep = (duration: number) =>
   new Promise((resolve) => setTimeout(resolve, duration))
 
-const animateChanges = async (changes, playerIndex) => {
+const pickIndices = (array: { index: number; indices: number[] }[]) =>
+  array.map(({ index, indices }) => indices.concat(index))
+
+const animateChanges = async (changes: BoardChange[], playerIndex: number) => {
   for (let i = 0; i < changes.length; i++) {
     const change = changes[i]
     const { added, moved, removed, merged, cleared, message } = change
@@ -429,14 +463,14 @@ const animateChanges = async (changes, playerIndex) => {
         indices.forEach((i, nr) => {
           const element = tiles[i]
           setTimeout(
-            () => element.classList.add("cleared"),
+            () => element?.classList.add("cleared"),
             type === 3 ? 200 : Math.abs(startNr - nr) * 25
           )
         })
       })
 
       if (removed.length || merged.length) {
-        playSound(`match-${Math.min(i + 1, 3)}`)
+        playSound(i === 0 ? "match-1" : i === 1 ? "match-2" : "match-3")
       }
 
       if (
@@ -447,14 +481,7 @@ const animateChanges = async (changes, playerIndex) => {
 
       await sleep(350)
       animateScore(
-        removed
-          .concat(
-            merged
-              .concat(cleared)
-              .flat()
-              .map(({ index, indices }) => indices.concat(index))
-          )
-          .flat(),
+        removed.concat(pickIndices(merged)).concat(pickIndices(cleared)).flat(),
         playerIndex,
         getScoreForChange(change)
       )
@@ -483,26 +510,35 @@ const animateChanges = async (changes, playerIndex) => {
         )
         .forEach((index) => removeTile(index))
       merged.forEach(({ index, tile, indices, vertical }) => {
-        setMergedTile(tiles[index], tile, vertical)
+        setMergedTile(tiles[index]!, tile, vertical)
         indices.forEach((i) => {
-          positionCellElement(tiles[i], index)
+          positionCellElement(tiles[i]!, index)
           removeTile(i)
         })
       })
       await sleep(merged.length === 0 ? 250 : 350)
     }
     movedEntries
-      .map(([targetIndex, sourceIndex]) => [targetIndex, tiles[sourceIndex]])
+      .map(
+        ([targetIndex, sourceIndex]) =>
+          [parseInt(targetIndex, 10), tiles[sourceIndex]] as const
+      )
       .forEach(([targetIndex, element]) => {
-        positionCellElement(element, targetIndex)
+        positionCellElement(element!, targetIndex)
         tiles[targetIndex] = element
       })
-    Object.entries(added).forEach(([index, tile]) => addTile(index, tile))
+    Object.entries(added).forEach(([index, tile]) =>
+      addTile(parseInt(index, 10), tile)
+    )
     await sleep(i === changes.length - 1 ? 300 : 500)
   }
 }
 
-const setFilled = (items, filledCount, useCurrent = true) =>
+const setFilled = (
+  items: HTMLElement[],
+  filledCount: number,
+  useCurrent = true
+) =>
   items.forEach((element, i) => {
     element.className =
       i < filledCount
@@ -512,9 +548,9 @@ const setFilled = (items, filledCount, useCurrent = true) =>
         : ""
   })
 
-const setMovesPlayed = (movesPlayed, movesPerRound) => {
+const setMovesPlayed = (movesPlayed: number, movesPerRound: number) => {
   // Initialize turn list item elements if not already created
-  let extraMovesItems = []
+  let extraMovesItems: HTMLElement[] = []
   if (movesPerRound > movesItems.length) {
     const numToInsert = movesPerRound - movesItems.length
     movesItems = movesItems.concat(
@@ -527,7 +563,7 @@ const setMovesPlayed = (movesPlayed, movesPerRound) => {
     }
   } else if (movesPerRound < movesItems.length) {
     movesItems.splice(movesPerRound).forEach((element) => {
-      element.parentElement.removeChild(element)
+      element.parentElement?.removeChild(element)
     })
   }
   setFilled(movesItems, movesPerRound - movesPlayed, false)
@@ -538,22 +574,26 @@ const setMovesPlayed = (movesPlayed, movesPerRound) => {
   })
 }
 
-const setRoundsPlayed = (roundsPlayed) => {
+const setRoundsPlayed = (roundsPlayed: number) => {
   setFilled(roundsItems, roundsPlayed)
   roundsList.setAttribute(
     "data-round",
-    Math.min(numberOfRounds, roundsPlayed + 1)
+    Math.min(numberOfRounds, roundsPlayed + 1).toString()
   )
 }
 
-const appendNewElements = (elementCount, targetElement, tagName) =>
-  new Array(elementCount).fill(null).map((_, i) => {
+const appendNewElements = (
+  elementCount: number,
+  targetElement: HTMLElement,
+  tagName: string
+) =>
+  new Array(elementCount).fill(null).map(() => {
     const child = document.createElement(tagName)
     targetElement.appendChild(child)
     return child
   })
 
-const showMessage = async (messageType) => {
+const showMessage = async (messageType: string) => {
   const messageElement = document.createElement("div")
   const innerMessageElement = document.createElement("span")
   switch (messageType) {
@@ -583,7 +623,7 @@ const showMessage = async (messageType) => {
   board.removeChild(messageElement)
 }
 
-async function showSpecialTileHint(index) {
+async function showSpecialTileHint(index: number) {
   const { row, col } = getCoordinatesForIndex(index)
   isUpdating = true
 
@@ -594,7 +634,7 @@ async function showSpecialTileHint(index) {
   }`
   messageElement.style.top = `${(row / rows) * 100}%`
   messageElement.style.left = `${(col / cols) * 100}%`
-  board.appendChild(messageElement)
+  board?.appendChild(messageElement)
 
   const sameColorFrames = frames.filter(
     (_, i) => cells[i] % numberOfTiles === cells[index] % numberOfTiles
@@ -606,12 +646,12 @@ async function showSpecialTileHint(index) {
   sameColorFrames.forEach((element) => {
     element.classList.remove("hint")
   })
-  board.removeChild(messageElement)
+  board?.removeChild(messageElement)
   isUpdating = false
 }
 
-function findPossibleMoves(cells) {
-  let moves = []
+function findPossibleMoves(cells: Cells) {
+  const moves = []
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const index = getIndexForCoordinates(row, col)
@@ -626,31 +666,35 @@ function findPossibleMoves(cells) {
   return moves
 }
 
-async function showHint(playerIndex) {
+async function showHint(playerIndex: number) {
   const moves = findPossibleMoves(cells)
   const [index1, index2] = moves[Math.floor(Math.random() * moves.length)]
   const direction = deltaToDirection[index2 - index1]
   const { row, col } = getCoordinatesForIndex(index1)
-
+  if (!moveHintElement) {
+    return
+  }
   moveHintElement.style.top = `${(row / rows) * 100}%`
   moveHintElement.style.left = `${(col / cols) * 100}%`
   moveHintElement.style.width = `${(1 / cols) * 100}%`
-  moveHintElement.setAttribute("data-swap-player", playerIndex + 1)
+  moveHintElement.setAttribute("data-swap-player", (playerIndex + 1).toString())
   moveHintElement.className = `move-${direction}`
   await sleep(1500)
   moveHintElement.className = ""
   moveHintElement.removeAttribute("data-swap-player")
 }
 
-let hintInterval = null
+let hintInterval: ReturnType<typeof setTimeout> | undefined
 
-function scheduleMoveHint(playerIndex) {
+function scheduleMoveHint(playerIndex: number) {
   hintInterval = setInterval(() => {
     showHint(playerIndex)
   }, 20000)
 }
 
-const visualUpdate = async ({
+type OnChangeFn = OnChange<GameState, GameActions>
+type OnChangeParam = Parameters<OnChangeFn>[0]
+const onChange: OnChangeFn = async ({
   newGame,
   oldGame,
   action,
@@ -670,7 +714,10 @@ const visualUpdate = async ({
   } = newGame
   cells = newGame.cells
   const gameOver = isGameOver(newGame)
-  yourTurn = !gameOver && playerIds.indexOf(yourPlayerId) === currentPlayerIndex
+  yourTurn =
+    !gameOver && yourPlayerId
+      ? playerIds.indexOf(yourPlayerId) === currentPlayerIndex
+      : false
 
   // Initialize frame elements if not already created
   if (!frames) {
@@ -701,7 +748,7 @@ const visualUpdate = async ({
     })
   } else if (playerItems.length > playerIds.length) {
     playerItems.splice(playerIds.length).forEach((li) => {
-      li.parentElement.removeChild(li)
+      li.parentElement?.removeChild(li)
     })
   } else if (playerItems.length < playerIds.length) {
     playerItems = playerItems.concat(
@@ -724,13 +771,13 @@ const visualUpdate = async ({
     extraMovesItems ||
     appendNewElements(numberOfSpecialActions, extraMovesList, "li")
 
-  const updatePlayerState = async (currentPlayerIndex) => {
+  const updatePlayerState = async (currentPlayerIndex: number) => {
     const leaderPlayerId = playerIds.reduce(
       (a, b) => (players[a].score < players[b].score ? b : a),
       playerIds[0]
     )
     playerIds.forEach((id, i) => {
-      let li = playerItems[i]
+      const li = playerItems[i]
       const player = playerData[id]
       const isCurrentPlayer = i === currentPlayerIndex
       const position =
@@ -742,10 +789,10 @@ const visualUpdate = async ({
       } else if (wasLeader) {
         li.classList.add("previous-leader")
       }
-      li.lastChild.textContent =
+      li.lastChild!.textContent =
         id === yourPlayerId ? "You" : player && player.displayName
-      li.firstChild.setAttribute("src", player.avatarUrl)
-      li.setAttribute("data-score", players[id].score)
+      ;(li.firstChild as HTMLElement).setAttribute("src", player.avatarUrl)
+      li.setAttribute("data-score", players[id].score.toString())
       scores[i] = players[id].score
       li.style.left = isCurrentPlayer
         ? "50%"
@@ -779,7 +826,9 @@ const visualUpdate = async ({
   frames.forEach((frame, i) => {
     frame.setAttribute(
       "data-highlight",
-      highlightedCells[i] ? playerIds.indexOf(highlightedCells[i]) : ""
+      highlightedCells[i]
+        ? playerIds.indexOf(highlightedCells[i]).toString()
+        : ""
     )
   })
 
@@ -789,11 +838,12 @@ const visualUpdate = async ({
         const { sourceIndex, targetIndex } = action.params
         const sourceElement = tiles[sourceIndex]
         if (
+          yourPlayerId &&
           oldGame.playerIds.indexOf(yourPlayerId) !== oldGame.currentPlayerIndex
         ) {
-          sourceElement.setAttribute(
+          sourceElement?.setAttribute(
             "data-swap-player",
-            oldGame.currentPlayerIndex + 1
+            (oldGame.currentPlayerIndex + 1).toString()
           )
           await sleep(300)
         }
@@ -838,16 +888,17 @@ const visualUpdate = async ({
   }
 }
 
-const renderQueue = []
-const queueUpdate = async (...update) => {
+const renderQueue: OnChangeParam[] = []
+const queueUpdate: OnChangeFn = async (update) => {
   renderQueue.unshift(update)
   if (!isUpdating) {
     isUpdating = true
-    while (renderQueue.length !== 0) {
-      await visualUpdate(...renderQueue.pop())
+    let params: OnChangeParam | undefined
+    while ((params = renderQueue.pop())) {
+      await onChange(params)
     }
     isUpdating = false
   }
 }
 
-Rune.initClient({ visualUpdate: queueUpdate })
+Rune.initClient({ onChange: queueUpdate })

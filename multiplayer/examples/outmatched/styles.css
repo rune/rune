@@ -38,12 +38,12 @@ main {
 header {
   position: relative;
   height: 14rem;
-  background: url("background.svg") no-repeat bottom,
+  background: url(images/background.svg) no-repeat bottom,
     linear-gradient(#00202f, #003f48);
 }
 
 footer {
-  background: url("oval.svg") no-repeat top center;
+  background: url(images/oval.svg) no-repeat top center;
   background-size: cover;
   margin-top: 1.2rem;
   height: 3.5rem;
@@ -179,7 +179,7 @@ footer li:nth-child(2) {
   margin-left: -2.6rem;
   width: 2.5rem;
   aspect-ratio: 1;
-  background: url("first-badge.svg") no-repeat;
+  background: url(images/first-badge.svg) no-repeat;
   background-size: contain;
   opacity: 0;
   transition: transform 0.5s;
@@ -251,7 +251,7 @@ footer li:nth-child(2) {
   border: 3px solid;
   border-radius: 50%;
   box-sizing: border-box;
-  background-image: url(avatar-placeholder.svg);
+  background-image: url(images/avatar-placeholder.svg);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -305,7 +305,7 @@ footer li:nth-child(2) {
 
 header nav {
   position: relative;
-  background: url("oval.svg") no-repeat bottom center;
+  background: url(images/oval.svg) no-repeat bottom center;
   background-size: cover;
   padding: 1.2rem 0 0 0;
   display: flex;
@@ -632,7 +632,7 @@ header nav:before {
   top: 100%;
   width: 12px;
   height: 5px;
-  background: url(tooltip-tail.svg) no-repeat;
+  background: url(images/tooltip-tail.svg) no-repeat;
 }
 
 .tooltip.right:after {
@@ -999,22 +999,22 @@ canvas {
 
 #move-hint[data-swap-player="1"],
 #tiles > *[data-swap-player="1"]:before {
-  background-image: url(hands/green.svg);
+  background-image: url(images/hands/green.svg);
 }
 
 #move-hint[data-swap-player="2"],
 #tiles > *[data-swap-player="2"]:before {
-  background-image: url(hands/purple.svg);
+  background-image: url(images/hands/purple.svg);
 }
 
 #move-hint[data-swap-player="3"],
 #tiles > *[data-swap-player="3"]:before {
-  background-image: url(hands/red.svg);
+  background-image: url(images/hands/red.svg);
 }
 
 #move-hint[data-swap-player="4"],
 #tiles > *[data-swap-player="4"]:before {
-  background-image: url(hands/yellow.svg);
+  background-image: url(images/hands/yellow.svg);
 }
 
 @keyframes zoom-in {
@@ -1100,117 +1100,117 @@ canvas {
 }
 
 #tiles > *[data-tile="1"]:after {
-  background-image: url(tiles/blue.svg);
+  background-image: url(images/tiles/blue.svg);
 }
 
 #tiles > *[data-tile="2"]:after {
-  background-image: url(tiles/green.svg);
+  background-image: url(images/tiles/green.svg);
 }
 
 #tiles > *[data-tile="3"]:after {
-  background-image: url(tiles/orange.svg);
+  background-image: url(images/tiles/orange.svg);
 }
 
 #tiles > *[data-tile="4"]:after {
-  background-image: url(tiles/brown.svg);
+  background-image: url(images/tiles/brown.svg);
 }
 
 #tiles > *[data-tile="5"]:after {
-  background-image: url(tiles/grey.svg);
+  background-image: url(images/tiles/grey.svg);
 }
 
 #tiles > *[data-tile="6"]:after {
-  background-image: url(tiles/yellow.svg);
+  background-image: url(images/tiles/yellow.svg);
 }
 
 #tiles > *[data-merged-tile="7"]:before,
 #tiles > *[data-tile="7"]:after {
-  background-image: url(arrow-horizontal/blue.svg);
+  background-image: url(images/arrow-horizontal/blue.svg);
 }
 
 #tiles > *[data-merged-tile="8"]:before,
 #tiles > *[data-tile="8"]:after {
-  background-image: url(arrow-horizontal/green.svg);
+  background-image: url(images/arrow-horizontal/green.svg);
 }
 
 #tiles > *[data-merged-tile="9"]:before,
 #tiles > *[data-tile="9"]:after {
-  background-image: url(arrow-horizontal/orange.svg);
+  background-image: url(images/arrow-horizontal/orange.svg);
 }
 
 #tiles > *[data-merged-tile="10"]:before,
 #tiles > *[data-tile="10"]:after {
-  background-image: url(arrow-horizontal/brown.svg);
+  background-image: url(images/arrow-horizontal/brown.svg);
 }
 
 #tiles > *[data-merged-tile="11"]:before,
 #tiles > *[data-tile="11"]:after {
-  background-image: url(arrow-horizontal/grey.svg);
+  background-image: url(images/arrow-horizontal/grey.svg);
 }
 
 #tiles > *[data-merged-tile="12"]:before,
 #tiles > *[data-tile="12"]:after {
-  background-image: url(arrow-horizontal/yellow.svg);
+  background-image: url(images/arrow-horizontal/yellow.svg);
 }
 
 #tiles > *[data-merged-tile="13"]:before,
 #tiles > *[data-tile="13"]:after {
-  background-image: url(arrow-vertical/blue.svg);
+  background-image: url(images/arrow-vertical/blue.svg);
 }
 
 #tiles > *[data-merged-tile="14"]:before,
 #tiles > *[data-tile="14"]:after {
-  background-image: url(arrow-vertical/green.svg);
+  background-image: url(images/arrow-vertical/green.svg);
 }
 
 #tiles > *[data-merged-tile="15"]:before,
 #tiles > *[data-tile="15"]:after {
-  background-image: url(arrow-vertical/orange.svg);
+  background-image: url(images/arrow-vertical/orange.svg);
 }
 
 #tiles > *[data-merged-tile="16"]:before,
 #tiles > *[data-tile="16"]:after {
-  background-image: url(arrow-vertical/brown.svg);
+  background-image: url(images/arrow-vertical/brown.svg);
 }
 
 #tiles > *[data-merged-tile="17"]:before,
 #tiles > *[data-tile="17"]:after {
-  background-image: url(arrow-vertical/grey.svg);
+  background-image: url(images/arrow-vertical/grey.svg);
 }
 
 #tiles > *[data-merged-tile="18"]:before,
 #tiles > *[data-tile="18"]:after {
-  background-image: url(arrow-vertical/yellow.svg);
+  background-image: url(images/arrow-vertical/yellow.svg);
 }
 
 #tiles > *[data-merged-tile="19"]:before,
 #tiles > *[data-tile="19"]:after {
-  background-image: url(bombs/blue.svg);
+  background-image: url(images/bombs/blue.svg);
 }
 
 #tiles > *[data-merged-tile="20"]:before,
 #tiles > *[data-tile="20"]:after {
-  background-image: url(bombs/green.svg);
+  background-image: url(images/bombs/green.svg);
 }
 
 #tiles > *[data-merged-tile="21"]:before,
 #tiles > *[data-tile="21"]:after {
-  background-image: url(bombs/orange.svg);
+  background-image: url(images/bombs/orange.svg);
 }
 
 #tiles > *[data-merged-tile="22"]:before,
 #tiles > *[data-tile="22"]:after {
-  background-image: url(bombs/brown.svg);
+  background-image: url(images/bombs/brown.svg);
 }
 
 #tiles > *[data-merged-tile="23"]:before,
 #tiles > *[data-tile="23"]:after {
-  background-image: url(bombs/grey.svg);
+  background-image: url(images/bombs/grey.svg);
 }
 
 #tiles > *[data-merged-tile="24"]:before,
 #tiles > *[data-tile="24"]:after {
-  background-image: url(bombs/yellow.svg);
+  background-image: url(images/bombs/yellow.svg);
 }
 
 @media (max-height: 700px) {

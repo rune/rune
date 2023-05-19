@@ -1,5 +1,7 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
@@ -27,19 +29,17 @@
       <footer>
         <nav>
           <button id="shuffle-button" type="button">
-            <img src="shuffle.svg" alt="Shuffle" />
+            <img src="images/shuffle.svg" alt="Shuffle" />
             <ol id="shuffles"></ol>
           </button>
           <button id="extra-move-button" type="button">
-            <img src="extra-move.svg" alt="Extra move" />
+            <img src="images/extra-move.svg" alt="Extra move" />
             <ol id="extra-moves"></ol>
           </button>
-          <!-- <button id="hammer-button" type="button">🔨</button> -->
         </nav>
       </footer>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer.js"></script>
-    <script src="logic.js"></script>
-    <script src="client.js"></script>
+    <script type="module" src="/src/logic/index.ts"></script>
+    <script type="module" src="/src/client.ts"></script>
   </body>
 </html>

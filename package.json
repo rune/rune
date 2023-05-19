@@ -13,7 +13,6 @@
     "typecheck": "yarn workspaces run typecheck",
     "example-breakout": "rune start singleplayer/examples/breakout",
     "example-bunny-twirl": "rune start singleplayer/examples/bunny-twirl",
-    "example-llama-crush": "rune start multiplayer/examples/llama-crush",
     "example-tic-tac-toe": "rune start multiplayer/examples/tic-tac-toe"
   },
   "devDependencies": {

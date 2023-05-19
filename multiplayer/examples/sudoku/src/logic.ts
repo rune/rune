@@ -1,4 +1,3 @@
-import { getSudoku } from "sudoku-gen"
 import { Coordinate, Color, GameState } from "./lib/types/GameState"
 import { cellPointer } from "./lib/cellPointer"
 import { getRandomItem } from "./lib/getRandomItem"
@@ -6,7 +5,7 @@ import { maxHints } from "./lib/maxHints"
 import { randomString } from "./lib/randomString"
 import { calculateErrorsOrGameOver } from "./lib/calculateErrorsOrGameOver"
 import { calculateSuccesses } from "./lib/calculateSuccesses"
-import { boardFromSudoku } from "./lib/boardFromSudoku"
+import { generateSudoku } from "./lib/generateSudoku"
 
 const possibleColors: Color[] = [
   [65, 156, 85],
@@ -27,8 +26,8 @@ Rune.initLogic({
   maxPlayers: 4,
   setup: (playerIds) => ({
     session: randomString(10),
-    onboardingBoard: boardFromSudoku({
-      sudoku: getSudoku("easy"),
+    onboardingBoard: generateSudoku({
+      difficulty: "medium",
       solved: true,
     }),
     gameOver: false,
@@ -50,11 +49,9 @@ Rune.initLogic({
     startGame: (difficulty, { game }) => {
       if (game.sudoku) throw Rune.invalidAction()
 
-      const sudoku = getSudoku(difficulty)
-
       game.sudoku = {
         difficulty,
-        board: boardFromSudoku({ sudoku: sudoku, solved: false }),
+        board: generateSudoku({ difficulty, solved: false }),
       }
     },
     select: (coordinate, { game, playerId }) => {

@@ -24,6 +24,9 @@ const eslint = new ESLint({
   baseConfig: {
     root: true,
     extends: ["plugin:rune/logic"],
+    parserOptions: {
+      sourceType: "module",
+    },
   },
 })
 

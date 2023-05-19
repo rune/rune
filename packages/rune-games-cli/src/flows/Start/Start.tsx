@@ -1,3 +1,4 @@
+import fetch from "cross-fetch"
 import { Text, Box, Spacer, useInput } from "ink"
 import path from "path"
 import qrcode from "qrcode-terminal"
@@ -48,6 +49,24 @@ export function Start() {
           return validateGameFiles(gameFiles)
         })
         .then(setValidationResult)
+    } else {
+      Promise.all([
+        fetch(`${gamePathOrUrl}`).then((result) => result.text()),
+        fetch(`${gamePathOrUrl}/logic.js`).then((result) => result.text()),
+      ])
+        .then(([indexHtml, logicJs]) => {
+          const gameFiles = [
+            { content: indexHtml, path: "index.html", size: indexHtml.length },
+            ...(logicJs
+              ? [{ content: logicJs, path: "logic.js", size: logicJs.length }]
+              : []),
+          ]
+
+          setGameFiles(gameFiles)
+
+          return validateGameFiles(gameFiles)
+        })
+        .then(setValidationResult)
     }
   }, [gamePathOrUrl, gameType])
 
@@ -59,12 +78,13 @@ export function Start() {
   })
 
   const appServer = useAppServer({
-    gameUrl:
-      gameType === "url"
+    gameUrl: validationResult
+      ? gameType === "url"
         ? gamePathOrUrl
         : gameType === "path" && gameServer
         ? `http://localhost:${gameServer.port}`
-        : undefined,
+        : undefined
+      : undefined,
     multiplayer: validationResult?.multiplayer,
   })
 
@@ -85,7 +105,7 @@ export function Start() {
   }, [appUrls.ip])
 
   const showValidationErrors =
-    gameType === "path" && !validationResult?.valid && !ignoreValidation
+    !!validationResult && !validationResult?.valid && !ignoreValidation
 
   useInput(
     (input) => {

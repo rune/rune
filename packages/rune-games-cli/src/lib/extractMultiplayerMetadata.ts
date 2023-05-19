@@ -1,6 +1,6 @@
 const regexes = {
-  minPlayers: /minPlayers\s*:\s*?([0-9])/,
-  maxPlayers: /maxPlayers\s*:\s*?([0-9])/,
+  minPlayers: /minPlayers\s*:\s*?([0-9]+)/,
+  maxPlayers: /maxPlayers\s*:\s*?([0-9]+)/,
   playerJoined: /playerJoined\s*[:(]/,
   playerLeft: /playerLeft\s*[:(]/,
 }

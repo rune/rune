@@ -10,7 +10,7 @@ One complexity of multiplayer games is that there may be different number of pla
 
 Rune has `events`, which are always triggered based on room changes (e.g. a player joining). This is opposed to `actions` , which are always called by game. Currently available events are: `playerJoined`, `playerLeft`, `stateSync`.
 
-Whenever an event happens, `visualUpdate` is called with `event` as a parameter to let the game visually change its appearance based on the changes. The game can provide an optional callback for `playerJoined` and `playerLeft` in `logic.js`, which allows the game to change game state when they happen.
+Whenever an event happens, `onChange` is called with `event` as a parameter to let the game visually change its appearance based on the changes. The game can provide an optional callback for `playerJoined` and `playerLeft` in `logic.js`, which allows the game to change game state when they happen.
 
 Below is an overview comparing actions & events.
 
@@ -25,12 +25,12 @@ Below is an overview comparing actions & events.
 
 Many games only support a few players. The remaining users in the room will be spectactors. Spectators are:
 
-- Running game code as everyone else, i.e. calls `visualUpdate` on new actions/events
+- Running game code as everyone else, i.e. calls `onChange` on new actions/events
 - Unable to make any actions (enforced by the SDK)
 - Not triggering `playerJoined` or `playerLeft` events
-- Not provided in `players` argument to `visualUpdate`
+- Not provided in `players` argument to `onChange`
 - Shown differently in the room UI
-- Has `yourPlayerId: undefined` argument for `visualUpdate`
+- Has `yourPlayerId: undefined` argument for `onChange`
 
 This means that the number of players that the game SDK sees may not equal the number of users in the room. This is intended.
 

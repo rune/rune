@@ -1,6 +1,6 @@
 import type { ESLint } from "eslint"
-import * as noParentScopeVariables from "./no-parent-scope-variables"
+import * as noParentScopeMutation from "./no-parent-scope-mutation"
 
 export const rules: ESLint.Plugin["rules"] = {
-  "no-parent-scope-variables": noParentScopeVariables,
+  "no-parent-scope-mutation": noParentScopeMutation,
 }

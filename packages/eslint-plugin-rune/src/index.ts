@@ -107,7 +107,7 @@ const logicConfig: ESLint.ConfigData = {
     "no-undef": 2,
     "no-global-assign": 2,
     "no-extend-native": 2,
-    "no-var": 2,
+    "no-var": 1,
     "no-restricted-properties": [
       2,
       {
@@ -130,7 +130,7 @@ const logicConfig: ESLint.ConfigData = {
       "error",
       {
         selector:
-          "ImportDeclaration,ExportNamedDeclaration,ExportAllDeclaration,ExportDefaultDeclaration",
+          "ImportDeclaration,ExportNamedDeclaration[source],ExportAllDeclaration[source],ExportDefaultDeclaration[source]",
         message: "Rune logic must be contained in a single file.",
       },
       {
@@ -152,7 +152,7 @@ const logicConfig: ESLint.ConfigData = {
           "Regular expressions are stateful and might prevent Rune from working properly.",
       },
     ],
-    "rune/no-parent-scope-variables": 2,
+    "rune/no-parent-scope-mutation": 2,
   },
 }
 

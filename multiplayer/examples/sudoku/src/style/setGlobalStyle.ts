@@ -1,3 +1,7 @@
+import LatoRegular from "./Lato-Regular.ttf"
+import LatoLight from "./Lato-Light.ttf"
+import LatoBold from "./Lato-Bold.ttf"
+
 const style = document.createElement("style")
 
 // language=CSS
@@ -5,19 +9,19 @@ style.innerHTML = `
   @font-face {
     font-family: "Lato";
     font-weight: 400;
-    src: url('${require("./Lato-Regular.ttf")}');
+    src: url('${LatoRegular}');
   }
 
   @font-face {
     font-family: "Lato";
     font-weight: 300;
-    src: url('${require("./Lato-Light.ttf")}');
+    src: url('${LatoLight}');
   }
 
   @font-face {
     font-family: "Lato";
     font-weight: 600;
-    src: url('${require("./Lato-Bold.ttf")}');
+    src: url('${LatoBold}');
   }
 
   html,

@@ -27,7 +27,7 @@ export function generateSudoku({
     validValues: [],
   }))
 
-  if (difficulty === "easy") addMoreFixedCells(board, 16)
+  if (difficulty === "easy") addMoreFixedCells(board, 8)
 
   return board
 }

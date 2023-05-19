@@ -19,7 +19,6 @@ import {
   ranges,
   frameDuration,
 } from "../Onboarding/Onboarding"
-import { $secretMode } from "../../state/$secretMode"
 
 export function Cell({
   row,
@@ -38,7 +37,6 @@ export function Cell({
   const animatingHints = useAtomValue($animatingHints)
   const { successBlip } = useSuccessBlip({ row, col })
   const [gameOverMode, setGameOverMode] = useState(false)
-  const secretMode = useAtomValue($secretMode)
 
   useEffect(() => {
     if (gameOver) {
@@ -104,32 +102,21 @@ export function Cell({
           {!animatingHints[cellPointer({ row, col })] && (
             <Value fixed={cell.fixed}>{cell.value}</Value>
           )}
-          <Notes>
-            {range(3).map((row) => (
-              <NoteRow key={row}>
-                {range(3).map((col) =>
-                  ((note) => (
-                    <Note
-                      key={col}
-                      opacity={
-                        secretMode
-                          ? cell.validValues.includes(note)
-                            ? cell.validValues.length === 1
-                              ? 1
-                              : 0.25
-                            : 0
-                          : cell.notes.includes(note)
-                          ? 1
-                          : 0
-                      }
-                    >
-                      {note}
-                    </Note>
-                  ))(row * 3 + col + 1)
-                )}
-              </NoteRow>
-            ))}
-          </Notes>
+          {cell.notes.length > 0 && (
+            <Notes>
+              {range(3).map((row) => (
+                <NoteRow key={row}>
+                  {range(3).map((col) =>
+                    ((note) => (
+                      <Note key={col} visible={cell.notes.includes(note)}>
+                        {note}
+                      </Note>
+                    ))(row * 3 + col + 1)
+                  )}
+                </NoteRow>
+              ))}
+            </Notes>
+          )}
           <ErrorHighlight enabled={cell.error} />
           <HighlightBorder
             visible={!gameOver && !!selections?.includes(yourPlayerId ?? "")}
@@ -207,7 +194,7 @@ const NoteRow = styled.div`
   flex: 1;
 `
 
-const Note = styled.div<{ opacity: number }>`
+const Note = styled.div<{ visible: boolean }>`
   display: flex;
   flex: 1;
   align-items: center;
@@ -217,5 +204,5 @@ const Note = styled.div<{ opacity: number }>`
   font-weight: 600;
   color: #f8d5af;
 
-  opacity: ${({ opacity }) => opacity};
+  visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
 `

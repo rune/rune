@@ -1,5 +1,6 @@
 import { Howl } from "howler"
 
+// These sounds are unavailable in the open-source version because of licensing reasons
 export const sounds = {
   setValue: new Howl({ src: ["sounds/setValue.mp3"] }),
   hint: new Howl({ src: ["sounds/hint.mp3"] }),

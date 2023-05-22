@@ -6,6 +6,7 @@ export const cli = meow(
     $ rune start <[optional] game path or URL, defaults to current directory>
     $ rune upload <[optional] game path, defaults to current directory>
     $ rune list
+    $ rune create <[optional] project name, defaults to current directory>
 
   Options
     --version, -v   Show CLI version
@@ -20,6 +21,8 @@ export const cli = meow(
     $ cd game/path && rune upload
 
     $ rune upload game/path
+    
+    $ rune create my-game
 `,
   {
     importMeta: import.meta,
@@ -41,6 +44,7 @@ export const validCommands = [
   "list",
   "upload",
   "update",
+  "create",
 ] as const
 
 export function cliCommand() {

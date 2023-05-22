@@ -35,19 +35,19 @@ Next, add `rune` to the extends section of your `.eslintrc` configuration file:
 
 ```json
 {
-	"extends": ["plugin:rune/recommended"]
+  "extends": ["plugin:rune/recommended"]
 }
 ```
 
-This will exclusively check files named `logic.js` for the Rune Multiplayer SDK rules. If your logic is split across multiple files and a bundler is used to produce a single file, you might specify which files to lint yourself with:
+This will exclusively check files named `logic.js` or files in a `logic` folder for the Rune Multiplayer SDK rules. If your logic is split across multiple files and a bundler is used to produce a single file, you might specify which files to lint yourself with:
 
 ```json
 {
-	"overrides": [
-		{
-			"files": ["logic/*.js"],
-			"extends": ["plugin:rune/logic"]
-		}
-	]
+  "overrides": [
+    {
+      "files": ["lib/*.ts"],
+      "extends": ["plugin:rune/logicModule"]
+    }
+  ]
 }
 ```

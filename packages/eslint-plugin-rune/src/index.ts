@@ -2,6 +2,27 @@ import type { ESLint } from "eslint"
 
 export { rules } from "./rules"
 
+const restrictedSyntaxBase = [
+  {
+    selector: "TryStatement",
+    message: "Try/catch might prevent Rune from working properly.",
+  },
+  {
+    selector: "ThisExpression,WithStatement",
+    message: "This references might prevent Rune from working properly.",
+  },
+  {
+    selector:
+      "AwaitExpression,ArrowFunctionExpression[async=true],FunctionExpression[async=true],FunctionDeclaration[async=true],YieldExpression",
+    message: "Rune logic must be synchronous.",
+  },
+  {
+    selector: "RegExpLiteral",
+    message:
+      "Regular expressions are stateful and might prevent Rune from working properly.",
+  },
+]
+
 const logicConfig: ESLint.ConfigData = {
   plugins: ["rune"],
   parserOptions: {
@@ -133,26 +154,17 @@ const logicConfig: ESLint.ConfigData = {
           "ImportDeclaration,ExportNamedDeclaration[source],ExportAllDeclaration[source],ExportDefaultDeclaration[source]",
         message: "Rune logic must be contained in a single file.",
       },
-      {
-        selector: "TryStatement",
-        message: "Try/catch might prevent Rune from working properly.",
-      },
-      {
-        selector: "ThisExpression,WithStatement",
-        message: "This references might prevent Rune from working properly.",
-      },
-      {
-        selector:
-          "AwaitExpression,ArrowFunctionExpression[async=true],FunctionExpression[async=true],FunctionDeclaration[async=true],YieldExpression",
-        message: "Rune logic must be synchronous.",
-      },
-      {
-        selector: "RegExpLiteral",
-        message:
-          "Regular expressions are stateful and might prevent Rune from working properly.",
-      },
+      ...restrictedSyntaxBase,
     ],
     "rune/no-parent-scope-mutation": 2,
+  },
+}
+
+const logicModuleConfig: ESLint.ConfigData = {
+  ...logicConfig,
+  rules: {
+    ...logicConfig.rules,
+    "no-restricted-syntax": ["error", ...restrictedSyntaxBase],
   },
 }
 
@@ -166,7 +178,12 @@ export const configs: ESLint.Plugin["configs"] = {
         files: ["**/logic.js"],
         ...logicConfig,
       },
+      {
+        files: ["**/logic/**/*.ts", "**/logic/**/*.js"],
+        ...logicModuleConfig,
+      },
     ],
   },
   logic: logicConfig,
+  logicModule: logicModuleConfig,
 }

@@ -29,7 +29,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "./copy-sounds.sh && rollup -c && react-scripts build"
+    "build": "react-scripts build && rollup -c",
+    "deploy": "../../../copy-assets.sh sudoku && yarn build && rune upload build"
   },
   "eslintConfig": {
     "extends": [

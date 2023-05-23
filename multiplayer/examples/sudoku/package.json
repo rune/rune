@@ -30,7 +30,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && rollup -c",
-    "deploy": "../../../copy-assets.sh sudoku && yarn build && rune upload build"
+    "deploy": "../../../scripts/copy-assets.sh sudoku && yarn build && rune upload build"
   },
   "eslintConfig": {
     "extends": [

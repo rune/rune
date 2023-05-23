@@ -22,5 +22,5 @@ else
     git pull
 fi
 
-cd "$WORK_DIR" || exit
+cd "$WORK_DIR" || exit 1
 cp -r "$ASSETS_DIR/game-assets/$GAME/." .

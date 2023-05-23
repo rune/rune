@@ -11,16 +11,16 @@ then
 fi
 
 mkdir -p "$ASSETS_DIR"
-cd "$ASSETS_DIR" || exit
+cd "$ASSETS_DIR" || exit 1
 
 if [ ! -e "$ASSETS_DIR/game-assets" ]
 then
   git clone git@github.com:rune/game-assets.git
 else
-    cd game-assets || exit
+    cd game-assets || exit 1
     git checkout -f staging
     git pull
 fi
 
-cd "$WORK_DIR" || exit
+cd "$WORK_DIR" || exit 1
 cp -r "$ASSETS_DIR/game-assets/$GAME/." .

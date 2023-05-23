@@ -130,6 +130,8 @@ export function PhotoSphereViewer({
         viewer.addEventListener("zoom-updated", onInteraction)
       })
 
+    let inertiaTimeoutHandle: ReturnType<typeof setTimeout>
+
     function onZoomUpdated(e: { zoomLevel: number }) {
       // adjust zoom speed to approximate linear zoom behavior
       viewer.setOptions({
@@ -139,6 +141,18 @@ export function PhotoSphereViewer({
           [0.15, 1]
         ),
       })
+
+      viewer.setOptions({ moveInertia: false })
+
+      if (e.zoomLevel === 0) viewer.zoom(1)
+      else if (e.zoomLevel === 100) viewer.zoom(99)
+
+      clearTimeout(inertiaTimeoutHandle)
+
+      inertiaTimeoutHandle = setTimeout(
+        () => viewer.setOptions({ moveInertia: true }),
+        200
+      )
     }
 
     viewer.addEventListener("zoom-updated", onZoomUpdated)
@@ -156,6 +170,7 @@ export function PhotoSphereViewer({
     viewer.addEventListener("dblclick", onDoubleClick)
 
     return () => {
+      clearTimeout(inertiaTimeoutHandle)
       viewer.removeEventListener("position-updated", onInteraction)
       viewer.removeEventListener("zoom-updated", onInteraction)
       viewer.removeEventListener("zoom-updated", onZoomUpdated as any)

@@ -1,5 +1,3 @@
-/* eslint no-undef: 0 */
-
 import { pickRandom } from "./lib/pickRandom"
 import { calculateDistanceKm } from "./lib/calculateDistanceKm"
 import { calculateScore } from "./lib/calculateScore"

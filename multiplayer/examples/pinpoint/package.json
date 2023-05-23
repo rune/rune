@@ -7,6 +7,8 @@
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@photo-sphere-viewer/core": "^5.1.4",
     "@photo-sphere-viewer/cubemap-tiles-adapter": "^5.1.4",
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-typescript": "^11.1.0",
     "@types/howler": "^2.2.7",
     "@types/lodash": "^4.14.192",
@@ -25,7 +27,7 @@
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.5",
     "rollup": "^3.20.4",
-    "rune-games-sdk": "^4.6.0",
+    "rune-games-sdk": "^4.9.3",
     "sass": "^1.60.0",
     "styled-components": "^5.3.6",
     "typescript": "^4.4.2"

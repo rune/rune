@@ -25,7 +25,7 @@ import { timings } from "../animation/config"
 import { Pixel } from "ol/pixel"
 import { Attribution } from "ol/control"
 import TileLayer from "ol/layer/Tile"
-import { XYZ } from "ol/source"
+import { OSM } from "ol/source"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -78,25 +78,8 @@ export const OLMap = forwardRef<
 
     const attribution = new Attribution({ collapsible: false })
 
-    // const vectorTileLayer = new VectorTileLayer({
-    //   declutter: true,
-    //   className: "base",
-    // })
-    //
-    // applyStyle(
-    //   vectorTileLayer,
-    //   "https://api.maptiler.com/maps/streets-v2/style.json?key=Bf09W8HTCpSRogf4976b"
-    // )
-
     const tileLayer = new TileLayer({
-      source: new XYZ({
-        attributions: [
-          '<a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a>',
-          '<a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
-        ],
-        url: "https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=Bf09W8HTCpSRogf4976b",
-        tilePixelRatio: 2,
-      }),
+      source: new OSM(),
     })
 
     setMap(

@@ -19,13 +19,15 @@ export function App() {
   const setGuessingMapView = useSetAtom($guessingMapView)
 
   useEffect(() => {
-    Rune.initClient({
-      visualUpdate: ({ newGame, players, yourPlayerId }) => {
-        setGame(newGame)
-        setPlayers(players)
-        setMyPlayerId(yourPlayerId)
-      },
-    })
+    import("../logic").then(() =>
+      Rune.initClient({
+        onChange: ({ newGame, players, yourPlayerId }) => {
+          setGame(newGame)
+          setPlayers(players)
+          setMyPlayerId(yourPlayerId)
+        },
+      })
+    )
   }, [setGame, setMyPlayerId, setPlayers])
 
   const [view, setView] = useState<"panorama" | "map">("panorama")

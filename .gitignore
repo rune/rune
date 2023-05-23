@@ -12,3 +12,5 @@ yarn-error.log
 !.vscode/tasks.json
 .idea
 dist/
+
+/multiplayer/examples/sudoku/public/sounds/

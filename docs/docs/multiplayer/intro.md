@@ -17,18 +17,24 @@ Build a multiplayer game that reaches millions and let Rune handle all the compl
 - Conflict resolution
 - Spectating
 
-## Install
+## Setting up a new project
+
+```sh
+npx rune-games-cli@latest create
+```
+
+## Integrate with existing game
 
 Include the following lines in your `index.html` file before loading any other JS scripts:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer-dev.js"></script>
 <script src="logic.js"></script>
 ```
 
 ## Game Logic
 
-Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize.  For instance, to give all players a score and have an action that just increments the score:
+Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
 
 ```js
 // logic.js
@@ -41,13 +47,13 @@ Rune.initLogic({
     for (let playerId of playerIds) {
       scores[playerId] = 0
     }
-    return { scores }      
+    return { scores }
   },
   actions: {
     incrementScore(playerWhoGotPoints, { game }) {
       game.scores[playerWhoGotPoints]++
-    }
-  }
+    },
+  },
 })
 ```
 
@@ -67,21 +73,13 @@ button.onClick = () => {
   })
 }
 
+// Callback you define for when something changes (e.g. someone made an action)
+function onChange({ oldGame, newGame, yourPlayerId, players, action, event }) {
+  // Your game visuals update code...
+}
+
 // Initialize the Rune SDK once your game is fully ready
-Rune.initClient({
-  visualUpdate: ({
-    newGame,
-    oldGame,
-    yourPlayerId,
-    players,
-    action,
-    event,
-    rollbacks,
-  }) => {
-    // Update game based on game state from logic.js
-    render(newGame)
-  },
-})
+Rune.initClient({ onChange })
 ```
 
 ## Next steps

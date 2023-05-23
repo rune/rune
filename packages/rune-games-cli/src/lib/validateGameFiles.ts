@@ -1,5 +1,5 @@
 import { ESLint, Linter } from "eslint"
-import { parse, valid, HTMLElement } from "node-html-parser"
+import { parse, valid } from "node-html-parser"
 import path from "path"
 import semver from "semver"
 
@@ -12,7 +12,7 @@ import LintMessage = Linter.LintMessage
 export const validationOptions = {
   sdkUrlStart: "https://cdn.jsdelivr.net/npm/rune-games-sdk",
   sdkVersionRegex: /rune-games-sdk@(\d(\.\d(\.\d)?)?)/,
-  minSdkVersion: "4.5.0",
+  minSdkVersion: "4.8.1",
   maxFiles: 1000,
   maxSizeMb: 25,
 }
@@ -24,6 +24,9 @@ const eslint = new ESLint({
   baseConfig: {
     root: true,
     extends: ["plugin:rune/logic"],
+    parserOptions: {
+      sourceType: "module",
+    },
   },
 })
 
@@ -86,12 +89,14 @@ export async function validateGameFiles(
         message: "Game index.html must include Rune SDK script",
       })
     } else {
-      if (sdkScript.getAttribute("src")?.endsWith("/multiplayer.js")) {
+      if (
+        sdkScript.getAttribute("src")?.endsWith("/multiplayer.js") ||
+        sdkScript.getAttribute("src")?.endsWith("/multiplayer-dev.js")
+      ) {
         multiplayerValidationResult = {}
 
         await validateMultiplayer({
           multiplayerValidationResult,
-          scripts,
           errors,
           logicJs,
           indexHtml,
@@ -112,7 +117,7 @@ export async function validateGameFiles(
         errors.push({ message: `Rune SDK must specify a version` })
       }
 
-      const [major, minor, patch] = (sdkVersion ?? "")?.split(".")
+      const [major, minor, patch] = (sdkVersion ?? "").split(".")
       const maxedOutSdkVersion = `${major}.${minor ?? 999}.${patch ?? 999}`
 
       const sdkVersionCoerced = semver.coerce(sdkVersion && maxedOutSdkVersion)
@@ -139,51 +144,31 @@ export async function validateGameFiles(
 
 async function validateMultiplayer({
   multiplayerValidationResult,
-  scripts,
   errors,
   logicJs,
   indexHtml,
 }: {
   multiplayerValidationResult: NonNullable<ValidationResult["multiplayer"]>
-  scripts: HTMLElement[]
   errors: ValidationError[]
   logicJs: FileInfo | undefined
   indexHtml: FileInfo
 }) {
-  const logicScript = scripts.find(
-    (script) =>
-      script.getAttribute("src") === "logic.js" ||
-      script.getAttribute("src")?.endsWith("/logic.js")
-  )
-
-  if (!logicScript) {
+  if (!logicJs) {
     errors.push({
-      message: "logic.js file is not included in index.html",
+      message: "logic.js must be included in the game files",
     })
   } else {
-    if (scripts.indexOf(logicScript) !== 1) {
+    if (path.dirname(indexHtml.path) !== path.dirname(logicJs.path)) {
       errors.push({
-        message: "logic.js must be the second script in index.html",
+        message: "logic.js must be in the same directory as index.html",
       })
     }
 
-    if (!logicJs) {
-      errors.push({
-        message: "logic.js must be included in the game files",
-      })
-    } else {
-      if (path.dirname(indexHtml.path) !== path.dirname(logicJs.path)) {
-        errors.push({
-          message: "logic.js must be in the same directory as index.html",
-        })
-      }
-
-      await validateMultiplayerLogicJsContent({
-        logicJs,
-        multiplayerValidationResult,
-        errors,
-      })
-    }
+    await validateMultiplayerLogicJsContent({
+      logicJs,
+      multiplayerValidationResult,
+      errors,
+    })
   }
 
   return multiplayerValidationResult
@@ -209,10 +194,12 @@ async function validateMultiplayerLogicJsContent({
         const result = results.at(0)
 
         if (result) {
-          if (result.messages.length > 0) {
+          const lintErrors = result.messages.filter((err) => err.severity === 2)
+
+          if (lintErrors.length > 0) {
             errors.push({
               message: "logic.js contains invalid code",
-              lintErrors: result.messages,
+              lintErrors,
             })
           }
         } else {

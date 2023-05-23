@@ -1,7 +1,7 @@
 import "@photo-sphere-viewer/core/index.scss"
 
 import { useEffect, useMemo, useRef, useLayoutEffect } from "react"
-import { Viewer } from "@photo-sphere-viewer/core"
+import { Viewer, ClickData } from "@photo-sphere-viewer/core"
 import {
   CubemapTilesAdapter,
   CubemapMultiTilesPanorama,
@@ -157,14 +157,23 @@ export function PhotoSphereViewer({
 
     viewer.addEventListener("zoom-updated", onZoomUpdated)
 
-    function onDoubleClick() {
+    function onDoubleClick(e: { data: ClickData }) {
+      const position = viewer.dataHelper.viewerCoordsToSphericalCoords({
+        x: e.data.viewerX,
+        y: e.data.viewerY,
+      })
+
       const zoom = viewer.dataHelper.fovToZoomLevel(
         viewer.dataHelper.zoomLevelToFov(viewer.getZoomLevel()) - 20
       )
 
-      viewer
-        .stopAnimation()
-        .then(() => viewer.animate({ zoom, speed: timings.default }))
+      viewer.stopAnimation().then(() =>
+        viewer.animate({
+          zoom,
+          ...position,
+          speed: timings.default,
+        })
+      )
     }
 
     viewer.addEventListener("dblclick", onDoubleClick)
@@ -174,7 +183,7 @@ export function PhotoSphereViewer({
       viewer.removeEventListener("position-updated", onInteraction)
       viewer.removeEventListener("zoom-updated", onInteraction)
       viewer.removeEventListener("zoom-updated", onZoomUpdated as any)
-      viewer.removeEventListener("dblclick", onDoubleClick)
+      viewer.removeEventListener("dblclick", onDoubleClick as any)
     }
   }, [panorama, view])
 

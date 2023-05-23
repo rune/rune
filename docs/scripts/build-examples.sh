@@ -16,5 +16,5 @@ cp -r build/. ../../../docs/static/_examples/sudoku
 cd ../outmatched
 yarn
 yarn build
-sed -i '' 's/multiplayer\.js/multiplayer-dev\.js/' 'dist/index.html'
 cp -r dist/. ../../../docs/static/_examples/outmatched
+perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../../docs/static/_examples/outmatched/index.html

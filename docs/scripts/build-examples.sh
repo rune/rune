@@ -11,3 +11,10 @@ cd ../multiplayer/examples/sudoku
 yarn
 yarn build
 cp -r build/. ../../../docs/static/_examples/sudoku
+
+# Outmatched
+cd ../outmatched
+yarn
+yarn build
+sed -i '' 's/multiplayer\.js/multiplayer-dev\.js/' 'dist/index.html'
+cp -r dist/. ../../../docs/static/_examples/outmatched

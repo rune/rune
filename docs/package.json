@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "prebuild": "rm -rf static/examples && mkdir -p static/examples && cp -r ../multiplayer/examples/tic-tac-toe ./static/examples/tic-tac-toe",
+    "prebuild": "scripts/build-examples.sh",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",

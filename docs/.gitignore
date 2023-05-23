@@ -3,7 +3,7 @@
 
 # Production
 /build
-/static/examples
+/static/_examples
 
 # Generated files
 .docusaurus

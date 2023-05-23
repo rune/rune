@@ -1,6 +1,6 @@
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 import { OLMap, Pin } from "../OLMap/OLMap"
-import { useMemo, useState, useEffect, useCallback, useRef } from "react"
+import React, { useMemo, useState, useEffect } from "react"
 import { Overlay } from "../Overlay"
 import greenCircleImg from "./img/greenCircle.svg"
 import sortBy from "lodash/sortBy"
@@ -23,6 +23,8 @@ import {
 } from "../animation/config"
 import { sounds } from "../../sounds/sounds"
 import { formatDistance } from "../../lib/formatDistance"
+import backButtonImg from "../MapView/img/backButton.svg"
+import forwardButtonImg from "../MapView/img/forwardButton.svg"
 
 export function ScoreboardView() {
   const game = useAtomValue($game)!
@@ -105,26 +107,9 @@ export function ScoreboardView() {
 
   const [overlayHidden, setOverlayHidden] = useState(false)
 
-  const timeoutHandleRef = useRef<ReturnType<typeof setTimeout>>()
-
-  const onMapInteraction = useCallback(() => {
-    setOverlayHidden(true)
-    clearTimeout(timeoutHandleRef.current)
-    timeoutHandleRef.current = setTimeout(
-      () => setOverlayHidden(false),
-      timings.delayShort
-    )
-  }, [])
-
   return (
     <Root>
-      <OLMap
-        center={[0, 0]}
-        zoom={0}
-        pins={pins}
-        autoFitPins
-        onInteraction={onMapInteraction}
-      />
+      <OLMap center={[0, 0]} zoom={0} pins={pins} autoFitPins />
       <SimpleCSSTransition
         visible={
           animationStep >= ScoreboardAnimationStep.background && !overlayHidden
@@ -188,6 +173,21 @@ export function ScoreboardView() {
           </Content>
         </ContentRoot>
       </SimpleCSSTransition>
+
+      {animationStep >= ScoreboardAnimationStep.background &&
+        (overlayHidden ? (
+          <MapToggleButton
+            src={forwardButtonImg}
+            position="right"
+            onClick={() => setOverlayHidden(false)}
+          />
+        ) : (
+          <MapToggleButton
+            src={backButtonImg}
+            position="left"
+            onClick={() => setOverlayHidden(true)}
+          />
+        ))}
     </Root>
   )
 }
@@ -201,7 +201,6 @@ const Root = styled.div`
 
 const ContentRoot = styled.div`
   ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
-  pointer-events: none;
 `
 
 const ListContainer = styled.div`
@@ -268,4 +267,19 @@ const InviteLink = styled.div`
   font-weight: 400;
   color: #01a491;
   pointer-events: auto;
+`
+
+const MapToggleButton = styled.img<{ position: "left" | "right" }>`
+  position: absolute;
+  top: 15px;
+  ${({ position }) =>
+    position === "left"
+      ? css`
+          left: 10px;
+        `
+      : css`
+          right: 10px;
+        `};
+  width: 33px;
+  height: 33px;
 `

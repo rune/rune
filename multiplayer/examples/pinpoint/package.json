@@ -31,7 +31,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && esbuild src/logic.ts --bundle --outfile=build/logic.js --platform=neutral --tsconfig=tsconfig-logic.json"
+    "build": "react-scripts build && esbuild src/logic.ts --bundle --outfile=build/logic.js --platform=neutral --tsconfig=tsconfig-logic.json",
+    "deploy": "../../../scripts/copy-assets.sh pinpoint && yarn build && rune upload build"
   },
   "eslintConfig": {
     "extends": [

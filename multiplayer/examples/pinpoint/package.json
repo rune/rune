@@ -13,6 +13,7 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-transition-group": "^4.4.5",
     "@types/styled-components": "^5.1.26",
+    "core-js": "^3.30.2",
     "esbuild": "^0.17.19",
     "howler": "^2.2.3",
     "jotai": "^2.0.3",

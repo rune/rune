@@ -1,6 +1,6 @@
 import { Coordinate } from "ol/coordinate"
-import minBy from "lodash/minBy"
 import { calculateDistance } from "./calculateDistance"
+import { minBy } from "./minBy"
 
 export function pickBestGuessRepresentation(
   target: Coordinate,

@@ -3,7 +3,6 @@ import { OLMap, Pin } from "../OLMap/OLMap"
 import React, { useMemo, useState, useEffect } from "react"
 import { Overlay } from "../Overlay"
 import greenCircleImg from "./img/greenCircle.svg"
-import sortBy from "lodash/sortBy"
 import { CTA } from "../MapView/GuessingMapView"
 import playIcon from "./img/play.svg"
 import { pickBestGuessRepresentation } from "../../lib/pickBestGuessRepresentation"
@@ -25,6 +24,7 @@ import { sounds } from "../../sounds/sounds"
 import { formatDistance } from "../../lib/formatDistance"
 import backButtonImg from "../MapView/img/backButton.svg"
 import forwardButtonImg from "../MapView/img/forwardButton.svg"
+import { sortBy } from "../../lib/sortBy"
 
 export function ScoreboardView() {
   const game = useAtomValue($game)!

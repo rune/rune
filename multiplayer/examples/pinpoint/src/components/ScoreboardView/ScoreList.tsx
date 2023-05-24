@@ -1,13 +1,13 @@
 import styled from "styled-components/macro"
 import { Player } from "rune-games-sdk/multiplayer"
 import { useMemo } from "react"
-import sortBy from "lodash/sortBy"
 import { AnimatedNumber } from "./AnimatedNumber"
 import { timings } from "../animation/config"
 import {
   simpleCSSTransitionStyles,
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
+import { sortBy } from "../../lib/sortBy"
 
 const itemHeight = 70
 const itemGap = 10

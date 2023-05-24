@@ -1,0 +1,33 @@
+---
+sidebar_position: 8
+---
+
+# Examples
+
+import { MultiplayerExamples } from "@site/src/components/MultiplayerExamples"
+
+<MultiplayerExamples
+  data={[
+    {
+      title: "Tic Tac Toe",
+      slug: "tic-tac-toe",
+      description: "JavaScript, no bundler, no framework.",
+      src: require("@site/static/img/multiplayer-games/tic-tac-toe.png")
+        .default,
+    },
+    {
+      title: "Sudoku",
+      slug: "sudoku",
+      description: "TypeScript, Create React App + rollup for logic.js.",
+      src: require("@site/static/img/multiplayer-games/sudoku.png").default,
+    },
+    {
+      title: "Outmatched",
+      slug: "outmatched",
+      description: "TypeScript, Vite, no framework.",
+      src: require("@site/static/img/multiplayer-games/outmatched.png").default,
+    },
+  ]}
+/>
+
+See all multiplayer examples in our [GitHub repository](https://github.com/rune/rune-games-sdk/tree/staging/multiplayer/examples/).

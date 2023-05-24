@@ -1,0 +1,31 @@
+.examples {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+}
+.examples li {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.examples img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.examples h2 {
+  margin: 1rem 0 0 0;
+}
+.examples li > p {
+  margin-top: 0.3rem;
+}
+
+@media screen and (min-width: 997px) {
+  .examples li {
+    width: 30%;
+  }
+}

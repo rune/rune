@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body class="loading">
+    <main>
+      <header>
+        <nav>
+          <ol id="rounds"></ol>
+        </nav>
+        <ul id="players"></ul>
+        <ol id="moves"></ol>
+      </header>
+      <div id="board-outer">
+        <div id="board-inner">
+          <div id="board">
+            <div id="frames"></div>
+            <div id="tiles"></div>
+            <div id="move-hint"></div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <nav>
+          <button id="shuffle-button" type="button">
+            <img src="images/shuffle.svg" alt="Shuffle" />
+            <ol id="shuffles"></ol>
+          </button>
+          <button id="extra-move-button" type="button">
+            <img src="images/extra-move.svg" alt="Extra move" />
+            <ol id="extra-moves"></ol>
+          </button>
+        </nav>
+      </footer>
+    </main>
+    <script type="module" src="/src/logic/index.ts"></script>
+    <script type="module" src="/src/client.ts"></script>
+  </body>
+</html>

@@ -9,7 +9,7 @@ export function GamePage({ title, slug }) {
   return (
     <Layout title={title} description={siteConfig.description}>
       <iframe
-        src={`/_examples/${slug}?embedded=1`}
+        src={`/_examples/${slug}/?embedded=1`}
         style={{ width: "100%", height: "calc(100vh - 60px)" }}
       />
     </Layout>

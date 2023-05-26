@@ -144,8 +144,8 @@ export function PhotoSphereViewer({
 
       viewer.setOptions({ moveInertia: false })
 
-      if (e.zoomLevel === 0) viewer.zoom(1)
-      else if (e.zoomLevel === 100) viewer.zoom(99)
+      if (e.zoomLevel === 0) viewer.zoom(0.01)
+      else if (e.zoomLevel === 100) viewer.zoom(99.99)
 
       clearTimeout(inertiaTimeoutHandle)
 

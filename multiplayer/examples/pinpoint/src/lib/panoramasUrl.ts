@@ -1,1 +1,2 @@
-export const panoramasUrl = "https://games-staging.rune.ai/panoramas-test"
+export const panoramasUrl =
+  "https://games-production.rune.ai/pinpoint/panoramas"

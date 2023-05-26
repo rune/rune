@@ -29,9 +29,10 @@
     "typescript": "^4.4.2"
   },
   "scripts": {
-    "start": "cp src/components/OLMap/getTileLayer.base.ts src/components/OLMap/getTileLayer.ts && react-scripts start",
-    "build": "react-scripts build && esbuild src/logic.ts --bundle --outfile=build/logic.js --platform=neutral --tsconfig=tsconfig-logic.json --minify",
-    "deploy": "../../../scripts/copy-assets.sh pinpoint && yarn build && rune upload build"
+    "start": "./copy-tile-creator.sh && react-scripts start",
+    "build": "./copy-tile-creator.sh && react-scripts build && yarn build:logic",
+    "build:logic": "esbuild src/logic.ts --bundle --outfile=build/logic.js --platform=neutral --tsconfig=tsconfig-logic.json --minify",
+    "deploy": "../../../scripts/copy-assets.sh pinpoint && react-scripts build && yarn build:logic && rune upload build"
   },
   "eslintConfig": {
     "extends": [

@@ -1,6 +1,6 @@
 {
   "name": "rune-games-cli",
-  "version": "6.0.1",
+  "version": "6.1.0",
   "description": "Easy way to test your HTML5 game before releasing it on Rune.",
   "license": "MIT",
   "keywords": [
@@ -45,7 +45,7 @@
     "cross-fetch": "3.1.5",
     "date-fns": "2.29.1",
     "eslint": "7.22.0",
-    "eslint-plugin-rune": "0.1.6",
+    "eslint-plugin-rune": "0.1.7",
     "express": "4.18.0",
     "figures": "4.0.1",
     "form-data": "4.0.0",

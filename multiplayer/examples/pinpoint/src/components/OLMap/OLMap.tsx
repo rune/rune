@@ -24,8 +24,7 @@ import { animate } from "../../lib/animate"
 import { timings } from "../animation/config"
 import { Pixel } from "ol/pixel"
 import { Attribution } from "ol/control"
-import TileLayer from "ol/layer/Tile"
-import { XYZ } from "ol/source"
+import { getTileLayer } from "./getTileLayer"
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 useGeographic()
@@ -78,16 +77,7 @@ export const OLMap = forwardRef<
 
     const attribution = new Attribution({ collapsible: false })
 
-    const tileLayer = new TileLayer({
-      source: new XYZ({
-        attributions: [
-          '<a href="https://www.tracestrack.com/" target="_blank">© Tracestrack</a>',
-          '<a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
-        ],
-        url: "https://tile.tracestrack.com/auto/{z}/{x}/{y}.png?key=51050ff4901225961869a41d231869a6",
-        tileSize: 256,
-      }),
-    })
+    const tileLayer = getTileLayer()
 
     setMap(
       new Map({

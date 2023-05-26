@@ -24,3 +24,5 @@ yarn-error.log*
 
 public/logic.js
 public/sounds/
+
+src/components/OLMap/getTileLayer.ts

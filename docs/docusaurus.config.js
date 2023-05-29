@@ -111,7 +111,7 @@ const config = {
             items: [
               {
                 label: "Discord",
-                href: "https://discord.gg/s3BWn3ZUmS",
+                href: "https://discord.gg/rune-devs",
               },
               {
                 label: "Twitter",

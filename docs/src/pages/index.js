@@ -23,7 +23,7 @@ function HomepageHeader() {
           </Link>
           <a
             className="button button--primary button--lg"
-            href="https://discord.gg/s3BWn3ZUmS"
+            href="https://discord.gg/rune-devs"
           >
             Join Discord
           </a>

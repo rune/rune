@@ -23,9 +23,9 @@ function HomepageHeader() {
           </Link>
           <a
             className="button button--primary button--lg"
-            href="https://forms.gle/vYa1UUpD9GvML2PEA"
+            href="https://discord.gg/s3BWn3ZUmS"
           >
-            Apply for Beta
+            Join Discord
           </a>
         </div>
       </div>

@@ -110,8 +110,8 @@ const config = {
             title: "Community",
             items: [
               {
-                label: "Apply for Beta",
-                href: "https://forms.gle/vYa1UUpD9GvML2PEA",
+                label: "Discord",
+                href: "https://discord.gg/s3BWn3ZUmS",
               },
               {
                 label: "Twitter",

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 70
 ---
 
 # Supported Games
@@ -23,4 +23,4 @@ There's a lot more games you can build, these are just some examples to give you
 
 ## Adding Support for More Games in Upcoming Version
 
-Rune's multiplayer SDK has some great new updates coming, including shared timers, update loop, and more! This'll add support for classics like Snake and modern real-time IO games.
+Rune's multiplayer SDK has some great new updates coming, including fast update loop! This'll add support for classics like Snake and modern real-time IO games.

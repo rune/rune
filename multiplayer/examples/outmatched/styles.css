@@ -22,6 +22,7 @@ html {
   color: #f9e7d2;
   font-family: LuckiestGuy, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
+  overflow-x: hidden;
 }
 
 button:focus {

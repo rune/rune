@@ -69,7 +69,7 @@ const resizeObserver = new ResizeObserver(() => {
     () => {
       const boardWidth =
         Math.floor(
-          Math.min(boardInner.scrollHeight, boardInner.scrollWidth) / rows
+          Math.min(boardInner.clientHeight, boardInner.clientWidth) / rows
         ) * rows
       board.style.width = `${boardWidth}px`
       if (style.sheet?.rules.length !== 0) {

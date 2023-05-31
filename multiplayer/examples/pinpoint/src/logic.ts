@@ -1,7 +1,7 @@
 import { pickRandom } from "./lib/pickRandom"
 import { calculateDistanceKm } from "./lib/calculateDistanceKm"
 import { calculateScore } from "./lib/calculateScore"
-import { getPanoramas } from "./lib/data/getPanoramas"
+import { panoramas } from "./lib/data/panoramas"
 
 const numRounds = 5
 
@@ -10,11 +10,10 @@ Rune.initLogic({
   maxPlayers: 4,
   setup: (playerIds) => {
     const rounds = []
-    const remainingPanoramas = getPanoramas()
 
     for (let i = 0; i < numRounds; i++) {
-      const randomPanorama = pickRandom(remainingPanoramas)
-      remainingPanoramas.splice(remainingPanoramas.indexOf(randomPanorama), 1)
+      // TODO: Prevent pano from appearing twice by checking ids
+      const randomPanorama = pickRandom(panoramas)
       rounds.push({ panorama: randomPanorama })
     }
 

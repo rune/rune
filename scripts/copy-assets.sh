@@ -1,3 +1,6 @@
+# This script copies game assets for the examples that cannot be provided in
+# this repo due to their licensing restrictions. If you've based your game on
+# an example game, you can ignore this file and run 'rune upload' directly.
 set -e
 
 ASSETS_DIR="$TMPDIR/game-asset-import"
@@ -15,7 +18,7 @@ cd "$ASSETS_DIR" || exit 1
 
 if [ ! -e "$ASSETS_DIR/game-assets" ]
 then
-  git clone git@github.com:rune/game-assets.git
+  git clone https://github.com/rune/game-assets.git
 else
     cd game-assets || exit 1
     git checkout -f staging

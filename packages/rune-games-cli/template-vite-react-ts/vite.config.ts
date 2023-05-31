@@ -4,5 +4,6 @@ import rune from "vite-plugin-rune"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "",
   plugins: [react(), rune({ logicPath: "./src/logic.ts" })],
 })

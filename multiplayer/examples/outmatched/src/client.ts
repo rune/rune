@@ -548,7 +548,11 @@ const setFilled = (
         : ""
   })
 
-const setMovesPlayed = (movesPlayed: number, movesPerRound: number) => {
+const setMovesPlayed = (
+  movesPlayed: number,
+  movesPerRound: number,
+  useCurrent = true
+) => {
   // Initialize turn list item elements if not already created
   let extraMovesItems: HTMLElement[] = []
   if (movesPerRound > movesItems.length) {
@@ -566,9 +570,12 @@ const setMovesPlayed = (movesPlayed: number, movesPerRound: number) => {
       element.parentElement?.removeChild(element)
     })
   }
-  setFilled(movesItems, movesPerRound - movesPlayed, false)
+  setFilled(movesItems, movesPlayed, useCurrent)
   const movesLeft = movesPerRound - movesPlayed
-  movesList.setAttribute("title", `Move ${movesLeft}/${movesPerRound}`)
+  movesList.setAttribute(
+    "title",
+    `${movesLeft} Move${movesLeft === 1 ? "" : "s"} Left`
+  )
   extraMovesItems.forEach((element) => {
     element.classList.add("extra")
   })
@@ -815,12 +822,12 @@ const onChange: OnChangeFn = async ({
       body.className = ""
       playSound("your-turn")
       await showMessage("your-turn")
+      if (roundsPlayed === 0) {
+        await sleep(300)
+        showHint(currentPlayerIndex)
+      }
     }
     body.className = yourTurn ? "current-player-turn" : ""
-    if (becameYourTurn && roundsPlayed === 0) {
-      await sleep(1000)
-      showHint(currentPlayerIndex)
-    }
   }
 
   frames.forEach((frame, i) => {
@@ -852,10 +859,10 @@ const onChange: OnChangeFn = async ({
         playSound("swap")
         await sleep(400)
         if (!movesPlayed) {
-          setMovesPlayed(oldGame.movesPerRound, oldGame.movesPerRound)
+          setMovesPlayed(oldGame.movesPerRound, oldGame.movesPerRound, false)
           await sleep(400)
         } else {
-          setMovesPlayed(movesPlayed, movesPerRound)
+          setMovesPlayed(movesPlayed, movesPerRound, false)
         }
 
         break

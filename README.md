@@ -1,11 +1,11 @@
 # Rune Games SDK
 
-Tiny SDK for building multiplayer HTML5 games that run inside Rune for [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan) and [iOS](https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364).
+SDK for building multiplayer HTML5 games that run inside Rune on [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan) and [iOS](https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364). Don't worry about hosting servers and make a multiplayer game that gets into the hands of the huge Rune community!
 
 ## Features
 
 - **Social**: Rune has messaging and voice chat so players can hang out together and talk about your game.
-- **Fast & Reliable**: Our predict-rollback netcode updates clients immediately and the server resolves any conflicts.
+- **Fast & Reliable**: Our predict-rollback netcode updates clients immediately and the server resolves conflicts.
 - **Free**: We pay for servers, voice chat, and everything else. It's 100% free to launch your game on Rune.
 
 ## Documentation

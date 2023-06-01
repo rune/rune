@@ -14,22 +14,39 @@ For instance this could be used to track how long it took for user to make a gue
 ```javascript
 // logic.js
 
+function allPlayersDone(game) {
+  //...
+}
+
+function setNewQuestionAndAnswer(game) {
+  //...
+}
+
 Rune.initLogic({
-  setup() {
-    return {
-      guessRequestedAt: 0,
-      guessDuration: 0
-    };
-  },
+  setup: (playerIds) => ({
+    scores: Object.fromEntries(playerIds.map((id) => [id, 0])),
+    roundStartAt: 0,
+    question: "A group of otters is called what?",
+    correctAnswer: "A raft"
+  }),
   actions: {
-    requestGuess(_, {game}) {
-      game.guessRequestedAt = Rune.gameTimeInSeconds();
+    guess: ({ answer }, { game, playerId }) => {
+      if (answer === game.correctAnswer) {
+        // Increment score based on time
+        const timeTaken = Rune.gameTimeInSeconds() - roundStartAt
+
+        scores[playerId] += max(30 - timeTaken, 0)
+      }
+
+      // Start a new round once everyone has answered
+      if (allPlayersDone(game)) {
+        roundStartAt = Rune.gameTimeInSeconds()
+        setNewQuestionAndAnswer(game)
+      }
     },
-    confirmGuess(_, {game}) {
-      game.guessDuration = Rune.gameTimeInSeconds() - game.guessDuration;
-    }
-  }
+  },
 })
+
 ```
 
 ## Update function
@@ -43,29 +60,17 @@ Here’s an example of how a game could implement that players have to make a mo
 // logic.js
 
 Rune.initLogic({
-  setup() {
-    return {
-      allowToGuess: false,
-      guessRequestedAt: 0,
-      guessDuration: 0
-    };
-  },
-  actions: {
-    requestGuess(_, {game}) {
-      game.allowToGuess = true;
-      game.guessRequestedAt = Rune.gameTimeInSeconds();
-    },
-    confirmGuess(_, {game}) {
-      game.guessDuration = Rune.gameTimeInSeconds() - game.guessDuration;
-    }
-  },
+  //... (previous example)
   update: ({game}) => {
-    //Check if 30 seconds have passed, then disallow guessing
-    if (game.allowToGuess && Rune.gameTimeInSeconds() - game.guessRequestedAt > 30) {
-      game.allowToGuess = false
+    //Check if 30 seconds have passed, then switch to another question
+    if (Rune.gameTimeInSeconds() - game.roundStartAt > 30) {
+      roundStartAt = Rune.gameTimeInSeconds()
+      setNewQuestionAndAnswer(game)
     }
   }
+
 })
+
 ```
 
 

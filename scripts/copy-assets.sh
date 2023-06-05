@@ -18,7 +18,7 @@ cd "$ASSETS_DIR" || exit 1
 
 if [ ! -e "$ASSETS_DIR/game-assets" ]
 then
-  git clone https://github.com/rune/game-assets.git
+  git clone git@github.com:rune/game-assets.git
 else
     cd game-assets || exit 1
     git checkout -f staging

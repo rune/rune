@@ -30,9 +30,9 @@
   },
   "scripts": {
     "start": "./copy-tile-creator.sh && react-scripts start",
-    "build": "./copy-tile-creator.sh && react-scripts build && yarn build:logic",
+    "build": "./copy-tile-creator.sh && GENERATE_SOURCEMAP=false react-scripts build && yarn build:logic",
     "build:logic": "esbuild src/logic.ts --bundle --outfile=build/logic.js --platform=neutral --tsconfig=tsconfig-logic.json --minify",
-    "deploy": "../../../scripts/copy-assets.sh pinpoint && react-scripts build && yarn build:logic && rune upload build"
+    "deploy": "../../../scripts/copy-assets.sh pinpoint && GENERATE_SOURCEMAP=false react-scripts build && yarn build:logic && rune upload build"
   },
   "eslintConfig": {
     "extends": [

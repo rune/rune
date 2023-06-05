@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && rollup -c",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
     "deploy": "../../../scripts/copy-assets.sh sudoku && yarn build && rune upload build"
   },
   "eslintConfig": {

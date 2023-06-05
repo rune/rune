@@ -1,10 +1,9 @@
-import { Panorama } from "./Panorama"
 import { Coordinate } from "ol/coordinate"
 
 export interface GameState {
   sessionId: number
   playerIds: string[]
-  rounds: { panorama: Panorama }[]
+  rounds: { index: number; coords: { lon: number; lat: number } }[]
   currentRound: number
   guesses: {
     playerId: string

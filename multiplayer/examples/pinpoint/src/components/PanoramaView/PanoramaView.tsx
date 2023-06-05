@@ -18,6 +18,7 @@ import { timings } from "../animation/config"
 import { useLatestGuess } from "./useLatestGuess"
 
 import { panoramasUrl } from "../../lib/panoramasUrl"
+import { panoramasClient } from "../../lib/data/panoramasClient"
 
 export function PanoramaView({
   onOpenMapClick,
@@ -31,7 +32,7 @@ export function PanoramaView({
 
   const isSpectator = !myPlayerId
   const round = game.currentRound
-  const panorama = game.rounds[game.currentRound].panorama
+  const panorama = panoramasClient[game.rounds[round].index]
   const guesses = useAtomValue($guesses)
   const myGuess = useAtomValue($myGuess)
 

@@ -1,8 +1,8 @@
 import { pickRandom } from "./lib/pickRandom"
 import { calculateDistanceKm } from "./lib/calculateDistanceKm"
 import { calculateScore } from "./lib/calculateScore"
-import { panoramas } from "./lib/data/panoramas"
-import { Panorama } from "./lib/types/Panorama"
+import { panoramas } from "./lib/data/panoramasLogic"
+import { GameState } from "./lib/types/GameState"
 
 const numRounds = 5
 
@@ -10,13 +10,16 @@ Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (playerIds) => {
-    const rounds: { panorama: Panorama }[] = []
-    const remainingPanoramas = panoramas.slice()
+    const rounds: GameState["rounds"] = []
+    const remainingPanoramas = [...panoramas]
 
     for (let i = 0; i < numRounds; i++) {
       const randomPanorama = pickRandom(remainingPanoramas)
       remainingPanoramas.splice(remainingPanoramas.indexOf(randomPanorama), 1)
-      rounds.push({ panorama: randomPanorama })
+      rounds.push({
+        index: panoramas.indexOf(randomPanorama),
+        coords: randomPanorama,
+      })
     }
 
     return {
@@ -39,8 +42,8 @@ Rune.initLogic({
       const distance =
         Math.round(
           calculateDistanceKm(location, [
-            game.rounds[game.currentRound].panorama.longitude,
-            game.rounds[game.currentRound].panorama.latitude,
+            game.rounds[game.currentRound].coords.lon,
+            game.rounds[game.currentRound].coords.lat,
           ]) * 1e4
         ) / 1e4
 

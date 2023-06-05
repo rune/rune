@@ -25,6 +25,7 @@ import { formatDistance } from "../../lib/formatDistance"
 import backButtonImg from "../MapView/img/backButton.svg"
 import forwardButtonImg from "../MapView/img/forwardButton.svg"
 import { sortBy } from "../../lib/sortBy"
+import { panoramasClient } from "../../lib/data/panoramasClient"
 
 export function ScoreboardView() {
   const game = useAtomValue($game)!
@@ -32,7 +33,7 @@ export function ScoreboardView() {
   const myPlayerId = useAtomValue($myPlayerId)
 
   const round = game.currentRound
-  const panorama = game.rounds[round].panorama
+  const panorama = panoramasClient[game.rounds[round].index]
   const guesses = useAtomValue($guesses)
   const isSpectator = !myPlayerId
 

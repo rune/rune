@@ -1719,27 +1719,27 @@
   resolved "https://registry.yarnpkg.com/@petamoriken/float16/-/float16-3.8.0.tgz#3a48b7938e1a62188a61ec02d5b12630f671401f"
   integrity sha512-AhVAm6SQ+zgxIiOzwVdUcDmKlu/qU39FiYD2UD6kQQaVenrn0dGZewIghWAENGQsvC+1avLCuT+T2/3Gsp/W3w==
 
-"@photo-sphere-viewer/core@5.1.4", "@photo-sphere-viewer/core@^5.1.4":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@photo-sphere-viewer/core/-/core-5.1.4.tgz#ebf45701e3a9f2625eac44e5e2e09cf64a9f7ee8"
-  integrity sha512-VT1KffZI8vl9JEsjJSiaABb4XnHYeNkOoDoO64wAExZ8XIxOLCuMvCLVsqtXYxyDO/B/3U8xse5Xua8yqI+Z+Q==
+"@photo-sphere-viewer/core@5.1.6", "@photo-sphere-viewer/core@^5.1.4":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@photo-sphere-viewer/core/-/core-5.1.6.tgz#de33d616ef9cfef0a0281fb369001b6adf253a0b"
+  integrity sha512-WMa7CZzgTRlpXovbCqqFqPl+fZyLp6QOWYqtAtBy/UKig8d1XkKqj/40M8Z5aPmkt46B5Yz8YXPMDZ7bTAm4gg==
   dependencies:
-    three "^0.150.1"
+    three "^0.153.0"
 
-"@photo-sphere-viewer/cubemap-adapter@5.1.4":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@photo-sphere-viewer/cubemap-adapter/-/cubemap-adapter-5.1.4.tgz#ac211e60f14a4083119b2a7dc75e80b10d87d36e"
-  integrity sha512-MmWXCqD89KRKxzsMOmkr8gndLJ8SlwFxl+dlBzKdpzs9M+w5+IZlSg95cAjqPoEnTnDxfafJEpjHHWZPSqaM0Q==
+"@photo-sphere-viewer/cubemap-adapter@5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@photo-sphere-viewer/cubemap-adapter/-/cubemap-adapter-5.1.6.tgz#ecec2cf2eccae869b9880c620d30df8d16e457af"
+  integrity sha512-Pr/5duvspGR03Lr7S6h+A43KxNTUTYIdhzswkQR7+dVUekNpqy755qF1abUWrHC/NHtl21n5r8r6jC1zd2zmUg==
   dependencies:
-    "@photo-sphere-viewer/core" "5.1.4"
+    "@photo-sphere-viewer/core" "5.1.6"
 
 "@photo-sphere-viewer/cubemap-tiles-adapter@^5.1.4":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@photo-sphere-viewer/cubemap-tiles-adapter/-/cubemap-tiles-adapter-5.1.4.tgz#b1d94b04663a09870d5b2d6a3504d3593abb2780"
-  integrity sha512-iS0eKebOS9MvabfBARq2VTApyFXAxhO+PGX7q9gKIwCx7ph6Lzv0cwUseYOprlKI3BitzMp/JAtze8Atmx9uYw==
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@photo-sphere-viewer/cubemap-tiles-adapter/-/cubemap-tiles-adapter-5.1.6.tgz#0321baed4ff88f1e262c55d9815dbb435bb434a8"
+  integrity sha512-haiPuEhQQiI/m4HKRtCnbN77GeR0/eZ/wi+Dkevx2Iqcl37BMZW/Hho10lYuwqL9NGiAHerC3nNoBfli0LbHjw==
   dependencies:
-    "@photo-sphere-viewer/core" "5.1.4"
-    "@photo-sphere-viewer/cubemap-adapter" "5.1.4"
+    "@photo-sphere-viewer/core" "5.1.6"
+    "@photo-sphere-viewer/cubemap-adapter" "5.1.6"
 
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.10"
@@ -8835,10 +8835,10 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
-three@^0.150.1:
-  version "0.150.1"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.150.1.tgz#870d324a4d2daf1c7d55be97f3f73d83783e28be"
-  integrity sha512-5C1MqKUWaHYo13BX0Q64qcdwImgnnjSOFgBscOzAo8MYCzEtqfQqorEKMcajnA3FHy1yVlIe9AmaMQ0OQracNA==
+three@^0.153.0:
+  version "0.153.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.153.0.tgz#d8f2aab7b49ae4ac947fd0e24cebec11378758f0"
+  integrity sha512-OCP2/uQR6GcDpSLnJt/3a4mdS0kNWcbfUXIwLoEMgLzEUIVIYsSDwskpmOii/AkDM+BBwrl6+CKgrjX9+E2aWg==
 
 throat@^6.0.1:
   version "6.0.2"

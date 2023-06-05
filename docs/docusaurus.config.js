@@ -57,6 +57,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      image: "img/social-preview.jpg",
       colorMode: {
         respectPrefersColorScheme: true,
       },
@@ -110,8 +111,8 @@ const config = {
             title: "Community",
             items: [
               {
-                label: "Apply for Beta",
-                href: "https://forms.gle/vYa1UUpD9GvML2PEA",
+                label: "Discord",
+                href: "https://discord.gg/rune-devs",
               },
               {
                 label: "Twitter",

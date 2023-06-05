@@ -41,10 +41,8 @@ Rune.initLogic({
 
       const distance =
         Math.round(
-          calculateDistanceKm(location, [
-            game.rounds[game.currentRound].coords.lon,
-            game.rounds[game.currentRound].coords.lat,
-          ]) * 1e4
+          calculateDistanceKm(location, game.rounds[game.currentRound].coords) *
+            1e4
         ) / 1e4
 
       game.guesses.push({

@@ -3,7 +3,7 @@ import { Coordinate } from "ol/coordinate"
 export interface GameState {
   sessionId: number
   playerIds: string[]
-  rounds: { index: number; coords: { lon: number; lat: number } }[]
+  rounds: { index: number; coords: Coordinate }[]
   currentRound: number
   guesses: {
     playerId: string

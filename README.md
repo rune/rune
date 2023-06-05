@@ -1,11 +1,11 @@
 # Rune Games SDK
 
-Tiny SDK for building multiplayer HTML5 games that run inside Rune for [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan) and [iOS](https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364).
+SDK for building multiplayer HTML5 games that run inside Rune on [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan) and [iOS](https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364). Don't worry about hosting servers and make a multiplayer game that gets into the hands of the huge Rune community!
 
 ## Features
 
 - **Social**: Rune has messaging and voice chat so players can hang out together and talk about your game.
-- **Fast & Reliable**: Our predict-rollback netcode updates clients immediately and the server resolves any conflicts.
+- **Fast & Reliable**: Our predict-rollback netcode updates clients immediately and the server resolves conflicts.
 - **Free**: We pay for servers, voice chat, and everything else. It's 100% free to launch your game on Rune.
 
 ## Documentation
@@ -23,10 +23,10 @@ Tiny SDK for building multiplayer HTML5 games that run inside Rune for [Android]
 
 ## Examples
 
-| [Tic Tac Toe](https://developers.rune.ai/examples/tic-tac-toe/)                                                                                    | [Outmatched](https://developers.rune.ai/examples/outmatched/)                                       | [Sudoku](https://developers.rune.ai/examples/tic-tac-toe/)                                     |
-| -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| [![](https://github.com/rune/rune-games-sdk/assets/378279/a6103c52-10fe-4a67-95f1-9de8b1e605c3)](https://developers.rune.ai/examples/tic-tac-toe/) | ![](https://github.com/rune/rune-games-sdk/assets/378279/7c4dc778-0080-4266-9781-5a173d4e94bf)      | ![](https://github.com/rune/rune-games-sdk/assets/378279/2f8aa9f8-565d-4c9c-b003-804d9afb5dff) |
-| [`tic-tac-toe`](https://github.com/rune/rune-games-sdk/tree/staging/multiplayer/examples/tic-tac-toe)                                              | [`outmatched`](https://github.com/rune/rune-games-sdk/tree/staging/multiplayer/examples/outmatched) | [`sudoku`](https://github.com/rune/rune-games-sdk/tree/staging/multiplayer/examples/sudoku)    |
+| Tic Tac Toe                                                                                                                                              | Outmatched                                                                                                                                             | Sudoku                                                                                                                                              |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| [<img src="docs/static/img/multiplayer-games/tic-tac-toe.png" width=500>](https://developers.rune.ai/examples/tic-tac-toe/)                              | [<img src="docs/static/img/multiplayer-games/outmatched.png" width=500>](https://developers.rune.ai/examples/outmatched/)                              | [<img src="docs/static/img/multiplayer-games/sudoku.png" width=500>](https://developers.rune.ai/examples/sudoku/)                              |
+| [Demo](https://developers.rune.ai/examples/tic-tac-toe/), [Source](https://github.com/rune/rune-games-sdk/tree/staging/multiplayer/examples/tic-tac-toe) | [Demo](https://developers.rune.ai/examples/outmatched/), [Source](https://github.com/rune/rune-games-sdk/tree/staging/multiplayer/examples/outmatched) | [Demo](https://developers.rune.ai/examples/tic-tac-toe/), [Source](https://github.com/rune/rune-games-sdk/tree/staging/multiplayer/examples/sudoku) |
 
 ## Help
 

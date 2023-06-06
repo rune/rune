@@ -89,7 +89,7 @@ export const OLMap = forwardRef<
           zoom: 0,
           enableRotation: false,
           minResolution: 6,
-          constrainResolution: true,
+          smoothResolutionConstraint: false,
         }),
         maxTilesLoading: 2,
       })

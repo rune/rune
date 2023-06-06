@@ -1,6 +1,6 @@
 import "@photo-sphere-viewer/core/index.scss"
 
-import { useEffect, useMemo, useRef, useLayoutEffect } from "react"
+import { useEffect, useMemo, useRef, useLayoutEffect, useState } from "react"
 import { Viewer, ClickData } from "@photo-sphere-viewer/core"
 import {
   CubemapTilesAdapter,
@@ -100,10 +100,38 @@ export function PhotoSphereViewer({
   const onFirstInteractionRef = useRef(onFirstInteraction)
   onFirstInteractionRef.current = onFirstInteraction
 
+  // This hacky logic prevents changing the panorama while some of the current
+  // panorama's tiles are still loading. This is necessary because the library
+  // doesn't provide a way to cancel loading tiles and this sometimes causes a
+  // race condition when the old tile finishes loading after the new panorama is
+  // in place and this one tile would be out of place in the new set
+  const [loadingQueueEmpty, setLoadingQueueEmpty] = useState(true)
+
+  useEffect(() => {
+    if (loadingQueueEmpty) return
+
+    const timeout = setInterval(() => {
+      if (
+        Object.keys((viewer as any).adapter.queue.runningTasks).length === 0
+      ) {
+        setLoadingQueueEmpty(true)
+      }
+    }, 250)
+
+    return () => clearInterval(timeout)
+  }, [loadingQueueEmpty])
+
   useEffect(() => {
     if (!viewer) return
 
     if (viewer.config.panorama?.baseUrl.back === panorama.baseUrl.back) return
+
+    if (!loadingQueueEmpty) return
+
+    if (Object.keys((viewer as any).adapter.queue.runningTasks).length) {
+      setLoadingQueueEmpty(false)
+      return
+    }
 
     viewer.setOptions({
       minFov: view.minFov,
@@ -185,7 +213,7 @@ export function PhotoSphereViewer({
       viewer.removeEventListener("zoom-updated", onZoomUpdated as any)
       viewer.removeEventListener("dblclick", onDoubleClick as any)
     }
-  }, [panorama, view])
+  }, [loadingQueueEmpty, panorama, view])
 
   return <Root ref={containerRef} />
 }

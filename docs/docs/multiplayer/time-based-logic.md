@@ -98,7 +98,7 @@ Rune.initLogic({
 })
 ```
 
-* PlayerA calls action click when game time is at second 4. PlayerA receives `onChange` call with `click` action as an argument. PlayerA `game.clickedAt = 4`.
-* Server receives the action, but server is already at second 5. Server processes the action.
+* PlayerA calls action click when game time is at second 4. PlayerA receives `onChange` call with `click` action as an argument, making PlayerA see `game.clickedAt = 4`.
+* Server receives and processes the action at game time second 5.
 * Every client receives that the action was executed at 5th second. 
-PlayerA `onChange` is called with `timeSync` event, playerB `onChange` is called with `click` action. Both players `game.clickedAt = 5`.
+PlayerA's `onChange` function is called with `timeSync` event to reconcile that the server processed the action at second 5 (and the server holds the truth). In this way, both players end up with `game.clickedAt = 5`.

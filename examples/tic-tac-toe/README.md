@@ -1,15 +1,11 @@
 # Tic Tac Toe example
 
-The classing game implemented using the Rune SDK and vanilla JS.
+The classic game implemented using the Rune SDK and vanilla JS. Here's a [demo](https://developers.rune.ai/examples/tic-tac-toe/).
 
-## Running
+[<img src="../../docs/static/img/multiplayer-games/tic-tac-toe.png" width=500>](https://developers.rune.ai/examples/tic-tac-toe/)
+
+## Run for development
 
 ```sh
 npx serve@latest
 ```
-
-## Demo
-
-[View demo](https://developers.rune.ai/examples/tic-tac-toe/)
-
-<a href="https://developers.rune.ai/examples/tic-tac-toe/"><img width="748" alt="Screenshot of Tic Tac Toe game" src="https://github.com/rune/rune-games-sdk/assets/378279/438f065f-45a6-4537-ac89-20cd26452961"></a>

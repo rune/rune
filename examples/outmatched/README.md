@@ -1,8 +1,8 @@
 # Outmatched
 
-A multiplayer Match 3 game using the Rune SDK.
+A multiplayer Match 3 game using the Rune SDK. Here's a [demo](https://developers.rune.ai/examples/outmatched/).
 
-<img width="761" alt="Screenshot of Outmatched" src="https://github.com/rune/rune-games-sdk/assets/378279/f32d74ba-34c1-4c5f-a027-a96beca3b314">
+[<img src="../../docs/static/img/multiplayer-games/outmatched.png" width=500>](https://developers.rune.ai/examples/outmatched/)
 
 ## Installing
 

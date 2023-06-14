@@ -40,5 +40,4 @@ Rune.gameOver()
 
 ## Next steps
 
-- [View example games](examples.md)
 - [Explore the API reference](api-reference.md)

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 50
 ---
 
 # Joining and Leaving
@@ -8,16 +8,16 @@ One complexity of multiplayer games is that there may be different number of pla
 
 # Events
 
-Rune has `events`, which are always triggered based on room changes (e.g. a player joining). This is opposed to `actions` , which are always called by game. Currently available events are: `playerJoined`, `playerLeft`, `stateSync`.
+Rune has `events`, which are always triggered based on room changes (e.g. a player joining). This is opposed to `actions` , which are always called by game. Currently available events are: `playerJoined`, `playerLeft`, `stateSync`, `update`, `timeSync`. You can read more about `update` and `timeSync` events in [time documentation](time-based-logic.md)
 
 Whenever an event happens, `onChange` is called with `event` as a parameter to let the game visually change its appearance based on the changes. The game can provide an optional callback for `playerJoined` and `playerLeft` in `logic.js`, which allows the game to change game state when they happen.
 
 Below is an overview comparing actions & events.
 
 |                       | Actions    | Events                     |
-| --------------------- | ---------- | -------------------------- |
+| --------------------- | ---------- |----------------------------|
 | Defined and called by | Game Dev   | Rune                       |
-| Quantity              | Any number | Predefined (currently 3)   |
+| Quantity              | Any number | Predefined (currently 5)   |
 | Update game state?    | Yes        | If using optional callback |
 | Might be rolled back? | Yes        | No                         |
 

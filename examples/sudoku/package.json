@@ -31,7 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
-    "deploy": "../../../scripts/copy-assets.sh sudoku && yarn build && rune upload build"
+    "deploy": "../../scripts/copy-assets.sh sudoku && yarn build && rune upload build"
   },
   "eslintConfig": {
     "extends": [

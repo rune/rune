@@ -13,7 +13,7 @@ export function MultiplayerExamples({ data }) {
           <h2>{example.title}</h2>
           <a href={`/examples/${example.slug}/`}>Demo</a> |{" "}
           <a
-            href={`https://github.com/rune/rune-games-sdk/tree/staging/multiplayer/examples/${example.slug}`}
+            href={`https://github.com/rune/rune-games-sdk/tree/staging/examples/${example.slug}`}
           >
             Source
           </a>

@@ -30,7 +30,7 @@ module.exports = {
       extends: ["plugin:rune/logic"],
     },
     {
-      files: ["singleplayer/**/*.js", "multiplayer/**/*.js"],
+      files: ["examples/**/*.js", "examples/**/*.ts"],
       extends: ["plugin:rune/recommended"],
       env: {
         browser: true,

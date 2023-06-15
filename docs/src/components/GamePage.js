@@ -19,10 +19,7 @@ export function GamePage({ title, slug }) {
       document.body.style.overflow = "hidden"
     })
 
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ["style"],
-    })
+    observer.observe(document.body, { attributeFilter: ["style"] })
 
     return () => {
       document.body.style.overflow = "auto"

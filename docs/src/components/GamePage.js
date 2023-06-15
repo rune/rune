@@ -3,9 +3,8 @@ import React, { useEffect } from "react"
 import Layout from "@theme/Layout"
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 
-const isMobile = "ontouchstart" in window
-
 export function GamePage({ title, slug }) {
+  const isMobile = "ontouchstart" in window
   const { siteConfig } = useDocusaurusContext()
 
   useEffect(() => {

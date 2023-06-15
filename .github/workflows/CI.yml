@@ -21,6 +21,9 @@ jobs:
       - run: yarn test
   test-docs:
     runs-on: ubuntu-latest
+    env:
+      TMPDIR: /tmp
+      GAME_ASSETS_SSH: ${{ secrets.GAME_ASSETS_SSH }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -31,7 +34,11 @@ jobs:
         run: yarn --prefer-offline --frozen-lockfile --non-interactive --ignore-scripts --silent
         working-directory: docs
       - name: Build website
-        run: yarn build
+        run: |
+          mkdir ~/.ssh
+          echo "$GAME_ASSETS_SSH" | base64 -d > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          yarn build
         working-directory: docs
   typecheck:
     runs-on: ubuntu-latest

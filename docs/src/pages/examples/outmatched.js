@@ -5,7 +5,7 @@ import BrowserOnly from "@docusaurus/BrowserOnly"
 export default function Outmatched() {
   return (
     <BrowserOnly>
-      <GamePage title="Outmatched" slug="outmatched" />
+      {() => <GamePage title="Outmatched" slug="outmatched" />}
     </BrowserOnly>
   )
 }

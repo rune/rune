@@ -5,7 +5,7 @@ import BrowserOnly from "@docusaurus/BrowserOnly"
 export default function Pinpoint() {
   return (
     <BrowserOnly>
-      <GamePage title="Pinpoint" slug="pinpoint" />
+      {() => <GamePage title="Pinpoint" slug="pinpoint" />}
     </BrowserOnly>
   )
 }

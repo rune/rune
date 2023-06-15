@@ -40,6 +40,7 @@ export function GamePage({ title, slug }) {
         src={`/_examples/${slug}/?embedded=1`}
         style={{
           width: "100%",
+          // svh is important because it takes into account mobile browser bottom nav bar
           height: "calc(100svh - var(--ifm-navbar-height))",
         }}
       />

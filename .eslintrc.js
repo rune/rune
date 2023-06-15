@@ -9,6 +9,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "prettier"],
   env: {
     node: true,
+    browser: true,
   },
   rules: {
     "prettier/prettier": ["error"],

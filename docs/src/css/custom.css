@@ -72,3 +72,13 @@
   display: block;
   aspect-ratio: 1910/749;
 }
+
+@media (max-width: 996px) {
+  .navbar__items--right .navbar__link {
+    display: initial;
+  }
+
+  .searchBox_node_modules-\@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module {
+    display: none;
+  }
+}

@@ -22,8 +22,8 @@ export function GamePage({ title, slug }) {
     observer.observe(document.body, { attributeFilter: ["style"] })
 
     return () => {
-      document.body.style.overflow = "auto"
       observer.disconnect()
+      document.body.style.overflow = "auto"
     }
   }, [])
 

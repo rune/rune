@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai"
 import { useEffect, useState, useMemo } from "react"
 import { roundDuration } from "../logic"
 import styled, { css } from "styled-components/macro"
+import { sounds } from "../sounds/sounds"
 
 export function Timer() {
   const roundTimerStartedAt = useAtomValue($roundTimerStartedAt)
@@ -52,6 +53,10 @@ export function Timer() {
   }, [value])
 
   const almostOver = value !== null && value <= 5
+
+  useEffect(() => {
+    if (almostOver) sounds.timer.play()
+  }, [almostOver])
 
   if (value === null) return null
 

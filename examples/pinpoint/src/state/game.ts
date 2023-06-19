@@ -17,3 +17,7 @@ export const $myGuess = atom((get) => {
   const myPlayerId = get($myPlayerId)
   return guesses.find((guess) => guess.playerId === myPlayerId)
 })
+
+export const $roundTimerStartedAt = atom((get) => {
+  return get($game)?.roundTimerStartedAt
+})

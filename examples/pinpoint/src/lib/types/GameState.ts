@@ -5,11 +5,13 @@ export interface GameState {
   playerIds: string[]
   rounds: { index: number; coords: Coordinate }[]
   currentRound: number
+  roundTimerStartedAt: number | null
   guesses: {
     playerId: string
     round: number
     location: Coordinate
     distance: number
     score: number
+    missed?: boolean
   }[]
 }

@@ -3,8 +3,11 @@ import { calculateDistanceKm } from "./lib/calculateDistanceKm"
 import { calculateScore } from "./lib/calculateScore"
 import { panoramas } from "./lib/data/panoramasLogic"
 import { GameState } from "./lib/types/GameState"
+import { shouldTriggerGameOver } from "./lib/shouldTriggerGameOver"
+import { triggerGameOver } from "./lib/triggerGameOver"
 
-const numRounds = 5
+export const numRounds = 1
+export const roundDuration = 5
 
 Rune.initLogic({
   minPlayers: 1,
@@ -27,6 +30,7 @@ Rune.initLogic({
       playerIds,
       rounds,
       currentRound: 0,
+      roundTimerStartedAt: null,
       guesses: [],
     }
   },
@@ -53,20 +57,18 @@ Rune.initLogic({
         score: calculateScore(distance),
       })
 
-      if (game.guesses.length === game.playerIds.length * numRounds) {
-        Rune.gameOver({
-          players: game.guesses.reduce(
-            (acc, guess) => ({
-              ...acc,
-              [guess.playerId]: (acc[guess.playerId] ?? 0) + guess.score,
-            }),
-            {} as {
-              [playerId: string]: number
-            }
-          ),
-          delayPopUp: true,
-        })
+      if (game.playerIds.length > 1 && !game.roundTimerStartedAt) {
+        game.roundTimerStartedAt = Rune.gameTimeInSeconds()
       }
+
+      if (
+        game.guesses.filter((guess) => guess.round === game.currentRound)
+          .length === game.playerIds.length
+      ) {
+        game.roundTimerStartedAt = null
+      }
+
+      if (shouldTriggerGameOver(game)) triggerGameOver(game)
     },
     nextRound: (_, { game }) => {
       if (game.currentRound === numRounds - 1) throw Rune.invalidAction()
@@ -86,5 +88,34 @@ Rune.initLogic({
       game.playerIds = game.playerIds.filter((id) => id !== playerId)
       game.guesses = game.guesses.filter((guess) => guess.playerId !== playerId)
     },
+  },
+  update: ({ game }) => {
+    if (
+      game.roundTimerStartedAt &&
+      Rune.gameTimeInSeconds() >= game.roundTimerStartedAt + roundDuration
+    ) {
+      const currentRoundGuesses = game.guesses.filter(
+        (guess) => guess.round === game.currentRound
+      )
+      const playersWhoDidNotGuess = game.playerIds.filter(
+        (playerId) =>
+          !currentRoundGuesses.find((guess) => guess.playerId === playerId)
+      )
+
+      for (const playerId of playersWhoDidNotGuess) {
+        game.guesses.push({
+          playerId,
+          round: game.currentRound,
+          location: [0, 0],
+          distance: Infinity,
+          missed: true,
+          score: 0,
+        })
+      }
+
+      game.roundTimerStartedAt = null
+
+      if (shouldTriggerGameOver(game)) triggerGameOver(game)
+    }
   },
 })

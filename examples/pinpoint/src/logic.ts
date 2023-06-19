@@ -7,7 +7,7 @@ import { shouldTriggerGameOver } from "./lib/shouldTriggerGameOver"
 import { triggerGameOver } from "./lib/triggerGameOver"
 
 export const numRounds = 5
-export const roundDuration = 25
+export const roundDuration = 3
 
 Rune.initLogic({
   minPlayers: 1,
@@ -94,12 +94,11 @@ Rune.initLogic({
       game.roundTimerStartedAt &&
       Rune.gameTimeInSeconds() >= game.roundTimerStartedAt + roundDuration
     ) {
-      const currentRoundGuesses = game.guesses.filter(
-        (guess) => guess.round === game.currentRound
-      )
+      const playersWhoGuessed = game.guesses
+        .filter((guess) => guess.round === game.currentRound)
+        .map((guess) => guess.playerId)
       const playersWhoDidNotGuess = game.playerIds.filter(
-        (playerId) =>
-          !currentRoundGuesses.find((guess) => guess.playerId === playerId)
+        (playerId) => !playersWhoGuessed.includes(playerId)
       )
 
       for (const playerId of playersWhoDidNotGuess) {

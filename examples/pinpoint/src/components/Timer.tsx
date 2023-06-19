@@ -56,6 +56,10 @@ export function Timer() {
 
   useEffect(() => {
     if (almostOver) sounds.timer.play()
+
+    return () => {
+      sounds.timer.stop()
+    }
   }, [almostOver])
 
   if (value === null) return null

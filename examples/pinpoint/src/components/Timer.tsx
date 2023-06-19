@@ -15,7 +15,7 @@ export function Timer() {
       const startedAt = Date.now()
 
       const tick = () => {
-        const value = roundDuration - (Date.now() - startedAt) / 1000
+        const value = roundDuration - (Date.now() - startedAt) / 1000 - 0.5
 
         if (value <= 0) {
           setValue(0)

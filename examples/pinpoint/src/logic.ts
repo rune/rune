@@ -6,8 +6,8 @@ import { GameState } from "./lib/types/GameState"
 import { shouldTriggerGameOver } from "./lib/shouldTriggerGameOver"
 import { triggerGameOver } from "./lib/triggerGameOver"
 
-export const numRounds = 1
-export const roundDuration = 5
+export const numRounds = 5
+export const roundDuration = 25
 
 Rune.initLogic({
   minPlayers: 1,

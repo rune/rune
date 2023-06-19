@@ -55,7 +55,7 @@ export function ScoreList({
       </Score>
       <SimpleCSSTransition visible={showLatestScore} duration={timings.default}>
         <LatestScoreRight missed={scores[0].missed}>
-          +{scores[0].latestScore}
+          {scores[0].missed ? "No guess" : `+${scores[0].latestScore}`}
         </LatestScoreRight>
       </SimpleCSSTransition>
     </BigItem>
@@ -166,5 +166,5 @@ const LatestScore = styled.div<{ missed: boolean }>`
 const LatestScoreRight = styled(LatestScore)`
   top: inherit;
   bottom: 25px;
-  right: -12px;
+  right: -15px;
 `

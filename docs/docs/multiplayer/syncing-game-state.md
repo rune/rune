@@ -87,7 +87,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 
 ## Restrictions
 
-- Game logic must be written in a subset of JavaScript, see [Logic Restrictions](logic-restrictions.md). The client showing the visual interface can be written in any game engine as long as it uses the JS logic underneath.
+- Game logic must be written in a subset of JavaScript, see [Logic Restrictions](../advanced/logic-restrictions.md). The client showing the visual interface can be written in any game engine as long as it uses the JS logic underneath.
 - Max 3 actions per player per second.
 - Actions must be synchronous, fast and be memory efficient – execute in <10ms and consume <5MB memory.
 - The `onChange` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.

@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Supported Games
 
-Rune handles all the complexity of building a multiplayer game. We've made this SDK to make your life simple and we've tried to make it general enough that you can build almost anything. Any game that follows the [overall game guidelines](how-it-works/syncing-game-state.md#restrictions) and [server-side logic](advanced/logic-restrictions.md) guidelines is supported.
+Rune handles all the complexity of building a multiplayer game. We've made this SDK to make your life simple and we've tried to make it general enough that you can build almost anything. Any game that follows the [overall game guidelines](how-it-works/syncing-game-state.md#restrictions) and [server-side logic](advanced/server-side-logic.md) guidelines is supported.
 
 ## Examples of Supported Games
 

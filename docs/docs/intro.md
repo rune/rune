@@ -34,7 +34,7 @@ Include the following lines in your `index.html` file before loading any other J
 
 ## Game Logic
 
-Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
+Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](multiplayer/syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
 
 ```js
 // logic.js
@@ -59,7 +59,7 @@ Rune.initLogic({
 
 ## Rendering
 
-Next, integrate your game UI to [react to game state changes](api-reference.md#runeinitclientoptions) and [send actions to the logic layer](api-reference.md#runeinitclientoptions). This code may live anywhere except in `logic.js`; the docs will refer to `client.js`:
+Next, integrate your game UI to [react to game state changes](multiplayer/api-reference.md#runeinitclientoptions) and [send actions to the logic layer](multiplayer/api-reference.md#runeinitclientoptions). This code may live anywhere except in `logic.js`; the docs will refer to `client.js`:
 
 ```js
 // client.js
@@ -84,9 +84,9 @@ Rune.initClient({ onChange })
 
 ## Next steps
 
-- [Read about syncing game state](syncing-game-state.md)
-- [Get inspired by the kinds of games that are supported](supported-games.md)
+- [Read about syncing game state](multiplayer/syncing-game-state.md)
+- [Get inspired by the kinds of games that are supported](multiplayer/supported-games.md)
 - [View example games](examples.mdx)
-- [Explore the API reference](api-reference.md)
+- [Explore the API reference](multiplayer/api-reference.md)
 - [Test your game with the Rune CLI](cli.md)
 - [Publish your game](publishing.md)

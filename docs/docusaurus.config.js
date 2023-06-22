@@ -70,7 +70,7 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "multiplayer/intro",
+            docId: "intro",
             position: "left",
             label: "Docs",
           },
@@ -99,11 +99,11 @@ const config = {
             items: [
               {
                 label: "Intro",
-                to: "/docs/multiplayer/intro",
+                to: "/docs/intro",
               },
               {
                 label: "Examples",
-                to: "/docs/multiplayer/examples",
+                to: "/docs/examples",
               },
               {
                 label: "Publishing",

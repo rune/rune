@@ -1,12 +1,16 @@
-import figures from "figures"
 import { Box, Text } from "ink"
 import TextInputImport from "ink-text-input"
 import path from "path"
 import React, { useState, useMemo, useCallback, useEffect } from "react"
 
 import { Step } from "../../components/Step.js"
+import { ValidationErrors } from "../../components/ValidationErrors.js"
 import { cli } from "../../lib/cli.js"
-import { getGameFiles } from "../../lib/getGameFiles.js"
+import {
+  getGameFiles,
+  findShortestPathFileThatEndsWith,
+  FileInfo,
+} from "../../lib/getGameFiles.js"
 import {
   validateGameFiles,
   ValidationResult,
@@ -34,8 +38,16 @@ export function GameDirInputStep({
   const [validateGameResult, setValidateGameResult] =
     useState<ValidationResult | null>(null)
 
+  const [logicJsFile, setLogicJsFile] = useState<FileInfo | undefined>()
+
   const onSubmitGameDir = useCallback(() => {
-    getGameFiles(gameDir).then(validateGameFiles).then(setValidateGameResult)
+    getGameFiles(gameDir)
+      .then((gameFiles) => {
+        setLogicJsFile(findShortestPathFileThatEndsWith(gameFiles, "logic.js"))
+
+        return validateGameFiles(gameFiles)
+      })
+      .then(setValidateGameResult)
   }, [gameDir])
 
   useEffect(() => {
@@ -56,13 +68,10 @@ export function GameDirInputStep({
           status="error"
           label="Some issues detected with your game"
           view={
-            <Box flexDirection="column">
-              {validateGameResult?.errors.map((error, i) => (
-                <Text key={i} color="red">
-                  {figures.line} {error.message}
-                </Text>
-              ))}
-            </Box>
+            <ValidationErrors
+              validationResult={validateGameResult}
+              logicJsFile={logicJsFile}
+            />
           }
         />
       )}

@@ -52,7 +52,7 @@ Press the ⚙️ icon to open the developer tools, which allows you to emulate n
 
 ### `rune upload`
 
-Uploads your game to Rune for publishing, see [Publishing Your Game](publishing.md) for more info.
+Uploads your game to Rune for publishing, see [Publishing Your Game](publishing-your-game.md) for more info.
 
 ```bash
 cd game/path && rune upload

@@ -12,7 +12,7 @@ Multiplayer games are generally separated into game logic and rendering. This se
 
 ### Game Logic
 
-The logic is stored in a single file, `logic.js`, and initialized by running `Rune.initLogic()` with `minPlayers`, `maxPlayers`, `setup` and `actions`. The `minPlayers` and `maxPlayers` values ensure the game only have to consider a number of players between those two values. All other cases are Rune, incl. automatically making remaining people in the room spectators (more info in [Joining and Leaving](joining-leaving.md)).
+The logic is stored in a single file, `logic.js`, and initialized by running `Rune.initLogic()` with `minPlayers`, `maxPlayers`, `setup` and `actions`. The `minPlayers` and `maxPlayers` values ensure the game only have to consider a number of players between those two values. All other cases are Rune, incl. automatically making remaining people in the room spectators (more info in [Joining and Leaving](../advanced/joining-leaving.md)).
 
 The `setup` function returns the initial values for the `game` state, which is the game information that’s synced across players. In the case of Tic Tac Toe, the `game` state describes who’s turn it is and which of the 9 cells have been filled with an X or an O. The `setup` function gets the `players` argument with info about the players at the time of starting the game.
 
@@ -100,4 +100,4 @@ Games running on Rune should support initializing the game at any possible momen
 
 Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `onChange`'s `newGame` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.
 
-You can test your game using the [Rune CLI](cli.md) by adding players/spectators joining at various times during your game session.  
+You can test your game using the [Rune CLI](publishing/cli.md) by adding players/spectators joining at various times during your game session.  

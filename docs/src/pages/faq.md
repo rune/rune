@@ -48,7 +48,7 @@ We want to let you unleash your creativity while still avoiding content inapprop
 
 ### How Do I Make the Best Possible Game on Rune?
 
-We’ve talked with a lot of players in the Rune community and accumulated their feedback in [Best Practices](/docs/best-practices). Make sure to check it out!
+We’ve talked with a lot of players in the Rune community and accumulated their feedback in [Best Practices](/docs/publishing/best-practices). Make sure to check it out!
 
 ### Who Makes the Game Logo and What Should It Look Like?
 
@@ -56,7 +56,7 @@ You can upload your own logo or we can help you make one. The logo should be a P
 
 ### How Do I Upload My Game?
 
-See [Publishing](/docs/publishing) docs. We'll keep improving the upload and update process with a focus on making it as easy as possible for you to upload and update your game!
+See [Publishing](/docs/publishing/publishing-your-game) docs. We'll keep improving the upload and update process with a focus on making it as easy as possible for you to upload and update your game!
 
 ### What Is the Size Limit?
 

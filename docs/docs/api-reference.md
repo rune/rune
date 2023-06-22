@@ -55,11 +55,11 @@ Rune.initLogic({
 
 ### `minPlayers: number`
 
-A value between 1-4 of the minmum amount of players that is required to play the game. See [Joining and Leaving](multiplayer/joining-leaving.md#minimum-and-maximum-players).
+A value between 1-4 of the minmum amount of players that is required to play the game. See [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players).
 
 ### `maxPlayers: number`
 
-A value between 1-4, must be equal to or greater than `minPlayers`. If the value is lower than 4, other users may join the game as spectators. See [Joining and Leaving](multiplayer/joining-leaving.md#minimum-and-maximum-players).
+A value between 1-4, must be equal to or greater than `minPlayers`. If the value is lower than 4, other users may join the game as spectators. See [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players).
 
 ### `setup(playerIds: string[]): any`
 
@@ -71,7 +71,7 @@ The `actions` option is an object with actions functions exposed to the UI integ
 
 ### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any }) => void }` _optional_
 
-By default a game will end if a player leaves (see [Joining and Leaving](multiplayer/joining-leaving.md#minimum-and-maximum-players)), but by defining the `playerJoined`/`playerLeft` events you can [Support Players Joining Midgame](multiplayer/joining-leaving.md#supporting-players-joining-midgame).
+By default a game will end if a player leaves (see [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players)), but by defining the `playerJoined`/`playerLeft` events you can [Support Players Joining Midgame](advanced/joining-leaving.md#supporting-players-joining-midgame).
 
 ## `Rune.invalidAction()`
 
@@ -92,7 +92,7 @@ Rune.initLogic({
 
 ## `Rune.gameOver(options)`
 
-When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](game-over.md) guide.
+When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](multiplayer/game-over.md) guide.
 
 ```js
 // logic.js

@@ -17,9 +17,9 @@ The primary aim is to ensure that the code is deterministic, meaning that if you
 - **Regular expressions** because they are stateful.
 - **Use of `eval`** because it's potentially harmful and can be used to bypass above rules.
 
-A notable exception to this list is `Math.random()` which is ensured to be deterministic, see [Randomness](randomness.md) to read more about how this works.
+A notable exception to this list is `Math.random()` which is ensured to be deterministic, see [Randomness](../advanced/randomness.md) to read more about how this works.
 
-The [Rune CLI](cli.md) will warn you if your game logic uses unsafe code so don't worry!
+The [Rune CLI](publishing/cli.md) will warn you if your game logic uses unsafe code so don't worry!
 
 ## Editor Integration
 

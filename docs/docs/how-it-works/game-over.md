@@ -6,7 +6,7 @@ sidebar_position: 90
 
 When your game ends, you should call [`Rune.gameOver(options)`](../api-reference.md#runegameoveroptions) to inform Rune that the game ended. As a result, Rune will overlay a standardized game over popup to the user.
 
-This popup contents will vary depending on the options you pass. The main choice is whether the game has winners/losers or assigns each player a score.
+This popup contents will vary depending on the options you pass. The main choice is whether the game has winners/losers or assigns each player a score.
 
 ### Delaying Game Over Popup
 

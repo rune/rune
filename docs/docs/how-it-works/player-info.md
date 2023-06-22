@@ -4,7 +4,7 @@ sidebar_position: 20
 
 # Player Info
 
-The game will want to show each player’s name inside their game.
+You'll often want to show each player’s name and avatar inside your game. Here's how you do it.
 
 ## Players Object
 

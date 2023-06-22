@@ -28,8 +28,6 @@ We’re a small passionate team who love making and playing games together. Rune
 
 Rune has 5+ million players so you’ll get tons of people playing your game and giving you feedback. Building a game is fun, but having tons of people actually playing your game makes it 10x more fun. We promote your game for free on our social channels and also provide valuable analytics and use feedback on your game. And don’t forget the bragging rights — Rune shows that you created the game and displays your stats. Next time you meet your friends, you can show them how you built a game with millions of plays.
 
-Rune also helps you make your game amazing by providing social features like leaderboards, daily challenges, offline support, _etc_. for free. These features take only a few minutes to add with the Rune SDK.
-
 ### Which Game Engines Does Rune Support?
 
 Your game logic must be written in JavaScript/TypeScript, but your rendering code can use any engine that exports to HTML5. This includes all JavaScript-based engines, Unity, Godot, Defold, and many others. If you don’t know how to use Rune with your favorite engine, just ask us!
@@ -70,6 +68,10 @@ We'll try to do our best to review your game quickly and it should normally take
 
 Definitely. It's your game and you can do whatever you like with it.
 
+### Can I Remove My Game From Rune?
+
+Yes, you're always free to remove your game whenever you'd like. It's your game.
+
 ### Can I Upload More Than One Game to Rune?
 
 Yes! You can upload as many games as you like to Rune.
@@ -86,7 +88,7 @@ Of course, anyone uploading their game early will have a huge head start in buil
 
 ### How Does Rune Make Money / Stay Alive?
 
-We're working hard and will soon have ways for you to earn money on your game on Rune. When you start making revenue, we will take a small piece of it to cover server and development costs.
+We'll soon provide ways for you as a game developer to earn money on your game on Rune. When you start making revenue, we will take a small piece of it to cover server and development costs.
 
 ### Do You Host Game Jams?
 

@@ -74,7 +74,7 @@ Rune.initClient({ onChange })
 ## Next Steps
 
 - [Read about syncing game state](multiplayer/syncing-game-state.md)
-- [Get inspired by the kinds of games that are supported](multiplayer/supported-games.md)
+- [Get inspired by the kinds of games that are supported](publishing/supported-games.md)
 - [View example games](examples.mdx)
 - [Explore the API reference](api-reference.md)
 - [Test your game with the Rune CLI](publishing/cli.md)

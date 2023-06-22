@@ -18,7 +18,7 @@ The primary aim is to ensure that the code is deterministic, meaning that if you
 
 A notable exception to this list is `Math.random()` which is ensured to be deterministic, see [Randomness](randomness.md) to read more about how this works.
 
-The [Rune CLI](publishing/cli.md) will warn you if your game logic uses unsafe code so don't worry!
+The [Rune CLI](publishing/cli.md) will also warn you if your game logic uses unsafe code when uploading so don't worry.
 
 ## Editor Integration
 

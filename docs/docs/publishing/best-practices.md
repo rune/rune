@@ -33,7 +33,3 @@ Your game should ideally scale from small narrow phones with resolutions of 280Ã
 ### Use Icons Instead of Text
 
 Many players speak little to no English so it's ideal if your game can be understood without understanding English.
-
-### Use Daily Challenges to Keep Game Exciting
-
-[Daily challenges](singleplayer/challenges.md) are optional, but a great way to make your game have something new and exciting every day. Different colors / maps / physics â€” it's completely up to your creativity! If your game supports daily challenges, Rune will automatically add daily leaderboards. Players love having a fresh leaderboard to compete on every day!

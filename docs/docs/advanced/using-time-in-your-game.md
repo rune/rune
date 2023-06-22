@@ -2,7 +2,7 @@
 sidebar_position: 61
 ---
 
-# Time-Based Logic
+# Using Time in your Game
 
 ## Game Time
 

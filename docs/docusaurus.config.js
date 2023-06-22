@@ -70,7 +70,7 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "multiplayer/intro",
+            docId: "quick-start",
             position: "left",
             label: "Docs",
           },
@@ -98,12 +98,12 @@ const config = {
             title: "Docs",
             items: [
               {
-                label: "Singleplayer SDK",
-                to: "/docs/singleplayer/intro",
+                label: "Quick Start",
+                to: "/docs/quick-start",
               },
               {
-                label: "Multiplayer SDK",
-                to: "/docs/multiplayer/intro",
+                label: "Examples",
+                to: "/docs/examples",
               },
             ],
           },

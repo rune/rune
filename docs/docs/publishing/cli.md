@@ -1,8 +1,8 @@
 ---
-sidebar_position: 5
+sidebar_position: 100
 ---
 
-# Command Line Interface
+# CLI Reference
 
 For a smooth development experience use the `rune` CLI in your terminal.
 

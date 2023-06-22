@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Syncing Game State
 
-Underlying all multiplayer gaming is syncing game information. This page will use the simple example of Tic Tac Toe to explain how the game state is synced across players.
+Underlying all multiplayer gaming is syncing game information. This page will use the simple example of Tic Tac Toe to explain how the game state is synced across players using Rune's custom predict-rollback netcode.
 
 ## Separation into Game Logic and Rendering
 

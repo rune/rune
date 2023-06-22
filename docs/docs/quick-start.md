@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # Quick Start
 
-Build a multiplayer game that reaches millions and let Rune handle all the complexity. Rune handles netcode, hosting servers, voice chat, matchmaking, spectating, and much more.
+Build a multiplayer game that reaches millions and let Rune handle all the complexity. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
 ## Install
 

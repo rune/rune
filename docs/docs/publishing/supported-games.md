@@ -4,9 +4,7 @@ sidebar_position: 4
 
 # Supported Games
 
-Rune handles all the complexity of building a multiplayer game. You don't have to write any netcode or host servers. Moreover, you don't have to worry about game version mismatches, player reconnections, or even having enough players for your game! The [quick start section](quick-start.md) has more details on all the things that Rune handles for you.    
-
-We've made this SDK to make your life simple. We've tried to make it general enough that you can build almost anything. Any game that follows the [overall restrictions](how-it-works/syncing-game-state.md#restrictions) and [logic restrictions](advanced/logic-restrictions.md) is supported. Really your imagination is the limit!
+Rune handles all the complexity of building a multiplayer game. We've made this SDK to make your life simple and we've tried to make it general enough that you can build almost anything. Any game that follows the [overall restrictions](how-it-works/syncing-game-state.md#restrictions) and [logic restrictions](advanced/logic-restrictions.md) is supported.
 
 ## Examples of Supported Games
 
@@ -23,4 +21,4 @@ There's a lot more games you can build, these are just some examples to give you
 
 ## Adding Support for More Games in Upcoming Version
 
-Rune's multiplayer SDK has some great new updates coming, including fast update loop! This'll add support for classics like Snake and modern real-time IO games.
+We have some great updates coming up, including a 60 fps update loop! This'll add support for classics like Snake and modern real-time IO games.

@@ -18,11 +18,11 @@ The primary aim is to ensure that the code is deterministic, meaning that if you
 
 A notable exception to this list is `Math.random()` which is ensured to be deterministic, see [Randomness](randomness.md) to read more about how this works.
 
-The [Rune CLI](publishing/cli.md) will also warn you if your game logic uses unsafe code when uploading so don't worry.
+The [Rune CLI](publishing/cli.md) will also warn you if it detects that your game logic seems to be using potentially unsafe code when uploading. Don't worry, we'll also help ensure that your game runs smoothly across devices when testing it before it's released.
 
 ## Editor Integration
 
-If you use [ESLint](https://eslint.org/) as part of your development setup, it's also possible to get these warnings directly in your editor.
+If you use [ESLint](https://eslint.org/) as part of your development setup, it's also possible to get warnings for potentially unsafe code directly in your editor.
 
 First, install `eslint-plugin-rune`:
 

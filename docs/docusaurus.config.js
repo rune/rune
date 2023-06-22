@@ -98,12 +98,16 @@ const config = {
             title: "Docs",
             items: [
               {
-                label: "Singleplayer SDK",
-                to: "/docs/singleplayer/intro",
+                label: "Intro",
+                to: "/docs/multiplayer/intro",
               },
               {
-                label: "Multiplayer SDK",
-                to: "/docs/multiplayer/intro",
+                label: "Examples",
+                to: "/docs/multiplayer/examples",
+              },
+              {
+                label: "Publishing",
+                to: "/docs/publishing",
               },
             ],
           },

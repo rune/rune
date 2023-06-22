@@ -23,7 +23,7 @@ or integrate with an existing game by including these lines in your `index.html`
 
 ## Game Logic
 
-Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](multiplayer/syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
+Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](how-it-works/syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
 
 ```js
 // logic.js
@@ -73,7 +73,7 @@ Rune.initClient({ onChange })
 
 ## Next Steps
 
-- [Read about syncing game state](multiplayer/syncing-game-state.md)
+- [Read about syncing game state](how-it-works/syncing-game-state.md)
 - [Get inspired by the kinds of games that are supported](publishing/supported-games.md)
 - [View example games](examples.mdx)
 - [Explore the API reference](api-reference.md)

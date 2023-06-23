@@ -145,8 +145,8 @@ kickBall: ({ direction, speed }, { game }) => {
           <p>
             Write your game logic as actions using the expressiveness and
             simplicity of JavaScript. Your game client can be built in any
-            framework that exports to web such as Phaser, PixiJS, PlayCanvas,
-            React, Unity, or Godot.
+            framework that works on the web such as React, Svelte, Vue, Phaser,
+            PixiJS, PlayCanvas, it pulUnity, or Godot.
           </p>
           <p>
             <strong>We solve the difficult and boring parts</strong> like

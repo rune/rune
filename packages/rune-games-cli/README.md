@@ -6,7 +6,7 @@ Test your HTML5 game inside a mock Rune app to ensure your game works with the [
 
 ## Documentation
 
-- [Rune Command Line Interface](https://developers.rune.ai/docs/cli)
+- [Rune Command Line Interface](https://developers.rune.ai/docs/publishing/cli)
 
 ## License
 

@@ -130,7 +130,7 @@ Rune.initLogic({
 
 ## `Rune.gameTimeInSeconds()`
 
-Returns the amount of seconds that have passed since the start of the game.
+Returns the amount of seconds that have passed since the start of the game. See [Using Time in your Game](advanced/using-time-in-your-game.md#game-time).
 
 ### `players: Record<string, "WON" | "LOST" | number>`
 

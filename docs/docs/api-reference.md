@@ -23,19 +23,20 @@ Rune.initLogic({
     for (let playerId of playerIds) {
       scores[playerId] = 0
     }
-    return { scores }
+    return { scores, playersIds, currentPlayerIndex: 0, currentPlayerStartedAt: 0 }
   },
   actions: {
     myAction: (payload, { game, playerId }) => {
       // Check it's not the other player's turn
-      if (game.lastPlayerTurn !== playerId) {
+      if (game.currentPlayer !== game.playerIds[game.currentPlayerIndex]) {
         throw Rune.invalidAction()
       }
 
       // Increase score and switch turn
       game.scores[playerId]++
-      game.lastPlayerTurn = playerId
-
+      //Switch turn
+      game.currentPlayerIndex = (game.currentPlayerIndex + 1) % game.playerIds;
+      game.currentPlayerStartedAt = Rune.gameTimeInSeconds();
       // Determine if game has ended
       if (isVictoryOrDraw(game)) {
         Rune.gameOver()
@@ -50,6 +51,13 @@ Rune.initLogic({
       delete game.scores[playerId]
     },
   },
+  update: ({game}) => {
+    //If 30 seconds have passed since last player scored, switch player
+    if (Rune.gameTimeInSeconds() - game.lastPlayerScoredAt > 30) {
+      game.currentPlayerIndex = (game.currentPlayerIndex + 1) % game.playerIds;
+      game.currentPlayerStartedAt = Rune.gameTimeInSeconds();
+    }
+  }
 })
 ```
 
@@ -72,6 +80,10 @@ The `actions` option is an object with actions functions exposed to the UI integ
 ### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any }) => void }` _optional_
 
 By default a game will end if a player leaves (see [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players)), but by defining the `playerJoined`/`playerLeft` events you can [Support Players Joining Midgame](advanced/joining-leaving.md#supporting-players-joining-midgame).
+
+### `update({game: any}) => void` _optional_
+
+Function that is executed every second. See [Using Time in your Game](advanced/using-time-in-your-game.md#update-function).
 
 ## `Rune.invalidAction()`
 
@@ -115,6 +127,10 @@ Rune.initLogic({
   },
 })
 ```
+
+## `Rune.gameTimeInSeconds()`
+
+Returns the amount of seconds that have passed since the start of the game.
 
 ### `players: Record<string, "WON" | "LOST" | number>`
 

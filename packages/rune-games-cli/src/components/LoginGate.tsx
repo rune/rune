@@ -1,5 +1,5 @@
 import { Box } from "ink"
-import React, { ReactNode } from "react"
+import React, { ReactNode, useState } from "react"
 
 import { Login } from "../flows/Login.js"
 import { useMe } from "../gql/useMe.js"
@@ -9,7 +9,11 @@ import { Step } from "./Step.js"
 export function LoginGate({ children }: { children: ReactNode }) {
   const { me } = useMe()
 
-  if (!me?.handle) return <Login />
+  const [isRegistering, setIsRegistering] = useState(false)
+
+  if (!me?.handle || isRegistering) {
+    return <Login setIsRegistering={setIsRegistering} />
+  }
 
   return (
     <Box flexDirection="column">

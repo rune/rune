@@ -6,7 +6,7 @@ sidebar_position: 61
 
 ## Game Time
 
-Rune exposes `Rune.gameTimeInSeconds()` that you can use inside logic.js, which returns the amount of seconds that have passed since the start of the game.
+Rune exposes `Rune.gameTimeInSeconds()` that you can use inside your game, which returns the amount of seconds that have passed since the start of the game.
 At the moment Rune provides time precision of a second, which should work well for most casual game purposes.
 
 For instance, this could be used to track how long it took for user to make a guess:
@@ -23,8 +23,8 @@ function setNewQuestionAndAnswer(game) {
 }
 
 Rune.initLogic({
-  setup: (playerIds) => ({
-    scores: Object.fromEntries(playerIds.map((id) => [id, 0])),
+  setup: (allPlayerIds) => ({
+    scores: Object.fromEntries(allPlayerIds.map((id) => [id, 0])),
     roundStartAt: 0,
     question: "A group of otters is called what?",
     correctAnswer: "A raft"

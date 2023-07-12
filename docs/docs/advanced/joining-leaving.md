@@ -54,9 +54,9 @@ For instance, the game may want to initialize a player’s score as part of hand
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
-  setup: (players) => {
+  setup: (allPlayerIds) => {
     const scores = {}
-    for (playerId in players) {
+    for (playerId in allPlayerIds) {
       scores[playerId] = 0
     }
     return { scores }

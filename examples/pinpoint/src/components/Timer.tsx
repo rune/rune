@@ -13,7 +13,8 @@ export function Timer() {
     let handle: ReturnType<typeof requestAnimationFrame> | undefined
 
     if (roundTimerStartedAt) {
-      const startedAt = Date.now()
+      const startedAt =
+        Date.now() - (Rune.gameTimeInSeconds() - roundTimerStartedAt) * 1000
 
       const tick = () => {
         const value = roundDuration - (Date.now() - startedAt) / 1000 - 0.5

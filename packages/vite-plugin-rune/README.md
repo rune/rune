@@ -1,8 +1,8 @@
 # vite-plugin-rune
 
-Plugin to use Rune Multiplayer SDK with vite. Will automatically inject the SDK and configure build options according to the Rune logic.js requirements.
+Plugin to use Rune Multiplayer SDK with vite. Will automatically inject the SDK and configure build options according to the Rune [logic.js requirements](https://developers.rune.ai/docs/advanced/server-side-logic).
 
-## Installation
+## Install
 
 ```shell
 # yarn

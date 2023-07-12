@@ -2,30 +2,19 @@
 sidebar_position: 0
 ---
 
-# Intro
+# Quick Start
 
-## Why use Rune?
+Build a multiplayer game that reaches millions and let Rune handle all the complexity. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
-Build a multiplayer game that reaches millions and let Rune handle all the complexity. Here's some things you **don't have to worry about** if you use Rune:
+## Install
 
-- Netcode
-- Hosting servers
-- Accounts & friends
-- Voice chat
-- Matchmaking
-- Version mismatches
-- Conflict resolution
-- Spectating
-
-## Setting up a new project
+Create a new Rune game project by running: 
 
 ```sh
 npx rune-games-cli@latest create
 ```
 
-## Integrate with existing game
-
-Include the following lines in your `index.html` file before loading any other JS scripts:
+or integrate with an existing game by including these lines in your `index.html` file before loading any other JS scripts:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer-dev.js"></script>
@@ -34,7 +23,7 @@ Include the following lines in your `index.html` file before loading any other J
 
 ## Game Logic
 
-Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
+Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](how-it-works/syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
 
 ```js
 // logic.js
@@ -82,11 +71,10 @@ function onChange({ oldGame, newGame, yourPlayerId, players, action, event }) {
 Rune.initClient({ onChange })
 ```
 
-## Next steps
+## Next Steps
 
-- [Read about syncing game state](syncing-game-state.md)
-- [Get inspired by the kinds of games that are supported](supported-games.md)
 - [View example games](examples.mdx)
+- [Read more about game state syncing](how-it-works/syncing-game-state.md)
+- [Publish your game](publishing/publishing-your-game.md)
 - [Explore the API reference](api-reference.md)
-- [Test your game with the Rune CLI](cli.md)
-- [Publish your game](publishing.md)
+- [Join the Rune Discord server](https://discord.gg/rune-devs)

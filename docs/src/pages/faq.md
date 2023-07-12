@@ -6,24 +6,19 @@ title: Frequently Asked Questions
 
 ### What Is Rune?
 
-Rune is a social gaming app with millions of people playing games together across iOS and Android. Here's a [quick video](https://www.youtube.com/shorts/5nfZg0Am98U) to give you a sense of how our app works.
-
-Players can discover and play amazing HTML5 games built by indie game developers from around the world. They can do this right inside the Rune app in a seamless TikTok-style interface. They can compete with their friends on the leaderboards, play together on voice chat, and much much more!
-
-Our mission is to make mobile gaming more social and enable indie game developers to get their games in the hands of millions of players.
+Rune is a social gaming app with millions of people playing games together across iOS and Android. Players can enjoy a variety of amazing multiplayer HTML5 games on Rune's voice chat, creating lasting memories and sharing laughs! Our mission is to make mobile gaming more social and enable indie game developers to get their games in the hands of millions of players.
 
 ### What Are Rune’s Features?
 
-Here’s some of the many features Rune provides:
-
-- Leaderboards
-- Voice Chat
-- Messaging
-- Commenting
-- Daily Challenges
-- Push Notifications
-- Offline Support
-- Rich Game Share Links
+With Rune, you can build a multiplayer game that reaches millions, while letting us handle the complexity! Here’s some things you don't have to worry about if you use Rune:
+- Netcode
+- Hosting Servers
+- Accounts & friends
+- Voice chat
+- Matchmaking
+- Version Mismatches
+- Conflict resolution
+- Spectating
 
 ### Who Are We?
 
@@ -33,27 +28,13 @@ We’re a small passionate team who love making and playing games together. Rune
 
 Rune has 5+ million players so you’ll get tons of people playing your game and giving you feedback. Building a game is fun, but having tons of people actually playing your game makes it 10x more fun. We promote your game for free on our social channels and also provide valuable analytics and use feedback on your game. And don’t forget the bragging rights — Rune shows that you created the game and displays your stats. Next time you meet your friends, you can show them how you built a game with millions of plays.
 
-Rune also helps you make your game amazing by providing social features like leaderboards, daily challenges, offline support, _etc_. for free. These features take only a few minutes to add with the Rune SDK.
-
 ### Which Game Engines Does Rune Support?
 
-Rune supports any game that can be exported as HTML5. Almost every game engine exports to HTML5, including Unity, Godot, Defold and all JavaScript game frameworks of course! One of our goals is to let everyone use their favorite engine for Rune!
-
-Your game just needs to integrate Rune’s minimal SDK written in JavaScript. We’re working on extensions for Godot, Unity, Defold, and many other engines, to make it even easier to integrate! If you don’t know how to use Rune with your favorite engine, then just ask us!
-
-### What Is the Rune SDK?
-
-The [Rune SDK](/docs/multiplayer/intro) is a small JavaScript library that you can use to make multiplayer HTML5 games for mobile.
+Your game logic must be written in JavaScript/TypeScript, but your rendering code can use any engine that exports to HTML5. This includes all JavaScript-based engines, Unity, Godot, Defold, and many others. If you don’t know how to use Rune with your favorite engine, just ask us!
 
 ### Does Rune Host the Games?
 
 Yes, we host the games for free. The games are hosted and cached all over the world to ensure the games load super fast!
-
-### What Are Daily Challenges?
-
-You may have heard of Wordle, a game which makes players guess a new word every day. Rune’s daily challenges are similar, but much more flexible! They allow you to ensure that everyone in the world plays the same “challenge” in your game each day.
-
-Daily challenges are optional, but a great way to make your game have something new and exciting every day. Different colors / maps / physics — it's completely up to your creativity! If your game supports daily challenges, Rune will automatically add daily leaderboards. Players love having a fresh leaderboard to compete on every day!
 
 ### Should My Game Support Both Mobile and Desktop Input?
 
@@ -65,7 +46,7 @@ We want to let you unleash your creativity while still avoiding content inapprop
 
 ### How Do I Make the Best Possible Game on Rune?
 
-We’ve talked with a lot of players in the Rune community and accumulated their feedback in [Best Practices](/docs/best-practices). Make sure to check it out!
+We’ve talked with a lot of players in the Rune community and accumulated their feedback in [Best Practices](/docs/publishing/best-practices). Make sure to check it out!
 
 ### Who Makes the Game Logo and What Should It Look Like?
 
@@ -73,7 +54,7 @@ You can upload your own logo or we can help you make one. The logo should be a P
 
 ### How Do I Upload My Game?
 
-See [Publishing](/docs/publishing) docs. We'll keep improving the upload and update process with a focus on making it as easy as possible for you to upload and update your game!
+See [Publishing](/docs/publishing/publishing-your-game) docs. We'll keep improving the upload and update process with a focus on making it as easy as possible for you to upload and update your game!
 
 ### What Is the Size Limit?
 
@@ -86,6 +67,10 @@ We'll try to do our best to review your game quickly and it should normally take
 ### Can I Upload My Game to Other Platforms Than Rune?
 
 Definitely. It's your game and you can do whatever you like with it.
+
+### Can I Remove My Game From Rune?
+
+Yes, you're always free to remove your game whenever you'd like. It's your game.
 
 ### Can I Upload More Than One Game to Rune?
 
@@ -101,7 +86,11 @@ We're working on ways to help indie game devs monetize, but want to make sure we
 
 Of course, anyone uploading their game early will have a huge head start in building a global hit game. We will be promoting your game for free, both inside the app and on our social media channels.
 
-### Do You Have Game Jams?
+### How Does Rune Make Money / Stay Alive?
+
+We'll soon provide ways for you as a game developer to earn money on your game on Rune. When you start making revenue, we will take a small piece of it to cover server and development costs.
+
+### Do You Host Game Jams?
 
 Yes! We host fun community events for all indie game developers regardless of experience level. Some of these events will also have prizes. See `announcements` channel on Discord or [follow us on Twitter](https://twitter.com/joinrune) for the latest game jam.
 

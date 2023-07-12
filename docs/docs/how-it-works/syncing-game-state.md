@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Syncing Game State
 
-Underlying all multiplayer gaming is syncing game information. This page will use the simple example of Tic Tac Toe to explain how the game state is synced across players.
+Underlying all multiplayer gaming is syncing game information. This page will use the simple example of Tic Tac Toe to explain how the game state is synced across players using Rune's custom predict-rollback netcode.
 
 ## Separation into Game Logic and Rendering
 
@@ -12,7 +12,7 @@ Multiplayer games are generally separated into game logic and rendering. This se
 
 ### Game Logic
 
-The logic is stored in a single file, `logic.js`, and initialized by running `Rune.initLogic()` with `minPlayers`, `maxPlayers`, `setup` and `actions`. The `minPlayers` and `maxPlayers` values ensure the game only have to consider a number of players between those two values. All other cases are Rune, incl. automatically making remaining people in the room spectators (more info in [Joining and Leaving](joining-leaving.md)).
+The logic is stored in a single file, `logic.js`, and initialized by running `Rune.initLogic()` with `minPlayers`, `maxPlayers`, `setup` and `actions`. The `minPlayers` and `maxPlayers` values ensure the game only have to consider a number of players between those two values. All other cases are Rune, incl. automatically making remaining people in the room spectators (more info in [Joining and Leaving](advanced/joining-leaving.md)).
 
 The `setup` function returns the initial values for the `game` state, which is the game information that’s synced across players. In the case of Tic Tac Toe, the `game` state describes who’s turn it is and which of the 9 cells have been filled with an X or an O. The `setup` function gets the `players` argument with info about the players at the time of starting the game.
 
@@ -87,7 +87,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 
 ## Restrictions
 
-- Game logic must be written in a subset of JavaScript, see [Logic Restrictions](logic-restrictions.md). The client showing the visual interface can be written in any game engine as long as it uses the JS logic underneath.
+- Game logic must be written in a subset of JavaScript, see [Server-Side Logic](advanced/server-side-logic.md). The client showing the visual interface can be written in any game engine as long as it uses the JS logic underneath.
 - Max 3 actions per player per second.
 - Actions must be synchronous, fast and be memory efficient – execute in <10ms and consume <5MB memory.
 - The `onChange` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.
@@ -100,4 +100,4 @@ Games running on Rune should support initializing the game at any possible momen
 
 Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `onChange`'s `newGame` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.
 
-You can test your game using the [Rune CLI](cli.md) by adding players/spectators joining at various times during your game session.  
+You can test your game by adding players/spectators joining at various times during your game session. See [Testing Locally](/publishing/testing-locally.md) for more info on how we simulate a multiplayer experience when developing.

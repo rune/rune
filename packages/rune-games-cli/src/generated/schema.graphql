@@ -78,6 +78,7 @@ type DevTeam {
   ): GamesConnection!
   handle: String
   id: Int!
+  twitter: String
   unsubscribedFromEmailsAt: Datetime
   updatedAt: Datetime!
 }
@@ -101,6 +102,7 @@ Represents an update to a `DevTeam`. Fields that are set will be updated.
 """
 input DevTeamPatch {
   handle: String
+  twitter: String
 }
 
 """A connection to a list of `DevTeam` values."""

@@ -9,7 +9,9 @@ import { Step } from "./Step.js"
 export function LoginGate({ children }: { children: ReactNode }) {
   const { me } = useMe()
 
-  if (!me?.handle) return <Login />
+  if (!me?.handle) {
+    return <Login />
+  }
 
   return (
     <Box flexDirection="column">

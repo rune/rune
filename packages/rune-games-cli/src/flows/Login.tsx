@@ -21,6 +21,8 @@ export function Login() {
   const { me, meLoading, meError } = useMe({ skip: !authToken })
   const [email, setEmail] = useState("")
   const [newHandle, setNewHandle] = useState("")
+  const [handleSubmitted, setHandleSubmitted] = useState(false)
+  const [twitter, setTwitter] = useState("")
   const {
     startVerification,
     startVerificationLoading,
@@ -74,18 +76,31 @@ export function Login() {
   }, [newAuthToken])
 
   const sanitizedNewHandle = newHandle.trim()
+  const sanitizedTwitter = twitter.trim()
 
-  const submitNewHandle = useCallback(() => {
+  const submitDevData = useCallback(() => {
     if (me && sanitizedNewHandle) {
-      updateDevTeamById({ id: me.id, patch: { handle: sanitizedNewHandle } })
+      updateDevTeamById({
+        id: me.id,
+        patch: {
+          handle: sanitizedNewHandle,
+          twitter: sanitizedTwitter ?? undefined,
+        },
+      })
     }
-  }, [me, sanitizedNewHandle, updateDevTeamById])
+  }, [me, sanitizedNewHandle, sanitizedTwitter, updateDevTeamById])
 
   useEffect(() => {
     if (meError?.message.includes("[tango][AUTH_FAILED]")) {
       storage.delete("authToken")
     }
   }, [meError?.message])
+
+  useEffect(() => {
+    if (updateDevTeamByIdError) {
+      setHandleSubmitted(false)
+    }
+  }, [updateDevTeamByIdError])
 
   if (alreadyHasAuthToken && meLoading) {
     return <Step status="waiting" label="Checking authorization" />
@@ -174,45 +189,69 @@ export function Login() {
 
       {authToken && (
         <Step
-          status={
-            me?.handle
-              ? "success"
-              : updateDevTeamByIdLoading || meLoading
-              ? "waiting"
-              : "userInput"
-          }
+          status={handleSubmitted ? "success" : "userInput"}
           label={(status) =>
             status === "success"
-              ? `You’re logged in successfully as \`${me?.handle}\`!`
-              : status === "waiting"
-              ? updateDevTeamByIdLoading
-                ? "Setting your handle"
-                : "Checking authorization"
+              ? `Handle: ${newHandle}`
               : "To finish setting up your account, please enter your desired handle"
           }
           view={(status) =>
             (status === "userInput" || updateDevTeamByIdError) && (
               <Box flexDirection="column">
-                {updateDevTeamByIdError && (
+                {status === "userInput" && updateDevTeamByIdError && (
                   <Text color="red">
                     {formatApolloError(updateDevTeamByIdError, {
                       'violates check constraint "dev_team_handle_check"':
                         "Invalid input, handles can contain only lowercase letters, numbers, and underscores/dot/hyphens (no spaces)",
                       'violates unique constraint "dev_team_handle_key"':
                         "This handle is already taken, please choose another",
+                      'violates check constraint "dev_team_twitter_regex"':
+                        "Invalid twitter handle",
                       default: "Something went wrong",
                     })}
                   </Text>
                 )}
-                <Box>
-                  <Text>Handle: </Text>
-                  <TextInput
-                    placeholder="cool-dev"
-                    value={newHandle}
-                    onChange={setNewHandle}
-                    onSubmit={submitNewHandle}
-                  />
-                </Box>
+                {status === "userInput" && (
+                  <Box>
+                    <Text>Handle: </Text>
+                    <TextInput
+                      placeholder="cool-dev"
+                      value={newHandle}
+                      onChange={setNewHandle}
+                      onSubmit={() => setHandleSubmitted(true)}
+                    />
+                  </Box>
+                )}
+              </Box>
+            )
+          }
+        />
+      )}
+
+      {handleSubmitted && (
+        <Step
+          status={
+            updateDevTeamByIdLoading || meLoading ? "waiting" : "userInput"
+          }
+          label={(status) =>
+            status === "success"
+              ? `Dev Data saved successfully!`
+              : status === "waiting"
+              ? updateDevTeamByIdLoading
+                ? "Saving your dev data"
+                : "Checking authorization"
+              : "Your twitter handle (optional)"
+          }
+          view={(status) =>
+            status === "userInput" && (
+              <Box>
+                <Text>Twitter: </Text>
+                <TextInput
+                  placeholder=""
+                  value={twitter}
+                  onChange={setTwitter}
+                  onSubmit={submitDevData}
+                />
               </Box>
             )
           }

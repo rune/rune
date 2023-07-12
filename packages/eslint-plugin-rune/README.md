@@ -4,7 +4,7 @@ This package is a collection of rules and configuration for writing safe logic c
 
 ## Documentation
 
-- [Logic Restrictions](https://developers.rune.ai/docs/multiplayer/logic-restrictions)
+- [Server-Side Logic](https://developers.rune.ai/docs/advanced/server-side-logic#editor-integration)
 
 ## Developing
 

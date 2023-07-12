@@ -4,6 +4,7 @@ import path from "path"
 import qrcode from "qrcode-terminal"
 import React, { useState, useMemo, useEffect } from "react"
 
+import { ValidationErrors } from "../../components/ValidationErrors.js"
 import { cli } from "../../lib/cli.js"
 import {
   getGameFiles,
@@ -18,7 +19,6 @@ import {
 
 import { ExitKey } from "./ExitKey.js"
 import { getLocalUrls } from "./getLocalUrls.js"
-import { renderErrorCodeLine } from "./renderCodeError.js"
 import { useAppServer } from "./useAppServer.js"
 import { useGameServer } from "./useGameServer.js"
 
@@ -129,32 +129,10 @@ export function Start() {
             <Text color="yellow" bold>
               Some issues found during game files validation:
             </Text>
-            {validationResult?.errors.map((error, i) => (
-              <Box key={i} paddingLeft={0} flexDirection="column">
-                <Text color="red">
-                  {i + 1}) {error.message}
-                </Text>
-                {!!error.lintErrors?.length && (
-                  <Box paddingLeft={2} flexDirection="column">
-                    {error.lintErrors.map((lintError, i) => (
-                      <Box key={i} flexDirection="column">
-                        <Text>
-                          - {lintError.message} ({lintError.ruleId})
-                        </Text>
-                        {logicJsFile?.content && (
-                          <Box paddingLeft={2}>
-                            {renderErrorCodeLine({
-                              code: logicJsFile.content,
-                              ...lintError,
-                            })}
-                          </Box>
-                        )}
-                      </Box>
-                    ))}
-                  </Box>
-                )}
-              </Box>
-            ))}
+            <ValidationErrors
+              validationResult={validationResult}
+              logicJsFile={logicJsFile}
+            />
           </Box>
           <Text>Do you still want to proceed? (Y/N)</Text>
         </Box>

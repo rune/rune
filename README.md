@@ -10,10 +10,11 @@ SDK for building multiplayer HTML5 games that run inside Rune on [Android](https
 
 ## Documentation
 
-- [Intro](https://developers.rune.ai/docs/multiplayer/intro)
-- [SDK API reference](https://developers.rune.ai/docs/multiplayer/api-reference)
-- [Supported Games](https://developers.rune.ai/docs/multiplayer/supported-games)
-- [Syncing Game State](https://developers.rune.ai/docs/multiplayer/syncing-game-state)
+- [Quick Start](https://developers.rune.ai/docs/quick-start)
+- [Philosophy](https://developers.rune.ai/docs/how-it-works/philosophy)
+- [Syncing Game State](https://developers.rune.ai/docs/how-it-works/syncing-game-state)
+- [Testing Locally](https://developers.rune.ai/docs/publishing/testing-locally)
+- [SDK API Reference](https://developers.rune.ai/docs/api-reference)
 
 ## Packages
 

@@ -19,6 +19,7 @@ gql`
       handle
       email
       admin
+      twitter
     }
   }
 `

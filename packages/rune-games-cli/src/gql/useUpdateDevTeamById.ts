@@ -27,6 +27,7 @@ gql`
       devTeam {
         id
         handle
+        twitter
       }
     }
   }

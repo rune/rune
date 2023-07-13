@@ -26,7 +26,7 @@ The remaining parts of the code are hopefully self-explanatory. Some code like t
 Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
-  setup: (players) => {
+  setup: () => {
     return {
       cells: Array(9).fill(null),
       // Allow either player to start
@@ -88,7 +88,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 ## Restrictions
 
 - Game logic must be written in a subset of JavaScript, see [Server-Side Logic](advanced/server-side-logic.md). The client showing the visual interface can be written in any game engine as long as it uses the JS logic underneath.
-- Max 3 actions per player per second.
+- Max 10 actions per player per second.
 - Actions must be synchronous, fast and be memory efficient – execute in <10ms and consume <5MB memory.
 - The `onChange` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.
 - The `game` state must be <1 MB and any `action` payload below <100 KB to avoid unnecessary network bandwidth usage.

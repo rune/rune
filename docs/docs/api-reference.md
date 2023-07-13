@@ -18,24 +18,24 @@ The `initLogic` function should be called directly at the top level of your `log
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
-  setup: (playersIds) => {
+  setup: (allPlayerIds) => {
     const scores = {}
-    for (let playerId of playerIds) {
+    for (let playerId of allPlayerIds) {
       scores[playerId] = 0
     }
-    return { scores, playersIds, currentPlayerIndex: 0, currentPlayerStartedAt: 0 }
+    return { scores, currentPlayerIndex: 0, currentPlayerStartedAt: 0 }
   },
   actions: {
-    myAction: (payload, { game, playerId }) => {
+    myAction: (payload, { game, playerId, allPlayerIds }) => {
       // Check it's not the other player's turn
-      if (game.currentPlayer !== game.playerIds[game.currentPlayerIndex]) {
+      if (game.currentPlayer !== allPlayerIds[game.currentPlayerIndex]) {
         throw Rune.invalidAction()
       }
 
       // Increase score and switch turn
       game.scores[playerId]++
       //Switch turn
-      game.currentPlayerIndex = (game.currentPlayerIndex + 1) % game.playerIds;
+      game.currentPlayerIndex = (game.currentPlayerIndex + 1) % allPlayerIds.length;
       game.currentPlayerStartedAt = Rune.gameTimeInSeconds();
       // Determine if game has ended
       if (isVictoryOrDraw(game)) {
@@ -51,10 +51,10 @@ Rune.initLogic({
       delete game.scores[playerId]
     },
   },
-  update: ({game}) => {
+  update: ({ game, allPlayerIds }) => {
     //If 30 seconds have passed since last player scored, switch player
     if (Rune.gameTimeInSeconds() - game.lastPlayerScoredAt > 30) {
-      game.currentPlayerIndex = (game.currentPlayerIndex + 1) % game.playerIds;
+      game.currentPlayerIndex = (game.currentPlayerIndex + 1) % allPlayerIds.length;
       game.currentPlayerStartedAt = Rune.gameTimeInSeconds();
     }
   }
@@ -69,19 +69,19 @@ A value between 1-4 of the minmum amount of players that is required to play the
 
 A value between 1-4, must be equal to or greater than `minPlayers`. If the value is lower than 4, other users may join the game as spectators. See [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players).
 
-### `setup(playerIds: string[]): any`
+### `setup(allPlayerIds: string[]): any`
 
-The `setup` function returns the initial values for the game state, which is the game information that’s synced across players. The function gets the `players` argument which is an array of the player IDs at the time of starting the game and must return the initial game state.
+The `setup` function returns the initial values for the game state, which is the game information that’s synced across players. The function gets the `allPlayerIds` argument which is an array of the player IDs at the time of starting the game and must return the initial game state.
 
-### `actions: { [string]: (payload, { game: any, playerId: string }) => void}`
+### `actions: { [string]: (payload, { game: any, playerId: string, allPlayerIds: string[] }) => void}`
 
 The `actions` option is an object with actions functions exposed to the UI integration layer, called with [`Rune.actions.myAction(payload)`](#runeactionspayload). The functions are responsible for [validating the action](#runeinvalidaction), mutating the `game` state and [end the game](#runegameover) when appropriate.
 
-### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any }) => void }` _optional_
+### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any, allPlayerIds: string[] }) => void }` _optional_
 
 By default a game will end if a player leaves (see [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players)), but by defining the `playerJoined`/`playerLeft` events you can [Support Players Joining Midgame](advanced/joining-leaving.md#supporting-players-joining-midgame).
 
-### `update({game: any}) => void` _optional_
+### `update({game: any,  allPlayerIds: string[]}) => void` _optional_
 
 Function that is executed every second. See [Using Time in your Game](advanced/using-time-in-your-game.md#update-function).
 

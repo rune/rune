@@ -90,7 +90,7 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
           //For some reason on windows some paths are returned with \x00 at the beginning. Remove it.
           const idWithoutNull = id.startsWith("\x00") ? id.slice(1) : id
 
-          //Try to unify pats so that no matter what platform they run on they would use /.
+          //Try to unify paths so that no matter what platform they run on they would use /.
           //This is necessary due to vite not providing platform specific paths in some cases
           const platformAgnosticId = idWithoutNull.split(path.sep).join("/")
           const platformAgnosticLogicPath = logicPath.split(path.sep).join("/")

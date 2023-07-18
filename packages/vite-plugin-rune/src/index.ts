@@ -85,6 +85,8 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
         },
         // Force all logic related code into a logic.js chunk.
         manualChunks: (id, { getModuleInfo }) => {
+          const moduleInfo = getModuleInfo(id)
+
           //For some reason on windows some paths are returned with \x00 at the beginning. Remove it.
           const idWithoutNull = id.startsWith("\x00") ? id.slice(1) : id
 
@@ -92,8 +94,8 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
           //This is necessary due to vite not providing platform specific paths in some cases
           const platformAgnosticId = idWithoutNull.split(path.sep).join("/")
           const platformAgnosticLogicPath = logicPath.split(path.sep).join("/")
-          const platformAgnosticImporters = getModuleInfo(id)?.importers
-            ? getModuleInfo(id).importers.map((importer: string) =>
+          const platformAgnosticImporters = moduleInfo
+            ? moduleInfo.importers.map((importer: string) =>
                 importer.split(path.sep).join("/")
               )
             : []

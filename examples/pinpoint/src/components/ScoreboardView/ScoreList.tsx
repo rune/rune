@@ -23,6 +23,7 @@ export function ScoreList({
     score: number
     latestScore: number
     previousScore: number
+    missed: boolean
   }[]
   myPlayerId: string | undefined
   show: "score" | "previousScore"
@@ -53,7 +54,9 @@ export function ScoreList({
         <AnimatedNumber value={scores[0][show]} />
       </Score>
       <SimpleCSSTransition visible={showLatestScore} duration={timings.default}>
-        <LatestScoreRight>+{scores[0].latestScore}</LatestScoreRight>
+        <LatestScoreRight missed={scores[0].missed}>
+          {scores[0].missed ? "No guess" : `+${scores[0].latestScore}`}
+        </LatestScoreRight>
       </SimpleCSSTransition>
     </BigItem>
   ) : (
@@ -73,7 +76,9 @@ export function ScoreList({
             visible={showLatestScore}
             duration={timings.default}
           >
-            <LatestScore>+{item.latestScore}</LatestScore>
+            <LatestScore missed={item.missed}>
+              {item.missed ? "No guess" : `+${item.latestScore}`}
+            </LatestScore>
           </SimpleCSSTransition>
         </Item>
       ))}
@@ -146,20 +151,20 @@ const Score = styled.div`
   text-align: center;
 `
 
-const LatestScore = styled.div`
+const LatestScore = styled.div<{ missed: boolean }>`
   ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
-  color: #1e6252;
+  color: ${({ missed }) => (missed ? "#F34545" : "#1e6252")};
   font-size: 13px;
   font-weight: 700;
   position: absolute;
-  right: 30px;
+  right: 8px;
   top: 2px;
-  width: 55px;
+  width: 100px;
   text-align: center;
 `
 
 const LatestScoreRight = styled(LatestScore)`
   top: inherit;
   bottom: 25px;
-  right: 10px;
+  right: -15px;
 `

@@ -9,6 +9,7 @@ import { $players } from "../state/players"
 import { $myPlayerId } from "../state/myPlayerId"
 import { useFlags } from "../state/flags"
 import { $pendingGuess, $guessingMapView } from "../state/guessingMap"
+import { Timer } from "./Timer"
 
 export function App() {
   const [game, setGame] = useAtom($game)
@@ -56,6 +57,7 @@ export function App() {
 
   return (
     <Root>
+      <Timer />
       {roundFinished ? (
         <ScoreboardView />
       ) : (

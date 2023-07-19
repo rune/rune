@@ -45,14 +45,16 @@ export function ScoreboardView() {
     const target = [panorama.longitude, panorama.latitude]
 
     return [
-      ...guesses.map((guess) => ({
-        type: "guess" as const,
-        location: pickBestGuessRepresentation(target, guess.location),
-        confirmed: true,
-        targetLocation: target,
-        avatarUrl: players[guess.playerId].avatarUrl,
-        distanceText: formatDistance(guess.distance),
-      })),
+      ...guesses
+        .filter((guess) => !guess.missed)
+        .map((guess) => ({
+          type: "guess" as const,
+          location: pickBestGuessRepresentation(target, guess.location),
+          confirmed: true,
+          targetLocation: target,
+          avatarUrl: players[guess.playerId].avatarUrl,
+          distanceText: formatDistance(guess.distance),
+        })),
       {
         type: "flag" as const,
         location: target,
@@ -68,12 +70,14 @@ export function ScoreboardView() {
         )
         const score = guesses.reduce((acc, guess) => acc + guess.score, 0)
         const latestScore = guesses.at(-1)?.score ?? 0
+        const missed = !!guesses.at(-1)?.missed
         const previousScore = score - latestScore
         return {
           player,
           score,
           latestScore,
           previousScore,
+          missed,
         }
       }),
     [game.guesses, players]

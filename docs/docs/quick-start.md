@@ -31,9 +31,9 @@ Create a file named `logic.js` with a `setup` function that returns initial valu
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
-  setup: (playerIds) => {
+  setup: (allPlayerIds) => {
     const scores = {}
-    for (let playerId of playerIds) {
+    for (let playerId of allPlayerIds) {
       scores[playerId] = 0
     }
     return { scores }

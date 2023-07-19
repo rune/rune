@@ -1,6 +1,6 @@
 import type { Plugin } from "vite"
 import { createRequire } from "node:module"
-import { resolve } from "node:path"
+import path from "node:path"
 import { existsSync, readFileSync } from "node:fs"
 
 const require = createRequire(import.meta.url)
@@ -26,7 +26,7 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
   if (!options?.logicPath) {
     throw new Error("`logicPath` option is required to use the Rune plugin")
   }
-  const logicPath = resolve(options.logicPath)
+  const logicPath = path.resolve(options.logicPath)
   if (!existsSync(logicPath)) {
     throw new Error(`Rune logic file "${options.logicPath}" not found`)
   }
@@ -39,7 +39,10 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
       resolveId: (id) => (id === runtimePublicPath ? id : undefined),
       load: (id) =>
         id === runtimePublicPath
-          ? readFileSync(resolve(runePkgPath, "../multiplayer-dev.js"), "utf-8")
+          ? readFileSync(
+              path.resolve(runePkgPath, "../multiplayer-dev.js"),
+              "utf-8"
+            )
           : undefined,
     },
     {
@@ -82,9 +85,23 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
         },
         // Force all logic related code into a logic.js chunk.
         manualChunks: (id, { getModuleInfo }) => {
+          const moduleInfo = getModuleInfo(id)
+
+          //For some reason on windows some paths are returned with \x00 at the beginning. Remove it.
+          const idWithoutNull = id.startsWith("\x00") ? id.slice(1) : id
+
+          //Try to unify paths so that no matter what platform they run on they would use /.
+          //This is necessary due to vite not providing platform specific paths in some cases
+          const platformAgnosticId = idWithoutNull.split(path.sep).join("/")
+          const platformAgnosticLogicPath = logicPath.split(path.sep).join("/")
+          const platformAgnosticImporters = moduleInfo
+            ? moduleInfo.importers.map((importer: string) =>
+                importer.split(path.sep).join("/")
+              )
+            : []
           if (
-            id === logicPath ||
-            getModuleInfo(id)?.importers.includes(logicPath)
+            platformAgnosticId === platformAgnosticLogicPath ||
+            platformAgnosticImporters.includes(platformAgnosticLogicPath)
           ) {
             return "logic"
           }

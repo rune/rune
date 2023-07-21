@@ -23,6 +23,10 @@ const templateDir = path.resolve(
 )
 const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"
 
+function formatRunCommand(command: string) {
+  return `${pkgManager}${pkgManager === "yarn" ? "" : " run"} ${command}`
+}
+
 function formatTargetDir(targetDir: string) {
   return targetDir.trim().replace(/\/+$/g, "")
 }
@@ -175,10 +179,15 @@ export function Create({ args }: { args: string[] }) {
         )
       )}
       {step === Steps.Done && (
-        <Text>{`\nTo start the project, run:
+        <Text>{`
+To start the project, run:
   cd ${targetDir}
   ${pkgManager} install
-  ${pkgManager}${pkgManager === "yarn" ? "" : " run"} dev
+  ${formatRunCommand("dev")}
+
+To upload your game, run:
+  ${formatRunCommand("build")}
+  rune upload
 `}</Text>
       )}
     </Box>

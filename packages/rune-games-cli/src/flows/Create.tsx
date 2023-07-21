@@ -184,6 +184,7 @@ To start the project, run:
   cd ${targetDir}
   ${pkgManager} install
   ${formatRunCommand("dev")}
+
 To upload your game, run:
   ${formatRunCommand("build")}
   rune upload

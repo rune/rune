@@ -175,10 +175,13 @@ export function Create({ args }: { args: string[] }) {
         )
       )}
       {step === Steps.Done && (
-        <Text>{`\nTo start the project, run:
+        <Text>{`
+To start the project, run:
   cd ${targetDir}
   ${pkgManager} install
   ${pkgManager}${pkgManager === "yarn" ? "" : " run"} dev
+To upload your game, run:
+  rune upload
 `}</Text>
       )}
     </Box>

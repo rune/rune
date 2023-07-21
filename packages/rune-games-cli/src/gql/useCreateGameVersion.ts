@@ -28,12 +28,14 @@ gql`
     $gameId: Int!
     $content: Upload!
     $challengeSupport: Boolean
+    $isDraft: Boolean
   ) {
     createGameVersion(
       input: {
         gameId: $gameId
         content: $content
         challengeSupport: $challengeSupport
+        isDraft: $isDraft
       }
     ) {
       previewLink

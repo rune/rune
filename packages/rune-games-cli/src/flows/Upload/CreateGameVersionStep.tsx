@@ -56,6 +56,7 @@ export function CreateGameVersionStep({
         createGameVersion({
           gameId,
           challengeSupport,
+          isDraft: !readyForRelease,
           content: {
             name: "content.zip",
             content: zip.toBuffer(),
@@ -66,10 +67,10 @@ export function CreateGameVersionStep({
     }
   }, [
     challengeSupport,
+    readyForRelease,
     createGameVersion,
     gameDir,
     gameId,
-    readyForRelease,
     readyToUpload,
   ])
 

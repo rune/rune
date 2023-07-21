@@ -14,8 +14,8 @@ export function ReadyForReleaseStep({
     if (readyForRelease !== undefined) onComplete(readyForRelease)
   }, [readyForRelease, onComplete])
 
-  const chosenLabel = useMemo(() => {
-    if (readyForRelease === undefined) return null
+  const label = useMemo(() => {
+    if (readyForRelease === undefined) return "Is your game ready for release?"
 
     return readyForRelease
       ? "Game is ready for release"
@@ -25,11 +25,7 @@ export function ReadyForReleaseStep({
   return (
     <Step
       status={readyForRelease !== undefined ? "success" : "userInput"}
-      label={
-        readyForRelease !== undefined
-          ? chosenLabel
-          : "Is your game ready for release?"
-      }
+      label={label}
       view={
         readyForRelease === undefined && (
           <Choose

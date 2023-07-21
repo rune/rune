@@ -46,10 +46,24 @@ export interface ValidationResult {
   }
 }
 
+export function parseGameIndexHtml(indexHtmlContent: string) {
+  if (!valid(indexHtmlContent)) return null
+
+  const { sdkUrlStart } = validationOptions
+
+  const parsedIndexHtml = parse(indexHtmlContent)
+  const scripts = parsedIndexHtml.getElementsByTagName("script")
+  const sdkScript = scripts.find((script) =>
+    script.getAttribute("src")?.startsWith(sdkUrlStart)
+  )
+
+  return { parsedIndexHtml, scripts, sdkScript }
+}
+
 export async function validateGameFiles(
   files: FileInfo[]
 ): Promise<ValidationResult> {
-  const { sdkUrlStart, sdkVersionRegex, minSdkVersion, maxFiles, maxSizeMb } =
+  const { sdkVersionRegex, minSdkVersion, maxFiles, maxSizeMb } =
     validationOptions
 
   const errors: ValidationError[] = []
@@ -75,20 +89,18 @@ export async function validateGameFiles(
     errors.push({
       message: "index.html content has not been provided for validation",
     })
-  } else if (!valid(indexHtml.content)) {
-    errors.push({ message: "index.html is not valid HTML" })
   } else {
-    const parsedIndexHtml = parse(indexHtml.content)
-    const scripts = parsedIndexHtml.getElementsByTagName("script")
-    const sdkScript = scripts.find((script) =>
-      script.getAttribute("src")?.startsWith(sdkUrlStart)
-    )
+    const gameIndexHtmlElements = parseGameIndexHtml(indexHtml.content)
 
-    if (!sdkScript) {
+    if (!gameIndexHtmlElements) {
+      errors.push({ message: "index.html is not valid HTML" })
+    } else if (!gameIndexHtmlElements.sdkScript) {
       errors.push({
         message: "Game index.html must include Rune SDK script",
       })
     } else {
+      const { sdkScript, scripts } = gameIndexHtmlElements
+
       if (
         sdkScript.getAttribute("src")?.endsWith("/multiplayer.js") ||
         sdkScript.getAttribute("src")?.endsWith("/multiplayer-dev.js")

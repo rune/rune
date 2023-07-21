@@ -6,6 +6,7 @@ import React, { useState, useMemo, useCallback, useEffect } from "react"
 import { Step } from "../../components/Step.js"
 import { ValidationErrors } from "../../components/ValidationErrors.js"
 import { cli } from "../../lib/cli.js"
+import { findGameDir } from "../../lib/findGameDir.js"
 import {
   getGameFiles,
   findShortestPathFileThatEndsWith,
@@ -24,8 +25,8 @@ export function GameDirInputStep({
 }: {
   onComplete: (args: { gameDir: string; multiplayer: boolean }) => void
 }) {
-  const [gameDir, setGameDir] = useState(
-    () => cli.input[1] ?? path.resolve(".")
+  const [gameDir, setGameDir] = useState(() =>
+    findGameDir(cli.input[1] ?? path.resolve("."))
   )
   const gameDirFormatted = useMemo(
     () =>

@@ -8,11 +8,15 @@ import { ConfirmationStep } from "./ConfirmationStep.js"
 import { CreateGameStep } from "./CreateGameStep.js"
 import { CreateGameVersionStep } from "./CreateGameVersionStep.js"
 import { GameDirInputStep } from "./GameDirInputStep.js"
+import { ReadyForReleaseStep } from "./ReadyForReleaseStep.js"
 
 export function Upload() {
   const [gameDir, setGameDir] = useState<string | undefined>()
   const [multiplayer, setMultiplayer] = useState<boolean>(false)
   const [gameId, setGameId] = useState<number | null | undefined>()
+  const [readyForRelease, setReadyForRelease] = useState<boolean | undefined>(
+    undefined
+  )
   const [confirmed, setConfirmed] = useState(false)
 
   return (
@@ -24,9 +28,12 @@ export function Upload() {
         }}
       />
       {gameDir !== undefined && (
+        <ReadyForReleaseStep onComplete={setReadyForRelease} />
+      )}
+      {gameDir !== undefined && readyForRelease !== undefined && (
         <ChooseGameStep currentGameId={gameId} onComplete={setGameId} />
       )}
-      {gameId === null && (
+      {gameId === null && readyForRelease !== undefined && (
         <CreateGameStep
           type={multiplayer ? GameType.MULTIPLAYER : GameType.SINGLEPLAYER}
           onComplete={setGameId}
@@ -34,10 +41,12 @@ export function Upload() {
       )}
       {!!gameId &&
         !!gameDir &&
+        readyForRelease !== undefined &&
         (confirmed ? (
           <CreateGameVersionStep
             gameId={gameId}
             gameDir={gameDir}
+            readyForRelease={readyForRelease}
             multiplayer={multiplayer}
           />
         ) : (

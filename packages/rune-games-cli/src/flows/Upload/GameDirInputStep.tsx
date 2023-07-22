@@ -79,7 +79,7 @@ export function GameDirInputStep({
           status="error"
           label={
             !existsGameDir
-              ? "Invalid directory"
+              ? "Directory does not exist"
               : "Some issues detected with your game"
           }
           view={

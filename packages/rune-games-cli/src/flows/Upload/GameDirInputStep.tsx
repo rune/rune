@@ -12,6 +12,7 @@ import {
   findShortestPathFileThatEndsWith,
   FileInfo,
 } from "../../lib/getGameFiles.js"
+import { isDir } from "../../lib/isDir.js"
 import {
   validateGameFiles,
   ValidationResult,
@@ -28,6 +29,7 @@ export function GameDirInputStep({
   const [gameDir, setGameDir] = useState(() =>
     findGameDir(cli.input[1] ?? path.resolve("."))
   )
+  const existsGameDir = useMemo(() => isDir(gameDir), [gameDir])
   const gameDirFormatted = useMemo(
     () =>
       path.relative(".", gameDir) === ""
@@ -42,6 +44,8 @@ export function GameDirInputStep({
   const [logicJsFile, setLogicJsFile] = useState<FileInfo | undefined>()
 
   const onSubmitGameDir = useCallback(() => {
+    if (!existsGameDir) return
+
     getGameFiles(gameDir)
       .then((gameFiles) => {
         setLogicJsFile(findShortestPathFileThatEndsWith(gameFiles, "logic.js"))
@@ -49,7 +53,7 @@ export function GameDirInputStep({
         return validateGameFiles(gameFiles)
       })
       .then(setValidateGameResult)
-  }, [gameDir])
+  }, [existsGameDir, gameDir])
 
   useEffect(() => {
     if (validateGameResult?.valid) {
@@ -62,17 +66,29 @@ export function GameDirInputStep({
     validateGameResult?.valid,
   ])
 
+  useEffect(() => {
+    if (!existsGameDir) {
+      setValidateGameResult(null)
+    }
+  }, [existsGameDir])
+
   return (
     <>
-      {!!validateGameResult?.errors.length && (
+      {(!existsGameDir || !!validateGameResult?.errors.length) && (
         <Step
           status="error"
-          label="Some issues detected with your game"
+          label={
+            !existsGameDir
+              ? "Directory does not exist"
+              : "Some issues detected with your game"
+          }
           view={
-            <ValidationErrors
-              validationResult={validateGameResult}
-              logicJsFile={logicJsFile}
-            />
+            validateGameResult && (
+              <ValidationErrors
+                validationResult={validateGameResult}
+                logicJsFile={logicJsFile}
+              />
+            )
           }
         />
       )}

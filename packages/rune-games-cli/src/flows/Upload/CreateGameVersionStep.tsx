@@ -13,10 +13,12 @@ import { getGameFiles } from "../../lib/getGameFiles.js"
 export function CreateGameVersionStep({
   gameId,
   gameDir,
+  readyForRelease,
   multiplayer,
 }: {
   gameId: number
   gameDir: string
+  readyForRelease: boolean
   multiplayer: boolean
 }) {
   const { game, gameLoading } = useGame(gameId)
@@ -54,6 +56,7 @@ export function CreateGameVersionStep({
         createGameVersion({
           gameId,
           challengeSupport,
+          isDraft: !readyForRelease,
           content: {
             name: "content.zip",
             content: zip.toBuffer(),
@@ -62,7 +65,14 @@ export function CreateGameVersionStep({
         })
       })
     }
-  }, [challengeSupport, createGameVersion, gameDir, gameId, readyToUpload])
+  }, [
+    challengeSupport,
+    readyForRelease,
+    createGameVersion,
+    gameDir,
+    gameId,
+    readyToUpload,
+  ])
 
   return (
     <Box flexDirection="column">

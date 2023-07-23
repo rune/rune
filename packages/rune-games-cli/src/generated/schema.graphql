@@ -26,6 +26,7 @@ input CreateGameVersionInput {
   clientMutationId: String
   content: Upload!
   gameId: Int!
+  isDraft: Boolean
 }
 
 type CreateGameVersionPayload {
@@ -276,6 +277,7 @@ input GameVersionCondition {
 
 enum GameVersionStatus {
   ACTIVE
+  DRAFT
   INACTIVE
   IN_REVIEW
   UPLOADING

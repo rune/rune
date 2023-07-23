@@ -1,6 +1,6 @@
 # vite-plugin-rune
 
-Plugin to use Rune Multiplayer SDK with vite. This plugin will automatically inject the SDK and configure build options to create a `logic.js` file for the game. See [Syncing Game State](https://developers.rune.ai/docs/how-it-works/syncing-game-state) for more info on how Rune's SDK uses a `logic.js` file to seamlessly sync game state across players.
+Plugin to use Rune SDK with vite. This plugin will automatically inject the SDK and configure build options to create a `logic.js` file for the game. See [Syncing Game State](https://developers.rune.ai/docs/how-it-works/syncing-game-state) for more info on how Rune's SDK uses a `logic.js` file to seamlessly sync game state across players.
 
 ## Install
 

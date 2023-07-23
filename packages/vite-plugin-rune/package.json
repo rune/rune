@@ -2,7 +2,7 @@
   "name": "vite-plugin-rune",
   "version": "0.1.1",
   "type": "module",
-  "description": "Vite plugin for Rune Multiplayer SDK",
+  "description": "Vite plugin for Rune SDK",
   "license": "MIT",
   "author": "Rune AI Inc.",
   "keywords": [

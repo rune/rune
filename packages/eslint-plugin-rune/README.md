@@ -1,6 +1,6 @@
 # eslint-plugin-rune
 
-This package is a collection of rules and configuration for writing safe logic code for the Rune Multiplayer SDK.
+This package is a collection of rules and configuration for writing safe logic code for the Multiplayer SDK.
 
 ## Documentation
 

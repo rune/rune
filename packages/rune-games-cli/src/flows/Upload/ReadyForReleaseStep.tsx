@@ -18,8 +18,8 @@ export function ReadyForReleaseStep({
     if (readyForRelease === undefined) return "Is your game ready for release?"
 
     return readyForRelease
-      ? "Game is ready for release"
-      : "Game is not ready for release"
+      ? "Game is ready, Rune will review + release it after upload"
+      : "Game is not ready, just uploading for playtesting"
   }, [readyForRelease])
 
   return (

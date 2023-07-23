@@ -89,6 +89,8 @@ Function that is executed every second. See [Using Time in your Game](advanced/u
 
 Whenever a player tries to do an action that is not allowed, the action handler should reject it by calling `throw Rune.invalidAction()` which will cancel the action and potentially roll back optimistic updates.
 
+This is completely safe to do and can be used throughout your game. For instance, it is used in the [Tic Tac Toe example](https://github.com/rune/rune-games-sdk/blob/staging/examples/tic-tac-toe/logic.js) to ensure that players only can make a move when it is their turn.
+
 ```js
 // logic.js
 Rune.initLogic({

@@ -1,14 +1,9 @@
 // @ts-check
 const { createConfigTester } = require("../createConfigTester")
 
-const test = createConfigTester({
-  extends: "plugin:rune/logic",
-  parserOptions: {
-    sourceType: "module",
-  },
-})
+const test = createConfigTester()
 
-test("syntax", {
+test("syntax", ({ type }) => ({
   valid: [
     "1+1",
     "1-1",
@@ -66,27 +61,34 @@ test("syntax", {
     "switch('hest') { case 'hest': break; default: break; }",
     "let hest = {}; hest.aaa?.bbb",
     "let hest = {}; hest.aaa ?? 'bbb'",
-    'export const hest = "snel"',
-    'export default "hest"',
-  ],
+  ].concat(
+    type === "module"
+      ? ['export const hest = "snel"', 'export default "hest"']
+      : []
+  ),
   invalid: [
-    ["var hest = 'snel'", "unexpectedVar", 1],
-    ["try { throw new Error('hest') } catch (_e) { }", "restrictedSyntax"],
-    ["try { throw new Error('hest') } finally { }", "restrictedSyntax"],
-    ['this.hest = "snel"', "restrictedSyntax"],
-    ['async () => "hest"', "restrictedSyntax"],
-    ['async () => { await Promise.resolve("hest") }', "restrictedSyntax"],
-    ['async function hest() { return "snel" }', "restrictedSyntax"],
+    ["var hest = 'snel'", "no-var", 1],
+    ["try { throw new Error('hest') } catch (_e) { }", "no-restricted-syntax"],
+    ["try { throw new Error('hest') } finally { }", "no-restricted-syntax"],
+    ['this.hest = "snel"', "no-restricted-syntax"],
+    ['async () => "hest"', "no-restricted-syntax"],
+    ['async () => { await Promise.resolve("hest") }', "no-restricted-syntax"],
+    ['async function hest() { return "snel" }', "no-restricted-syntax"],
     [
       'async function hest() { await Promise.resolve("snel") }',
-      "restrictedSyntax",
+      "no-restricted-syntax",
     ],
-    ['function* hest() { yield "snel" }', "restrictedSyntax"],
-    ['import snel from "hest"', "restrictedSyntax"],
-    ['import { snel as klad } from "hest"', "restrictedSyntax"],
-    ['import * as snel from "hest"', "restrictedSyntax"],
-    ['import "hest"', "restrictedSyntax"],
-    ['export * from "hest"', "restrictedSyntax"],
-    ['export { snel } from "hest"', "restrictedSyntax"],
-  ],
-})
+    ['function* hest() { yield "snel" }', "no-restricted-syntax"],
+  ].concat(
+    type === "module"
+      ? [
+          ['import snel from "hest"', "no-restricted-syntax"],
+          ['import { snel as klad } from "hest"', "no-restricted-syntax"],
+          ['import * as snel from "hest"', "no-restricted-syntax"],
+          ['import "hest"', "no-restricted-syntax"],
+          ['export * from "hest"', "no-restricted-syntax"],
+          ['export { snel } from "hest"', "no-restricted-syntax"],
+        ]
+      : []
+  ),
+}))

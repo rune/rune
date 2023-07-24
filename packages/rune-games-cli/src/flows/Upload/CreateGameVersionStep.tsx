@@ -123,8 +123,10 @@ export function CreateGameVersionStep({
               })
             ) : (
               <>
-                Version #{newGameVersionId} uploaded successfully and is now in
-                review 🥳 You can test it here: {previewLink}
+                {readyForRelease
+                  ? `Version #${newGameVersionId} uploaded successfully and is now in review 🥳`
+                  : `Version #${newGameVersionId} uploaded successfully!`}{" "}
+                You can test it here: {previewLink}
                 <Newline />
                 <Text color="yellow">
                   (only share this link with other devs who are helping playtest

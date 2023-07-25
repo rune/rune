@@ -2,7 +2,7 @@ const { createConfigTester } = require("../createConfigTester")
 
 const test = createConfigTester()
 
-test(`variable scope`, ({ type }) => ({
+test("variable scope", ({ type }) => ({
   valid: [
     "(() => { let hest; hest = 'snel' })()",
     "() => { Rune.initLogic() }",

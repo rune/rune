@@ -36,80 +36,102 @@ const normalizeInvalidCodeTest = (test) => {
   } else if (Array.isArray(test)) {
     return {
       code: test[0],
-      errors: [{ messageId: test[1], severity: test[2] || 2 }],
+      errors: [{ ruleId: test[1], severity: test[2] || 2 }],
     }
   }
   return test
 }
 
-const createConfigTester = (baseConfig = {}) => {
-  const eslint = new ESLint({
-    useEslintrc: false,
-    allowInlineConfig: false,
-    fix: false,
-    cache: false,
-    baseConfig,
-  })
-
+//Need to run tests in :
+//JS script
+//JS module
+//TS script
+//TS module
+const createConfigTester = () => {
   /**
    * @param {string} testName
    * @param {TestSuite} tests
    */
-  return (testName, { valid, invalid }) => {
-    describe(testName, () => {
-      if (valid) {
-        describe("valid", () => {
-          valid.forEach((code) => {
-            it(code, async () => {
-              const [result] = await eslint.lintText(code)
-              assert.deepEqual(
-                result.messages.filter((m) => m.severity >= 1),
-                []
-              )
-            })
-          })
+  return (testName, testGetter) => {
+    ;["typescript", "javascript"].forEach((language) => {
+      ;["module", "script"].forEach((sourceType) => {
+        const eslint = new ESLint({
+          useEslintrc: false,
+          allowInlineConfig: false,
+          fix: false,
+          cache: false,
+          baseConfig: {
+            extends:
+              sourceType === "module"
+                ? "plugin:rune/logicModule"
+                : "plugin:rune/logic",
+            parserOptions: { sourceType },
+            parser:
+              language === "typescript"
+                ? "@typescript-eslint/parser"
+                : undefined,
+          },
         })
-      }
-      if (invalid) {
-        describe("invalid", () => {
-          invalid.forEach((test) => {
-            const { code, errors } = normalizeInvalidCodeTest(test)
-            it(code, async () => {
-              const [result] = await eslint.lintText(code)
-              errors.forEach((error) => {
-                if (
-                  !result.messages.find((message) =>
-                    Object.entries(error).every(
-                      ([key, value]) => message[key] === value
-                    )
+
+        const { valid, invalid } = testGetter({ language, sourceType })
+
+        describe(`${testName}: ${language} ${sourceType}`, () => {
+          if (valid) {
+            describe("valid", () => {
+              valid.forEach((code) => {
+                it(code, async () => {
+                  const [result] = await eslint.lintText(code)
+                  assert.deepEqual(
+                    result.messages.filter((m) => m.severity >= 1),
+                    []
                   )
-                ) {
-                  if (result.messages.length === 0) {
-                    throw new Error(
-                      "Expected error matching " +
-                        JSON.stringify(error) +
-                        ", but none were emitted"
-                    )
-                  }
-                  throw new Error(
-                    "No messages matching " +
-                      JSON.stringify(error) +
-                      " found, but saw " +
-                      result.messages
-                        .map(
-                          (m) =>
-                            `"${m.message}"${
-                              m.messageId ? ` (${m.messageId})` : ""
-                            }`
-                        )
-                        .join(", ")
-                  )
-                }
+                })
               })
             })
-          })
+          }
+          if (invalid) {
+            describe("invalid", () => {
+              invalid.forEach((test) => {
+                const { code, errors } = normalizeInvalidCodeTest(test)
+                it(code, async () => {
+                  const [result] = await eslint.lintText(code)
+                  errors.forEach((error) => {
+                    if (
+                      !result.messages.find((message) =>
+                        Object.entries(error).every(
+                          ([key, value]) => message[key] === value
+                        )
+                      )
+                    ) {
+                      if (result.messages.length === 0) {
+                        throw new Error(
+                          "Expected error matching " +
+                            JSON.stringify(error) +
+                            ", but none were emitted"
+                        )
+                      }
+
+                      throw new Error(
+                        "No messages matching " +
+                          JSON.stringify(error) +
+                          " found, but saw " +
+                          result.messages
+                            .map(
+                              (m) =>
+                                `"${m.message}"${
+                                  m.ruleId ? ` (${m.ruleId})` : ""
+                                }`
+                            )
+                            .join(", ")
+                      )
+                    }
+                  })
+                })
+              })
+            })
+          }
         })
-      }
+      })
     })
   }
 }

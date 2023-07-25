@@ -1,11 +1,9 @@
 // @ts-check
 const { createConfigTester } = require("../createConfigTester")
 
-const test = createConfigTester({
-  extends: "plugin:rune/logic",
-})
+const test = createConfigTester()
 
-test("globals", {
+test("globals", () => ({
   valid: [
     "Rune.initLogic()",
     "Math.abs()",
@@ -22,31 +20,31 @@ test("globals", {
     "Number.isNaN(12)",
     "if (42 < Infinity) { }",
     "if (typeof Rune === 'undefined') { }",
+    "parseFloat('1.123')",
   ],
   invalid: [
-    ["Rune.init()", "restrictedObjectProperty"],
-    ["Prune.initLogic()", "undef"],
-    ["Rune.initClient()", "restrictedObjectProperty"],
-    ["Rune.deterministicRandom(1)", "restrictedObjectProperty"],
-    ["Object.assign(window, { hest: 'snel' })", "undef"],
-    ['require("hest")', "undef"],
-    ['eval("hest")', "undef"],
-    ["Date.now()", "undef"],
-    ["new Date()", "undef"],
-    ["const date = Date; date.now()", "undef"],
-    ["Performance.now()", "undef"],
-    ["global.hest = 'snel'", "undef"],
-    ["globalThis.hest = 'snel'", "undef"],
-    ["new XMLHttpRequest()", "undef"],
-    ["fetch('https://rune.ai')", "undef"],
-    ["setTimeout()", "undef"],
-    ["clearTimeout()", "undef"],
-    ["setInterval()", "undef"],
-    ["clearInterval()", "undef"],
-    ["alert()", "undef"],
-    ["new Intl.NumberFormat()", "undef"],
-    ["new Symbol()", "undef"],
-    ["new Map()", "undef"],
-    ["new Set()", "undef"],
+    ["Prune.initLogic()", "no-undef"],
+    ["Object.assign(window, { hest: 'snel' })", "no-undef"],
+    ['require("hest")', "no-undef"],
+    ["Performance.now()", "no-undef"],
+    ["global.hest = 'snel'", "no-undef"],
+    ["globalThis.hest = 'snel'", "no-undef"],
+    ["new XMLHttpRequest()", "no-undef"],
+    ["fetch('https://rune.ai')", "no-undef"],
+    ["setTimeout()", "no-undef"],
+    ["clearTimeout()", "no-undef"],
+    ["setInterval()", "no-undef"],
+    ["clearInterval()", "no-undef"],
+    ["alert()", "no-undef"],
+    ["Rune.init()", "no-restricted-properties"],
+    ["Rune.initClient()", "no-restricted-properties"],
+    ["Rune.deterministicRandom(1)", "no-restricted-properties"],
+    ['eval("hest")', "no-restricted-globals"],
+    ["new Date()", "no-restricted-globals"],
+    ["const date = Date; date.now()", "no-restricted-globals"],
+    ["Date.now()", "no-restricted-globals"],
+    ["new Intl.NumberFormat()", "no-restricted-globals"],
+    ["new Symbol()", "no-restricted-globals"],
+    ["parseFloat = function() {}", "no-global-assign"],
   ],
-})
+}))

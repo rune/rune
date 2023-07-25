@@ -18,7 +18,7 @@ Requires [Node.js](https://nodejs.org/en/download/) version 14.17 or above.
 
 ### `rune start`
 
-Starts a development server that emulates your game running in the Rune app. This interface is identical to the one described in [Testing Locally](testing-locally.md).
+Starts a development server that emulates your game running in the Rune app. This interface is identical to the one described in [Simulating Multiplayer](simulating-multiplayer.md).
 
 ```bash
 cd game/path && rune start

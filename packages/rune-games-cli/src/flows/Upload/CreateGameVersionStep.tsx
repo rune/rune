@@ -134,7 +134,12 @@ export function CreateGameVersionStep({
                   your game)
                 </Text>
                 {congratulationMsg && (
-                  <Text color="green">{congratulationMsg}</Text>
+                  <>
+                    <Newline />
+                    <Newline />
+                    <Text color="green">{congratulationMsg}</Text>
+                    <Newline />
+                  </>
                 )}
               </>
             )

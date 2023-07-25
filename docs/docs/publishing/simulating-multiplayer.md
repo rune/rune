@@ -13,3 +13,9 @@ To simulate the multiplayer experience during development, Rune runs many instan
 ## Run on Your Phone
 
 You can also test your game on your phone. Just connect to the URL provided by your development tool and you'll see a development UI for testing the multiplayer experience. You can also test how your game works on a phone by using Chrome Developer Tools.
+
+## FAQ
+
+### How to share links for playtesting?
+
+In case you want other devs to help you playtest your game, [publish your game](publishing-your-game.md) to get the playtest link that you can share with them.

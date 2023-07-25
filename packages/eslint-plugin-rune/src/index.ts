@@ -129,7 +129,7 @@ const logicModuleConfig: ESLint.ConfigData = {
 export const configs: ESLint.Plugin["configs"] = {
   recommended: {
     globals: {
-      Rune: true,
+      Rune: "readonly",
     },
     overrides: [
       {

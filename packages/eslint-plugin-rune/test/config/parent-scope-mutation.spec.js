@@ -1,10 +1,8 @@
 const { createConfigTester } = require("../createConfigTester")
 
-const test = createConfigTester({
-  extends: "plugin:rune/logic",
-})
+const test = createConfigTester()
 
-test("variable scope", {
+test("variable scope", ({ type }) => ({
   valid: [
     "(() => { let hest; hest = 'snel' })()",
     "() => { Rune.initLogic() }",
@@ -53,6 +51,7 @@ test("variable scope", {
   ],
   invalid: [
     "let hest; (() => { hest = 'snel' })()",
+    "Math.smth = 4",
     "() => { let hest; () => { hest = 'snel' } }",
     "const hest = ['snel', 'klad']; (() => { hest.splice(0, 1) })()",
     "const hest = { snel: true }; () => Object.assign(hest, { klad: true })",
@@ -74,7 +73,6 @@ test("variable scope", {
     "let hest = 1; () => { ([...hest] = [2]); }",
     "Rune = 'hest'",
     "Rune.blah = 'hest'",
-    "delete Rune",
     "delete Rune.initLogic",
     "Rune.initLogic++",
     "Rune.initLogic += 1",
@@ -89,5 +87,9 @@ test("variable scope", {
     "Object.__defineGetter__(Rune, () => 'hest')",
     "Object.__defineSetter__(Rune, () => 'hest')",
     "Object.setPrototypeOf(Rune, { hest: true })",
-  ].map((s) => [s, "noParentScopeMutation"]),
-})
+    //deleting Rune will throw Parsing error: Deleting local variable in strict mode in case of running in module
+    type === "script" && "delete Rune",
+  ]
+    .filter((x) => !!x)
+    .map((s) => [s, "rune/no-parent-scope-mutation"]),
+}))

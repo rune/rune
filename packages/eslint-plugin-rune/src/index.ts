@@ -23,108 +23,66 @@ const restrictedSyntaxBase = [
   },
 ]
 
+const restrictedGlobals = [
+  "exports",
+  "global",
+  "module",
+  "require",
+  "constructor",
+  {
+    name: "Date",
+    message: "Please use Rune.gameTimeInSeconds() for time",
+  },
+  "decodeURI",
+  "decodeURIComponent",
+  "encodeURI",
+  "encodeURIComponent",
+  "escape",
+  "eval",
+  "EvalError",
+  "Function",
+  "RegExp",
+  "toLocaleString",
+  "unescape",
+  "ArrayBuffer",
+  "DataView",
+  "Float32Array",
+  "Float64Array",
+  "Int16Array",
+  "Int32Array",
+  "Int8Array",
+  "Promise",
+  "Proxy",
+  "Reflect",
+  "Symbol",
+  "Uint16Array",
+  "Uint32Array",
+  "Uint8Array",
+  "Uint8ClampedArray",
+  "WeakMap",
+  "WeakSet",
+  "Atomics",
+  "SharedArrayBuffer",
+  "BigInt",
+  "BigInt64Array",
+  "BigUint64Array",
+  "globalThis",
+  "FinalizationRegistry",
+  "WeakRef",
+  "Performance",
+  "Intl",
+]
+
 const logicConfig: ESLint.ConfigData = {
   plugins: ["rune"],
   parserOptions: {
     ecmaVersion: 2021,
   },
   globals: {
-    // See https://github.com/eslint/eslint/tree/main/conf/globals.js
-    // commonjs
-    exports: "off",
-    global: "off",
-    module: "off",
-    require: "off",
-
-    // es3
-    Array: "readonly",
-    Boolean: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    constructor: "off",
-    Date: "off",
-    decodeURI: "off",
-    decodeURIComponent: "off",
-    encodeURI: "off",
-    encodeURIComponent: "off",
-    Error: "readonly",
-    escape: "off",
-    eval: "off",
-    EvalError: "off",
-    Function: "off",
-    // @ts-expect-error JS built-in method conflict
-    hasOwnProperty: "readonly",
-    Infinity: "readonly",
-    isFinite: "readonly",
-    isNaN: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    isPrototypeOf: "readonly",
-    Math: "readonly",
-    NaN: "readonly",
-    Number: "readonly",
-    Object: "readonly",
-    parseFloat: "readonly",
-    parseInt: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    propertyIsEnumerable: "readonly",
-    RangeError: "readonly",
-    ReferenceError: "readonly",
-    RegExp: "off",
-    String: "readonly",
-    SyntaxError: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    toLocaleString: "off",
-    // @ts-expect-error JS built-in method conflict
-    toString: "readonly",
-    TypeError: "readonly",
-    undefined: "readonly",
-    unescape: "off",
-    URIError: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    valueOf: "readonly",
-
-    // es5
-    JSON: "readonly",
-
-    // es2015
-    ArrayBuffer: "off",
-    DataView: "off",
-    Float32Array: "off",
-    Float64Array: "off",
-    Int16Array: "off",
-    Int32Array: "off",
-    Int8Array: "off",
-    Map: "off",
-    Promise: "off",
-    Proxy: "off",
-    Reflect: "off",
-    Set: "off",
-    Symbol: "off",
-    Uint16Array: "off",
-    Uint32Array: "off",
-    Uint8Array: "off",
-    Uint8ClampedArray: "off",
-    WeakMap: "off",
-    WeakSet: "off",
-
-    // es2017
-    Atomics: "off",
-    SharedArrayBuffer: "off",
-
-    // es2020
-    BigInt: "off",
-    BigInt64Array: "off",
-    BigUint64Array: "off",
-    globalThis: "off",
-
-    // es2021
-    AggregateError: "readonly",
-    FinalizationRegistry: "off",
-    WeakRef: "off",
-
-    // Rune globals
     Rune: "readonly",
   },
   rules: {
+    "no-restricted-globals": ["error", ...restrictedGlobals],
     "no-undef": 2,
     "no-global-assign": 2,
     "no-extend-native": 2,
@@ -171,15 +129,11 @@ const logicModuleConfig: ESLint.ConfigData = {
 export const configs: ESLint.Plugin["configs"] = {
   recommended: {
     globals: {
-      Rune: true,
+      Rune: "readonly",
     },
     overrides: [
       {
-        files: ["**/logic.js"],
-        ...logicConfig,
-      },
-      {
-        files: ["**/logic/**/*.ts", "**/logic/**/*.js"],
+        files: ["**/logic.ts", "**/logic.js"],
         ...logicModuleConfig,
       },
     ],

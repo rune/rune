@@ -25,6 +25,6 @@ We can also make a logo for your game if you'd like, just ask us on [Discord](ht
 
 ## Sit Back, Relax
 
-The Rune team will now review your game to ensure it follows the best practices and work properly. We'll try to do our best to review your game quickly and it should normally take less than 2-3 weekdays.
+If you chose that your game is ready for release, the Rune team will review your game to ensure it follows the best practices and work properly. We'll try to do our best to review your game quickly and it should normally take less than 2-3 weekdays.
 
 To have the quickest review experience, make sure your game follow the [Best Practices](publishing/best-practices.md).

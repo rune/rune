@@ -11,6 +11,7 @@ Rune is a social gaming app with millions of people playing games together acros
 ### What Are Rune’s Features?
 
 With Rune, you can build a multiplayer game that reaches millions, while letting us handle the complexity! Here’s some things you don't have to worry about if you use Rune:
+
 - Netcode
 - Hosting Servers
 - Accounts & friends
@@ -117,3 +118,7 @@ We’d love to hear from you! Let us know what you think in the `feedback-for-ru
 ### I Need Help / Have a Question. Who Do I Ask?
 
 See the [Help section](/help).
+
+### Sharing Playtesting Links
+
+In case you want other devs to help you playtest your game, you can [upload your game](/docs/publishing/publishing-your-game) to get a playtest link that you can share with them. This link will work even before the game has been reviewed.

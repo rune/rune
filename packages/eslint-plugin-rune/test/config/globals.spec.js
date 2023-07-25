@@ -20,6 +20,7 @@ test("globals", () => ({
     "Number.isNaN(12)",
     "if (42 < Infinity) { }",
     "if (typeof Rune === 'undefined') { }",
+    "parseFloat('1.123')",
   ],
   invalid: [
     ["Prune.initLogic()", "no-undef"],
@@ -44,5 +45,6 @@ test("globals", () => ({
     ["Date.now()", "no-restricted-globals"],
     ["new Intl.NumberFormat()", "no-restricted-globals"],
     ["new Symbol()", "no-restricted-globals"],
+    ["parseFloat = function() {}", "no-global-assign"],
   ],
 }))

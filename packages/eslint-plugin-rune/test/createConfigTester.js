@@ -119,7 +119,7 @@ const createConfigTester = () => {
                             .map(
                               (m) =>
                                 `"${m.message}"${
-                                  m.messageId ? ` (${m.messageId})` : ""
+                                  m.ruleId ? ` (${m.ruleId})` : ""
                                 }`
                             )
                             .join(", ")

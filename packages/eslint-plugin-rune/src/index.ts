@@ -79,42 +79,6 @@ const logicConfig: ESLint.ConfigData = {
     ecmaVersion: 2021,
   },
   globals: {
-    // See https://github.com/eslint/eslint/tree/main/conf/globals.js
-    // es3
-    Array: "readonly",
-    Boolean: "readonly",
-    Error: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    hasOwnProperty: "readonly",
-    Infinity: "readonly",
-    isFinite: "readonly",
-    isNaN: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    isPrototypeOf: "readonly",
-    Math: "readonly",
-    NaN: "readonly",
-    Number: "readonly",
-    Object: "readonly",
-    parseFloat: "readonly",
-    parseInt: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    propertyIsEnumerable: "readonly",
-    RangeError: "readonly",
-    ReferenceError: "readonly",
-    String: "readonly",
-    SyntaxError: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    toString: "readonly",
-    TypeError: "readonly",
-    undefined: "readonly",
-    URIError: "readonly",
-    // @ts-expect-error JS built-in method conflict
-    valueOf: "readonly",
-    // es5
-    JSON: "readonly",
-    // es2021
-    AggregateError: "readonly",
-    // Rune globals
     Rune: "readonly",
   },
   rules: {

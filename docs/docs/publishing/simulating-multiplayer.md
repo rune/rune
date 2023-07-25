@@ -18,4 +18,4 @@ You can also test your game on your phone. Just connect to the URL provided by y
 
 ### How to share links for playtesting?
 
-In case you want other devs to help you playtest your game, [publish your game](publishing-your-game.md) to get the playtest link that you can share with them.
+In case you want other devs to help you playtest your game, you can [upload your game](publishing-your-game.md) to get a playtest link that you can share with them. This link will work even before the game has been reviewed.

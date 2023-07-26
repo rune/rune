@@ -25,7 +25,6 @@ const restrictedSyntaxBase = [
 
 const restrictedGlobals = [
   "exports",
-  "global",
   "module",
   "require",
   "constructor",
@@ -66,7 +65,6 @@ const restrictedGlobals = [
   "BigInt",
   "BigInt64Array",
   "BigUint64Array",
-  "globalThis",
   "FinalizationRegistry",
   "WeakRef",
   "Performance",
@@ -79,6 +77,8 @@ const logicConfig: ESLint.ConfigData = {
     ecmaVersion: 2021,
   },
   globals: {
+    globalThis: "readonly",
+    global: "readonly",
     Rune: "readonly",
   },
   rules: {

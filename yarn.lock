@@ -5112,6 +5112,11 @@ eslint-plugin-react@^7.31.11:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.8"
 
+eslint-plugin-rune@0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-rune/-/eslint-plugin-rune-0.1.9.tgz#5bce76f2a714561c6c891e9d92e279128712bdd9"
+  integrity sha512-EkYqSMqK00wteibvnqysOD9V4a0IOs75HLLQVxfeyvGv4nDsLgkkXzIlQ6LZ0iAdsrPriMJVwKhJ/vZwui1C/A==
+
 eslint-scope@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmjs.org/eslint-scope/-/eslint-scope-5.1.1.tgz"

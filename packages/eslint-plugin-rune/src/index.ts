@@ -27,6 +27,8 @@ const restrictedGlobals = [
   "exports",
   "module",
   "require",
+  "window",
+  "global",
   "constructor",
   {
     name: "Date",

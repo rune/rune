@@ -28,6 +28,7 @@ export function CreateGameVersionStep({
     createGameVersionError,
     newGameVersionId,
     previewLink,
+    congratulationMsg,
   } = useCreateGameVersion()
   const [challengeSupport, setChallengeSupport] = useState<
     boolean | undefined
@@ -132,6 +133,14 @@ export function CreateGameVersionStep({
                   (only share this link with other devs who are helping playtest
                   your game)
                 </Text>
+                {congratulationMsg && (
+                  <>
+                    <Newline />
+                    <Newline />
+                    <Text color="green">{congratulationMsg}</Text>
+                    <Newline />
+                  </>
+                )}
               </>
             )
           }

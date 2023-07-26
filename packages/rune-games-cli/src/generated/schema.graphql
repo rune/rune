@@ -31,6 +31,7 @@ input CreateGameVersionInput {
 
 type CreateGameVersionPayload {
   clientMutationId: String
+  congratulationMsg: String
   gameVersion: GameVersion!
   previewLink: String!
 }

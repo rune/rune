@@ -20,6 +20,7 @@ export function useCreateGameVersion() {
     createGameVersionError: result.error,
     newGameVersionId: result.data?.createGameVersion.gameVersion.gameVersionId,
     previewLink: result.data?.createGameVersion.previewLink,
+    congratulationMsg: result?.data?.createGameVersion.congratulationMsg,
   }
 }
 
@@ -39,6 +40,7 @@ gql`
       }
     ) {
       previewLink
+      congratulationMsg
       gameVersion {
         gameId
         gameVersionId

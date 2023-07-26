@@ -22,6 +22,7 @@ test("globals", () => ({
     "if (typeof Rune === 'undefined') { }",
     "parseFloat('1.123')",
     "globalThis.Math.pow()",
+    "new Set()",
   ],
   invalid: [
     ["Prune.initLogic()", "no-undef"],

@@ -74,6 +74,7 @@ const restrictedGlobals = [
 ]
 
 const logicConfig: ESLint.ConfigData = {
+  env: { es6: true },
   plugins: ["rune"],
   parserOptions: {
     ecmaVersion: 2021,

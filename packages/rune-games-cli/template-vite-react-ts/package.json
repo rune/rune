@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run lint && vite",
+    "dev": "vite",
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives",

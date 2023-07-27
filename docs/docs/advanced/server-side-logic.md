@@ -17,13 +17,13 @@ The Rune SDK will help check your code for unsafe patterns such as:
 - Non-deterministic runtime built-ins such as `Date` and `fetch`
 - Regular expressions because they are stateful
 
-A notable exception to this list is `Math.random()` which is ensured to be deterministic, see [Randomness](randomness.md) to read more about how this works.
+A notable exception to this list is `Math.random()` which is ensured to be deterministic, see [Randomness](randomness.md) for more info.
 
 The [Rune CLI](publishing/cli.md) will also warn you if it detects that your game logic seems to be using potentially unsafe code when uploading. Don't worry, we'll also help ensure that your game runs smoothly across devices when testing it before it's released.
 
 ## Editor Integration
 
-If you use [ESLint](https://eslint.org/) as part of your development setup, it's also possible to get warnings for potentially unsafe code directly in your editor.
+If you use [ESLint](https://eslint.org/), it's also possible to get warnings for potentially unsafe code directly in your editor.
 
 First, install `eslint-plugin-rune`:
 
@@ -39,7 +39,7 @@ Next, add `rune` to the extends section of your `.eslintrc` configuration file:
 }
 ```
 
-This will exclusively check files named `logic.js`/`logic.ts` or files in a `logic` folder for the Rune SDK rules. If your logic is split across multiple files and a bundler is used to produce a single file, you might specify which files to lint yourself with:
+The Rune eslint plugin will by default check files named `logic.js`/`logic.ts` or files in a `logic` folder for the Rune SDK rules. If needed, you can specify more files to lint yourself with:
 
 ```json
 {

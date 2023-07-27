@@ -23,15 +23,15 @@ The [Rune CLI](publishing/cli.md) will also warn you if it detects that your gam
 
 ## Editor Integration
 
-If you use [ESLint](https://eslint.org/), it's also possible to get warnings for potentially unsafe code directly in your editor.
+If you use [ESLint](https://eslint.org/), you can get warnings for potentially unsafe code directly in your editor!
 
-First, install `eslint-plugin-rune`:
+First, install the Rune eslint plugin:
 
 ```bash
 npm install eslint-plugin-rune --save-dev
 ```
 
-Next, add `rune` to the extends section of your `.eslintrc` configuration file:
+Next, add the plugin to the extends section of your `.eslintrc` configuration file:
 
 ```json
 {

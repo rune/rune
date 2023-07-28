@@ -3,7 +3,7 @@
 # an example game, you can ignore this file and run 'rune upload' directly.
 set -e
 
-ASSETS_DIR="$TMPDIR/game-asset-import"
+ASSETS_DIR="$HOME/.rune/game-asset-import"
 WORK_DIR="$PWD"
 GAME=$1
 

@@ -21,7 +21,7 @@ Requires [Node.js](https://nodejs.org/en/download/) version 14.17 or above.
 Creates a new example game using Vite template.
 
 ```bash
-rune creae
+rune create
 # or
 rune create my-game
 ```

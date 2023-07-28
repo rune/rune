@@ -17,11 +17,12 @@ rune upload
 All games on Rune have logos. Here's the guidelines for logos:
 
 - PNG format
-- 600×600 px resolution
+- 600×600 resolution
+- Square w/o rounded edges
 - No transparency
 - No text
 
-We can also make a logo for your game if you'd like, just ask us on [Discord](https://discord.gg/rune-devs)!
+You do not need a logo to upload an initial version for playtesting. It's only needed before releasing the game to the Rune community. We can also make a logo for your game if you'd like, just ask us on [Discord](https://discord.gg/rune-devs)!
 
 ## Sit Back, Relax
 

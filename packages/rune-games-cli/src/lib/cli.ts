@@ -3,26 +3,20 @@ import meow from "meow"
 export const cli = meow(
   `
   Usage
-    $ rune start <[optional] game path or URL, defaults to current directory>
+    $ rune create <[optional] project name, defaults to current directory>
     $ rune upload <[optional] game path, defaults to current directory>
     $ rune list
-    $ rune create <[optional] project name, defaults to current directory>
 
   Options
     --version, -v   Show CLI version
 
   Examples
-    $ cd game/path && rune start
-
-    $ rune start game/path
-
-    $ rune start https://game-url.com
-
-    $ cd game/path && rune upload
-
-    $ rune upload game/path
-    
     $ rune create my-game
+
+    $ cd my-game && rune upload
+
+    $ rune upload my-game
+    
 `,
   {
     importMeta: import.meta,
@@ -39,7 +33,6 @@ export const cli = meow(
 
 export const validCommands = [
   "help",
-  "start",
   "logout",
   "list",
   "upload",

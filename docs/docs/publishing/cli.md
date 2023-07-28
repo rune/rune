@@ -26,7 +26,7 @@ rune creae
 rune create my-game
 ```
 
-Follow instructions on the terminal to run the game in Rune Dev UI. The interface is identical to the one described in [Simulating Multiplayer](simulating-multiplayer.md).
+Follow instructions on the terminal to run the game in mock Rune app. The interface is identical to the one described in [Simulating Multiplayer](simulating-multiplayer.md).
 
 ### `rune upload`
 

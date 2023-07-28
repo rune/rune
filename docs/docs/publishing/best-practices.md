@@ -28,7 +28,7 @@ Rune shows an animation while your game is loading. It can be confusing if there
 
 ### Gameplay Should not be Affected by Screen Size
 
-Your game should ideally scale from small narrow phones with resolutions of 280×653 to wide tablets with resolutions of 1280×800. Gameplay should not be affected by aspect ratio or resolution. Make sure your game scales to cover the entire screen to provide the best player experience.
+Your game should ideally scale from small narrow phones with resolutions like 280×653 to wide tablets with resolutions like 1280×800. The gameplay area can be even less on small phones, e.g. only 450 pixels high. Gameplay should not be affected by aspect ratio or resolution. Make sure your game scales to cover the entire screen to provide the best player experience. Rune is always in portrait mode so you don't have to worry about supporting landscape.
 
 ### Use Icons Instead of Text
 

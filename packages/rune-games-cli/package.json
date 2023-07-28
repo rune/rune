@@ -54,7 +54,6 @@
     "ink": "3.2.0",
     "ink-spinner": "4.0.3",
     "ink-text-input": "4.0.3",
-    "is-port-reachable": "4.0.0",
     "lodash": "4.17.21",
     "meow": "10.1.2",
     "mime-types": "2.1.35",

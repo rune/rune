@@ -23,6 +23,7 @@ test("globals", () => ({
     "parseFloat('1.123')",
     "globalThis.Math.pow()",
     "new Set()",
+    "console.log(123)",
   ],
   invalid: [
     ["Prune.initLogic()", "no-undef"],

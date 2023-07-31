@@ -84,6 +84,7 @@ const logicConfig: ESLint.ConfigData = {
     globalThis: "readonly",
     global: "readonly",
     Rune: "readonly",
+    console: "readonly",
   },
   rules: {
     "no-restricted-globals": ["error", ...restrictedGlobals],

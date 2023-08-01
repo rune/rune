@@ -1,8 +1,8 @@
 import { Box, Text } from "ink"
 import React from "react"
 
-import { renderErrorCodeLine } from "../flows/Start/renderCodeError.js"
 import { FileInfo } from "../lib/getGameFiles.js"
+import { renderErrorCodeLine } from "../lib/renderCodeError.js"
 import { ValidationResult } from "../lib/validateGameFiles.js"
 
 export function ValidationErrors({

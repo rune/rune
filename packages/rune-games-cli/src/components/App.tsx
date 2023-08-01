@@ -4,7 +4,6 @@ import React from "react"
 import { Create } from "../flows/Create.js"
 import { List } from "../flows/List.js"
 import { Logout } from "../flows/Logout.js"
-import { Start } from "../flows/Start/Start.js"
 import { Update } from "../flows/Update/Update.js"
 import { Upload } from "../flows/Upload/Upload.js"
 import { cliCommand, cli } from "../lib/cli.js"
@@ -26,8 +25,6 @@ export function App() {
         <Text>{packageJson.version}</Text>
       ) : !command || command === "help" ? (
         <Text>{cli.help}</Text>
-      ) : command === "start" ? (
-        <Start />
       ) : command === "logout" ? (
         <Logout />
       ) : command === "create" ? (

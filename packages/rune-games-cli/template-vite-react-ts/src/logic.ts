@@ -27,12 +27,4 @@ Rune.initLogic({
       game.count += amount
     },
   },
-  events: {
-    playerJoined: () => {
-      // Handle player joined
-    },
-    playerLeft() {
-      // Handle player left
-    },
-  },
 })

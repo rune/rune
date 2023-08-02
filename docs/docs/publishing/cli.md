@@ -46,7 +46,7 @@ Displays a list of your games on Rune.
 
 ### `rune update-info`
 
-Allows to update you game's info such as title, description or logo.
+Update your game's info such as title, description or logo.
 
 ### `rune logout`
 

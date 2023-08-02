@@ -75,8 +75,11 @@ export function Login() {
     }
   }, [newAuthToken])
 
-  const sanitizedNewHandle = newHandle.trim()
-  const sanitizedTwitter = twitter.trim()
+  const sanitizedNewHandle = useMemo(() => newHandle.trim(), [newHandle])
+  const sanitizedTwitter = useMemo(
+    () => twitter.trim().replace(/^@/, ""),
+    [twitter]
+  )
 
   const submitDevData = useCallback(() => {
     if (me && sanitizedNewHandle) {

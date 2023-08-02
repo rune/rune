@@ -5,7 +5,7 @@ export const cli = meow(
   Usage
     $ rune create <[optional] project name, defaults to current directory>
     $ rune upload <[optional] game path, defaults to current directory>
-    $ rune update-info  [Allows updating game info (title, description, logo)]
+    $ rune update-info  [Updating game info (title, description, logo)]
     $ rune list         [Lists all your games]
 
   Options

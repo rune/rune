@@ -35,7 +35,7 @@ export function App() {
             <List />
           ) : command === "upload" ? (
             <Upload />
-          ) : command === "update" ? (
+          ) : command === "update-info" ? (
             <Update args={args} />
           ) : null}
         </LoginGate>

@@ -22,14 +22,14 @@ export function Upload() {
   const [needConfirmation, setNeedConfirmation] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
   const { me } = useMe()
-  const { games, gamesLoading } = useGames({
+  const { games } = useGames({
     condition: { devTeamId: me?.id },
     skip: !me,
   })
 
   useEffect(() => {
-    if (!gamesLoading && games && games.length > 1) setNeedConfirmation(true)
-  }, [games, gamesLoading])
+    if (games && games.length > 1) setNeedConfirmation(true)
+  }, [games])
 
   return (
     <Box flexDirection="column">

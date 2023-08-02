@@ -8,8 +8,8 @@ import path from "node:path"
 export default defineConfig({
   base: "", // Makes paths relative
   plugins: [
-    qrcode(),
-    react(), // only applies in dev mode
+    qrcode(), // only applies in dev mode
+    react(),
     rune({ logicPath: path.resolve("./src/logic.ts") }),
   ],
 })

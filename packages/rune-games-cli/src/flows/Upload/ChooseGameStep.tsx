@@ -57,6 +57,10 @@ export function ChooseGameStep({
     } game selected`
   }, [gameId, games])
 
+  if (!gamesLoading && items.length === 0) {
+    return <Step status="error" label="No games found" />
+  }
+
   return (
     <Step
       status={gamesLoading ? "waiting" : submitted ? "success" : "userInput"}

@@ -44,6 +44,10 @@ This command will log you in using your email (if it's the first time) and then 
 
 Displays a list of your games on Rune.
 
+### `rune update-info`
+
+Allows to update you game's info such as title, description or logo.
+
 ### `rune logout`
 
 Log out from the CLI.

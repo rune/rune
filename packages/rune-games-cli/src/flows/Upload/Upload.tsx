@@ -1,7 +1,9 @@
 import { Box } from "ink"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { GameType } from "../../generated/types.js"
+import { useGames } from "../../gql/useGames.js"
+import { useMe } from "../../gql/useMe.js"
 
 import { ChooseGameStep } from "./ChooseGameStep.js"
 import { ConfirmationStep } from "./ConfirmationStep.js"
@@ -17,7 +19,17 @@ export function Upload() {
   const [readyForRelease, setReadyForRelease] = useState<boolean | undefined>(
     undefined
   )
+  const [needConfirmation, setNeedConfirmation] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
+  const { me } = useMe()
+  const { games, gamesLoading } = useGames({
+    condition: { devTeamId: me?.id },
+    skip: !me,
+  })
+
+  useEffect(() => {
+    if (!gamesLoading && games && games.length > 1) setNeedConfirmation(true)
+  }, [games, gamesLoading])
 
   return (
     <Box flexDirection="column">
@@ -42,7 +54,7 @@ export function Upload() {
       {!!gameId &&
         !!gameDir &&
         readyForRelease !== undefined &&
-        (confirmed ? (
+        (confirmed || !needConfirmation ? (
           <CreateGameVersionStep
             gameId={gameId}
             gameDir={gameDir}

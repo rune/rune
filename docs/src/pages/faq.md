@@ -2,9 +2,7 @@
 title: Frequently Asked Questions
 ---
 
-# Frequently Asked Questions
-
-## About Rune
+# About Rune
 
 ### What Is Rune?
 
@@ -47,7 +45,10 @@ We'll soon provide ways for you as a game developer to earn money on your game o
 
 We don't integrate with blockchain or NFTs and have no upcoming plans to do so.
 
-## Getting Started
+<br />
+<br />
+
+# Getting Started
 
 ### Which Game Engines Does Rune Support?
 
@@ -75,7 +76,10 @@ We're working on ways to help indie game devs monetize, but want to make sure we
 
 Of course, anyone uploading their game early will have a huge head start in building a global hit game. We will be promoting your game for free, both inside the app and on our social media channels.
 
-## Game Content
+<br />
+<br />
+
+# Game Content
 
 ### How Do I Make the Best Possible Game on Rune?
 
@@ -89,7 +93,10 @@ We want to let you unleash your creativity while still avoiding content inapprop
 
 We don’t allow network requests of any kind. This protects players' privacy and allows seamless gameplay regardless of internet connection.
 
-## Uploading and Managing Games
+<br />
+<br />
+
+# Uploading and Managing Games
 
 ### How Do I Upload My Game?
 
@@ -123,7 +130,10 @@ Yes! You can upload as many games as you like to Rune.
 
 Yes, you're always free to remove your game whenever you'd like. It's your game.
 
-## Support and Help
+<br />
+<br />
+
+# Support and Help
 
 ### I Found a Bug or Have Suggestions for a New Feature. How Do I Tell You?
 

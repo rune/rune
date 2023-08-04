@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives",
@@ -27,6 +27,7 @@
     "eslint-plugin-rune": "^0.1.9",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
+    "vite-plugin-qrcode": "^0.2.2",
     "vite-plugin-rune": "^0.1.1"
   }
 }

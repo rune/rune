@@ -4,6 +4,7 @@ import React, { useState, useCallback, useEffect } from "react"
 
 import { Step } from "../../components/Step.js"
 import { useGame } from "../../gql/useGame.js"
+import { useMe } from "../../gql/useMe.js"
 import { useUpdateGame } from "../../gql/useUpdateGame.js"
 import { formatApolloError } from "../../lib/formatApolloError.js"
 import { prepareFileUpload } from "../../lib/prepareFileUpload.js"
@@ -12,6 +13,9 @@ import { prepareFileUpload } from "../../lib/prepareFileUpload.js"
 const TextInput = TextInputImport.default as typeof TextInputImport
 
 export function UpdateGameStep({ gameId }: { gameId: number }) {
+  const { me } = useMe()
+  const isAdmin = Boolean(me?.admin)
+
   const { game } = useGame(gameId)
   const [title, setTitle] = useState("")
   const [titleSubmitted, setTitleSubmitted] = useState(false)
@@ -44,7 +48,8 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
       titleSubmitted &&
       descriptionSubmitted &&
       logoPathSubmitted &&
-      previewImgPathSubmitted
+      // Only allow admin to upload previewImg
+      (!isAdmin || previewImgPathSubmitted)
     ) {
       updateGame({
         gameId,
@@ -57,6 +62,7 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
       })
     }
   }, [
+    isAdmin,
     description,
     descriptionSubmitted,
     gameId,
@@ -149,7 +155,8 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
           }
         />
       )}
-      {logoPathSubmitted && (
+      {/* Only allow admin to upload previewImg */}
+      {logoPathSubmitted && isAdmin && (
         <Step
           status={previewImgPathSubmitted ? "success" : "userInput"}
           label={

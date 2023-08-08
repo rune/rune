@@ -19,6 +19,8 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false)
   const [logoPath, setLogoPath] = useState("")
   const [logoPathSubmitted, setLogoPathSubmitted] = useState(false)
+  const [previewImgPath, setPreviewImgPath] = useState("")
+  const [previewImgPathSubmitted, setPreviewImgPathSubmitted] = useState(false)
   const { updateGame, updateGameLoading, updateGameError, updatedGame } =
     useUpdateGame()
 
@@ -33,14 +35,25 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
   const onSubmitLogoPath = useCallback(() => {
     setLogoPathSubmitted(true)
   }, [])
+  const onSubmitPreviewImgPath = useCallback(() => {
+    setPreviewImgPathSubmitted(true)
+  }, [])
 
   useEffect(() => {
-    if (titleSubmitted && descriptionSubmitted && logoPathSubmitted) {
+    if (
+      titleSubmitted &&
+      descriptionSubmitted &&
+      logoPathSubmitted &&
+      previewImgPathSubmitted
+    ) {
       updateGame({
         gameId,
         title,
         description,
         ...(logoPath && { logo: prepareFileUpload(logoPath) }),
+        ...(previewImgPath && {
+          previewImg: prepareFileUpload(previewImgPath),
+        }),
       })
     }
   }, [
@@ -49,6 +62,8 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
     gameId,
     logoPath,
     logoPathSubmitted,
+    previewImgPath,
+    previewImgPathSubmitted,
     title,
     titleSubmitted,
     updateGame,
@@ -59,6 +74,7 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
       setTitleSubmitted(false)
       setDescriptionSubmitted(false)
       setLogoPathSubmitted(false)
+      setPreviewImgPathSubmitted(false)
     }
   }, [updateGameError])
 
@@ -128,6 +144,28 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
                 value={logoPath}
                 onChange={setLogoPath}
                 onSubmit={onSubmitLogoPath}
+              />
+            )
+          }
+        />
+      )}
+      {logoPathSubmitted && (
+        <Step
+          status={previewImgPathSubmitted ? "success" : "userInput"}
+          label={
+            previewImgPathSubmitted
+              ? previewImgPath === ""
+                ? "Will not update the game preview image"
+                : `Will update the preview image to the one from ${previewImgPath}`
+              : "Provide path to game preview image (optional)"
+          }
+          view={
+            !previewImgPathSubmitted && (
+              <TextInput
+                placeholder="/path/to/preview_img.png"
+                value={previewImgPath}
+                onChange={setPreviewImgPath}
+                onSubmit={onSubmitPreviewImgPath}
               />
             )
           }

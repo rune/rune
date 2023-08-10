@@ -13,6 +13,7 @@ const TextInput = TextInputImport.default as typeof TextInputImport
 
 export function UpdateGameStep({ gameId }: { gameId: number }) {
   const { game } = useGame(gameId)
+  const [initialValuesSet, setInitialValuesSet] = useState(false)
   const [title, setTitle] = useState("")
   const [titleSubmitted, setTitleSubmitted] = useState(false)
   const [description, setDescription] = useState("")
@@ -63,11 +64,18 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
   }, [updateGameError])
 
   useEffect(() => {
+    if (initialValuesSet) return
+
     if (game) {
       setTitle(game.title)
-      if (game.description) setDescription(game.description)
+
+      if (game.description) {
+        setDescription(game.description)
+      }
+
+      setInitialValuesSet(true)
     }
-  }, [game])
+  }, [initialValuesSet, game])
 
   return (
     <Box flexDirection="column">

@@ -63,11 +63,15 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
   }, [updateGameError])
 
   useEffect(() => {
+    // Set initial values of game
     if (game) {
-      setTitle(game.title)
-      if (game.description) setDescription(game.description)
+      if (!titleSubmitted) setTitle(game.title)
+
+      if (!descriptionSubmitted && game.description) {
+        setDescription(game.description)
+      }
     }
-  }, [game])
+  }, [titleSubmitted, descriptionSubmitted, game])
 
   return (
     <Box flexDirection="column">

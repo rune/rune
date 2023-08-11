@@ -567,6 +567,7 @@ export interface UpdateGameInput {
   description?: InputMaybe<Scalars['String']>;
   gameId: Scalars['Int'];
   logo?: InputMaybe<Scalars['Upload']>;
+  previewImg?: InputMaybe<Scalars['Upload']>;
   title?: InputMaybe<Scalars['String']>;
 }
 

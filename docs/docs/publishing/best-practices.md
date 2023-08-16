@@ -22,9 +22,9 @@ One of the amazing things about Rune is that there’s no ads. Leave out any bra
 
 Players expect any level information to persist indefinitely, but iOS/Android may reset the cache and clear this information. We're working on a way to make saving data more robust and sync it across devices, but until then please avoid saving data.
 
-### Avoid Progress Bars and Calling `Rune.init()` Prematurely
+### Avoid Progress Bars and Calling `Rune.initClient()` Prematurely
 
-Rune shows an animation while your game is loading. It can be confusing if there's another progress bar in your game itself. To avoid this, wait with calling Rune.init() until your game has fully completed loading.
+Rune shows an animation while your game is loading. It can be confusing if there's another progress bar in your game itself. To avoid this, wait with calling `Rune.initClient()` until your game has fully completed loading.
 
 ### Gameplay Should not be Affected by Screen Size
 
@@ -33,3 +33,7 @@ Your game should ideally scale from small narrow phones with resolutions like 28
 ### Use Icons Instead of Text
 
 Many players speak little to no English so it's ideal if your game can be understood without understanding English.
+
+### Support Spectators
+
+Players on Rune can spectate your game. This can happen in many ways, e.g. if someone joins the room after the room has hit your game's `maxPlayers` or if someone joins after your game has called `Rune.gameOver()`. You can identify specators by them having `yourPlayerId` as undefined (see [Player Info](../how-it-works/player-info.md). Spectators should see all gameplay, but not have any UI for performing actions.

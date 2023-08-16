@@ -36,4 +36,4 @@ Many players speak little to no English so it's ideal if your game can be unders
 
 ### Support Spectators
 
-Players on Rune can spectate your game. This can happen in many ways, e.g. if someone joins the room after the room has hit your game's `maxPlayers` or if someone joins after your game has called `Rune.gameOver()`. You can identify specators by them having `yourPlayerId` as undefined (see [Player Info](../how-it-works/player-info.md). Spectators should see all gameplay, but not have any UI for performing actions.
+Players on Rune can spectate your game. This can happen in many ways, e.g. if someone joins after the room has hit your game's `maxPlayers` or if someone joins after your game has called `Rune.gameOver()`. You can identify spectators by having `yourPlayerId` as undefined (see [Player Info](../how-it-works/player-info.md)). Spectators should see all gameplay, but not have any UI for performing actions.

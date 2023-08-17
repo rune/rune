@@ -1,41 +1,72 @@
 import { useAtomValue } from "jotai"
-import { $yourPlayer, $round, $actorPlayer } from "../../state/$state"
-import { numRounds } from "../../logic"
+import {
+  $yourPlayer,
+  $round,
+  $actorPlayer,
+  $currentTurn,
+} from "../../state/$state"
+import { numRounds, turnCountdown, turnDuration } from "../../logic"
 import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
+import { PieTimer } from "../Timer/PieTimer"
+import { LineTimer } from "../Timer/LineTimer"
 
 export function Game() {
   const yourPlayer = useAtomValue($yourPlayer)
   const actorPlayer = useAtomValue($actorPlayer)
   const round = useAtomValue($round)
+  const currentTurn = useAtomValue($currentTurn)
+
+  if (!currentTurn) return null
 
   return (
     <Root actor={yourPlayer?.actor}>
-      <RoundLabel>
-        Round
-        <br />
-        {round + 1}/{numRounds}
-      </RoundLabel>
-      <UpNext>
-        {yourPlayer?.actor ? (
-          <UpNextLabel>You’re up next!</UpNextLabel>
-        ) : (
-          <>
-            <Avatar src={actorPlayer?.info.avatarUrl} />
-            <UpNextLabel>
-              {actorPlayer?.info.displayName}
-              <br />
-              is up next!
-            </UpNextLabel>
-          </>
-        )}
-      </UpNext>
+      {currentTurn.stage === "countdown" ? (
+        <>
+          <RoundLabel>
+            Round
+            <br />
+            {round + 1}/{numRounds}
+          </RoundLabel>
+          <UpNext>
+            {yourPlayer?.actor ? (
+              <UpNextLabel>You’re up next!</UpNextLabel>
+            ) : (
+              <>
+                <Avatar src={actorPlayer?.info.avatarUrl} />
+                <UpNextLabel>
+                  {actorPlayer?.info.displayName}
+                  <br />
+                  is up next!
+                </UpNextLabel>
+              </>
+            )}
+          </UpNext>
+          <PieTimer
+            startedAt={currentTurn.countdownStartedAt}
+            duration={turnCountdown}
+          />
+        </>
+      ) : currentTurn.stage === "acting" ? (
+        <>
+          <LineTimer
+            startedAt={currentTurn.timerStartedAt}
+            duration={turnDuration}
+            almostOverAt={5}
+          />
+        </>
+      ) : currentTurn.stage === "result" ? (
+        <div>results</div>
+      ) : null}
     </Root>
   )
 }
 
 const Root = styled.div<{ actor?: boolean }>`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   ${({ actor }) =>
     actor &&
     css`
@@ -63,7 +94,7 @@ const UpNext = styled.div`
   > :not(:first-child) {
     margin-top: ${rel(12)};
   }
-  margin: ${rel(32)} 0 ${rel(21)} 0;
+  margin: ${rel(24)} 0;
 `
 
 const UpNextLabel = styled.div`

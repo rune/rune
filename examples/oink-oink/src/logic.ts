@@ -1,6 +1,9 @@
 import { GameState, animals, emotions } from "./lib/types/GameState"
 
 export const numRounds = 3
+export const turnCountdown = 3
+
+export const turnDuration = 30
 
 Rune.initLogic({
   minPlayers: 2,
@@ -29,6 +32,28 @@ Rune.initLogic({
       startGameCheck(game)
     },
   },
+  update: ({ game }) => {
+    const currentTurn = game.turns.at(-1)
+
+    if (!currentTurn) return
+
+    if (
+      currentTurn.stage === "countdown" &&
+      currentTurn.countdownStartedAt &&
+      Rune.gameTimeInSeconds() >= currentTurn.countdownStartedAt + turnCountdown
+    ) {
+      currentTurn.stage = "acting"
+      currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+    }
+
+    if (
+      currentTurn.stage === "acting" &&
+      currentTurn.timerStartedAt &&
+      Rune.gameTimeInSeconds() >= currentTurn.timerStartedAt + turnDuration
+    ) {
+      currentTurn.stage = "result"
+    }
+  },
 })
 
 function getRandomItem<T>(items: readonly T[]) {
@@ -44,5 +69,7 @@ function startGameCheck(game: GameState) {
   game.turns.push({
     animal: getRandomItem(animals),
     emotion: getRandomItem(emotions),
+    stage: "countdown",
+    countdownStartedAt: Rune.gameTimeInSeconds(),
   })
 }

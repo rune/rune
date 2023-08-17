@@ -37,5 +37,8 @@ export interface GameState {
   turns: {
     animal: Animal
     emotion: Emotion
+    stage: "countdown" | "acting" | "result"
+    countdownStartedAt?: number
+    timerStartedAt?: number
   }[]
 }

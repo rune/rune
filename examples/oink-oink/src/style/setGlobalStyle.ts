@@ -1,12 +1,19 @@
 import LilitaOne from "./LilitaOne-Regular.ttf"
+import UbuntuMonoBold from "./UbuntuMono-Bold.ttf"
 
 const style = document.createElement("style")
 
 // language=CSS
 style.innerHTML = `
   @font-face {
-    font-family: "LilitaOne";
+    font-family: LilitaOne;
     src: url('${LilitaOne}');
+  }
+  
+  @font-face {
+    font-family: UbuntuMono;
+    font-weight: 700;
+    src: url('${UbuntuMonoBold}');
   }
 
   html,
@@ -27,7 +34,6 @@ style.innerHTML = `
     user-select: none;
     box-sizing: border-box;
     line-height: 114%;
-    letter-spacing: -0.02em; 
   }
 `
 

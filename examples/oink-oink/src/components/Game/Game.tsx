@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai"
-import { $yourPlayer, $round } from "../state/$state"
-import { numRounds } from "../logic"
+import { $yourPlayer, $round } from "../../state/$state"
+import { numRounds } from "../../logic"
 
 export function Game() {
   const yourPlayer = useAtomValue($yourPlayer)

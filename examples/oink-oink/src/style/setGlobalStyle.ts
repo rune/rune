@@ -26,6 +26,7 @@ style.innerHTML = `
     user-select: none;
     box-sizing: border-box;
     line-height: 114%;
+    letter-spacing: -0.02em; 
   }
 `
 

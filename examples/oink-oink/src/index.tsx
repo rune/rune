@@ -1,6 +1,6 @@
 import "./style/setGlobalStyle"
 import ReactDOM from "react-dom/client"
-import { App } from "./components/App"
+import { App } from "./components/App/App"
 import { $state } from "./state/$state"
 import { Provider, createStore } from "jotai"
 

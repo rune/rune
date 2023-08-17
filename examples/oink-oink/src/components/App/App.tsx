@@ -1,8 +1,10 @@
 import styled from "styled-components/macro"
 import { useAtomValue } from "jotai"
-import { $gameStarted } from "../state/$state"
-import { Start } from "./Start"
-import { Game } from "./Game"
+import { $gameStarted } from "../../state/$state"
+import { Start } from "../Start/Start"
+import { Game } from "../Game/Game"
+
+import background from "./background.svg"
 
 export function App() {
   const gameStarted = useAtomValue($gameStarted)
@@ -13,7 +15,9 @@ export function App() {
 }
 
 const Root = styled.div`
+  display: flex;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #00a6ff 0%, green 100%);
+  background: url("${background}") no-repeat;
+  background-size: 100% 100%;
 `

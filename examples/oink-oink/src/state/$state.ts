@@ -11,6 +11,7 @@ export const $state = atom<{
     players: [],
     gameStarted: false,
     round: 0,
+    turns: [],
   },
   players: {},
   yourPlayerId: undefined,

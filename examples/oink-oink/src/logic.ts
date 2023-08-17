@@ -1,4 +1,4 @@
-import { GameState } from "./lib/types/GameState"
+import { GameState, animals, emotions } from "./lib/types/GameState"
 
 export const numRounds = 3
 
@@ -13,6 +13,7 @@ Rune.initLogic({
     })),
     gameStarted: false,
     round: 0,
+    turns: [],
   }),
   actions: {
     setReadyToStart: (_, { game, playerId }) => {
@@ -30,10 +31,18 @@ Rune.initLogic({
   },
 })
 
+function getRandomItem<T>(items: readonly T[]) {
+  return items[Math.floor(Math.random() * items.length)]
+}
+
 function startGameCheck(game: GameState) {
   if (game.gameStarted) return
   if (game.players.some((player) => !player.readyToStart)) return
 
   game.gameStarted = true
   game.players[0].actor = true
+  game.turns.push({
+    animal: getRandomItem(animals),
+    emotion: getRandomItem(emotions),
+  })
 }

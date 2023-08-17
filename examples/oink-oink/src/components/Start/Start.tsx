@@ -48,7 +48,6 @@ const LogoImg = styled.img`
 
 const ReadyLabel = styled.div`
   font-size: ${rel(28)};
-  color: white;
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
   text-align: center;
 `

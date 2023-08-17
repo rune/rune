@@ -20,6 +20,7 @@ style.innerHTML = `
 
   body {
     font-family: "LilitaOne", sans-serif;
+    color: white;
   }
 
   * {

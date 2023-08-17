@@ -46,4 +46,8 @@ export const $yourPlayer = atom((get) => {
   return players.find((player) => player.id === yourPlayerId)
 })
 
+export const $actorPlayer = atom((get) =>
+  get($players).find((player) => player.actor)
+)
+
 export const $round = atom((get) => get($game).round)

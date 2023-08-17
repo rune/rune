@@ -10,6 +10,7 @@ import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { PieTimer } from "../Timer/PieTimer"
 import { LineTimer } from "../Timer/LineTimer"
+import { art } from "./art/art"
 
 export function Game() {
   const yourPlayer = useAtomValue($yourPlayer)
@@ -54,6 +55,15 @@ export function Game() {
             duration={turnDuration}
             almostOverAt={5}
           />
+          {yourPlayer?.actor ? (
+            <>
+              <Prompt>Make this sound!</Prompt>
+              <AnimalImg src={art.animals[currentTurn.animal]} />
+              <EmotionImg src={art.emotions[currentTurn.emotion]} />
+            </>
+          ) : (
+            <div>guessing view</div>
+          )}
         </>
       ) : currentTurn.stage === "result" ? (
         <div>results</div>
@@ -106,4 +116,19 @@ const UpNextLabel = styled.div`
 const Avatar = styled.img`
   width: ${rel(94)};
   height: ${rel(94)};
+`
+
+const Prompt = styled.div`
+  font-size: ${rel(28)};
+  text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
+`
+
+const AnimalImg = styled.img`
+  width: ${rel(220)};
+  height: ${rel(220)};
+`
+
+const EmotionImg = styled.img`
+  width: ${rel(64)};
+  height: ${rel(64)};
 `

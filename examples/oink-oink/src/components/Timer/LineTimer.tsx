@@ -1,6 +1,7 @@
 import { useTimerValue } from "./useTimerValue"
 import styled from "styled-components/macro"
 import { rel } from "../../style/rel"
+import { useMemo } from "react"
 
 export function LineTimer({
   startedAt,
@@ -12,6 +13,15 @@ export function LineTimer({
   almostOverAt?: number
 }) {
   const value = useTimerValue({ startedAt, duration })
+
+  const clock = useMemo(() => {
+    if (!value) return null
+    const minutes = Math.floor(value / 60)
+    const seconds = Math.round(value % 60)
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`
+  }, [value])
 
   if (value === null) return null
 
@@ -25,7 +35,7 @@ export function LineTimer({
           almostOver={almostOver}
         />
       </Container>
-      <Label>00:{`${Math.round(value)}`.padStart(2, "0")}</Label>
+      <Clock>{clock}</Clock>
     </Root>
   )
 }
@@ -53,7 +63,7 @@ const Value = styled.div<{ almostOver: boolean }>`
   height: 100%;
 `
 
-const Label = styled.div`
+const Clock = styled.div`
   font-family: UbuntuMono;
   font-weight: 700;
   font-size: ${rel(20)};

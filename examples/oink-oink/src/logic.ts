@@ -95,6 +95,10 @@ Rune.initLogic({
         })
       }
     }
+
+    // TODO: figure out how to do:
+    //  "The timer is paused during the screens/animations where a correct
+    //  guess is being shown in the interest of fairness."
   },
 })
 

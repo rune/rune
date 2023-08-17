@@ -11,7 +11,7 @@ export function Game() {
       <div>
         round {round + 1}/{numRounds}
       </div>
-      <pre>{JSON.stringify(yourPlayer)}</pre>
+      <pre>{JSON.stringify(yourPlayer, null, 2)}</pre>
     </div>
   )
 }

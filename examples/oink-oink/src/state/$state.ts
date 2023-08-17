@@ -24,7 +24,19 @@ export const $yourPlayerId = atom((get) => get($state).yourPlayerId)
 
 export const $gameStarted = atom((get) => get($game).gameStarted)
 
-export const $players = atom((get) => get($game).players)
+export const $players = atom((get) => {
+  const players = get($game).players
+  const playersInfo = get($playersInfo)
+
+  return players.map((player) => {
+    const info = playersInfo[player.id]
+
+    return {
+      ...player,
+      info,
+    }
+  })
+})
 
 export const $yourPlayer = atom((get) => {
   const yourPlayerId = get($yourPlayerId)

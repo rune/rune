@@ -1,21 +1,16 @@
 import { useAtomValue } from "jotai"
-import {
-  $yourPlayer,
-  $round,
-  $actorPlayer,
-  $currentTurn,
-} from "../../state/$state"
-import { numRounds, turnCountdown, turnDuration } from "../../logic"
+import { $yourPlayer, $currentTurn } from "../../state/$state"
+import { turnDuration } from "../../logic"
 import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
-import { PieTimer } from "../Timer/PieTimer"
 import { LineTimer } from "../Timer/LineTimer"
-import { art } from "./art/art"
+import { Countdown } from "./Countdown"
+import { Acting } from "./Acting"
+import { Guessing } from "./Guessing"
+import { Results } from "./Results"
 
 export function Game() {
   const yourPlayer = useAtomValue($yourPlayer)
-  const actorPlayer = useAtomValue($actorPlayer)
-  const round = useAtomValue($round)
   const currentTurn = useAtomValue($currentTurn)
 
   if (!currentTurn) return null
@@ -23,31 +18,7 @@ export function Game() {
   return (
     <Root actor={yourPlayer?.actor}>
       {currentTurn.stage === "countdown" ? (
-        <>
-          <RoundLabel>
-            Round
-            <br />
-            {round + 1}/{numRounds}
-          </RoundLabel>
-          <UpNext>
-            {yourPlayer?.actor ? (
-              <UpNextLabel>You’re up next!</UpNextLabel>
-            ) : (
-              <>
-                <Avatar src={actorPlayer?.info.avatarUrl} />
-                <UpNextLabel>
-                  {actorPlayer?.info.displayName}
-                  <br />
-                  is up next!
-                </UpNextLabel>
-              </>
-            )}
-          </UpNext>
-          <PieTimer
-            startedAt={currentTurn.countdownStartedAt}
-            duration={turnCountdown}
-          />
-        </>
+        <Countdown />
       ) : currentTurn.stage === "acting" ? (
         <>
           <LineTimer
@@ -56,18 +27,10 @@ export function Game() {
             actor={!!yourPlayer?.actor}
             almostOverAt={5}
           />
-          {yourPlayer?.actor ? (
-            <>
-              <Prompt>Make this sound!</Prompt>
-              <AnimalImg src={art.animals[currentTurn.animal]} />
-              <EmotionImg src={art.emotions[currentTurn.emotion]} />
-            </>
-          ) : (
-            <div>guessing view</div>
-          )}
+          {yourPlayer?.actor ? <Acting /> : <Guessing />}
         </>
       ) : currentTurn.stage === "result" ? (
-        <div>results</div>
+        <Results />
       ) : null}
     </Root>
   )
@@ -89,47 +52,4 @@ const Root = styled.div<{ actor?: boolean }>`
       );
     `};
   padding-top: ${rel(64)};
-`
-
-const RoundLabel = styled.div`
-  font-size: ${rel(64)};
-  text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
-  text-transform: uppercase;
-  text-align: center;
-`
-
-const UpNext = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  > :not(:first-child) {
-    margin-top: ${rel(12)};
-  }
-  margin: ${rel(24)} 0;
-`
-
-const UpNextLabel = styled.div`
-  font-size: ${rel(28)};
-  text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
-  text-align: center;
-`
-
-const Avatar = styled.img`
-  width: ${rel(94)};
-  height: ${rel(94)};
-`
-
-const Prompt = styled.div`
-  font-size: ${rel(28)};
-  text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
-`
-
-const AnimalImg = styled.img`
-  width: ${rel(220)};
-  height: ${rel(220)};
-`
-
-const EmotionImg = styled.img`
-  width: ${rel(64)};
-  height: ${rel(64)};
 `

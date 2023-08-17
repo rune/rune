@@ -6,10 +6,12 @@ import { useMemo } from "react"
 export function LineTimer({
   startedAt,
   duration,
+  actor,
   almostOverAt,
 }: {
   startedAt?: number
   duration: number
+  actor: boolean
   almostOverAt?: number
 }) {
   const value = useTimerValue({ startedAt, duration })
@@ -32,6 +34,7 @@ export function LineTimer({
       <Container>
         <Value
           style={{ width: `${(value / duration) * 100}%` }}
+          actor={actor}
           almostOver={almostOver}
         />
       </Container>
@@ -58,8 +61,9 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-const Value = styled.div<{ almostOver: boolean }>`
-  background: ${({ almostOver }) => (almostOver ? "#FFC531" : "#31ff6b")};
+const Value = styled.div<{ actor: boolean; almostOver: boolean }>`
+  background: ${({ almostOver, actor }) =>
+    almostOver ? "#FFC531" : actor ? "#31ff6b" : "#FFBFD6"};
   height: 100%;
 `
 

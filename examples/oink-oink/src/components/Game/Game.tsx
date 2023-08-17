@@ -53,6 +53,7 @@ export function Game() {
           <LineTimer
             startedAt={currentTurn.timerStartedAt}
             duration={turnDuration}
+            actor={!!yourPlayer?.actor}
             almostOverAt={5}
           />
           {yourPlayer?.actor ? (

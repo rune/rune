@@ -41,4 +41,9 @@ export interface GameState {
     countdownStartedAt?: number
     timerStartedAt?: number
   }[]
+  guesses: {
+    playerId: PlayerId
+    animal: Animal
+    emotion: Emotion
+  }[]
 }

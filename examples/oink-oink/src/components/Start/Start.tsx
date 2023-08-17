@@ -59,7 +59,6 @@ const ReadyButton = styled.div<{ visible: boolean }>`
   background: linear-gradient(180deg, #ffbbca 0%, #ffbbca 0.01%, #ffeaee 100%);
   border-radius: ${rel(24)};
   padding: ${rel(8)};
-  cursor: pointer;
 
   > div {
     background: white;

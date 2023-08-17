@@ -19,7 +19,7 @@ export function Countdown() {
   if (!currentTurn) return null
 
   return (
-    <>
+    <Root>
       <RoundLabel>
         Round
         <br />
@@ -43,9 +43,15 @@ export function Countdown() {
         startedAt={currentTurn.countdownStartedAt}
         duration={turnCountdown}
       />
-    </>
+    </Root>
   )
 }
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 const RoundLabel = styled.div`
   font-size: ${rel(64)};

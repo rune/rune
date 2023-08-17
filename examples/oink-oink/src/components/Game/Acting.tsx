@@ -10,13 +10,19 @@ export function Acting() {
   if (!currentTurn) return null
 
   return (
-    <>
+    <Root>
       <Prompt>Make this sound!</Prompt>
       <AnimalImg src={art.animals[currentTurn.animal]} />
       <EmotionImg src={art.emotions[currentTurn.emotion]} />
-    </>
+    </Root>
   )
 }
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 const Prompt = styled.div`
   font-size: ${rel(28)};

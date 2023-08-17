@@ -12,6 +12,7 @@ export const $state = atom<{
     gameStarted: false,
     round: 0,
     turns: [],
+    guesses: [],
   },
   players: {},
   yourPlayerId: undefined,

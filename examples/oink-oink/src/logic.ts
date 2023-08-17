@@ -17,6 +17,7 @@ Rune.initLogic({
     gameStarted: false,
     round: 0,
     turns: [],
+    guesses: [],
   }),
   actions: {
     setReadyToStart: (_, { game, playerId }) => {
@@ -25,16 +26,44 @@ Rune.initLogic({
       if (player) player.readyToStart = true
       startGameCheck(game)
     },
+    makeGuess: ({ animal, emotion }, { game, playerId }) => {
+      game.guesses.push({ playerId, animal, emotion })
+
+      const currentTurn = game.turns.at(-1)
+      if (!currentTurn) return
+
+      if (currentTurn.animal === animal && currentTurn.emotion === emotion) {
+        // TODO: award points. also maybe no need for turns to be an array?
+        currentTurn.animal = getRandomItem(animals)
+        currentTurn.emotion = getRandomItem(emotions)
+      }
+    },
+    nextRound: (_, { game }) => {
+      console.log("nextRound", game.round)
+      if (game.round + 1 === numRounds) throw Rune.invalidAction()
+
+      game.round += 1
+      const actorIndex = game.players.findIndex((player) => player.actor)
+      game.players[actorIndex].actor = false
+      game.players[0].actor = true
+      game.turns.push({
+        animal: getRandomItem(animals),
+        emotion: getRandomItem(emotions),
+        stage: "countdown",
+        countdownStartedAt: Rune.gameTimeInSeconds(),
+      })
+    },
   },
   events: {
     playerLeft: (playerId, { game }) => {
       game.players = game.players.filter((p) => p.id !== playerId)
       startGameCheck(game)
+
+      // todo: switch to next actor
     },
   },
   update: ({ game }) => {
     const currentTurn = game.turns.at(-1)
-
     if (!currentTurn) return
 
     if (
@@ -51,7 +80,20 @@ Rune.initLogic({
       currentTurn.timerStartedAt &&
       Rune.gameTimeInSeconds() >= currentTurn.timerStartedAt + turnDuration
     ) {
-      currentTurn.stage = "result"
+      const actorIndex = game.players.findIndex((player) => player.actor)
+
+      if (actorIndex === game.players.length - 1) {
+        currentTurn.stage = "result"
+      } else {
+        game.players[actorIndex].actor = false
+        game.players[actorIndex + 1].actor = true
+        game.turns.push({
+          animal: getRandomItem(animals),
+          emotion: getRandomItem(emotions),
+          stage: "countdown",
+          countdownStartedAt: Rune.gameTimeInSeconds(),
+        })
+      }
     }
   },
 })

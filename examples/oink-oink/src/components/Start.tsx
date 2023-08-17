@@ -7,16 +7,16 @@ export function Start() {
   const yourPlayer = useAtomValue($yourPlayer)
 
   const numReady = useMemo(
-    () => players?.filter((p) => p.readyToStart).length,
+    () => players.filter((p) => p.readyToStart).length,
     [players]
   )
 
   return (
     <button
       onClick={() => Rune.actions.setReadyToStart()}
-      disabled={!yourPlayer || yourPlayer?.readyToStart}
+      disabled={!yourPlayer || yourPlayer.readyToStart}
     >
-      ready ({numReady}/{players?.length})
+      ready ({numReady}/{players.length})
     </button>
   )
 }

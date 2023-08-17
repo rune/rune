@@ -1,5 +1,7 @@
 import { GameState } from "./lib/types/GameState"
 
+export const numRounds = 3
+
 Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 4,
@@ -7,8 +9,10 @@ Rune.initLogic({
     players: playerIds.map((id) => ({
       id,
       readyToStart: false,
+      actor: false,
     })),
     gameStarted: false,
+    round: 0,
   }),
   actions: {
     setReadyToStart: (_, { game, playerId }) => {
@@ -31,4 +35,5 @@ function startGameCheck(game: GameState) {
   if (game.players.some((player) => !player.readyToStart)) return
 
   game.gameStarted = true
+  game.players[0].actor = true
 }

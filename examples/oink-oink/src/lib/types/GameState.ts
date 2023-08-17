@@ -4,6 +4,8 @@ export interface GameState {
   players: {
     id: PlayerId
     readyToStart: boolean
+    actor: boolean
   }[]
   gameStarted: boolean
+  round: number
 }

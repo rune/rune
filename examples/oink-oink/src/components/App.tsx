@@ -7,6 +7,8 @@ import { Game } from "./Game"
 export function App() {
   const gameStarted = useAtomValue($gameStarted)
 
+  // TODO: onboarding
+
   return <Root>{gameStarted ? <Game /> : <Start />}</Root>
 }
 

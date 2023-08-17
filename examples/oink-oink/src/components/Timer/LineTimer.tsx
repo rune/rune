@@ -14,18 +14,15 @@ export function LineTimer({
   actor: boolean
   almostOverAt?: number
 }) {
-  const value = useTimerValue({ startedAt, duration })
+  const value = useTimerValue({ startedAt, duration }) ?? 0
 
   const clock = useMemo(() => {
-    if (!value) return null
     const minutes = Math.floor(value / 60)
     const seconds = Math.round(value % 60)
     return `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`
   }, [value])
-
-  if (value === null) return null
 
   const almostOver = almostOverAt !== undefined && value <= almostOverAt
 

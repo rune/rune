@@ -17,12 +17,16 @@ export function useTimerValue({
         Date.now() - (Rune.gameTimeInSeconds() - startedAt) * 1000
 
       const tick = () => {
-        const value = duration - (Date.now() - adjustedStartedAt) / 1000 - 0.5
+        const newValue =
+          duration - (Date.now() - adjustedStartedAt) / 1000 - 0.5
 
-        if (value <= 0) {
+        if (newValue <= 0) {
           setValue(0)
         } else {
-          setValue(value)
+          setValue((oldValue) =>
+            // if we add time, don't go backwards, pause instead
+            oldValue !== null && newValue > oldValue ? oldValue : newValue
+          )
           handle = requestAnimationFrame(tick)
         }
       }

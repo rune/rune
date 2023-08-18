@@ -12,7 +12,8 @@ export function Results() {
       <div>
         {players.map((player) => (
           <div key={player.id}>
-            {player.info.displayName}: {player.score} (+{player.latestScore})
+            {player.info.displayName}: {player.score} (+
+            {player.latestRoundScore})
           </div>
         ))}
       </div>

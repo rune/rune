@@ -11,6 +11,7 @@ import { Results } from "./Results"
 import { useTimerValue } from "../Timer/useTimerValue"
 import { useEffect, useRef, useState } from "react"
 import { Guess } from "../../lib/types/GameState"
+import { EndOfTurn } from "./EndOfTurn"
 
 const almostOverAt = 5
 
@@ -76,6 +77,8 @@ export function Game() {
             <Guessing />
           )}
         </>
+      ) : currentTurn.stage === "endOfTurn" ? (
+        <EndOfTurn />
       ) : currentTurn.stage === "result" ? (
         <Results />
       ) : null}

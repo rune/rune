@@ -39,14 +39,15 @@ export interface GameState {
     readyToStart: boolean
     actor: boolean
     score: number
-    latestScore: number
+    latestTurnScore: number
+    latestRoundScore: number
   }[]
   gameStarted: boolean
   round: number
   currentTurn: {
     animal: Animal
     emotion: Emotion
-    stage: "countdown" | "acting" | "result"
+    stage: "countdown" | "acting" | "endOfTurn" | "result"
     timerStartedAt?: number
   } | null
   guesses: Guess[]

@@ -3,7 +3,9 @@ import { GameState, animals, emotions } from "./lib/types/GameState"
 export const numRounds = 2
 export const turnCountdown = 3
 
-export const turnDuration = 30
+export const turnDuration = 5
+
+export const endOfTurnDuration = 3
 
 export const displayCorrectGuessFor = 3
 
@@ -18,7 +20,8 @@ Rune.initLogic({
       readyToStart: false,
       actor: false,
       score: 0,
-      latestScore: 0,
+      latestTurnScore: 0,
+      latestRoundScore: 0,
     })),
     gameStarted: false,
     round: 0,
@@ -53,9 +56,11 @@ Rune.initLogic({
         if (!player || !actor) return
 
         player.score += 1
-        player.latestScore += 1
+        player.latestTurnScore += 1
+        player.latestRoundScore += 1
         actor.score += 1
-        actor.latestScore += 1
+        actor.latestTurnScore += 1
+        actor.latestRoundScore += 1
 
         game.currentTurn.animal = getRandomItem(animals)
         game.currentTurn.emotion = getRandomItem(emotions)
@@ -67,13 +72,13 @@ Rune.initLogic({
     nextRound: (_, { game }) => {
       if (game.round + 1 === numRounds) throw Rune.invalidAction()
 
+      for (const player of game.players) {
+        player.latestRoundScore = 0
+      }
+
       game.round += 1
       setActor(game, "first")
       newTurn(game)
-
-      for (const player of game.players) {
-        player.latestScore = 0
-      }
     },
   },
   events: {
@@ -114,6 +119,20 @@ Rune.initLogic({
       game.currentTurn.timerStartedAt &&
       Rune.gameTimeInSeconds() >= game.currentTurn.timerStartedAt + turnDuration
     ) {
+      game.currentTurn.stage = "endOfTurn"
+      game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+    }
+
+    if (
+      game.currentTurn.stage === "endOfTurn" &&
+      game.currentTurn.timerStartedAt &&
+      Rune.gameTimeInSeconds() >=
+        game.currentTurn.timerStartedAt + endOfTurnDuration
+    ) {
+      for (const player of game.players) {
+        player.latestTurnScore = 0
+      }
+
       if (isLastActor(game)) {
         game.currentTurn.stage = "result"
 

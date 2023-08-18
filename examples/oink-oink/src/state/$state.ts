@@ -54,3 +54,7 @@ export const $actorPlayer = atom((get) =>
 export const $round = atom((get) => get($game).round)
 
 export const $currentTurn = atom((get) => get($game).currentTurn)
+
+export const $guesses = atom((get) => get($game).guesses)
+
+export const $latestGuess = atom((get) => get($guesses).at(-1))

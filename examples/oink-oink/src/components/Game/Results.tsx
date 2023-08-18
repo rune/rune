@@ -4,6 +4,8 @@ import { $players } from "../../state/$state"
 export function Results() {
   const players = useAtomValue($players)
 
+  // TODO: show game over when animation ends
+
   return (
     <div>
       <h1>Results</h1>

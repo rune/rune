@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai"
-import { $yourPlayer, $currentTurn } from "../../state/$state"
-import { turnDuration } from "../../logic"
+import { $yourPlayer, $currentTurn, $latestGuess } from "../../state/$state"
+import { turnDuration, displayCorrectGuessFor } from "../../logic"
 import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { LineTimer } from "../Timer/LineTimer"
@@ -9,18 +9,41 @@ import { Acting } from "./Acting"
 import { Guessing } from "./Guessing"
 import { Results } from "./Results"
 import { useTimerValue } from "../Timer/useTimerValue"
+import { useEffect, useRef, useState } from "react"
+import { Guess } from "../../lib/types/GameState"
 
 const almostOverAt = 5
 
 export function Game() {
   const yourPlayer = useAtomValue($yourPlayer)
   const currentTurn = useAtomValue($currentTurn)
+  const latestGuess = useAtomValue($latestGuess)
+  const [displayedLatestCorrectGuess, setDisplayedLatestCorrectGuess] =
+    useState<Guess>()
 
   const turnTimerValue =
     useTimerValue({
       startedAt: currentTurn?.timerStartedAt,
       duration: turnDuration,
     }) ?? 0
+
+  const prevLatestGuessRef = useRef(latestGuess)
+  useEffect(() => {
+    if (latestGuess !== prevLatestGuessRef.current) {
+      if (latestGuess?.correct) setDisplayedLatestCorrectGuess(latestGuess)
+      prevLatestGuessRef.current = latestGuess
+    }
+  }, [latestGuess])
+
+  useEffect(() => {
+    if (displayedLatestCorrectGuess) {
+      const handle = setTimeout(
+        () => setDisplayedLatestCorrectGuess(undefined),
+        displayCorrectGuessFor * 1000
+      )
+      return () => clearTimeout(handle)
+    }
+  }, [displayedLatestCorrectGuess])
 
   if (!currentTurn) return null
 
@@ -41,7 +64,17 @@ export function Game() {
             actor={!!yourPlayer?.actor}
             almostOverAt={almostOverAt}
           />
-          {yourPlayer?.actor ? <Acting /> : <Guessing />}
+          {displayedLatestCorrectGuess ? (
+            <div>
+              {displayedLatestCorrectGuess.playerId === yourPlayer?.id
+                ? "you got it"
+                : "someone got it"}
+            </div>
+          ) : yourPlayer?.actor ? (
+            <Acting />
+          ) : (
+            <Guessing />
+          )}
         </>
       ) : currentTurn.stage === "result" ? (
         <Results />

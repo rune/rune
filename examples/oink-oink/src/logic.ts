@@ -1,9 +1,13 @@
 import { GameState, animals, emotions } from "./lib/types/GameState"
 
-export const numRounds = 3
+export const numRounds = 2
 export const turnCountdown = 3
 
-export const turnDuration = 10
+export const turnDuration = 3
+
+export const displayCorrectGuessFor = 3
+
+// todo: replace all ifs with asserts/throws?
 
 Rune.initLogic({
   minPlayers: 2,
@@ -29,14 +33,20 @@ Rune.initLogic({
       startGameCheck(game)
     },
     makeGuess: ({ animal, emotion }, { game, playerId }) => {
-      game.guesses.push({ playerId, animal, emotion })
-
       if (!game.currentTurn) return
 
-      if (
-        game.currentTurn.animal === animal &&
-        game.currentTurn.emotion === emotion
-      ) {
+      const guess = {
+        playerId,
+        animal,
+        emotion,
+        correct:
+          game.currentTurn.animal === animal &&
+          game.currentTurn.emotion === emotion,
+      }
+
+      game.guesses.push(guess)
+
+      if (guess.correct) {
         const player = game.players.find((player) => player.id === playerId)
         const actor = game.players.find((player) => player.actor)
 
@@ -49,6 +59,9 @@ Rune.initLogic({
 
         game.currentTurn.animal = getRandomItem(animals)
         game.currentTurn.emotion = getRandomItem(emotions)
+        if (game.currentTurn.timerStartedAt) {
+          game.currentTurn.timerStartedAt += displayCorrectGuessFor
+        }
       }
     },
     nextRound: (_, { game }) => {
@@ -103,15 +116,24 @@ Rune.initLogic({
     ) {
       if (isLastActor(game)) {
         game.currentTurn.stage = "result"
+
+        if (game.round + 1 === numRounds) {
+          Rune.gameOver({
+            players: game.players.reduce(
+              (acc, player) => ({
+                ...acc,
+                [player.id]: player.score,
+              }),
+              {}
+            ),
+            delayPopUp: true,
+          })
+        }
       } else {
         setActor(game, "next")
         newTurn(game)
       }
     }
-
-    // TODO: figure out how to do:
-    //  "The timer is paused during the screens/animations where a correct
-    //  guess is being shown in the interest of fairness."
   },
 })
 

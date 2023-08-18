@@ -26,6 +26,13 @@ export type Animal = (typeof animals)[number]
 
 export type Emotion = (typeof emotions)[number]
 
+export type Guess = {
+  playerId: PlayerId
+  animal: Animal
+  emotion: Emotion
+  correct: boolean
+}
+
 export interface GameState {
   players: {
     id: PlayerId
@@ -42,9 +49,5 @@ export interface GameState {
     stage: "countdown" | "acting" | "result"
     timerStartedAt?: number
   } | null
-  guesses: {
-    playerId: PlayerId
-    animal: Animal
-    emotion: Emotion
-  }[]
+  guesses: Guess[]
 }

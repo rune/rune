@@ -42,12 +42,11 @@ Rune.initLogic({
 
         if (!player || !actor) return
 
-        player.score += 3
-        player.latestScore += 3
+        player.score += 1
+        player.latestScore += 1
         actor.score += 1
         actor.latestScore += 1
 
-        // TODO: award points. also maybe no need for turns to be an array?
         game.currentTurn.animal = getRandomItem(animals)
         game.currentTurn.emotion = getRandomItem(emotions)
       }

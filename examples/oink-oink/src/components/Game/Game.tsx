@@ -2,7 +2,6 @@ import { useAtomValue } from "jotai"
 import { $yourPlayer, $currentTurn, $latestGuess } from "../../state/$state"
 import { turnDuration, displayCorrectGuessFor } from "../../logic"
 import styled, { css } from "styled-components/macro"
-import { rel } from "../../style/rel"
 import { LineTimer } from "../Timer/LineTimer"
 import { Countdown } from "./Countdown"
 import { Acting } from "./Acting"
@@ -12,6 +11,8 @@ import { useTimerValue } from "../Timer/useTimerValue"
 import { useEffect, useRef, useState } from "react"
 import { Guess } from "../../lib/types/GameState"
 import { EndOfTurn } from "./EndOfTurn"
+import { rel } from "../../style/rel"
+import { CorrectGuess } from "./CorrectGuess"
 
 const almostOverAt = 5
 
@@ -59,18 +60,17 @@ export function Game() {
         <Countdown />
       ) : currentTurn.stage === "acting" ? (
         <>
-          <LineTimer
-            startedAt={currentTurn.timerStartedAt}
-            duration={turnDuration}
-            actor={!!yourPlayer?.actor}
-            almostOverAt={almostOverAt}
-          />
+          <TimerContainer>
+            <LineTimer
+              startedAt={currentTurn.timerStartedAt}
+              duration={turnDuration}
+              actor={!!yourPlayer?.actor}
+              almostOverAt={almostOverAt}
+            />
+          </TimerContainer>
+
           {displayedLatestCorrectGuess ? (
-            <div>
-              {displayedLatestCorrectGuess.playerId === yourPlayer?.id
-                ? "you got it"
-                : "someone got it"}
-            </div>
+            <CorrectGuess {...displayedLatestCorrectGuess} />
           ) : yourPlayer?.actor ? (
             <Acting />
           ) : (
@@ -91,6 +91,7 @@ const Root = styled.div<{ actor?: boolean; almostOver?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   ${({ actor, almostOver }) =>
     almostOver
       ? css`
@@ -110,5 +111,10 @@ const Root = styled.div<{ actor?: boolean; almostOver?: boolean }>`
             #24083a 100%
           );
         `};
-  padding-top: ${rel(64)};
+`
+
+const TimerContainer = styled.div`
+  position: absolute;
+  top: ${rel(24)};
+  width: 100%;
 `

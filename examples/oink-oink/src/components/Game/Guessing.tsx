@@ -54,11 +54,9 @@ export function Guessing() {
 }
 
 const Root = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: ${rel(24)};
   > :not(:last-child) {
     margin-bottom: ${rel(24)};
   }

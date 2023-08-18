@@ -10,13 +10,18 @@ export function Guessing() {
 
   useEffect(() => {
     if (pendingAnimal && pendingEmotion) {
-      Rune.actions.makeGuess({ animal: pendingAnimal, emotion: pendingEmotion })
-      setPendingAnimal(undefined)
-      setPendingEmotion(undefined)
+      // todo: figure out if there's an easy way to add a lag without delaying submit
+      const handle = setTimeout(() => {
+        Rune.actions.makeGuess({
+          animal: pendingAnimal,
+          emotion: pendingEmotion,
+        })
+        setPendingAnimal(undefined)
+        setPendingEmotion(undefined)
+      }, 500)
+      return () => clearTimeout(handle)
     }
   }, [pendingAnimal, pendingEmotion])
-
-  // TODO: handle correct guess (both your and someone else's)
 
   return (
     <Root>

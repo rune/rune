@@ -3,7 +3,7 @@ import { GameState, animals, emotions } from "./lib/types/GameState"
 export const numRounds = 2
 export const turnCountdown = 3
 
-export const turnDuration = 5
+export const turnDuration = 30
 
 export const endOfTurnDuration = 3
 
@@ -12,7 +12,7 @@ export const displayCorrectGuessFor = 3
 // todo: replace all ifs with asserts/throws?
 
 Rune.initLogic({
-  minPlayers: 2,
+  minPlayers: 3,
   maxPlayers: 4,
   setup: (playerIds) => ({
     players: playerIds.map((id) => ({

@@ -40,7 +40,7 @@ export function Countdown() {
         )}
       </UpNext>
       <PieTimer
-        startedAt={currentTurn.countdownStartedAt}
+        startedAt={currentTurn.timerStartedAt}
         duration={turnCountdown}
       />
     </Root>

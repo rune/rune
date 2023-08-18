@@ -3,7 +3,7 @@ import { GameState, animals, emotions } from "./lib/types/GameState"
 export const numRounds = 3
 export const turnCountdown = 3
 
-export const turnDuration = 30
+export const turnDuration = 10
 
 Rune.initLogic({
   minPlayers: 2,
@@ -13,10 +13,12 @@ Rune.initLogic({
       id,
       readyToStart: false,
       actor: false,
+      score: 0,
+      latestScore: 0,
     })),
     gameStarted: false,
     round: 0,
-    turns: [],
+    currentTurn: null,
     guesses: [],
   }),
   actions: {
@@ -29,29 +31,37 @@ Rune.initLogic({
     makeGuess: ({ animal, emotion }, { game, playerId }) => {
       game.guesses.push({ playerId, animal, emotion })
 
-      const currentTurn = game.turns.at(-1)
-      if (!currentTurn) return
+      if (!game.currentTurn) return
 
-      if (currentTurn.animal === animal && currentTurn.emotion === emotion) {
+      if (
+        game.currentTurn.animal === animal &&
+        game.currentTurn.emotion === emotion
+      ) {
+        const player = game.players.find((player) => player.id === playerId)
+        const actor = game.players.find((player) => player.actor)
+
+        if (!player || !actor) return
+
+        player.score += 3
+        player.latestScore += 3
+        actor.score += 1
+        actor.latestScore += 1
+
         // TODO: award points. also maybe no need for turns to be an array?
-        currentTurn.animal = getRandomItem(animals)
-        currentTurn.emotion = getRandomItem(emotions)
+        game.currentTurn.animal = getRandomItem(animals)
+        game.currentTurn.emotion = getRandomItem(emotions)
       }
     },
     nextRound: (_, { game }) => {
-      console.log("nextRound", game.round)
       if (game.round + 1 === numRounds) throw Rune.invalidAction()
 
       game.round += 1
-      const actorIndex = game.players.findIndex((player) => player.actor)
-      game.players[actorIndex].actor = false
-      game.players[0].actor = true
-      game.turns.push({
-        animal: getRandomItem(animals),
-        emotion: getRandomItem(emotions),
-        stage: "countdown",
-        countdownStartedAt: Rune.gameTimeInSeconds(),
-      })
+      setActor(game, "first")
+      newTurn(game)
+
+      for (const player of game.players) {
+        player.latestScore = 0
+      }
     },
   },
   events: {
@@ -59,40 +69,44 @@ Rune.initLogic({
       game.players = game.players.filter((p) => p.id !== playerId)
       startGameCheck(game)
 
-      // todo: switch to next actor
+      if (!game.currentTurn) return
+
+      if (
+        game.currentTurn.stage === "acting" ||
+        game.currentTurn.stage === "countdown"
+      ) {
+        if (isLastActor(game)) {
+          game.currentTurn.stage = "result"
+        } else {
+          setActor(game, "next")
+          newTurn(game)
+        }
+      }
     },
   },
   update: ({ game }) => {
-    const currentTurn = game.turns.at(-1)
-    if (!currentTurn) return
+    if (!game.currentTurn) return
 
     if (
-      currentTurn.stage === "countdown" &&
-      currentTurn.countdownStartedAt &&
-      Rune.gameTimeInSeconds() >= currentTurn.countdownStartedAt + turnCountdown
+      game.currentTurn.stage === "countdown" &&
+      game.currentTurn.timerStartedAt &&
+      Rune.gameTimeInSeconds() >=
+        game.currentTurn.timerStartedAt + turnCountdown
     ) {
-      currentTurn.stage = "acting"
-      currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+      game.currentTurn.stage = "acting"
+      game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
     }
 
     if (
-      currentTurn.stage === "acting" &&
-      currentTurn.timerStartedAt &&
-      Rune.gameTimeInSeconds() >= currentTurn.timerStartedAt + turnDuration
+      game.currentTurn.stage === "acting" &&
+      game.currentTurn.timerStartedAt &&
+      Rune.gameTimeInSeconds() >= game.currentTurn.timerStartedAt + turnDuration
     ) {
-      const actorIndex = game.players.findIndex((player) => player.actor)
-
-      if (actorIndex === game.players.length - 1) {
-        currentTurn.stage = "result"
+      if (isLastActor(game)) {
+        game.currentTurn.stage = "result"
       } else {
-        game.players[actorIndex].actor = false
-        game.players[actorIndex + 1].actor = true
-        game.turns.push({
-          animal: getRandomItem(animals),
-          emotion: getRandomItem(emotions),
-          stage: "countdown",
-          countdownStartedAt: Rune.gameTimeInSeconds(),
-        })
+        setActor(game, "next")
+        newTurn(game)
       }
     }
 
@@ -111,11 +125,29 @@ function startGameCheck(game: GameState) {
   if (game.players.some((player) => !player.readyToStart)) return
 
   game.gameStarted = true
-  game.players[0].actor = true
-  game.turns.push({
+
+  setActor(game, "first")
+  newTurn(game)
+}
+
+function isLastActor(game: GameState) {
+  const actorIndex = game.players.findIndex((player) => player.actor)
+  return actorIndex + 1 === game.players.length
+}
+
+function setActor(game: GameState, which: "first" | "next") {
+  const actorIndex = game.players.findIndex((player) => player.actor)
+  const nextActorIndex = which === "first" ? 0 : actorIndex + 1
+
+  if (~actorIndex) game.players[actorIndex].actor = false
+  game.players[nextActorIndex].actor = true
+}
+
+function newTurn(game: GameState) {
+  game.currentTurn = {
     animal: getRandomItem(animals),
     emotion: getRandomItem(emotions),
     stage: "countdown",
-    countdownStartedAt: Rune.gameTimeInSeconds(),
-  })
+    timerStartedAt: Rune.gameTimeInSeconds(),
+  }
 }

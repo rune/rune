@@ -31,16 +31,17 @@ export interface GameState {
     id: PlayerId
     readyToStart: boolean
     actor: boolean
+    score: number
+    latestScore: number
   }[]
   gameStarted: boolean
   round: number
-  turns: {
+  currentTurn: {
     animal: Animal
     emotion: Emotion
     stage: "countdown" | "acting" | "result"
-    countdownStartedAt?: number
     timerStartedAt?: number
-  }[]
+  } | null
   guesses: {
     playerId: PlayerId
     animal: Animal

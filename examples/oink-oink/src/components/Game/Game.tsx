@@ -23,6 +23,8 @@ export function Game() {
   const [displayedLatestCorrectGuess, setDisplayedLatestCorrectGuess] =
     useState<Guess>()
 
+  // TODO: this doesn't reset when the turn changes so it stays red if it was almost over before
+  //  perhaps do it as a AlmostOverBackground component so we can unmount it between stages?
   const turnTimerValue =
     useTimerValue({
       startedAt: currentTurn?.timerStartedAt,

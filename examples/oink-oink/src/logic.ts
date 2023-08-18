@@ -1,6 +1,6 @@
 import { GameState, animals, emotions } from "./lib/types/GameState"
 
-export const numRounds = 2
+export const numRounds = 3
 export const turnCountdown = 3
 
 export const turnDuration = 30

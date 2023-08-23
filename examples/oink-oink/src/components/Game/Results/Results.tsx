@@ -212,7 +212,7 @@ const LatestScore = styled.div<{ invisible?: boolean }>`
 
   position: absolute;
   top: ${rel(-22)};
-  right: ${rel(10)};
+  right: 0;
 
   background: #23490c;
   -webkit-background-clip: text;

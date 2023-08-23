@@ -1,11 +1,12 @@
-import { art } from "./art/art"
+import { art } from "../art/art"
 import styled from "styled-components/macro"
-import { rel } from "../../style/rel"
+import { rel } from "../../../style/rel"
 import { useAtomValue } from "jotai"
-import { $currentTurn } from "../../state/$state"
+import { $currentTurn } from "../../../state/$state"
 import { Player } from "@lottiefiles/react-lottie-player"
 
-import speakingAnimation from "./lottie/speaking.json"
+import speakingAnimation from "../lottie/speaking.json"
+import { GuessesView } from "./GuessesView"
 
 export function Acting() {
   const currentTurn = useAtomValue($currentTurn)
@@ -19,8 +20,11 @@ export function Acting() {
       <SpeakingHead autoplay loop src={speakingAnimation} />
       <div style={{ height: rel(15) }} />
       <AnimalImg src={art.animals[currentTurn.animal]} />
-      <div style={{ height: rel(78) }} />
+      <div style={{ height: rel(48) }} />
       <EmotionImg src={art.emotions[currentTurn.emotion]} />
+      <div style={{ height: rel(15) }} />
+      <Prompt>Guesses:</Prompt>
+      <GuessesView />
     </Root>
   )
 }

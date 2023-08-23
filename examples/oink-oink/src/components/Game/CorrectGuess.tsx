@@ -82,20 +82,20 @@ const GuessContainer = styled.div`
 `
 
 const EmotionImg = styled.img`
-  width: ${rel(103)};
-  height: ${rel(103)};
-  margin-left: ${rel(139 - 103)};
+  width: ${rel(96)};
+  height: ${rel(96)};
 `
 
 const Plus = styled.div`
   color: #e4faff;
   text-shadow: 0 ${rel(4.8)} 0 rgba(0, 0, 0, 0.35);
   font-size: ${rel(103)};
+  margin: 0 ${rel(27)};
 `
 
 const AnimalImg = styled.img`
-  width: ${rel(139)};
-  height: ${rel(139)};
+  width: ${rel(96)};
+  height: ${rel(96)};
 `
 
 const AvatarImg = styled.img`

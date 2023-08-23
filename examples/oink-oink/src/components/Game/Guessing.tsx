@@ -27,11 +27,14 @@ export function Guessing() {
     <Root>
       <Prompt>Guess the animal</Prompt>
       <Grid>
-        {animals.map((animal) => (
+        {animals.map((animal, i) => (
           <Item
             key={animal}
             selected={pendingAnimal === animal}
             onClick={() => setPendingAnimal(animal)}
+            animateScaleWithDelay={
+              pendingEmotion && !pendingAnimal ? i / 2 : undefined
+            }
           >
             <img src={art.animals[animal]} />
           </Item>
@@ -39,11 +42,14 @@ export function Guessing() {
       </Grid>
       <Prompt>Guess the emotion</Prompt>
       <Grid>
-        {emotions.map((emotion) => (
+        {emotions.map((emotion, i) => (
           <Item
             key={emotion}
             selected={pendingEmotion === emotion}
             onClick={() => setPendingEmotion(emotion)}
+            animateScaleWithDelay={
+              pendingAnimal && !pendingEmotion ? i / 2 : undefined
+            }
           >
             <img src={art.emotions[emotion]} />
           </Item>
@@ -73,7 +79,7 @@ const Grid = styled.div`
   justify-content: center;
 `
 
-const Item = styled.div<{ selected: boolean }>`
+const Item = styled.div<{ selected: boolean; animateScaleWithDelay?: number }>`
   width: ${rel(72)};
   height: ${rel(72)};
   background: white;
@@ -92,4 +98,10 @@ const Item = styled.div<{ selected: boolean }>`
     width: 100%;
     height: 100%;
   }
+
+  ${({ animateScaleWithDelay }) =>
+    animateScaleWithDelay !== undefined &&
+    css`
+      animation: buttonScale 0.5s ease-in-out ${animateScaleWithDelay}s forwards;
+    `};
 `

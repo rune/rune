@@ -17,18 +17,6 @@ export function AlmostOverBackground() {
 }
 
 const Root = styled.div`
-  @keyframes pulsing {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
   z-index: -1;
   position: absolute;
   top: 0;

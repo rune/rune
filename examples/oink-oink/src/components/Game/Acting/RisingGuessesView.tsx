@@ -46,45 +46,7 @@ export const RisingGuessesView = memo(() => {
   )
 })
 
-const Root = styled.div`
-  @keyframes rocking {
-    0% {
-      transform: translateX(-5%);
-    }
-    50% {
-      transform: translateX(5%);
-    }
-    100% {
-      transform: translateX(-5%);
-    }
-  }
-
-  @keyframes rising {
-    0% {
-      bottom: 0;
-      opacity: 0;
-    }
-    20% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      bottom: ${rel(120)};
-      opacity: 0;
-    }
-  }
-
-  @keyframes shrinking {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0) translateX(-50%);
-    }
-  }
-`
+const Root = styled.div``
 
 const PositionAndRocking = styled.div<{ position: number }>`
   animation: rocking 800ms ease-in-out infinite, rising 1s linear forwards;

@@ -50,7 +50,7 @@ export function Game() {
       {currentTurn.stage === "countdown" ? (
         <Countdown />
       ) : currentTurn.stage === "acting" ? (
-        <>
+        <ActingStage>
           <AlmostOverBackground />
           <TimerContainer>
             <LineTimer
@@ -68,7 +68,7 @@ export function Game() {
           ) : (
             <Guessing />
           )}
-        </>
+        </ActingStage>
       ) : currentTurn.stage === "endOfTurn" ? (
         <EndOfTurn />
       ) : currentTurn.stage === "result" ? (
@@ -79,6 +79,7 @@ export function Game() {
 }
 
 const Root = styled.div<{ actor?: boolean }>`
+  animation: fadeIn 300ms ease-out forwards;
   z-index: 0;
   flex: 1;
   display: flex;
@@ -95,6 +96,15 @@ const Root = styled.div<{ actor?: boolean }>`
         #24083a 100%
       );
     `};
+`
+
+const ActingStage = styled.div`
+  animation: fadeIn 300ms ease-out forwards;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
 
 const TimerContainer = styled.div`

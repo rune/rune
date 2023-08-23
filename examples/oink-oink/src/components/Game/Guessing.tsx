@@ -60,6 +60,7 @@ export function Guessing() {
 }
 
 const Root = styled.div`
+  animation: fadeIn 300ms ease-out forwards;
   display: flex;
   flex-direction: column;
   align-items: center;

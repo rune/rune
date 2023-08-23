@@ -34,6 +34,7 @@ export function Start() {
 }
 
 const Root = styled.div`
+  animation: fadeIn 300ms ease-out forwards;
   flex: 1;
   display: flex;
   flex-direction: column;

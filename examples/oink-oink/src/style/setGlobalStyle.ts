@@ -98,6 +98,15 @@ style.innerHTML = `
       transform: scale(1);
     }
   }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `
 
 document.head.appendChild(style)

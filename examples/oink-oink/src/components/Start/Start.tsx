@@ -24,7 +24,7 @@ export function Start() {
         Players Ready
       </ReadyLabel>
       <ReadyButton
-        visible={!!yourPlayer && !yourPlayer.readyToStart}
+        invisible={!yourPlayer || yourPlayer.readyToStart}
         onClick={() => Rune.actions.setReadyToStart()}
       >
         <div>I'm Ready</div>
@@ -52,9 +52,10 @@ const ReadyLabel = styled.div`
   text-align: center;
 `
 
-export const ReadyButton = styled.div<{ visible: boolean }>`
+export const ReadyButton = styled.div<{ invisible?: boolean }>`
   width: ${rel(336)};
-  visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
+  opacity: ${({ invisible }) => (invisible ? 0 : 1)};
+  transition: opacity 150ms ease-out;
 
   background: linear-gradient(180deg, #ffbbca 0%, #ffbbca 0.01%, #ffeaee 100%);
   border-radius: ${rel(24)};

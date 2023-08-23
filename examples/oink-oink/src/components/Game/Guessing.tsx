@@ -88,6 +88,7 @@ const Item = styled.div<{ selected: boolean; animateScaleWithDelay?: number }>`
   margin: ${rel(8)};
   border: ${rel(4)} solid transparent;
   padding: ${rel(12 - 4)};
+  transition: border-color 150ms ease-out;
   ${({ selected }) =>
     selected &&
     css`

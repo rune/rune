@@ -105,13 +105,18 @@ export function Results() {
         </List>
       )}
 
-      {animationStepIdx >= animationStepKeyIndexMap.cta &&
-        yourPlayerId &&
-        round < numRounds - 1 && (
-          <ReadyButton visible onClick={() => Rune.actions.nextRound()}>
-            <div>Continue</div>
-          </ReadyButton>
-        )}
+      <ReadyButton
+        invisible={
+          !(
+            animationStepIdx >= animationStepKeyIndexMap.cta &&
+            yourPlayerId &&
+            round < numRounds - 1
+          )
+        }
+        onClick={() => Rune.actions.nextRound()}
+      >
+        <div>Continue</div>
+      </ReadyButton>
     </Root>
   )
 }

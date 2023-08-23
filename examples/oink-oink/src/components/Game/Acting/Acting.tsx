@@ -15,7 +15,7 @@ export function Acting() {
 
   return (
     <Root>
-      <Prompt>Make this sound!</Prompt>
+      <Label>Make this sound!</Label>
       <div style={{ height: rel(8) }} />
       <SpeakingHead autoplay loop src={speakingAnimation} />
       <div style={{ height: rel(15) }} />
@@ -23,7 +23,7 @@ export function Acting() {
       <div style={{ height: rel(48) }} />
       <EmotionImg src={art.emotions[currentTurn.emotion]} />
       <div style={{ height: rel(15) }} />
-      <Prompt>Guesses:</Prompt>
+      <Label>Guesses:</Label>
       <RisingGuessesView />
     </Root>
   )
@@ -36,7 +36,7 @@ const Root = styled.div`
   align-items: center;
 `
 
-const Prompt = styled.div`
+const Label = styled.div`
   font-size: ${rel(28)};
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
 `

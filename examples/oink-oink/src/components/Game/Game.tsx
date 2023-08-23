@@ -17,6 +17,7 @@ import { EndOfTurn } from "./EndOfTurn"
 import { rel } from "../../style/rel"
 import { CorrectGuess } from "./CorrectGuess"
 import { AlmostOverBackground } from "./AlmostOverBackground"
+import { Spectating } from "./Spectating"
 
 export function Game() {
   const yourPlayer = useAtomValue($yourPlayer)
@@ -63,7 +64,9 @@ export function Game() {
 
           {displayedLatestCorrectGuess ? (
             <CorrectGuess {...displayedLatestCorrectGuess} />
-          ) : yourPlayer?.actor ? (
+          ) : !yourPlayer ? (
+            <Spectating />
+          ) : yourPlayer.actor ? (
             <Acting />
           ) : (
             <Guessing />

@@ -1,5 +1,10 @@
 import { useAtomValue } from "jotai"
-import { $players, $yourPlayerId, $round } from "../../../state/$state"
+import {
+  $players,
+  $yourPlayerId,
+  $round,
+  $gameOver,
+} from "../../../state/$state"
 import { useState, useEffect, useMemo } from "react"
 import { sortBy } from "../../../lib/sortBy"
 import styled from "styled-components/macro"
@@ -31,8 +36,7 @@ export function Results() {
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
   const round = useAtomValue($round)
-
-  // TODO: show game over when animation ends
+  const gameOver = useAtomValue($gameOver)
 
   const [animationStepIdx, setAnimationStepIdx] = useState(0)
 
@@ -46,6 +50,12 @@ export function Results() {
 
     return () => clearTimeout(handle)
   }, [animationStepIdx])
+
+  useEffect(() => {
+    if (gameOver && animationStepIdx >= animationStepKeyIndexMap.cta) {
+      Rune.showGameOverPopUp()
+    }
+  }, [animationStepIdx, gameOver])
 
   const playersOrderedByPrevious = useMemo(
     () =>
@@ -140,7 +150,7 @@ const Item = styled.div`
 
 const AvatarImg = styled.img`
   width: ${rel(32)};
-  width: ${rel(32)};
+  height: ${rel(32)};
 `
 
 const Name = styled.div`

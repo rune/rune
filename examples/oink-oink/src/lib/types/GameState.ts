@@ -51,4 +51,5 @@ export interface GameState {
     timerStartedAt?: number
   } | null
   guesses: Guess[]
+  gameOver: boolean
 }

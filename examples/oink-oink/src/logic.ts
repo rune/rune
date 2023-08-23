@@ -27,6 +27,7 @@ Rune.initLogic({
     round: 0,
     currentTurn: null,
     guesses: [],
+    gameOver: false,
   }),
   actions: {
     setReadyToStart: (_, { game, playerId }) => {
@@ -137,6 +138,7 @@ Rune.initLogic({
         game.currentTurn.stage = "result"
 
         if (game.round + 1 === numRounds) {
+          game.gameOver = true
           Rune.gameOver({
             players: game.players.reduce(
               (acc, player) => ({

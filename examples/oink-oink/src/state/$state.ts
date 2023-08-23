@@ -13,6 +13,7 @@ export const $state = atom<{
     round: 0,
     currentTurn: null,
     guesses: [],
+    gameOver: false,
   },
   players: {},
   yourPlayerId: undefined,
@@ -58,3 +59,5 @@ export const $currentTurn = atom((get) => get($game).currentTurn)
 export const $guesses = atom((get) => get($game).guesses)
 
 export const $latestGuess = atom((get) => get($guesses).at(-1))
+
+export const $gameOver = atom((get) => get($game).gameOver)

@@ -6,7 +6,7 @@ import { $currentTurn } from "../../../state/$state"
 import { Player } from "@lottiefiles/react-lottie-player"
 
 import speakingAnimation from "../lottie/speaking.json"
-import { GuessesView } from "./GuessesView"
+import { RisingGuessesView } from "./RisingGuessesView"
 
 export function Acting() {
   const currentTurn = useAtomValue($currentTurn)
@@ -24,7 +24,7 @@ export function Acting() {
       <EmotionImg src={art.emotions[currentTurn.emotion]} />
       <div style={{ height: rel(15) }} />
       <Prompt>Guesses:</Prompt>
-      <GuessesView />
+      <RisingGuessesView />
     </Root>
   )
 }

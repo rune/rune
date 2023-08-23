@@ -11,7 +11,7 @@ const rotations: { [i: number]: number } = {}
 
 // TODO: use memo() on all components? related to use of useTimerValue in Game.tsx
 
-export const GuessesView = memo(() => {
+export const RisingGuessesView = memo(() => {
   const guesses = useAtomValue($guesses)
   const initialLength = useRef(guesses.length)
   const newGuesses = useMemo(

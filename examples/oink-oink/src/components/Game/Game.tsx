@@ -1,20 +1,22 @@
 import { useAtomValue } from "jotai"
 import { $yourPlayer, $currentTurn, $latestGuess } from "../../state/$state"
-import { turnDuration, displayCorrectGuessFor } from "../../logic"
+import {
+  turnDuration,
+  displayCorrectGuessFor,
+  turnAlmostOverAt,
+} from "../../logic"
 import styled, { css } from "styled-components/macro"
 import { LineTimer } from "../Timer/LineTimer"
 import { Countdown } from "./Countdown"
 import { Acting } from "./Acting/Acting"
 import { Guessing } from "./Guessing"
 import { Results } from "./Results/Results"
-import { useTimerValue } from "../Timer/useTimerValue"
 import { useEffect, useRef, useState } from "react"
 import { Guess } from "../../lib/types/GameState"
 import { EndOfTurn } from "./EndOfTurn"
 import { rel } from "../../style/rel"
 import { CorrectGuess } from "./CorrectGuess"
-
-const almostOverAt = 5
+import { AlmostOverBackground } from "./AlmostOverBackground"
 
 export function Game() {
   const yourPlayer = useAtomValue($yourPlayer)
@@ -22,14 +24,6 @@ export function Game() {
   const latestGuess = useAtomValue($latestGuess)
   const [displayedLatestCorrectGuess, setDisplayedLatestCorrectGuess] =
     useState<Guess>()
-
-  // TODO: this doesn't reset when the turn changes so it stays red if it was almost over before
-  //  perhaps do it as a AlmostOverBackground component so we can unmount it between stages?
-  const turnTimerValue =
-    useTimerValue({
-      startedAt: currentTurn?.timerStartedAt,
-      duration: turnDuration,
-    }) ?? 0
 
   const prevLatestGuessRef = useRef(latestGuess)
   useEffect(() => {
@@ -52,22 +46,18 @@ export function Game() {
   if (!currentTurn) return null
 
   return (
-    <Root
-      actor={yourPlayer?.actor}
-      almostOver={
-        currentTurn.stage === "acting" && turnTimerValue <= almostOverAt
-      }
-    >
+    <Root actor={yourPlayer?.actor}>
       {currentTurn.stage === "countdown" ? (
         <Countdown />
       ) : currentTurn.stage === "acting" ? (
         <>
+          <AlmostOverBackground />
           <TimerContainer>
             <LineTimer
               startedAt={currentTurn.timerStartedAt}
               duration={turnDuration}
               actor={!!yourPlayer?.actor}
-              almostOverAt={almostOverAt}
+              almostOverAt={turnAlmostOverAt}
             />
           </TimerContainer>
 
@@ -88,31 +78,23 @@ export function Game() {
   )
 }
 
-const Root = styled.div<{ actor?: boolean; almostOver?: boolean }>`
+const Root = styled.div<{ actor?: boolean }>`
+  z-index: 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  ${({ actor, almostOver }) =>
-    almostOver
-      ? css`
-          background: radial-gradient(
-            62.56% 62.56% at 50% 44.09%,
-            #ff5631 0%,
-            #57112b 81.77%,
-            #310414 100%
-          );
-        `
-      : actor &&
-        css`
-          background: radial-gradient(
-            62.56% 62.56% at 50% 44.09%,
-            #bc5287 0%,
-            #24083a 81.77%,
-            #24083a 100%
-          );
-        `};
+  ${({ actor }) =>
+    actor &&
+    css`
+      background: radial-gradient(
+        62.56% 62.56% at 50% 44.09%,
+        #bc5287 0%,
+        #24083a 81.77%,
+        #24083a 100%
+      );
+    `};
 `
 
 const TimerContainer = styled.div`

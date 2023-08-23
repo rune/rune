@@ -72,6 +72,7 @@ Rune.initLogic({
     },
     nextRound: (_, { game }) => {
       if (game.round + 1 === numRounds) throw Rune.invalidAction()
+      if (game.currentTurn?.stage !== "result") throw Rune.invalidAction()
 
       for (const player of game.players) {
         player.latestRoundScore = 0

@@ -3,6 +3,9 @@ import styled from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { useAtomValue } from "jotai"
 import { $currentTurn } from "../../state/$state"
+import { Player } from "@lottiefiles/react-lottie-player"
+
+import speakingAnimation from "./lottie/speaking.json"
 
 export function Acting() {
   const currentTurn = useAtomValue($currentTurn)
@@ -12,7 +15,11 @@ export function Acting() {
   return (
     <Root>
       <Prompt>Make this sound!</Prompt>
+      <div style={{ height: rel(8) }} />
+      <SpeakingHead autoplay loop src={speakingAnimation} />
+      <div style={{ height: rel(15) }} />
       <AnimalImg src={art.animals[currentTurn.animal]} />
+      <div style={{ height: rel(78) }} />
       <EmotionImg src={art.emotions[currentTurn.emotion]} />
     </Root>
   )
@@ -37,4 +44,8 @@ const AnimalImg = styled.img`
 const EmotionImg = styled.img`
   width: ${rel(64)};
   height: ${rel(64)};
+`
+
+const SpeakingHead = styled(Player)`
+  height: ${rel(37)};
 `

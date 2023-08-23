@@ -5,8 +5,9 @@ import { useAtomValue } from "jotai"
 import { useMemo } from "react"
 import { rel } from "../../style/rel"
 import { art } from "./art/art"
-
+import confettiAnimation from "./lottie/confetti.json"
 import checkmark from "./checkmark.svg"
+import { Player } from "@lottiefiles/react-lottie-player"
 
 export function CorrectGuess(guess: Guess) {
   const yourPlayerId = useAtomValue($yourPlayerId)
@@ -20,6 +21,7 @@ export function CorrectGuess(guess: Guess) {
     <Root>
       {guess.playerId === yourPlayerId ? (
         <>
+          <Confetti autoplay keepLastFrame src={confettiAnimation} />
           <CheckmarkImg src={checkmark} />
           <Label big uppercase>
             Correct!
@@ -116,4 +118,13 @@ const Score = styled.div`
 
   color: #69c251;
   text-shadow: 0 ${rel(4.5)} ${rel(4.5)} rgba(0, 0, 0, 0.25);
+`
+
+export const Confetti = styled(Player)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scale(3);
 `

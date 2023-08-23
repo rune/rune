@@ -2,6 +2,8 @@ import { useAtomValue } from "jotai"
 import { $actorPlayer, $yourPlayerId } from "../../state/$state"
 import styled from "styled-components/macro"
 import { rel } from "../../style/rel"
+import { Confetti } from "./CorrectGuess"
+import confettiAnimation from "./lottie/confetti.json"
 
 export function EndOfTurn() {
   const actorPlayer = useAtomValue($actorPlayer)
@@ -12,6 +14,7 @@ export function EndOfTurn() {
       {!!actorPlayer?.latestTurnScore ? (
         actorPlayer.id === yourPlayerId ? (
           <>
+            <Confetti autoplay keepLastFrame src={confettiAnimation} />
             <Heading>Great job!</Heading>
             <div style={{ height: rel(58) }} />
             <Score>+{actorPlayer.latestTurnScore}pt</Score>

@@ -52,7 +52,7 @@ const ReadyLabel = styled.div`
   text-align: center;
 `
 
-const ReadyButton = styled.div<{ visible: boolean }>`
+export const ReadyButton = styled.div<{ visible: boolean }>`
   width: ${rel(336)};
   visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
 

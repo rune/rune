@@ -32,6 +32,9 @@ const animationStepKeyIndexMap = animationSteps.reduce(
   }
 )
 
+const itemHeight = 64
+const itemGap = 16
+
 export function Results() {
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
@@ -57,53 +60,80 @@ export function Results() {
     }
   }, [animationStepIdx, gameOver])
 
-  const playersOrderedByPrevious = useMemo(
+  const playersOrderedByPreviousScore = useMemo(
     () =>
       sortBy(players, (player) => -(player.score - player.latestRoundScore)),
     [players]
   )
 
-  const playersOrdered = useMemo(
+  const playersOrderedByScore = useMemo(
     () => sortBy(players, (player) => -player.score),
     [players]
+  )
+
+  const playersFixedOrderWithOffset = useMemo(
+    () =>
+      sortBy(
+        players,
+        (player) => -(player.score - player.latestRoundScore),
+        (player) => player.id
+      ).map((player, i) => ({
+        ...player,
+        offset: rel(
+          ((round === 0 ||
+          animationStepIdx >= animationStepKeyIndexMap.newScoreOrder
+            ? playersOrderedByScore
+            : playersOrderedByPreviousScore
+          ).indexOf(player) -
+            i) *
+            (itemHeight + itemGap)
+        ),
+      })),
+    [
+      animationStepIdx,
+      players,
+      playersOrderedByPreviousScore,
+      playersOrderedByScore,
+      round,
+    ]
   )
 
   return (
     <Root>
       <Heading>Leaderboard</Heading>
 
-      {animationStepIdx > animationStepKeyIndexMap.empty && (
-        <List>
-          {(round === 0 ||
-          animationStepIdx >= animationStepKeyIndexMap.newScoreOrder
-            ? playersOrdered
-            : playersOrderedByPrevious
-          ).map((player) => (
-            <Item key={player.id}>
-              <AvatarImg src={player.info.avatarUrl} />
-              <div style={{ width: rel(8) }} />
-              <Name>
-                {player.id === yourPlayerId ? "You" : player.info.displayName}
-              </Name>
-              <div style={{ flex: 1 }} />
-              <Score>
-                {!!player.latestRoundScore &&
-                  animationStepIdx >= animationStepKeyIndexMap.latestScore && (
-                    <LatestScore>+{player.latestRoundScore}pt</LatestScore>
-                  )}
-                <AnimatedNumber
-                  value={
-                    animationStepIdx >= animationStepKeyIndexMap.newScores
-                      ? player.score
-                      : player.score - player.latestRoundScore
-                  }
-                />
-                pts
-              </Score>
-            </Item>
-          ))}
-        </List>
-      )}
+      <List invisible={!(animationStepIdx > animationStepKeyIndexMap.empty)}>
+        {playersFixedOrderWithOffset.map((player) => (
+          <Item key={player.id} offset={player.offset}>
+            <AvatarImg src={player.info.avatarUrl} />
+            <div style={{ width: rel(8) }} />
+            <Name>
+              {player.id === yourPlayerId ? "You" : player.info.displayName}
+            </Name>
+            <div style={{ flex: 1 }} />
+            <Score>
+              <LatestScore
+                invisible={
+                  !(
+                    !!player.latestRoundScore &&
+                    animationStepIdx >= animationStepKeyIndexMap.latestScore
+                  )
+                }
+              >
+                +{player.latestRoundScore}pt
+              </LatestScore>
+              <AnimatedNumber
+                value={
+                  animationStepIdx >= animationStepKeyIndexMap.newScores
+                    ? player.score
+                    : player.score - player.latestRoundScore
+                }
+              />
+              pts
+            </Score>
+          </Item>
+        ))}
+      </List>
 
       <ReadyButton
         invisible={
@@ -136,21 +166,27 @@ const Heading = styled.div`
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
 `
 
-const List = styled.div`
+const List = styled.div<{ invisible: boolean }>`
+  opacity: ${({ invisible }) => (invisible ? 0 : 1)};
+  transition: opacity 300ms ease-out;
   display: flex;
   flex-direction: column;
   > :not(:first-child) {
-    margin-top: ${rel(16)};
+    margin-top: ${rel(itemGap)};
   }
 `
 
-const Item = styled.div`
+const Item = styled.div<{ offset: string }>`
   width: ${rel(336)};
   background: white;
   border-radius: ${rel(24)};
   display: flex;
   align-items: center;
-  padding: ${rel(16)} ${rel(29)} ${rel(16)} ${rel(24)};
+  height: ${rel(itemHeight)};
+  padding: 0 ${rel(29)} 0 ${rel(24)};
+  position: relative;
+  top: ${({ offset }) => offset};
+  transition: top 500ms ease-in-out;
 `
 
 const AvatarImg = styled.img`
@@ -169,7 +205,10 @@ const Score = styled.div`
   color: #af41d1;
 `
 
-const LatestScore = styled.div`
+const LatestScore = styled.div<{ invisible?: boolean }>`
+  opacity: ${({ invisible }) => (invisible ? 0 : 1)};
+  transition: opacity 300ms ease-out;
+
   position: absolute;
   top: ${rel(-22)};
   right: ${rel(10)};

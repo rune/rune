@@ -31,7 +31,8 @@ export const AlmostOverBackground = memo(() => {
 
 const Root = styled.div`
   z-index: -1;
-  position: absolute;
+  // has to be fixed, scale animation causes actual layout changes on Android (and UI then can be moved by swiping)
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

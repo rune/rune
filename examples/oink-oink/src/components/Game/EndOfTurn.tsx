@@ -4,10 +4,16 @@ import styled from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { Confetti } from "./CorrectGuess"
 import confettiAnimation from "./lottie/confetti.json"
+import { useEffect } from "react"
+import { sounds } from "../../sounds/sounds"
 
 export function EndOfTurn() {
   const actorPlayer = useAtomValue($actorPlayer)
   const yourPlayerId = useAtomValue($yourPlayerId)
+
+  useEffect(() => {
+    sounds.endOfTurn.play()
+  }, [])
 
   return (
     <Root>

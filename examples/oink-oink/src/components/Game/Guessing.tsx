@@ -3,6 +3,7 @@ import { rel } from "../../style/rel"
 import { animals, emotions, Animal, Emotion } from "../../lib/types/GameState"
 import { art } from "./art/art"
 import { useState, useEffect } from "react"
+import { sounds } from "../../sounds/sounds"
 
 export function Guessing() {
   const [pendingAnimal, setPendingAnimal] = useState<Animal>()
@@ -31,7 +32,10 @@ export function Guessing() {
           <Item
             key={animal}
             selected={pendingAnimal === animal}
-            onClick={() => setPendingAnimal(animal)}
+            onClick={() => {
+              sounds.guessButton.play()
+              setPendingAnimal(animal)
+            }}
             animateScaleWithDelay={
               pendingEmotion && !pendingAnimal ? i / 2 : undefined
             }
@@ -46,7 +50,10 @@ export function Guessing() {
           <Item
             key={emotion}
             selected={pendingEmotion === emotion}
-            onClick={() => setPendingEmotion(emotion)}
+            onClick={() => {
+              sounds.guessButton.play()
+              setPendingEmotion(emotion)
+            }}
             animateScaleWithDelay={
               pendingAnimal && !pendingEmotion ? i / 2 : undefined
             }

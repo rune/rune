@@ -3,6 +3,8 @@ import { turnDuration, turnAlmostOverAt } from "../../logic"
 import { useAtomValue } from "jotai"
 import { $currentTurn } from "../../state/$state"
 import styled from "styled-components/macro"
+import { useEffect } from "react"
+import { sounds } from "../../sounds/sounds"
 
 export function AlmostOverBackground() {
   const currentTurn = useAtomValue($currentTurn)
@@ -13,7 +15,18 @@ export function AlmostOverBackground() {
       duration: turnDuration,
     }) ?? 0
 
-  return turnTimerValue <= turnAlmostOverAt ? <Root /> : null
+  const almostOver = turnTimerValue <= turnAlmostOverAt
+
+  useEffect(() => {
+    if (almostOver) {
+      sounds.timer.play()
+      return () => {
+        sounds.timer.stop()
+      }
+    }
+  }, [almostOver])
+
+  return almostOver ? <Root /> : null
 }
 
 const Root = styled.div`

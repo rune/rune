@@ -2,12 +2,13 @@ import styled, { css } from "styled-components/macro"
 import { Guess } from "../../lib/types/GameState"
 import { $yourPlayerId, $players } from "../../state/$state"
 import { useAtomValue } from "jotai"
-import { useMemo } from "react"
+import { useMemo, useEffect } from "react"
 import { rel } from "../../style/rel"
 import { art } from "./art/art"
 import confettiAnimation from "./lottie/confetti.json"
 import checkmark from "./checkmark.svg"
 import { Player } from "@lottiefiles/react-lottie-player"
+import { sounds } from "../../sounds/sounds"
 
 export function CorrectGuess(guess: Guess) {
   const yourPlayerId = useAtomValue($yourPlayerId)
@@ -16,6 +17,14 @@ export function CorrectGuess(guess: Guess) {
     () => players.find((p) => p.id === guess.playerId),
     [guess.playerId, players]
   )
+
+  useEffect(() => {
+    if (guess.playerId === yourPlayerId) {
+      sounds.correctGuess.play()
+    } else {
+      sounds.otherUserCorrectGuess.play()
+    }
+  }, [guess.playerId, yourPlayerId])
 
   return (
     <Root>

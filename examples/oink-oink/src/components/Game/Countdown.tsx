@@ -9,12 +9,18 @@ import {
   $round,
   $currentTurn,
 } from "../../state/$state"
+import { useEffect } from "react"
+import { sounds } from "../../sounds/sounds"
 
 export function Countdown() {
   const yourPlayer = useAtomValue($yourPlayer)
   const actorPlayer = useAtomValue($actorPlayer)
   const round = useAtomValue($round)
   const currentTurn = useAtomValue($currentTurn)
+
+  useEffect(() => {
+    sounds.countdown.play()
+  }, [])
 
   if (!currentTurn) return null
 

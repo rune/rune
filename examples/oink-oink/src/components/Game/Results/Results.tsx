@@ -12,6 +12,7 @@ import { rel } from "../../../style/rel"
 import { AnimatedNumber } from "./AnimatedNumber"
 import { ReadyButton } from "../../Start/Start"
 import { numRounds } from "../../../logic"
+import { sounds } from "../../../sounds/sounds"
 
 const animationSteps = [
   { key: "empty", duration: 1000 },
@@ -52,6 +53,12 @@ export function Results() {
     )
 
     return () => clearTimeout(handle)
+  }, [animationStepIdx])
+
+  useEffect(() => {
+    if (animationStepIdx === animationStepKeyIndexMap.newScores) {
+      sounds.scoreIncrease.play()
+    }
   }, [animationStepIdx])
 
   useEffect(() => {

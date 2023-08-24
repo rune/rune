@@ -5,13 +5,17 @@ import { Start } from "../Start/Start"
 import { Game } from "../Game/Game"
 
 import background from "./background.svg"
+import { ImagePreloader } from "./ImagePreloader"
 
 export function App() {
   const gameStarted = useAtomValue($gameStarted)
 
-  // TODO: onboarding
-
-  return <Root>{gameStarted ? <Game /> : <Start />}</Root>
+  return (
+    <Root>
+      <ImagePreloader />
+      {gameStarted ? <Game /> : <Start />}
+    </Root>
+  )
 }
 
 const Root = styled.div`

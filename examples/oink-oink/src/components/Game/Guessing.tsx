@@ -2,10 +2,10 @@ import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { animals, emotions, Animal, Emotion } from "../../lib/types/GameState"
 import { art } from "./art/art"
-import { useState, useEffect } from "react"
+import { useState, useEffect, memo } from "react"
 import { sounds } from "../../sounds/sounds"
 
-export function Guessing() {
+export const Guessing = memo(() => {
   const [pendingAnimal, setPendingAnimal] = useState<Animal>()
   const [pendingEmotion, setPendingEmotion] = useState<Emotion>()
 
@@ -63,7 +63,7 @@ export function Guessing() {
       </Grid>
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   animation: fadeIn 300ms ease-out forwards;

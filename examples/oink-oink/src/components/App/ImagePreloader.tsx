@@ -1,9 +1,9 @@
 import { useAtomValue } from "jotai"
 import { $players } from "../../state/$state"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, memo } from "react"
 import { art } from "../Game/art/art"
 
-export function ImagePreloader() {
+export const ImagePreloader = memo(() => {
   const players = useAtomValue($players)
   const playerAvatars = useMemo(
     () => players.map((player) => player.info.avatarUrl),
@@ -20,7 +20,7 @@ export function ImagePreloader() {
   }, [])
 
   return null
-}
+})
 
 const preloaded = new Set<string>()
 

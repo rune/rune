@@ -1,59 +1,68 @@
 import styled, { css } from "styled-components/macro"
 import { rel } from "../../../style/rel"
-import { useMemo, useState, useEffect } from "react"
+import { useMemo, useState, useEffect, memo } from "react"
 
-export function Carousel({
-  values,
-  selected,
-  big,
-}: {
-  values: string[]
-  selected: string
-  big?: boolean
-}) {
-  const orderedValues = useMemo(() => {
-    const random = values.sort(() => Math.random() - 0.5)
+export const Carousel = memo(
+  ({
+    values,
+    selected,
+    big,
+  }: {
+    values: string[]
+    selected: string
+    big?: boolean
+  }) => {
+    const orderedValues = useMemo(() => {
+      const random = values.sort(() => Math.random() - 0.5)
 
-    // remove selected from the list
-    random.splice(random.indexOf(selected), 1)
-    // replicate the list to increase length
-    random.push(...random, ...random)
-    // insert selected in the middle
-    random.splice(-Math.floor(values.length / 2), 0, selected)
+      // remove selected from the list
+      random.splice(random.indexOf(selected), 1)
+      // replicate the list to increase length
+      random.push(...random, ...random)
+      // insert selected in the middle
+      random.splice(-Math.floor(values.length / 2), 0, selected)
 
-    return random
-  }, [selected, values])
+      return random
+    }, [selected, values])
 
-  const offset = useMemo(() => {
-    const margin = big ? sizes.big.margin : sizes.small.margin
-    const size = big ? sizes.big.normalSize : sizes.small.normalSize
-    const selectedSize = big ? sizes.big.selectedSize : sizes.small.selectedSize
+    const offset = useMemo(() => {
+      const margin = big ? sizes.big.margin : sizes.small.margin
+      const size = big ? sizes.big.normalSize : sizes.small.normalSize
+      const selectedSize = big
+        ? sizes.big.selectedSize
+        : sizes.small.selectedSize
+
+      return (
+        (margin + size) * orderedValues.indexOf(selected) +
+        margin +
+        selectedSize / 2
+      )
+    }, [big, orderedValues, selected])
+
+    const [renderedOffset, setRenderedOffset] = useState(0)
+
+    useEffect(() => {
+      requestAnimationFrame(() => setRenderedOffset(offset))
+    }, [offset])
+
+    const delay = useMemo(() => Math.round(Math.random() * 200), [])
 
     return (
-      (margin + size) * orderedValues.indexOf(selected) +
-      margin +
-      selectedSize / 2
+      <Root big={!!big}>
+        <Inner offset={renderedOffset} delay={delay}>
+          {orderedValues.map((value, i) => (
+            <Img
+              key={i}
+              src={value}
+              big={!!big}
+              selected={value === selected}
+            />
+          ))}
+        </Inner>
+      </Root>
     )
-  }, [big, orderedValues, selected])
-
-  const [renderedOffset, setRenderedOffset] = useState(0)
-
-  useEffect(() => {
-    requestAnimationFrame(() => setRenderedOffset(offset))
-  }, [offset])
-
-  const delay = useMemo(() => Math.round(Math.random() * 200), [])
-
-  return (
-    <Root big={!!big}>
-      <Inner offset={renderedOffset} delay={delay}>
-        {orderedValues.map((value, i) => (
-          <Img key={i} src={value} big={!!big} selected={value === selected} />
-        ))}
-      </Inner>
-    </Root>
-  )
-}
+  }
+)
 
 const sizes = {
   big: {

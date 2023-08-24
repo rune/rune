@@ -4,10 +4,10 @@ import styled from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { Confetti } from "./CorrectGuess"
 import confettiAnimation from "./lottie/confetti.json"
-import { useEffect } from "react"
+import { useEffect, memo } from "react"
 import { sounds } from "../../sounds/sounds"
 
-export function EndOfTurn() {
+export const EndOfTurn = memo(() => {
   const actorPlayer = useAtomValue($actorPlayer)
   const yourPlayerId = useAtomValue($yourPlayerId)
 
@@ -40,7 +40,7 @@ export function EndOfTurn() {
       )}
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   animation: fadeIn 300ms ease-out forwards;

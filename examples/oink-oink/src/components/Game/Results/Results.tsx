@@ -5,7 +5,7 @@ import {
   $round,
   $gameOver,
 } from "../../../state/$state"
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, memo } from "react"
 import { sortBy } from "../../../lib/sortBy"
 import styled, { css } from "styled-components/macro"
 import { rel } from "../../../style/rel"
@@ -36,7 +36,7 @@ const animationStepKeyIndexMap = animationSteps.reduce(
 const itemHeight = 64
 const itemGap = 16
 
-export function Results() {
+export const Results = memo(() => {
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
   const round = useAtomValue($round)
@@ -156,7 +156,7 @@ export function Results() {
       </ReadyButton>
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   animation: fadeIn 300ms ease-out forwards;

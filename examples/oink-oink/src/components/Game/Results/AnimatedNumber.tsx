@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, memo } from "react"
 import { animate } from "../../../lib/animate"
 
-export function AnimatedNumber({ value }: { value: number }) {
+export const AnimatedNumber = memo(({ value }: { value: number }) => {
   const [renderedValue, setRenderedValue] = useState(value)
   const prevValue = useRef(value)
 
@@ -20,7 +20,7 @@ export function AnimatedNumber({ value }: { value: number }) {
   }, [value])
 
   return <>{renderedValue}</>
-}
+})
 
 function easeOutExpo(x: number): number {
   return x === 1 ? 1 : 1 - Math.pow(2, -10 * x)

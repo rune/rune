@@ -9,10 +9,10 @@ import {
   $round,
   $currentTurn,
 } from "../../state/$state"
-import { useEffect } from "react"
+import { useEffect, memo } from "react"
 import { sounds } from "../../sounds/sounds"
 
-export function Countdown() {
+export const Countdown = memo(() => {
   const yourPlayer = useAtomValue($yourPlayer)
   const actorPlayer = useAtomValue($actorPlayer)
   const round = useAtomValue($round)
@@ -51,7 +51,7 @@ export function Countdown() {
       />
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   animation: fadeIn 300ms ease-out forwards;

@@ -9,8 +9,6 @@ import { remap } from "../../../lib/remap"
 const positions: { [i: number]: number } = {}
 const rotations: { [i: number]: number } = {}
 
-// TODO: use memo() on all components? related to use of useTimerValue in Game.tsx
-
 export const RisingGuessesView = memo(() => {
   const guesses = useAtomValue($guesses)
   const initialLength = useRef(guesses.length)

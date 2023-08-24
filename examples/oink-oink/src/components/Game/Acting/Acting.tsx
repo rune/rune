@@ -8,9 +8,9 @@ import { Player } from "@lottiefiles/react-lottie-player"
 import speakingAnimation from "../lottie/speaking.json"
 import { RisingGuessesView } from "./RisingGuessesView"
 import { Carousel } from "./Carousel"
-import { useMemo } from "react"
+import { useMemo, memo } from "react"
 
-export function Acting() {
+export const Acting = memo(() => {
   const currentTurn = useAtomValue($currentTurn)
 
   const animalImgs = useMemo(() => Object.values(art.animals), [])
@@ -39,7 +39,7 @@ export function Acting() {
       <RisingGuessesView />
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   animation: fadeIn 300ms ease-out forwards;

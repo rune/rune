@@ -1,12 +1,12 @@
 import { useAtomValue } from "jotai"
 import { $players, $yourPlayer } from "../../state/$state"
-import { useMemo } from "react"
+import { useMemo, memo } from "react"
 import styled, { css } from "styled-components/macro"
 
 import logo from "./logo.svg"
 import { rel } from "../../style/rel"
 
-export function Start() {
+export const Start = memo(() => {
   const players = useAtomValue($players)
   const yourPlayer = useAtomValue($yourPlayer)
 
@@ -31,7 +31,7 @@ export function Start() {
       </ReadyButton>
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   animation: fadeIn 300ms ease-out forwards;

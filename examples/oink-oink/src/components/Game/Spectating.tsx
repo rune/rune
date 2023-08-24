@@ -3,8 +3,9 @@ import { rel } from "../../style/rel"
 import { $actorPlayer } from "../../state/$state"
 import { useAtomValue } from "jotai"
 import { RisingGuessesView } from "./Acting/RisingGuessesView"
+import { memo } from "react"
 
-export function Spectating() {
+export const Spectating = memo(() => {
   const actorPlayer = useAtomValue($actorPlayer)
 
   return (
@@ -23,7 +24,7 @@ export function Spectating() {
       </Bottom>
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   animation: fadeIn 300ms ease-out forwards;

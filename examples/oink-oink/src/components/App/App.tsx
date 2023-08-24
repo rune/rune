@@ -6,8 +6,9 @@ import { Game } from "../Game/Game"
 
 import background from "./background.svg"
 import { ImagePreloader } from "./ImagePreloader"
+import { memo } from "react"
 
-export function App() {
+export const App = memo(() => {
   const gameStarted = useAtomValue($gameStarted)
 
   return (
@@ -16,7 +17,7 @@ export function App() {
       {gameStarted ? <Game /> : <Start />}
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   display: flex;

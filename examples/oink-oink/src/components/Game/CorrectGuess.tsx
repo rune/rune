@@ -2,7 +2,7 @@ import styled, { css } from "styled-components/macro"
 import { Guess } from "../../lib/types/GameState"
 import { $yourPlayerId, $players } from "../../state/$state"
 import { useAtomValue } from "jotai"
-import { useMemo, useEffect } from "react"
+import { useMemo, useEffect, memo } from "react"
 import { rel } from "../../style/rel"
 import { art } from "./art/art"
 import confettiAnimation from "./lottie/confetti.json"
@@ -10,7 +10,7 @@ import checkmark from "./checkmark.svg"
 import { Player } from "@lottiefiles/react-lottie-player"
 import { sounds } from "../../sounds/sounds"
 
-export function CorrectGuess(guess: Guess) {
+export const CorrectGuess = memo((guess: Guess) => {
   const yourPlayerId = useAtomValue($yourPlayerId)
   const players = useAtomValue($players)
   const guessPlayer = useMemo(
@@ -62,7 +62,7 @@ export function CorrectGuess(guess: Guess) {
       )}
     </Root>
   )
-}
+})
 
 const Root = styled.div`
   animation: fadeIn 300ms ease-out forwards;

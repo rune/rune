@@ -19,7 +19,7 @@ export const Spectating = memo(() => {
         </Label>
       </Player>
       <Bottom>
-        <Label>Guesses:</Label>
+        <Label>Guesses</Label>
         <RisingGuessesView />
       </Bottom>
     </Root>

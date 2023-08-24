@@ -35,7 +35,7 @@ export const Acting = memo(() => {
         selected={art.emotions[currentTurn.emotion]}
       />
       <div style={{ height: rel(15) }} />
-      <Label>Guesses:</Label>
+      <Label>Guesses</Label>
       <RisingGuessesView />
     </Root>
   )

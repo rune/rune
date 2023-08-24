@@ -23,6 +23,11 @@ export const Guessing = memo(() => {
     [currentTurn?.animal, currentTurn?.emotion, pendingAnimal, pendingEmotion]
   )
 
+  const inputDisabled = useMemo(
+    () => pendingAnimal && pendingEmotion,
+    [pendingAnimal, pendingEmotion]
+  )
+
   useEffect(() => {
     if (pendingAnimal && pendingEmotion) {
       const handle = setTimeout(() => {
@@ -47,6 +52,7 @@ export const Guessing = memo(() => {
             selected={pendingAnimal === animal}
             invalid={invalid}
             onClick={() => {
+              if (inputDisabled) return
               sounds.guessButton.play()
               setPendingAnimal(animal)
             }}
@@ -68,6 +74,7 @@ export const Guessing = memo(() => {
             selected={pendingEmotion === emotion}
             invalid={invalid}
             onClick={() => {
+              if (inputDisabled) return
               sounds.guessButton.play()
               setPendingEmotion(emotion)
             }}

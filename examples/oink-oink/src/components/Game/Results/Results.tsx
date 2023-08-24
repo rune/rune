@@ -7,7 +7,7 @@ import {
 } from "../../../state/$state"
 import { useState, useEffect, useMemo, memo } from "react"
 import { sortBy } from "../../../lib/sortBy"
-import styled, { css } from "styled-components/macro"
+import styled from "styled-components/macro"
 import { rel } from "../../../style/rel"
 import { AnimatedNumber } from "./AnimatedNumber"
 import { ReadyButton } from "../../Start/Start"
@@ -109,7 +109,11 @@ export const Results = memo(() => {
     <Root>
       <Heading>Leaderboard</Heading>
 
-      <List invisible={!(animationStepIdx > animationStepKeyIndexMap.empty)}>
+      <List
+        style={{
+          opacity: animationStepIdx > animationStepKeyIndexMap.empty ? 1 : 0,
+        }}
+      >
         {playersFixedOrderWithOffset.map((player) => (
           <Item key={player.id} offset={player.offset}>
             <AvatarImg src={player.info.avatarUrl} />
@@ -120,12 +124,13 @@ export const Results = memo(() => {
             <div style={{ flex: 1 }} />
             <Score>
               <LatestScore
-                invisible={
-                  !(
+                style={{
+                  opacity:
                     !!player.latestRoundScore &&
                     animationStepIdx >= animationStepKeyIndexMap.latestScore
-                  )
-                }
+                      ? 1
+                      : 0,
+                }}
               >
                 +{player.latestRoundScore}pt
               </LatestScore>
@@ -143,13 +148,14 @@ export const Results = memo(() => {
       </List>
 
       <ReadyButton
-        invisible={
-          !(
+        style={{
+          opacity:
             animationStepIdx >= animationStepKeyIndexMap.cta &&
             yourPlayerId &&
             round < numRounds - 1
-          )
-        }
+              ? 1
+              : 0,
+        }}
         onClick={() => Rune.actions.nextRound()}
       >
         <div>Continue</div>
@@ -174,15 +180,7 @@ const Heading = styled.div`
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
 `
 
-const List = styled.div<{ invisible: boolean }>`
-  ${({ invisible }) =>
-    invisible
-      ? css`
-          opacity: 0;
-        `
-      : css`
-          opacity: 1;
-        `};
+const List = styled.div`
   transition: opacity 300ms ease-out;
   display: flex;
   flex-direction: column;
@@ -220,15 +218,7 @@ const Score = styled.div`
   color: #af41d1;
 `
 
-const LatestScore = styled.div<{ invisible?: boolean }>`
-  ${({ invisible }) =>
-    invisible
-      ? css`
-          opacity: 0;
-        `
-      : css`
-          opacity: 1;
-        `};
+const LatestScore = styled.div`
   transition: opacity 300ms ease-out;
 
   position: absolute;

@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai"
 import { $players, $yourPlayer } from "../../state/$state"
 import { useMemo, memo } from "react"
-import styled, { css } from "styled-components/macro"
+import styled from "styled-components/macro"
 
 import logo from "./logo.svg"
 import { rel } from "../../style/rel"
@@ -24,7 +24,7 @@ export const Start = memo(() => {
         Players Ready
       </ReadyLabel>
       <ReadyButton
-        invisible={!yourPlayer || yourPlayer.readyToStart}
+        style={{ opacity: yourPlayer && !yourPlayer.readyToStart ? 1 : 0 }}
         onClick={() => Rune.actions.setReadyToStart()}
       >
         <div>I'm Ready</div>
@@ -53,16 +53,8 @@ const ReadyLabel = styled.div`
   text-align: center;
 `
 
-export const ReadyButton = styled.div<{ invisible?: boolean }>`
+export const ReadyButton = styled.div`
   width: ${rel(336)};
-  ${({ invisible }) =>
-    invisible
-      ? css`
-          opacity: 0;
-        `
-      : css`
-          opacity: 1;
-        `};
   transition: opacity 150ms ease-out;
 
   background: linear-gradient(180deg, #ffbbca 0%, #ffbbca 0.01%, #ffeaee 100%);

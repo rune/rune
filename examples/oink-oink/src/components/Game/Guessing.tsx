@@ -7,6 +7,8 @@ import { sounds } from "../../sounds/sounds"
 import { useAtomValue } from "jotai"
 import { $currentTurn } from "../../state/$state"
 
+const buttonHintDelay = 1.5
+
 export const Guessing = memo(() => {
   const [pendingAnimal, setPendingAnimal] = useState<Animal>()
   const [pendingEmotion, setPendingEmotion] = useState<Emotion>()
@@ -49,7 +51,9 @@ export const Guessing = memo(() => {
               setPendingAnimal(animal)
             }}
             animateScaleWithDelay={
-              pendingEmotion && !pendingAnimal ? i / 2 : undefined
+              pendingEmotion && !pendingAnimal
+                ? i / 2 + buttonHintDelay
+                : undefined
             }
           >
             <img src={art.animals[animal]} />
@@ -68,7 +72,9 @@ export const Guessing = memo(() => {
               setPendingEmotion(emotion)
             }}
             animateScaleWithDelay={
-              pendingAnimal && !pendingEmotion ? i / 2 : undefined
+              pendingAnimal && !pendingEmotion
+                ? i / 2 + buttonHintDelay
+                : undefined
             }
           >
             <img src={art.emotions[emotion]} />

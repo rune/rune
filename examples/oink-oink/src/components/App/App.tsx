@@ -1,6 +1,6 @@
 import styled from "styled-components/macro"
 import { useAtomValue } from "jotai"
-import { $gameStarted } from "../../state/$state"
+import { $gameStarted, $ready } from "../../state/$state"
 import { Start } from "../Start/Start"
 import { Game } from "../Game/Game"
 
@@ -9,7 +9,10 @@ import { ImagePreloader } from "./ImagePreloader"
 import { memo } from "react"
 
 export const App = memo(() => {
+  const ready = useAtomValue($ready)
   const gameStarted = useAtomValue($gameStarted)
+
+  if (!ready) return <Root />
 
   return (
     <Root>

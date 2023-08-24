@@ -3,10 +3,12 @@ import { atom } from "jotai"
 import { Players, PlayerId } from "rune-games-sdk/multiplayer"
 
 export const $state = atom<{
+  ready: boolean
   game: GameState
   players: Players
   yourPlayerId: PlayerId | undefined
 }>({
+  ready: false,
   game: {
     players: [],
     gameStarted: false,
@@ -18,6 +20,8 @@ export const $state = atom<{
   players: {},
   yourPlayerId: undefined,
 })
+
+export const $ready = atom((get) => get($state).ready)
 
 export const $game = atom((get) => get($state).game)
 

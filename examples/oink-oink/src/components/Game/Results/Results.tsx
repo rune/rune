@@ -7,7 +7,7 @@ import {
 } from "../../../state/$state"
 import { useState, useEffect, useMemo } from "react"
 import { sortBy } from "../../../lib/sortBy"
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 import { rel } from "../../../style/rel"
 import { AnimatedNumber } from "./AnimatedNumber"
 import { ReadyButton } from "../../Start/Start"
@@ -175,7 +175,14 @@ const Heading = styled.div`
 `
 
 const List = styled.div<{ invisible: boolean }>`
-  opacity: ${({ invisible }) => (invisible ? 0 : 1)};
+  ${({ invisible }) =>
+    invisible
+      ? css`
+          opacity: 0;
+        `
+      : css`
+          opacity: 1;
+        `};
   transition: opacity 300ms ease-out;
   display: flex;
   flex-direction: column;
@@ -214,7 +221,14 @@ const Score = styled.div`
 `
 
 const LatestScore = styled.div<{ invisible?: boolean }>`
-  opacity: ${({ invisible }) => (invisible ? 0 : 1)};
+  ${({ invisible }) =>
+    invisible
+      ? css`
+          opacity: 0;
+        `
+      : css`
+          opacity: 1;
+        `};
   transition: opacity 300ms ease-out;
 
   position: absolute;

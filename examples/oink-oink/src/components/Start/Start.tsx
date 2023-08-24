@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai"
 import { $players, $yourPlayer } from "../../state/$state"
 import { useMemo } from "react"
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 
 import logo from "./logo.svg"
 import { rel } from "../../style/rel"
@@ -55,7 +55,14 @@ const ReadyLabel = styled.div`
 
 export const ReadyButton = styled.div<{ invisible?: boolean }>`
   width: ${rel(336)};
-  opacity: ${({ invisible }) => (invisible ? 0 : 1)};
+  ${({ invisible }) =>
+    invisible
+      ? css`
+          opacity: 0;
+        `
+      : css`
+          opacity: 1;
+        `};
   transition: opacity 150ms ease-out;
 
   background: linear-gradient(180deg, #ffbbca 0%, #ffbbca 0.01%, #ffeaee 100%);

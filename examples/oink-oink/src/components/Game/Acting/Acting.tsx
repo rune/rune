@@ -7,9 +7,14 @@ import { Player } from "@lottiefiles/react-lottie-player"
 
 import speakingAnimation from "../lottie/speaking.json"
 import { RisingGuessesView } from "./RisingGuessesView"
+import { Carousel } from "./Carousel"
+import { useMemo } from "react"
 
 export function Acting() {
   const currentTurn = useAtomValue($currentTurn)
+
+  const animalImgs = useMemo(() => Object.values(art.animals), [])
+  const emotionImgs = useMemo(() => Object.values(art.emotions), [])
 
   if (!currentTurn) return null
 
@@ -19,9 +24,16 @@ export function Acting() {
       <div style={{ height: rel(8) }} />
       <SpeakingHead autoplay loop src={speakingAnimation} />
       <div style={{ height: rel(15) }} />
-      <AnimalImg src={art.animals[currentTurn.animal]} />
+      <Carousel
+        big
+        values={animalImgs}
+        selected={art.animals[currentTurn.animal]}
+      />
       <div style={{ height: rel(48) }} />
-      <EmotionImg src={art.emotions[currentTurn.emotion]} />
+      <Carousel
+        values={emotionImgs}
+        selected={art.emotions[currentTurn.emotion]}
+      />
       <div style={{ height: rel(15) }} />
       <Label>Guesses:</Label>
       <RisingGuessesView />
@@ -39,16 +51,6 @@ const Root = styled.div`
 const Label = styled.div`
   font-size: ${rel(28)};
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
-`
-
-const AnimalImg = styled.img`
-  width: ${rel(220)};
-  height: ${rel(220)};
-`
-
-const EmotionImg = styled.img`
-  width: ${rel(64)};
-  height: ${rel(64)};
 `
 
 const SpeakingHead = styled(Player)`

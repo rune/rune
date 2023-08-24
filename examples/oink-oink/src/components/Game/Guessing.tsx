@@ -2,12 +2,24 @@ import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
 import { animals, emotions, Animal, Emotion } from "../../lib/types/GameState"
 import { art } from "./art/art"
-import { useState, useEffect, memo } from "react"
+import { useState, useEffect, memo, useMemo } from "react"
 import { sounds } from "../../sounds/sounds"
+import { useAtomValue } from "jotai"
+import { $currentTurn } from "../../state/$state"
 
 export const Guessing = memo(() => {
   const [pendingAnimal, setPendingAnimal] = useState<Animal>()
   const [pendingEmotion, setPendingEmotion] = useState<Emotion>()
+  const currentTurn = useAtomValue($currentTurn)
+
+  const invalid = useMemo(
+    () =>
+      pendingAnimal &&
+      pendingEmotion &&
+      (pendingAnimal !== currentTurn?.animal ||
+        pendingEmotion !== currentTurn?.emotion),
+    [currentTurn?.animal, currentTurn?.emotion, pendingAnimal, pendingEmotion]
+  )
 
   useEffect(() => {
     if (pendingAnimal && pendingEmotion) {
@@ -31,6 +43,7 @@ export const Guessing = memo(() => {
           <Item
             key={animal}
             selected={pendingAnimal === animal}
+            invalid={invalid}
             onClick={() => {
               sounds.guessButton.play()
               setPendingAnimal(animal)
@@ -49,6 +62,7 @@ export const Guessing = memo(() => {
           <Item
             key={emotion}
             selected={pendingEmotion === emotion}
+            invalid={invalid}
             onClick={() => {
               sounds.guessButton.play()
               setPendingEmotion(emotion)
@@ -86,7 +100,11 @@ const Grid = styled.div`
   justify-content: center;
 `
 
-const Item = styled.div<{ selected: boolean; animateScaleWithDelay?: number }>`
+const Item = styled.div<{
+  selected: boolean
+  animateScaleWithDelay?: number
+  invalid?: boolean
+}>`
   width: ${rel(72)};
   height: ${rel(72)};
   background: white;
@@ -95,12 +113,17 @@ const Item = styled.div<{ selected: boolean; animateScaleWithDelay?: number }>`
   margin: ${rel(8)};
   border: ${rel(4)} solid transparent;
   padding: ${rel(12 - 4)};
-  transition: border-color 150ms ease-out;
-  ${({ selected }) =>
+  transition: all 150ms ease-out;
+  ${({ selected, invalid }) =>
     selected &&
-    css`
-      border-color: #5bb600;
-    `}
+    (invalid
+      ? css`
+          border-color: #e93643;
+          background: #f27d7d;
+        `
+      : css`
+          border-color: #5bb600;
+        `)}
 
   > img {
     width: 100%;

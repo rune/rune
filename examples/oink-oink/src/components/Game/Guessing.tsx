@@ -11,7 +11,6 @@ export function Guessing() {
 
   useEffect(() => {
     if (pendingAnimal && pendingEmotion) {
-      // todo: figure out if there's an easy way to add a lag without delaying submit
       const handle = setTimeout(() => {
         Rune.actions.makeGuess({
           animal: pendingAnimal,

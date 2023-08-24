@@ -18,8 +18,6 @@ import crying from "./emotions/crying.png"
 import ghost from "./emotions/ghost.png"
 import cold from "./emotions/cold.png"
 
-// TODO: use new bigger images
-
 export const art: {
   animals: { [K in Animal]: string }
   emotions: { [K in Emotion]: string }

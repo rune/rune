@@ -36,7 +36,7 @@ export const EndOfTurn = memo(() => {
           </>
         )
       ) : (
-        <Label>Better luck next time</Label>
+        <Label>Better luck next time!</Label>
       )}
     </Root>
   )

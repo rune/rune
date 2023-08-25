@@ -1,4 +1,4 @@
-# Sudoku
+# Oink Oink
 
 Think you know what a sad frog sounds like? Test your impressions against your friends!
 Here's a [demo](https://developers.rune.ai/examples/oink-oink/).

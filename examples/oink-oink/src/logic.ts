@@ -7,13 +7,9 @@ import { startGameCheck } from "./lib/startGameCheck"
 
 export const numRounds = 3
 export const turnCountdown = 3
-
 export const turnDuration = 30
-
 export const turnAlmostOverAt = 5
-
 export const endOfTurnDuration = 3
-
 export const displayCorrectGuessFor = 3
 
 Rune.initLogic({

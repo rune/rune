@@ -113,57 +113,58 @@ Rune.initLogic({
     },
   },
   update: ({ game }) => {
-    if (!game.currentTurn) return
+    if (!game.currentTurn || !game.currentTurn.timerStartedAt) return
 
-    if (
-      game.currentTurn.stage === "countdown" &&
-      game.currentTurn.timerStartedAt &&
-      Rune.gameTimeInSeconds() >=
-        game.currentTurn.timerStartedAt + turnCountdown
-    ) {
-      game.currentTurn.stage = "acting"
-      game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
-    }
-
-    if (
-      game.currentTurn.stage === "acting" &&
-      game.currentTurn.timerStartedAt &&
-      Rune.gameTimeInSeconds() >= game.currentTurn.timerStartedAt + turnDuration
-    ) {
-      game.currentTurn.stage = "endOfTurn"
-      game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
-    }
-
-    if (
-      game.currentTurn.stage === "endOfTurn" &&
-      game.currentTurn.timerStartedAt &&
-      Rune.gameTimeInSeconds() >=
-        game.currentTurn.timerStartedAt + endOfTurnDuration
-    ) {
-      for (const player of game.players) {
-        player.latestTurnScore = 0
-      }
-
-      if (isLastActor(game)) {
-        game.currentTurn.stage = "result"
-
-        if (game.round + 1 === numRounds) {
-          game.gameOver = true
-          Rune.gameOver({
-            players: game.players.reduce(
-              (acc, player) => ({
-                ...acc,
-                [player.id]: player.score,
-              }),
-              {}
-            ),
-            delayPopUp: true,
-          })
+    switch (game.currentTurn.stage) {
+      case "countdown":
+        if (
+          Rune.gameTimeInSeconds() >=
+          game.currentTurn.timerStartedAt + turnCountdown
+        ) {
+          game.currentTurn.stage = "acting"
+          game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
         }
-      } else {
-        setActor(game, "next")
-        newTurn(game)
-      }
+        break
+      case "acting":
+        if (
+          Rune.gameTimeInSeconds() >=
+          game.currentTurn.timerStartedAt + turnDuration
+        ) {
+          game.currentTurn.stage = "endOfTurn"
+          game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+        }
+        break
+      case "endOfTurn":
+        if (
+          Rune.gameTimeInSeconds() >=
+          game.currentTurn.timerStartedAt + endOfTurnDuration
+        ) {
+          for (const player of game.players) {
+            player.latestTurnScore = 0
+          }
+
+          if (isLastActor(game)) {
+            game.currentTurn.stage = "result"
+
+            if (game.round + 1 === numRounds) {
+              game.gameOver = true
+              Rune.gameOver({
+                players: game.players.reduce(
+                  (acc, player) => ({
+                    ...acc,
+                    [player.id]: player.score,
+                  }),
+                  {}
+                ),
+                delayPopUp: true,
+              })
+            }
+          } else {
+            setActor(game, "next")
+            newTurn(game)
+          }
+        }
+        break
     }
   },
 })

@@ -93,14 +93,15 @@ Rune.initLogic({
     },
   },
   events: {
-    playerLeft: (_, { game }) => {
+    playerLeft: (playerId, { game }) => {
+      game.players = game.players.filter((player) => player.id !== playerId)
+
       startGameCheck(game)
 
-      if (!game.currentTurn) throw Rune.invalidAction()
-
       if (
-        game.currentTurn.stage === "acting" ||
-        game.currentTurn.stage === "countdown"
+        game.currentTurn &&
+        (game.currentTurn.stage === "acting" ||
+          game.currentTurn.stage === "countdown")
       ) {
         if (isLastActor(game)) {
           game.currentTurn.stage = "result"

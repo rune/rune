@@ -24,3 +24,9 @@ cd ../pinpoint
 yarn
 ../../scripts/copy-assets.sh pinpoint && yarn build
 cp -r build/. ../../docs/static/_examples/pinpoint
+
+#
+cd ../oink-oink
+yarn
+../../scripts/copy-assets.sh oink-oink && yarn build
+cp -r build/. ../../docs/static/_examples/oink-oink

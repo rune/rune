@@ -644,6 +644,99 @@ describe("validateGameFiles", () => {
       }
     )
 
+    await check(
+      [
+        {
+          path: "index.html",
+          size: 1 * 1e6,
+          content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+        },
+        {
+          path: "logic.js",
+          size: 1 * 1e6,
+          // language=JavaScript
+          content: `
+              Rune.initLogic({
+                minPlayers: 1,
+                maxPlayers: 4,
+                updatesPerSecond: 40,
+                setup: () => {
+                  return { cells: Array(25).fill(null) }
+                },
+                actions: {},
+                events: {
+                  playerJoined: () => {},
+                  playerLeft () {},
+                },
+              })`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [
+          {
+            message:
+              "logic.js: updatesPerSecond must be undefined or between 1 and 30",
+          },
+        ],
+        multiplayer: {
+          handlesPlayerJoined: true,
+          handlesPlayerLeft: true,
+          minPlayers: 1,
+          maxPlayers: 4,
+          updatesPerSecond: 40,
+        },
+      }
+    )
+
+    await check(
+      [
+        {
+          path: "index.html",
+          size: 1 * 1e6,
+          content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+        },
+        {
+          path: "logic.js",
+          size: 1 * 1e6,
+          // language=JavaScript
+          content: `
+              Rune.initLogic({
+                minPlayers: 1,
+                maxPlayers: 4,
+                updatesPerSecond: 10,
+                setup: () => {
+                  return { cells: Array(25).fill(null) }
+                },
+                actions: {},
+                events: {
+                  playerJoined: () => {},
+                  playerLeft () {},
+                },
+              })`,
+        },
+      ],
+      {
+        valid: true,
+        errors: [],
+        multiplayer: {
+          handlesPlayerJoined: true,
+          handlesPlayerLeft: true,
+          minPlayers: 1,
+          maxPlayers: 4,
+          updatesPerSecond: 10,
+        },
+      }
+    )
+
     function check(files: FileInfo[], expected: ValidationResult) {
       return expect(validateGameFiles(files)).resolves.toEqual(expected)
     }

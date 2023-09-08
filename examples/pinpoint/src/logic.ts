@@ -13,13 +13,13 @@ export const roundDuration = 25
 // weightedPanoramas is generated for pickRandom
 // The chance of picking panorama with higher weight increases because it appears more times in weightedPanoramas array
 const weightedPanoramas = generateWeightedPanoramas(panoramas)
-const usedPanoramas = new Set<number>()
 
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (playerIds) => {
     const rounds: GameState["rounds"] = []
+    const usedPanoramas = new Set<number>()
 
     for (let i = 0; i < numRounds; i++) {
       // Pick random weighted panorama that has not been used yet

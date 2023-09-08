@@ -9,7 +9,7 @@ const NUMBER_OF_LONGITUDE_BUCKETS = 30
 const NUMBER_OF_LATITUDE_BUCKETS = 30
 
 // Returns number from 0 to numberOfCells - 1
-const getBucketId = (
+export const getBucketId = (
   value: number,
   options: { min: number; max: number; numberOfCells: number }
 ) => {
@@ -94,4 +94,6 @@ function generatePanoramasLogic() {
   fs.writeFileSync("./src/lib/data/panoramasLogic.ts", panoramasLogic, "utf-8")
 }
 
-generatePanoramasLogic()
+// Run directly if called.
+// This is used to allow other files to import these functions.
+if (!module.parent) generatePanoramasLogic()

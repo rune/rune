@@ -1,10 +1,11 @@
-import { pickWeightedRandom } from "./lib/pickWeightedRandom"
 import { calculateDistanceKm } from "./lib/calculateDistanceKm"
 import { calculateScore } from "./lib/calculateScore"
 import { panoramas } from "./lib/data/panoramasLogic"
 import { GameState } from "./lib/types/GameState"
 import { shouldTriggerGameOver } from "./lib/shouldTriggerGameOver"
 import { triggerGameOver } from "./lib/triggerGameOver"
+import { pickRandom } from "./lib/pickRandom"
+import { generateWeightedPanoramas } from "./lib/generateWeightedPanoramas"
 
 export const numRounds = 5
 export const roundDuration = 25
@@ -17,7 +18,11 @@ Rune.initLogic({
     const remainingPanoramas = [...panoramas]
 
     for (let i = 0; i < numRounds; i++) {
-      const randomPanorama = pickWeightedRandom(remainingPanoramas)
+      // Pick random weighted panorama
+      const weightedPanoramas = generateWeightedPanoramas(remainingPanoramas)
+      // The chance of picking item with higher weight increases because it appears more times in weightedPanoramas array
+      const randomPanorama = pickRandom(weightedPanoramas)
+
       remainingPanoramas.splice(remainingPanoramas.indexOf(randomPanorama), 1)
       const [longitude, latitude] = randomPanorama
 

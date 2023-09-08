@@ -17,7 +17,10 @@ Rune.initLogic({
     const remainingPanoramas = [...panoramas]
 
     for (let i = 0; i < numRounds; i++) {
-      const randomPanorama = pickRandom(remainingPanoramas)
+      const randomPanoramas = pickRandom(remainingPanoramas, 10)
+      // Get panorama with highest weight
+      const [randomPanorama] = randomPanoramas.sort((a, b) => b[2] - a[2])
+
       const [longitude, latitude] = randomPanorama
       remainingPanoramas.splice(remainingPanoramas.indexOf(randomPanorama), 1)
       rounds.push({

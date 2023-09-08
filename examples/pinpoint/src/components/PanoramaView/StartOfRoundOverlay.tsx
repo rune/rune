@@ -10,7 +10,6 @@ import {
   SimpleCSSTransition,
 } from "../animation/SimpleCSSTransition"
 import { timings } from "../animation/config"
-import { panoramasClient } from "../../lib/data/panoramasClient"
 
 export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
   const game = useAtomValue($game)!
@@ -19,7 +18,6 @@ export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
   const round = game.currentRound
   const maxRound = game.rounds.length
   const playersArray = useMemo(() => Object.values(players), [players])
-  const panorama = panoramasClient[game.rounds[round].index]
 
   return (
     <SimpleCSSTransition visible={visible} duration={timings.default}>

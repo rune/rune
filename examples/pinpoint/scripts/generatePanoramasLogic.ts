@@ -22,6 +22,24 @@ const getBucketId = (
   return Math.floor(normalizedValue * numberOfCells)
 }
 
+// Returns string composed of two BucketId (longitude and latitude)
+const getCellId = (panorama: Panorama): CellId => {
+  const { longitude, latitude } = panorama
+
+  const longitudeBucketId = getBucketId(longitude, {
+    min: -180,
+    max: 180,
+    numberOfCells: NUMBER_OF_LONGITUDE_BUCKETS,
+  })
+  const latitudeBucketId = getBucketId(latitude, {
+    min: -90,
+    max: 90,
+    numberOfCells: NUMBER_OF_LATITUDE_BUCKETS,
+  })
+
+  return `${longitudeBucketId}-${latitudeBucketId}`
+}
+
 // Returns integer from 1 to max
 const getWeight = (value: number, max: number) => {
   const weight = 1 / value // (0, 1]
@@ -33,41 +51,32 @@ const getWeight = (value: number, max: number) => {
 
 const addWeights = (panoramas: Panorama[]) => {
   // Group by cellId
-  const groupedPanoramas: Record<CellId, Panorama[]> = {}
+  const groupedPanoramaCounts: Record<CellId, number> = {}
   let maxNumberOfPanoramasInCell = -1
   panoramas.forEach((panorama) => {
-    const { longitude, latitude } = panorama
+    const cellId = getCellId(panorama)
 
-    const longitudeBucketId = getBucketId(longitude, {
-      min: -180,
-      max: 180,
-      numberOfCells: NUMBER_OF_LONGITUDE_BUCKETS,
-    })
-    const latitudeBucketId = getBucketId(latitude, {
-      min: -90,
-      max: 90,
-      numberOfCells: NUMBER_OF_LATITUDE_BUCKETS,
-    })
-
-    const cellId = `${longitudeBucketId}-${latitudeBucketId}`
-
-    if (!groupedPanoramas[cellId]) {
-      groupedPanoramas[cellId] = []
+    if (!groupedPanoramaCounts[cellId]) {
+      groupedPanoramaCounts[cellId] = 0
     }
-    groupedPanoramas[cellId].push(panorama)
+    groupedPanoramaCounts[cellId] += 1
 
     maxNumberOfPanoramasInCell = Math.max(
       maxNumberOfPanoramasInCell,
-      groupedPanoramas[cellId].length
+      groupedPanoramaCounts[cellId]
     )
   })
 
-  // Add weight
-  return Object.values(groupedPanoramas).flatMap((panoramas) => {
-    return panoramas.map((panorama) => ({
+  return panoramas.map((panorama) => {
+    const cellId = getCellId(panorama)
+
+    return {
       ...panorama,
-      weight: getWeight(panoramas.length, maxNumberOfPanoramasInCell),
-    }))
+      weight: getWeight(
+        groupedPanoramaCounts[cellId],
+        maxNumberOfPanoramasInCell
+      ),
+    }
   })
 }
 

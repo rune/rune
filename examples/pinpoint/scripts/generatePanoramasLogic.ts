@@ -7,6 +7,7 @@ type CellId = `${BucketId}-${BucketId}`
 
 const NUMBER_OF_LONGITUDE_BUCKETS = 30
 const NUMBER_OF_LATITUDE_BUCKETS = 30
+const MAX_WEIGHT = 20
 
 // Returns number from 0 to numberOfCells - 1
 export const getBucketId = (
@@ -44,7 +45,7 @@ const getCellId = (panorama: Panorama): CellId => {
 const getWeight = (value: number, max: number) => {
   const weight = 1 / value // (0, 1]
   const normalizedWeight = weight * max // [1, max]
-  const cappedWeight = Math.min(normalizedWeight, 100) // [1, 100]
+  const cappedWeight = Math.min(normalizedWeight, MAX_WEIGHT) // [1, MAX_WEIGHT]
   const roundedWeight = Math.round(cappedWeight)
 
   return roundedWeight

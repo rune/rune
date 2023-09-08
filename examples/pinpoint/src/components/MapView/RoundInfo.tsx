@@ -26,28 +26,30 @@ export function RoundInfo() {
     [players, myPlayerId]
   )
 
-  if (!myPlayer) return null
-
   return (
     <Root>
       <Header>
         Round {round + 1}/{game.rounds.length}
       </Header>
       <Players>
-        <Player>
-          <AvatarContainer>
-            <Avatar src={myPlayer.avatarUrl} />
-            <SimpleCSSTransition
-              visible={!!guesses.find((guess) => guess.playerId === myPlayerId)}
-              duration={timings.default}
-            >
-              <AvatarCheckmarkContainer>
-                <AvatarCheckmark src={avatarCheckmarkImg} />
-              </AvatarCheckmarkContainer>
-            </SimpleCSSTransition>
-          </AvatarContainer>
-          <Name>You</Name>
-        </Player>
+        {myPlayer && (
+          <Player>
+            <AvatarContainer>
+              <Avatar src={myPlayer.avatarUrl} />
+              <SimpleCSSTransition
+                visible={
+                  !!guesses.find((guess) => guess.playerId === myPlayerId)
+                }
+                duration={timings.default}
+              >
+                <AvatarCheckmarkContainer>
+                  <AvatarCheckmark src={avatarCheckmarkImg} />
+                </AvatarCheckmarkContainer>
+              </SimpleCSSTransition>
+            </AvatarContainer>
+            <Name>You</Name>
+          </Player>
+        )}
         {remainingPlayers.map((player) => (
           <Player key={player.playerId}>
             <AvatarContainer>
@@ -66,7 +68,7 @@ export function RoundInfo() {
             <Name>{player.displayName}</Name>
           </Player>
         ))}
-        {remainingPlayers.length < 3 && (
+        {myPlayer && remainingPlayers.length < 3 && (
           <Player onClick={() => Rune.showInvitePlayers()}>
             <AvatarPlaceholder src={invitePlayerImg} />
             <Name>Invite</Name>

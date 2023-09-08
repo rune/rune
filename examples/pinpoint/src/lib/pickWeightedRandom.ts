@@ -1,7 +1,7 @@
 type Longitude = number
 type Latitude = number
 type Weight = number // Must be integer
-type Arr = [Longitude, Latitude, Weight]
+export type Arr = [Longitude, Latitude, Weight]
 
 export function pickWeightedRandom(arr: Arr[]) {
   // Create weightedItems array in which every item from arr array will appear as many items as weight of that item

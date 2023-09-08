@@ -18,10 +18,11 @@ Rune.initLogic({
 
     for (let i = 0; i < numRounds; i++) {
       const randomPanorama = pickRandom(remainingPanoramas)
+      const [longitude, latitude] = randomPanorama
       remainingPanoramas.splice(remainingPanoramas.indexOf(randomPanorama), 1)
       rounds.push({
         index: panoramas.indexOf(randomPanorama),
-        coords: randomPanorama,
+        coords: [longitude, latitude],
       })
     }
 

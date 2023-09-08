@@ -22,10 +22,13 @@ const getBucketId = (
   return Math.floor(normalizedValue * numberOfCells)
 }
 
-const getWeight = (value: number, max: number) => {
-  const weight = 1 / value
-  const normalizedWeigth = weight * max
-  const roundedWeight = Number(normalizedWeigth.toFixed(2))
+// Returns number from 0.0099 to 1
+const getWeight = (value: number, min: number, max: number) => {
+  const normalizedValue = (value - min) / (max - min) // [0, 1]
+  const preparedValue = normalizedValue * 100 + 1 // [1, 101]
+  const weight = 1 / preparedValue // [0.0099, 1]
+
+  const roundedWeight = Number(weight.toFixed(4))
 
   return roundedWeight
 }
@@ -33,7 +36,8 @@ const getWeight = (value: number, max: number) => {
 const addWeights = (panoramas: Panorama[]) => {
   // Group by cellId
   const groupedPanoramas: Record<CellId, Panorama[]> = {}
-  let maxNumberOfPanoramasInCell = 0
+  let minNumberOfPanoramasInCell = Number.MAX_SAFE_INTEGER
+  let maxNumberOfPanoramasInCell = -1
   panoramas.forEach((panorama) => {
     const { longitude, latitude } = panorama
 
@@ -55,16 +59,25 @@ const addWeights = (panoramas: Panorama[]) => {
     }
     groupedPanoramas[cellId].push(panorama)
 
-    if (groupedPanoramas[cellId].length > maxNumberOfPanoramasInCell) {
-      maxNumberOfPanoramasInCell = groupedPanoramas[cellId].length
-    }
+    minNumberOfPanoramasInCell = Math.min(
+      minNumberOfPanoramasInCell,
+      groupedPanoramas[cellId].length
+    )
+    maxNumberOfPanoramasInCell = Math.max(
+      maxNumberOfPanoramasInCell,
+      groupedPanoramas[cellId].length
+    )
   })
 
   // Add weight
   return Object.values(groupedPanoramas).flatMap((panoramas) => {
     return panoramas.map((panorama) => ({
       ...panorama,
-      weight: getWeight(panoramas.length, maxNumberOfPanoramasInCell),
+      weight: getWeight(
+        panoramas.length,
+        minNumberOfPanoramasInCell,
+        maxNumberOfPanoramasInCell
+      ),
     }))
   })
 }

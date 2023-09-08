@@ -44,7 +44,8 @@ const getCellId = (panorama: Panorama): CellId => {
 const getWeight = (value: number, max: number) => {
   const weight = 1 / value // (0, 1]
   const normalizedWeight = weight * max // [1, max]
-  const roundedWeight = Math.round(normalizedWeight)
+  const cappedWeight = Math.max(normalizedWeight, 100) // [1, 100]
+  const roundedWeight = Math.round(cappedWeight)
 
   return roundedWeight
 }

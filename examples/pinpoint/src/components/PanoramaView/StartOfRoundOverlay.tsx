@@ -38,7 +38,6 @@ export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
               <Name>{playersArray[0].displayName}</Name>
             )}
           </PlayersContainer>
-          <LabelSmall>Photo by {panorama.authorName}</LabelSmall>
         </Box>
       </Root>
     </SimpleCSSTransition>
@@ -91,11 +90,6 @@ const Label = styled.div`
   text-overflow: ellipsis;
 
   font-size: 14px;
-  font-weight: 300;
-`
-
-const LabelSmall = styled(Label)`
-  font-size: 11px;
   font-weight: 300;
 `
 

@@ -22,6 +22,14 @@ const getBucketId = (
   return Math.floor(normalizedValue * numberOfCells)
 }
 
+const getWeight = (numberOfPanoramasInCell: number) => {
+  const weight = 1 / numberOfPanoramasInCell
+  const roundedWeight = Number(weight.toFixed(2))
+
+  // Keep minimum weight 0.01
+  return Math.min(0.01, roundedWeight)
+}
+
 const addWeights = (panoramas: Panorama[]) => {
   // Group by cellId
   const groupedPanoramas: Record<CellId, Panorama[]> = {}
@@ -51,7 +59,7 @@ const addWeights = (panoramas: Panorama[]) => {
   return Object.values(groupedPanoramas).flatMap((panoramas) => {
     return panoramas.map((panorama) => ({
       ...panorama,
-      weight: 1 / panoramas.length,
+      weight: getWeight(panoramas.length),
     }))
   })
 }

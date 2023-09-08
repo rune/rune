@@ -64,7 +64,7 @@ const addWeights = (panoramas: Panorama[]) => {
   })
 }
 
-function generatePanoramaLogic() {
+function generatePanoramasLogic() {
   const panoramasWithWeight = addWeights(panoramas)
 
   const panoramasLogic = `export const panoramas: [number, number, number][] = JSON.parse('${JSON.stringify(
@@ -78,4 +78,4 @@ function generatePanoramaLogic() {
   fs.writeFileSync("./src/lib/data/panoramasLogic.ts", panoramasLogic, "utf-8")
 }
 
-generatePanoramaLogic()
+generatePanoramasLogic()

@@ -1,4 +1,4 @@
-import * as panoramas from "../src/lib/data/panoramas.json"
+import * as allPanoramas from "../src/lib/data/panoramas.json"
 import * as fs from "fs"
 
 type Panorama = { longitude: number; latitude: number }
@@ -22,13 +22,11 @@ const getBucketId = (
   return Math.floor(normalizedValue * numberOfCells)
 }
 
-// Returns number from 0.0099 to 1
-const getWeight = (value: number, min: number, max: number) => {
-  const normalizedValue = (value - min) / (max - min) // [0, 1]
-  const preparedValue = normalizedValue * 100 + 1 // [1, 101]
-  const weight = 1 / preparedValue // [0.0099, 1]
-
-  const roundedWeight = Number(weight.toFixed(4))
+// Returns integer from 1 to max
+const getWeight = (value: number, max: number) => {
+  const weight = 1 / value // (0, 1]
+  const normalizedWeight = weight * max // [1, max]
+  const roundedWeight = Math.round(normalizedWeight)
 
   return roundedWeight
 }
@@ -36,7 +34,6 @@ const getWeight = (value: number, min: number, max: number) => {
 const addWeights = (panoramas: Panorama[]) => {
   // Group by cellId
   const groupedPanoramas: Record<CellId, Panorama[]> = {}
-  let minNumberOfPanoramasInCell = Number.MAX_SAFE_INTEGER
   let maxNumberOfPanoramasInCell = -1
   panoramas.forEach((panorama) => {
     const { longitude, latitude } = panorama
@@ -59,10 +56,6 @@ const addWeights = (panoramas: Panorama[]) => {
     }
     groupedPanoramas[cellId].push(panorama)
 
-    minNumberOfPanoramasInCell = Math.min(
-      minNumberOfPanoramasInCell,
-      groupedPanoramas[cellId].length
-    )
     maxNumberOfPanoramasInCell = Math.max(
       maxNumberOfPanoramasInCell,
       groupedPanoramas[cellId].length
@@ -73,17 +66,13 @@ const addWeights = (panoramas: Panorama[]) => {
   return Object.values(groupedPanoramas).flatMap((panoramas) => {
     return panoramas.map((panorama) => ({
       ...panorama,
-      weight: getWeight(
-        panoramas.length,
-        minNumberOfPanoramasInCell,
-        maxNumberOfPanoramasInCell
-      ),
+      weight: getWeight(panoramas.length, maxNumberOfPanoramasInCell),
     }))
   })
 }
 
 function generatePanoramasLogic() {
-  const panoramasWithWeight = addWeights(panoramas)
+  const panoramasWithWeight = addWeights(allPanoramas)
 
   const panoramasLogic = `export const panoramas: [number, number, number][] = JSON.parse('${JSON.stringify(
     panoramasWithWeight.map(({ longitude, latitude, weight }) => [

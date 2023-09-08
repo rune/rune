@@ -1,4 +1,4 @@
-import { pickRandom } from "./lib/pickRandom"
+import { pickWeightedRandom } from "./lib/pickWeightedRandom"
 import { calculateDistanceKm } from "./lib/calculateDistanceKm"
 import { calculateScore } from "./lib/calculateScore"
 import { panoramas } from "./lib/data/panoramasLogic"
@@ -17,12 +17,10 @@ Rune.initLogic({
     const remainingPanoramas = [...panoramas]
 
     for (let i = 0; i < numRounds; i++) {
-      const randomPanoramas = pickRandom(remainingPanoramas, 10)
-      // Get panorama with highest weight
-      const [randomPanorama] = randomPanoramas.sort((a, b) => b[2] - a[2])
-
-      const [longitude, latitude] = randomPanorama
+      const randomPanorama = pickWeightedRandom(remainingPanoramas)
       remainingPanoramas.splice(remainingPanoramas.indexOf(randomPanorama), 1)
+      const [longitude, latitude] = randomPanorama
+
       rounds.push({
         index: panoramas.indexOf(randomPanorama),
         coords: [longitude, latitude],

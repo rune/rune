@@ -34,6 +34,7 @@ Rune.initLogic({
         index: newPanoramaIdx,
         coords: [longitude, latitude],
       })
+      usedPanoramas.add(newPanoramaIdx)
     }
 
     return {

@@ -153,6 +153,7 @@ export function ScoreboardView() {
                   }
                 />
               </ListContainer>
+              <Photographer>Photo by {panorama.authorName}</Photographer>
             </SimpleCSSTransition>
 
             <SimpleCSSTransition
@@ -287,4 +288,11 @@ const MapToggleButton = styled.img<{ position: "left" | "right" }>`
         `};
   width: 33px;
   height: 33px;
+`
+
+const Photographer = styled.p`
+  margin: 20px;
+  font-size: 13px;
+  font-weight: 300;
+  color: #01a491;
 `

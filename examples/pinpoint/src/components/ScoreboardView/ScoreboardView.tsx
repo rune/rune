@@ -219,8 +219,8 @@ const ListContainer = styled.div`
 `
 
 const WhiteBackground = styled(Overlay)`
-  background-color: white;
-  opacity: 0.6;
+  background-color: #F8FFFC;
+  opacity: 0.9;
 `
 
 const GreenCircle = styled.img`

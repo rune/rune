@@ -1,6 +1,8 @@
 import * as allPanoramas from "../src/lib/data/panoramas.json"
 import * as assert from "assert"
 
+import { MathUtils as MathUtils6 } from "three"
+
 // Copied from src/components/PanoramaView/PhotoSphereViewer.tsx
 const zoomRanges = [
   [180, 50],
@@ -27,8 +29,6 @@ function mapFovToZoom(
 }
 
 function verifyPanoramas() {
-  const data: Record<string, any[]> = {}
-
   for (const item of allPanoramas) {
     // fov
     assert(
@@ -39,6 +39,10 @@ function verifyPanoramas() {
     // https://photo-sphere-viewer.js.org/guide/config.html#standard-options
     assert(item.view.maxFov > item.view.minFov && item.view.maxFov < 180)
     assert(item.view.minFov > 1 && item.view.minFov < item.view.maxFov)
+
+    assert(!Number.isNaN(MathUtils6.degToRad(item.view.fov)))
+    assert(!Number.isNaN(MathUtils6.degToRad(item.view.maxFov)))
+    assert(!Number.isNaN(MathUtils6.degToRad(item.view.minFov)))
 
     // src/components/PanoramaView/PhotoSphereViewer.tsx
     assert(item.levels.length > 0 && item.levels.length <= 3)

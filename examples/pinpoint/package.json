@@ -29,6 +29,7 @@
   },
   "scripts": {
     "generatePanoramasLogic": "ts-node --transpile-only scripts/generatePanoramasLogic.ts",
+    "verifyPanoramas": "ts-node --transpile-only scripts/verifyPanoramas.ts",
     "postinstall": "./copy-tile-creator.sh",
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && yarn build:logic",

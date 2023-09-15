@@ -31,11 +31,11 @@ Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
-    const scores = {}
+    const game = { scores: {} }
     for (let playerId of allPlayerIds) {
-      scores[playerId] = 0
+      game.scores[playerId] = 0
     }
-    return { scores }
+    return game
   },
   actions: {
     incrementScore(playerWhoGotPoints, { game }) {

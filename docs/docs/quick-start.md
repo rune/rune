@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # Quick Start
 
-Build a multiplayer game that reaches millions and let Rune handle all the complexity. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
+Build a multiplayer game for the Rune platform and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
 ## Install
 
@@ -14,11 +14,10 @@ Create a new Rune game project by running:
 npx rune-games-cli@latest create
 ```
 
-or integrate with an existing game by including these lines in your `index.html` file before loading any other JS scripts:
+or add the SDK to an existing game by including it in your `index.html` above any other JS scripts: 
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer-dev.js"></script>
-<script src="logic.js"></script>
 ```
 
 ## Game Logic
@@ -32,11 +31,11 @@ Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
-    const scores = {}
+    const game = { scores: {} }
     for (let playerId of allPlayerIds) {
-      scores[playerId] = 0
+      game.scores[playerId] = 0
     }
-    return { scores }
+    return game
   },
   actions: {
     incrementScore(playerWhoGotPoints, { game }) {

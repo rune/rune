@@ -191,11 +191,11 @@ Do not rely on `players` argument for determining player order, instead use `set
 
 :::
 
-#### `action?: { action: string, playerId: string, params: any }`
+#### `action?: { name: string, playerId: string, params: any }`
 
 If the update was triggered from a `Rune.actions.*` call, this argument will contain info about it, such as the payload and who initiated. Usually this should be ignored and rely on `newGame` instead.
 
-#### `event?: { event: string, params: any }`
+#### `event?: { name: string, params: any }`
 
 Currently this is always the `stateSync` event, you can ignore it for now.
 

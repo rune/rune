@@ -840,7 +840,7 @@ const onChange: OnChangeFn = async ({
   })
 
   if (action) {
-    switch (action.action) {
+    switch (action.name) {
       case "swap": {
         const { sourceIndex, targetIndex } = action.params
         const sourceElement = tiles[sourceIndex]

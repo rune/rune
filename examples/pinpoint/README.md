@@ -25,3 +25,11 @@ yarn start
 ```sh
 yarn build
 ```
+
+## Adding more panoramas
+
+After adding more panoramas, make sure to re-build panoramasLogic with:
+
+```sh
+yarn generatePanoramasLogic
+```

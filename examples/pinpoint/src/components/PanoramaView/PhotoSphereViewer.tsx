@@ -31,7 +31,7 @@ function mapFovToZoom(
 const portal = document.createElement("div")
 portal.style.width = "100%"
 portal.style.height = "100%"
-document.getElementById("hidden")?.appendChild(portal)
+document.getElementById("hiddenPsv")?.appendChild(portal)
 
 const viewer = new Viewer({
   container: portal,
@@ -57,7 +57,7 @@ export function PhotoSphereViewer({
     containerRef.current?.appendChild(portal)
 
     return () => {
-      document.getElementById("hidden")?.appendChild(portal)
+      document.getElementById("hiddenPsv")?.appendChild(portal)
     }
   }, [])
 

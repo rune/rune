@@ -153,6 +153,7 @@ export function ScoreboardView() {
                   }
                 />
               </ListContainer>
+              <Photographer>Photo by {panorama.authorName}</Photographer>
             </SimpleCSSTransition>
 
             <SimpleCSSTransition
@@ -218,8 +219,8 @@ const ListContainer = styled.div`
 `
 
 const WhiteBackground = styled(Overlay)`
-  background-color: white;
-  opacity: 0.6;
+  background-color: #F8FFFC;
+  opacity: 0.9;
 `
 
 const GreenCircle = styled.img`
@@ -287,4 +288,11 @@ const MapToggleButton = styled.img<{ position: "left" | "right" }>`
         `};
   width: 33px;
   height: 33px;
+`
+
+const Photographer = styled.p`
+  margin: 20px;
+  font-size: 13px;
+  font-weight: 300;
+  color: #01a491;
 `

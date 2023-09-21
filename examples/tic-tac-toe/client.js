@@ -59,7 +59,7 @@ Rune.initClient({
       li.textContent = player && player.displayName
     })
 
-    if (action && action.action === "claimCell") {
+    if (action && action.name === "claimCell") {
       selectSound.play()
     }
 

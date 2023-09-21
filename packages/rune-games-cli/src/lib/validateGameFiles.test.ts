@@ -9,12 +9,37 @@ jest.mock("./rootPath.ts", () => ({
   rootPath: path.resolve(__dirname, "../.."),
 }))
 
+const validLogicFile = {
+  path: "src/logic.js",
+  size: 1 * 1e6,
+  // language=JavaScript
+  content: `
+    Rune.initLogic({
+      minPlayers: 1,
+      maxPlayers: 4,
+      setup: () => {
+        return {}
+      },
+      actions: {},
+      events: {
+        playerJoined: () => {},
+        playerLeft () {},
+      },
+    })`,
+}
+const validLogicMultiplayer = {
+  handlesPlayerJoined: true,
+  handlesPlayerLeft: true,
+  minPlayers: 1,
+  maxPlayers: 4,
+}
+
 describe("validateGameFiles", () => {
   test("should validate game content", async () => {
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         {
           path: "src/index.html",
           size: 1 * 1e6,
@@ -23,20 +48,20 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/browser.min.js"></script>
-                  <script src="src/game.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
                 </head>
                 <body></body>
               </html>`,
         },
       ],
-      { valid: true, errors: [] }
+      { valid: true, errors: [], multiplayer: validLogicMultiplayer }
     )
 
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         {
           path: "src/index.html",
           size: 1 * 1e6,
@@ -45,8 +70,8 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.4.5/dist/browser.min.js"></script>
-                  <script src="src/game.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.4.5/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -54,6 +79,7 @@ describe("validateGameFiles", () => {
       ],
       {
         valid: false,
+        multiplayer: validLogicMultiplayer,
         errors: [
           {
             message:
@@ -66,7 +92,7 @@ describe("validateGameFiles", () => {
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         {
           path: "src/index.html",
           size: 1 * 1e6,
@@ -75,8 +101,8 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.4/dist/browser.min.js"></script>
-                  <script src="src/game.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.4/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -84,6 +110,7 @@ describe("validateGameFiles", () => {
       ],
       {
         valid: false,
+        multiplayer: validLogicMultiplayer,
         errors: [
           {
             message:
@@ -96,7 +123,7 @@ describe("validateGameFiles", () => {
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         {
           path: "src/index.html",
           size: 1 * 1e6,
@@ -105,8 +132,8 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3/dist/browser.min.js"></script>
-                  <script src="src/game.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@3/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -114,6 +141,7 @@ describe("validateGameFiles", () => {
       ],
       {
         valid: false,
+        multiplayer: validLogicMultiplayer,
         errors: [
           {
             message:
@@ -126,7 +154,7 @@ describe("validateGameFiles", () => {
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         {
           path: "src/index.html",
           size: 1 * 1e6,
@@ -135,8 +163,8 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/dist/browser.min.js"></script>
-                  <script src="src/game.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -144,6 +172,7 @@ describe("validateGameFiles", () => {
       ],
       {
         valid: true,
+        multiplayer: validLogicMultiplayer,
         errors: [],
       }
     )
@@ -151,7 +180,7 @@ describe("validateGameFiles", () => {
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         {
           path: "src/nestedFolder/index.html",
           size: 1 * 1e6,
@@ -169,8 +198,8 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/dist/browser.min.js"></script>
-                  <script src="src/game.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -179,6 +208,7 @@ describe("validateGameFiles", () => {
       {
         // valid because we should only look at the root index.html
         valid: true,
+        multiplayer: validLogicMultiplayer,
         errors: [],
       }
     )
@@ -186,7 +216,7 @@ describe("validateGameFiles", () => {
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         {
           path: "src/index.html",
           size: 1 * 1e6,
@@ -195,8 +225,8 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk/dist/browser.min.js"></script>
-                  <script src="src/game.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -204,14 +234,15 @@ describe("validateGameFiles", () => {
       ],
       {
         valid: false,
+        multiplayer: validLogicMultiplayer,
         errors: [{ message: "Rune SDK must specify a version" }],
       }
     )
 
     await check(
       [
-        { path: "media/background.png", size: 10 * 1e6 },
-        { path: "src/game.js", size: 10 * 1e6 },
+        { path: "media/background.png", size: 30 * 1e6 },
+        validLogicFile,
         {
           path: "src/index.html",
           size: 10 * 1e6,
@@ -220,8 +251,8 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="src/game.js"></script>
-                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/browser.min.js"></script>
+                  <script src="src/logic.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -229,6 +260,7 @@ describe("validateGameFiles", () => {
       ],
       {
         valid: false,
+        multiplayer: validLogicMultiplayer,
         errors: [
           { message: "Game size must be less than 25MB" },
           { message: "Rune SDK must be the first script in index.html" },
@@ -239,7 +271,7 @@ describe("validateGameFiles", () => {
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         {
           path: "src/index.html",
           size: 1 * 1e6,
@@ -248,7 +280,7 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
-                  <script src="src/game.js"></script>
+                  <script src="src/logic.js"></script>
                 </head>
                 <body></body>
               </html>`,
@@ -256,6 +288,7 @@ describe("validateGameFiles", () => {
       ],
       {
         valid: false,
+        multiplayer: undefined,
         errors: [{ message: "Game index.html must include Rune SDK script" }],
       }
     )
@@ -263,7 +296,7 @@ describe("validateGameFiles", () => {
     await check(
       [
         { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
+        validLogicFile,
         { path: "src/index.html", size: 1 * 1e6 },
       ],
       {
@@ -277,10 +310,7 @@ describe("validateGameFiles", () => {
     )
 
     await check(
-      [
-        { path: "media/background.png", size: 1 * 1e6 },
-        { path: "src/game.js", size: 1 * 1e6 },
-      ],
+      [{ path: "media/background.png", size: 1 * 1e6 }, validLogicFile],
       {
         valid: false,
         errors: [{ message: "Game must include index.html" }],
@@ -310,7 +340,7 @@ describe("validateGameFiles", () => {
                   <title>Game</title>
                 </head>
                 <body>
-                  <script src="src/game.js">
+                  <script src="src/logic.js">
                   <div>
                 </body>
               </html>`,

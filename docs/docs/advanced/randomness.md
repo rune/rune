@@ -6,7 +6,7 @@ sidebar_position: 60
 
 :::tip
 
-**TL;DR**: just use `Math.random()`.
+**TLDR**: just use `Math.random()`
 
 :::
 

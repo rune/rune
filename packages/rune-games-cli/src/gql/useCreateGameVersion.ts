@@ -28,16 +28,10 @@ gql`
   mutation CreateGameVersion(
     $gameId: Int!
     $content: Upload!
-    $challengeSupport: Boolean
     $isDraft: Boolean
   ) {
     createGameVersion(
-      input: {
-        gameId: $gameId
-        content: $content
-        challengeSupport: $challengeSupport
-        isDraft: $isDraft
-      }
+      input: { gameId: $gameId, content: $content, isDraft: $isDraft }
     ) {
       previewLink
       congratulationMsg

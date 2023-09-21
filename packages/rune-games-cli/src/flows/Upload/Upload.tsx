@@ -56,7 +56,6 @@ export function Upload() {
             gameId={gameId}
             gameDir={gameDir}
             readyForRelease={readyForRelease}
-            multiplayer={multiplayer}
           />
         ) : (
           <ConfirmationStep

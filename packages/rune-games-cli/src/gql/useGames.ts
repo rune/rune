@@ -35,7 +35,6 @@ gql`
             gameId
             gameVersionId
             status
-            supportsChallenge
           }
         }
       }

@@ -147,7 +147,7 @@ export async function validateGameFiles(
         }
       } else {
         errors.push({
-          message: `Rune SDK is must be multiplayer`,
+          message: `Rune SDK must be multiplayer`,
         })
       }
     }

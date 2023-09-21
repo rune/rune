@@ -137,8 +137,6 @@ export enum DevTeamsOrderBy {
 export interface Game {
   __typename: 'Game';
   blurredImgDataUrl: Maybe<Scalars['String']>;
-  /** Challenge number that increases every day by 1 at tango.next_challenge_at */
-  challengeId: Scalars['Int'];
   /** (Denormalized) Total number of comments . */
   commentCount: Scalars['Int'];
   createdAt: Scalars['Datetime'];
@@ -150,16 +148,9 @@ export interface Game {
   gameVersions: GameVersionsConnection;
   id: Scalars['Int'];
   logoUrl: Scalars['String'];
-  /** NULL means that the challenge is disabled. Once enabled, challenge cannot be disabled. */
-  nextChallengeAt: Maybe<Scalars['Datetime']>;
-  /**
-   * Sum of the deprecated game_session table rows
-   * with duration longer than 3s
-   * as well as the new game_play table rows
-   * with duration longer than 3s.
-   * Note that the sum exludes game plays longer than 86.4s created between 2022-05-26 and 2022-05-31 due to RUNE-7891.
-   */
+  /** @deprecated: Not used */
   playCount: Scalars['Int'];
+  previewImgUrl: Maybe<Scalars['String']>;
   title: Scalars['String'];
   type: GameType;
   updatedAt: Scalars['Datetime'];
@@ -182,8 +173,6 @@ export interface GameCondition {
   devTeamId?: InputMaybe<Scalars['Int']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['Int']>;
-  /** Checks for equality with the object’s `nextChallengeAt` field. */
-  nextChallengeAt?: InputMaybe<Scalars['Datetime']>;
 }
 
 export interface GameFile {
@@ -221,11 +210,13 @@ export interface GameVersion {
   game: Maybe<Game>;
   gameId: Scalars['Int'];
   gameVersionId: Scalars['Int'];
+  key: Scalars['String'];
   multiplayerMaxPlayers: Scalars['Int'];
   multiplayerMinPlayers: Scalars['Int'];
   multiplayerSupportsPlayerJoining: Scalars['Boolean'];
   multiplayerSupportsPlayerLeaving: Scalars['Boolean'];
   status: GameVersionStatus;
+  /** @deprecated true */
   supportsChallenge: Scalars['Boolean'];
 }
 
@@ -236,6 +227,8 @@ export interface GameVersion {
 export interface GameVersionCondition {
   /** Checks for equality with the object’s `gameId` field. */
   gameId?: InputMaybe<Scalars['Int']>;
+  /** Checks for equality with the object’s `key` field. */
+  key?: InputMaybe<Scalars['String']>;
 }
 
 export enum GameVersionStatus {
@@ -243,8 +236,7 @@ export enum GameVersionStatus {
   DRAFT = 'DRAFT',
   INACTIVE = 'INACTIVE',
   IN_REVIEW = 'IN_REVIEW',
-  UPLOADING = 'UPLOADING',
-  WAITING_FOR_RELEASE = 'WAITING_FOR_RELEASE'
+  UPLOADING = 'UPLOADING'
 }
 
 /** A connection to a list of `GameVersion` values. */
@@ -273,6 +265,8 @@ export interface GameVersionsEdge {
 export enum GameVersionsOrderBy {
   GAME_ID_ASC = 'GAME_ID_ASC',
   GAME_ID_DESC = 'GAME_ID_DESC',
+  KEY_ASC = 'KEY_ASC',
+  KEY_DESC = 'KEY_DESC',
   NATURAL = 'NATURAL',
   PRIMARY_KEY_ASC = 'PRIMARY_KEY_ASC',
   PRIMARY_KEY_DESC = 'PRIMARY_KEY_DESC'
@@ -307,8 +301,6 @@ export enum GamesOrderBy {
   ID_ASC = 'ID_ASC',
   ID_DESC = 'ID_DESC',
   NATURAL = 'NATURAL',
-  NEXT_CHALLENGE_AT_ASC = 'NEXT_CHALLENGE_AT_ASC',
-  NEXT_CHALLENGE_AT_DESC = 'NEXT_CHALLENGE_AT_DESC',
   PRIMARY_KEY_ASC = 'PRIMARY_KEY_ASC',
   PRIMARY_KEY_DESC = 'PRIMARY_KEY_DESC'
 }
@@ -414,6 +406,7 @@ export interface Query {
   devTeams: Maybe<DevTeamsConnection>;
   gameById: Maybe<Game>;
   gameVersionByGameIdAndGameVersionId: Maybe<GameVersion>;
+  gameVersionByKey: Maybe<GameVersion>;
   /** Reads and enables pagination through a set of `GameVersion`. */
   gameVersions: Maybe<GameVersionsConnection>;
   /** Reads and enables pagination through a set of `Game`. */
@@ -467,6 +460,12 @@ export interface QueryGameByIdArgs {
 export interface QueryGameVersionByGameIdAndGameVersionIdArgs {
   gameId: Scalars['Int'];
   gameVersionId: Scalars['Int'];
+}
+
+
+/** The root query type which gives access points into the data universe. */
+export interface QueryGameVersionByKeyArgs {
+  key: Scalars['String'];
 }
 
 
@@ -619,7 +618,6 @@ export type CreateGameMutation = { __typename: 'Mutation', createGame: { __typen
 export type CreateGameVersionMutationVariables = Exact<{
   gameId: Scalars['Int'];
   content: Scalars['Upload'];
-  challengeSupport?: Maybe<Scalars['Boolean']>;
   isDraft?: Maybe<Scalars['Boolean']>;
 }>;
 
@@ -715,10 +713,9 @@ export type DevTeamsEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type GameKeySpecifier = ('blurredImgDataUrl' | 'challengeId' | 'commentCount' | 'createdAt' | 'description' | 'devTeam' | 'devTeamId' | 'gameVersions' | 'id' | 'logoUrl' | 'nextChallengeAt' | 'playCount' | 'title' | 'type' | 'updatedAt' | GameKeySpecifier)[];
+export type GameKeySpecifier = ('blurredImgDataUrl' | 'commentCount' | 'createdAt' | 'description' | 'devTeam' | 'devTeamId' | 'gameVersions' | 'id' | 'logoUrl' | 'playCount' | 'previewImgUrl' | 'title' | 'type' | 'updatedAt' | GameKeySpecifier)[];
 export type GameFieldPolicy = {
 	blurredImgDataUrl?: FieldPolicy<any> | FieldReadFunction<any>,
-	challengeId?: FieldPolicy<any> | FieldReadFunction<any>,
 	commentCount?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -727,8 +724,8 @@ export type GameFieldPolicy = {
 	gameVersions?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	logoUrl?: FieldPolicy<any> | FieldReadFunction<any>,
-	nextChallengeAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	playCount?: FieldPolicy<any> | FieldReadFunction<any>,
+	previewImgUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	title?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
@@ -747,12 +744,13 @@ export type GameValidationLintErrorFieldPolicy = {
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	ruleId?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type GameVersionKeySpecifier = ('createdByDevTeamId' | 'game' | 'gameId' | 'gameVersionId' | 'multiplayerMaxPlayers' | 'multiplayerMinPlayers' | 'multiplayerSupportsPlayerJoining' | 'multiplayerSupportsPlayerLeaving' | 'status' | 'supportsChallenge' | GameVersionKeySpecifier)[];
+export type GameVersionKeySpecifier = ('createdByDevTeamId' | 'game' | 'gameId' | 'gameVersionId' | 'key' | 'multiplayerMaxPlayers' | 'multiplayerMinPlayers' | 'multiplayerSupportsPlayerJoining' | 'multiplayerSupportsPlayerLeaving' | 'status' | 'supportsChallenge' | GameVersionKeySpecifier)[];
 export type GameVersionFieldPolicy = {
 	createdByDevTeamId?: FieldPolicy<any> | FieldReadFunction<any>,
 	game?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameId?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameVersionId?: FieldPolicy<any> | FieldReadFunction<any>,
+	key?: FieldPolicy<any> | FieldReadFunction<any>,
 	multiplayerMaxPlayers?: FieldPolicy<any> | FieldReadFunction<any>,
 	multiplayerMinPlayers?: FieldPolicy<any> | FieldReadFunction<any>,
 	multiplayerSupportsPlayerJoining?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -804,7 +802,7 @@ export type PageInfoFieldPolicy = {
 	hasPreviousPage?: FieldPolicy<any> | FieldReadFunction<any>,
 	startCursor?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('devTeamByEmail' | 'devTeamByHandle' | 'devTeamById' | 'devTeams' | 'gameById' | 'gameVersionByGameIdAndGameVersionId' | 'gameVersions' | 'games' | 'me' | 'query' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('devTeamByEmail' | 'devTeamByHandle' | 'devTeamById' | 'devTeams' | 'gameById' | 'gameVersionByGameIdAndGameVersionId' | 'gameVersionByKey' | 'gameVersions' | 'games' | 'me' | 'query' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	devTeamByEmail?: FieldPolicy<any> | FieldReadFunction<any>,
 	devTeamByHandle?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -812,6 +810,7 @@ export type QueryFieldPolicy = {
 	devTeams?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameById?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameVersionByGameIdAndGameVersionId?: FieldPolicy<any> | FieldReadFunction<any>,
+	gameVersionByKey?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameVersions?: FieldPolicy<any> | FieldReadFunction<any>,
 	games?: FieldPolicy<any> | FieldReadFunction<any>,
 	me?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -940,7 +939,7 @@ export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies;
 
 export const CheckVerificationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CheckVerification"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"verificationToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkVerification"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verificationToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"verificationToken"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authToken"}}]}}]}}]} as unknown as DocumentNode<CheckVerificationMutation, CheckVerificationMutationVariables>;
 export const CreateGameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGame"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"game"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateGameInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGame"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"game"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"game"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateGameMutation, CreateGameMutationVariables>;
-export const CreateGameVersionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGameVersion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"challengeSupport"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isDraft"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGameVersion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gameId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"challengeSupport"},"value":{"kind":"Variable","name":{"kind":"Name","value":"challengeSupport"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"isDraft"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isDraft"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"previewLink"}},{"kind":"Field","name":{"kind":"Name","value":"congratulationMsg"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersion"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}}]}}]}}]}}]} as unknown as DocumentNode<CreateGameVersionMutation, CreateGameVersionMutationVariables>;
+export const CreateGameVersionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGameVersion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isDraft"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGameVersion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gameId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"isDraft"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isDraft"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"previewLink"}},{"kind":"Field","name":{"kind":"Name","value":"congratulationMsg"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersion"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}}]}}]}}]}}]} as unknown as DocumentNode<CreateGameVersionMutation, CreateGameVersionMutationVariables>;
 export const GameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Game"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"PRIMARY_KEY_DESC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}},{"kind":"Field","name":{"kind":"Name","value":"supportsChallenge"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GameQuery, GameQueryVariables>;
 export const GamesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Games"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"condition"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"GameCondition"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"games"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"Variable","name":{"kind":"Name","value":"condition"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"PRIMARY_KEY_DESC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"devTeam"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"handle"}}]}},{"kind":"Field","name":{"kind":"Name","value":"gameVersions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"PRIMARY_KEY_DESC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"supportsChallenge"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GamesQuery, GamesQueryVariables>;
 export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"handle"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"twitter"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;

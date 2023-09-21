@@ -149,11 +149,6 @@ enum DevTeamsOrderBy {
 type Game {
   blurredImgDataUrl: String
 
-  """
-  Challenge number that increases every day by 1 at tango.next_challenge_at
-  """
-  challengeId: Int!
-
   """(Denormalized) Total number of comments ."""
   commentCount: Int!
   createdAt: Datetime!
@@ -194,19 +189,9 @@ type Game {
   id: Int!
   logoUrl: String!
 
-  """
-  NULL means that the challenge is disabled. Once enabled, challenge cannot be disabled.
-  """
-  nextChallengeAt: Datetime
-
-  """
-  Sum of the deprecated game_session table rows
-  with duration longer than 3s
-  as well as the new game_play table rows
-  with duration longer than 3s.
-  Note that the sum exludes game plays longer than 86.4s created between 2022-05-26 and 2022-05-31 due to RUNE-7891.
-  """
+  """@deprecated: Not used"""
   playCount: Int!
+  previewImgUrl: String
   title: String!
   type: GameType!
   updatedAt: Datetime!
@@ -221,9 +206,6 @@ input GameCondition {
 
   """Checks for equality with the object’s `id` field."""
   id: Int
-
-  """Checks for equality with the object’s `nextChallengeAt` field."""
-  nextChallengeAt: Datetime
 }
 
 input GameFile {
@@ -259,12 +241,13 @@ type GameVersion {
   game: Game
   gameId: Int!
   gameVersionId: Int!
+  key: String!
   multiplayerMaxPlayers: Int!
   multiplayerMinPlayers: Int!
   multiplayerSupportsPlayerJoining: Boolean!
   multiplayerSupportsPlayerLeaving: Boolean!
   status: GameVersionStatus!
-  supportsChallenge: Boolean!
+  supportsChallenge: Boolean! @deprecated(reason: "true")
 }
 
 """
@@ -274,6 +257,9 @@ for equality and combined with a logical ‘and.’
 input GameVersionCondition {
   """Checks for equality with the object’s `gameId` field."""
   gameId: Int
+
+  """Checks for equality with the object’s `key` field."""
+  key: String
 }
 
 enum GameVersionStatus {
@@ -282,7 +268,6 @@ enum GameVersionStatus {
   INACTIVE
   IN_REVIEW
   UPLOADING
-  WAITING_FOR_RELEASE
 }
 
 """A connection to a list of `GameVersion` values."""
@@ -315,6 +300,8 @@ type GameVersionsEdge {
 enum GameVersionsOrderBy {
   GAME_ID_ASC
   GAME_ID_DESC
+  KEY_ASC
+  KEY_DESC
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
@@ -353,8 +340,6 @@ enum GamesOrderBy {
   ID_ASC
   ID_DESC
   NATURAL
-  NEXT_CHALLENGE_AT_ASC
-  NEXT_CHALLENGE_AT_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
 }
@@ -482,6 +467,7 @@ type Query {
   ): DevTeamsConnection
   gameById(id: Int!): Game
   gameVersionByGameIdAndGameVersionId(gameId: Int!, gameVersionId: Int!): GameVersion
+  gameVersionByKey(key: String!): GameVersion
 
   """Reads and enables pagination through a set of `GameVersion`."""
   gameVersions(
@@ -632,6 +618,7 @@ input UpdateGameInput {
   description: String
   gameId: Int!
   logo: Upload
+  previewImg: Upload
   title: String
 }
 

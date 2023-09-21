@@ -70,6 +70,36 @@ describe("validateGameFiles", () => {
               <html lang="en">
                 <head>
                   <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/singleplayer.js"></script>
+                  <script src="src/logic.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [
+          {
+            message: "Rune SDK must be multiplayer",
+          },
+        ],
+        multiplayer: undefined,
+      }
+    )
+
+    await check(
+      [
+        { path: "media/background.png", size: 1 * 1e6 },
+        validLogicFile,
+        {
+          path: "src/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
                   <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.4.5/dist/multiplayer.js"></script>
                   <script src="src/logic.js"></script>
                 </head>

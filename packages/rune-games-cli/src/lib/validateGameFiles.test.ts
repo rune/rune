@@ -81,7 +81,8 @@ describe("validateGameFiles", () => {
         valid: false,
         errors: [
           {
-            message: "Rune SDK must be multiplayer",
+            message:
+              "Rune SDK script url must end with /multiplayer.js or /multiplayer-dev.js",
           },
         ],
         multiplayer: undefined,

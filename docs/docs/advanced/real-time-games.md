@@ -17,7 +17,8 @@ A game like Paddle is updating the position of the ball and the players' paddles
 
 Rune.initLogic({
   update: ({ game }) => {
-    // TOOD
+    game.ballPosition += game.ballSpeed
+    // ... remaining game logic
   },
   updatesPerSecond: 30
 })
@@ -56,10 +57,11 @@ function render() {
     const ballPositionRender = interpolateRender(ballPosition, ballPositionNext)
     drawBall(ballPositionRender)
 }
+
 ```
 
 ## Interpolation
 
 Making fast-paced multiplayer games can be challenging because of the latency between players. No matter how good the device and internet connection is, the network packets cannot travel faster than the speed of light. This means that your game will receive other's players actions some time after they happened. 
 
-If other players can quickly move around in your game, then you will need to do interpolation. To be added...
+If other players can quickly move around in your game, then you will need to do interpolation. 

@@ -113,35 +113,41 @@ export async function validateGameFiles(
           logicJs,
           indexHtml,
         })
-      }
 
-      if (scripts.indexOf(sdkScript) !== 0) {
+        if (scripts.indexOf(sdkScript) !== 0) {
+          errors.push({
+            message: "Rune SDK must be the first script in index.html",
+          })
+        }
+
+        const sdkVersion = sdkScript
+          .getAttribute("src")
+          ?.match(sdkVersionRegex)?.[1]
+
+        if (!sdkVersion) {
+          errors.push({ message: `Rune SDK must specify a version` })
+        }
+
+        const [major, minor, patch] = (sdkVersion ?? "").split(".")
+        const maxedOutSdkVersion = `${major}.${minor ?? 999}.${patch ?? 999}`
+
+        const sdkVersionCoerced = semver.coerce(
+          sdkVersion && maxedOutSdkVersion
+        )
+        const minSdkVersionCoerced = semver.coerce(minSdkVersion)
+
+        if (
+          sdkVersionCoerced &&
+          minSdkVersionCoerced &&
+          semver.lt(sdkVersionCoerced, minSdkVersionCoerced)
+        ) {
+          errors.push({
+            message: `Rune SDK is below minimum version (included ${sdkVersion}, min ${minSdkVersion})`,
+          })
+        }
+      } else {
         errors.push({
-          message: "Rune SDK must be the first script in index.html",
-        })
-      }
-
-      const sdkVersion = sdkScript
-        .getAttribute("src")
-        ?.match(sdkVersionRegex)?.[1]
-
-      if (!sdkVersion) {
-        errors.push({ message: `Rune SDK must specify a version` })
-      }
-
-      const [major, minor, patch] = (sdkVersion ?? "").split(".")
-      const maxedOutSdkVersion = `${major}.${minor ?? 999}.${patch ?? 999}`
-
-      const sdkVersionCoerced = semver.coerce(sdkVersion && maxedOutSdkVersion)
-      const minSdkVersionCoerced = semver.coerce(minSdkVersion)
-
-      if (
-        sdkVersionCoerced &&
-        minSdkVersionCoerced &&
-        semver.lt(sdkVersionCoerced, minSdkVersionCoerced)
-      ) {
-        errors.push({
-          message: `Rune SDK is below minimum version (included ${sdkVersion}, min ${minSdkVersion})`,
+          message: `Rune SDK script url must end with /multiplayer.js or /multiplayer-dev.js`,
         })
       }
     }

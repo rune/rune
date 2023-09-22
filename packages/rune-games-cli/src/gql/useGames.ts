@@ -26,9 +26,12 @@ gql`
       nodes {
         id
         title
-        devTeam {
-          id
-          handle
+        gameDevs {
+          nodes {
+            userId
+            displayName
+            type
+          }
         }
         gameVersions(orderBy: [PRIMARY_KEY_DESC]) {
           nodes {
@@ -44,13 +47,17 @@ gql`
 
 export function gameItemLabel({
   game,
-  showDevHandle,
+  showDevDisplayName,
 }: {
   game: NonNullable<GamesQuery["games"]>["nodes"][0]
-  showDevHandle?: boolean
+  showDevDisplayName?: boolean
 }) {
+  const gameDevAdmin = game.gameDevs.nodes.find(
+    (gameDev) => gameDev.type === "ADMIN"
+  )
+
   return `${game.title}${
-    showDevHandle ? ` [dev: ${game.devTeam?.handle}]` : ""
+    showDevDisplayName ? ` [dev: ${gameDevAdmin?.displayName}]` : ""
   }${
     game.gameVersions.nodes[0]
       ? ` (latest version: ${game.gameVersions.nodes[0].status

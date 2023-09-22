@@ -238,6 +238,7 @@ input GameCondition {
 
 type GameDev {
   createdAt: Datetime!
+  displayName: String
 
   """Reads a single `Game` that is related to this `GameDev`."""
   game: Game

@@ -31,7 +31,8 @@ export function List() {
           <Text bold>All games:</Text>
           {games?.map((game) => (
             <Text key={game.id}>
-              {figures.bullet} {gameItemLabel({ game, showDevHandle: true })}
+              {figures.bullet}{" "}
+              {gameItemLabel({ game, showDevDisplayName: true })}
             </Text>
           ))}
         </>

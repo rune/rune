@@ -20,7 +20,7 @@ export function Upload() {
   const [needConfirmation, setNeedConfirmation] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
   const { me } = useMe()
-  const { games } = useGames({ condition: { devTeamId: me?.id }, skip: !me })
+  const { games } = useGames({ condition: { devTeamId: me?.devId }, skip: !me })
 
   useEffect(() => {
     if (games && games.length > 1) setNeedConfirmation(true)

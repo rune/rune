@@ -60,7 +60,6 @@ export interface CreateGameVersionPayload {
 
 export interface DevTeam {
   __typename: 'DevTeam';
-  admin: Scalars['Boolean'];
   createdAt: Scalars['Datetime'];
   email: Maybe<Scalars['String']>;
   /** Reads and enables pagination through a set of `Game`. */
@@ -144,6 +143,8 @@ export interface Game {
   /** Reads a single `DevTeam` that is related to this `Game`. */
   devTeam: Maybe<DevTeam>;
   devTeamId: Scalars['Int'];
+  /** Reads and enables pagination through a set of `GameDev`. */
+  gameDevs: GameDevsConnection;
   /** Reads and enables pagination through a set of `GameVersion`. */
   gameVersions: GameVersionsConnection;
   id: Scalars['Int'];
@@ -154,6 +155,17 @@ export interface Game {
   title: Scalars['String'];
   type: GameType;
   updatedAt: Scalars['Datetime'];
+}
+
+
+export interface GameGameDevsArgs {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<GameDevCondition>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<GameDevsOrderBy>>;
 }
 
 
@@ -175,6 +187,58 @@ export interface GameCondition {
   id?: InputMaybe<Scalars['Int']>;
 }
 
+export interface GameDev {
+  __typename: 'GameDev';
+  createdAt: Scalars['Datetime'];
+  /** Reads a single `Game` that is related to this `GameDev`. */
+  game: Maybe<Game>;
+  gameId: Scalars['Int'];
+  type: GameDevType;
+  updatedAt: Scalars['Datetime'];
+  userId: Scalars['Int'];
+}
+
+/** A condition to be used against `GameDev` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface GameDevCondition {
+  /** Checks for equality with the object’s `gameId` field. */
+  gameId?: InputMaybe<Scalars['Int']>;
+}
+
+export enum GameDevType {
+  ADMIN = 'ADMIN'
+}
+
+/** A connection to a list of `GameDev` values. */
+export interface GameDevsConnection {
+  __typename: 'GameDevsConnection';
+  /** A list of edges which contains the `GameDev` and cursor to aid in pagination. */
+  edges: Array<GameDevsEdge>;
+  /** A list of `GameDev` objects. */
+  nodes: Array<GameDev>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `GameDev` you could get from the connection. */
+  totalCount: Scalars['Int'];
+}
+
+/** A `GameDev` edge in the connection. */
+export interface GameDevsEdge {
+  __typename: 'GameDevsEdge';
+  /** A cursor for use in pagination. */
+  cursor: Maybe<Scalars['Cursor']>;
+  /** The `GameDev` at the end of the edge. */
+  node: GameDev;
+}
+
+/** Methods to use when ordering `GameDev`. */
+export enum GameDevsOrderBy {
+  GAME_ID_ASC = 'GAME_ID_ASC',
+  GAME_ID_DESC = 'GAME_ID_DESC',
+  NATURAL = 'NATURAL',
+  PRIMARY_KEY_ASC = 'PRIMARY_KEY_ASC',
+  PRIMARY_KEY_DESC = 'PRIMARY_KEY_DESC'
+}
+
 export interface GameFile {
   content?: InputMaybe<Scalars['String']>;
   path: Scalars['String'];
@@ -183,8 +247,7 @@ export interface GameFile {
 
 export enum GameType {
   EXTERNAL = 'EXTERNAL',
-  MULTIPLAYER = 'MULTIPLAYER',
-  SINGLEPLAYER = 'SINGLEPLAYER'
+  MULTIPLAYER = 'MULTIPLAYER'
 }
 
 export interface GameValidationError {
@@ -305,6 +368,14 @@ export enum GamesOrderBy {
   PRIMARY_KEY_DESC = 'PRIMARY_KEY_DESC'
 }
 
+export interface Me {
+  __typename: 'Me';
+  admin: Scalars['Boolean'];
+  devId: Scalars['Int'];
+  displayName: Scalars['String'];
+  email: Maybe<Scalars['String']>;
+}
+
 /** The root mutation type which contains root level fields which mutate data. */
 export interface Mutation {
   __typename: 'Mutation';
@@ -320,6 +391,8 @@ export interface Mutation {
   updateDevTeamById: Maybe<UpdateDevTeamPayload>;
   updateGame: UpdateGamePayload;
   updateGameSdk: UpdateGameSdkPayload;
+  /** Updates a single `UserDev` using a unique key and a patch. */
+  updateUserDevByUserId: Maybe<UpdateUserDevPayload>;
   validateGame: ValidateGamePayload;
 }
 
@@ -379,6 +452,12 @@ export interface MutationUpdateGameSdkArgs {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export interface MutationUpdateUserDevByUserIdArgs {
+  input: UpdateUserDevByUserIdInput;
+}
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export interface MutationValidateGameArgs {
   input: ValidateGameInput;
 }
@@ -405,18 +484,24 @@ export interface Query {
   /** Reads and enables pagination through a set of `DevTeam`. */
   devTeams: Maybe<DevTeamsConnection>;
   gameById: Maybe<Game>;
+  gameDevByGameIdAndUserId: Maybe<GameDev>;
+  /** Reads and enables pagination through a set of `GameDev`. */
+  gameDevs: Maybe<GameDevsConnection>;
   gameVersionByGameIdAndGameVersionId: Maybe<GameVersion>;
   gameVersionByKey: Maybe<GameVersion>;
   /** Reads and enables pagination through a set of `GameVersion`. */
   gameVersions: Maybe<GameVersionsConnection>;
   /** Reads and enables pagination through a set of `Game`. */
   games: Maybe<GamesConnection>;
-  me: DevTeam;
+  me: Me;
   /**
    * Exposes the root query type nested one level down. This is helpful for Relay 1
    * which can only query top level fields if they are in a particular form.
    */
   query: Query;
+  userDevByUserId: Maybe<UserDev>;
+  /** Reads and enables pagination through a set of `UserDev`. */
+  userDevs: Maybe<UserDevsConnection>;
 }
 
 
@@ -457,6 +542,25 @@ export interface QueryGameByIdArgs {
 
 
 /** The root query type which gives access points into the data universe. */
+export interface QueryGameDevByGameIdAndUserIdArgs {
+  gameId: Scalars['Int'];
+  userId: Scalars['Int'];
+}
+
+
+/** The root query type which gives access points into the data universe. */
+export interface QueryGameDevsArgs {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<GameDevCondition>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<GameDevsOrderBy>>;
+}
+
+
+/** The root query type which gives access points into the data universe. */
 export interface QueryGameVersionByGameIdAndGameVersionIdArgs {
   gameId: Scalars['Int'];
   gameVersionId: Scalars['Int'];
@@ -490,6 +594,24 @@ export interface QueryGamesArgs {
   last?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<GamesOrderBy>>;
+}
+
+
+/** The root query type which gives access points into the data universe. */
+export interface QueryUserDevByUserIdArgs {
+  userId: Scalars['Int'];
+}
+
+
+/** The root query type which gives access points into the data universe. */
+export interface QueryUserDevsArgs {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<UserDevCondition>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<UserDevsOrderBy>>;
 }
 
 export interface StartVerificationInput {
@@ -589,6 +711,90 @@ export interface UpdateGameSdkPayload {
   success: Scalars['Boolean'];
 }
 
+/** All input for the `updateUserDevByUserId` mutation. */
+export interface UpdateUserDevByUserIdInput {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** An object where the defined keys will be set on the `UserDev` being updated. */
+  patch: UserDevPatch;
+  userId: Scalars['Int'];
+}
+
+/** The output of our update `UserDev` mutation. */
+export interface UpdateUserDevPayload {
+  __typename: 'UpdateUserDevPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId: Maybe<Scalars['String']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query: Maybe<Query>;
+  /** The `UserDev` that was updated by this mutation. */
+  userDev: Maybe<UserDev>;
+  /** An edge for our `UserDev`. May be used by Relay 1. */
+  userDevEdge: Maybe<UserDevsEdge>;
+}
+
+
+/** The output of our update `UserDev` mutation. */
+export interface UpdateUserDevPayloadUserDevEdgeArgs {
+  orderBy?: InputMaybe<Array<UserDevsOrderBy>>;
+}
+
+export interface UserDev {
+  __typename: 'UserDev';
+  createdAt: Scalars['Datetime'];
+  sendWeeklyStatsEmails: Scalars['Boolean'];
+  updatedAt: Scalars['Datetime'];
+  userId: Scalars['Int'];
+}
+
+/** A condition to be used against `UserDev` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface UserDevCondition {
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['Int']>;
+}
+
+/** Represents an update to a `UserDev`. Fields that are set will be updated. */
+export interface UserDevPatch {
+  sendWeeklyStatsEmails?: InputMaybe<Scalars['Boolean']>;
+}
+
+/** A connection to a list of `UserDev` values. */
+export interface UserDevsConnection {
+  __typename: 'UserDevsConnection';
+  /** A list of edges which contains the `UserDev` and cursor to aid in pagination. */
+  edges: Array<UserDevsEdge>;
+  /** A list of `UserDev` objects. */
+  nodes: Array<UserDev>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `UserDev` you could get from the connection. */
+  totalCount: Scalars['Int'];
+}
+
+/** A `UserDev` edge in the connection. */
+export interface UserDevsEdge {
+  __typename: 'UserDevsEdge';
+  /** A cursor for use in pagination. */
+  cursor: Maybe<Scalars['Cursor']>;
+  /** The `UserDev` at the end of the edge. */
+  node: UserDev;
+}
+
+/** Methods to use when ordering `UserDev`. */
+export enum UserDevsOrderBy {
+  NATURAL = 'NATURAL',
+  PRIMARY_KEY_ASC = 'PRIMARY_KEY_ASC',
+  PRIMARY_KEY_DESC = 'PRIMARY_KEY_DESC',
+  USER_ID_ASC = 'USER_ID_ASC',
+  USER_ID_DESC = 'USER_ID_DESC'
+}
+
 export interface ValidateGameInput {
   clientMutationId?: InputMaybe<Scalars['String']>;
   files: Array<GameFile>;
@@ -641,7 +847,7 @@ export type GamesQuery = { __typename: 'Query', games: { __typename: 'GamesConne
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename: 'Query', me: { __typename: 'DevTeam', id: number, handle: string | null, email: string | null, admin: boolean, twitter: string | null } };
+export type MeQuery = { __typename: 'Query', me: { __typename: 'Me', devId: number, displayName: string, email: string | null, admin: boolean } };
 
 export type StartVerificationMutationVariables = Exact<{
   email: Scalars['String'];
@@ -649,14 +855,6 @@ export type StartVerificationMutationVariables = Exact<{
 
 
 export type StartVerificationMutation = { __typename: 'Mutation', startVerification: { __typename: 'StartVerificationPayload', verificationToken: string } };
-
-export type UpdateDevTeamByIdMutationVariables = Exact<{
-  id: Scalars['Int'];
-  patch: DevTeamPatch;
-}>;
-
-
-export type UpdateDevTeamByIdMutation = { __typename: 'Mutation', updateDevTeamById: { __typename: 'UpdateDevTeamPayload', devTeam: { __typename: 'DevTeam', id: number, handle: string | null, twitter: string | null } | null } | null };
 
 export type UpdateGameMutationVariables = Exact<{
   input: UpdateGameInput;
@@ -689,9 +887,8 @@ export type CreateGameVersionPayloadFieldPolicy = {
 	gameVersion?: FieldPolicy<any> | FieldReadFunction<any>,
 	previewLink?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type DevTeamKeySpecifier = ('admin' | 'createdAt' | 'email' | 'games' | 'handle' | 'id' | 'twitter' | 'unsubscribedFromEmailsAt' | 'updatedAt' | DevTeamKeySpecifier)[];
+export type DevTeamKeySpecifier = ('createdAt' | 'email' | 'games' | 'handle' | 'id' | 'twitter' | 'unsubscribedFromEmailsAt' | 'updatedAt' | DevTeamKeySpecifier)[];
 export type DevTeamFieldPolicy = {
-	admin?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	email?: FieldPolicy<any> | FieldReadFunction<any>,
 	games?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -713,7 +910,7 @@ export type DevTeamsEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type GameKeySpecifier = ('blurredImgDataUrl' | 'commentCount' | 'createdAt' | 'description' | 'devTeam' | 'devTeamId' | 'gameVersions' | 'id' | 'logoUrl' | 'playCount' | 'previewImgUrl' | 'title' | 'type' | 'updatedAt' | GameKeySpecifier)[];
+export type GameKeySpecifier = ('blurredImgDataUrl' | 'commentCount' | 'createdAt' | 'description' | 'devTeam' | 'devTeamId' | 'gameDevs' | 'gameVersions' | 'id' | 'logoUrl' | 'playCount' | 'previewImgUrl' | 'title' | 'type' | 'updatedAt' | GameKeySpecifier)[];
 export type GameFieldPolicy = {
 	blurredImgDataUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	commentCount?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -721,6 +918,7 @@ export type GameFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	devTeam?: FieldPolicy<any> | FieldReadFunction<any>,
 	devTeamId?: FieldPolicy<any> | FieldReadFunction<any>,
+	gameDevs?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameVersions?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	logoUrl?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -729,6 +927,27 @@ export type GameFieldPolicy = {
 	title?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type GameDevKeySpecifier = ('createdAt' | 'game' | 'gameId' | 'type' | 'updatedAt' | 'userId' | GameDevKeySpecifier)[];
+export type GameDevFieldPolicy = {
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	game?: FieldPolicy<any> | FieldReadFunction<any>,
+	gameId?: FieldPolicy<any> | FieldReadFunction<any>,
+	type?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	userId?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type GameDevsConnectionKeySpecifier = ('edges' | 'nodes' | 'pageInfo' | 'totalCount' | GameDevsConnectionKeySpecifier)[];
+export type GameDevsConnectionFieldPolicy = {
+	edges?: FieldPolicy<any> | FieldReadFunction<any>,
+	nodes?: FieldPolicy<any> | FieldReadFunction<any>,
+	pageInfo?: FieldPolicy<any> | FieldReadFunction<any>,
+	totalCount?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type GameDevsEdgeKeySpecifier = ('cursor' | 'node' | GameDevsEdgeKeySpecifier)[];
+export type GameDevsEdgeFieldPolicy = {
+	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
+	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type GameValidationErrorKeySpecifier = ('lintErrors' | 'message' | GameValidationErrorKeySpecifier)[];
 export type GameValidationErrorFieldPolicy = {
@@ -782,7 +1001,14 @@ export type GamesEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('checkVerification' | 'createGame' | 'createGameVersion' | 'startVerification' | 'updateDevTeamByEmail' | 'updateDevTeamByHandle' | 'updateDevTeamById' | 'updateGame' | 'updateGameSdk' | 'validateGame' | MutationKeySpecifier)[];
+export type MeKeySpecifier = ('admin' | 'devId' | 'displayName' | 'email' | MeKeySpecifier)[];
+export type MeFieldPolicy = {
+	admin?: FieldPolicy<any> | FieldReadFunction<any>,
+	devId?: FieldPolicy<any> | FieldReadFunction<any>,
+	displayName?: FieldPolicy<any> | FieldReadFunction<any>,
+	email?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type MutationKeySpecifier = ('checkVerification' | 'createGame' | 'createGameVersion' | 'startVerification' | 'updateDevTeamByEmail' | 'updateDevTeamByHandle' | 'updateDevTeamById' | 'updateGame' | 'updateGameSdk' | 'updateUserDevByUserId' | 'validateGame' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	checkVerification?: FieldPolicy<any> | FieldReadFunction<any>,
 	createGame?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -793,6 +1019,7 @@ export type MutationFieldPolicy = {
 	updateDevTeamById?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateGame?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateGameSdk?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateUserDevByUserId?: FieldPolicy<any> | FieldReadFunction<any>,
 	validateGame?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PageInfoKeySpecifier = ('endCursor' | 'hasNextPage' | 'hasPreviousPage' | 'startCursor' | PageInfoKeySpecifier)[];
@@ -802,19 +1029,23 @@ export type PageInfoFieldPolicy = {
 	hasPreviousPage?: FieldPolicy<any> | FieldReadFunction<any>,
 	startCursor?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('devTeamByEmail' | 'devTeamByHandle' | 'devTeamById' | 'devTeams' | 'gameById' | 'gameVersionByGameIdAndGameVersionId' | 'gameVersionByKey' | 'gameVersions' | 'games' | 'me' | 'query' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('devTeamByEmail' | 'devTeamByHandle' | 'devTeamById' | 'devTeams' | 'gameById' | 'gameDevByGameIdAndUserId' | 'gameDevs' | 'gameVersionByGameIdAndGameVersionId' | 'gameVersionByKey' | 'gameVersions' | 'games' | 'me' | 'query' | 'userDevByUserId' | 'userDevs' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	devTeamByEmail?: FieldPolicy<any> | FieldReadFunction<any>,
 	devTeamByHandle?: FieldPolicy<any> | FieldReadFunction<any>,
 	devTeamById?: FieldPolicy<any> | FieldReadFunction<any>,
 	devTeams?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameById?: FieldPolicy<any> | FieldReadFunction<any>,
+	gameDevByGameIdAndUserId?: FieldPolicy<any> | FieldReadFunction<any>,
+	gameDevs?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameVersionByGameIdAndGameVersionId?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameVersionByKey?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameVersions?: FieldPolicy<any> | FieldReadFunction<any>,
 	games?: FieldPolicy<any> | FieldReadFunction<any>,
 	me?: FieldPolicy<any> | FieldReadFunction<any>,
-	query?: FieldPolicy<any> | FieldReadFunction<any>
+	query?: FieldPolicy<any> | FieldReadFunction<any>,
+	userDevByUserId?: FieldPolicy<any> | FieldReadFunction<any>,
+	userDevs?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type StartVerificationPayloadKeySpecifier = ('clientMutationId' | 'verificationToken' | StartVerificationPayloadKeySpecifier)[];
 export type StartVerificationPayloadFieldPolicy = {
@@ -838,6 +1069,32 @@ export type UpdateGameSdkPayloadFieldPolicy = {
 	clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>,
 	error?: FieldPolicy<any> | FieldReadFunction<any>,
 	success?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type UpdateUserDevPayloadKeySpecifier = ('clientMutationId' | 'query' | 'userDev' | 'userDevEdge' | UpdateUserDevPayloadKeySpecifier)[];
+export type UpdateUserDevPayloadFieldPolicy = {
+	clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>,
+	query?: FieldPolicy<any> | FieldReadFunction<any>,
+	userDev?: FieldPolicy<any> | FieldReadFunction<any>,
+	userDevEdge?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type UserDevKeySpecifier = ('createdAt' | 'sendWeeklyStatsEmails' | 'updatedAt' | 'userId' | UserDevKeySpecifier)[];
+export type UserDevFieldPolicy = {
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	sendWeeklyStatsEmails?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	userId?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type UserDevsConnectionKeySpecifier = ('edges' | 'nodes' | 'pageInfo' | 'totalCount' | UserDevsConnectionKeySpecifier)[];
+export type UserDevsConnectionFieldPolicy = {
+	edges?: FieldPolicy<any> | FieldReadFunction<any>,
+	nodes?: FieldPolicy<any> | FieldReadFunction<any>,
+	pageInfo?: FieldPolicy<any> | FieldReadFunction<any>,
+	totalCount?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type UserDevsEdgeKeySpecifier = ('cursor' | 'node' | UserDevsEdgeKeySpecifier)[];
+export type UserDevsEdgeFieldPolicy = {
+	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
+	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ValidateGamePayloadKeySpecifier = ('clientMutationId' | 'errors' | 'valid' | ValidateGamePayloadKeySpecifier)[];
 export type ValidateGamePayloadFieldPolicy = {
@@ -874,6 +1131,18 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | GameKeySpecifier | (() => undefined | GameKeySpecifier),
 		fields?: GameFieldPolicy,
 	},
+	GameDev?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | GameDevKeySpecifier | (() => undefined | GameDevKeySpecifier),
+		fields?: GameDevFieldPolicy,
+	},
+	GameDevsConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | GameDevsConnectionKeySpecifier | (() => undefined | GameDevsConnectionKeySpecifier),
+		fields?: GameDevsConnectionFieldPolicy,
+	},
+	GameDevsEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | GameDevsEdgeKeySpecifier | (() => undefined | GameDevsEdgeKeySpecifier),
+		fields?: GameDevsEdgeFieldPolicy,
+	},
 	GameValidationError?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | GameValidationErrorKeySpecifier | (() => undefined | GameValidationErrorKeySpecifier),
 		fields?: GameValidationErrorFieldPolicy,
@@ -901,6 +1170,10 @@ export type StrictTypedTypePolicies = {
 	GamesEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | GamesEdgeKeySpecifier | (() => undefined | GamesEdgeKeySpecifier),
 		fields?: GamesEdgeFieldPolicy,
+	},
+	Me?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | MeKeySpecifier | (() => undefined | MeKeySpecifier),
+		fields?: MeFieldPolicy,
 	},
 	Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | MutationKeySpecifier | (() => undefined | MutationKeySpecifier),
@@ -930,6 +1203,22 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | UpdateGameSdkPayloadKeySpecifier | (() => undefined | UpdateGameSdkPayloadKeySpecifier),
 		fields?: UpdateGameSdkPayloadFieldPolicy,
 	},
+	UpdateUserDevPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | UpdateUserDevPayloadKeySpecifier | (() => undefined | UpdateUserDevPayloadKeySpecifier),
+		fields?: UpdateUserDevPayloadFieldPolicy,
+	},
+	UserDev?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | UserDevKeySpecifier | (() => undefined | UserDevKeySpecifier),
+		fields?: UserDevFieldPolicy,
+	},
+	UserDevsConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | UserDevsConnectionKeySpecifier | (() => undefined | UserDevsConnectionKeySpecifier),
+		fields?: UserDevsConnectionFieldPolicy,
+	},
+	UserDevsEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | UserDevsEdgeKeySpecifier | (() => undefined | UserDevsEdgeKeySpecifier),
+		fields?: UserDevsEdgeFieldPolicy,
+	},
 	ValidateGamePayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ValidateGamePayloadKeySpecifier | (() => undefined | ValidateGamePayloadKeySpecifier),
 		fields?: ValidateGamePayloadFieldPolicy,
@@ -942,8 +1231,7 @@ export const CreateGameDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const CreateGameVersionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGameVersion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isDraft"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGameVersion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gameId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"isDraft"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isDraft"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"previewLink"}},{"kind":"Field","name":{"kind":"Name","value":"congratulationMsg"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersion"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}}]}}]}}]}}]} as unknown as DocumentNode<CreateGameVersionMutation, CreateGameVersionMutationVariables>;
 export const GameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Game"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"PRIMARY_KEY_DESC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GameQuery, GameQueryVariables>;
 export const GamesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Games"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"condition"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"GameCondition"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"games"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"Variable","name":{"kind":"Name","value":"condition"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"PRIMARY_KEY_DESC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"devTeam"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"handle"}}]}},{"kind":"Field","name":{"kind":"Name","value":"gameVersions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"PRIMARY_KEY_DESC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GamesQuery, GamesQueryVariables>;
-export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"handle"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"twitter"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
+export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"devId"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
 export const StartVerificationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"StartVerification"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startVerification"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verificationToken"}}]}}]}}]} as unknown as DocumentNode<StartVerificationMutation, StartVerificationMutationVariables>;
-export const UpdateDevTeamByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDevTeamById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"patch"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DevTeamPatch"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDevTeamById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"patch"},"value":{"kind":"Variable","name":{"kind":"Name","value":"patch"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"devTeam"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"handle"}},{"kind":"Field","name":{"kind":"Name","value":"twitter"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateDevTeamByIdMutation, UpdateDevTeamByIdMutationVariables>;
 export const UpdateGameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGame"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateGameInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGame"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"game"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateGameMutation, UpdateGameMutationVariables>;
 export const UpdateGameSdkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGameSdk"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateGameSdkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGameSdk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}}]} as unknown as DocumentNode<UpdateGameSdkMutation, UpdateGameSdkMutationVariables>;

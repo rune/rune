@@ -9,7 +9,7 @@ import { Step } from "./Step.js"
 export function LoginGate({ children }: { children: ReactNode }) {
   const { me } = useMe()
 
-  if (!me?.handle) {
+  if (!me?.displayName) {
     return <Login />
   }
 
@@ -17,7 +17,7 @@ export function LoginGate({ children }: { children: ReactNode }) {
     <Box flexDirection="column">
       <Step
         status="success"
-        label={`Logged in as \`${me.handle}\` (${me.email})`}
+        label={`Logged in as \`${me.displayName}\` (${me.email})`}
       />
       {children}
     </Box>

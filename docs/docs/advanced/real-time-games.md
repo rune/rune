@@ -4,7 +4,7 @@ sidebar_position: 62
 
 # Real-Time Games
 
-Rune supports making many kinds of real-time multiplayer games. This page focuses on real-time multiplayer games involving an update loop running many times pr. second. However, you can also make really fun real-time multiplayer games like our [Collaborative Sudoku](https://github.com/rune/rune-games-sdk/blob/staging/examples/sudoku) without needing the more complex code described below. If you're new to Rune and game development, we suggest you start making a game without an update loop. See the [example games](../examples.mdx) for inspiration.
+Rune supports making many kinds of real-time multiplayer games. This page focuses on real-time multiplayer games involving an update loop running many times pr. second. However, you can also make really fun real-time multiplayer games without needing the more complex code described below. If you're new to Rune or game development, we suggest you start making a game without an update loop. See the [example games](../examples.mdx) for inspiration.
 
 We will use the example of [Paddle](https://github.com/rune/rune-games-sdk/blob/staging/examples/paddle) to explain how Rune makes it simple to make real-time multiplayer games.
 
@@ -32,14 +32,18 @@ The update loop will always run at a fixed tick rate, but mobile phones will ren
 
 Consider a Paddle game with `updatesPerSecond: 10`, i.e. the game state updates every 100 ms. The ball is at position 0 in `currentGame` at 0 ms and will be at position 10 in after 100 ms. When the phone wants to render the game at 60 ms, it should render at position 6 as the ball should be 60% towards the new position.
 
-If the game uses CSS or another framework that supports specifying an animation from one position to another, then the game can just tell the framework to animate between `currentGame` and `nextUpdateGame`. In this way, the game is able to render the ball's at any time and will look more fluid for fast-moving objects.
+Rune provides `nextGameUpdate`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. This is provided in the `onChange` callback. Additionally, the game can at any time get the milliseconds between updates as `Rune.msPerUpdate`. By using these, the game can render the ball's at any time and will look more fluid for fast-moving objects.
 
-Another approach is needed if the game uses a graphics framework with an explicit `render` function. The game can install the `rune-interpolation` package and import the `extrapolateForRendering` function, which will compute the position at rendering time when the graphics framework calls the `render` function.
+How to do that depends on the graphics engine:
+- If the engine supports animating between positions, then the game can animate between `currentGame` and `nextUpdateGame`
+- If the engine has an explicit `render` function, then the game can use Rune's `interpolateRender` function
+
+The `interpolateRender` function computes the position at rendering time. This can be used by installing the `rune-interpolation` package. Here's an example of how this would be used for rendering the ball in Paddle at a variable frame rate: 
 
 ```javascript
 // client.js
 
-import { extrapolateForRendering } from "rune-interpolation"
+import { interpolateRender } from "rune-interpolation"
 
 let ballPosition, ballPositionNext
 
@@ -49,10 +53,9 @@ function onChange({ currentGame, nextUpdateGame }) {
 }
 
 function render() {
-    const ballRenderPosition = extrapolateForRendering(ballPosition, ballPositionNext)
-    drawBall(ballRenderPosition)
+    const ballPositionRender = interpolateRender(ballPosition, ballPositionNext)
+    drawBall(ballPositionRender)
 }
-
 ```
 
 ## Interpolation

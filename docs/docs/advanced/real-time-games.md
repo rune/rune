@@ -18,7 +18,7 @@ A game like Paddle is updating the position of the ball and the players' paddles
 Rune.initLogic({
   update: ({ game }) => {
     game.ballPosition += game.ballSpeed
-    // ... remaining game logic
+    // ... (remaining game logic)
   },
   updatesPerSecond: 30
 })
@@ -47,13 +47,13 @@ Here's an example of how `Rune.interpolate.rendering()` would be used for render
 let ballPosition, ballPositionNext
 
 function onChange({ currentGame, nextUpdateGame }) {
-    ballPosition = currentGame.ballPosition
-    ballPositionNext = nextUpdateGame!.ballPosition
+  ballPosition = currentGame.ballPosition
+  ballPositionNext = nextUpdateGame!.ballPosition
 }
 
 function render() {
-    const ballPositionRender = Rune.interpolate.rendering(ballPosition, ballPositionNext)
-    drawBall(ballPositionRender)
+  const ballPositionRender = Rune.interpolate.rendering(ballPosition, ballPositionNext)
+  drawBall(ballPositionRender)
 }
 
 ```
@@ -74,80 +74,102 @@ In Paddle, the players control the paddles, and the game must therefore interpol
 // logic.js
 
 Rune.initLogic({
-    minPlayers: 2,
-    maxPlayers: 2,
-    updatesPerSecond: 30,
-    setup: (allPlayerIds) => {
-        // Paddles only move in 1 dimension so can just specify position and speed for that 
-        const paddles = [
-            { position: START_POSITION, speed: 0 },
-            { position: START_POSITION, speed: 0 }
-        ]
-        return { paddles }
-    },
-    update: ({ game }) => {
-        for (let i = 0; i < 2; i++) {
+  minPlayers: 2,
+  maxPlayers: 2,
+  updatesPerSecond: 30,
+  setup: (allPlayerIds) => {
+    // Paddles only move in 1 dimension so can just specify one position and speed 
+    const paddles = [
+      { position: START_POSITION, speed: 0 },
+      { position: START_POSITION, speed: 0 }
+    ]
+    const players = [
+      { id: allPlayerIds[0], score: 0 },
+      { id: allPlayerIds[1], score: 0 },
+    ]
+    return { paddles, players }
+  },
+  update: ({ game }) => {
+    for (let i = 0; i < 2; i++) {
+      game.paddles[i].position += game.paddles[i].speed
             
-            // Move paddle
-            game.paddles[i].position += game.paddles[i].speed
-            
-            // Clamp to sides
-            if (game.paddles[i].position < 0) {
-                game.paddles[i].position = 0
-                game.paddles[i].speed = 0
-            }
-            if (game.paddles[i].position + PADDLE_WIDTH > GAME_WIDTH) {
-                game.paddles[i].position = 0
-                game.paddles[i].speed = 0
-            }
-        }
-    },
-    actions: {
-        // ... (player inputs to move paddles by changing paddle speed)
+      // Clamp to sides
+      if (game.paddles[i].position < 0) {
+        game.paddles[i].position = 0
+        game.paddles[i].speed = 0
+      }
+      if (game.paddles[i].position + PADDLE_WIDTH > GAME_WIDTH) {
+        game.paddles[i].position = 0
+        game.paddles[i].speed = 0
+      }
     }
+    // ... (remaining game logic)
+  },
+  actions: {
+    // ... (player inputs to move paddles by changing paddle speed)
+  }
 })
 
 ```
 
-The `game` state is provided to the `onChange` callback as `currentGame` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `currentGame` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth, the game can use the interpolation helper provided as part of the [rune-interpolation package](https://github.com/rune/rune-games-sdk/blob/staging/packages/rune-interpolation).
+The `game` state is provided to the `onChange` callback as `currentGame` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `currentGame` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth, the game can create an interpolator for interpolating the movements over time using `Rune.interpolate.createInterpolator()`.
 
-The interpolation helper has built-in acceleration, meaning that the paddle will slowly start moving and then accelerate up to the top speed, which is provided by the game. Usually a good value for this is twice the default speed. The interpolation helper also has [additional options](https://github.com/rune/rune-games-sdk/blob/staging/packages/rune-interpolation) for more fine-grained control.
+The interpolator has built-in acceleration, meaning that the paddle will slowly start moving and then accelerate up to a top speed defined by the game. Usually a good value for the max speed is twice the normal player speed. By default, the acceleration takes 500 ms to reach max speed. The game can also modify this if desired by providing the `timeToMaxSpeed` option.
 
-
+The game should call the interpolator's `update()` function every time the `onChange` callback is called with the `update` event. This will make the interpolated position move towards the true position specified in `currentGame`. Here's that code for the paddle game:
 
 ```javascript
 // client.js
 
 import { playerSpeed } from "./logic.js"
-import { createInterpolator } from "rune-interpolation"
 
-let opponentPaddlePosition = createInterpolator({ maxSpeed: playerSpeed * 2 })
+let opponentInterpolator = Rune.interpolate.createInterpolator({ maxSpeed: playerSpeed * 2 })
 
-function onChange({ currentGame, event }) {
+function onChange({ currentGame, nextUpdateGame, event, yourPlayerId }) {
     
-    if (event.name === "update") {
-       ...
-    }
+  const opponent = currentGame.players.findIndex((p) => p.id !== yourPlayerId)
+   
+  if (event.name === "update") {
+    opponentInterpolator.update({ 
+      currentGame: currentGame.paddles[opponent].position,
+      nextUpdateGame: nextUpdateGame.paddles[opponent].position
+    })
+  }
 }
 
 ```
 
-There might be special circumstances, where the game will want to immediately move the other players' positions without interpolating. For instance, after a point has been scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `reset()` on the interpolator.
+The paddle game can at any time get the interpolated position from the interpolator by calling `getPosition()`. As games with interpolation often want to render at a variable frame rate, the function returns three different versions of the position to easily support that: `currentGame`, `nextUpdateGame`, and `rendering`. As described in the section above, games using an animation framework will use `currentGame` and `nextUpdateGame`, whereas games with an explicit `render()` function will use `rendering`. Below is the code for using `rendering`:
 
 ```javascript
 // client.js
+// ... (code from previous example)
 
-function onChange({ previousGame, currentGame, event }) {
-    // ... (code from previous example)
-    if (currentGame.score !== previousGame.score) {
-        // TODO: ...
-    } 
+function render() {
+  const opponentPosition = opponentInterpolator.getPosition().rendering
+  drawOpponent(opponentPosition)
 }
 
 ```
 
-## Combining Rendering and Player Interpolation
+There might be special circumstances, where the game will want to immediately move the other players' positions without interpolating. For instance, after a point has been scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `reset()` on the interpolator:
 
-The previous two sections covered interpolation for rendering and for other players' movement. The former interpolates between `update` calls and the latter across longer time periods. Normally, the rendering interpolation uses `nextGameUpdate` and `interpolateRender`, but ...
+```javascript
+// client.js
+// ... (code from previous example)
 
-By combining these interpolations, the Paddle game has flexible frame rate rendering and smooth movements for other players regardless of network conditions. This gives the best player experience for the games that need it. You can try a [demo of the game here](/examples/paddle) or look at the [full code here](https://github.com/rune/rune-games-sdk/blob/staging/examples/paddle)!
+function onChange({ previousGame, currentGame }) {
+    
+  const previousTotal = previousGame.players[0].score + previousGame.players[1].score
+  const currentTotal = currentGame.players[0].score + currentGame.players[1].score
+    
+  if (previousTotal !== currentTotal) {
+    opponentInterpolator.reset()
+  }
+}
+
+```
+
+## Demo and Example Game
+
+Using the interpolations described above, your game can achieve flexible frame rate rendering and smooth movements for other players regardless of network conditions. This gives the best player experience for the games that need it. If you want to make your own real-time Rune game, it's great to start with the Paddle example game. You can [try the demo](/examples/paddle) and see how the opponent gets interpolated when simulating latency. You can also see the [full code here](https://github.com/rune/rune-games-sdk/blob/staging/examples/paddle)!

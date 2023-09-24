@@ -37,14 +37,12 @@ Rune provides `nextGameUpdate`, which contains the game state after another run 
 
 How to do that depends on the game's graphics engine:
 - If the engine supports animating between positions, the game can animate between `currentGame` and `nextUpdateGame`
-- If the engine has an explicit `render` function, the game can use Rune's `interpolateRender` function
+- If the engine has an explicit `render` function, the game can use the `Rune.interpolate.rendering()` function
 
-The `interpolateRender` function computes the position at rendering time, which can be used by installing the [rune-interpolation package](https://github.com/rune/rune-games-sdk/blob/staging/packages/rune-interpolation). Here's an example of how this would be used for rendering the ball in Paddle at a variable frame rate: 
+Here's an example of how `Rune.interpolate.rendering()` would be used for rendering the ball in Paddle at a variable frame rate: 
 
 ```javascript
 // client.js
-
-import { interpolateRender } from "rune-interpolation"
 
 let ballPosition, ballPositionNext
 
@@ -54,7 +52,7 @@ function onChange({ currentGame, nextUpdateGame }) {
 }
 
 function render() {
-    const ballPositionRender = interpolateRender(ballPosition, ballPositionNext)
+    const ballPositionRender = Rune.interpolate.rendering(ballPosition, ballPositionNext)
     drawBall(ballPositionRender)
 }
 

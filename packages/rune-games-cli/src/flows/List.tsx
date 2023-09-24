@@ -1,18 +1,14 @@
 import figures from "figures"
 import { Text, Box } from "ink"
-import React, { useMemo } from "react"
+import React from "react"
 
-import { useGames, gameItemLabel } from "../gql/useGames.js"
+import { useGames, useMyGames, gameItemLabel } from "../gql/useGames.js"
 import { useMe } from "../gql/useMe.js"
 
 export function List() {
   const { me } = useMe()
   const { games } = useGames({ skip: !me })
-
-  const myGames = useMemo(
-    () => games?.filter((game) => game.devTeam?.id === me?.devId),
-    [games, me?.devId]
-  )
+  const { myGames } = useMyGames({ games, devId: me?.devId })
 
   return (
     <Box flexDirection="column">

@@ -1,7 +1,7 @@
 import { Box } from "ink"
 import React, { useEffect, useState } from "react"
 
-import { useGames } from "../../gql/useGames.js"
+import { useGames, useMyGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
 
 import { ChooseGameStep } from "./ChooseGameStep.js"
@@ -20,11 +20,12 @@ export function Upload() {
   const [needConfirmation, setNeedConfirmation] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
   const { me } = useMe()
-  const { games } = useGames({ condition: { devTeamId: me?.devId }, skip: !me })
+  const { games } = useGames({ skip: !me })
+  const { myGames } = useMyGames({ games, devId: me?.devId })
 
   useEffect(() => {
-    if (games && games.length > 1) setNeedConfirmation(true)
-  }, [games])
+    if (myGames && myGames.length > 1) setNeedConfirmation(true)
+  }, [myGames])
 
   return (
     <Box flexDirection="column">

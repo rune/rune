@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect } from "react"
 
 import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
-import { useGames, gameItemLabel } from "../../gql/useGames.js"
+import { useGames, useMyGames, gameItemLabel } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
 
 export function ChooseGameStep({
@@ -16,17 +16,13 @@ export function ChooseGameStep({
 }) {
   const { me } = useMe()
   const { games, gamesLoading } = useGames({ skip: !me })
+  const { myGames } = useMyGames({ games, devId: me?.devId })
   const [gameId, setGameId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     if (currentGameId) setGameId(currentGameId)
   }, [currentGameId])
-
-  const myGames = useMemo(
-    () => games?.filter((game) => game.devTeam?.id === me?.devId),
-    [games, me?.devId]
-  )
 
   const items = useMemo(
     () => [

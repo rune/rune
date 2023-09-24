@@ -1,17 +1,15 @@
 import { useQuery, gql } from "@apollo/client/index.js"
+import { useMemo } from "react"
 
-import { GamesDocument, GameCondition, GamesQuery } from "../generated/types.js"
+import { GamesDocument, GamesQuery } from "../generated/types.js"
 
 export function useGames({
   skip,
-  condition,
 }: {
   skip?: boolean
-  condition?: GameCondition
 } = {}) {
   const { data, ...rest } = useQuery(GamesDocument, {
     skip,
-    variables: { condition },
   })
 
   return {
@@ -21,8 +19,8 @@ export function useGames({
 }
 
 gql`
-  query Games($condition: GameCondition) {
-    games(condition: $condition, orderBy: [PRIMARY_KEY_DESC]) {
+  query Games {
+    games(orderBy: [PRIMARY_KEY_DESC]) {
       nodes {
         id
         title
@@ -44,6 +42,28 @@ gql`
     }
   }
 `
+
+export function useMyGames({
+  games,
+  devId,
+}: {
+  games?: NonNullable<GamesQuery["games"]>["nodes"]
+  devId?: number
+} = {}) {
+  const myGames = useMemo(
+    () =>
+      devId && games
+        ? games.filter((game) =>
+            game.gameDevs.nodes.some((gameDev) => gameDev.userId === devId)
+          )
+        : undefined,
+    [devId, games]
+  )
+
+  return {
+    myGames,
+  }
+}
 
 export function gameItemLabel({
   game,

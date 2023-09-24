@@ -60,8 +60,96 @@ function render() {
 
 ```
 
-## Interpolation
+## Interpolating Other Players' Movements
 
-Making fast-paced multiplayer games can be challenging because of the latency between players. No matter how good the device and internet connection is, the network packets cannot travel faster than the speed of light. This means that your game will receive other's players actions some time after they happened. 
+Making fast-paced multiplayer games can be challenging because of the latency between players. No matter how good the device and internet connection is, the network packets cannot travel faster than the speed of light. This means that your game will receive other's players actions some time after they happened. If other players can quickly move around in your game, then you will need to do interpolation of their positions to make their movements look smooth. This is done in the client-side code, i.e. in `client.js`.
 
-If other players can quickly move around in your game, then you will need to do interpolation. 
+:::tip
+
+First implement your game without interpolation for simplicity. Then you can test in the Dev UI whether it's actually needed.
+
+:::
+
+In Paddle, the players control the paddles, and the game must therefore interpolate the other players' paddles to get smooth movements. The core game state and update loop in paddle could be defined as this:
+
+```javascript
+// logic.js
+
+Rune.initLogic({
+    minPlayers: 2,
+    maxPlayers: 2,
+    updatesPerSecond: 30,
+    setup: (allPlayerIds) => {
+        // Paddles only move in 1 dimension so can just specify position and speed for that 
+        const paddles = [
+            { position: START_POSITION, speed: 0 },
+            { position: START_POSITION, speed: 0 }
+        ]
+        return { paddles }
+    },
+    update: ({ game }) => {
+        for (let i = 0; i < 2; i++) {
+            
+            // Move paddle
+            game.paddles[i].position += game.paddles[i].speed
+            
+            // Clamp to sides
+            if (game.paddles[i].position < 0) {
+                game.paddles[i].position = 0
+                game.paddles[i].speed = 0
+            }
+            if (game.paddles[i].position + PADDLE_WIDTH > GAME_WIDTH) {
+                game.paddles[i].position = 0
+                game.paddles[i].speed = 0
+            }
+        }
+    },
+    actions: {
+        // ... (player inputs to move paddles by changing paddle speed)
+    }
+})
+
+```
+
+The `game` state is provided to the `onChange` callback as `currentGame` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `currentGame` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth, the game can use the interpolation helper provided as part of the [rune-interpolation package](https://github.com/rune/rune-games-sdk/blob/staging/packages/rune-interpolation).
+
+The interpolation helper has built-in acceleration, meaning that the paddle will slowly start moving and then accelerate up to the top speed, which is provided by the game. Usually a good value for this is twice the default speed. The interpolation helper also has [additional options](https://github.com/rune/rune-games-sdk/blob/staging/packages/rune-interpolation) for more fine-grained control.
+
+
+
+```javascript
+// client.js
+
+import { playerSpeed } from "./logic.js"
+import { createInterpolator } from "rune-interpolation"
+
+let opponentPaddlePosition = createInterpolator({ maxSpeed: playerSpeed * 2 })
+
+function onChange({ currentGame, event }) {
+    
+    if (event.name === "update") {
+       ...
+    }
+}
+
+```
+
+There might be special circumstances, where the game will want to immediately move the other players' positions without interpolating. For instance, after a point has been scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `reset()` on the interpolator.
+
+```javascript
+// client.js
+
+function onChange({ previousGame, currentGame, event }) {
+    // ... (code from previous example)
+    if (currentGame.score !== previousGame.score) {
+        // TODO: ...
+    } 
+}
+
+```
+
+## Combining Rendering and Player Interpolation
+
+The previous two sections covered interpolation for rendering and for other players' movement. The former interpolates between `update` calls and the latter across longer time periods. Normally, the rendering interpolation uses `nextGameUpdate` and `interpolateRender`, but ...
+
+By combining these interpolations, the Paddle game has flexible frame rate rendering and smooth movements for other players regardless of network conditions. This gives the best player experience for the games that need it. You can try a [demo of the game here](/examples/paddle) or look at the [full code here](https://github.com/rune/rune-games-sdk/blob/staging/examples/paddle)!

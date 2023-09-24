@@ -35,11 +35,11 @@ Consider a Paddle game with `updatesPerSecond: 10`, i.e. the game state updates 
 
 Rune provides `nextGameUpdate`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. This is provided in the `onChange` callback. Additionally, the game can at any time get the milliseconds between updates as `Rune.msPerUpdate`. By using these, the game can render the ball's at any time and will look more fluid for fast-moving objects.
 
-How to do that depends on the graphics engine:
-- If the engine supports animating between positions, then the game can animate between `currentGame` and `nextUpdateGame`
-- If the engine has an explicit `render` function, then the game can use Rune's `interpolateRender` function
+How to do that depends on the game's graphics engine:
+- If the engine supports animating between positions, the game can animate between `currentGame` and `nextUpdateGame`
+- If the engine has an explicit `render` function, the game can use Rune's `interpolateRender` function
 
-The `interpolateRender` function computes the position at rendering time. This can be used by installing the `rune-interpolation` package. Here's an example of how this would be used for rendering the ball in Paddle at a variable frame rate: 
+The `interpolateRender` function computes the position at rendering time, which can be used by installing the [rune-interpolation package](https://github.com/rune/rune-games-sdk/blob/staging/packages/rune-interpolation). Here's an example of how this would be used for rendering the ball in Paddle at a variable frame rate: 
 
 ```javascript
 // client.js

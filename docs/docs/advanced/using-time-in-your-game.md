@@ -63,7 +63,7 @@ Here’s a game, where players have to make a move within 30 seconds or else the
 // logic.js
 
 Rune.initLogic({
-  // ... (previous example)
+  // ... (code from previous example)
   update: ({ game }) => {
     // Check if 30 seconds has passed, then switch to another question
     if (Rune.gameTime() - game.roundStartAt > 30) {

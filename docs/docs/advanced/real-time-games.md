@@ -13,8 +13,6 @@ We will use the example of [Paddle](https://github.com/rune/rune-games-sdk/blob/
 A game like Paddle is updating the position of the ball and the players' paddles many times per second. We can code this in the `logic.js` file by specifying an `update` function and the `updatesPerSecond` value. In the following example, the `update` function will be called 30 times per second on all clients.
 
 ```javascript
-// logic.js
-
 Rune.initLogic({
   update: ({ game }) => {
     game.ballPosition += game.ballSpeed
@@ -22,7 +20,6 @@ Rune.initLogic({
   },
   updatesPerSecond: 30
 })
-
 ```
 
 The `update` function is run in a synchronized way across all clients and the server. Only actions are sent to the server, which makes Rune real-time games very bandwidth efficient so that they can work even on mobile devices with limited bandwidth.
@@ -42,8 +39,6 @@ How to do that depends on the game's graphics engine:
 Here's an example of how `Rune.interpolate.rendering()` would be used for rendering the ball in Paddle at a variable frame rate: 
 
 ```javascript
-// client.js
-
 let ballPosition, ballPositionNext
 
 function onChange({ currentGame, nextUpdateGame }) {
@@ -55,7 +50,6 @@ function render() {
   const ballPositionRender = Rune.interpolate.rendering(ballPosition, ballPositionNext)
   drawBall(ballPositionRender)
 }
-
 ```
 
 ## Interpolating Other Players' Movements
@@ -71,8 +65,6 @@ First implement your game without interpolation for simplicity. Then you can tes
 In Paddle, the players control the paddles, and the game must therefore interpolate the other players' paddles to get smooth movements. The core game state and update loop in paddle could be defined as this:
 
 ```javascript
-// logic.js
-
 Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
@@ -109,7 +101,6 @@ Rune.initLogic({
     // ... (player inputs to move paddles by changing paddle speed)
   }
 })
-
 ```
 
 The `game` state is provided to the `onChange` callback as `currentGame` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `currentGame` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth, the game can create an interpolator for interpolating the movements over time using `Rune.interpolate.createInterpolator()`.
@@ -119,8 +110,6 @@ The interpolator has built-in acceleration, meaning that the paddle will slowly 
 The game should call the interpolator's `update()` function every time the `onChange` callback is called with the `update` event. This will make the interpolated position move towards the true position specified in `currentGame`. Here's that code for the paddle game:
 
 ```javascript
-// client.js
-
 import { playerSpeed } from "./logic.js"
 
 let opponentInterpolator = Rune.interpolate.createInterpolator({ maxSpeed: playerSpeed * 2 })
@@ -136,26 +125,22 @@ function onChange({ currentGame, nextUpdateGame, event, yourPlayerId }) {
     })
   }
 }
-
 ```
 
 The paddle game can at any time get the interpolated position from the interpolator by calling `getPosition()`. As games with interpolation often want to render at a variable frame rate, the function returns three different versions of the position to easily support that: `currentGame`, `nextUpdateGame`, and `rendering`. As described in the section above, games using an animation framework will use `currentGame` and `nextUpdateGame`, whereas games with an explicit `render()` function will use `rendering`. Below is the code for using `rendering`:
 
 ```javascript
-// client.js
 // ... (code from previous example)
 
 function render() {
   const opponentPosition = opponentInterpolator.getPosition().rendering
   drawOpponent(opponentPosition)
 }
-
 ```
 
 There might be special circumstances, where the game will want to immediately move the other players' positions without interpolating. For instance, after a point has been scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `reset()` on the interpolator:
 
 ```javascript
-// client.js
 // ... (code from previous example)
 
 function onChange({ previousGame, currentGame }) {
@@ -167,7 +152,6 @@ function onChange({ previousGame, currentGame }) {
     opponentInterpolator.reset()
   }
 }
-
 ```
 
 ## Demo and Example Game

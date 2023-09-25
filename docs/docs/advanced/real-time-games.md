@@ -30,13 +30,7 @@ The update loop will always run at a fixed tick rate, but mobile phones will ren
 
 Consider a Paddle game with `updatesPerSecond: 10`, i.e. the game state updates every 100 ms. The ball is at position 0 in `currentGame` at 0 ms and will be at position 10 in after 100 ms. When the phone wants to render the game at 60 ms, it should render at position 6 as the ball should be 60% towards the new position.
 
-Rune provides `nextGameUpdate`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. This is provided in the `onChange` callback. Additionally, the game can at any time get the milliseconds between updates as `Rune.msPerUpdate`. By using these, the game can render the ball's at any time and will look more fluid for fast-moving objects.
-
-How to do that depends on the game's graphics engine:
-- If the engine supports animating between positions, the game can animate between `currentGame` and `nextUpdateGame`
-- If the engine has an explicit `render` function, the game can use the `Rune.interpolate.rendering()` function
-
-Here's an example of how `Rune.interpolate.rendering()` would be used for rendering the ball in Paddle at a variable frame rate: 
+Rune provides `nextGameUpdate`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. The game can then use `Rune.interpolate.rendering()` with this info to compute the ball's position at any time and will look more fluid for fast-moving objects. Here's an example of how this would be used for rendering the ball in Paddle at a variable frame rate: 
 
 ```javascript
 let ballPosition, ballPositionNext
@@ -105,7 +99,7 @@ Rune.initLogic({
 
 The `game` state is provided to the `onChange` callback as `currentGame` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `currentGame` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth, the game can create an interpolator for interpolating the movements over time using `Rune.interpolate.createInterpolator()`.
 
-The interpolator has built-in acceleration, meaning that the paddle will slowly start moving and then accelerate up to a top speed defined by the game. Usually a good value for the max speed is twice the normal player speed. By default, the acceleration takes 500 ms to reach max speed. The game can also modify this if desired by providing the `timeToMaxSpeed` option.
+The interpolator has built-in acceleration, meaning that the paddle will slowly start moving and then accelerate up to a top speed defined by the game. Usually a good value for the max speed is twice the normal player speed. By default, the acceleration takes 1000 ms to reach max speed. The game can also modify this if desired by providing the `timeToMaxSpeed` option.
 
 The game should call the interpolator's `update()` function every time the `onChange` callback is called with the `update` event. This will make the interpolated position move towards the true position specified in `currentGame`. Here's that code for the paddle game:
 
@@ -127,13 +121,13 @@ function onChange({ currentGame, nextUpdateGame, event, yourPlayerId }) {
 }
 ```
 
-The paddle game can at any time get the interpolated position from the interpolator by calling `getPosition()`. As games with interpolation often want to render at a variable frame rate, the function returns three different versions of the position to easily support that: `currentGame`, `nextUpdateGame`, and `rendering`. As described in the section above, games using an animation framework will use `currentGame` and `nextUpdateGame`, whereas games with an explicit `render()` function will use `rendering`. Below is the code for using `rendering`:
+The paddle game can at any time get the interpolated position from the interpolator by calling `getPosition()`. This function returns the position adjusted for the time of rendering (see section above) so it can be used directly to achieve both interpolation and supporting variable frame rate. I.e. there's no need to separately call `Rune.interpolate.rendering()`. Here's how to get the opponent's interpolated paddle position for rendering:
 
 ```javascript
 // ... (code from previous example)
 
 function render() {
-  const opponentPosition = opponentInterpolator.getPosition().rendering
+  const opponentPosition = opponentInterpolator.getPosition()
   drawOpponent(opponentPosition)
 }
 ```

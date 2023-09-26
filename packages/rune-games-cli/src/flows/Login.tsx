@@ -105,7 +105,7 @@ export function Login() {
                 ? "Email sent"
                 : status === "waiting"
                 ? "Sending verification email"
-                : "Enter your email to login or create a new account"
+                : "Login to your Rune account to continue. If you don't have a Rune account, install the app and create an email-verified account"
             }
             view={(status) =>
               status === "userInput" && (

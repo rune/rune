@@ -26,24 +26,31 @@ The `update` function is run in a synchronized way across all clients and the se
 
 ## Rendering At Variable Frame Rate
 
-The update loop will always run at a fixed tick rate, but mobile phones will render your game's graphics slower or faster than that. This is highly dependent on how powerful the device is and how intensive your game is to run. To support rendering at a variable frame rate, your game can extrapolate positions between the `update` function calls. This is only needed for fast-moving objects stored in the `game` state such as the ball and paddles in Paddle.
+The update loop will always run at a fixed tick rate, but mobile phones will render your game's graphics slower or faster than that. This is highly dependent on how powerful the device is and how intensive your game is to run. To support rendering at a variable frame rate, your game can interpolate positions between the `update` function calls. This is only needed for fast-moving objects stored in the `game` state such as the ball and paddles in Paddle.
 
 Consider a Paddle game with `updatesPerSecond: 10`, i.e. the game state updates every 100 ms. The ball is at position 0 in `currentGame` at 0 ms and will be at position 10 in after 100 ms. When the phone wants to render the game at 60 ms, it should render at position 6 as the ball should be 60% towards the new position.
 
-Rune provides `nextGameUpdate`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. The game can then use `Rune.interpolate.rendering()` with this info to compute the ball's position at any time and will look more fluid for fast-moving objects. Here's an example of how this would be used for rendering the ball in Paddle at a variable frame rate: 
+Rune provides `nextGame`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. The game can interpolate between the current game state and the future game state by using `Rune.interpolator()`. The interpolator allows the game to compute the ball's position at any time and will make the game look more fluid for fast-moving objects. Here's how this would be used for rendering the ball in Paddle at a variable frame rate: 
 
 ```javascript
-let ballPosition, ballPositionNext
+let ballInterpolator = Rune.interpolator()
 
-function onChange({ currentGame, nextUpdateGame }) {
-  ballPosition = currentGame.ballPosition
-  ballPositionNext = nextUpdateGame!.ballPosition
+function onChange({ currentGame, nextGame }) {
+  ballInterpolator.update({ 
+    current: currentGame.ballPosition,
+    next: nextGame.ballPosition
+  })
 }
 
+// Rendering function called by the game's graphics engine
 function render() {
-  const ballPositionRender = Rune.interpolate.rendering(ballPosition, ballPositionNext)
-  drawBall(ballPositionRender)
+  const ballPosition = ballInterpolator.getPosition()
+    
+  // ... (draw the ball using the game's graphics engine)
 }
+
+// Initialize the game with the callback function
+Rune.initClient({ onChange })
 ```
 
 ## Interpolating Other Players' Movements
@@ -97,53 +104,51 @@ Rune.initLogic({
 })
 ```
 
-The `game` state is provided to the `onChange` callback as `currentGame` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `currentGame` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth, the game can create an interpolator for interpolating the movements over time using `Rune.interpolate.createInterpolator()`.
+The `game` state is provided to the `onChange` callback as `currentGame` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `currentGame` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth despite the latency, the game can create an interpolator using `Rune.interpolatorLatency`.
 
-The interpolator has built-in acceleration, meaning that the paddle will slowly start moving and then accelerate up to a top speed defined by the game. Usually a good value for the max speed is twice the normal player speed. By default, the acceleration takes 1000 ms to reach max speed. The game can also modify this if desired by providing the `timeToMaxSpeed` option.
+The latency interpolator has built-in acceleration, meaning that the paddle will slowly start moving and then accelerate up to a top speed defined by the game. Usually a good value for the max speed is twice the normal player speed. By default, the acceleration takes 1000 ms to reach max speed. The game can also modify this if desired by providing the `timeToMaxSpeed` option.
 
-The game should call the interpolator's `update()` function every time the `onChange` callback is called with the `update` event. This will make the interpolated position move towards the true position specified in `currentGame`. Here's that code for the paddle game:
+The game should call the interpolator's `update()` function, which moves the interpolated position towards the true position specified in `currentGame`. The game can at any time get the interpolated position from the interpolator by calling `getPosition()`. This function returns the position adjusted for the time of rendering (see section above) so it can be used directly to achieve both interpolation and supporting variable frame rate.
+
+Here's that code for the paddle game:
 
 ```javascript
 import { playerSpeed } from "./logic.js"
 
-let opponentInterpolator = Rune.interpolate.createInterpolator({ maxSpeed: playerSpeed * 2 })
+let opponentInterpolator = Rune.interpolatorLatency({ maxSpeed: playerSpeed * 2 })
 
-function onChange({ currentGame, nextUpdateGame, event, yourPlayerId }) {
-    
+function onChange({ currentGame, nextGame, yourPlayerId }) {
   const opponent = currentGame.players.findIndex((p) => p.id !== yourPlayerId)
    
-  if (event.name === "update") {
-    opponentInterpolator.update({ 
-      currentGame: currentGame.paddles[opponent].position,
-      nextUpdateGame: nextUpdateGame.paddles[opponent].position
-    })
-  }
+  opponentInterpolator.update({
+    current: currentGame.paddles[opponent].position,
+    next: nextGame.paddles[opponent].position
+  })
 }
-```
 
-The paddle game can at any time get the interpolated position from the interpolator by calling `getPosition()`. This function returns the position adjusted for the time of rendering (see section above) so it can be used directly to achieve both interpolation and supporting variable frame rate. I.e. there's no need to separately call `Rune.interpolate.rendering()`. Here's how to get the opponent's interpolated paddle position for rendering:
-
-```javascript
-// ... (code from previous example)
-
+// Rendering function called by the game's graphics engine
 function render() {
-  const opponentPosition = opponentInterpolator.getPosition()
-  drawOpponent(opponentPosition)
+    const opponentPosition = opponentInterpolator.getPosition()
+
+    // ... (draw the opponent's paddle using the game's graphics engine)
 }
+
+// Initialize the game with the callback function
+Rune.initClient({ onChange })
 ```
 
-There might be special circumstances, where the game will want to immediately move the other players' positions without interpolating. For instance, after a point has been scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `reset()` on the interpolator:
+There might be special circumstances, where the game will want to immediately move the other players' positions without interpolating. For instance, when a point is scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `moveToDestination()` on the interpolator:
 
 ```javascript
 // ... (code from previous example)
 
-function onChange({ previousGame, currentGame }) {
+function onChange({ currentGame, nextGame }) {
     
-  const previousTotal = previousGame.players[0].score + previousGame.players[1].score
   const currentTotal = currentGame.players[0].score + currentGame.players[1].score
+  const nextTotal = nextGame.players[0].score + nextGame.players[1].score
     
-  if (previousTotal !== currentTotal) {
-    opponentInterpolator.reset()
+  if (currentTotal < nextTotal) {
+    opponentInterpolator.moveToDestination()
   }
 }
 ```

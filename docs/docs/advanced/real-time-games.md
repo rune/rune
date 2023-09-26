@@ -53,6 +53,24 @@ function render() {
 Rune.initClient({ onChange })
 ```
 
+There might be game-specific scenarios, where the game should not interpolate into the future. For instance, when a point is scored in Paddle, the ball position will reset and the game should not interpolate the position between `currentGame` and `nextGame`. The game can do this by not calling `update()` on the interpolator in that scenario, i.e. updating the code above with an if condition:
+
+```javascript
+// Replaces function in previous code block
+function onChange({ currentGame, nextGame }) {
+    
+  const currentTotal = currentGame.players[0].score + currentGame.players[1].score
+  const nextTotal = nextGame.players[0].score + nextGame.players[1].score
+    
+  if (currentTotal === nextTotal) {
+    ballInterpolator.update({
+      current: currentGame.ballPosition,
+      next: nextGame.ballPosition
+    })
+  }
+}
+```
+
 ## Interpolating Other Players' Movements
 
 Making fast-paced multiplayer games can be challenging because of the latency between players. No matter how good the device and internet connection is, the network packets cannot travel faster than the speed of light. This means that your game will receive other's players actions some time after they happened. If other players can quickly move around in your game, then you will need to do interpolation of their positions to make their movements look smooth. This is done in the client-side code, i.e. in `client.js`.

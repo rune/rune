@@ -1,4 +1,4 @@
-import { Box } from "ink"
+import { Box, Text } from "ink"
 import React, { useEffect, useState } from "react"
 
 import { useGames, useMyGames } from "../../gql/useGames.js"
@@ -29,6 +29,10 @@ export function Upload() {
 
   return (
     <Box flexDirection="column">
+      <Text>
+        When your game is published, your Rune profile will be shown next to the
+        game.
+      </Text>
       <GameDirInputStep
         onComplete={({ gameDir }) => {
           setGameDir(gameDir)

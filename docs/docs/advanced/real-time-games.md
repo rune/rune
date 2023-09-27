@@ -166,7 +166,7 @@ function onChange({ currentGame, nextGame }) {
   const nextTotal = nextGame.players[0].score + nextGame.players[1].score
     
   if (currentTotal < nextTotal) {
-    opponentInterpolator.moveToDestination()
+    opponentInterpolator.jump({ currentGame.paddles[opponent].position })
   }
 }
 ```

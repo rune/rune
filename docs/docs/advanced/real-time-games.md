@@ -33,7 +33,7 @@ Consider a Paddle game with `updatesPerSecond: 10`, i.e. the game state updates 
 Rune provides `nextGame`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. The game can interpolate between the current game state and the future game state by using `Rune.interpolator()`. The interpolator allows the game to compute the ball's position at any time and will make the game look more fluid for fast-moving objects. Here's how this would be used for rendering the ball in Paddle at a variable frame rate: 
 
 ```javascript
-let ballInterpolator = Rune.interpolator()
+const ballInterpolator = Rune.interpolator()
 
 function onChange({ currentGame, nextGame }) {
   ballInterpolator.update({ 

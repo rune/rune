@@ -53,16 +53,13 @@ function render() {
 Rune.initClient({ onChange })
 ```
 
-There might be game-specific scenarios, where the game should not interpolate into the future. For instance, when a point is scored in Paddle, the ball position will reset and the game should not interpolate the position between `game` and `futureGame`. The game can do this by not calling `update()` on the interpolator in that scenario, i.e. updating the code above with an if condition:
+There might be game-specific scenarios, where the game should not interpolate into the future. For instance, when a point is scored in Paddle, the ball position will reset in `logic.js` and the game should not interpolate the position between `game` and `futureGame`. The game can do this by not calling `update()` on the interpolator in that scenario, i.e. updating the code above with an if condition checking the current score vs. the future score:
 
 ```javascript
 // Replaces function in previous code block
 function onChange({ game, futureGame }) {
     
-  const total = game.players[0].score + game.players[1].score
-  const futureTotal = futureGame.players[0].score + futureGame.players[1].score
-    
-  if (total === futureTotal) {
+  if (game.totalScore === futureGame.totalScore) {
     ballInterpolator.update({
       game: game.ballPosition,
       futureGame: futureGame.ballPosition
@@ -98,7 +95,7 @@ Rune.initLogic({
       { id: allPlayerIds[0], score: 0 },
       { id: allPlayerIds[1], score: 0 },
     ]
-    return { paddles, players }
+    return { paddles, players, totalScore: 0 }
   },
   update: ({ game }) => {
     for (let i = 0; i < 2; i++) {
@@ -155,17 +152,13 @@ function render() {
 Rune.initClient({ onChange })
 ```
 
-There might be game-specific scenarios, where the game will want to immediately move the other players' positions without interpolating. For instance, when a point is scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `moveTo()` on the interpolator:
+There might be game-specific scenarios, where the game will want to immediately move the other players' positions without interpolating. For instance, when a point is scored in Paddle, the player positions reset in `logic.js` and the opponent position should be updated immediately. The game can detect that a point was just scored by comparing `game` with `previousGame`, which contains the game state for the last `onChange` call. The game can then call `moveTo()` on the interpolator, which will also reset the speed inside the interpolator to zero so that it doesn't move anywhere. Here's the code for that:
 
 ```javascript
-// ... (code from previous example)
-
-function onChange({ game, futureGame }) {
+function onChange({ previousGame, game }) {
+  const opponent = game.players.findIndex((p) => p.id !== yourPlayerId)
     
-  const total = game.players[0].score + game.players[1].score
-  const futureTotal = futureGame.players[0].score + futureGame.players[1].score
-    
-  if (total < futureTotal) {
+  if (previousGame.totalScore < game.totalScore) {
     opponentInterpolator.moveTo(game.paddles[opponent].position)
   }
 }

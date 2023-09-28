@@ -155,7 +155,7 @@ function render() {
 Rune.initClient({ onChange })
 ```
 
-There might be game-specific scenarios, where the game will want to immediately move the other players' positions without interpolating. For instance, when a point is scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `moveToDestination()` on the interpolator:
+There might be game-specific scenarios, where the game will want to immediately move the other players' positions without interpolating. For instance, when a point is scored in Paddle, the player positions should be reset immediately without interpolation. The game can do this by calling `moveTo()` on the interpolator:
 
 ```javascript
 // ... (code from previous example)

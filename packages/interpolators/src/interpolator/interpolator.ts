@@ -15,6 +15,8 @@ export function interpolator<Dimensions extends number | number[]>() {
   return {
     update(params: { current: Dimensions; future: Dimensions }) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
+      //This value is set to true when `onChange` is called by `update` event.
       // @ts-ignore
       if (!Rune._isOnChangeCalledByUpdate) {
         return

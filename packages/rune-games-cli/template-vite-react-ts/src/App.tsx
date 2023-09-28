@@ -8,8 +8,8 @@ function App() {
   const [game, setGame] = useState<GameState>()
   useEffect(() => {
     Rune.initClient({
-      onChange: ({ newGame }) => {
-        setGame(newGame)
+      onChange: ({ game }) => {
+        setGame(game)
       },
     })
   }, [])

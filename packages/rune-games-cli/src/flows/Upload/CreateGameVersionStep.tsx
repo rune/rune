@@ -21,7 +21,7 @@ export function CreateGameVersionStep({
     createGameVersion,
     createGameVersionLoading,
     createGameVersionError,
-    newGameVersionId,
+    gameVersionId,
     previewLink,
     congratulationMsg,
   } = useCreateGameVersion()
@@ -67,8 +67,8 @@ export function CreateGameVersionStep({
           ) : (
             <>
               {readyForRelease
-                ? `Version #${newGameVersionId} uploaded successfully and is now in review 🥳`
-                : `Version #${newGameVersionId} uploaded successfully!`}{" "}
+                ? `Version #${gameVersionId} uploaded successfully and is now in review 🥳`
+                : `Version #${gameVersionId} uploaded successfully!`}{" "}
               You can test it here: {previewLink}
               <Newline />
               <Text color="yellow">

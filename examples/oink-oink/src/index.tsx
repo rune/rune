@@ -11,7 +11,7 @@ import("./logic").then(() => {
     onChange: ({ game, players, yourPlayerId, event }) => {
       store.set($state, {
         ready: true,
-        game: game,
+        game,
         players,
         yourPlayerId,
       })

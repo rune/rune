@@ -1,5 +1,6 @@
 import { RuneClient } from "rune-games-sdk"
 
 declare global {
-  const Rune: RuneClient<any, any>
+  // eslint-disable-next-line no-var
+  var Rune: RuneClient<any, any>
 }

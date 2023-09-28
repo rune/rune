@@ -5,6 +5,7 @@ import { interpolator } from "../src/interpolator/interpolator"
 describe("interpolator", () => {
   it("should expect current & next to be defined & correct type", () => {
     global.Rune = {
+      // @ts-ignore
       _isOnChangeCalledByUpdate: true,
     }
 
@@ -64,6 +65,7 @@ describe("interpolator", () => {
     const instance = interpolator()
 
     global.Rune = {
+      // @ts-ignore
       _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
@@ -74,6 +76,7 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual(0)
 
     global.Rune = {
+      // @ts-ignore
       _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
@@ -86,6 +89,7 @@ describe("interpolator", () => {
     const instance = interpolator()
 
     global.Rune = {
+      // @ts-ignore
       _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
@@ -96,6 +100,7 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual([0, 100])
 
     global.Rune = {
+      // @ts-ignore
       _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
@@ -108,6 +113,7 @@ describe("interpolator", () => {
     const instance = interpolator()
 
     global.Rune = {
+      // @ts-ignore
       _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
@@ -118,6 +124,7 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual(4)
 
     global.Rune = {
+      // @ts-ignore
       _isOnChangeCalledByUpdate: false,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,

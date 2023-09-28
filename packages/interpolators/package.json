@@ -17,6 +17,7 @@
   "scripts": {
     "build": "exit 0",
     "test": "jest",
+    "test:watch": "JEST_WATCH_TESTS=1 jest --watch",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

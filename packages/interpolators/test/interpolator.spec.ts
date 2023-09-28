@@ -3,7 +3,7 @@
 import { interpolator } from "../src/interpolator/interpolator"
 
 describe("interpolator", () => {
-  it("should expect current & next to be defined & correct type", () => {
+  it("should expect current & future to be defined & correct type", () => {
     global.Rune = {
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -12,11 +12,13 @@ describe("interpolator", () => {
     const instance = interpolator()
 
     // @ts-ignore
-    expect(() => instance.update()).toThrow("current and next must be provided")
+    expect(() => instance.update()).toThrow(
+      "current and future must be provided"
+    )
 
     // @ts-ignore
     expect(() => instance.update(null)).toThrow(
-      "current and next must be provided"
+      "current and future must be provided"
     )
 
     // @ts-ignore
@@ -24,35 +26,35 @@ describe("interpolator", () => {
 
     // @ts-ignore
     expect(() => instance.update({ current: [] })).toThrow(
-      "next must be number or array"
+      "future must be number or array"
     )
 
-    expect(() => instance.update({ current: [], next: [] })).toThrow(
-      "current & next must not be an empty array"
+    expect(() => instance.update({ current: [], future: [] })).toThrow(
+      "current & future must not be an empty array"
     )
 
-    expect(() => instance.update({ current: 1, next: [] })).toThrow(
-      "current is number, next must be number too"
+    expect(() => instance.update({ current: 1, future: [] })).toThrow(
+      "current is number, future must be number too"
     )
 
-    expect(() => instance.update({ current: [], next: 1 })).toThrow(
-      "current is array, next should be array too"
+    expect(() => instance.update({ current: [], future: 1 })).toThrow(
+      "current is array, future should be array too"
     )
 
-    expect(() => instance.update({ current: [1], next: [1, 2] })).toThrow(
-      "next length does not match current"
+    expect(() => instance.update({ current: [1], future: [1, 2] })).toThrow(
+      "future length does not match current"
     )
 
-    expect(() => instance.update({ current: [1, null], next: [1, 2] })).toThrow(
-      "current[1] must be a number"
-    )
+    expect(() =>
+      instance.update({ current: [1, null], future: [1, 2] })
+    ).toThrow("current[1] must be a number")
 
-    expect(() => instance.update({ current: [1, 3], next: [null, 1] })).toThrow(
-      "next[0] must be a number"
-    )
+    expect(() =>
+      instance.update({ current: [1, 3], future: [null, 1] })
+    ).toThrow("future[0] must be a number")
 
-    expect(() => instance.update({ current: 1, next: 3 })).not.toThrow()
-    expect(() => instance.update({ current: [1], next: [3] })).not.toThrow()
+    expect(() => instance.update({ current: 1, future: 3 })).not.toThrow()
+    expect(() => instance.update({ current: [1], future: [3] })).not.toThrow()
   })
 
   it("should not allow to call getPosition before calling update", () => {
@@ -71,7 +73,7 @@ describe("interpolator", () => {
       timeSinceLastUpdate: () => 0,
     }
 
-    instance.update({ current: 0, next: 10 })
+    instance.update({ current: 0, future: 10 })
 
     expect(instance.getPosition()).toEqual(0)
 
@@ -95,7 +97,7 @@ describe("interpolator", () => {
       timeSinceLastUpdate: () => 0,
     }
 
-    instance.update({ current: [0, 100], next: [10, 1000] })
+    instance.update({ current: [0, 100], future: [10, 1000] })
 
     expect(instance.getPosition()).toEqual([0, 100])
 
@@ -119,7 +121,7 @@ describe("interpolator", () => {
       timeSinceLastUpdate: () => 40,
     }
 
-    instance.update({ current: 0, next: 10 })
+    instance.update({ current: 0, future: 10 })
 
     expect(instance.getPosition()).toEqual(4)
 
@@ -130,7 +132,7 @@ describe("interpolator", () => {
       timeSinceLastUpdate: () => 40,
     }
 
-    instance.update({ current: 10, next: 100 })
+    instance.update({ current: 10, future: 100 })
 
     expect(instance.getPosition()).toEqual(4)
   })

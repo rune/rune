@@ -1,62 +1,71 @@
-const lerp = (a: number, b: number, t: number) => (b - a) * t + a
+function lerp(a: number, b: number, t: number) {
+  return (b - a) * t + a
+}
+
+function isDefined(value: unknown) {
+  return value !== undefined && value !== null
+}
+
+const runValidation = true
 
 export function interpolator<Dimensions extends number | number[]>() {
   let current: Dimensions | undefined = undefined
-  let next: Dimensions | undefined = undefined
+  let future: Dimensions | undefined = undefined
 
   return {
-    update(params: { current: Dimensions; next: Dimensions }) {
+    update(params: { current: Dimensions; future: Dimensions }) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       if (!Rune._isOnChangeCalledByUpdate) {
         return
       }
 
-      if (params === undefined || params === null) {
-        throw new Error("current and next must be provided")
-      }
-
-      if (params.current === null || params.current === undefined) {
-        throw new Error("current must be number or array")
-      }
-
-      if (params.next === null || params.next === undefined) {
-        throw new Error("next must be number or array")
-      }
-
-      if (Array.isArray(params.current)) {
-        if (!Array.isArray(params.next)) {
-          throw new Error("current is array, next should be array too")
+      if (runValidation) {
+        if (!isDefined(params)) {
+          throw new Error("current and future must be provided")
         }
 
-        if (params.current.length !== params.next.length) {
-          throw new Error("next length does not match current")
+        if (!isDefined(params.current)) {
+          throw new Error("current must be number or array")
         }
 
-        if (params.current.length === 0) {
-          throw new Error("current & next must not be an empty array")
+        if (!isDefined(params.future)) {
+          throw new Error("future must be number or array")
         }
 
-        params.current.forEach((el, index) => {
-          const from = el
-          const to = (params.next as number[])[index]
-
-          if (from === null || from === undefined) {
-            throw new Error(`current[${index}] must be a number`)
+        if (Array.isArray(params.current)) {
+          if (!Array.isArray(params.future)) {
+            throw new Error("current is array, future should be array too")
           }
 
-          if (to === null || to === undefined) {
-            throw new Error(`next[${index}] must be a number`)
+          if (params.current.length !== params.future.length) {
+            throw new Error("future length does not match current")
           }
-        })
-      } else {
-        if (Array.isArray(params.next)) {
-          throw new Error("current is number, next must be number too")
+
+          if (params.current.length === 0) {
+            throw new Error("current & future must not be an empty array")
+          }
+
+          params.current.forEach((currentPosition, index) => {
+            const futurePosition = (params.future as number[])[index]
+
+            if (!isDefined(currentPosition)) {
+              throw new Error(`current[${index}] must be a number`)
+            }
+
+            if (!isDefined(futurePosition)) {
+              throw new Error(`future[${index}] must be a number`)
+            }
+          })
+        } else {
+          if (Array.isArray(params.future)) {
+            throw new Error("current is number, future must be number too")
+          }
         }
       }
 
       current = params.current
-      next = params.next
+      future = params.future
     },
 
     getPosition(): Dimensions {
@@ -68,13 +77,13 @@ export function interpolator<Dimensions extends number | number[]>() {
 
       const delta = Rune.timeSinceLastUpdate() / Rune.msPerUpdate
 
-      if (Array.isArray(current) && Array.isArray(next)) {
+      if (Array.isArray(current) && Array.isArray(future)) {
         return current.map((curr, index) => {
-          return lerp(curr, (next as number[])[index], delta)
+          return lerp(curr, (future as number[])[index], delta)
         }) as Dimensions
       }
 
-      return lerp(current as number, next as number, delta) as Dimensions
+      return lerp(current as number, future as number, delta) as Dimensions
     },
   }
 }

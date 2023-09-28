@@ -38,7 +38,7 @@ export function App() {
           action,
           event,
         }) => {
-          setGame({ game: game, players, yourPlayerId })
+          setGame({ game, players, yourPlayerId })
 
           const lastActivityPlayerId =
             action?.action === "setValue" ||

@@ -14,7 +14,7 @@ const TextInput = TextInputImport.default as typeof TextInputImport
 export function CreateGameStep({
   onComplete,
 }: {
-  onComplete: (gameId: number) => void
+  onComplete: (newGameId: number) => void
 }) {
   const [title, setTitle] = useState("")
   const [titleSubmitted, setTitleSubmitted] = useState(false)

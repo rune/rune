@@ -19,7 +19,7 @@ function moveTowards<Dimensions extends number | number[]>(
 ): Dimensions {
   if (size > 0) {
     return (from as number[]).map((fromElement, index) =>
-      moveTowardsSingleValue(fromElement, to[index], maxSpeed)
+      moveTowardsSingleValue(fromElement, (to as number[])[index], maxSpeed)
     ) as Dimensions
   }
 
@@ -43,7 +43,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
 
   return {
     update(params: { game: Dimensions; futureGame: Dimensions }) {
-      //This value is set to true when `onChange` is called by `update` event.
+      // This value is set to true when `onChange` is called by `update` event.
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       if (!Rune._isOnChangeCalledByUpdate) {
@@ -69,7 +69,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
     },
 
     getPosition(): Dimensions {
-      return getPosition(game, futureGame, size)
+      return getPosition<Dimensions>(game, futureGame, size)
     },
 
     jump(jumpToGame: Dimensions) {

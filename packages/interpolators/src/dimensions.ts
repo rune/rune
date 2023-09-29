@@ -9,11 +9,11 @@ export function lerp(a: number, b: number, t: number) {
 }
 
 export function getPosition<Dimensions extends number | number[]>(
-  game: Dimensions,
-  futureGame: Dimensions,
-  size: number
+  game: Dimensions | undefined,
+  futureGame: Dimensions | undefined,
+  size: number | null
 ) {
-  if (game === undefined) {
+  if (game === undefined || futureGame === undefined || size === null) {
     throw new Error(
       "getPosition can't be called before calling update at least once"
     )

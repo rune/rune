@@ -42,13 +42,14 @@ export function validateUpdateParams<Dimensions extends number | number[]>(
     ;(params.current as number[]).forEach((currentPosition, index) => {
       const futurePosition = (params.future as number[])[index]
 
-      if (!isDefined(currentPosition)) {
-        throw new Error(`current[${index}] must be a number`)
-      }
-
-      if (!isDefined(futurePosition)) {
-        throw new Error(`future[${index}] must be a number`)
-      }
+      assert(
+        isDefined(currentPosition) && Number.isFinite(currentPosition),
+        `current[${index}] must be a number`
+      )
+      assert(
+        isDefined(futurePosition) && Number.isFinite(currentPosition),
+        `future[${index}] must be a number`
+      )
     })
   }
 }

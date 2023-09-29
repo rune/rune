@@ -1,25 +1,32 @@
 import { PlayerId } from "rune-games-sdk/multiplayer"
 
 export const animals = [
-  "dog",
   "lion",
+  "dog",
   "pig",
-  "cat",
-  "elephant",
-  "frog",
-  "cow",
   "sheep",
+  "elephant",
+  "cow",
+  "cat",
+  "frog",
+  "monkey",
+  "horse",
+  "goat",
+  "mouse",
+  "owl",
+  "duck",
+  "chicken",
 ] as const
 
 export const emotions = [
-  "laughing",
   "scared",
-  "angry",
-  "sleepy",
-  "sneezing",
   "crying",
+  "sneezing",
   "ghost",
   "cold",
+  "angry",
+  "sleepy",
+  "laughing",
 ] as const
 
 export type Animal = (typeof animals)[number]

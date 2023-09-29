@@ -2,7 +2,7 @@ import { art } from "../art/art"
 import styled from "styled-components/macro"
 import { rel } from "../../../style/rel"
 import { useAtomValue } from "jotai"
-import { $currentTurn } from "../../../state/$state"
+import { $currentTurn, $animals, $emotions } from "../../../state/$state"
 import { Player } from "@lottiefiles/react-lottie-player"
 
 import speakingAnimation from "../lottie/speaking.json"
@@ -12,9 +12,17 @@ import { useMemo, memo } from "react"
 
 export const Acting = memo(() => {
   const currentTurn = useAtomValue($currentTurn)
+  const animals = useAtomValue($animals)
+  const emotions = useAtomValue($emotions)
 
-  const animalImgs = useMemo(() => Object.values(art.animals), [])
-  const emotionImgs = useMemo(() => Object.values(art.emotions), [])
+  const animalImgs = useMemo(
+    () => animals.map((animal) => art.animals[animal]),
+    [animals]
+  )
+  const emotionImgs = useMemo(
+    () => emotions.map((emotion) => art.emotions[emotion]),
+    [emotions]
+  )
 
   if (!currentTurn) return null
 

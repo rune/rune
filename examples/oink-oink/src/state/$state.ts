@@ -13,6 +13,8 @@ export const $state = atom<{
     players: [],
     gameStarted: false,
     round: 0,
+    animals: [],
+    emotions: [],
     currentTurn: null,
     guesses: [],
     gameOver: false,
@@ -55,6 +57,10 @@ export const $yourPlayer = atom((get) => {
 export const $actorPlayer = atom((get) =>
   get($players).find((player) => player.actor)
 )
+
+export const $animals = atom((get) => get($game).animals)
+
+export const $emotions = atom((get) => get($game).emotions)
 
 export const $round = atom((get) => get($game).round)
 

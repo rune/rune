@@ -51,6 +51,8 @@ export interface GameState {
   }[]
   gameStarted: boolean
   round: number
+  animals: Animal[]
+  emotions: Emotion[]
   currentTurn: {
     animal: Animal
     emotion: Emotion

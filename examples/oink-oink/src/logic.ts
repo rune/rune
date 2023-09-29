@@ -1,4 +1,4 @@
-import { animals, emotions } from "./lib/types/GameState"
+import { Animal, animals, emotions } from "./lib/types/GameState"
 import { getRandomItem } from "./lib/getRandomItem"
 import { setActor } from "./lib/setActor"
 import { isLastActor } from "./lib/isLastActor"
@@ -26,6 +26,8 @@ Rune.initLogic({
     })),
     gameStarted: false,
     round: 0,
+    animals: animals.slice(0, 8), // First 8 animals
+    emotions: emotions.slice(0), // All emotions
     currentTurn: null,
     guesses: [],
     gameOver: false,
@@ -69,8 +71,8 @@ Rune.initLogic({
         actor.latestTurnScore += 1
         actor.latestRoundScore += 1
 
-        game.currentTurn.animal = getRandomItem(animals)
-        game.currentTurn.emotion = getRandomItem(emotions)
+        game.currentTurn.animal = getRandomItem(game.animals)
+        game.currentTurn.emotion = getRandomItem(game.emotions)
 
         if (!game.currentTurn.timerStartedAt) throw Rune.invalidAction()
         game.currentTurn.timerStartedAt += displayCorrectGuessFor
@@ -83,6 +85,17 @@ Rune.initLogic({
       for (const player of game.players) {
         player.latestRoundScore = 0
       }
+
+      let pickedAnimals: Animal[] = []
+      // Get random 8 animals (keep emotions the same)
+      const availableAnimals = [...animals]
+      while (pickedAnimals.length < 8) {
+        const animal = getRandomItem(availableAnimals)
+        const index = availableAnimals.indexOf(animal)
+        availableAnimals.splice(index, 1)
+        pickedAnimals.push(animal)
+      }
+      game.animals = [...pickedAnimals]
 
       game.round += 1
       setActor(game, "first")

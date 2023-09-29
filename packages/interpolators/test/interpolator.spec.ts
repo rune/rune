@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { interpolator } from "../src/interpolator/interpolator"
+import { interpolator } from "../src/interpolator"
 
 describe("interpolator", () => {
   it("should expect current & future to be defined & correct type", () => {

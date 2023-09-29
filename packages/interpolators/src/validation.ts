@@ -30,6 +30,13 @@ export function validateUpdateParams<Dimensions extends number | number[]>(
     )
   }
 
+  if (gameSize === -1) {
+    assert(
+      Number.isFinite(params.game) && Number.isFinite(params.futureGame),
+      "game & futureGame must be either a number or array of numbers"
+    )
+  }
+
   assert(gameSize !== 0, "game & futureGame must not be an empty array")
   assert(
     gameSize === futureGameSize,

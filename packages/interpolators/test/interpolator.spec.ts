@@ -13,8 +13,6 @@ describe("interpolator", () => {
     const instance = interpolator()
 
     global.Rune = {
-      // @ts-ignore
-      _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
     }
@@ -24,8 +22,6 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual(0)
 
     global.Rune = {
-      // @ts-ignore
-      _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
     }
@@ -37,8 +33,6 @@ describe("interpolator", () => {
     const instance = interpolator()
 
     global.Rune = {
-      // @ts-ignore
-      _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
     }
@@ -48,38 +42,10 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual([0, 100])
 
     global.Rune = {
-      // @ts-ignore
-      _isOnChangeCalledByUpdate: true,
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
     }
 
     expect(instance.getPosition()).toEqual([4, 460])
-  })
-
-  it("should ignore update calls if _isOnChangeCalledByUpdate is false", () => {
-    const instance = interpolator()
-
-    global.Rune = {
-      // @ts-ignore
-      _isOnChangeCalledByUpdate: true,
-      msPerUpdate: 100,
-      timeSinceLastUpdate: () => 40,
-    }
-
-    instance.update({ game: 0, futureGame: 10 })
-
-    expect(instance.getPosition()).toEqual(4)
-
-    global.Rune = {
-      // @ts-ignore
-      _isOnChangeCalledByUpdate: false,
-      msPerUpdate: 100,
-      timeSinceLastUpdate: () => 40,
-    }
-
-    instance.update({ game: 10, futureGame: 100 })
-
-    expect(instance.getPosition()).toEqual(4)
   })
 })

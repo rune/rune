@@ -24,13 +24,13 @@ describe("validation", () => {
     ).toThrow("game & futureGame must not be an empty array")
 
     expect(() =>
-      // @ts-ignore
-      validateUpdateParams({ game: 1, futureGame: [] }, null)
+      validateUpdateParams({ game: [1], futureGame: [1, 2] }, null)
     ).toThrow("game and futureGame dimensions must match")
 
     expect(() =>
-      validateUpdateParams({ game: [1], futureGame: [1, 2] }, null)
-    ).toThrow("game and futureGame dimensions must match")
+      // @ts-ignore
+      validateUpdateParams({ game: {}, futureGame: {} }, null)
+    ).toThrow("game & futureGame must be either a number or array of numbers")
 
     expect(() =>
       validateUpdateParams({ game: [1, null], futureGame: [1, 2] }, null)

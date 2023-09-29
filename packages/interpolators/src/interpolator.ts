@@ -15,13 +15,6 @@ export function interpolator<Dimensions extends number | number[]>() {
 
   return {
     update(params: { game: Dimensions; futureGame: Dimensions }) {
-      //This value is set to true when `onChange` is called by `update` event.
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      if (!Rune._isOnChangeCalledByUpdate) {
-        return
-      }
-
       if (runValidation) {
         validateUpdateParams(params, size)
       }

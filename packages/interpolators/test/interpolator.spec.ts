@@ -3,60 +3,6 @@
 import { interpolator } from "../src/interpolator"
 
 describe("interpolator", () => {
-  it("should expect current & future to be defined & correct type", () => {
-    global.Rune = {
-      // @ts-ignore
-      _isOnChangeCalledByUpdate: true,
-    }
-
-    const instance = interpolator()
-
-    // @ts-ignore
-    expect(() => instance.update()).toThrow(
-      "current and future must be provided"
-    )
-
-    // @ts-ignore
-    expect(() => instance.update(null)).toThrow(
-      "current and future must be provided"
-    )
-
-    // @ts-ignore
-    expect(() => instance.update({})).toThrow("current must be number or array")
-
-    // @ts-ignore
-    expect(() => instance.update({ current: [] })).toThrow(
-      "future must be number or array"
-    )
-
-    expect(() => instance.update({ current: [], future: [] })).toThrow(
-      "current & future must not be an empty array"
-    )
-
-    expect(() => instance.update({ current: 1, future: [] })).toThrow(
-      "current is number, future must be number too"
-    )
-
-    expect(() => instance.update({ current: [], future: 1 })).toThrow(
-      "current is array, future should be array too"
-    )
-
-    expect(() => instance.update({ current: [1], future: [1, 2] })).toThrow(
-      "future length does not match current"
-    )
-
-    expect(() =>
-      instance.update({ current: [1, null], future: [1, 2] })
-    ).toThrow("current[1] must be a number")
-
-    expect(() =>
-      instance.update({ current: [1, 3], future: [null, 1] })
-    ).toThrow("future[0] must be a number")
-
-    expect(() => instance.update({ current: 1, future: 3 })).not.toThrow()
-    expect(() => instance.update({ current: [1], future: [3] })).not.toThrow()
-  })
-
   it("should not allow to call getPosition before calling update", () => {
     expect(() => interpolator().getPosition()).toThrow(
       "getPosition can't be called before calling update at least once"

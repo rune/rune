@@ -1,36 +1,45 @@
+import { getDimensions } from "./dimensions"
+
 function isDefined(value: unknown) {
   return value !== undefined && value !== null
 }
 
-export function validateUpdateParams<
-  Dimensions extends number | number[]
->(params: { current: Dimensions; future: Dimensions }) {
-  if (!isDefined(params)) {
-    throw new Error("current and future must be provided")
+function assert(condition: boolean, message: string) {
+  if (!condition) {
+    throw new Error(message)
+  }
+}
+
+export function validateUpdateParams<Dimensions extends number | number[]>(
+  params: { current: Dimensions; future: Dimensions },
+  size: number | null
+) {
+  assert(
+    isDefined(params) && isDefined(params.current) && isDefined(params.future),
+    "current & future must be defined"
+  )
+
+  const currentSize = getDimensions(params.current)
+  const futureSize = getDimensions(params.future)
+
+  //In case update was already called, verify the dimensions didn't change
+  if (size !== null) {
+    assert(
+      size === currentSize && size === futureSize,
+      "current & future must remain same dimensions in all update calls"
+    )
   }
 
-  if (!isDefined(params.current)) {
-    throw new Error("current must be number or array")
-  }
+  assert(currentSize !== 0, "current & future must not be an empty array")
+  assert(currentSize === futureSize, "current and future dimensions must match")
+  assert(
+    currentSize < 5,
+    "current & future must be either a number or array of numbers up to 4 dimensions"
+  )
 
-  if (!isDefined(params.future)) {
-    throw new Error("future must be number or array")
-  }
-
-  if (Array.isArray(params.current)) {
-    if (!Array.isArray(params.future)) {
-      throw new Error("current is array, future should be array too")
-    }
-
-    if (params.current.length !== params.future.length) {
-      throw new Error("future length does not match current")
-    }
-
-    if (params.current.length === 0) {
-      throw new Error("current & future must not be an empty array")
-    }
-
-    params.current.forEach((currentPosition, index) => {
+  if (currentSize > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
+    ;(params.current as number[]).forEach((currentPosition, index) => {
       const futurePosition = (params.future as number[])[index]
 
       if (!isDefined(currentPosition)) {
@@ -41,9 +50,5 @@ export function validateUpdateParams<
         throw new Error(`future[${index}] must be a number`)
       }
     })
-  } else {
-    if (Array.isArray(params.future)) {
-      throw new Error("current is number, future must be number too")
-    }
   }
 }

@@ -107,7 +107,12 @@ export const Results = memo(() => {
 
   return (
     <Root>
-      <Heading>Leaderboard</Heading>
+      <Header>
+        <Heading>Leaderboard</Heading>
+        <SubHeading>
+          Round {round + 1}/{numRounds}
+        </SubHeading>
+      </Header>
 
       <List
         style={{
@@ -175,9 +180,17 @@ const Root = styled.div`
   padding-bottom: max(env(safe-area-inset-bottom), ${rel(47)});
 `
 
+const Header = styled.div``
+
 const Heading = styled.div`
   font-size: ${rel(40)};
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
+  text-align: center;
+`
+
+const SubHeading = styled(Heading)`
+  padding-top: ${rel(10)};
+  font-size: ${rel(28)};
 `
 
 const List = styled.div`

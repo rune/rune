@@ -1,9 +1,5 @@
 import { validateUpdateParams } from "./validation"
-import { getDimensions } from "./dimensions"
-
-function lerp(a: number, b: number, t: number) {
-  return (b - a) * t + a
-}
+import { getDimensions, lerp } from "./dimensions"
 
 const runValidation = true
 

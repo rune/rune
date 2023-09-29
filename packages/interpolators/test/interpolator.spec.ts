@@ -19,7 +19,7 @@ describe("interpolator", () => {
       timeSinceLastUpdate: () => 0,
     }
 
-    instance.update({ current: 0, future: 10 })
+    instance.update({ game: 0, futureGame: 10 })
 
     expect(instance.getPosition()).toEqual(0)
 
@@ -43,7 +43,7 @@ describe("interpolator", () => {
       timeSinceLastUpdate: () => 0,
     }
 
-    instance.update({ current: [0, 100], future: [10, 1000] })
+    instance.update({ game: [0, 100], futureGame: [10, 1000] })
 
     expect(instance.getPosition()).toEqual([0, 100])
 
@@ -67,7 +67,7 @@ describe("interpolator", () => {
       timeSinceLastUpdate: () => 40,
     }
 
-    instance.update({ current: 0, future: 10 })
+    instance.update({ game: 0, futureGame: 10 })
 
     expect(instance.getPosition()).toEqual(4)
 
@@ -78,7 +78,7 @@ describe("interpolator", () => {
       timeSinceLastUpdate: () => 40,
     }
 
-    instance.update({ current: 10, future: 100 })
+    instance.update({ game: 10, futureGame: 100 })
 
     expect(instance.getPosition()).toEqual(4)
   })

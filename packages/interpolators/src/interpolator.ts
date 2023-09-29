@@ -8,13 +8,13 @@ function lerp(a: number, b: number, t: number) {
 const runValidation = true
 
 export function interpolator<Dimensions extends number | number[]>() {
-  let current: Dimensions | undefined = undefined
-  let future: Dimensions | undefined = undefined
+  let game: Dimensions | undefined = undefined
+  let futureGame: Dimensions | undefined = undefined
 
   let size: number | null = null
 
   return {
-    update(params: { current: Dimensions; future: Dimensions }) {
+    update(params: { game: Dimensions; futureGame: Dimensions }) {
       //This value is set to true when `onChange` is called by `update` event.
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -26,14 +26,14 @@ export function interpolator<Dimensions extends number | number[]>() {
         validateUpdateParams(params, size)
       }
 
-      size = getDimensions(params.current)
+      size = getDimensions(params.game)
 
-      current = params.current
-      future = params.future
+      game = params.game
+      futureGame = params.futureGame
     },
 
     getPosition(): Dimensions {
-      if (current === undefined) {
+      if (game === undefined) {
         throw new Error(
           "getPosition can't be called before calling update at least once"
         )
@@ -42,12 +42,12 @@ export function interpolator<Dimensions extends number | number[]>() {
       const delta = Rune.timeSinceLastUpdate() / Rune.msPerUpdate
 
       if (size !== -1) {
-        return (current as number[]).map((curr, index) => {
-          return lerp(curr, (future as number[])[index], delta)
+        return (game as number[]).map((curr, index) => {
+          return lerp(curr, (futureGame as number[])[index], delta)
         }) as Dimensions
       }
 
-      return lerp(current as number, future as number, delta) as Dimensions
+      return lerp(game as number, futureGame as number, delta) as Dimensions
     },
   }
 }

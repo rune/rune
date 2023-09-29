@@ -11,44 +11,47 @@ function assert(condition: boolean, message: string) {
 }
 
 export function validateUpdateParams<Dimensions extends number | number[]>(
-  params: { current: Dimensions; future: Dimensions },
+  params: { game: Dimensions; futureGame: Dimensions },
   size: number | null
 ) {
   assert(
-    isDefined(params) && isDefined(params.current) && isDefined(params.future),
-    "current & future must be defined"
+    isDefined(params) && isDefined(params.game) && isDefined(params.futureGame),
+    "game & futureGame must be defined"
   )
 
-  const currentSize = getDimensions(params.current)
-  const futureSize = getDimensions(params.future)
+  const gameSize = getDimensions(params.game)
+  const futureGameSize = getDimensions(params.futureGame)
 
   //In case update was already called, verify the dimensions didn't change
   if (size !== null) {
     assert(
-      size === currentSize && size === futureSize,
-      "current & future must remain same dimensions in all update calls"
+      size === gameSize && size === futureGameSize,
+      "game & futureGame must remain same dimensions in all update calls"
     )
   }
 
-  assert(currentSize !== 0, "current & future must not be an empty array")
-  assert(currentSize === futureSize, "current and future dimensions must match")
+  assert(gameSize !== 0, "game & futureGame must not be an empty array")
   assert(
-    currentSize < 5,
-    "current & future must be either a number or array of numbers up to 4 dimensions"
+    gameSize === futureGameSize,
+    "game and futureGame dimensions must match"
+  )
+  assert(
+    gameSize < 5,
+    "game & futureGame must be either a number or array of numbers up to 4 dimensions"
   )
 
-  if (currentSize > 0) {
+  if (gameSize > 0) {
     // eslint-disable-next-line @typescript-eslint/no-extra-semi
-    ;(params.current as number[]).forEach((currentPosition, index) => {
-      const futurePosition = (params.future as number[])[index]
+    ;(params.game as number[]).forEach((gamePosition, index) => {
+      const futureGamePosition = (params.futureGame as number[])[index]
 
       assert(
-        isDefined(currentPosition) && Number.isFinite(currentPosition),
-        `current[${index}] must be a number`
+        isDefined(gamePosition) && Number.isFinite(gamePosition),
+        `game[${index}] must be a number`
       )
       assert(
-        isDefined(futurePosition) && Number.isFinite(currentPosition),
-        `future[${index}] must be a number`
+        isDefined(futureGamePosition) && Number.isFinite(gamePosition),
+        `futureGame[${index}] must be a number`
       )
     })
   }

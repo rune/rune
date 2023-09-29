@@ -15,7 +15,7 @@ describe("interpolator", () => {
     global.Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
-    }
+    } as any
 
     instance.update({ game: 0, futureGame: 10 })
 
@@ -24,7 +24,7 @@ describe("interpolator", () => {
     global.Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
-    }
+    } as any
 
     expect(instance.getPosition()).toEqual(4)
   })
@@ -35,7 +35,7 @@ describe("interpolator", () => {
     global.Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
-    }
+    } as any
 
     instance.update({ game: [0, 100], futureGame: [10, 1000] })
 
@@ -44,7 +44,7 @@ describe("interpolator", () => {
     global.Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
-    }
+    } as any
 
     expect(instance.getPosition()).toEqual([4, 460])
   })

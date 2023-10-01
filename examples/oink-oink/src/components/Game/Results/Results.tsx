@@ -69,12 +69,22 @@ export const Results = memo(() => {
 
   const playersOrderedByPreviousScore = useMemo(
     () =>
-      sortBy(players, (player) => -(player.score - player.latestRoundScore)),
+      sortBy(players, (player) => {
+        const score = player.score.acting + player.score.guessing
+        const latestRoundScore =
+          player.latestRoundScore.acting + player.latestRoundScore.guessing
+
+        return -(score - latestRoundScore)
+      }),
     [players]
   )
 
   const playersOrderedByScore = useMemo(
-    () => sortBy(players, (player) => -player.score),
+    () =>
+      sortBy(players, (player) => {
+        const score = player.score.acting + player.score.guessing
+        return -score
+      }),
     [players]
   )
 
@@ -82,7 +92,13 @@ export const Results = memo(() => {
     () =>
       sortBy(
         players,
-        (player) => -(player.score - player.latestRoundScore),
+        (player) => {
+          const score = player.score.acting + player.score.guessing
+          const latestRoundScore =
+            player.latestRoundScore.acting + player.latestRoundScore.guessing
+
+          return -(score - latestRoundScore)
+        },
         (player) => player.id
       ).map((player, i) => ({
         ...player,
@@ -119,37 +135,43 @@ export const Results = memo(() => {
           opacity: animationStepIdx > animationStepKeyIndexMap.empty ? 1 : 0,
         }}
       >
-        {playersFixedOrderWithOffset.map((player) => (
-          <Item key={player.id} offset={player.offset}>
-            <AvatarImg src={player.info.avatarUrl} />
-            <div style={{ width: rel(8) }} />
-            <Name>
-              {player.id === yourPlayerId ? "You" : player.info.displayName}
-            </Name>
-            <div style={{ flex: 1 }} />
-            <Score>
-              <LatestScore
-                style={{
-                  opacity:
-                    !!player.latestRoundScore &&
-                    animationStepIdx >= animationStepKeyIndexMap.latestScore
-                      ? 1
-                      : 0,
-                }}
-              >
-                +{player.latestRoundScore}pt
-              </LatestScore>
-              <AnimatedNumber
-                value={
-                  animationStepIdx >= animationStepKeyIndexMap.newScores
-                    ? player.score
-                    : player.score - player.latestRoundScore
-                }
-              />
-              pts
-            </Score>
-          </Item>
-        ))}
+        {playersFixedOrderWithOffset.map((player) => {
+          const latestRoundScore =
+            player.latestRoundScore.acting + player.latestRoundScore.guessing
+          const score = player.score.acting + player.score.guessing
+
+          return (
+            <Item key={player.id} offset={player.offset}>
+              <AvatarImg src={player.info.avatarUrl} />
+              <div style={{ width: rel(8) }} />
+              <Name>
+                {player.id === yourPlayerId ? "You" : player.info.displayName}
+              </Name>
+              <div style={{ flex: 1 }} />
+              <Score>
+                <LatestScore
+                  style={{
+                    opacity:
+                      !!latestRoundScore &&
+                      animationStepIdx >= animationStepKeyIndexMap.latestScore
+                        ? 1
+                        : 0,
+                  }}
+                >
+                  +{latestRoundScore}pt
+                </LatestScore>
+                <AnimatedNumber
+                  value={
+                    animationStepIdx >= animationStepKeyIndexMap.newScores
+                      ? score
+                      : score - latestRoundScore
+                  }
+                />
+                pts
+              </Score>
+            </Item>
+          )
+        })}
       </List>
 
       <ReadyButton

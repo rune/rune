@@ -20,9 +20,18 @@ Rune.initLogic({
       id,
       readyToStart: false,
       actor: false,
-      score: 0,
-      latestTurnScore: 0,
-      latestRoundScore: 0,
+      score: {
+        acting: 0,
+        guessing: 0,
+      },
+      latestTurnScore: {
+        acting: 0,
+        guessing: 0,
+      },
+      latestRoundScore: {
+        acting: 0,
+        guessing: 0,
+      },
     })),
     gameStarted: false,
     round: 0,
@@ -64,12 +73,13 @@ Rune.initLogic({
 
         if (!player || !actor) throw Rune.invalidAction()
 
-        player.score += 1
-        player.latestTurnScore += 1
-        player.latestRoundScore += 1
-        actor.score += 1
-        actor.latestTurnScore += 1
-        actor.latestRoundScore += 1
+        player.score.guessing += 1
+        player.latestTurnScore.guessing += 1
+        player.latestRoundScore.guessing += 1
+
+        actor.score.acting += 1
+        actor.latestTurnScore.acting += 1
+        actor.latestRoundScore.acting += 1
 
         game.currentTurn.animal = getRandomItem(game.animals)
         game.currentTurn.emotion = getRandomItem(game.emotions)
@@ -83,7 +93,8 @@ Rune.initLogic({
       if (game.currentTurn?.stage !== "result") throw Rune.invalidAction()
 
       for (const player of game.players) {
-        player.latestRoundScore = 0
+        player.latestRoundScore.guessing = 0
+        player.latestRoundScore.acting = 0
       }
 
       let pickedAnimals: Animal[] = []
@@ -150,7 +161,8 @@ Rune.initLogic({
           game.currentTurn.timerStartedAt + endOfTurnDuration
         ) {
           for (const player of game.players) {
-            player.latestTurnScore = 0
+            player.latestTurnScore.guessing = 0
+            player.latestTurnScore.acting = 0
           }
 
           if (isLastActor(game)) {
@@ -162,7 +174,7 @@ Rune.initLogic({
                 players: game.players.reduce(
                   (acc, player) => ({
                     ...acc,
-                    [player.id]: player.score,
+                    [player.id]: player.score.acting + player.score.guessing,
                   }),
                   {}
                 ),

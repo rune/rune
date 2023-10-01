@@ -40,14 +40,19 @@ export type Guess = {
   correct: boolean
 }
 
+type Score = {
+  guessing: number
+  acting: number
+}
+
 export interface GameState {
   players: {
     id: PlayerId
     readyToStart: boolean
     actor: boolean
-    score: number
-    latestTurnScore: number
-    latestRoundScore: number
+    score: Score
+    latestTurnScore: Score
+    latestRoundScore: Score
   }[]
   gameStarted: boolean
   round: number

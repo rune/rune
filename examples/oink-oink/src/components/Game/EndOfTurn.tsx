@@ -20,20 +20,20 @@ export const EndOfTurn = memo(() => {
 
   return (
     <Root>
-      {!!actorPlayer?.latestTurnScore ? (
+      {!!actorPlayer?.latestTurnScore.acting ? (
         actorPlayer.id === yourPlayerId ? (
           <>
             <Confetti autoplay keepLastFrame src={confettiAnimation} />
             <Heading>Great job!</Heading>
             <div style={{ height: rel(58) }} />
-            <Score>+{actorPlayer.latestTurnScore}pt</Score>
+            <Score>+{actorPlayer.latestTurnScore.acting}pt</Score>
             <Label>Points</Label>
           </>
         ) : (
           <>
             <Label>{actorPlayer.info.displayName}</Label>
             <AvatarImg src={actorPlayer.info.avatarUrl} />
-            <Score>+{actorPlayer.latestTurnScore}pt</Score>
+            <Score>+{actorPlayer.latestTurnScore.acting}pt</Score>
             <Label>Points</Label>
             <Label>For acting</Label>
           </>

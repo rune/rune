@@ -148,7 +148,7 @@ export const Results = memo(() => {
                 {player.id === yourPlayerId ? "You" : player.info.displayName}
               </Name>
               <div style={{ flex: 1 }} />
-              <Score>
+              <TotalScore>
                 <LatestScore
                   style={{
                     opacity:
@@ -168,7 +168,7 @@ export const Results = memo(() => {
                   }
                 />
                 pts
-              </Score>
+              </TotalScore>
             </Item>
           )
         })}
@@ -243,14 +243,17 @@ const AvatarImg = styled.img`
 `
 
 const Name = styled.div`
-  font-size: ${rel(24)};
+  font-size: ${rel(16)};
   color: black;
 `
 
-const Score = styled.div`
+const TotalScore = styled.div`
   position: relative;
-  font-size: ${rel(24)};
-  color: #af41d1;
+  font-size: ${rel(16)};
+  background-color: #af41d1;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 13px;
 `
 
 const LatestScore = styled.div`

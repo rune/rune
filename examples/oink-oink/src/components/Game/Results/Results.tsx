@@ -7,12 +7,14 @@ import {
 } from "../../../state/$state"
 import { useState, useEffect, useMemo, memo } from "react"
 import { sortBy } from "../../../lib/sortBy"
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 import { rel } from "../../../style/rel"
 import { AnimatedNumber } from "./AnimatedNumber"
 import { ReadyButton } from "../../Start/Start"
 import { numRounds } from "../../../logic"
 import { sounds } from "../../../sounds/sounds"
+import speaking from "./speaking.svg"
+import checkmark from "./checkmark.svg"
 
 const animationSteps = [
   { key: "empty", duration: 1000 },
@@ -35,6 +37,7 @@ const animationStepKeyIndexMap = animationSteps.reduce(
 
 const itemHeight = 50
 const itemGap = 16
+const scoreGap = 4
 
 export const Results = memo(() => {
   const players = useAtomValue($players)
@@ -135,6 +138,18 @@ export const Results = memo(() => {
           opacity: animationStepIdx > animationStepKeyIndexMap.empty ? 1 : 0,
         }}
       >
+        <HeaderItem>
+          <div style={{ flex: 1 }} />
+          <HeaderScore>
+            <SpeakingImg src={speaking} />
+          </HeaderScore>
+          <div style={{ width: rel(scoreGap) }} />
+          <HeaderScore>
+            <CheckmarkImg src={checkmark} />
+          </HeaderScore>
+          <div style={{ width: rel(scoreGap) }} />
+          <HeaderTotalScore>Total</HeaderTotalScore>
+        </HeaderItem>
         {playersFixedOrderWithOffset.map((player) => {
           const latestRoundScore =
             player.latestRoundScore.acting + player.latestRoundScore.guessing
@@ -149,9 +164,9 @@ export const Results = memo(() => {
               </Name>
               <div style={{ flex: 1 }} />
               <Score>{player.latestRoundScore.acting}</Score>
-              <div style={{ width: rel(4) }} />
+              <div style={{ width: rel(scoreGap) }} />
               <Score>{player.latestRoundScore.guessing}</Score>
-              <div style={{ width: rel(4) }} />
+              <div style={{ width: rel(scoreGap) }} />
               <TotalScore>
                 <ScoreBadge>
                   <LatestScore
@@ -230,14 +245,56 @@ const List = styled.div`
   }
 `
 
-const Item = styled.div<{ offset: string }>`
+const itemLayoutCss = css`
   width: ${rel(336)};
-  background: white;
-  border-radius: ${rel(24)};
+  padding: ${rel(9)} ${rel(16)};
   display: flex;
   align-items: center;
+`
+
+const scoreLayoutCss = css`
+  flex-shrink: 0;
+  width: ${rel(47)};
+  text-align: center;
+`
+
+const totalScoreLayoutCss = css`
+  flex-shrink: 0;
+  width: ${rel(55 + 16)};
+  text-align: center;
+  margin-right: ${rel(-8)};
+`
+
+const HeaderItem = styled.div`
+  ${itemLayoutCss}
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: ${rel(-1.5)};
+`
+
+const SpeakingImg = styled.img`
+  width: ${rel(30)};
+`
+
+const CheckmarkImg = styled.img`
+  width: ${rel(26)};
+`
+
+const HeaderScore = styled.div`
+  ${scoreLayoutCss}
+`
+
+const HeaderTotalScore = styled.div`
+  ${totalScoreLayoutCss}
+  color: #e4faff;
+  font-size: ${rel(16)};
+`
+
+const Item = styled.div<{ offset: string }>`
+  ${itemLayoutCss}
+  background: white;
+  border-radius: ${rel(24)};
   height: ${rel(itemHeight)};
-  padding: ${rel(9)} ${rel(16)};
   position: relative;
   top: ${({ offset }) => offset};
   transition: top 500ms ease-in-out;
@@ -258,19 +315,14 @@ const Name = styled.div`
 `
 
 const Score = styled.div`
-  flex-shrink: 0;
+  ${scoreLayoutCss}
   font-size: ${rel(16)};
   color: #ffbccb;
-  width: ${rel(47)};
-  text-align: center;
 `
 const TotalScore = styled.div`
-  flex-shrink: 0;
+  ${totalScoreLayoutCss}
   font-size: ${rel(16)};
   color: #ffffff;
-  width: ${rel(55 + 16)};
-  text-align: center;
-  margin-right: ${rel(-8)};
 `
 const ScoreBadge = styled.div`
   position: relative;

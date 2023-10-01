@@ -33,7 +33,7 @@ const animationStepKeyIndexMap = animationSteps.reduce(
   }
 )
 
-const itemHeight = 64
+const itemHeight = 50
 const itemGap = 16
 
 export const Results = memo(() => {
@@ -148,26 +148,32 @@ export const Results = memo(() => {
                 {player.id === yourPlayerId ? "You" : player.info.displayName}
               </Name>
               <div style={{ flex: 1 }} />
+              <Score>{player.latestRoundScore.acting}</Score>
+              <div style={{ width: rel(4) }} />
+              <Score>{player.latestRoundScore.guessing}</Score>
+              <div style={{ width: rel(4) }} />
               <TotalScore>
-                <LatestScore
-                  style={{
-                    opacity:
-                      !!latestRoundScore &&
-                      animationStepIdx >= animationStepKeyIndexMap.latestScore
-                        ? 1
-                        : 0,
-                  }}
-                >
-                  +{latestRoundScore}pt
-                </LatestScore>
-                <AnimatedNumber
-                  value={
-                    animationStepIdx >= animationStepKeyIndexMap.newScores
-                      ? score
-                      : score - latestRoundScore
-                  }
-                />
-                pts
+                <ScoreBadge>
+                  <LatestScore
+                    style={{
+                      opacity:
+                        !!latestRoundScore &&
+                        animationStepIdx >= animationStepKeyIndexMap.latestScore
+                          ? 1
+                          : 0,
+                    }}
+                  >
+                    +{latestRoundScore}pt
+                  </LatestScore>
+                  <AnimatedNumber
+                    value={
+                      animationStepIdx >= animationStepKeyIndexMap.newScores
+                        ? score
+                        : score - latestRoundScore
+                    }
+                  />
+                  pts
+                </ScoreBadge>
               </TotalScore>
             </Item>
           )
@@ -231,7 +237,7 @@ const Item = styled.div<{ offset: string }>`
   display: flex;
   align-items: center;
   height: ${rel(itemHeight)};
-  padding: 0 ${rel(29)} 0 ${rel(24)};
+  padding: ${rel(9)} ${rel(16)};
   position: relative;
   top: ${({ offset }) => offset};
   transition: top 500ms ease-in-out;
@@ -245,32 +251,54 @@ const AvatarImg = styled.img`
 const Name = styled.div`
   font-size: ${rel(16)};
   color: black;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `
 
-const TotalScore = styled.div`
-  position: relative;
+const Score = styled.div`
+  flex-shrink: 0;
   font-size: ${rel(16)};
-  background-color: #af41d1;
+  color: #ffbccb;
+  width: ${rel(47)};
+  text-align: center;
+`
+const TotalScore = styled.div`
+  flex-shrink: 0;
+  font-size: ${rel(16)};
   color: #ffffff;
-  padding: 4px 8px;
-  border-radius: 13px;
+  width: ${rel(55 + 16)};
+  text-align: center;
+  margin-right: ${rel(-8)};
+`
+const ScoreBadge = styled.div`
+  position: relative;
+  display: inline-block;
+
+  background-color: #af41d1;
+
+  padding: ${rel(4)} ${rel(8)};
+  border-radius: ${rel(13)};
 `
 
 const LatestScore = styled.div`
   transition: opacity 300ms ease-out;
 
   position: absolute;
-  top: ${rel(-22)};
+  top: ${rel(-28)};
   right: 0;
 
   background: #23490c;
   -webkit-background-clip: text;
-  -webkit-text-stroke: ${rel(1)} transparent;
+  -webkit-text-stroke: ${rel(2)} transparent;
   background-clip: text;
-  text-stroke: ${rel(1)} transparent;
+  text-stroke: ${rel(2)} transparent;
   // this is needed for the stroke renders nicely
   padding: ${rel(1)};
+  letter-spacing: ${rel(0.5)};
 
+  font-size: ${rel(24)};
   color: #69c251;
   text-shadow: 0 ${rel(4.5)} ${rel(4.5)} rgba(0, 0, 0, 0.25);
 `

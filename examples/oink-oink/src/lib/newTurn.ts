@@ -7,5 +7,7 @@ export function newTurn(game: GameState) {
     emotion: getRandomItem(game.emotions),
     stage: "countdown",
     timerStartedAt: Rune.gameTimeInSeconds(),
+    latestActingStartedAt: Rune.gameTimeInSeconds(),
+    showSkipTurnButton: false,
   }
 }

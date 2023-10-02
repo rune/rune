@@ -9,8 +9,6 @@ import speakingAnimation from "../lottie/speaking.json"
 import { RisingGuessesView } from "./RisingGuessesView"
 import { Carousel } from "./Carousel"
 import { useMemo, memo } from "react"
-import { hideSkipTurnButtonDuration, turnDuration } from "../../../logic"
-import { useTimerValue } from "../../Timer/useTimerValue"
 
 export const Acting = memo(() => {
   const currentTurn = useAtomValue($currentTurn)
@@ -25,14 +23,6 @@ export const Acting = memo(() => {
     () => emotions.map((emotion) => art.emotions[emotion]),
     [emotions]
   )
-
-  const turnTimerValue = useTimerValue({
-    startedAt: currentTurn?.timerStartedAt,
-    duration: turnDuration,
-  })
-
-  const showSkipTurnButton =
-    turnTimerValue && turnDuration - turnTimerValue > hideSkipTurnButtonDuration
 
   if (!currentTurn) return null
 
@@ -50,7 +40,7 @@ export const Acting = memo(() => {
       <Carousel values={emotionImgs} selected={selectedEmoji} />
       <div style={{ height: rel(15) }} />
       <SkipTurnButton
-        style={{ opacity: showSkipTurnButton ? 1 : 0 }}
+        style={{ opacity: currentTurn.showSkipTurnButton ? 1 : 0 }}
         onClick={() => Rune.actions.skipTurn()}
       >
         Skip

@@ -85,8 +85,10 @@ Rune.initLogic({
         game.currentTurn.animal = getRandomItem(game.animals)
         game.currentTurn.emotion = getRandomItem(game.emotions)
 
-        if (!game.currentTurn.timerStartedAt) throw Rune.invalidAction()
         game.currentTurn.timerStartedAt += displayCorrectGuessFor
+        game.currentTurn.latestActingStartedAt =
+          Rune.gameTimeInSeconds() + displayCorrectGuessFor
+        game.currentTurn.showSkipTurnButton = false
       }
     },
     skipTurn: (_, { game }) => {
@@ -94,6 +96,8 @@ Rune.initLogic({
 
       game.currentTurn.stage = "endOfTurn"
       game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+      game.currentTurn.latestActingStartedAt = Rune.gameTimeInSeconds()
+      game.currentTurn.showSkipTurnButton = false
     },
     nextRound: (_, { game }) => {
       if (game.round + 1 === numRounds) throw Rune.invalidAction()
@@ -133,7 +137,7 @@ Rune.initLogic({
     },
   },
   update: ({ game }) => {
-    if (!game.currentTurn || !game.currentTurn.timerStartedAt) return
+    if (!game.currentTurn) return
 
     switch (game.currentTurn.stage) {
       case "countdown":
@@ -143,6 +147,8 @@ Rune.initLogic({
         ) {
           game.currentTurn.stage = "acting"
           game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+          game.currentTurn.latestActingStartedAt = Rune.gameTimeInSeconds()
+          game.currentTurn.showSkipTurnButton = false
         }
         break
       case "acting":
@@ -152,6 +158,15 @@ Rune.initLogic({
         ) {
           game.currentTurn.stage = "endOfTurn"
           game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+          game.currentTurn.latestActingStartedAt = Rune.gameTimeInSeconds()
+          game.currentTurn.showSkipTurnButton = false
+        }
+
+        if (
+          Rune.gameTimeInSeconds() >=
+          game.currentTurn.latestActingStartedAt + hideSkipTurnButtonDuration
+        ) {
+          game.currentTurn.showSkipTurnButton = true
         }
         break
       case "endOfTurn":

@@ -62,7 +62,9 @@ export interface GameState {
     animal: Animal
     emotion: Emotion
     stage: "countdown" | "acting" | "endOfTurn" | "result"
-    timerStartedAt?: number
+    timerStartedAt: number
+    latestActingStartedAt: number
+    showSkipTurnButton: boolean
   } | null
   guesses: Guess[]
   gameOver: boolean

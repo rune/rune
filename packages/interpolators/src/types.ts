@@ -7,6 +7,7 @@ export type InterpolatorLatency = <
   Dimensions extends number | number[]
 >(config: {
   maxSpeed: number
+  timeToMaxSpeed?: number
 }) => {
   update: (params: { game: Dimensions; futureGame: Dimensions }) => void
   getPosition: () => Dimensions

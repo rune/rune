@@ -87,6 +87,8 @@ Rune.initLogic({
 
         if (!game.currentTurn.timerStartedAt) throw Rune.invalidAction()
         game.currentTurn.timerStartedAt += displayCorrectGuessFor
+
+        game.guesses = []
       }
     },
     skipTurn: (_, { game }) => {
@@ -94,6 +96,8 @@ Rune.initLogic({
 
       game.currentTurn.stage = "endOfTurn"
       game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+
+      game.guesses = []
     },
     nextRound: (_, { game }) => {
       if (game.round + 1 === numRounds) throw Rune.invalidAction()
@@ -160,6 +164,8 @@ Rune.initLogic({
         ) {
           game.currentTurn.stage = "endOfTurn"
           game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+
+          game.guesses = []
         }
         break
       case "endOfTurn":

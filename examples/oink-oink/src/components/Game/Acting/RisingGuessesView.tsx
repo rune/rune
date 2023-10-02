@@ -11,11 +11,6 @@ const rotations: { [i: number]: number } = {}
 
 export const RisingGuessesView = memo(() => {
   const guesses = useAtomValue($guesses)
-  const initialLength = useRef(guesses.length)
-  const newGuesses = useMemo(
-    () => guesses.slice(initialLength.current),
-    [guesses]
-  )
 
   const getPosition = useCallback((i: number) => {
     if (positions[i] === undefined) positions[i] = Math.random()
@@ -29,7 +24,7 @@ export const RisingGuessesView = memo(() => {
 
   return (
     <Root>
-      {newGuesses.map((guess, i) => (
+      {guesses.map((guess, i) => (
         <PositionAndRocking position={getPosition(i)} key={i}>
           <Scale>
             <Guess rotation={getRotation(i)}>

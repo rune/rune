@@ -18,38 +18,45 @@ export const EndOfTurn = memo(() => {
     sounds.endOfTurn.play()
   }, [])
 
+  if (!currentTurn) return <></>
+
+  const isActor = actorPlayer?.id === yourPlayerId
+  const hasGuess = !!actorPlayer?.latestTurnScore.acting
+
   return (
     <Root>
-      {!!actorPlayer?.latestTurnScore.acting ? (
-        actorPlayer.id === yourPlayerId ? (
-          <>
-            <Confetti autoplay keepLastFrame src={confettiAnimation} />
-            <Heading>Great job!</Heading>
-            <div style={{ height: rel(58) }} />
-            <Score>+{actorPlayer.latestTurnScore.acting}pt</Score>
-            <Label>Points</Label>
-          </>
-        ) : (
-          <>
-            <Label>{actorPlayer.info.displayName}</Label>
-            <AvatarImg src={actorPlayer.info.avatarUrl} />
-            <Score>+{actorPlayer.latestTurnScore.acting}pt</Score>
-            <Label>Points</Label>
-            <Label>For acting</Label>
-          </>
-        )
+      {isActor && hasGuess ? (
+        <>
+          <Confetti autoplay keepLastFrame src={confettiAnimation} />
+          <Heading>Great job!</Heading>
+          <div style={{ height: rel(58) }} />
+          <Score>+{actorPlayer.latestTurnScore.acting}pt</Score>
+          <Label>Points</Label>
+        </>
+      ) : isActor && !hasGuess ? (
+        <Label>Better luck next time!</Label>
+      ) : !isActor && hasGuess ? (
+        <>
+          <Label>The answer was...</Label>
+          <GuessContainer>
+            <EmotionImg src={art.emotions[currentTurn.emotion]} />
+            <Plus>+</Plus>
+            <AnimalImg src={art.animals[currentTurn.animal]} />
+          </GuessContainer>
+          <Label>{actorPlayer.info.displayName}</Label>
+          <AvatarImg src={actorPlayer.info.avatarUrl} />
+          <Score>+{actorPlayer.latestTurnScore.acting}pt</Score>
+          <Label>Points</Label>
+          <Label>For acting</Label>
+        </>
       ) : (
         <>
-          {currentTurn && (
-            <>
-              <Label>The answer was...</Label>
-              <GuessContainer>
-                <EmotionImg src={art.emotions[currentTurn.emotion]} />
-                <Plus>+</Plus>
-                <AnimalImg src={art.animals[currentTurn.animal]} />
-              </GuessContainer>
-            </>
-          )}
+          <Label>The answer was...</Label>
+          <GuessContainer>
+            <EmotionImg src={art.emotions[currentTurn.emotion]} />
+            <Plus>+</Plus>
+            <AnimalImg src={art.animals[currentTurn.animal]} />
+          </GuessContainer>
           <Label>Better luck next time!</Label>
         </>
       )}

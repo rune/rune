@@ -2,7 +2,7 @@ import styled from "styled-components/macro"
 import { rel } from "../../../style/rel"
 import { useAtomValue } from "jotai"
 import { $guesses } from "../../../state/$state"
-import { useCallback, memo } from "react"
+import { useRef, useMemo, useCallback, memo } from "react"
 import { art } from "../art/art"
 import { remap } from "../../../lib/remap"
 
@@ -11,6 +11,11 @@ const rotations: { [i: number]: number } = {}
 
 export const RisingGuessesView = memo(() => {
   const guesses = useAtomValue($guesses)
+  const initialLength = useRef(guesses.length)
+  const newGuesses = useMemo(
+    () => guesses.slice(initialLength.current),
+    [guesses]
+  )
 
   const getPosition = useCallback((i: number) => {
     if (positions[i] === undefined) positions[i] = Math.random()
@@ -24,7 +29,7 @@ export const RisingGuessesView = memo(() => {
 
   return (
     <Root>
-      {guesses.map((guess, i) => (
+      {newGuesses.map((guess, i) => (
         <PositionAndRocking position={getPosition(i)} key={i}>
           <Scale>
             <Guess rotation={getRotation(i)}>

@@ -11,6 +11,7 @@ export const turnDuration = 30
 export const turnAlmostOverAt = 5
 export const endOfTurnDuration = 3
 export const displayCorrectGuessFor = 3
+export const hideSkipButtonDuration = 10
 
 Rune.initLogic({
   minPlayers: 3,
@@ -87,6 +88,12 @@ Rune.initLogic({
         if (!game.currentTurn.timerStartedAt) throw Rune.invalidAction()
         game.currentTurn.timerStartedAt += displayCorrectGuessFor
       }
+    },
+    skipTurn: (_, { game }) => {
+      if (!game.currentTurn) throw Rune.invalidAction()
+
+      game.currentTurn.stage = "endOfTurn"
+      game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
     },
     nextRound: (_, { game }) => {
       if (game.round + 1 === numRounds) throw Rune.invalidAction()

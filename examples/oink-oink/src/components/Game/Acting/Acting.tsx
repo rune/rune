@@ -9,6 +9,8 @@ import speakingAnimation from "../lottie/speaking.json"
 import { RisingGuessesView } from "./RisingGuessesView"
 import { Carousel } from "./Carousel"
 import { useMemo, memo } from "react"
+import { hideSkipButtonDuration, turnDuration } from "../../../logic"
+import { useTimerValue } from "../../Timer/useTimerValue"
 
 export const Acting = memo(() => {
   const currentTurn = useAtomValue($currentTurn)
@@ -24,6 +26,14 @@ export const Acting = memo(() => {
     [emotions]
   )
 
+  const turnTimerValue = useTimerValue({
+    startedAt: currentTurn?.timerStartedAt,
+    duration: turnDuration,
+  })
+
+  const showSkipTurnButton =
+    turnTimerValue && turnDuration - turnTimerValue > hideSkipButtonDuration
+
   if (!currentTurn) return null
 
   return (
@@ -37,13 +47,21 @@ export const Acting = memo(() => {
         values={animalImgs}
         selected={art.animals[currentTurn.animal]}
       />
-      <div style={{ height: rel(48) }} />
+      <div style={{ height: rel(15) }} />
       <Carousel
         values={emotionImgs}
         selected={art.emotions[currentTurn.emotion]}
       />
       <div style={{ height: rel(15) }} />
+      <SkipTurnButton
+        style={{ opacity: showSkipTurnButton ? 1 : 0 }}
+        onClick={() => Rune.actions.skipTurn()}
+      >
+        Skip
+      </SkipTurnButton>
+      <div style={{ height: rel(15) }} />
       <Label>Guesses</Label>
+      <div style={{ height: rel(15) }} />
       <RisingGuessesView />
     </Root>
   )
@@ -63,4 +81,18 @@ const Label = styled.div`
 
 const SpeakingHead = styled(Player)`
   height: ${rel(37)};
+`
+
+const SkipTurnButton = styled.div`
+  width: ${rel(168)};
+  transition: opacity 150ms ease-out;
+
+  background: #280a3d;
+  border-radius: ${rel(12)};
+  border: ${rel(2)} solid #6c1c92;
+  padding: ${rel(8)};
+
+  font-size: ${rel(24)};
+  color: #8539ba;
+  text-align: center;
 `

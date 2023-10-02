@@ -36,6 +36,9 @@ export const Acting = memo(() => {
 
   if (!currentTurn) return null
 
+  const selectedAnimal = art.animals[currentTurn.animal]
+  const selectedEmoji = art.emotions[currentTurn.emotion]
+
   return (
     <Root>
       <Label>Make this sound!</Label>
@@ -45,12 +48,14 @@ export const Acting = memo(() => {
       <Carousel
         big
         values={animalImgs}
-        selected={art.animals[currentTurn.animal]}
+        selected={selectedAnimal}
+        key={selectedAnimal}
       />
       <div style={{ height: rel(15) }} />
       <Carousel
         values={emotionImgs}
-        selected={art.emotions[currentTurn.emotion]}
+        selected={selectedEmoji}
+        key={selectedEmoji}
       />
       <div style={{ height: rel(15) }} />
       <SkipTurnButton

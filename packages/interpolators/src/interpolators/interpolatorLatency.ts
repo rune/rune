@@ -82,8 +82,8 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
       return (interpolated as number[]).map((interpolatedValue, index) => {
         return calculateSpeedSingleValue(
           interpolatedValue,
-          target[index],
-          speed[index] ?? 0
+          (target as number[])[index],
+          (speed as number[])[index] ?? 0
         )
       }) as Dimensions
     }
@@ -120,12 +120,17 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
 
       speed = calculateSpeed(interpolated, params.game)
 
-      interpolated = moveTowards(interpolated, params.game, speed, size)
+      interpolated = moveTowards(
+        interpolated,
+        params.game,
+        speed,
+        size as number
+      )
       futureInterpolated = moveTowards(
         interpolated,
         params.futureGame,
         speed,
-        size
+        size as number
       )
     },
 

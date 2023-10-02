@@ -89,8 +89,8 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
     }
   }
 
-  const updatesToMaxSpeed = Math.floor(timeToMaxSpeed / Rune.msPerUpdate)
-  const acceleration = maxSpeed / updatesToMaxSpeed
+  let updatesToMaxSpeed = 0
+  let acceleration = 0
 
   return {
     update(params: { game: Dimensions; futureGame: Dimensions }) {
@@ -104,6 +104,11 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
 
         size = getDimensions(params.game)
         speed = getDefaultSpeed()
+
+        updatesToMaxSpeed = Math.floor(timeToMaxSpeed / Rune.msPerUpdate)
+
+        acceleration = maxSpeed / updatesToMaxSpeed
+
         return
       }
 

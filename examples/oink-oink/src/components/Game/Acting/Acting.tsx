@@ -9,7 +9,7 @@ import speakingAnimation from "../lottie/speaking.json"
 import { RisingGuessesView } from "./RisingGuessesView"
 import { Carousel } from "./Carousel"
 import { useMemo, memo } from "react"
-import { hideSkipButtonDuration, turnDuration } from "../../../logic"
+import { hideSkipTurnButtonDuration, turnDuration } from "../../../logic"
 import { useTimerValue } from "../../Timer/useTimerValue"
 
 export const Acting = memo(() => {
@@ -32,7 +32,7 @@ export const Acting = memo(() => {
   })
 
   const showSkipTurnButton =
-    turnTimerValue && turnDuration - turnTimerValue > hideSkipButtonDuration
+    turnTimerValue && turnDuration - turnTimerValue > hideSkipTurnButtonDuration
 
   if (!currentTurn) return null
 

@@ -1,4 +1,4 @@
-import { Animal, animals, emotions } from "./lib/types/GameState"
+import { animals, emotions } from "./lib/types/GameState"
 import { getRandomItem } from "./lib/getRandomItem"
 import { setActor } from "./lib/setActor"
 import { isLastActor } from "./lib/isLastActor"
@@ -11,7 +11,7 @@ export const turnDuration = 30
 export const turnAlmostOverAt = 5
 export const endOfTurnDuration = 3
 export const displayCorrectGuessFor = 3
-export const hideSkipButtonDuration = 10
+export const hideSkipTurnButtonDuration = 10
 
 Rune.initLogic({
   minPlayers: 3,
@@ -108,16 +108,8 @@ Rune.initLogic({
         player.latestRoundScore.acting = 0
       }
 
-      let pickedAnimals: Animal[] = []
       // Get random 8 animals (keep emotions the same)
-      const availableAnimals = [...animals]
-      while (pickedAnimals.length < 8) {
-        const animal = getRandomItem(availableAnimals)
-        const index = availableAnimals.indexOf(animal)
-        availableAnimals.splice(index, 1)
-        pickedAnimals.push(animal)
-      }
-      game.animals = [...pickedAnimals]
+      game.animals = [...animals].sort(() => Math.random() - 0.5).slice(0, 8)
 
       game.round += 1
       setActor(game, "first")

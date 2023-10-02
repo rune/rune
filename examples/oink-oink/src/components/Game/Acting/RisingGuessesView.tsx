@@ -2,7 +2,7 @@ import styled from "styled-components/macro"
 import { rel } from "../../../style/rel"
 import { useAtomValue } from "jotai"
 import { $guesses } from "../../../state/$state"
-import { useRef, useMemo, useCallback, memo } from "react"
+import { useCallback, memo } from "react"
 import { art } from "../art/art"
 import { remap } from "../../../lib/remap"
 

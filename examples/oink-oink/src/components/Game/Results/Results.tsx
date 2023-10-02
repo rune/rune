@@ -163,9 +163,9 @@ export const Results = memo(() => {
                 {player.id === yourPlayerId ? "You" : player.info.displayName}
               </Name>
               <div style={{ flex: 1 }} />
-              <Score>{player.latestRoundScore.acting}</Score>
+              <Score>{player.score.acting}</Score>
               <div style={{ width: rel(scoreGap) }} />
-              <Score>{player.latestRoundScore.guessing}</Score>
+              <Score>{player.score.guessing}</Score>
               <div style={{ width: rel(scoreGap) }} />
               <TotalScore>
                 <ScoreBadge>

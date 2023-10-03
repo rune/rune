@@ -1,5 +1,6 @@
 import { validateUpdateParams } from "../validation"
 import { getDimensions, getPosition } from "../dimensions"
+import { InterpolatorLatency } from "../types"
 
 const runValidation = true
 
@@ -40,7 +41,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
 }: {
   maxSpeed: number
   timeToMaxSpeed?: number
-}) {
+}): InterpolatorLatency<Dimensions> {
   let interpolated: Dimensions | undefined = undefined
   let futureInterpolated: Dimensions | undefined = undefined
 

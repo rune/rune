@@ -5,8 +5,8 @@ const selectSound = new Audio("select.wav")
 let buttons, playerItems
 
 Rune.initClient({
-  onChange: ({ newGame, players: playerData, yourPlayerId, action }) => {
-    const { cells, players, winCombo, lastPlayerId, gameOver } = newGame
+  onChange: ({ game, players: playerData, yourPlayerId, action }) => {
+    const { cells, players, winCombo, lastPlayerId, gameOver } = game
 
     board.className = "" // Remove loading class
 

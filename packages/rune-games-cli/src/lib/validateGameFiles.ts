@@ -44,6 +44,7 @@ export interface ValidationResult {
     handlesPlayerJoined?: boolean
     handlesPlayerLeft?: boolean
     updatesPerSecond?: number
+    inputDelay?: number
   }
 }
 
@@ -112,7 +113,6 @@ export async function validateGameFiles(
             logicJs,
             indexHtml,
           })) ?? {}
-      }
 
         if (scripts.indexOf(sdkScript) !== 0) {
           errors.push({

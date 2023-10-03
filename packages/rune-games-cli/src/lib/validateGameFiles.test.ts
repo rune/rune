@@ -725,6 +725,7 @@ describe("validateGameFiles", () => {
                 minPlayers: 1,
                 maxPlayers: 4,
                 updatesPerSecond: 40,
+                inputDelay: 50,
                 setup: () => {
                   return { cells: Array(25).fill(null) }
                 },

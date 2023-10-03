@@ -19,10 +19,10 @@ import {
 import { Players } from "rune-games-sdk"
 import { initControls } from "./controls"
 
-import playerScoreSfx from "./assets/PlayerScore.mp3"
-import opponentScoreSfx from "./assets/OponentScore.mp3"
-import opponentHitSfx from "./assets/OpponentHit.mp3"
-import playerHitSfx from "./assets/PlayerHit.wav"
+import playerScoreSfx from "./assets/audio/PlayerScore.mp3"
+import opponentScoreSfx from "./assets/audio/OponentScore.mp3"
+import opponentHitSfx from "./assets/audio/OpponentHit.mp3"
+import playerHitSfx from "./assets/audio/PlayerHit.wav"
 
 const ballInterpolator = Rune.interpolator<[number, number]>()
 const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({

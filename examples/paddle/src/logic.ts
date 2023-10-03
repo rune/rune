@@ -4,7 +4,7 @@ const updatesPerSecond = 30
 
 const speedMultiplier = 60 / updatesPerSecond
 export const GAME_WIDTH = 320
-export const PADDLE_OFFSET = 150
+export const PADDLE_OFFSET = 100
 export const GAME_RENDERED_HEIGHT = 600
 export const GAME_HEIGHT = GAME_RENDERED_HEIGHT + PADDLE_OFFSET / 2
 

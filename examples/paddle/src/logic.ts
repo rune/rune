@@ -10,6 +10,8 @@ export const PADDLE_OFFSET = 100
 export const PADDLE_WIDTH = 64
 export const PADDLE_SPEED = 4 * speedMultiplier
 
+const MAX_BALL_SPEED = 20
+
 export const POINTS_TO_WIN = 10
 
 // Get the middle y-value to draw the paddle using the relationship between
@@ -22,16 +24,15 @@ export const BOTTOM_PADDLE_POSITION =
 
 export const BALL_RADIUS = 5
 
-export type Ball = {
+type Ball = {
   position: [number, number]
-  xSpeed: number
-  ySpeed: number
+  speed: [number, number]
 }
 
-export type Paddle = {
+type Paddle = {
   position: number
-  y: number
   speed: number
+  isTop: boolean
 }
 
 type Player = { id: PlayerId; score: number }
@@ -47,21 +48,15 @@ export interface GameState {
 export type GameActions = {
   setPosition: (position: number) => void
 }
-export type RuneTyped = RuneClient<GameState, GameActions>
-
-declare global {
-  const Rune: RuneTyped
-}
 
 function movePaddle(paddle: Paddle, position: number) {
   paddle.position += position
   paddle.speed = position
+
   if (paddle.position < 0) {
-    // all the way to the side
     paddle.position = 0
     paddle.speed = 0
   } else if (paddle.position + PADDLE_WIDTH > GAME_WIDTH) {
-    // all the way to the top
     paddle.position = GAME_WIDTH - PADDLE_WIDTH
     paddle.speed = 0
   }
@@ -73,28 +68,58 @@ function ballUpdate(
   paddle2: Paddle,
   game: GameState
 ) {
-  ball.position[0] += ball.xSpeed
-  ball.position[1] += ball.ySpeed
+  ball.position[0] += ball.speed[0]
+  ball.position[1] += ball.speed[1]
 
-  const topX = ball.position[0] - 5
-  const topY = ball.position[1] - 5
+  const left = ball.position[0] - BALL_RADIUS
+  const top = ball.position[1] - BALL_RADIUS
 
-  const bottomX = ball.position[0] + 5
-  const bottomY = ball.position[1] + 5
+  const right = ball.position[0] + BALL_RADIUS
+  const bottom = ball.position[1] + BALL_RADIUS
 
-  if (ball.position[0] - 5 < 0) {
+  if (left < 0) {
     // hitting the left wall
-    ball.position[0] = 5
-    ball.xSpeed *= -1
-  } else if (ball.position[0] + 5 > GAME_WIDTH) {
+    ball.position[0] = BALL_RADIUS
+    ball.speed[0] *= -1
+  } else if (right > GAME_WIDTH) {
     // hitting the right wall
-    ball.position[0] = GAME_WIDTH - 5
-    ball.xSpeed *= -1
+    ball.position[0] = GAME_WIDTH - BALL_RADIUS
+    ball.speed[0] *= -1
   }
 
-  // A point was score, reset the ball
-  if (ball.position[1] < 0 || ball.position[1] > GAME_HEIGHT) {
-    if (ball.position[1] < 0) {
+  //top paddle
+  if (
+    top < TOP_PADDLE_POSITION + PADDLE_HEIGHT &&
+    bottom > TOP_PADDLE_POSITION &&
+    left < paddle1.position + PADDLE_WIDTH &&
+    right > paddle1.position
+  ) {
+    ball.speed = [
+      Math.min(ball.speed[0] + paddle1.speed / 2, MAX_BALL_SPEED),
+      3 * speedMultiplier,
+    ]
+
+    ball.position[1] += ball.speed[1]
+  }
+
+  //bottom paddle
+  if (
+    top < BOTTOM_PADDLE_POSITION + PADDLE_HEIGHT &&
+    bottom > BOTTOM_PADDLE_POSITION &&
+    left < paddle2.position + PADDLE_WIDTH &&
+    right > paddle2.position
+  ) {
+    ball.speed = [
+      Math.min(ball.speed[0] + paddle2.speed / 2, MAX_BALL_SPEED),
+      -3 * speedMultiplier,
+    ]
+
+    ball.position[1] += ball.speed[1]
+  }
+
+  //score
+  if (top < 0 || bottom > GAME_HEIGHT) {
+    if (top < 0) {
       game.players[1].score++
     } else {
       game.players[0].score++
@@ -117,38 +142,11 @@ function ballUpdate(
 
     const direction = ball.position[1] < 0 ? -1 : 1
 
-    ball.ySpeed = 3 * speedMultiplier * direction
-    ball.xSpeed = 0
+    ball.speed = [0, 3 * speedMultiplier * direction]
     ball.position[0] = GAME_WIDTH / 2
     ball.position[1] = GAME_HEIGHT / 2
     paddle1.position = MIDDLE_X
     paddle2.position = MIDDLE_X
-  }
-
-  if (topY < GAME_HEIGHT / 2) {
-    if (
-      topY < paddle1.y + PADDLE_HEIGHT &&
-      bottomY > paddle1.y &&
-      topX < paddle1.position + PADDLE_WIDTH &&
-      bottomX > paddle1.position
-    ) {
-      // hit the player's paddle
-      ball.ySpeed = 3 * speedMultiplier
-      ball.xSpeed += paddle1.speed / 2
-      ball.position[1] += ball.ySpeed
-    }
-  } else {
-    if (
-      topY < paddle2.y + PADDLE_HEIGHT &&
-      bottomY > paddle2.y &&
-      topX < paddle2.position + PADDLE_WIDTH &&
-      bottomX > paddle2.position
-    ) {
-      // hit the computer's paddle
-      ball.ySpeed = -3 * speedMultiplier
-      ball.xSpeed += paddle2.speed / 2
-      ball.position[1] += ball.ySpeed
-    }
   }
 }
 
@@ -171,18 +169,17 @@ Rune.initLogic({
       ],
       ball: {
         position: [GAME_WIDTH / 2, GAME_HEIGHT / 2],
-        xSpeed: 0,
-        ySpeed: 3 * speedMultiplier,
+        speed: [0, 3 * speedMultiplier],
       },
       paddles: [
         {
           position: MIDDLE_X,
-          y: TOP_PADDLE_POSITION,
+          isTop: true,
           speed: 0,
         },
         {
           position: MIDDLE_X,
-          y: BOTTOM_PADDLE_POSITION,
+          isTop: false,
           speed: 0,
         },
       ],

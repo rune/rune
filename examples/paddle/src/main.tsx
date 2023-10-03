@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import {
   BOTTOM_PADDLE_POSITION,
   GAME_HEIGHT,

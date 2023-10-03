@@ -4,7 +4,7 @@ sidebar_position: 61
 
 # Real-Time Games
 
-Many games use time as an essential part of their game logic. Rune makes this easy by synchronizing clocks across clients and the server. We provide multiple ways for you to add time-based code in your game logic based on what's most fitting for your game. You can also make fast-paced games using the Rune SDK (see the bottom of this page).
+Many games use time as an essential part of their game logic. Rune makes this easy by synchronizing clocks across clients and the server. We provide multiple ways for you to add time-based code in your game logic based on what's most fitting for your game. You can also make fast-paced games with a synchronized update loop running many times pr. second.
 
 ## Game Time
 

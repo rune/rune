@@ -154,26 +154,26 @@ The `initClient` function should be called after your game is fully ready, but s
 // client.js
 Rune.initClient({
   onChange: ({
-    newGame,
-    oldGame,
+    game,
+    previousGame,
     yourPlayerId,
     players,
     action,
     event,
     rollbacks,
   }) => {
-    render(newGame)
+    render(game)
   },
 })
 ```
 
 ### `onChange: () => void`
 
-#### `newGame: any`
+#### `game: any`
 
 This argument is the current game state. Your `onChange()` function should update the UI to reflect its values.
 
-#### `oldGame: any`
+#### `previousGame: any`
 
 This argument is the previous game state. Usually this can be ignored, but it's useful if your game needs to detect changes of certain values.
 
@@ -193,7 +193,7 @@ Do not rely on `players` argument for determining player order, instead use `set
 
 #### `action?: { name: string, playerId: string, params: any }`
 
-If the update was triggered from a `Rune.actions.*` call, this argument will contain info about it, such as the payload and who initiated. Usually this should be ignored and rely on `newGame` instead.
+If the update was triggered from a `Rune.actions.*` call, this argument will contain info about it, such as the payload and who initiated. Usually this should be ignored and rely on `game` instead.
 
 #### `event?: { name: string, params: any }`
 

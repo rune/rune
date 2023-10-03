@@ -62,8 +62,8 @@ The `client.js` also binds the UI to call the `actions`. For instance, for Tic T
 
 ```js
 const onChange = ({
-  oldGame,
-  newGame,
+  previousGame,
+  game,
   action,
   event,
   players,
@@ -98,6 +98,6 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 
 Games running on Rune should support initializing the game at any possible moment as someone can join as a spectator/player at any time. This could happen e.g. at the start of the game, in the middle of a match, or after game over. This initialization is done using the `stateSync` event. Additionally, the `stateSync` event is also used when restarting the game, reconnecting after an unexpected disconnect, or if the game crashes.
 
-Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `onChange`'s `newGame` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.
+Your game must support this `stateSync` event. If you built your game in a reactive way (i.e. it always rerenders according to `onChange`'s `game` argument), then you don't need to worry about `stateSync` event. If your game has side effects, then you might need to specifically handle this event.
 
 You can test your game by adding players/spectators joining at various times during your game session. See [Simulating Multiplayer](/publishing/simulating-multiplayer.md) for more info on how we simulate a multiplayer experience when developing.

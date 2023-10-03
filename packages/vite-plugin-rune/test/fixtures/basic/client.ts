@@ -1,5 +1,5 @@
 Rune.initClient({
-  onChange: ({ newGame }) => {
-    document.getElementById("root")!.innerHTML = JSON.stringify(newGame)
+  onChange: ({ game }) => {
+    document.getElementById("root")!.innerHTML = JSON.stringify(game)
   },
 })

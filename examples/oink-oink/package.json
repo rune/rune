@@ -21,7 +21,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "rollup": "^3.20.4",
-    "rune-games-sdk": "4.12.0",
+    "rune-games-sdk": "4.15.1",
     "styled-components": "^5.3.6",
     "typescript": "^4.4.2"
   },

@@ -1,16 +1,78 @@
 ---
-sidebar_position: 62
+sidebar_position: 61
 ---
 
 # Real-Time Games
 
-Rune supports making many kinds of real-time multiplayer games. This page focuses on real-time multiplayer games involving an update loop running many times pr. second. However, you can also make really fun real-time multiplayer games without needing the more complex code described below. If you're new to Rune or game development, we suggest you start making a game without an update loop. See the [example games](../examples.mdx) for inspiration.
+Many games use time as an essential part of their game logic. Rune makes this easy by synchronizing clocks across clients and the server. We provide multiple ways for you to add time-based code in your game logic based on what's most fitting for your game. You can also make fast-paced games using the Rune SDK (see the bottom of this page).
 
-We will use the example of [Paddle](https://github.com/rune/rune-games-sdk/blob/staging/examples/paddle) to explain how Rune makes it simple to make real-time multiplayer games.
+## Game Time
 
-## Lots of Game Updates
+You can use `Rune.gameTime()` inside your game, which returns the milliseconds that have passed since the start of the game. By default, Rune provides time precision of a second, which should work well for most casual game purposes.
 
-A game like Paddle is updating the position of the ball and the players' paddles many times per second. We can code this in the `logic.js` file by specifying an `update` function and the `updatesPerSecond` value. In the following example, the `update` function will be called 30 times per second on all clients.
+For instance, this could be used to track how long it took for user to make a guess:
+
+```javascript
+// logic.js
+
+function allPlayersDone(game) {
+  // ...
+}
+
+function setNewQuestionAndAnswer(game) {
+  // ...
+}
+
+Rune.initLogic({
+  setup: (allPlayerIds) => {
+    return {
+      scores: Object.fromEntries(allPlayerIds.map((id) => [id, 0])),
+      roundStartAt: 0,
+      question: "A group of otters is called what?",
+      correctAnswer: "A raft"   
+    }
+  },
+  actions: {
+    guess: ({ answer }, { game, playerId }) => {
+      if (answer === game.correctAnswer) {
+        // Increment score based on time
+        const timeTaken = Rune.gameTime() - roundStartAt
+
+        scores[playerId] += max(30 - timeTaken, 0)
+      }
+
+      // Start a new round once everyone has answered
+      if (allPlayersDone(game)) {
+        roundStartAt = Rune.gameTime()
+        setNewQuestionAndAnswer(game)
+      }
+    },
+  },
+})
+
+```
+
+## Update Function
+
+You can provide an `update` function inside your `logic.js` file to run game logic every second. When game state is changed inside your `update` function, the `onChange` inside `client.js` is called with `update` event. Here’s a game, where players have to make a move within 30 seconds or else their turn will pass:
+
+```javascript
+// logic.js
+
+Rune.initLogic({
+  // ... (code from previous example)
+  update: ({ game }) => {
+    // Check if 30 seconds has passed, then switch to another question
+    if (Rune.gameTime() - game.roundStartAt > 30) {
+      roundStartAt = Rune.gameTime()
+      setNewQuestionAndAnswer(game)
+    }
+  }
+})
+
+```
+
+By default, the `update` function runs every second. This works well for most party games and makes your game run smoothly and efficiently on almost any device. However, some game will need to run the update function much more frequently than once pr. second. A game like Paddle needs to update the position of the ball and the players' paddles many times per second. The game can specify this by providing `updatesPerSecond` to `Rune.initLogic()`. In the following example, the `update` function will be called 30 times per second on all clients:
 
 ```javascript
 Rune.initLogic({
@@ -22,146 +84,40 @@ Rune.initLogic({
 })
 ```
 
-The `update` function is run in a synchronized way across all clients and the server. Only actions are sent to the server, which makes Rune real-time games very bandwidth efficient so that they can work even on mobile devices with limited bandwidth.
+The `update` function is run in a synchronized way across all clients and the server. Only actions are sent to the server, which makes Rune real-time games very bandwidth efficient so that they can work even on mobile devices with limited bandwidth. Even with our optimizations, your game might still experience stuttering due to latency between players or varying frame rates across devices. Rune helps you [reduce this stuttering through interpolators](reducing-stutter.md).
 
-## Rendering At Variable Frame Rate
+## The `timeSync` Event
 
-The update loop will always run at a fixed tick rate, but mobile phones will render your game's graphics slower or faster than that. This is highly dependent on how powerful the device is and how intensive your game is to run. To support rendering at a variable frame rate, your game can interpolate positions between the `update` function calls. This is only needed for fast-moving objects stored in the `game` state such as the ball and paddles in Paddle.
+Network packets between the client and server are sometimes delayed due to bad internet connection. If that happens, the server might execute the action at different game time compared to the optimistic client action. If this has impact on game state, the client that made the optimistic action will receive a `onChange` call with `timeSync` event.
 
-Consider a Paddle game with `updatesPerSecond: 10`, i.e. the game state updates every 100 ms. The ball is at position 0 in `game` at 0 ms and will be at position 10 in after 100 ms. When the phone wants to render the game at 60 ms, it should render at position 6 as the ball should be 60% towards the new position.
-
-Rune provides `futureGame`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. The game can interpolate between the current game state and the future game state by using `Rune.interpolator()`. The interpolator allows the game to compute the ball's position at any time and will make the game look more fluid for fast-moving objects. Here's how this would be used for rendering the ball in Paddle at a variable frame rate: 
+Let's consider a game with the following game logic:
 
 ```javascript
-const ballInterpolator = Rune.interpolator()
+// logic.js
 
-function onChange({ game, futureGame }) {
-  ballInterpolator.update({
-    game: game.ballPosition,
-    futureGame: futureGame.ballPosition
-  })
-}
-
-// Rendering function called by the game's graphics engine
-function render() {
-  const ballPosition = ballInterpolator.getPosition()
-    
-  // ... (draw the ball using the game's graphics engine)
-}
-
-// Initialize the game with the callback function
-Rune.initClient({ onChange })
-```
-
-There might be game-specific scenarios, where the game should not interpolate into the future. For instance, when a point is scored in Paddle, the ball position will reset in `logic.js` and the game should not interpolate the position between `game` and `futureGame`. The game can do this by not calling `update()` on the interpolator in that scenario, i.e. updating the code above with an if condition checking the current score vs. the future score:
-
-```javascript
-// Replaces function in previous code block
-function onChange({ game, futureGame }) {
-    
-  if (game.totalScore === futureGame.totalScore) {
-    ballInterpolator.update({
-      game: game.ballPosition,
-      futureGame: futureGame.ballPosition
-    })
-  }
-}
-```
-
-## Interpolating Other Players' Movements
-
-Making fast-paced multiplayer games can be challenging because of the latency between players. No matter how good the device and internet connection is, the network packets cannot travel faster than the speed of light. This means that your game will receive other's players actions some time after they happened. If other players can quickly move around in your game, then you will need to do interpolation of their positions to make their movements look smooth. This is done in the client-side code, i.e. in `client.js`.
-
-:::tip
-
-First implement your game without interpolation for simplicity. Then you can test in the Dev UI whether it's actually needed.
-
-:::
-
-In Paddle, the players control the paddles, and the game must therefore interpolate the other players' paddles to get smooth movements. The core game state and update loop in paddle could be defined as this:
-
-```javascript
 Rune.initLogic({
-  minPlayers: 2,
-  maxPlayers: 2,
-  updatesPerSecond: 30,
-  setup: (allPlayerIds) => {
-    // Paddles only move in 1 dimension so can just specify one position and speed 
-    const paddles = [
-      { position: START_POSITION, speed: 0 },
-      { position: START_POSITION, speed: 0 }
-    ]
-    const players = [
-      { id: allPlayerIds[0], score: 0 },
-      { id: allPlayerIds[1], score: 0 },
-    ]
-    return { paddles, players, totalScore: 0 }
-  },
-  update: ({ game }) => {
-    for (let i = 0; i < 2; i++) {
-      game.paddles[i].position += game.paddles[i].speed
-            
-      // Clamp to sides
-      if (game.paddles[i].position < 0) {
-        game.paddles[i].position = 0
-        game.paddles[i].speed = 0
-      }
-      if (game.paddles[i].position + PADDLE_WIDTH > GAME_WIDTH) {
-        game.paddles[i].position = 0
-        game.paddles[i].speed = 0
-      }
-    }
-    // ... (remaining game logic)
+  setup() {
+    return {
+      clickedAt: 0,
+    };
   },
   actions: {
-    // ... (player inputs to move paddles by changing paddle speed)
-  }
+    click(_, { game }) {
+      game.clickedAt = Rune.gameTime();
+    },
+  },
 })
 ```
 
-The `game` state is provided to the `onChange` callback as `game` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `game` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth despite the latency, the game can create an interpolator using `Rune.interpolatorLatency`.
+The game is played by two players (Player A and Player B), who do the following:
 
-The game should call the interpolator's `update()` function, which moves the interpolated position towards the true position specified in `game`. The game can at any time get the interpolated position from the interpolator by calling `getPosition()`. This function returns the position adjusted for the time of rendering (see section above) so it can be used directly to achieve both interpolation and supporting variable frame rate.
+* PlayerA calls the action `click` when game time is at second 4. Player A receives `onChange` call with `click` action as an argument, making Player A see `game.clickedAt = 4`.
+* Server receives and processes the action at game time second 5.
+* Every client receives that the action was executed at 5th second.
 
-Here's that code for the paddle game:
+Player A's `onChange` function will now be called with `timeSync` event to reconcile that the server processed the action at second 5 (and the server holds the truth). In this way, both players end up with `game.clickedAt = 5`.
 
-```javascript
-import { playerSpeed } from "./logic.js"
+## Further Reading
 
-let opponentInterpolator = Rune.interpolatorLatency({ maxSpeed: playerSpeed })
-
-function onChange({ game, futureGame, yourPlayerId }) {
-  const opponent = game.players.findIndex((p) => p.id !== yourPlayerId)
-   
-  opponentInterpolator.update({
-    game: game.paddles[opponent].position,
-    futureGame: futureGame.paddles[opponent].position
-  })
-}
-
-// Rendering function called by the game's graphics engine
-function render() {
-    const opponentPosition = opponentInterpolator.getPosition()
-
-    // ... (draw the opponent's paddle using the game's graphics engine)
-}
-
-// Initialize the game with the callback function
-Rune.initClient({ onChange })
-```
-
-There might be game-specific scenarios, where the game will want to immediately move the other players' positions without interpolating. For instance, when a point is scored in Paddle, the player positions reset in `logic.js` and the opponent position should be updated immediately. The game can detect that a point was just scored by comparing `game` with `previousGame`, which contains the game state for the last `onChange` call. The game can then call `moveTo()` on the interpolator, which will also reset the speed inside the interpolator to zero so that it doesn't move anywhere. Here's the code for that:
-
-```javascript
-function onChange({ previousGame, game }) {
-  const opponent = game.players.findIndex((p) => p.id !== yourPlayerId)
-    
-  if (previousGame.totalScore < game.totalScore) {
-    opponentInterpolator.moveTo(game.paddles[opponent].position)
-  }
-}
-```
-
-## Demo and Example Game
-
-Using the interpolations described above, your game can achieve flexible frame rate rendering and smooth movements for other players regardless of network conditions. This gives the best player experience for the games that need it. If you want to make your own real-time Rune game, it's great to start with the Paddle example game. You can [try the demo](/examples/paddle) and see how the opponent gets interpolated when simulating latency. You can also see the [full code here](https://github.com/rune/rune-games-sdk/blob/staging/examples/paddle)!
+- [See how the Pinpoint example game uses time](https://github.com/rune/rune-games-sdk/blob/staging/examples/pinpoint/src/logic.ts)
+- [See how to reduce stutters in fast-paced games](reducing-stutter.md)

@@ -702,8 +702,8 @@ function scheduleMoveHint(playerIndex: number) {
 type OnChangeFn = OnChange<GameState, GameActions>
 type OnChangeParam = Parameters<OnChangeFn>[0]
 const onChange: OnChangeFn = async ({
-  newGame,
-  oldGame,
+  game,
+  previousGame,
   action,
   players: playerData,
   yourPlayerId,
@@ -718,9 +718,9 @@ const onChange: OnChangeFn = async ({
     changes,
     players,
     highlightedCells,
-  } = newGame
-  cells = newGame.cells
-  const gameOver = isGameOver(newGame)
+  } = game
+  cells = game.cells
+  const gameOver = isGameOver(game)
   yourTurn =
     !gameOver && yourPlayerId
       ? playerIds.indexOf(yourPlayerId) === currentPlayerIndex
@@ -846,11 +846,12 @@ const onChange: OnChangeFn = async ({
         const sourceElement = tiles[sourceIndex]
         if (
           yourPlayerId &&
-          oldGame.playerIds.indexOf(yourPlayerId) !== oldGame.currentPlayerIndex
+          previousGame.playerIds.indexOf(yourPlayerId) !==
+            previousGame.currentPlayerIndex
         ) {
           sourceElement?.setAttribute(
             "data-swap-player",
-            (oldGame.currentPlayerIndex + 1).toString()
+            (previousGame.currentPlayerIndex + 1).toString()
           )
           await sleep(300)
         }
@@ -859,7 +860,11 @@ const onChange: OnChangeFn = async ({
         playSound("swap")
         await sleep(400)
         if (!movesPlayed) {
-          setMovesPlayed(oldGame.movesPerRound, oldGame.movesPerRound, false)
+          setMovesPlayed(
+            previousGame.movesPerRound,
+            previousGame.movesPerRound,
+            false
+          )
           await sleep(400)
         } else {
           setMovesPlayed(movesPlayed, movesPerRound, false)
@@ -878,13 +883,13 @@ const onChange: OnChangeFn = async ({
         break
       }
     }
-    await animateChanges(changes, oldGame.currentPlayerIndex)
+    await animateChanges(changes, previousGame.currentPlayerIndex)
   }
   renderBoard()
   await updatePlayerState(currentPlayerIndex)
   if (
     roundsPlayed === numberOfRounds - 1 &&
-    oldGame.roundsPlayed !== roundsPlayed
+    previousGame.roundsPlayed !== roundsPlayed
   ) {
     await showMessage("last-round")
   } else if (gameOver) {

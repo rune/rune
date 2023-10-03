@@ -31,14 +31,14 @@ export function App() {
     import("../logic").then(() => {
       Rune.initClient({
         onChange: ({
-          newGame,
+          game,
           players,
           yourPlayerId,
           rollbacks,
           action,
           event,
         }) => {
-          setGame({ game: newGame, players, yourPlayerId })
+          setGame({ game, players, yourPlayerId })
 
           const lastActivityPlayerId =
             action?.action === "setValue" ||
@@ -60,8 +60,8 @@ export function App() {
 
           if (action?.action === "setValue") {
             if (action.params.value) {
-              const selection = newGame.playerState[action.playerId].selection
-              const cell = newGame.sudoku?.board.at(cellPointer(selection))
+              const selection = game.playerState[action.playerId].selection
+              const cell = game.sudoku?.board.at(cellPointer(selection))
 
               if (cell?.error) {
                 sounds.error.play()

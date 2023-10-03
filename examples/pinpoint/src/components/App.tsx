@@ -22,8 +22,8 @@ export function App() {
   useEffect(() => {
     import("../logic").then(() =>
       Rune.initClient({
-        onChange: ({ newGame, players, yourPlayerId }) => {
-          setGame(newGame)
+        onChange: ({ game, players, yourPlayerId }) => {
+          setGame(game)
           setPlayers(players)
           setMyPlayerId(yourPlayerId)
         },

@@ -9,7 +9,6 @@ import {
   POINTS_TO_WIN,
 } from "./logic.ts"
 import { fittingString } from "./helpers.ts"
-import badNetworkImage from "./assets/WiFiSymbols.png"
 
 export function setupCanvas(): {
   canvas: HTMLCanvasElement
@@ -138,10 +137,4 @@ export function renderScore(
       context.stroke()
     }
   }
-}
-
-const badNetwork = new Image()
-badNetwork.src = badNetworkImage
-export function renderBadNetwork(context: CanvasRenderingContext2D) {
-  context.drawImage(badNetwork, GAME_WIDTH / 2 - 78 / 2, 148, 78, 78)
 }

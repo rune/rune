@@ -25,11 +25,15 @@ export function extractMultiplayerMetadata(logicJsContent: string) {
 
   const handlesPlayerLeft = regexes.playerLeft.test(logicJsContent)
 
+  const inputDelayString = logicJsContent.match(regexes.inputDelay)?.at(1)
+  const inputDelay = inputDelayString ? parseInt(inputDelayString) : undefined
+
   return {
     minPlayers,
     maxPlayers,
     handlesPlayerJoined,
     handlesPlayerLeft,
     updatesPerSecond,
+    inputDelay,
   }
 }

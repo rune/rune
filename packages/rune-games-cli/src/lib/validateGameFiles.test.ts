@@ -751,6 +751,58 @@ describe("validateGameFiles", () => {
           minPlayers: 1,
           maxPlayers: 4,
           updatesPerSecond: 40,
+          inputDelay: 50,
+        },
+      }
+    )
+
+    await check(
+      [
+        {
+          path: "index.html",
+          size: 1 * 1e6,
+          content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+        },
+        {
+          path: "logic.js",
+          size: 1 * 1e6,
+          // language=JavaScript
+          content: `
+            Rune.initLogic({
+              minPlayers: 1,
+              maxPlayers: 4,
+              updatesPerSecond: 10,
+              inputDelay: 60,
+              setup: () => {
+                return { cells: Array(25).fill(null) }
+              },
+              actions: {},
+              events: {
+                playerJoined: () => {},
+                playerLeft () {},
+              },
+            })`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [
+          {
+            message:
+              "logic.js: inputDelay must be undefined or between 0 and 50",
+          },
+        ],
+        multiplayer: {
+          handlesPlayerJoined: true,
+          handlesPlayerLeft: true,
+          minPlayers: 1,
+          maxPlayers: 4,
+          inputDelay: 60,
+          updatesPerSecond: 10,
         },
       }
     )

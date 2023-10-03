@@ -282,6 +282,17 @@ async function validateMultiplayerLogicJsContent({
       }
     }
 
+    if (multiplayerMetadata.inputDelay !== undefined) {
+      if (
+        multiplayerMetadata.inputDelay < 0 ||
+        multiplayerMetadata.inputDelay > 50
+      ) {
+        errors.push({
+          message: "logic.js: inputDelay must be undefined or between 0 and 50",
+        })
+      }
+    }
+
     return multiplayerMetadata
   }
 }

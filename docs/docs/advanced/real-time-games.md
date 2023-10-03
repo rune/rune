@@ -121,8 +121,6 @@ Rune.initLogic({
 
 The `game` state is provided to the `onChange` callback as `game` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `game` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth despite the latency, the game can create an interpolator using `Rune.interpolatorLatency`.
 
-The latency interpolator has built-in acceleration, meaning that the paddle will slowly start moving and then accelerate up to a top speed defined by the game. Usually a good value for the max speed is twice the normal player speed. By default, the acceleration takes 1000 ms to reach max speed. The game can also modify this if desired by providing the `timeToMaxSpeed` option.
-
 The game should call the interpolator's `update()` function, which moves the interpolated position towards the true position specified in `game`. The game can at any time get the interpolated position from the interpolator by calling `getPosition()`. This function returns the position adjusted for the time of rendering (see section above) so it can be used directly to achieve both interpolation and supporting variable frame rate.
 
 Here's that code for the paddle game:
@@ -130,7 +128,7 @@ Here's that code for the paddle game:
 ```javascript
 import { playerSpeed } from "./logic.js"
 
-let opponentInterpolator = Rune.interpolatorLatency({ maxSpeed: playerSpeed * 2 })
+let opponentInterpolator = Rune.interpolatorLatency({ maxSpeed: playerSpeed })
 
 function onChange({ game, futureGame, yourPlayerId }) {
   const opponent = game.players.findIndex((p) => p.id !== yourPlayerId)

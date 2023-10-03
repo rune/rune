@@ -4,9 +4,9 @@ sidebar_position: 62
 
 # Reducing Stutter
 
-This page focuses on reducing stutter for fast-paced multiplayer games running an update loop many times pr. second. However, you can also make really fun [real-time multiplayer games](real-time-games.md) without needing the more complex code described below. If you're new to Rune or game development, we suggest you start making a game without an update loop. See the [example games](../examples.mdx) for inspiration.
+This page focuses on reducing stutter for fast-paced multiplayer games running an update loop many times pr. second. However, you can also make really fun [real-time multiplayer games](real-time-games.md) without needing the more complex code described below. If you're new to Rune or game development, we suggest you start by making a game without an update loop or an update loop only running once pr. second. See the [example games](../examples.mdx) for inspiration.
 
-We will use the example of [Paddle](https://github.com/rune/rune-games-sdk/blob/staging/examples/paddle) to explain how Rune makes it simple to make fast-paced multiplayer games. A game like Paddle is updating the position of the ball and the players' paddles many times per second. We can code this in the `logic.js` file by specifying an `update` function and the `updatesPerSecond` value. In the following example, the `update` function will be called 30 times per second on all clients.
+We will use the example of [Paddle](/examples/paddle) to explain how Rune makes it simple to make fast-paced multiplayer games. A game like Paddle is updating the position of the ball and the players' paddles many times per second. We can code this in the `logic.js` file by specifying an `update` function and the `updatesPerSecond` value. In the following example, the `update` function will be called 30 times per second on all clients.
 
 ```javascript
 Rune.initLogic({

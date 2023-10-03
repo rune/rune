@@ -52,8 +52,6 @@ const images = [new Image(22, 22), new Image(22, 22)]
 let lastScoreAt = 0
 let lastScoredBy: number | null = null
 
-let lastBadNetworkAt = 0
-
 window.onload = function () {
   document.body.appendChild(canvas)
 
@@ -109,19 +107,9 @@ window.onload = function () {
           game: game.paddles[playerIndex].position,
           futureGame: futureGame.paddles[playerIndex].position,
         })
-
-        const distance = measureBallDistance(
-          params.previousGame.ball.position,
-          game.ball.position
-        )
-
-        //If ball jumps more than MAX_BALL_SPEED, it means that there was latency issue, indicate that
-        if (distance > MAX_BALL_SPEED) {
-          lastBadNetworkAt = performance.now()
-        }
       }
 
-      if (params.previousGame.totalScore !== game.totalScore) {
+      if (game.totalScore > params.previousGame.totalScore) {
         lastScoreAt = performance.now()
 
         lastScoredBy =
@@ -182,17 +170,6 @@ window.onload = function () {
         game.players[playerIndex].score
       )
 
-      if (
-        lastBadNetworkAt &&
-        performance.now() - lastBadNetworkAt > BAD_NETWORK_DURATION
-      ) {
-        lastBadNetworkAt = 0
-      }
-
-      if (lastBadNetworkAt !== 0) {
-        renderBadNetwork(context)
-      }
-
       if (lastScoredBy !== null) {
         if (performance.now() - lastScoreAt > SCORE_DURATION) {
           lastScoreAt = 0
@@ -208,7 +185,7 @@ window.onload = function () {
 
       renderBall(
         context,
-        lastBadNetworkAt !== 0,
+        true,
         game.players[0].id === yourPlayerId,
         ...ballInterpolator.getPosition()
       )

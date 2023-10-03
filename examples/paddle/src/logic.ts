@@ -115,7 +115,9 @@ function ballUpdate(
       })
     }
 
-    ball.ySpeed = 3 * speedMultiplier
+    const direction = ball.position[1] < 0 ? -1 : 1
+
+    ball.ySpeed = 3 * speedMultiplier * direction
     ball.xSpeed = 0
     ball.position[0] = GAME_WIDTH / 2
     ball.position[1] = GAME_HEIGHT / 2

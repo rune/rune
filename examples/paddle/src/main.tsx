@@ -3,11 +3,9 @@ import {
   GAME_HEIGHT,
   GAME_WIDTH,
   GameState,
-  PADDLE_WIDTH,
   PADDLE_SPEED,
   TOP_PADDLE_POSITION,
 } from "./logic"
-import { throttle } from "./helpers"
 import {
   renderBall,
   renderPaddle,
@@ -17,10 +15,11 @@ import {
   setupCanvas,
 } from "./render"
 import { Players } from "rune-games-sdk"
+import {initControls} from "./controls";
 
 const ballInterpolator = Rune.interpolator<[number, number]>()
 const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
-  maxSpeed: PADDLE_SPEED,
+  maxSpeed: PADDLE_SPEED + 1,
   timeToMaxSpeed: 0,
 })
 const playerPaddleInterpolator = Rune.interpolator<number>()
@@ -60,6 +59,10 @@ window.onload = function () {
         playerIndex =
           yourPlayerId && game.players[0].id === yourPlayerId ? 0 : 1
         opponentIndex = playerIndex === 0 ? 1 : 0
+
+        if (yourPlayerId) {
+          initControls()
+        }
       }
 
       if (game.totalScore === futureGame.totalScore) {
@@ -110,7 +113,7 @@ function render() {
       context,
       GAME_HEIGHT - 25,
       images[playerIndex],
-      players[game.players[playerIndex].id].displayName,
+      yourPlayerId !== undefined ? "You" : players[game.players[playerIndex].id].displayName,
       game.players[playerIndex].score
     )
 
@@ -150,22 +153,3 @@ function render() {
 }
 
 render()
-
-const move = throttle((x: number) => {
-  const position = Math.max(
-    0,
-    Math.min(
-      Math.round((x / window.innerWidth) * GAME_WIDTH - PADDLE_WIDTH / 2),
-      GAME_WIDTH - PADDLE_WIDTH
-    )
-  )
-
-  Rune.actions.setPosition(position)
-}, 100)
-
-window.addEventListener("pointerdown", (event) => move(event.clientX))
-window.addEventListener("pointermove", (event) => {
-  // if (event.pressure > 0) {
-  move(event.clientX)
-  // }
-})

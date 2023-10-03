@@ -18,11 +18,7 @@ import {
 } from "./render"
 import { Interpolator, InterpolatorLatency, Players } from "rune-games-sdk"
 import { initControls } from "./controls"
-
-import playerScoreSfx from "./assets/audio/PlayerScore.mp3"
-import opponentScoreSfx from "./assets/audio/OponentScore.mp3"
-import opponentHitSfx from "./assets/audio/OpponentHit.mp3"
-import playerHitSfx from "./assets/audio/PlayerHit.wav"
+import { playSound } from "./playSound.ts"
 
 // Interpolate between updates to support variable FPS
 let playerPaddleInterpolator:
@@ -52,13 +48,6 @@ let lastScoredBy: number | null = null
 
 window.onload = function () {
   document.body.appendChild(canvas)
-
-  const audio = {
-    playerScore: new Audio(playerScoreSfx),
-    opponentScore: new Audio(opponentScoreSfx),
-    playerHit: new Audio(playerHitSfx),
-    opponentHit: new Audio(opponentHitSfx),
-  }
 
   Rune.initClient({
     onChange: (params) => {
@@ -115,9 +104,9 @@ window.onload = function () {
           params.previousGame.players[0].score !== game.players[0].score ? 0 : 1
 
         if (lastScoredBy === playerIndex) {
-          audio.playerScore.play()
+          playSound("playerScore")
         } else {
-          audio.opponentScore.play()
+          playSound("opponentScore")
         }
 
         if (!yourPlayerId) {
@@ -132,13 +121,13 @@ window.onload = function () {
       }
 
       if (
-        game.paddleHit !== null &&
-        params.previousGame.paddleHit !== game.paddleHit
+        futureGame.paddleHit !== null &&
+        futureGame.paddleHit !== game.paddleHit
       ) {
-        if (playerIndex === game.paddleHit) {
-          audio.playerHit.play()
+        if (playerIndex === futureGame.paddleHit) {
+          playSound("playerHit")
         } else {
-          audio.opponentHit.play()
+          playSound("opponentHit")
         }
       }
     },

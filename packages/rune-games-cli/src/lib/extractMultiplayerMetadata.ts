@@ -4,6 +4,7 @@ const regexes = {
   playerJoined: /playerJoined\s*[:(]/,
   playerLeft: /playerLeft\s*[:(]/,
   updatesPerSecond: /updatesPerSecond\s*:\s*?([0-9]+)/,
+  inputDelay: /inputDelay\s*:\s*?([0-9]+)/,
 }
 
 export function extractMultiplayerMetadata(logicJsContent: string) {

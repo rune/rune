@@ -7,6 +7,7 @@ import {
   POINTS_TO_WIN,
 } from "./logic.ts"
 import { fittingString } from "./helpers.ts"
+import badNetworkImage from "./assets/WiFiSymbols.png"
 
 export function setupCanvas(): {
   canvas: HTMLCanvasElement
@@ -33,17 +34,43 @@ export function setupCanvas(): {
 
 export function renderBall(
   context: CanvasRenderingContext2D,
+  renderGlow: boolean,
   inverse: boolean,
   x: number,
   y: number
 ) {
-  context.beginPath()
-  context.arc(x, inverse ? GAME_HEIGHT - y : y, BALL_RADIUS, 2 * Math.PI, 0)
-  context.fillStyle = "rgba(1, 206, 75, 1)"
-  context.fill()
+  const yPosition = inverse ? GAME_HEIGHT - y : y
+
+  if (renderGlow) {
+    const radius = 20
+
+    const radgrad = context.createRadialGradient(
+      x,
+      yPosition,
+      0,
+      x,
+      yPosition,
+      radius
+    )
+    radgrad.addColorStop(0, "rgba(1, 206, 75, 1)")
+    radgrad.addColorStop(BALL_RADIUS / radius, "rgba(1, 206, 75, 1)")
+    radgrad.addColorStop(BALL_RADIUS / radius + 0.01, "rgba(1, 206, 75, 0.3)")
+    radgrad.addColorStop(1, "rgba(1, 206, 75, 0)")
+
+    // draw shape
+    context.fillStyle = radgrad
+    context.fillRect(x - radius, yPosition - radius, radius * 2, radius * 2)
+  } else {
+    context.beginPath()
+    context.arc(x, yPosition, BALL_RADIUS, 2 * Math.PI, 0)
+    context.fillStyle = "rgba(1, 206, 75, 1)"
+    context.fill()
+  }
 }
 
 export const SCORE_DURATION = 1500
+
+export const BAD_NETWORK_DURATION = 3000
 
 export function renderPopup(
   context: CanvasRenderingContext2D,
@@ -109,4 +136,10 @@ export function renderScore(
       context.stroke()
     }
   }
+}
+
+const badNetwork = new Image()
+badNetwork.src = badNetworkImage
+export function renderBadNetwork(context: CanvasRenderingContext2D) {
+  context.drawImage(badNetwork, GAME_WIDTH / 2 - 78 / 2, 148, 78, 78)
 }

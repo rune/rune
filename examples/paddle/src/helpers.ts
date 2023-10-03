@@ -18,7 +18,6 @@ export function fittingString(
   }
 }
 
-
 export const throttle = (fn: (...args: any[]) => void, wait = 300) => {
   let inThrottle: boolean,
     lastFn: ReturnType<typeof setTimeout>,
@@ -40,4 +39,14 @@ export const throttle = (fn: (...args: any[]) => void, wait = 300) => {
       }, Math.max(wait - (Date.now() - lastTime), 0))
     }
   }
+}
+
+export function measureBallDistance(
+  previousPosition: [number, number],
+  currentPosition: [number, number]
+) {
+  return Math.sqrt(
+    (previousPosition[0] - currentPosition[0]) ** 2 +
+      (previousPosition[1] - currentPosition[1]) ** 2
+  )
 }

@@ -10,13 +10,11 @@ export const PADDLE_OFFSET = 100
 export const PADDLE_WIDTH = 64
 export const PADDLE_SPEED = 4 * speedMultiplier
 
-const MAX_BALL_SPEED = 20
+export const MAX_BALL_SPEED = 20
 
 export const POINTS_TO_WIN = 10
 
-// Get the middle y-value to draw the paddle using the relationship between
-// the height of the canvas and the height of the paddle
-const MIDDLE_X = (GAME_WIDTH - PADDLE_WIDTH) / 2
+const PADDLE_START_POSITION = (GAME_WIDTH - PADDLE_WIDTH) / 2
 
 export const TOP_PADDLE_POSITION = PADDLE_OFFSET
 export const BOTTOM_PADDLE_POSITION =
@@ -150,8 +148,8 @@ function ballUpdate(
     ball.speed = [0, 3 * speedMultiplier * direction]
     ball.position[0] = GAME_WIDTH / 2
     ball.position[1] = GAME_HEIGHT / 2
-    paddle1.position = MIDDLE_X
-    paddle2.position = MIDDLE_X
+    paddle1.position = PADDLE_START_POSITION
+    paddle2.position = PADDLE_START_POSITION
   }
 }
 
@@ -178,12 +176,12 @@ Rune.initLogic({
       },
       paddles: [
         {
-          position: MIDDLE_X,
+          position: PADDLE_START_POSITION,
           isTop: true,
           speed: 0,
         },
         {
-          position: MIDDLE_X,
+          position: PADDLE_START_POSITION,
           isTop: false,
           speed: 0,
         },

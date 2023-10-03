@@ -5,10 +5,13 @@ import {
   GAME_HEIGHT,
   GAME_WIDTH,
   GameState,
+  MAX_BALL_SPEED,
   PADDLE_SPEED,
   TOP_PADDLE_POSITION,
 } from "./logic"
 import {
+  BAD_NETWORK_DURATION,
+  renderBadNetwork,
   renderBall,
   renderPaddle,
   renderPopup,
@@ -23,6 +26,8 @@ import playerScoreSfx from "./assets/PlayerScore.mp3"
 import opponentScoreSfx from "./assets/OponentScore.mp3"
 import opponentHitSfx from "./assets/OpponentHit.mp3"
 import playerHitSfx from "./assets/PlayerHit.wav"
+
+import { measureBallDistance } from "./helpers"
 
 const ballInterpolator = Rune.interpolator<[number, number]>()
 const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
@@ -46,6 +51,8 @@ const images = [new Image(22, 22), new Image(22, 22)]
 
 let lastScoreAt = 0
 let lastScoredBy: number | null = null
+
+let lastBadNetworkAt = 0
 
 window.onload = function () {
   document.body.appendChild(canvas)
@@ -102,6 +109,16 @@ window.onload = function () {
           game: game.paddles[playerIndex].position,
           futureGame: futureGame.paddles[playerIndex].position,
         })
+
+        const distance = measureBallDistance(
+          params.previousGame.ball.position,
+          game.ball.position
+        )
+
+        //If ball jumps more than MAX_BALL_SPEED, it means that there was latency issue, indicate that
+        if (distance > MAX_BALL_SPEED) {
+          lastBadNetworkAt = performance.now()
+        }
       }
 
       if (params.previousGame.totalScore !== game.totalScore) {
@@ -139,66 +156,78 @@ window.onload = function () {
       }
     },
   })
-}
 
-function render() {
-  context.clearRect(0, 0, canvas.width, canvas.height)
+  function render() {
+    context.clearRect(0, 0, canvas.width, canvas.height)
 
-  context.fillStyle = "#150813"
-  context.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
+    context.fillStyle = "#150813"
+    context.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
 
-  if (game) {
-    renderScore(
-      context,
-      25,
-      images[opponentIndex],
-      players[game.players[opponentIndex].id].displayName,
-      game.players[opponentIndex].score
-    )
+    if (game) {
+      renderScore(
+        context,
+        25,
+        images[opponentIndex],
+        players[game.players[opponentIndex].id].displayName,
+        game.players[opponentIndex].score
+      )
 
-    renderScore(
-      context,
-      GAME_HEIGHT - 25,
-      images[playerIndex],
-      yourPlayerId !== undefined
-        ? "You"
-        : players[game.players[playerIndex].id].displayName,
-      game.players[playerIndex].score
-    )
+      renderScore(
+        context,
+        GAME_HEIGHT - 25,
+        images[playerIndex],
+        yourPlayerId !== undefined
+          ? "You"
+          : players[game.players[playerIndex].id].displayName,
+        game.players[playerIndex].score
+      )
 
-    if (lastScoredBy !== null) {
-      if (performance.now() - lastScoreAt > SCORE_DURATION) {
-        lastScoreAt = 0
-        lastScoredBy = null
-      } else {
-        renderPopup(
-          context,
-          players[game.players[lastScoredBy].id].displayName,
-          lastScoreAt
-        )
+      if (
+        lastBadNetworkAt &&
+        performance.now() - lastBadNetworkAt > BAD_NETWORK_DURATION
+      ) {
+        lastBadNetworkAt = 0
       }
+
+      if (lastBadNetworkAt !== 0) {
+        renderBadNetwork(context)
+      }
+
+      if (lastScoredBy !== null) {
+        if (performance.now() - lastScoreAt > SCORE_DURATION) {
+          lastScoreAt = 0
+          lastScoredBy = null
+        } else {
+          renderPopup(
+            context,
+            players[game.players[lastScoredBy].id].displayName,
+            lastScoreAt
+          )
+        }
+      }
+
+      renderBall(
+        context,
+        lastBadNetworkAt !== 0,
+        game.players[0].id === yourPlayerId,
+        ...ballInterpolator.getPosition()
+      )
+
+      renderPaddle(
+        context,
+        TOP_PADDLE_POSITION,
+        opponentPaddleInterpolator.getPosition()
+      )
+
+      renderPaddle(
+        context,
+        BOTTOM_PADDLE_POSITION,
+        playerPaddleInterpolator.getPosition()
+      )
     }
 
-    renderBall(
-      context,
-      game.players[0].id === yourPlayerId,
-      ...ballInterpolator.getPosition()
-    )
-
-    renderPaddle(
-      context,
-      TOP_PADDLE_POSITION,
-      opponentPaddleInterpolator.getPosition()
-    )
-
-    renderPaddle(
-      context,
-      BOTTOM_PADDLE_POSITION,
-      playerPaddleInterpolator.getPosition()
-    )
+    requestAnimationFrame(render)
   }
 
-  requestAnimationFrame(render)
+  render()
 }
-
-render()

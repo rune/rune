@@ -62,7 +62,7 @@ button.onClick = () => {
 }
 
 // Callback you define for when something changes (e.g. someone made an action)
-function onChange({ previousGame, game, yourPlayerId, players, action, event }) {
+function onChange({ game, yourPlayerId, players, action, event }) {
   // Your game visuals update code...
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { interpolator } from "../src/interpolator"
+import { interpolator } from "../src/interpolators/interpolator"
 
 describe("interpolator", () => {
   it("should not allow to call getPosition before calling update", () => {

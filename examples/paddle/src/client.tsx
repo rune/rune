@@ -24,12 +24,14 @@ import opponentScoreSfx from "./assets/OponentScore.mp3"
 import opponentHitSfx from "./assets/OpponentHit.mp3"
 import playerHitSfx from "./assets/PlayerHit.wav"
 
+// Interpolate between updates to support variable FPS
+let playerPaddleInterpolator = Rune.interpolator<number>()
 const ballInterpolator = Rune.interpolator<[number, number]>()
+
+// Prevent paddle from teleporting around when receiving action from the past
 const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
   maxSpeed: PADDLE_SPEED + 1,
-  timeToMaxSpeed: 0,
 })
-let playerPaddleInterpolator = Rune.interpolator<number>()
 
 const { canvas, context } = setupCanvas()
 
@@ -44,7 +46,7 @@ let playerIndex = 0
 let isReady = false
 const images = [new Image(22, 22), new Image(22, 22)]
 
-let lastScoreAt = 0
+let lastScoredAt = 0
 let lastScoredBy: number | null = null
 
 window.onload = function () {
@@ -79,14 +81,14 @@ window.onload = function () {
         }
 
         if (!yourPlayerId) {
-          //In case client is a spectator, use latency interpolator for both paddles
+          // In case client is a spectator, use latency interpolator for both paddles
           playerPaddleInterpolator = Rune.interpolatorLatency<number>({
             maxSpeed: PADDLE_SPEED + 1,
-            timeToMaxSpeed: 0,
           })
         }
       }
 
+      // Always interpolate except when the score changes
       if (game.totalScore === futureGame.totalScore) {
         ballInterpolator.update({
           game: game.ball.position,
@@ -104,8 +106,9 @@ window.onload = function () {
         })
       }
 
+      // Play sounds etc. when the score changes
       if (game.totalScore > params.previousGame.totalScore) {
-        lastScoreAt = performance.now()
+        lastScoredAt = performance.now()
 
         lastScoredBy =
           params.previousGame.players[0].score !== game.players[0].score ? 0 : 1
@@ -124,6 +127,7 @@ window.onload = function () {
           )
         }
 
+        // Reset opponent paddle position after score w/o interpolation
         opponentPaddleInterpolator.jump(game.paddles[opponentIndex].position)
       }
 
@@ -166,14 +170,14 @@ window.onload = function () {
       )
 
       if (lastScoredBy !== null) {
-        if (performance.now() - lastScoreAt > SCORE_DURATION) {
-          lastScoreAt = 0
+        if (performance.now() - lastScoredAt > SCORE_DURATION) {
+          lastScoredAt = 0
           lastScoredBy = null
         } else {
           renderPopup(
             context,
             players[game.players[lastScoredBy].id].displayName,
-            lastScoreAt
+            lastScoredAt
           )
         }
       }
@@ -185,12 +189,13 @@ window.onload = function () {
         ...ballInterpolator.getPosition()
       )
 
+      // Always render your own paddle at the bottom.
+      // Add some offset to have space for controlling your paddle.
       renderPaddle(
         context,
         PADDLE_OFFSET / 2,
         opponentPaddleInterpolator.getPosition()
       )
-
       renderPaddle(
         context,
         GAME_RENDERED_HEIGHT - PADDLE_OFFSET - PADDLE_HEIGHT,
@@ -198,6 +203,7 @@ window.onload = function () {
       )
     }
 
+    // Call render() again when browser is ready to render another frame
     requestAnimationFrame(render)
   }
 

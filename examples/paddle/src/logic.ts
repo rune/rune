@@ -1,10 +1,13 @@
 import { PlayerId } from "rune-games-sdk"
 
+// Use multiplayer so updatesPerSecond can be changed w/o impacting game speed
 const updatesPerSecond = 30
-
 const speedMultiplier = 60 / updatesPerSecond
+
 export const GAME_WIDTH = 320
-export const PADDLE_OFFSET = 150
+export const PADDLE_OFFSET = 100
+
+// Render only part of game screen to add space for controlling your paddle
 export const GAME_RENDERED_HEIGHT = 600
 export const GAME_HEIGHT = GAME_RENDERED_HEIGHT + PADDLE_OFFSET / 2
 
@@ -79,16 +82,16 @@ function ballUpdate(
   const bottom = ball.position[1] + BALL_RADIUS
 
   if (left < 0) {
-    // hitting the left wall
+    // Hitting the left wall
     ball.position[0] = BALL_RADIUS
     ball.speed[0] *= -1
   } else if (right > GAME_WIDTH) {
-    // hitting the right wall
+    // Hitting the right wall
     ball.position[0] = GAME_WIDTH - BALL_RADIUS
     ball.speed[0] *= -1
   }
 
-  //top paddle
+  // Hitting the top paddle
   if (
     top < TOP_PADDLE_POSITION + PADDLE_HEIGHT &&
     bottom > TOP_PADDLE_POSITION &&
@@ -105,7 +108,7 @@ function ballUpdate(
     game.paddleHit = 0
   }
 
-  //bottom paddle
+  // Hitting the bottom paddle
   if (
     top < BOTTOM_PADDLE_POSITION + PADDLE_HEIGHT &&
     bottom > BOTTOM_PADDLE_POSITION &&
@@ -122,7 +125,7 @@ function ballUpdate(
     game.paddleHit = 1
   }
 
-  //score
+  // Add point if ball scores and reset
   if (top < 0 || bottom > GAME_HEIGHT) {
     if (top < 0) {
       game.players[1].score++
@@ -194,9 +197,10 @@ Rune.initLogic({
     }
   },
   actions: {
-    setPosition: (position, { game, playerId }) => {
+    // Player sets position they're moving towards.
+    // Update function then moves paddle towards that.
+    setDesiredPosition: (position, { game, playerId }) => {
       const index = game.players[0].id === playerId ? 0 : 1
-
       game.desiredPosition[index] = position
     },
   },
@@ -206,6 +210,7 @@ Rune.initLogic({
     for (let i = 0; i < 2; i++) {
       const desiredPosition = game.desiredPosition[i]
 
+      // Move towards desired position
       if (desiredPosition !== null) {
         const distance = desiredPosition - game.paddles[i].position
 

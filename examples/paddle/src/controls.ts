@@ -1,5 +1,5 @@
-import {throttle} from "./helpers.ts";
-import {GAME_WIDTH, PADDLE_WIDTH} from "./logic.ts";
+import { throttle } from "./helpers.ts"
+import { GAME_WIDTH, PADDLE_WIDTH } from "./logic.ts"
 
 export function initControls() {
   const move = throttle((x: number) => {
@@ -11,12 +11,11 @@ export function initControls() {
       )
     )
 
-    Rune.actions.setPosition(position)
+    Rune.actions.setDesiredPosition(position)
   }, 100)
 
   window.addEventListener("pointerdown", (event) => move(event.clientX))
   window.addEventListener("pointermove", (event) => {
     move(event.clientX)
   })
-
 }

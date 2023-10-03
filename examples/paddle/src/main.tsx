@@ -29,7 +29,7 @@ const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
   maxSpeed: PADDLE_SPEED + 1,
   timeToMaxSpeed: 0,
 })
-const playerPaddleInterpolator = Rune.interpolator<number>()
+let playerPaddleInterpolator = Rune.interpolator<number>()
 
 const { canvas, context } = setupCanvas()
 
@@ -77,6 +77,14 @@ window.onload = function () {
         if (yourPlayerId) {
           initControls()
         }
+
+        if (!yourPlayerId) {
+          //In case client is a spectator, use latency interpolator for both paddles
+          playerPaddleInterpolator = Rune.interpolatorLatency<number>({
+            maxSpeed: PADDLE_SPEED + 1,
+            timeToMaxSpeed: 0,
+          })
+        }
       }
 
       if (game.totalScore === futureGame.totalScore) {
@@ -106,6 +114,14 @@ window.onload = function () {
           audio.playerScore.play()
         } else {
           audio.opponentScore.play()
+        }
+
+        if (!yourPlayerId) {
+          //TODO, fix with correct type when SDK exports ist
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-extra-semi
+          ;(playerPaddleInterpolator as any).jump(
+            game.paddles[opponentIndex].position
+          )
         }
 
         opponentPaddleInterpolator.jump(game.paddles[opponentIndex].position)

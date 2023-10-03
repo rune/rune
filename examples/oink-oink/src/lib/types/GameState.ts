@@ -3,12 +3,19 @@ import { PlayerId } from "rune-games-sdk/multiplayer"
 export const animals = [
   "dog",
   "lion",
-  "pig",
+  "duck",
   "cat",
-  "elephant",
-  "frog",
+  "horse",
+  "chicken",
   "cow",
   "sheep",
+  "elephant",
+  "goat",
+  "mouse",
+  "owl",
+  "pig",
+  "frog",
+  "monkey",
 ] as const
 
 export const emotions = [
@@ -33,22 +40,31 @@ export type Guess = {
   correct: boolean
 }
 
+type Score = {
+  guessing: number
+  acting: number
+}
+
 export interface GameState {
   players: {
     id: PlayerId
     readyToStart: boolean
     actor: boolean
-    score: number
-    latestTurnScore: number
-    latestRoundScore: number
+    score: Score
+    latestTurnScore: Score
+    latestRoundScore: Score
   }[]
   gameStarted: boolean
   round: number
+  animals: Animal[]
+  emotions: Emotion[]
   currentTurn: {
     animal: Animal
     emotion: Emotion
     stage: "countdown" | "acting" | "endOfTurn" | "result"
-    timerStartedAt?: number
+    timerStartedAt: number
+    latestActingStartedAt: number
+    showSkipTurnButton: boolean
   } | null
   guesses: Guess[]
   gameOver: boolean

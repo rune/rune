@@ -28,7 +28,9 @@ export const Game = memo(() => {
 
   const prevLatestGuessRef = useRef(latestGuess)
   useEffect(() => {
-    if (latestGuess !== prevLatestGuessRef.current) {
+    if (
+      JSON.stringify(latestGuess) !== JSON.stringify(prevLatestGuessRef.current)
+    ) {
       if (latestGuess?.correct) setDisplayedLatestCorrectGuess(latestGuess)
       prevLatestGuessRef.current = latestGuess
     }

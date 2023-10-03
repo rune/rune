@@ -2,7 +2,7 @@ import { art } from "../art/art"
 import styled from "styled-components/macro"
 import { rel } from "../../../style/rel"
 import { useAtomValue } from "jotai"
-import { $currentTurn } from "../../../state/$state"
+import { $currentTurn, $animals, $emotions } from "../../../state/$state"
 import { Player } from "@lottiefiles/react-lottie-player"
 
 import speakingAnimation from "../lottie/speaking.json"
@@ -12,11 +12,22 @@ import { useMemo, memo } from "react"
 
 export const Acting = memo(() => {
   const currentTurn = useAtomValue($currentTurn)
+  const animals = useAtomValue($animals)
+  const emotions = useAtomValue($emotions)
 
-  const animalImgs = useMemo(() => Object.values(art.animals), [])
-  const emotionImgs = useMemo(() => Object.values(art.emotions), [])
+  const animalImgs = useMemo(
+    () => animals.map((animal) => art.animals[animal]),
+    [animals]
+  )
+  const emotionImgs = useMemo(
+    () => emotions.map((emotion) => art.emotions[emotion]),
+    [emotions]
+  )
 
   if (!currentTurn) return null
+
+  const selectedAnimal = art.animals[currentTurn.animal]
+  const selectedEmoji = art.emotions[currentTurn.emotion]
 
   return (
     <Root>
@@ -24,18 +35,19 @@ export const Acting = memo(() => {
       <div style={{ height: rel(8) }} />
       <SpeakingHead autoplay loop src={speakingAnimation} />
       <div style={{ height: rel(15) }} />
-      <Carousel
-        big
-        values={animalImgs}
-        selected={art.animals[currentTurn.animal]}
-      />
-      <div style={{ height: rel(48) }} />
-      <Carousel
-        values={emotionImgs}
-        selected={art.emotions[currentTurn.emotion]}
-      />
+      <Carousel big values={animalImgs} selected={selectedAnimal} />
+      <div style={{ height: rel(15) }} />
+      <Carousel values={emotionImgs} selected={selectedEmoji} />
+      <div style={{ height: rel(15) }} />
+      <SkipTurnButton
+        style={{ opacity: currentTurn.showSkipTurnButton ? 1 : 0 }}
+        onClick={() => Rune.actions.skipTurn()}
+      >
+        Skip
+      </SkipTurnButton>
       <div style={{ height: rel(15) }} />
       <Label>Guesses</Label>
+      <div style={{ height: rel(15) }} />
       <RisingGuessesView />
     </Root>
   )
@@ -55,4 +67,18 @@ const Label = styled.div`
 
 const SpeakingHead = styled(Player)`
   height: ${rel(37)};
+`
+
+const SkipTurnButton = styled.div`
+  width: ${rel(168)};
+  transition: opacity 150ms ease-out;
+
+  background: #280a3d;
+  border-radius: ${rel(12)};
+  border: ${rel(2)} solid #6c1c92;
+  padding: ${rel(8)};
+
+  font-size: ${rel(24)};
+  color: #8539ba;
+  text-align: center;
 `

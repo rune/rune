@@ -5,7 +5,7 @@ import { art } from "./art/art"
 import { useState, useEffect, memo, useMemo } from "react"
 import { sounds } from "../../sounds/sounds"
 import { useAtomValue } from "jotai"
-import { $currentTurn } from "../../state/$state"
+import { $currentTurn, $round } from "../../state/$state"
 
 const buttonHintDelay = 1.5
 
@@ -13,6 +13,7 @@ export const Guessing = memo(() => {
   const [pendingAnimal, setPendingAnimal] = useState<Animal>()
   const [pendingEmotion, setPendingEmotion] = useState<Emotion>()
   const currentTurn = useAtomValue($currentTurn)
+  const round = useAtomValue($round)
 
   const invalid = useMemo(
     () =>
@@ -34,13 +35,14 @@ export const Guessing = memo(() => {
         Rune.actions.makeGuess({
           animal: pendingAnimal,
           emotion: pendingEmotion,
+          round
         })
         setPendingAnimal(undefined)
         setPendingEmotion(undefined)
       }, 500)
       return () => clearTimeout(handle)
     }
-  }, [pendingAnimal, pendingEmotion])
+  }, [pendingAnimal, pendingEmotion, round])
 
   return (
     <Root>

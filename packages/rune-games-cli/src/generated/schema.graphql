@@ -22,7 +22,6 @@ type CreateGamePayload {
 }
 
 input CreateGameVersionInput {
-  challengeSupport: Boolean
   clientMutationId: String
   content: Upload!
   gameId: Int!
@@ -45,13 +44,16 @@ A point in time as described by the [ISO
 """
 scalar Datetime
 
-type DevTeam {
-  admin: Boolean!
-  createdAt: Datetime!
-  email: String
+type Game {
+  blurredImgDataUrl: String
 
-  """Reads and enables pagination through a set of `Game`."""
-  games(
+  """(Denormalized) Total number of comments ."""
+  commentCount: Int!
+  createdAt: Datetime!
+  description: String
+
+  """Reads and enables pagination through a set of `GameDev`."""
+  gameDevs(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
 
@@ -61,7 +63,7 @@ type DevTeam {
     """
     A condition to be used in determining which values should be returned by the collection.
     """
-    condition: GameCondition
+    condition: GameDevCondition
 
     """Only read the first `n` values of the set."""
     first: Int
@@ -75,93 +77,9 @@ type DevTeam {
     """
     offset: Int
 
-    """The method to use when ordering `Game`."""
-    orderBy: [GamesOrderBy!] = [PRIMARY_KEY_ASC]
-  ): GamesConnection!
-  handle: String
-  id: Int!
-  twitter: String
-  unsubscribedFromEmailsAt: Datetime
-  updatedAt: Datetime!
-}
-
-"""
-A condition to be used against `DevTeam` object types. All fields are tested for equality and combined with a logical ‘and.’
-"""
-input DevTeamCondition {
-  """Checks for equality with the object’s `email` field."""
-  email: String
-
-  """Checks for equality with the object’s `handle` field."""
-  handle: String
-
-  """Checks for equality with the object’s `id` field."""
-  id: Int
-}
-
-"""
-Represents an update to a `DevTeam`. Fields that are set will be updated.
-"""
-input DevTeamPatch {
-  handle: String
-  twitter: String
-}
-
-"""A connection to a list of `DevTeam` values."""
-type DevTeamsConnection {
-  """
-  A list of edges which contains the `DevTeam` and cursor to aid in pagination.
-  """
-  edges: [DevTeamsEdge!]!
-
-  """A list of `DevTeam` objects."""
-  nodes: [DevTeam!]!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """The count of *all* `DevTeam` you could get from the connection."""
-  totalCount: Int!
-}
-
-"""A `DevTeam` edge in the connection."""
-type DevTeamsEdge {
-  """A cursor for use in pagination."""
-  cursor: Cursor
-
-  """The `DevTeam` at the end of the edge."""
-  node: DevTeam!
-}
-
-"""Methods to use when ordering `DevTeam`."""
-enum DevTeamsOrderBy {
-  EMAIL_ASC
-  EMAIL_DESC
-  HANDLE_ASC
-  HANDLE_DESC
-  ID_ASC
-  ID_DESC
-  NATURAL
-  PRIMARY_KEY_ASC
-  PRIMARY_KEY_DESC
-}
-
-type Game {
-  blurredImgDataUrl: String
-
-  """
-  Challenge number that increases every day by 1 at tango.next_challenge_at
-  """
-  challengeId: Int!
-
-  """(Denormalized) Total number of comments ."""
-  commentCount: Int!
-  createdAt: Datetime!
-  description: String
-
-  """Reads a single `DevTeam` that is related to this `Game`."""
-  devTeam: DevTeam
-  devTeamId: Int!
+    """The method to use when ordering `GameDev`."""
+    orderBy: [GameDevsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): GameDevsConnection!
 
   """Reads and enables pagination through a set of `GameVersion`."""
   gameVersions(
@@ -194,19 +112,9 @@ type Game {
   id: Int!
   logoUrl: String!
 
-  """
-  NULL means that the challenge is disabled. Once enabled, challenge cannot be disabled.
-  """
-  nextChallengeAt: Datetime
-
-  """
-  Sum of the deprecated game_session table rows
-  with duration longer than 3s
-  as well as the new game_play table rows
-  with duration longer than 3s.
-  Note that the sum exludes game plays longer than 86.4s created between 2022-05-26 and 2022-05-31 due to RUNE-7891.
-  """
+  """@deprecated: Not used"""
   playCount: Int!
+  previewImgUrl: String
   title: String!
   type: GameType!
   updatedAt: Datetime!
@@ -216,14 +124,65 @@ type Game {
 A condition to be used against `Game` object types. All fields are tested for equality and combined with a logical ‘and.’
 """
 input GameCondition {
-  """Checks for equality with the object’s `devTeamId` field."""
-  devTeamId: Int
-
   """Checks for equality with the object’s `id` field."""
   id: Int
+}
 
-  """Checks for equality with the object’s `nextChallengeAt` field."""
-  nextChallengeAt: Datetime
+type GameDev {
+  displayName: String
+
+  """Reads a single `Game` that is related to this `GameDev`."""
+  game: Game
+  gameId: Int!
+  type: GameDevType!
+  userId: Int!
+}
+
+"""
+A condition to be used against `GameDev` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input GameDevCondition {
+  """Checks for equality with the object’s `gameId` field."""
+  gameId: Int
+}
+
+enum GameDevType {
+  ADMIN
+}
+
+"""A connection to a list of `GameDev` values."""
+type GameDevsConnection {
+  """
+  A list of edges which contains the `GameDev` and cursor to aid in pagination.
+  """
+  edges: [GameDevsEdge!]!
+
+  """A list of `GameDev` objects."""
+  nodes: [GameDev!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `GameDev` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `GameDev` edge in the connection."""
+type GameDevsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `GameDev` at the end of the edge."""
+  node: GameDev!
+}
+
+"""Methods to use when ordering `GameDev`."""
+enum GameDevsOrderBy {
+  GAME_ID_ASC
+  GAME_ID_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
 }
 
 input GameFile {
@@ -235,7 +194,6 @@ input GameFile {
 enum GameType {
   EXTERNAL
   MULTIPLAYER
-  SINGLEPLAYER
 }
 
 type GameValidationError {
@@ -253,18 +211,18 @@ type GameValidationLintError {
 }
 
 type GameVersion {
-  createdByDevTeamId: Int
+  createdByDevId: Int
 
   """Reads a single `Game` that is related to this `GameVersion`."""
   game: Game
   gameId: Int!
   gameVersionId: Int!
+  key: String!
   multiplayerMaxPlayers: Int!
   multiplayerMinPlayers: Int!
   multiplayerSupportsPlayerJoining: Boolean!
   multiplayerSupportsPlayerLeaving: Boolean!
   status: GameVersionStatus!
-  supportsChallenge: Boolean!
 }
 
 """
@@ -274,6 +232,9 @@ for equality and combined with a logical ‘and.’
 input GameVersionCondition {
   """Checks for equality with the object’s `gameId` field."""
   gameId: Int
+
+  """Checks for equality with the object’s `key` field."""
+  key: String
 }
 
 enum GameVersionStatus {
@@ -282,7 +243,6 @@ enum GameVersionStatus {
   INACTIVE
   IN_REVIEW
   UPLOADING
-  WAITING_FOR_RELEASE
 }
 
 """A connection to a list of `GameVersion` values."""
@@ -315,6 +275,8 @@ type GameVersionsEdge {
 enum GameVersionsOrderBy {
   GAME_ID_ASC
   GAME_ID_DESC
+  KEY_ASC
+  KEY_DESC
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
@@ -348,15 +310,18 @@ type GamesEdge {
 
 """Methods to use when ordering `Game`."""
 enum GamesOrderBy {
-  DEV_TEAM_ID_ASC
-  DEV_TEAM_ID_DESC
   ID_ASC
   ID_DESC
   NATURAL
-  NEXT_CHALLENGE_AT_ASC
-  NEXT_CHALLENGE_AT_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
+}
+
+type Me {
+  admin: Boolean!
+  devId: Int!
+  displayName: String!
+  email: String
 }
 
 """
@@ -387,30 +352,6 @@ type Mutation {
     """
     input: StartVerificationInput!
   ): StartVerificationPayload!
-
-  """Updates a single `DevTeam` using a unique key and a patch."""
-  updateDevTeamByEmail(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: UpdateDevTeamByEmailInput!
-  ): UpdateDevTeamPayload
-
-  """Updates a single `DevTeam` using a unique key and a patch."""
-  updateDevTeamByHandle(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: UpdateDevTeamByHandleInput!
-  ): UpdateDevTeamPayload
-
-  """Updates a single `DevTeam` using a unique key and a patch."""
-  updateDevTeamById(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: UpdateDevTeamByIdInput!
-  ): UpdateDevTeamPayload
   updateGame(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -448,12 +389,11 @@ type PageInfo {
 
 """The root query type which gives access points into the data universe."""
 type Query {
-  devTeamByEmail(email: String!): DevTeam
-  devTeamByHandle(handle: String!): DevTeam
-  devTeamById(id: Int!): DevTeam
+  gameById(id: Int!): Game
+  gameDevByGameIdAndUserId(gameId: Int!, userId: Int!): GameDev
 
-  """Reads and enables pagination through a set of `DevTeam`."""
-  devTeams(
+  """Reads and enables pagination through a set of `GameDev`."""
+  gameDevs(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
 
@@ -463,7 +403,7 @@ type Query {
     """
     A condition to be used in determining which values should be returned by the collection.
     """
-    condition: DevTeamCondition
+    condition: GameDevCondition
 
     """Only read the first `n` values of the set."""
     first: Int
@@ -477,11 +417,11 @@ type Query {
     """
     offset: Int
 
-    """The method to use when ordering `DevTeam`."""
-    orderBy: [DevTeamsOrderBy!] = [PRIMARY_KEY_ASC]
-  ): DevTeamsConnection
-  gameById(id: Int!): Game
+    """The method to use when ordering `GameDev`."""
+    orderBy: [GameDevsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): GameDevsConnection
   gameVersionByGameIdAndGameVersionId(gameId: Int!, gameVersionId: Int!): GameVersion
+  gameVersionByKey(key: String!): GameVersion
 
   """Reads and enables pagination through a set of `GameVersion`."""
   gameVersions(
@@ -540,13 +480,74 @@ type Query {
     """The method to use when ordering `Game`."""
     orderBy: [GamesOrderBy!] = [PRIMARY_KEY_ASC]
   ): GamesConnection
-  me: DevTeam!
+  me: Me!
 
   """
   Exposes the root query type nested one level down. This is helpful for Relay 1
   which can only query top level fields if they are in a particular form.
   """
   query: Query!
+
+  """Reads and enables pagination through a set of `UserPrivateReadonly`."""
+  userPrivateReadonlies(
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserPrivateReadonlyCondition
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """The method to use when ordering `UserPrivateReadonly`."""
+    orderBy: [UserPrivateReadonliesOrderBy!] = [NATURAL]
+  ): UserPrivateReadonliesConnection
+  userPrivateReadonlyByEmail(email: String!): UserPrivateReadonly
+  userPrivateReadonlyByUserId(userId: Int!): UserPrivateReadonly
+  userProfileEditableByUserId(userId: Int!): UserProfileEditable
+
+  """Reads and enables pagination through a set of `UserProfileEditable`."""
+  userProfileEditables(
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserProfileEditableCondition
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """The method to use when ordering `UserProfileEditable`."""
+    orderBy: [UserProfileEditablesOrderBy!] = [NATURAL]
+  ): UserProfileEditablesConnection
 }
 
 input StartVerificationInput {
@@ -559,79 +560,12 @@ type StartVerificationPayload {
   verificationToken: String!
 }
 
-"""All input for the `updateDevTeamByEmail` mutation."""
-input UpdateDevTeamByEmailInput {
-  """
-  An arbitrary string value with no semantic meaning. Will be included in the
-  payload verbatim. May be used to track mutations by the client.
-  """
-  clientMutationId: String
-  email: String!
-
-  """
-  An object where the defined keys will be set on the `DevTeam` being updated.
-  """
-  patch: DevTeamPatch!
-}
-
-"""All input for the `updateDevTeamByHandle` mutation."""
-input UpdateDevTeamByHandleInput {
-  """
-  An arbitrary string value with no semantic meaning. Will be included in the
-  payload verbatim. May be used to track mutations by the client.
-  """
-  clientMutationId: String
-  handle: String!
-
-  """
-  An object where the defined keys will be set on the `DevTeam` being updated.
-  """
-  patch: DevTeamPatch!
-}
-
-"""All input for the `updateDevTeamById` mutation."""
-input UpdateDevTeamByIdInput {
-  """
-  An arbitrary string value with no semantic meaning. Will be included in the
-  payload verbatim. May be used to track mutations by the client.
-  """
-  clientMutationId: String
-  id: Int!
-
-  """
-  An object where the defined keys will be set on the `DevTeam` being updated.
-  """
-  patch: DevTeamPatch!
-}
-
-"""The output of our update `DevTeam` mutation."""
-type UpdateDevTeamPayload {
-  """
-  The exact same `clientMutationId` that was provided in the mutation input,
-  unchanged and unused. May be used by a client to track mutations.
-  """
-  clientMutationId: String
-
-  """The `DevTeam` that was updated by this mutation."""
-  devTeam: DevTeam
-
-  """An edge for our `DevTeam`. May be used by Relay 1."""
-  devTeamEdge(
-    """The method to use when ordering `DevTeam`."""
-    orderBy: [DevTeamsOrderBy!] = [PRIMARY_KEY_ASC]
-  ): DevTeamsEdge
-
-  """
-  Our root query field type. Allows us to run any query from our mutation payload.
-  """
-  query: Query
-}
-
 input UpdateGameInput {
   clientMutationId: String
   description: String
   gameId: Int!
   logo: Upload
+  previewImg: Upload
   title: String
 }
 
@@ -654,6 +588,112 @@ type UpdateGameSdkPayload {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+"""A connection to a list of `UserPrivateReadonly` values."""
+type UserPrivateReadonliesConnection {
+  """
+  A list of edges which contains the `UserPrivateReadonly` and cursor to aid in pagination.
+  """
+  edges: [UserPrivateReadonliesEdge!]!
+
+  """A list of `UserPrivateReadonly` objects."""
+  nodes: [UserPrivateReadonly!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """
+  The count of *all* `UserPrivateReadonly` you could get from the connection.
+  """
+  totalCount: Int!
+}
+
+"""A `UserPrivateReadonly` edge in the connection."""
+type UserPrivateReadonliesEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `UserPrivateReadonly` at the end of the edge."""
+  node: UserPrivateReadonly!
+}
+
+"""Methods to use when ordering `UserPrivateReadonly`."""
+enum UserPrivateReadonliesOrderBy {
+  EMAIL_ASC
+  EMAIL_DESC
+  NATURAL
+  USER_ID_ASC
+  USER_ID_DESC
+}
+
+"""
+Contains sensitive information that can only be read by the user themself. They cannot update this table directly as that could cause issues with data integrity (e.g. phone verification, current room, etc.).
+"""
+type UserPrivateReadonly {
+  email: String
+  userId: Int!
+}
+
+"""
+A condition to be used against `UserPrivateReadonly` object types. All fields
+are tested for equality and combined with a logical ‘and.’
+"""
+input UserPrivateReadonlyCondition {
+  """Checks for equality with the object’s `email` field."""
+  email: String
+
+  """Checks for equality with the object’s `userId` field."""
+  userId: Int
+}
+
+type UserProfileEditable {
+  displayName: String!
+  userId: Int!
+}
+
+"""
+A condition to be used against `UserProfileEditable` object types. All fields
+are tested for equality and combined with a logical ‘and.’
+"""
+input UserProfileEditableCondition {
+  """Checks for equality with the object’s `userId` field."""
+  userId: Int
+}
+
+"""A connection to a list of `UserProfileEditable` values."""
+type UserProfileEditablesConnection {
+  """
+  A list of edges which contains the `UserProfileEditable` and cursor to aid in pagination.
+  """
+  edges: [UserProfileEditablesEdge!]!
+
+  """A list of `UserProfileEditable` objects."""
+  nodes: [UserProfileEditable!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """
+  The count of *all* `UserProfileEditable` you could get from the connection.
+  """
+  totalCount: Int!
+}
+
+"""A `UserProfileEditable` edge in the connection."""
+type UserProfileEditablesEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `UserProfileEditable` at the end of the edge."""
+  node: UserProfileEditable!
+}
+
+"""Methods to use when ordering `UserProfileEditable`."""
+enum UserProfileEditablesOrderBy {
+  NATURAL
+  USER_ID_ASC
+  USER_ID_DESC
+}
 
 input ValidateGameInput {
   clientMutationId: String

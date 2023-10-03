@@ -1,28 +1,40 @@
-import { pickRandom } from "./lib/pickRandom"
 import { calculateDistanceKm } from "./lib/calculateDistanceKm"
 import { calculateScore } from "./lib/calculateScore"
 import { panoramas } from "./lib/data/panoramasLogic"
 import { GameState } from "./lib/types/GameState"
 import { shouldTriggerGameOver } from "./lib/shouldTriggerGameOver"
 import { triggerGameOver } from "./lib/triggerGameOver"
+import { pickRandom } from "./lib/pickRandom"
+import { generateWeightedPanoramas } from "./lib/generateWeightedPanoramas"
 
 export const numRounds = 5
 export const roundDuration = 25
+
+// weightedPanoramas is generated for pickRandom
+// The chance of picking panorama with higher weight increases because it appears more times in weightedPanoramas array
+const weightedPanoramas = generateWeightedPanoramas(panoramas)
 
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (playerIds) => {
     const rounds: GameState["rounds"] = []
-    const remainingPanoramas = [...panoramas]
+    const usedPanoramas = new Set<number>()
 
     for (let i = 0; i < numRounds; i++) {
-      const randomPanorama = pickRandom(remainingPanoramas)
-      remainingPanoramas.splice(remainingPanoramas.indexOf(randomPanorama), 1)
+      // Pick random weighted panorama that has not been used yet
+      let newPanoramaIdx = undefined
+      while (!newPanoramaIdx || usedPanoramas.has(newPanoramaIdx)) {
+        newPanoramaIdx = pickRandom(weightedPanoramas)
+      }
+
+      const [longitude, latitude] = panoramas[newPanoramaIdx]
+
       rounds.push({
-        index: panoramas.indexOf(randomPanorama),
-        coords: randomPanorama,
+        index: newPanoramaIdx,
+        coords: [longitude, latitude],
       })
+      usedPanoramas.add(newPanoramaIdx)
     }
 
     return {

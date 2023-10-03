@@ -41,8 +41,9 @@ Rune.initLogic({
 
       startGameCheck(game)
     },
-    makeGuess: ({ animal, emotion }, { game, playerId }) => {
+    makeGuess: ({ animal, emotion, round }, { game, playerId }) => {
       if (!game.currentTurn) throw Rune.invalidAction()
+      if (game.round !== round) throw Rune.invalidAction()
 
       const guess = {
         playerId,

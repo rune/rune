@@ -1,0 +1,9 @@
+{
+  "include": [
+    "src/**/*.ts",
+    "Rune.d.ts"
+  ],
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
+}

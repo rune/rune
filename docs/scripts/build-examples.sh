@@ -25,8 +25,15 @@ yarn
 ../../scripts/copy-assets.sh pinpoint && yarn build
 cp -r build/. ../../docs/static/_examples/pinpoint
 
-#
+# OinkOink
 cd ../oink-oink
 yarn
 ../../scripts/copy-assets.sh oink-oink && yarn build
 cp -r build/. ../../docs/static/_examples/oink-oink
+
+# Paddle
+cd ../paddle
+yarn
+../../scripts/copy-assets.sh paddle && yarn build
+cp -r dist/. ../../docs/static/_examples/paddle
+perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_examples/paddle/index.html

@@ -83,7 +83,7 @@ By default a game will end if a player leaves (see [Joining and Leaving](advance
 
 ### `update({game: any,  allPlayerIds: string[]}) => void` _optional_
 
-Function that is executed every second. See [Using Time in your Game](advanced/using-time-in-your-game.md#update-function).
+Function that is executed every second. See [Using Time in your Game](advanced/real-time-games.md#update-function).
 
 ## `Rune.invalidAction()`
 
@@ -132,7 +132,7 @@ Rune.initLogic({
 
 ## `Rune.gameTimeInSeconds()`
 
-Returns the amount of seconds that have passed since the start of the game. See [Using Time in your Game](advanced/using-time-in-your-game.md#game-time).
+Returns the amount of seconds that have passed since the start of the game. See [Using Time in your Game](advanced/real-time-games.md#game-time).
 
 ### `players: Record<string, "WON" | "LOST" | number>`
 

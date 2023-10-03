@@ -1,8 +1,7 @@
-import { Box } from "ink"
+import { Box, Text } from "ink"
 import React, { useEffect, useState } from "react"
 
-import { GameType } from "../../generated/types.js"
-import { useGames } from "../../gql/useGames.js"
+import { useGames, useMyGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
 
 import { ChooseGameStep } from "./ChooseGameStep.js"
@@ -14,7 +13,6 @@ import { ReadyForReleaseStep } from "./ReadyForReleaseStep.js"
 
 export function Upload() {
   const [gameDir, setGameDir] = useState<string | undefined>()
-  const [multiplayer, setMultiplayer] = useState<boolean>(false)
   const [gameId, setGameId] = useState<number | null | undefined>()
   const [readyForRelease, setReadyForRelease] = useState<boolean | undefined>(
     undefined
@@ -22,18 +20,22 @@ export function Upload() {
   const [needConfirmation, setNeedConfirmation] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
   const { me } = useMe()
-  const { games } = useGames({ condition: { devTeamId: me?.id }, skip: !me })
+  const { games } = useGames({ skip: !me })
+  const { myGames } = useMyGames({ games, devId: me?.devId })
 
   useEffect(() => {
-    if (games && games.length > 1) setNeedConfirmation(true)
-  }, [games])
+    if (myGames && myGames.length > 1) setNeedConfirmation(true)
+  }, [myGames])
 
   return (
     <Box flexDirection="column">
+      <Text>
+        When your game is published, your Rune profile will be shown next to the
+        game.
+      </Text>
       <GameDirInputStep
-        onComplete={({ gameDir, multiplayer }) => {
+        onComplete={({ gameDir }) => {
           setGameDir(gameDir)
-          setMultiplayer(multiplayer)
         }}
       />
       {gameDir !== undefined && (
@@ -43,10 +45,7 @@ export function Upload() {
         <ChooseGameStep currentGameId={gameId} onComplete={setGameId} />
       )}
       {gameId === null && readyForRelease !== undefined && (
-        <CreateGameStep
-          type={multiplayer ? GameType.MULTIPLAYER : GameType.SINGLEPLAYER}
-          onComplete={setGameId}
-        />
+        <CreateGameStep onComplete={setGameId} />
       )}
       {!!gameId &&
         !!gameDir &&
@@ -56,7 +55,6 @@ export function Upload() {
             gameId={gameId}
             gameDir={gameDir}
             readyForRelease={readyForRelease}
-            multiplayer={multiplayer}
           />
         ) : (
           <ConfirmationStep

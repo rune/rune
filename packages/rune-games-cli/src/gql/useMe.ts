@@ -15,11 +15,10 @@ export function useMe({ skip }: { skip?: boolean } = {}) {
 gql`
   query Me {
     me {
-      id
-      handle
+      devId
+      displayName
       email
       admin
-      twitter
     }
   }
 `

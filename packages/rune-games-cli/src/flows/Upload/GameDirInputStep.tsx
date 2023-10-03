@@ -24,7 +24,7 @@ const TextInput = TextInputImport.default as typeof TextInputImport
 export function GameDirInputStep({
   onComplete,
 }: {
-  onComplete: (args: { gameDir: string; multiplayer: boolean }) => void
+  onComplete: (args: { gameDir: string }) => void
 }) {
   const [gameDir, setGameDir] = useState(() =>
     findGameDir(cli.input[1] ?? path.resolve("."))
@@ -57,14 +57,9 @@ export function GameDirInputStep({
 
   useEffect(() => {
     if (validateGameResult?.valid) {
-      onComplete({ gameDir, multiplayer: !!validateGameResult.multiplayer })
+      onComplete({ gameDir })
     }
-  }, [
-    gameDir,
-    onComplete,
-    validateGameResult?.multiplayer,
-    validateGameResult?.valid,
-  ])
+  }, [gameDir, onComplete, validateGameResult?.valid])
 
   useEffect(() => {
     if (!existsGameDir) {

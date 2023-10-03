@@ -25,7 +25,6 @@ gql`
         nodes {
           gameId
           gameVersionId
-          supportsChallenge
           status
         }
       }

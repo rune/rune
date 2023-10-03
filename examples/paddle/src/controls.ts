@@ -11,7 +11,7 @@ export function initControls() {
       )
     )
 
-    Rune.actions.setDesiredPosition(position)
+    Rune.actions.setPosition(position)
   }, 100)
 
   window.addEventListener("pointerdown", (event) => move(event.clientX))

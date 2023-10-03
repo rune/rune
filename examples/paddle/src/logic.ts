@@ -199,7 +199,7 @@ Rune.initLogic({
   actions: {
     // Player sets position they're moving towards.
     // Update function then moves paddle towards that.
-    setDesiredPosition: (position, { game, playerId }) => {
+    setPosition: (position, { game, playerId }) => {
       const index = game.players[0].id === playerId ? 0 : 1
       game.desiredPosition[index] = position
     },

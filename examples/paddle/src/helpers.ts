@@ -1,3 +1,4 @@
+//https://stackoverflow.com/a/10511598
 export function fittingString(
   c: CanvasRenderingContext2D,
   str: string,

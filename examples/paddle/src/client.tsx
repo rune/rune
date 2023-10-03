@@ -16,7 +16,7 @@ import {
   SCORE_DURATION,
   setupCanvas,
 } from "./render"
-import { Players } from "rune-games-sdk"
+import { Interpolator, InterpolatorLatency, Players } from "rune-games-sdk"
 import { initControls } from "./controls"
 
 import playerScoreSfx from "./assets/audio/PlayerScore.mp3"
@@ -29,7 +29,9 @@ const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
   maxSpeed: PADDLE_SPEED + 1,
   timeToMaxSpeed: 0,
 })
-let playerPaddleInterpolator = Rune.interpolator<number>()
+let playerPaddleInterpolator:
+  | InterpolatorLatency<number>
+  | Interpolator<number> = Rune.interpolator<number>()
 
 const { canvas, context } = setupCanvas()
 
@@ -117,9 +119,8 @@ window.onload = function () {
         }
 
         if (!yourPlayerId) {
-          //TODO, fix with correct type when SDK exports ist
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-extra-semi
-          ;(playerPaddleInterpolator as any).jump(
+          // eslint-disable-next-line @typescript-eslint/no-extra-semi
+          ;(playerPaddleInterpolator as InterpolatorLatency<number>).jump(
             game.paddles[opponentIndex].position
           )
         }

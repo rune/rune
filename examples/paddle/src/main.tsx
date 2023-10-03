@@ -15,7 +15,12 @@ import {
   setupCanvas,
 } from "./render"
 import { Players } from "rune-games-sdk"
-import {initControls} from "./controls";
+import { initControls } from "./controls"
+
+import playerScoreSfx from "./assets/PlayerScore.mp3"
+import opponentScoreSfx from "./assets/OponentScore.mp3"
+import opponentHitSfx from "./assets/OpponentHit.mp3"
+import playerHitSfx from "./assets/PlayerHit.wav"
 
 const ballInterpolator = Rune.interpolator<[number, number]>()
 const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
@@ -37,11 +42,18 @@ let playerIndex = 0
 let isReady = false
 const images = [new Image(22, 22), new Image(22, 22)]
 
-let lastScoreAt= 0
+let lastScoreAt = 0
 let lastScoredBy: number | null = null
 
 window.onload = function () {
   document.body.appendChild(canvas)
+
+  const audio = {
+    playerScore: new Audio(playerScoreSfx),
+    opponentScore: new Audio(opponentScoreSfx),
+    playerHit: new Audio(playerHitSfx),
+    opponentHit: new Audio(opponentHitSfx),
+  }
 
   Rune.initClient({
     onChange: (params) => {
@@ -88,7 +100,24 @@ window.onload = function () {
         lastScoredBy =
           params.previousGame.players[0].score !== game.players[0].score ? 0 : 1
 
+        if (lastScoredBy === playerIndex) {
+          audio.playerScore.play()
+        } else {
+          audio.opponentScore.play()
+        }
+
         opponentPaddleInterpolator.jump(game.paddles[opponentIndex].position)
+      }
+
+      if (
+        game.paddleHit !== null &&
+        params.previousGame.paddleHit !== game.paddleHit
+      ) {
+        if (playerIndex === game.paddleHit) {
+          audio.playerHit.play()
+        } else {
+          audio.opponentHit.play()
+        }
       }
     },
   })
@@ -113,7 +142,9 @@ function render() {
       context,
       GAME_HEIGHT - 25,
       images[playerIndex],
-      yourPlayerId !== undefined ? "You" : players[game.players[playerIndex].id].displayName,
+      yourPlayerId !== undefined
+        ? "You"
+        : players[game.players[playerIndex].id].displayName,
       game.players[playerIndex].score
     )
 

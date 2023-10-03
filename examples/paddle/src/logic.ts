@@ -43,6 +43,7 @@ export interface GameState {
   paddles: [Paddle, Paddle]
   players: [Player, Player]
   totalScore: number
+  paddleHit: number | null
 }
 
 export type GameActions = {
@@ -100,6 +101,8 @@ function ballUpdate(
     ]
 
     ball.position[1] += ball.speed[1]
+
+    game.paddleHit = 0
   }
 
   //bottom paddle
@@ -115,6 +118,8 @@ function ballUpdate(
     ]
 
     ball.position[1] += ball.speed[1]
+
+    game.paddleHit = 1
   }
 
   //score
@@ -185,6 +190,7 @@ Rune.initLogic({
       ],
       desiredPosition: [null, null],
       totalScore: 0,
+      paddleHit: null,
     }
   },
   actions: {
@@ -195,6 +201,8 @@ Rune.initLogic({
     },
   },
   update: ({ game }) => {
+    game.paddleHit = null
+
     for (let i = 0; i < 2; i++) {
       const desiredPosition = game.desiredPosition[i]
 

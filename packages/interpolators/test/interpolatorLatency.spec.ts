@@ -21,7 +21,7 @@ describe("interpolator", () => {
       _isOnChangeCalledByUpdate: true,
     } as any
 
-    const instance = interpolatorLatency({ maxSpeed: 5 })
+    const instance = interpolatorLatency({ maxSpeed: 5, timeToMaxSpeed: 1000 })
 
     instance.update({ game: 0, futureGame: 10 })
     expect(instance.getPosition()).toEqual(0)
@@ -49,7 +49,7 @@ describe("interpolator", () => {
   })
 
   it("should interpolate between the positions when provided with numbers & timeSinceLastUpdate is not 0", () => {
-    const instance = interpolatorLatency({ maxSpeed: 5 })
+    const instance = interpolatorLatency({ maxSpeed: 5, timeToMaxSpeed: 1000 })
 
     global.Rune = {
       msPerUpdate: 100,
@@ -72,7 +72,7 @@ describe("interpolator", () => {
   })
 
   it("should interpolate between the positions when provided with arrays", () => {
-    const instance = interpolatorLatency({ maxSpeed: 10 })
+    const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
     global.Rune = {
       msPerUpdate: 100,
@@ -94,7 +94,7 @@ describe("interpolator", () => {
   })
 
   it("should ignore update calls if _isOnChangeCalledByUpdate is false", () => {
-    const instance = interpolatorLatency({ maxSpeed: 10 })
+    const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
     global.Rune = {
       msPerUpdate: 100,
@@ -181,5 +181,22 @@ describe("interpolator", () => {
     instance200ms.update({ game: 20, futureGame: 20 })
     expect(instanceOneSecond.getPosition()).toEqual(3)
     expect(instance200ms.getPosition()).toEqual(15)
+  })
+
+  it("should not use acceleration by default", () => {
+    const instance = interpolatorLatency({ maxSpeed: 3 })
+
+    global.Rune = {
+      msPerUpdate: 100,
+      // @ts-ignore
+      _isOnChangeCalledByUpdate: true,
+      timeSinceLastUpdate: () => 0,
+    }
+
+    instance.update({ game: 0, futureGame: 20 })
+    expect(instance.getPosition()).toEqual(0)
+
+    instance.update({ game: 20, futureGame: 20 })
+    expect(instance.getPosition()).toEqual(3)
   })
 })

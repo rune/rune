@@ -36,7 +36,7 @@ function moveTowards<Dimensions extends number | number[]>(
 
 export function interpolatorLatency<Dimensions extends number | number[]>({
   maxSpeed,
-  timeToMaxSpeed = 1000,
+  timeToMaxSpeed = 0,
 }: {
   maxSpeed: number
   timeToMaxSpeed?: number
@@ -48,11 +48,18 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
 
   let size: number | null = null
 
+  let acceleration = 0
+  let useAcceleration = false
+
   function calculateSpeedSingleValue(
     interpolated: number,
     target: number,
     currentSpeed: number
   ) {
+    if (!useAcceleration) {
+      return maxSpeed
+    }
+
     if (target > interpolated) {
       return Math.min(Math.max(currentSpeed, 0) + acceleration, maxSpeed)
     } else if (target < interpolated) {
@@ -89,9 +96,6 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
     }
   }
 
-  let updatesToMaxSpeed = 0
-  let acceleration = 0
-
   return {
     update(params: { game: Dimensions; futureGame: Dimensions }) {
       if (interpolated === undefined) {
@@ -105,9 +109,10 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
         size = getDimensions(params.game)
         speed = getDefaultSpeed()
 
-        updatesToMaxSpeed = Math.floor(timeToMaxSpeed / Rune.msPerUpdate)
-
-        acceleration = maxSpeed / updatesToMaxSpeed
+        if (timeToMaxSpeed > 0) {
+          acceleration = maxSpeed / (timeToMaxSpeed / Rune.msPerUpdate)
+          useAcceleration = true
+        }
 
         return
       }

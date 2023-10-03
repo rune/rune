@@ -9011,10 +9011,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.12.0:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.12.0.tgz#8ddda1fc4729efd930c6a3db59c6ada8bb27f6d5"
-  integrity sha512-/vKtQIkzMG/ueHL5KOKyPPcMdReUrcptGsl4zltRz1Zfui4t8dzPBHpF6QniDqXILNjX7qW1zk7YKMMO6TQPzw==
+rune-games-sdk@^4.15.1:
+  version "4.15.1"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.15.1.tgz#dc568d47270d11ecddf8203e15f44a6c1252e61d"
+  integrity sha512-NPWBrzvQZyBdGvM0KLYotaaJEDQbefClIvpv8HUxaAMDCSRiKrz2AU4+fRrjUz3RHX9ZXyZRGnFSlO8o9EzppA==
   dependencies:
     base-64 "1.0.0"
     core-js "3.31.1"

@@ -1,8 +1,10 @@
 import {
   BALL_RADIUS,
   GAME_HEIGHT,
+  GAME_RENDERED_HEIGHT,
   GAME_WIDTH,
   PADDLE_HEIGHT,
+  PADDLE_OFFSET,
   PADDLE_WIDTH,
   POINTS_TO_WIN,
 } from "./logic.ts"
@@ -18,7 +20,7 @@ export function setupCanvas(): {
   canvas.height = window.innerHeight
 
   const scaleX = window.innerWidth / GAME_WIDTH
-  const scaleY = window.innerHeight / GAME_HEIGHT
+  const scaleY = window.innerHeight / GAME_RENDERED_HEIGHT
 
   canvas.style.height = "100vh"
   canvas.style.width = "100vw"
@@ -39,7 +41,7 @@ export function renderBall(
   x: number,
   y: number
 ) {
-  const yPosition = inverse ? GAME_HEIGHT - y : y
+  const yPosition = (inverse ? GAME_HEIGHT - y : y) - PADDLE_OFFSET / 2
 
   if (renderGlow) {
     const radius = 20

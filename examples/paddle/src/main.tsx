@@ -1,13 +1,13 @@
 /// <reference types="vite/client" />
 
 import {
-  BOTTOM_PADDLE_POSITION,
-  GAME_HEIGHT,
+  GAME_RENDERED_HEIGHT,
   GAME_WIDTH,
   GameState,
   MAX_BALL_SPEED,
+  PADDLE_HEIGHT,
+  PADDLE_OFFSET,
   PADDLE_SPEED,
-  TOP_PADDLE_POSITION,
 } from "./logic"
 import {
   BAD_NETWORK_DURATION,
@@ -161,7 +161,7 @@ window.onload = function () {
     context.clearRect(0, 0, canvas.width, canvas.height)
 
     context.fillStyle = "#150813"
-    context.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
+    context.fillRect(0, 0, GAME_WIDTH, GAME_RENDERED_HEIGHT)
 
     if (game) {
       renderScore(
@@ -174,7 +174,7 @@ window.onload = function () {
 
       renderScore(
         context,
-        GAME_HEIGHT - 25,
+        GAME_RENDERED_HEIGHT - 25,
         images[playerIndex],
         yourPlayerId !== undefined
           ? "You"
@@ -215,13 +215,13 @@ window.onload = function () {
 
       renderPaddle(
         context,
-        TOP_PADDLE_POSITION,
+        PADDLE_OFFSET / 2,
         opponentPaddleInterpolator.getPosition()
       )
 
       renderPaddle(
         context,
-        BOTTOM_PADDLE_POSITION,
+        GAME_RENDERED_HEIGHT - PADDLE_OFFSET - PADDLE_HEIGHT,
         playerPaddleInterpolator.getPosition()
       )
     }

@@ -1,12 +1,14 @@
-import { PlayerId, RuneClient } from "rune-games-sdk"
+import { PlayerId } from "rune-games-sdk"
 
 const updatesPerSecond = 30
 
 const speedMultiplier = 60 / updatesPerSecond
 export const GAME_WIDTH = 320
-export const GAME_HEIGHT = 640
+export const PADDLE_OFFSET = 150
+export const GAME_RENDERED_HEIGHT = 600
+export const GAME_HEIGHT = GAME_RENDERED_HEIGHT + PADDLE_OFFSET / 2
+
 export const PADDLE_HEIGHT = 10
-export const PADDLE_OFFSET = 100
 export const PADDLE_WIDTH = 64
 export const PADDLE_SPEED = 4 * speedMultiplier
 

@@ -41,13 +41,3 @@ export const throttle = (fn: (...args: any[]) => void, wait = 300) => {
     }
   }
 }
-
-export function measureBallDistance(
-  previousPosition: [number, number],
-  currentPosition: [number, number]
-) {
-  return Math.sqrt(
-    (previousPosition[0] - currentPosition[0]) ** 2 +
-      (previousPosition[1] - currentPosition[1]) ** 2
-  )
-}

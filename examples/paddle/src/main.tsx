@@ -4,14 +4,11 @@ import {
   GAME_RENDERED_HEIGHT,
   GAME_WIDTH,
   GameState,
-  MAX_BALL_SPEED,
   PADDLE_HEIGHT,
   PADDLE_OFFSET,
   PADDLE_SPEED,
 } from "./logic"
 import {
-  BAD_NETWORK_DURATION,
-  renderBadNetwork,
   renderBall,
   renderPaddle,
   renderPopup,
@@ -26,8 +23,6 @@ import playerScoreSfx from "./assets/PlayerScore.mp3"
 import opponentScoreSfx from "./assets/OponentScore.mp3"
 import opponentHitSfx from "./assets/OpponentHit.mp3"
 import playerHitSfx from "./assets/PlayerHit.wav"
-
-import { measureBallDistance } from "./helpers"
 
 const ballInterpolator = Rune.interpolator<[number, number]>()
 const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({

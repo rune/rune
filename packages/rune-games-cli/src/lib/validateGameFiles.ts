@@ -43,6 +43,8 @@ export interface ValidationResult {
     maxPlayers?: number
     handlesPlayerJoined?: boolean
     handlesPlayerLeft?: boolean
+    updatesPerSecond?: number
+    inputDelay?: number
   }
 }
 
@@ -105,14 +107,12 @@ export async function validateGameFiles(
         sdkScript.getAttribute("src")?.endsWith("/multiplayer.js") ||
         sdkScript.getAttribute("src")?.endsWith("/multiplayer-dev.js")
       ) {
-        multiplayerValidationResult = {}
-
-        await validateMultiplayer({
-          multiplayerValidationResult,
-          errors,
-          logicJs,
-          indexHtml,
-        })
+        multiplayerValidationResult =
+          (await validateMultiplayer({
+            errors,
+            logicJs,
+            indexHtml,
+          })) ?? {}
 
         if (scripts.indexOf(sdkScript) !== 0) {
           errors.push({
@@ -161,16 +161,14 @@ export async function validateGameFiles(
 }
 
 async function validateMultiplayer({
-  multiplayerValidationResult,
   errors,
   logicJs,
   indexHtml,
 }: {
-  multiplayerValidationResult: NonNullable<ValidationResult["multiplayer"]>
   errors: ValidationError[]
   logicJs: FileInfo | undefined
   indexHtml: FileInfo
-}) {
+}): Promise<ValidationResult["multiplayer"]> {
   if (!logicJs) {
     errors.push({
       message: "logic.js must be included in the game files",
@@ -182,25 +180,20 @@ async function validateMultiplayer({
       })
     }
 
-    await validateMultiplayerLogicJsContent({
+    return validateMultiplayerLogicJsContent({
       logicJs,
-      multiplayerValidationResult,
       errors,
     })
   }
-
-  return multiplayerValidationResult
 }
 
 async function validateMultiplayerLogicJsContent({
   logicJs,
-  multiplayerValidationResult,
   errors,
 }: {
   logicJs: FileInfo
-  multiplayerValidationResult: NonNullable<ValidationResult["multiplayer"]>
   errors: ValidationError[]
-}) {
+}): Promise<ValidationResult["multiplayer"]> {
   if (!logicJs.content) {
     errors.push({
       message: "logic.js content has not been provided for validation",
@@ -228,14 +221,11 @@ async function validateMultiplayerLogicJsContent({
         errors.push({ message: "failed to lint logic.js" })
       })
 
-    Object.assign(
-      multiplayerValidationResult,
-      extractMultiplayerMetadata(logicJs.content)
-    )
+    const multiplayerMetadata = extractMultiplayerMetadata(logicJs.content)
 
     if (
-      !multiplayerValidationResult.minPlayers ||
-      isNaN(multiplayerValidationResult.minPlayers)
+      !multiplayerMetadata.minPlayers ||
+      isNaN(multiplayerMetadata.minPlayers)
     ) {
       errors.push({
         message: "logic.js: minPlayers not found or is invalid",
@@ -243,8 +233,8 @@ async function validateMultiplayerLogicJsContent({
     }
 
     if (
-      !multiplayerValidationResult.maxPlayers ||
-      isNaN(multiplayerValidationResult.maxPlayers)
+      !multiplayerMetadata.maxPlayers ||
+      isNaN(multiplayerMetadata.maxPlayers)
     ) {
       errors.push({
         message: "logic.js: maxPlayers not found or is invalid",
@@ -252,9 +242,8 @@ async function validateMultiplayerLogicJsContent({
     }
 
     if (
-      multiplayerValidationResult.minPlayers &&
-      (multiplayerValidationResult.minPlayers < 1 ||
-        multiplayerValidationResult.minPlayers > 4)
+      multiplayerMetadata.minPlayers &&
+      (multiplayerMetadata.minPlayers < 1 || multiplayerMetadata.minPlayers > 4)
     ) {
       errors.push({
         message: "logic.js: minPlayers must be between 1 and 4",
@@ -262,9 +251,8 @@ async function validateMultiplayerLogicJsContent({
     }
 
     if (
-      multiplayerValidationResult.maxPlayers &&
-      (multiplayerValidationResult.maxPlayers < 1 ||
-        multiplayerValidationResult.maxPlayers > 4)
+      multiplayerMetadata.maxPlayers &&
+      (multiplayerMetadata.maxPlayers < 1 || multiplayerMetadata.maxPlayers > 4)
     ) {
       errors.push({
         message: "logic.js: maxPlayers must be between 1 and 4",
@@ -272,17 +260,39 @@ async function validateMultiplayerLogicJsContent({
     }
 
     if (
-      multiplayerValidationResult.maxPlayers &&
-      multiplayerValidationResult.minPlayers &&
-      multiplayerValidationResult.maxPlayers <
-        multiplayerValidationResult.minPlayers
+      multiplayerMetadata.maxPlayers &&
+      multiplayerMetadata.minPlayers &&
+      multiplayerMetadata.maxPlayers < multiplayerMetadata.minPlayers
     ) {
       errors.push({
         message:
           "logic.js: maxPlayers must be greater than or equal to minPlayers",
       })
     }
-  }
 
-  return multiplayerValidationResult
+    if (multiplayerMetadata.updatesPerSecond !== undefined) {
+      if (
+        multiplayerMetadata.updatesPerSecond < 1 ||
+        multiplayerMetadata.updatesPerSecond > 30
+      ) {
+        errors.push({
+          message:
+            "logic.js: updatesPerSecond must be undefined or between 1 and 30",
+        })
+      }
+    }
+
+    if (multiplayerMetadata.inputDelay !== undefined) {
+      if (
+        multiplayerMetadata.inputDelay < 0 ||
+        multiplayerMetadata.inputDelay > 50
+      ) {
+        errors.push({
+          message: "logic.js: inputDelay must be undefined or between 0 and 50",
+        })
+      }
+    }
+
+    return multiplayerMetadata
+  }
 }

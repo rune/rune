@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components/macro"
 import { rel } from "../../style/rel"
-import { animals, emotions, Animal, Emotion } from "../../lib/types/GameState"
+import { Animal, Emotion } from "../../lib/types/GameState"
 import { art } from "./art/art"
 import { useState, useEffect, memo, useMemo } from "react"
 import { sounds } from "../../sounds/sounds"
 import { useAtomValue } from "jotai"
-import { $currentTurn, $round } from "../../state/$state"
+import { $currentTurn, $round, $animals, $emotions } from "../../state/$state"
 
 const buttonHintDelay = 1.5
 
@@ -14,6 +14,8 @@ export const Guessing = memo(() => {
   const [pendingEmotion, setPendingEmotion] = useState<Emotion>()
   const currentTurn = useAtomValue($currentTurn)
   const round = useAtomValue($round)
+  const animals = useAtomValue($animals)
+  const emotions = useAtomValue($emotions)
 
   const invalid = useMemo(
     () =>
@@ -35,7 +37,7 @@ export const Guessing = memo(() => {
         Rune.actions.makeGuess({
           animal: pendingAnimal,
           emotion: pendingEmotion,
-          round
+          round,
         })
         setPendingAnimal(undefined)
         setPendingEmotion(undefined)

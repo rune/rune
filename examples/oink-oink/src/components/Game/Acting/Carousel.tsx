@@ -13,7 +13,7 @@ export const Carousel = memo(
     big?: boolean
   }) => {
     const orderedValues = useMemo(() => {
-      const random = values.sort(() => Math.random() - 0.5)
+      const random = [...values].sort(() => Math.random() - 0.5)
 
       // remove selected from the list
       random.splice(random.indexOf(selected), 1)

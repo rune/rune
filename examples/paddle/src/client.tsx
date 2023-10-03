@@ -16,16 +16,17 @@ import {
   SCORE_DURATION,
   setupCanvas,
 } from "./render"
-import { Players } from "rune-games-sdk"
+import { Interpolator, InterpolatorLatency, Players } from "rune-games-sdk"
 import { initControls } from "./controls"
 
-import playerScoreSfx from "./assets/PlayerScore.mp3"
-import opponentScoreSfx from "./assets/OponentScore.mp3"
-import opponentHitSfx from "./assets/OpponentHit.mp3"
-import playerHitSfx from "./assets/PlayerHit.wav"
+import playerScoreSfx from "./assets/audio/PlayerScore.mp3"
+import opponentScoreSfx from "./assets/audio/OponentScore.mp3"
+import opponentHitSfx from "./assets/audio/OpponentHit.mp3"
+import playerHitSfx from "./assets/audio/PlayerHit.wav"
 
 // Interpolate between updates to support variable FPS
-let playerPaddleInterpolator = Rune.interpolator<number>()
+let playerPaddleInterpolator:
+    Interpolator<number> | InterpolatorLatency<number> = Rune.interpolator<number>()
 const ballInterpolator = Rune.interpolator<[number, number]>()
 
 // Prevent paddle from teleporting around when receiving action from the past
@@ -120,9 +121,8 @@ window.onload = function () {
         }
 
         if (!yourPlayerId) {
-          //TODO, fix with correct type when SDK exports ist
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-extra-semi
-          ;(playerPaddleInterpolator as any).jump(
+          // eslint-disable-next-line @typescript-eslint/no-extra-semi
+          ;(playerPaddleInterpolator as InterpolatorLatency<number>).jump(
             game.paddles[opponentIndex].position
           )
         }

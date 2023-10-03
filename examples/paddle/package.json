@@ -8,12 +8,13 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives",
+    "deploy": "../../scripts/copy-assets.sh paddle && yarn build && rune upload dist",
     "preview": "vite preview"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rune-games-sdk": "^4.12.0"
+    "rune-games-sdk": "^4.15.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

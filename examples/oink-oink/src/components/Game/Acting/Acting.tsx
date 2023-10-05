@@ -35,9 +35,18 @@ export const Acting = memo(() => {
       <div style={{ height: rel(8) }} />
       <SpeakingHead autoplay loop src={speakingAnimation} />
       <div style={{ height: rel(15) }} />
-      <Carousel big values={animalImgs} selected={selectedAnimal} />
+      <Carousel
+        big
+        values={animalImgs}
+        selected={selectedAnimal}
+        key={selectedAnimal}
+      />
       <div style={{ height: rel(15) }} />
-      <Carousel values={emotionImgs} selected={selectedEmoji} />
+      <Carousel
+        values={emotionImgs}
+        selected={selectedEmoji}
+        key={selectedEmoji}
+      />
       <div style={{ height: rel(15) }} />
       <SkipGuessButton
         style={{ opacity: currentTurn.showSkipGuessButton ? 1 : 0 }}

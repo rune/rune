@@ -94,8 +94,8 @@ Rune.initLogic({
     skipGuess: (_, { game }) => {
       if (!game.currentTurn) throw Rune.invalidAction()
 
-      game.currentTurn.stage = "endOfTurn"
-      game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+      game.currentTurn.animal = getRandomItem(game.animals)
+      game.currentTurn.emotion = getRandomItem(game.emotions)
       game.currentTurn.latestActingStartedAt = Rune.gameTimeInSeconds()
       game.currentTurn.showSkipGuessButton = false
     },

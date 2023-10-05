@@ -35,16 +35,25 @@ export const Acting = memo(() => {
       <div style={{ height: rel(8) }} />
       <SpeakingHead autoplay loop src={speakingAnimation} />
       <div style={{ height: rel(15) }} />
-      <Carousel big values={animalImgs} selected={selectedAnimal} />
+      <Carousel
+        big
+        values={animalImgs}
+        selected={selectedAnimal}
+        key={selectedAnimal}
+      />
       <div style={{ height: rel(15) }} />
-      <Carousel values={emotionImgs} selected={selectedEmoji} />
+      <Carousel
+        values={emotionImgs}
+        selected={selectedEmoji}
+        key={selectedEmoji}
+      />
       <div style={{ height: rel(15) }} />
-      <SkipTurnButton
-        style={{ opacity: currentTurn.showSkipTurnButton ? 1 : 0 }}
-        onClick={() => Rune.actions.skipTurn()}
+      <SkipGuessButton
+        style={{ opacity: currentTurn.showSkipGuessButton ? 1 : 0 }}
+        onClick={() => Rune.actions.skipGuess()}
       >
         Skip
-      </SkipTurnButton>
+      </SkipGuessButton>
       <div style={{ height: rel(15) }} />
       <Label>Guesses</Label>
       <div style={{ height: rel(15) }} />
@@ -69,7 +78,7 @@ const SpeakingHead = styled(Player)`
   height: ${rel(37)};
 `
 
-const SkipTurnButton = styled.div`
+const SkipGuessButton = styled.div`
   width: ${rel(168)};
   transition: opacity 150ms ease-out;
 

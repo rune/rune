@@ -8,5 +8,5 @@ export type GameActions = {
     round: GameState["round"]
   }) => void
   nextRound: () => void
-  skipTurn: () => void
+  skipGuess: () => void
 }

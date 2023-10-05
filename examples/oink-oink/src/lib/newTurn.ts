@@ -8,6 +8,6 @@ export function newTurn(game: GameState) {
     stage: "countdown",
     timerStartedAt: Rune.gameTimeInSeconds(),
     latestActingStartedAt: Rune.gameTimeInSeconds(),
-    showSkipTurnButton: false,
+    showSkipGuessButton: false,
   }
 }

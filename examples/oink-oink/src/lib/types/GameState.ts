@@ -64,7 +64,7 @@ export interface GameState {
     stage: "countdown" | "acting" | "endOfTurn" | "result"
     timerStartedAt: number
     latestActingStartedAt: number
-    showSkipTurnButton: boolean
+    showSkipGuessButton: boolean
   } | null
   guesses: Guess[]
   gameOver: boolean

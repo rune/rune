@@ -10,13 +10,15 @@ export function List() {
   const { games } = useGames({ skip: !me })
   const { myGames } = useMyGames({ games, devId: me?.devId })
 
+  if (!me) return <></>
+
   return (
     <Box flexDirection="column">
       <Text bold>Your games:</Text>
       {myGames?.length ? (
         myGames.map((game) => (
           <Text key={game.id}>
-            {figures.bullet} {gameItemLabel({ game })}
+            {figures.bullet} {gameItemLabel({ game, me })}
           </Text>
         ))
       ) : (
@@ -28,7 +30,7 @@ export function List() {
           {games?.map((game) => (
             <Text key={game.id}>
               {figures.bullet}{" "}
-              {gameItemLabel({ game, showDevDisplayName: true })}
+              {gameItemLabel({ game, me, showDevDisplayName: true })}
             </Text>
           ))}
         </>

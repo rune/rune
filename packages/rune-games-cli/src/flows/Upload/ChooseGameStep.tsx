@@ -27,12 +27,14 @@ export function ChooseGameStep({
   const items = useMemo(
     () => [
       ...(onlyExisting ? [] : [{ label: "New game", value: null }]),
-      ...((me?.admin ? games : myGames) ?? []).map((game) => ({
-        label: gameItemLabel({ game, showDevDisplayName: me?.admin }),
-        value: game.id,
-      })),
+      ...(me
+        ? ((me.admin ? games : myGames) ?? []).map((game) => ({
+            label: gameItemLabel({ game, me, showDevDisplayName: me?.admin }),
+            value: game.id,
+          }))
+        : []),
     ],
-    [games, me?.admin, myGames, onlyExisting]
+    [games, me, myGames, onlyExisting]
   )
 
   useEffect(() => {

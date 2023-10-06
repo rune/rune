@@ -1,7 +1,7 @@
 import { useQuery, gql } from "@apollo/client/index.js"
 import { useMemo } from "react"
 
-import { GamesDocument, GamesQuery } from "../generated/types.js"
+import { GamesDocument, GamesQuery, Me } from "../generated/types.js"
 
 export function useGames({
   skip,
@@ -68,21 +68,29 @@ export function useMyGames({
 export function gameItemLabel({
   game,
   showDevDisplayName,
+  me,
 }: {
   game: NonNullable<GamesQuery["games"]>["nodes"][0]
   showDevDisplayName?: boolean
+  me: Me
 }) {
-  const gameDevAdmin = game.gameDevs.nodes.find(
-    (gameDev) => gameDev.type === "ADMIN"
-  )
+  const gameDevs = game.gameDevs.nodes
+  const gameDevMe = gameDevs.find((gameDev) => gameDev.userId === me.devId)
+  const gameDevAdmin = gameDevs.find((gameDev) => gameDev.type === "ADMIN") // only first admin
+  const myRole = me.admin ? "ADMIN" : gameDevMe ? gameDevMe.type : "PLAYER"
+  const latestVersionStatus = game.gameVersions.nodes[0]?.status ?? "NONE"
 
-  return `${game.title}${
-    showDevDisplayName ? ` [dev: ${gameDevAdmin?.displayName}]` : ""
-  }${
-    game.gameVersions.nodes[0]
-      ? ` (latest version: ${game.gameVersions.nodes[0].status
-          .toLowerCase()
-          .replace("_", " ")})`
-      : " (no versions uploaded)"
-  }`
+  // Prepare label parts
+  const gameDevsLabel =
+    gameDevs.length === 0
+      ? "UNKNOWN"
+      : gameDevs.length === 1
+      ? gameDevAdmin?.displayName
+      : `${gameDevAdmin?.displayName} + ${gameDevs.length} others`
+
+  const gameTitle = game.title
+  const tag = showDevDisplayName ? ` [by ${gameDevsLabel}]` : ""
+  const props = [`latestVersion: ${latestVersionStatus}`, `myRole: ${myRole}`]
+
+  return `${gameTitle}${tag} (${props.join(", ")})`
 }

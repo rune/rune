@@ -67,11 +67,11 @@ export function useMyGames({
 
 export function gameItemLabel({
   game,
-  showDevDisplayName,
+  showGameDevs,
   me,
 }: {
   game: NonNullable<GamesQuery["games"]>["nodes"][0]
-  showDevDisplayName?: boolean
+  showGameDevs: boolean
   me: Me
 }) {
   const gameDevs = game.gameDevs.nodes
@@ -89,7 +89,7 @@ export function gameItemLabel({
       : `${gameDevAdmin?.displayName} + ${gameDevs.length} others`
 
   const gameTitle = game.title
-  const tag = showDevDisplayName ? ` [by ${gameDevsLabel}]` : ""
+  const tag = showGameDevs ? ` [by ${gameDevsLabel}]` : ""
   const props = [`latestVersion: ${latestVersionStatus}`, `myRole: ${myRole}`]
 
   return `${gameTitle}${tag} (${props.join(", ")})`

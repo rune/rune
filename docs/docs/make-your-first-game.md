@@ -190,7 +190,7 @@ export function shuffle<T>(array: T[]): T[] {
 
 ```
 
-This is suffienct to render the tiles now we can call it inside our app.ts
+This is sufficient to render the tiles now we can call it inside our app.ts
 ```ts
 //app.ts
 import { getAppContainer } from "../util/util";

@@ -1,6 +1,6 @@
 # Building Your First Game with Rune SDK: Flip Flop
 
-Welcome aboard! In this guide, we'll escort you through crafting your first game, "Flip Flop", harnessing the Rune SDK. Upon completion, you'll have a multiplayer game tailored for Rune's vast player community. This guide uses vanilla typescript, for the sake of brevity, I will not go through every single line of code, the full code can be found on [https://github.com/omar-abdul/pattern-pursuit](https://github.com/omar-abdul/pattern-pursuit)
+Welcome aboard! In this guide, we'll escort you through crafting your first game, "Flip Flop", harnessing the Rune SDK. Upon completion, you'll have a multiplayer game tailored for Rune's vast player community. This guide uses vanilla typescript, for the sake of brevity, I will not go through every single line of code, the full code can be found on [https://github.com/omar-abdul/flip-flop](https://github.com/omar-abdul/flip-flop)
 
 #### Prerequisites
 
@@ -8,22 +8,26 @@ Welcome aboard! In this guide, we'll escort you through crafting your first game
 - Node.js and npm/yarn installed.
 - A brief look through the Rune SDK Quick Start guide.
 
+### What are we going to build
+"Flip Flop" is a delightful memory tile matching game where the goal is to match pairs with the fewest moves possible.
+
 
 ### Step 1. Install and Configure
 
 1. Run vite with vanilla and ts
 
 ```bash
+# npm
 $ npm create vite@latest flip-flop --template vanilla-ts
-```
-
-```bash
+# yarn
 $ yarn create vite flip-flop --template vanilla-ts
+# pnpm
+$ pnpm create vite flip-flop --template vanilla-ts
+
 ```
 
-```bash
-$ pnpm create vite flip-flop --template vanilla-ts
-```
+
+
 
 2. Install rune-sdk and vite plugin
 
@@ -62,7 +66,7 @@ declare global {
 }
 ```
 
-5. import it in the html before the main.ts file
+5. Import it in the html before the main.ts file
 
 ```html
 <!DOCTYPE html>
@@ -90,17 +94,16 @@ declare global {
    });
    ```
 
-   Now you should see the vite +ts screen inside a smartphone frame
+ Now you should see the `vite + ts` screen logo inside a smartphone frame
 
 # Step 2
 ### Game UI
 
-To start we are going to render some tiles on the screen, but before we render them let us create a json file that will hold our data 
+To start we are going to render some tiles on the screen, but before we render them let us create a json file that will hold our data  in my case will name it themes.json
 
 ```json
-//values.json
 {
-    "values":[
+    "retro":[
         {"value":"1"},
         {"value":"2"},
         {"value":"3"},
@@ -114,7 +117,7 @@ To start we are going to render some tiles on the screen, but before we render t
 ```
 this json object will hold the values that we will use to match the tiles.
 
-Now we shall double the array, shuffle it and render the tiles, for the style.css you can find it at [https://github.com/omar-abdul/pattern-pursuit/blob/main/src/style.css](https://github.com/omar-abdul/pattern-pursuit/blob/main/src/style.css)
+Now we shall double the array, shuffle it and render the tiles, for the style.css you can find it at [https://github.com/omar-abdul/flip-flop/blob/main/src/style.css](https://github.com/omar-abdul/flip-flop/blob/main/src/style.css)
 ```ts
 //tiles.ts
 
@@ -171,7 +174,7 @@ and the code for shuffling
 ```ts
 //util.ts
 
-// other utils....
+// ....
 
 export function shuffle<T>(array: T[]): T[] {
   // This is using the Fisher-Yates (also known as Knuth or Durstenfeld) shuffle.
@@ -183,7 +186,7 @@ export function shuffle<T>(array: T[]): T[] {
   }
   return array;
 }
-
+//....
 
 ```
 
@@ -209,7 +212,9 @@ We should have forward facing tiles, but those aren't any fun, we want to intera
 
 Inside logic.ts you describe the initial game state, and the actions to change those states. This goes for Any state that needs to be communicated globaly through the system, and requries some behaviour to mutate it or change it. 
 
-the client communicates and reads these changes through actions
+These changes are accessible to the client (in our case `main.ts`) through the method `Rune.initClient()`that takes an  object with an OnChange function, this function is triggered when the state is initialized and everytime the state changes. The `onChange` function inside the `Rune.initClient()` has access to the game object which carries all our other states, it also has access to the number of players, the previous state,  the action that was called and so on.  For more reading check [https://developers.rune.ai/docs/api-reference#runeinitclientoptions](https://developers.rune.ai/docs/api-reference#runeinitclientoptions)
+
+The only way for the client to make changes to the state is through the actions or `Rune.actions.actionName()` 
 
 Enough concepts lets get dive in,
 
@@ -263,11 +268,18 @@ Rune.initLogic({
 
 ```
 
+`logic.ts` manages the state and actions of your game. Actions change the game's state, and the Rune client communicates and tracks these changes.
+
+To provide interactivity, you can listen to tile flips and manage matched pairs using actions in Rune. For instance, every time a tile flips, its ID is added to the flippedTiles array. If two tiles match, they get added to the match array. Tiles that don't match flip back.
+
+Use the gamestate custom event in main.ts to listen for changes in game state and update the UI accordingly.
+
 let's break down some of these functions
 
 `Rune.initLogic()` is a function that holds all the logic of the game, its the brain of your game, it takes an object as parameters, the object has these properties
 
 `minPlayers : number` minimum amount of players of the game (not less than 1)
+
 `maxPlayers: number` maximum amount of players of the game (not more than 4)
 
 `setup : function` a function that returns the initial state of your game, eg. scores=0, flippedTiles=[] etc all which will be available on the game object
@@ -349,11 +361,14 @@ document.addEventListener("gamestate", function (e) {
 
 ```
 
-we call this function inside app.ts
+We call this function inside app.ts
 ```ts
+export function renderApp() {
+
 //previous code
 
-  attachListenerToFlip();
+    attachListenerToFlip();
+}
 ```
 
 
@@ -375,6 +390,7 @@ declare global {
 }
 
 const updateGameEvent = (game: GameState) => {
+    //Custom Event that holds new Game object
   const gameEvent = new CustomEvent("gamestate", {
     detail: {
       game,
@@ -387,7 +403,8 @@ renderApp();
 
 Rune.initClient({
   onChange: ({ newGame }) => {
-    updateGameEvent(newGame);
+    //Here we are calling the updateGameEvent that dispatches a Custom Event names gamestate It is triggered with every time the game state/object changes 
+    updateGameEvent(newGame);  
   },
 });
 ```

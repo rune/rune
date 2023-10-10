@@ -23,7 +23,8 @@ Rune.initLogic({
 
     for (let i = 0; i < numRounds; i++) {
       // Pick random weighted panorama that has not been used yet
-      let newPanoramaIdx = undefined
+      let newPanoramaIdx
+
       while (!newPanoramaIdx || usedPanoramas.has(newPanoramaIdx)) {
         newPanoramaIdx = pickRandom(weightedPanoramas)
       }

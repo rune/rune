@@ -422,6 +422,11 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
+core-js@3.31.1:
+  version "3.31.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.31.1.tgz#f2b0eea9be9da0def2c5fece71064a7e5d687653"
+  integrity sha512-2sKLtfq1eFST7l7v62zaqXacPc7uG8ZAya8ogijLhTtaKNcpzpB4TMoTw2Si+8GYKRwFPMMtUT0263QFWFfqyQ==
+
 cross-spawn@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
@@ -1028,12 +1033,13 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.9.6:
-  version "4.9.6"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.9.6.tgz#cbac0767c0630fe594c80ff7ce6f1dbad3c38254"
-  integrity sha512-woUob9bK/hCzbuPr32MgRMvhdh1i7+TjpOEoeNbRLNdDCtBNgZvtu7iHS+yXmHDl2doaRbpn3b94maLymnVldA==
+rune-games-sdk@^4.15.1:
+  version "4.15.5"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.15.5.tgz#b771233ed4b6f542313caab3fc39a40d5f336bfa"
+  integrity sha512-gFkL/q2H6p2XzOnRkYHyDWiWTsGOf1P5BCqMCL2UGGqkLFOsDt+mFIz5ZVsZZpzjF5AkbXP9xXYzCnKyp4CXdw==
   dependencies:
     base-64 "1.0.0"
+    core-js "3.31.1"
     immer "10.0.1"
     rune-msgpack "1.0.0"
     xstate "4.32.1"

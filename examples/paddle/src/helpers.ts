@@ -19,11 +19,11 @@ export function fittingString(
   }
 }
 
-export const throttle = (fn: (...args: any[]) => void, wait = 300) => {
+export const throttle = (fn: (...args: unknown[]) => void, wait = 300) => {
   let inThrottle: boolean,
     lastFn: ReturnType<typeof setTimeout>,
     lastTime: number
-  return function (...args: any[]) {
+  return function (...args: unknown[]) {
     if (!inThrottle) {
       // eslint-disable-next-line prefer-spread
       fn.apply(null, args)

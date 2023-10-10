@@ -22,7 +22,8 @@ import { playSound } from "./playSound.ts"
 
 // Interpolate between updates to support variable FPS
 let playerPaddleInterpolator:
-    Interpolator<number> | InterpolatorLatency<number> = Rune.interpolator<number>()
+  | Interpolator<number>
+  | InterpolatorLatency<number> = Rune.interpolator<number>()
 const ballInterpolator = Rune.interpolator<[number, number]>()
 
 // Prevent paddle from teleporting around when receiving action from the past
@@ -53,6 +54,7 @@ window.onload = function () {
     onChange: (params) => {
       game = params.game
 
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       futureGame = params.futureGame!
       players = params.players
       yourPlayerId = params.yourPlayerId

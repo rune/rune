@@ -93,6 +93,12 @@ export function Create({ args }: { args: string[] }) {
       copy(path.join(templateDir, file), path.join(targetDir, file))
     }
 
+    // fixes issue where npm removes gitignore file during publish https://github.com/npm/npm/issues/3763
+    fs.renameSync(
+      path.join(targetDir, "gitignore"),
+      path.join(targetDir, ".gitignore")
+    )
+
     const pkg = JSON.parse(
       fs.readFileSync(path.join(templateDir, `package.json`), "utf-8")
     )

@@ -17,87 +17,91 @@ function draw(canvas: HTMLCanvasElement) {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       ctx.strokeStyle = "#10D4FF"
-      ctx.lineWidth = 3
+      ctx.lineWidth = 2
       ctx.shadowColor = "#10D4FF"
 
       const arcStartLineAngle = 315
-      const arcStart = { x: 200, y: 200 }
-      const directionRight = false
+      const arcStart = { x: 200, y: 250 }
+      const directionRight = true
+      const iterations = 50
 
       const turningMod = directionRight ? 1 : -1
 
-      // draw point arcStart
-      ctx.beginPath()
-      ctx.rect(arcStart.x - 2, arcStart.y - 2, 4, 4)
-      ctx.strokeStyle = "red"
-      ctx.stroke()
+      // eslint-disable-next-line no-inner-declarations
+      function drawPoint(point: { x: number; y: number }) {
+        if (!ctx) return
+        ctx.beginPath()
+        ctx.arc(point.x, point.y, 2.5, 0, 2 * Math.PI)
+        ctx.strokeStyle = "red"
+        ctx.stroke()
+      }
 
-      const forwardSpeed = 10
-      const turningSpeed = 5
+      drawPoint(arcStart)
 
-      const nextPointX =
-        arcStart.x +
-        Math.cos(
-          (arcStartLineAngle + turningSpeed * turningMod) * (Math.PI / 180)
-        ) *
-          forwardSpeed
-      const nextPointY =
-        arcStart.y +
-        Math.sin(
-          (arcStartLineAngle + turningSpeed * turningMod) * (Math.PI / 180)
-        ) *
-          forwardSpeed
+      const forwardSpeedPixelsPerTick = 10
+      const turningSpeedDegreesPerTick = 6
 
-      // draw point nextPoint
-      ctx.beginPath()
-      ctx.rect(nextPointX - 2, nextPointY - 2, 4, 4)
-      ctx.strokeStyle = "red"
-      ctx.stroke()
+      const nextPoint = {
+        x: arcStart.x,
+        y: arcStart.y,
+        angle: arcStartLineAngle,
+      }
 
-      const nextPoint2X =
-        nextPointX +
-        Math.cos(
-          (arcStartLineAngle + turningSpeed * 2 * turningMod) * (Math.PI / 180)
-        ) *
-          forwardSpeed
-      const nextPoint2Y =
-        nextPointY +
-        Math.sin(
-          (arcStartLineAngle + turningSpeed * 2 * turningMod) * (Math.PI / 180)
-        ) *
-          forwardSpeed
+      for (let i = 0; i < iterations; i++) {
+        const newAngle =
+          nextPoint.angle + turningSpeedDegreesPerTick * turningMod
 
-      // draw point nextPoint2
-      ctx.beginPath()
-      ctx.rect(nextPoint2X - 2, nextPoint2Y - 2, 4, 4)
-      ctx.strokeStyle = "red"
-      ctx.stroke()
+        nextPoint.x =
+          nextPoint.x +
+          Math.cos(newAngle * (Math.PI / 180)) * forwardSpeedPixelsPerTick
+        nextPoint.y =
+          nextPoint.y +
+          Math.sin(newAngle * (Math.PI / 180)) * forwardSpeedPixelsPerTick
+        nextPoint.angle = newAngle
 
-      const arcRadius = (180 * forwardSpeed) / (Math.PI * turningSpeed)
+        // draw point nextPoint
+        drawPoint(nextPoint)
+      }
+
+      const arcRadius =
+        (180 * forwardSpeedPixelsPerTick) /
+        (Math.PI * turningSpeedDegreesPerTick)
 
       const circleCenterX =
         arcStart.x +
-        Math.cos((arcStartLineAngle + 90 * turningMod) * (Math.PI / 180)) *
+        Math.cos(
+          (arcStartLineAngle +
+            (turningSpeedDegreesPerTick / 2) * turningMod +
+            90 * turningMod) *
+            (Math.PI / 180)
+        ) *
           arcRadius
       const circleCenterY =
         arcStart.y +
-        Math.sin((arcStartLineAngle + 90 * turningMod) * (Math.PI / 180)) *
+        Math.sin(
+          (arcStartLineAngle +
+            (turningSpeedDegreesPerTick / 2) * turningMod +
+            90 * turningMod) *
+            (Math.PI / 180)
+        ) *
           arcRadius
 
       // draw circle center
-      ctx.beginPath()
-      ctx.rect(circleCenterX - 2, circleCenterY - 2, 4, 4)
-      ctx.strokeStyle = "red"
-      ctx.stroke()
+      drawPoint({ x: circleCenterX, y: circleCenterY })
 
-      ctx.strokeStyle = "blue"
+      ctx.strokeStyle = "white"
       ctx.beginPath()
       ctx.arc(
         circleCenterX,
         circleCenterY,
         arcRadius,
-        (arcStartLineAngle - 90 * turningMod) * (Math.PI / 180),
-        (arcStartLineAngle + turningSpeed * 2 * turningMod - 90 * turningMod) *
+        (arcStartLineAngle +
+          (turningSpeedDegreesPerTick / 2) * turningMod -
+          90 * turningMod) *
+          (Math.PI / 180),
+        (nextPoint.angle +
+          (turningSpeedDegreesPerTick / 2) * turningMod -
+          90 * turningMod) *
           (Math.PI / 180),
         !directionRight
       )

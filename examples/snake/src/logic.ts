@@ -46,7 +46,7 @@ Rune.initLogic({
       player.turning = turning
     },
   },
-  updatesPerSecond: 30,
+  updatesPerSecond: 1,
   update: ({ game }) => {
     game.players.forEach((player) => {
       let goingStraight = false
@@ -59,11 +59,13 @@ Rune.initLogic({
         goingStraight = true
       }
 
+      const speed = 3
+
       const angleInRadians = (player.angleInDegrees * Math.PI) / 180
       const x =
-        player.line[player.line.length - 1].x + Math.cos(angleInRadians) * 3
+        player.line[player.line.length - 1].x + Math.cos(angleInRadians) * speed
       const y =
-        player.line[player.line.length - 1].y + Math.sin(angleInRadians) * 3
+        player.line[player.line.length - 1].y + Math.sin(angleInRadians) * speed
 
       let reflected = false
 
@@ -84,18 +86,34 @@ Rune.initLogic({
         reflected = true
       }
 
-      const shouldPlaceGap = Math.random() > 0.9
+      const shouldPlaceGap = Math.random() < 1 / 50
+      const lastPoint = player.line.at(-1)
+
+      const prev1Gap = player.line.at(-1)?.gap
+      const prev2Gap = player.line.at(-2)?.gap
+      const prev3Gap = player.line.at(-3)?.gap
+      const prev4Gap = player.line.at(-4)?.gap
+
+      const shouldContinueGap = prev1Gap
+      const shouldStopGap = prev1Gap && prev2Gap && prev3Gap && prev4Gap
+      //
+      // player.line.push({
+      //   x,
+      //   y,
+      //   gap: shouldPlaceGap || (shouldContinueGap && !shouldStopGap),
+      // })
 
       if (
         goingStraight &&
         player.line.length > 1 &&
         !reflected &&
-        !shouldPlaceGap
+        !shouldPlaceGap &&
+        lastPoint
       ) {
-        player.line.at(-1)!.x = x
-        player.line.at(-1)!.y = y
+        lastPoint.x = x
+        lastPoint.y = y
       } else {
-        player.line.push({ x, y, gap: shouldPlaceGap })
+        player.line.push({ x, y })
       }
     })
   },

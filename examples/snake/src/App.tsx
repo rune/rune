@@ -30,10 +30,11 @@ function draw(canvas: HTMLCanvasElement) {
       // eslint-disable-next-line no-inner-declarations
       function drawPoint(point: { x: number; y: number }) {
         if (!ctx) return
+        const radius = 4
         ctx.beginPath()
-        ctx.arc(point.x, point.y, 2.5, 0, 2 * Math.PI)
+        ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI)
         ctx.strokeStyle = "red"
-        ctx.stroke()
+        ctx.fill()
       }
 
       drawPoint(arcStart)

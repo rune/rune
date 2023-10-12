@@ -23,22 +23,22 @@ function draw(canvas: HTMLCanvasElement) {
       // eslint-disable-next-line no-inner-declarations
       function drawPoint(point: Point, color = "red") {
         if (!ctx) return
-        const radius = 7.5
+        const radius = 3
         ctx.beginPath()
         ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI)
         ctx.strokeStyle = color
-        ctx.lineWidth = 1
+        ctx.lineWidth = 2
         ctx.stroke()
       }
 
       // eslint-disable-next-line no-inner-declarations
-      function drawLine(start: Point, end: Point) {
+      function drawLine(start: Point, end: Point, gap: boolean) {
         if (!ctx) return
         ctx.beginPath()
         ctx.moveTo(start.x, start.y)
         ctx.lineTo(end.x, end.y)
-        ctx.lineWidth = 15
-        ctx.strokeStyle = "rgba(0,255,0,.5)"
+        ctx.lineWidth = 5
+        ctx.strokeStyle = gap ? "rgba(0,255,0,.4)" : "rgba(0,255,0,1)"
         ctx.stroke()
       }
 
@@ -47,7 +47,8 @@ function draw(canvas: HTMLCanvasElement) {
         initialAngle: number,
         endAngle: number,
         clockwise: boolean,
-        start: Point
+        start: Point,
+        gap: boolean
       ) {
         // let nextX = start.x
         // let nextY = start.y
@@ -100,8 +101,8 @@ function draw(canvas: HTMLCanvasElement) {
           arcEndAngle,
           !clockwise
         )
-        ctx.lineWidth = 15
-        ctx.strokeStyle = "rgba(255,0,0,.5)"
+        ctx.lineWidth = 5
+        ctx.strokeStyle = gap ? "rgba(255,0,0,.4)" : "rgba(255,0,0,1)"
         ctx.stroke()
       }
 
@@ -121,10 +122,11 @@ function draw(canvas: HTMLCanvasElement) {
               section.startAngle,
               section.endAngle,
               section.turning === "right",
-              section.start
+              section.start,
+              !!section.gap
             )
           } else {
-            drawLine(section.start, section.end)
+            drawLine(section.start, section.end, !!section.gap)
           }
 
           drawPoint(section.start)

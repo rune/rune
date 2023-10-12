@@ -13,12 +13,15 @@ type Section = {
   turning: Turning
   startAngle: number
   endAngle: number
+  gap?: boolean
 }
 
 export interface GameState {
   players: {
     playerId: string
     turning: Turning
+    // TODO: also count down from last gap to avoid gaps being too close
+    placingGap: number
     // angleInDegrees: number
     line: Section[]
   }[]
@@ -40,6 +43,10 @@ export const boardSize = {
 export const forwardSpeedPixelsPerTick = 3
 export const turningSpeedDegreesPerTick = 3
 
+const gapFrequency = 0.02
+
+const gapLength = 15
+
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
@@ -54,7 +61,7 @@ Rune.initLogic({
       players: allPlayerIds.map((playerId) => ({
         playerId,
         turning: "none",
-        angleInDegrees: angle,
+        placingGap: 0,
         line: [
           {
             start: startPoint,
@@ -83,13 +90,25 @@ Rune.initLogic({
       const turnMod =
         player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
 
-      if (lastSection.turning !== player.turning) {
+      const wasPlacingGap = !!player.placingGap
+
+      if (player.placingGap) {
+        player.placingGap--
+      } else {
+        if (Math.random() < gapFrequency) player.placingGap = gapLength
+      }
+
+      if (
+        lastSection.turning !== player.turning ||
+        wasPlacingGap !== !!player.placingGap
+      ) {
         player.line.push({
           start: { ...lastSection.end },
           end: { ...lastSection.end },
           turning: player.turning,
           startAngle: lastSection.endAngle,
           endAngle: lastSection.endAngle,
+          gap: !!player.placingGap,
         })
         lastSection = player.line[player.line.length - 1]
       }
@@ -115,7 +134,7 @@ Rune.initLogic({
       game.players.push({
         playerId,
         turning: "none",
-        // angleInDegrees: getRandomInt(360),
+        placingGap: 0,
         line: [
           {
             start: startPoint,

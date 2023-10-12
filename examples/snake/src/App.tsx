@@ -38,7 +38,7 @@ function draw(canvas: HTMLCanvasElement) {
         ctx.moveTo(start.x, start.y)
         ctx.lineTo(end.x, end.y)
         ctx.lineWidth = 5
-        ctx.strokeStyle = gap ? "rgba(0,255,0,.4)" : "rgba(0,255,0,1)"
+        ctx.strokeStyle = gap ? "rgba(0,255,0,.3)" : "rgba(0,255,0,1)"
         ctx.stroke()
       }
 
@@ -102,7 +102,7 @@ function draw(canvas: HTMLCanvasElement) {
           !clockwise
         )
         ctx.lineWidth = 5
-        ctx.strokeStyle = gap ? "rgba(255,0,0,.4)" : "rgba(255,0,0,1)"
+        ctx.strokeStyle = gap ? "rgba(255,0,0,.3)" : "rgba(255,0,0,1)"
         ctx.stroke()
       }
 

@@ -7,6 +7,7 @@ import {
   forwardSpeedPixelsPerTick,
   turningSpeedDegreesPerTick,
   degreesToRad,
+  findIntersectionPoint,
 } from "./logic.ts"
 import { styled } from "styled-components"
 import { rel } from "./lib/rel.ts"
@@ -39,6 +40,8 @@ function draw(canvas: HTMLCanvasElement) {
         ctx.lineTo(end.x, end.y)
         ctx.lineWidth = 5
         ctx.strokeStyle = gap ? "rgba(0,255,0,.3)" : "rgba(0,255,0,1)"
+        ctx.shadowBlur = 15
+        ctx.shadowColor = "rgba(0,255,0,1)"
         ctx.stroke()
       }
 
@@ -50,20 +53,6 @@ function draw(canvas: HTMLCanvasElement) {
         start: Point,
         gap: boolean
       ) {
-        // let nextX = start.x
-        // let nextY = start.y
-        // let nextAngle = initialAngle
-        // for (let i = 0; i < 100; i++) {
-        //   nextAngle += turningSpeedDegreesPerTick
-        //   nextX =
-        //     nextX +
-        //     Math.cos(nextAngle * (Math.PI / 180)) * forwardSpeedPixelsPerTick
-        //   nextY =
-        //     nextY +
-        //     Math.sin(nextAngle * (Math.PI / 180)) * forwardSpeedPixelsPerTick
-        //   drawPoint({ x: nextX, y: nextY }, "green")
-        // }
-
         if (!ctx) return
 
         const arcRadius =
@@ -89,9 +78,6 @@ function draw(canvas: HTMLCanvasElement) {
           endAngle + (-90 + turningSpeedDegreesPerTick / 2) * turningMod
         )
 
-        // arcStartAngle = degreesToRad(0)
-        // arcEndAngle = degreesToRad(360)
-
         ctx.beginPath()
         ctx.arc(
           arcCenter.x,
@@ -103,6 +89,8 @@ function draw(canvas: HTMLCanvasElement) {
         )
         ctx.lineWidth = 5
         ctx.strokeStyle = gap ? "rgba(255,0,0,.3)" : "rgba(255,0,0,1)"
+        ctx.shadowBlur = 15
+        ctx.shadowColor = "rgba(255,0,0,1)"
         ctx.stroke()
       }
 
@@ -114,9 +102,10 @@ function draw(canvas: HTMLCanvasElement) {
       ctx.fillStyle = "red"
 
       for (const player of game.players) {
-        const line = player.line
+        for (const section of player.line) {
+          // TODO: actually don't draw gaps
+          // if (section.gap) continue
 
-        for (const section of line) {
           if (section.turning !== "none") {
             drawArc(
               section.startAngle,
@@ -127,6 +116,16 @@ function draw(canvas: HTMLCanvasElement) {
             )
           } else {
             drawLine(section.start, section.end, !!section.gap)
+
+            for (const player2 of game.players) {
+              for (const test of player2.line) {
+                if (test === section || test.turning !== "none") continue
+
+                const intersectionPoint = findIntersectionPoint(section, test)
+
+                if (intersectionPoint) drawPoint(intersectionPoint, "blue")
+              }
+            }
           }
 
           drawPoint(section.start)

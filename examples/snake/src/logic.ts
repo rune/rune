@@ -161,3 +161,45 @@ export function getRandomInt(max: number) {
 export function degreesToRad(degrees: number) {
   return degrees * (Math.PI / 180)
 }
+
+export function findIntersectionPoint(
+  lineSegment1: { start: Point; end: Point },
+  lineSegment2: { start: Point; end: Point }
+): Point | null {
+  const { start: A, end: B } = lineSegment1
+  const { start: C, end: D } = lineSegment2
+
+  const a1 = B.y - A.y
+  const b1 = A.x - B.x
+  const c1 = a1 * A.x + b1 * A.y
+
+  const a2 = D.y - C.y
+  const b2 = C.x - D.x
+  const c2 = a2 * C.x + b2 * C.y
+
+  const determinant = a1 * b2 - a2 * b1
+
+  if (determinant === 0) {
+    // Lines are parallel
+    return null
+  } else {
+    const x = (b2 * c1 - b1 * c2) / determinant
+    const y = (a1 * c2 - a2 * c1) / determinant
+
+    // Check if the intersection point lies on both segments
+    if (
+      Math.min(A.x, B.x) <= x &&
+      x <= Math.max(A.x, B.x) &&
+      Math.min(A.y, B.y) <= y &&
+      y <= Math.max(A.y, B.y) &&
+      Math.min(C.x, D.x) <= x &&
+      x <= Math.max(C.x, D.x) &&
+      Math.min(C.y, D.y) <= y &&
+      y <= Math.max(C.y, D.y)
+    ) {
+      return { x, y }
+    }
+  }
+
+  return null
+}

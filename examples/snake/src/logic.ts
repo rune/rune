@@ -2,12 +2,25 @@ import type { RuneClient } from "rune-games-sdk/multiplayer"
 
 type Turning = "left" | "right" | "none"
 
+export type Point = {
+  x: number
+  y: number
+}
+
+type Section = {
+  start: Point
+  end: Point
+  turning: Turning
+  startAngle: number
+  endAngle: number
+}
+
 export interface GameState {
   players: {
     playerId: string
     turning: Turning
-    angleInDegrees: number
-    line: { x: number; y: number; gap?: boolean }[]
+    // angleInDegrees: number
+    line: Section[]
   }[]
 }
 
@@ -24,16 +37,33 @@ export const boardSize = {
   height: 500,
 }
 
+export const forwardSpeedPixelsPerTick = 3
+export const turningSpeedDegreesPerTick = 3
+
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
+    const startPoint = {
+      x: 200,
+      y: 300,
+    }
+    const angle = 270
+
     return {
       players: allPlayerIds.map((playerId) => ({
         playerId,
         turning: "none",
-        angleInDegrees: 45,
-        line: [{ x: 10, y: 30 }],
+        angleInDegrees: angle,
+        line: [
+          {
+            start: startPoint,
+            end: startPoint,
+            turning: "none",
+            startAngle: angle,
+            endAngle: angle,
+          },
+        ],
       })),
     }
   },
@@ -46,87 +76,53 @@ Rune.initLogic({
       player.turning = turning
     },
   },
-  updatesPerSecond: 1,
+  updatesPerSecond: 30,
   update: ({ game }) => {
     game.players.forEach((player) => {
-      let goingStraight = false
+      let lastSection = player.line[player.line.length - 1]
+      const turnMod =
+        player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
 
-      if (player.turning === "left") {
-        player.angleInDegrees -= 5
-      } else if (player.turning === "right") {
-        player.angleInDegrees += 5
-      } else {
-        goingStraight = true
+      if (lastSection.turning !== player.turning) {
+        player.line.push({
+          start: { ...lastSection.end },
+          end: { ...lastSection.end },
+          turning: player.turning,
+          startAngle: lastSection.endAngle,
+          endAngle: lastSection.endAngle,
+        })
+        lastSection = player.line[player.line.length - 1]
       }
 
-      const speed = 3
+      lastSection.endAngle += turningSpeedDegreesPerTick * turnMod
 
-      const angleInRadians = (player.angleInDegrees * Math.PI) / 180
-      const x =
-        player.line[player.line.length - 1].x + Math.cos(angleInRadians) * speed
-      const y =
-        player.line[player.line.length - 1].y + Math.sin(angleInRadians) * speed
-
-      let reflected = false
-
-      if (x > boardSize.width - 1) {
-        player.angleInDegrees = 180 - player.angleInDegrees
-        reflected = true
-      }
-      if (x < 0) {
-        player.angleInDegrees = 180 - player.angleInDegrees
-        reflected = true
-      }
-      if (y > boardSize.height - 1) {
-        player.angleInDegrees = 360 - player.angleInDegrees
-        reflected = true
-      }
-      if (y < 0) {
-        player.angleInDegrees = 360 - player.angleInDegrees
-        reflected = true
-      }
-
-      const shouldPlaceGap = Math.random() < 1 / 50
-      const lastPoint = player.line.at(-1)
-
-      const prev1Gap = player.line.at(-1)?.gap
-      const prev2Gap = player.line.at(-2)?.gap
-      const prev3Gap = player.line.at(-3)?.gap
-      const prev4Gap = player.line.at(-4)?.gap
-
-      const shouldContinueGap = prev1Gap
-      const shouldStopGap = prev1Gap && prev2Gap && prev3Gap && prev4Gap
-      //
-      // player.line.push({
-      //   x,
-      //   y,
-      //   gap: shouldPlaceGap || (shouldContinueGap && !shouldStopGap),
-      // })
-
-      if (
-        goingStraight &&
-        player.line.length > 1 &&
-        !reflected &&
-        !shouldPlaceGap &&
-        lastPoint
-      ) {
-        lastPoint.x = x
-        lastPoint.y = y
-      } else {
-        player.line.push({ x, y })
-      }
+      lastSection.end.x =
+        lastSection.end.x +
+        Math.cos(degreesToRad(lastSection.endAngle)) * forwardSpeedPixelsPerTick
+      lastSection.end.y =
+        lastSection.end.y +
+        Math.sin(degreesToRad(lastSection.endAngle)) * forwardSpeedPixelsPerTick
     })
   },
   events: {
     playerJoined: (playerId, { game }) => {
+      const startPoint = {
+        x: getRandomInt(boardSize.width),
+        y: getRandomInt(boardSize.height),
+      }
+      const angle = getRandomInt(360)
+
       game.players.push({
         playerId,
         turning: "none",
-        angleInDegrees: getRandomInt(360),
+        // angleInDegrees: getRandomInt(360),
         line: [
           {
-            x: getRandomInt(boardSize.width),
-            y: getRandomInt(boardSize.height),
+            start: startPoint,
+            end: startPoint,
+            startAngle: angle,
+            endAngle: angle,
+            turning: "none",
           },
         ],
       })
@@ -139,6 +135,10 @@ Rune.initLogic({
   },
 })
 
-function getRandomInt(max: number) {
+export function getRandomInt(max: number) {
   return Math.floor(Math.random() * max)
+}
+
+export function degreesToRad(degrees: number) {
+  return degrees * (Math.PI / 180)
 }

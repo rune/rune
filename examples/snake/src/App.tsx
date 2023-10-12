@@ -1,7 +1,13 @@
 import "./base.css"
 
 import { useEffect, useRef } from "react"
-import { boardSize } from "./logic.ts"
+import {
+  boardSize,
+  Point,
+  forwardSpeedPixelsPerTick,
+  turningSpeedDegreesPerTick,
+  degreesToRad,
+} from "./logic.ts"
 import { styled } from "styled-components"
 import { rel } from "./lib/rel.ts"
 import { InputTracker } from "./components/InputTracker.tsx"
@@ -14,139 +20,117 @@ function draw(canvas: HTMLCanvasElement) {
     const ctx = canvas.getContext("2d")
 
     if (ctx) {
+      // eslint-disable-next-line no-inner-declarations
+      function drawPoint(point: Point, color = "red") {
+        if (!ctx) return
+        const radius = 7.5
+        ctx.beginPath()
+        ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI)
+        ctx.strokeStyle = color
+        ctx.lineWidth = 1
+        ctx.stroke()
+      }
+
+      // eslint-disable-next-line no-inner-declarations
+      function drawLine(start: Point, end: Point) {
+        if (!ctx) return
+        ctx.beginPath()
+        ctx.moveTo(start.x, start.y)
+        ctx.lineTo(end.x, end.y)
+        ctx.lineWidth = 15
+        ctx.strokeStyle = "rgba(0,255,0,.5)"
+        ctx.stroke()
+      }
+
+      // eslint-disable-next-line no-inner-declarations
+      function drawArc(
+        initialAngle: number,
+        endAngle: number,
+        clockwise: boolean,
+        start: Point
+      ) {
+        // let nextX = start.x
+        // let nextY = start.y
+        // let nextAngle = initialAngle
+        // for (let i = 0; i < 100; i++) {
+        //   nextAngle += turningSpeedDegreesPerTick
+        //   nextX =
+        //     nextX +
+        //     Math.cos(nextAngle * (Math.PI / 180)) * forwardSpeedPixelsPerTick
+        //   nextY =
+        //     nextY +
+        //     Math.sin(nextAngle * (Math.PI / 180)) * forwardSpeedPixelsPerTick
+        //   drawPoint({ x: nextX, y: nextY }, "green")
+        // }
+
+        if (!ctx) return
+
+        const arcRadius =
+          (180 * forwardSpeedPixelsPerTick) /
+          (Math.PI * turningSpeedDegreesPerTick)
+
+        const turningMod = clockwise ? 1 : -1
+
+        const angleToCenter =
+          initialAngle + (+90 + turningSpeedDegreesPerTick / 2) * turningMod
+
+        const arcCenter = {
+          x: start.x + Math.cos(degreesToRad(angleToCenter)) * arcRadius,
+          y: start.y + Math.sin(degreesToRad(angleToCenter)) * arcRadius,
+        }
+
+        drawPoint(arcCenter, "yellow")
+
+        const arcStartAngle = degreesToRad(
+          initialAngle + (-90 + turningSpeedDegreesPerTick / 2) * turningMod
+        )
+        const arcEndAngle = degreesToRad(
+          endAngle + (-90 + turningSpeedDegreesPerTick / 2) * turningMod
+        )
+
+        // arcStartAngle = degreesToRad(0)
+        // arcEndAngle = degreesToRad(360)
+
+        ctx.beginPath()
+        ctx.arc(
+          arcCenter.x,
+          arcCenter.y,
+          arcRadius,
+          arcStartAngle,
+          arcEndAngle,
+          !clockwise
+        )
+        ctx.lineWidth = 15
+        ctx.strokeStyle = "rgba(255,0,0,.5)"
+        ctx.stroke()
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       ctx.strokeStyle = "#10D4FF"
       ctx.lineWidth = 2
       ctx.shadowColor = "#10D4FF"
+      ctx.fillStyle = "red"
 
-      const arcStartLineAngle = 315
-      const arcStart = { x: 200, y: 250 }
-      const directionRight = true
-      const iterations = 50
+      for (const player of game.players) {
+        const line = player.line
 
-      const turningMod = directionRight ? 1 : -1
+        for (const section of line) {
+          if (section.turning !== "none") {
+            drawArc(
+              section.startAngle,
+              section.endAngle,
+              section.turning === "right",
+              section.start
+            )
+          } else {
+            drawLine(section.start, section.end)
+          }
 
-      // eslint-disable-next-line no-inner-declarations
-      function drawPoint(point: { x: number; y: number }) {
-        if (!ctx) return
-        const radius = 4
-        ctx.beginPath()
-        ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI)
-        ctx.strokeStyle = "red"
-        ctx.fill()
+          drawPoint(section.start)
+          drawPoint(section.end)
+        }
       }
-
-      drawPoint(arcStart)
-
-      const forwardSpeedPixelsPerTick = 10
-      const turningSpeedDegreesPerTick = 6
-
-      const nextPoint = {
-        x: arcStart.x,
-        y: arcStart.y,
-        angle: arcStartLineAngle,
-      }
-
-      for (let i = 0; i < iterations; i++) {
-        const newAngle =
-          nextPoint.angle + turningSpeedDegreesPerTick * turningMod
-
-        nextPoint.x =
-          nextPoint.x +
-          Math.cos(newAngle * (Math.PI / 180)) * forwardSpeedPixelsPerTick
-        nextPoint.y =
-          nextPoint.y +
-          Math.sin(newAngle * (Math.PI / 180)) * forwardSpeedPixelsPerTick
-        nextPoint.angle = newAngle
-
-        // draw point nextPoint
-        drawPoint(nextPoint)
-      }
-
-      const arcRadius =
-        (180 * forwardSpeedPixelsPerTick) /
-        (Math.PI * turningSpeedDegreesPerTick)
-
-      const circleCenterX =
-        arcStart.x +
-        Math.cos(
-          (arcStartLineAngle +
-            (turningSpeedDegreesPerTick / 2) * turningMod +
-            90 * turningMod) *
-            (Math.PI / 180)
-        ) *
-          arcRadius
-      const circleCenterY =
-        arcStart.y +
-        Math.sin(
-          (arcStartLineAngle +
-            (turningSpeedDegreesPerTick / 2) * turningMod +
-            90 * turningMod) *
-            (Math.PI / 180)
-        ) *
-          arcRadius
-
-      // draw circle center
-      drawPoint({ x: circleCenterX, y: circleCenterY })
-
-      ctx.strokeStyle = "white"
-      ctx.beginPath()
-      ctx.arc(
-        circleCenterX,
-        circleCenterY,
-        arcRadius,
-        (arcStartLineAngle +
-          (turningSpeedDegreesPerTick / 2) * turningMod -
-          90 * turningMod) *
-          (Math.PI / 180),
-        (nextPoint.angle +
-          (turningSpeedDegreesPerTick / 2) * turningMod -
-          90 * turningMod) *
-          (Math.PI / 180),
-        !directionRight
-      )
-      ctx.stroke()
-
-      // ctx.beginPath()
-      //
-      // const x = 50
-      // const y = 50
-      // const radius = 20
-      // const startAngle = Math.PI / 2
-      // const endAngle = Math.PI
-      //
-      // const arcStartX = x + radius * Math.cos(startAngle)
-      // const arcStartY = y + radius * Math.sin(startAngle)
-      // const arcEndX = x + radius * Math.cos(endAngle)
-      // const arcEndY = y + radius * Math.sin(endAngle)
-      //
-      // ctx.arc(x, y, radius, startAngle, endAngle)
-      // ctx.stroke()
-
-      // for (const player of game.players) {
-      //   for (let i = 0; i < player.line.length; i++) {
-      //     if (i === 0) continue
-      //
-      //     const previousPoint = player.line[i - 1]
-      //     const point = player.line[i]
-      //
-      //     if (previousPoint.gap) continue
-      //
-      //     ctx.beginPath()
-      //     ctx.moveTo(previousPoint.x, previousPoint.y)
-      //     ctx.lineTo(point.x, point.y)
-      //
-      //     ctx.stroke()
-      //
-      //     // ctx.shadowBlur = 7.5
-      //     // ctx.stroke()
-      //     // ctx.shadowBlur = 15
-      //     // ctx.stroke()
-      //
-      //     ctx.closePath()
-      //   }
-      // }
     }
   }
 }

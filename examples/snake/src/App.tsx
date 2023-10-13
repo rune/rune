@@ -35,6 +35,7 @@ function drawArrow(
   ctx.lineWidth = 2 * window.devicePixelRatio
   ctx.fillStyle = color
   ctx.strokeStyle = color
+  ctx.shadowColor = color
   ctx.shadowBlur = 10 * window.devicePixelRatio
 
   ctx.stroke()
@@ -52,6 +53,8 @@ function drawCircle(
 
   ctx.lineWidth = 2 * window.devicePixelRatio
   ctx.fillStyle = color
+  ctx.strokeStyle = color
+  ctx.shadowColor = color
   ctx.shadowBlur = 10 * window.devicePixelRatio
 
   ctx.stroke()

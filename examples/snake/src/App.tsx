@@ -132,7 +132,9 @@ function draw(canvas: HTMLCanvasElement, scale: number) {
         )
       }
     }
+  }
 
+  for (const player of game.players) {
     const lastSection = player.line[player.line.length - 1]
 
     if (player.state === "alive") {

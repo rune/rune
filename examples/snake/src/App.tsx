@@ -1,10 +1,11 @@
 import "./base.css"
 
 import { useEffect, useRef, useState, useMemo, CSSProperties } from "react"
-import { boardSize, Point } from "./logic.ts"
+import { boardSize, arcRadius } from "./logic/logic.ts"
 import { styled } from "styled-components"
 import { InputTracker } from "./components/InputTracker.tsx"
 import { $state, store } from "./state/state.ts"
+import { Point } from "./logic/types.ts"
 
 const headerHeight = 100
 
@@ -67,11 +68,11 @@ function draw(canvas: HTMLCanvasElement, scale: number) {
       if (section.turning !== "none") {
         drawArc(
           ctx,
-          section.arc.center.x * scale,
-          section.arc.center.y * scale,
-          section.arc.radius * scale,
-          section.arc.startAngle,
-          section.arc.endAngle,
+          section.arcCenter.x * scale,
+          section.arcCenter.y * scale,
+          arcRadius * scale,
+          section.arcStartAngle,
+          section.arcEndAngle,
           section.turning === "left",
           player.color
         )
@@ -99,7 +100,9 @@ export function App() {
       const widthScale = containerWidth / boardSize.width
       const heightScale = containerHeight / boardSize.height
 
-      setScale(Math.min(widthScale, heightScale))
+      const newScale = Math.min(widthScale, heightScale)
+
+      setScale(newScale > 0 ? newScale : 1)
     }
 
     calculateScale()
@@ -112,14 +115,14 @@ export function App() {
   useEffect(() => {
     let handle: ReturnType<typeof requestAnimationFrame> | undefined
     function tick() {
-      if (canvasRef.current)
+      if (canvasRef.current) {
         draw(canvasRef.current, scale * window.devicePixelRatio)
-      // if (canvas2Ref.current) draw(canvas2Ref.current)
+      }
 
       handle = requestAnimationFrame(tick)
     }
 
-    tick()
+    handle = requestAnimationFrame(tick)
 
     return () => {
       if (handle) cancelAnimationFrame(handle)

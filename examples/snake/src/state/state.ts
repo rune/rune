@@ -1,5 +1,5 @@
 import { atom, createStore } from "jotai"
-import { GameState } from "../logic.ts"
+import { GameState } from "../logic/logic.ts"
 import { Players, PlayerId } from "rune-games-sdk"
 
 export const store = createStore()

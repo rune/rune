@@ -1,43 +1,7 @@
-import type { RuneClient } from "rune-games-sdk/multiplayer"
-import { PlayerId } from "rune-games-sdk"
-import {
-  degreesToRad,
-  getRandomIntBetween,
-  getRandomInt,
-} from "./lib/helpers.ts"
-
-type Turning = "left" | "right" | "none"
-
-export type Point = {
-  x: number
-  y: number
-}
-
-type Section = {
-  start: Point
-  end: Point
-  endAngle: number
-  gap: boolean
-} & (
-  | { turning: "none" }
-  | {
-      turning: "left" | "right"
-      arc: {
-        center: Point
-        radius: number
-        startAngle: number
-        endAngle: number
-      }
-    }
-)
-
-type PlayerInfo = {
-  playerId: string
-  turning: Turning
-  gapCounter: number
-  color: string
-  line: Section[]
-}
+import { degreesToRad } from "../lib/helpers.ts"
+import { getNewPlayer } from "./getNewPlayer.ts"
+import { Section, PlayerInfo, Turning } from "./types.ts"
+import { RuneClient } from "rune-games-sdk"
 
 export interface GameState {
   players: PlayerInfo[]
@@ -59,7 +23,7 @@ export const boardSize = {
 export const forwardSpeedPixelsPerTick = 3
 export const turningSpeedDegreesPerTick = 3
 
-const arcRadius =
+export const arcRadius =
   (180 * forwardSpeedPixelsPerTick) / (Math.PI * turningSpeedDegreesPerTick)
 
 const gapFrequency = 0.01
@@ -154,12 +118,9 @@ Rune.initLogic({
           const newSection: Section = {
             ...newSectionCommonProps,
             turning: player.turning,
-            arc: {
-              center: arcCenter,
-              radius: arcRadius,
-              startAngle: arcStartAngle,
-              endAngle: arcStartAngle,
-            },
+            arcCenter,
+            arcStartAngle,
+            arcEndAngle: arcStartAngle,
           }
 
           player.line.push(newSection)
@@ -175,7 +136,7 @@ Rune.initLogic({
         Math.sin(degreesToRad(lastSection.endAngle)) * forwardSpeedPixelsPerTick
 
       if (lastSection.turning !== "none") {
-        lastSection.arc.endAngle = degreesToRad(
+        lastSection.arcEndAngle = degreesToRad(
           lastSection.endAngle +
             (-90 + turningSpeedDegreesPerTick / 2) * turningModifier
         )
@@ -192,82 +153,3 @@ Rune.initLogic({
     },
   },
 })
-
-export function findIntersectionPoint(
-  line1: { start: Point; end: Point },
-  line2: { start: Point; end: Point }
-): Point | null {
-  const { start: line1Start, end: line1End } = line1
-  const { start: line2Start, end: line2End } = line2
-
-  const a1 = line1End.y - line1Start.y
-  const b1 = line1Start.x - line1End.x
-  const c1 = a1 * line1Start.x + b1 * line1Start.y
-
-  const a2 = line2End.y - line2Start.y
-  const b2 = line2Start.x - line2End.x
-  const c2 = a2 * line2Start.x + b2 * line2Start.y
-
-  const determinant = a1 * b2 - a2 * b1
-
-  // lines are not parallel
-  if (determinant !== 0) {
-    const x = (b2 * c1 - b1 * c2) / determinant
-    const y = (a1 * c2 - a2 * c1) / determinant
-
-    if (
-      Math.min(line1Start.x, line1End.x) <= x &&
-      x <= Math.max(line1Start.x, line1End.x) &&
-      Math.min(line1Start.y, line1End.y) <= y &&
-      y <= Math.max(line1Start.y, line1End.y) &&
-      Math.min(line2Start.x, line2End.x) <= x &&
-      x <= Math.max(line2Start.x, line2End.x) &&
-      Math.min(line2Start.y, line2End.y) <= y &&
-      y <= Math.max(line2Start.y, line2End.y)
-    ) {
-      return { x, y }
-    }
-  }
-
-  return null
-}
-
-function getNewPlayer(playerId: PlayerId, color: string): PlayerInfo {
-  const startPoint = {
-    x: getRandomInt(boardSize.width),
-    y: getRandomInt(boardSize.height),
-  }
-
-  const boardCenterX = boardSize.width / 2
-  const boardCenterY = boardSize.height / 2
-
-  function getAngleLimits(startPoint: Point): [number, number] {
-    return startPoint.x < boardCenterX && startPoint.y < boardCenterY
-      ? [0, 90]
-      : startPoint.x > boardCenterX && startPoint.y < boardCenterY
-      ? [90, 180]
-      : startPoint.x < boardCenterX && startPoint.y > boardCenterY
-      ? [270, 360]
-      : startPoint.x > boardCenterX && startPoint.y > boardCenterY
-      ? [180, 270]
-      : [0, 360]
-  }
-
-  const angle = getRandomIntBetween(...getAngleLimits(startPoint))
-
-  return {
-    playerId,
-    turning: "none",
-    gapCounter: 0,
-    color,
-    line: [
-      {
-        start: startPoint,
-        end: startPoint,
-        turning: "none",
-        endAngle: angle,
-        gap: false,
-      },
-    ],
-  }
-}

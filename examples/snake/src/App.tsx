@@ -1,137 +1,86 @@
 import "./base.css"
 
 import { useEffect, useRef } from "react"
-import {
-  boardSize,
-  Point,
-  forwardSpeedPixelsPerTick,
-  turningSpeedDegreesPerTick,
-  degreesToRad,
-  findIntersectionPoint,
-} from "./logic.ts"
+import { boardSize, Point } from "./logic.ts"
 import { styled } from "styled-components"
 import { rel } from "./lib/rel.ts"
 import { InputTracker } from "./components/InputTracker.tsx"
 import { $state, store } from "./state/state.ts"
 
+function drawPoint(ctx: CanvasRenderingContext2D, point: Point, color: string) {
+  ctx.beginPath()
+  ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI)
+  ctx.strokeStyle = color
+  ctx.lineWidth = 2
+  ctx.stroke()
+}
+
+function drawLine(
+  ctx: CanvasRenderingContext2D,
+  start: Point,
+  end: Point,
+  color: string
+) {
+  ctx.beginPath()
+  ctx.moveTo(start.x, start.y)
+  ctx.lineTo(end.x, end.y)
+  ctx.lineWidth = 5
+  ctx.strokeStyle = color
+  ctx.shadowBlur = 15
+  ctx.shadowColor = color
+  ctx.stroke()
+}
+
+function drawArc(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  radius: number,
+  startAngle: number,
+  endAngle: number,
+  counterclockwise: boolean,
+  color: string
+) {
+  ctx.beginPath()
+  ctx.arc(x, y, radius, startAngle, endAngle, counterclockwise)
+  ctx.lineWidth = 5
+  ctx.strokeStyle = color
+  ctx.shadowBlur = 15
+  ctx.shadowColor = color
+  ctx.stroke()
+}
+
 function draw(canvas: HTMLCanvasElement) {
+  const ctx = canvas.getContext("2d")
+
+  if (!ctx) return
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+
   const game = store.get($state).game
 
-  if (canvas) {
-    const ctx = canvas.getContext("2d")
+  for (const player of game.players) {
+    for (const section of player.line) {
+      if (section.gap) continue
 
-    if (ctx) {
-      // eslint-disable-next-line no-inner-declarations
-      function drawPoint(point: Point, color = "red") {
-        if (!ctx) return
-        const radius = 3
-        ctx.beginPath()
-        ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI)
-        ctx.strokeStyle = color
-        ctx.lineWidth = 2
-        ctx.stroke()
-      }
-
-      // eslint-disable-next-line no-inner-declarations
-      function drawLine(start: Point, end: Point, gap: boolean) {
-        if (!ctx) return
-        ctx.beginPath()
-        ctx.moveTo(start.x, start.y)
-        ctx.lineTo(end.x, end.y)
-        ctx.lineWidth = 5
-        ctx.strokeStyle = gap ? "rgba(0,255,0,.3)" : "rgba(0,255,0,1)"
-        ctx.shadowBlur = 15
-        ctx.shadowColor = "rgba(0,255,0,1)"
-        ctx.stroke()
-      }
-
-      // eslint-disable-next-line no-inner-declarations
-      function drawArc(
-        initialAngle: number,
-        endAngle: number,
-        clockwise: boolean,
-        start: Point,
-        gap: boolean
-      ) {
-        if (!ctx) return
-
-        const arcRadius =
-          (180 * forwardSpeedPixelsPerTick) /
-          (Math.PI * turningSpeedDegreesPerTick)
-
-        const turningMod = clockwise ? 1 : -1
-
-        const angleToCenter =
-          initialAngle + (+90 + turningSpeedDegreesPerTick / 2) * turningMod
-
-        const arcCenter = {
-          x: start.x + Math.cos(degreesToRad(angleToCenter)) * arcRadius,
-          y: start.y + Math.sin(degreesToRad(angleToCenter)) * arcRadius,
-        }
-
-        drawPoint(arcCenter, "yellow")
-
-        const arcStartAngle = degreesToRad(
-          initialAngle + (-90 + turningSpeedDegreesPerTick / 2) * turningMod
+      if (section.turning !== "none") {
+        drawArc(
+          ctx,
+          section.arc.center.x,
+          section.arc.center.y,
+          section.arc.radius,
+          section.arc.startAngle,
+          section.arc.endAngle,
+          section.turning === "left",
+          player.color
         )
-        const arcEndAngle = degreesToRad(
-          endAngle + (-90 + turningSpeedDegreesPerTick / 2) * turningMod
-        )
-
-        ctx.beginPath()
-        ctx.arc(
-          arcCenter.x,
-          arcCenter.y,
-          arcRadius,
-          arcStartAngle,
-          arcEndAngle,
-          !clockwise
-        )
-        ctx.lineWidth = 5
-        ctx.strokeStyle = gap ? "rgba(255,0,0,.3)" : "rgba(255,0,0,1)"
-        ctx.shadowBlur = 15
-        ctx.shadowColor = "rgba(255,0,0,1)"
-        ctx.stroke()
+        drawPoint(ctx, section.arc.center, "yellow")
+      } else {
+        drawLine(ctx, section.start, section.end, player.color)
       }
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      ctx.strokeStyle = "#10D4FF"
-      ctx.lineWidth = 2
-      ctx.shadowColor = "#10D4FF"
-      ctx.fillStyle = "red"
-
-      for (const player of game.players) {
-        for (const section of player.line) {
-          // TODO: actually don't draw gaps
-          // if (section.gap) continue
-
-          if (section.turning !== "none") {
-            drawArc(
-              section.startAngle,
-              section.endAngle,
-              section.turning === "right",
-              section.start,
-              !!section.gap
-            )
-          } else {
-            drawLine(section.start, section.end, !!section.gap)
-
-            for (const player2 of game.players) {
-              for (const test of player2.line) {
-                if (test === section || test.turning !== "none") continue
-
-                const intersectionPoint = findIntersectionPoint(section, test)
-
-                if (intersectionPoint) drawPoint(intersectionPoint, "blue")
-              }
-            }
-          }
-
-          drawPoint(section.start)
-          drawPoint(section.end)
-        }
-      }
+      drawPoint(ctx, section.start, "yellow")
+      drawPoint(ctx, section.end, "yellow")
     }
   }
 }
@@ -155,7 +104,6 @@ export function App() {
     }
   }, [])
 
-  console.log("render")
   return (
     <>
       <InputTracker />

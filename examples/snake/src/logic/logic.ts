@@ -28,14 +28,14 @@ export const turningSpeedDegreesPerTick = 3
 export const arcRadius =
   (180 * forwardSpeedPixelsPerTick) / (Math.PI * turningSpeedDegreesPerTick)
 
-const gapFrequency = 0.01
+const gapFrequency = 0 //0.01
 const gapLength = 15
 const minDistanceToNextGap = 30
 
 const colors = ["#BCFE00", "#10D4FF", "#FF32D2", "#FF9C27"]
 
 Rune.initLogic({
-  minPlayers: 2,
+  minPlayers: 1, // TODO 2
   maxPlayers: 4,
   setup: (allPlayerIds) => {
     return {
@@ -180,48 +180,38 @@ function isLastSectionIntersectsWithOther(
     for (const otherSection of otherPlayer.line) {
       if (otherSection.gap) continue
 
-      if (lastSection.turning === "none" && otherSection.turning === "none") {
-        if (findIntersectionPoint(lastSection, otherSection)) return true
-      } else {
-        const lastSectionLastLine =
-          lastSection.turning === "none"
-            ? lastSection
-            : {
-                start: {
-                  x:
-                    lastSection.end.x +
-                    Math.cos(degreesToRad(lastSection.endAngle - 180)) *
-                      forwardSpeedPixelsPerTick,
-                  y:
-                    lastSection.end.y +
-                    Math.sin(degreesToRad(lastSection.endAngle - 180)) *
-                      forwardSpeedPixelsPerTick,
-                },
-                end: lastSection.end,
-              }
+      const lastSectionLastLine = {
+        start: {
+          x:
+            lastSection.end.x +
+            Math.cos(degreesToRad(lastSection.endAngle - 180)) *
+              forwardSpeedPixelsPerTick,
+          y:
+            lastSection.end.y +
+            Math.sin(degreesToRad(lastSection.endAngle - 180)) *
+              forwardSpeedPixelsPerTick,
+        },
+        end: { ...lastSection.end },
+      }
 
-        if (otherSection.turning !== "none") {
-          const point = lastSectionLastLine.end
-          const arcCenter = otherSection.arcCenter
-          const distanceToCenter = Math.sqrt(
-            (point.x - arcCenter.x) ** 2 + (point.y - arcCenter.y) ** 2
-          )
+      if (otherSection.turning !== "none") {
+        const lastSectionEnd = lastSectionLastLine.end
+        const arcCenter = otherSection.arcCenter
+        const distanceToCenter = Math.sqrt(
+          (lastSectionEnd.x - arcCenter.x) ** 2 +
+            (lastSectionEnd.y - arcCenter.y) ** 2
+        )
 
-          console.log(distanceToCenter)
+        if (distanceToCenter > arcRadius) continue
+      }
 
-          if (distanceToCenter > arcRadius) continue
-        }
+      const otherSectionLines =
+        otherSection.turning === "none"
+          ? [otherSection]
+          : curvedSectionToLines(otherSection)
 
-        console.log("checking hard", lastSection.turning, otherSection.turning)
-
-        const otherSectionLines =
-          otherSection.turning === "none"
-            ? [otherSection]
-            : curvedSectionToLines(otherSection)
-
-        for (const line of otherSectionLines) {
-          if (findIntersectionPoint(lastSectionLastLine, line)) return true
-        }
+      for (const line of otherSectionLines) {
+        if (findIntersectionPoint(lastSectionLastLine, line)) return true
       }
     }
   }
@@ -234,11 +224,15 @@ function curvedSectionToLines(
 ) {
   const iterations =
     Math.abs(
-      radToDegrees(section.arcStartAngle) - radToDegrees(section.arcEndAngle)
+      section.turning === "left"
+        ? radToDegrees(section.arcStartAngle) -
+            radToDegrees(section.arcEndAngle)
+        : radToDegrees(section.arcEndAngle) -
+            radToDegrees(section.arcStartAngle)
     ) / turningSpeedDegreesPerTick
 
   const lines: { start: Point; end: Point }[] = []
-  let startPoint = section.end
+  let startPoint = { ...section.end }
   const turningModifier = section.turning === "right" ? 1 : -1
   let angle = section.endAngle - 180
 
@@ -252,7 +246,7 @@ function curvedSectionToLines(
         Math.sin(degreesToRad(angle)) * forwardSpeedPixelsPerTick,
     }
     const line = { start: { ...startPoint }, end: endPoint }
-    startPoint = endPoint
+    startPoint = { ...endPoint }
     angle -= turningSpeedDegreesPerTick * turningModifier
 
     lines.push(line)

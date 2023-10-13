@@ -10,6 +10,6 @@ export default defineConfig({
   plugins: [
     qrcode(), // only applies in dev mode
     react(),
-    rune({ logicPath: path.resolve("./src/logic.ts") }),
+    rune({ logicPath: path.resolve("./src/logic/logic.ts") }),
   ],
 })

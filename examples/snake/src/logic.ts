@@ -1,5 +1,10 @@
 import type { RuneClient } from "rune-games-sdk/multiplayer"
 import { PlayerId } from "rune-games-sdk"
+import {
+  degreesToRad,
+  getRandomIntBetween,
+  getRandomInt,
+} from "./lib/helpers.ts"
 
 type Turning = "left" | "right" | "none"
 
@@ -29,8 +34,7 @@ type Section = {
 type PlayerInfo = {
   playerId: string
   turning: Turning
-  // TODO: also count down from last gap to avoid gaps being too close
-  placingGap: number
+  gapCounter: number
   color: string
   line: Section[]
 }
@@ -59,8 +63,8 @@ const arcRadius =
   (180 * forwardSpeedPixelsPerTick) / (Math.PI * turningSpeedDegreesPerTick)
 
 const gapFrequency = 0.01
-
 const gapLength = 15
+const minDistanceToNextGap = 30
 
 const colors = ["#BCFE00", "#10D4FF", "#FF32D2", "#FF9C27"]
 
@@ -94,15 +98,17 @@ Rune.initLogic({
       const turningModifier =
         player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
 
-      const wasPlacingGap = !!player.placingGap
+      const wasPlacingGap = player.gapCounter > 0
 
-      if (player.placingGap) {
-        player.placingGap--
-      } else {
-        if (Math.random() < gapFrequency) player.placingGap = gapLength
+      if (player.gapCounter < -minDistanceToNextGap) {
+        if (Math.random() < gapFrequency) {
+          player.gapCounter = gapLength
+        }
       }
 
-      const isPlacingGap = !!player.placingGap
+      player.gapCounter--
+
+      const isPlacingGap = player.gapCounter > 0
 
       if (
         lastSection.turning !== player.turning ||
@@ -115,7 +121,7 @@ Rune.initLogic({
           end: { ...point },
           startAngle: lastSection.endAngle,
           endAngle: lastSection.endAngle,
-          gap: !!player.placingGap,
+          gap: player.gapCounter > 0,
         }
 
         if (player.turning === "none") {
@@ -187,18 +193,6 @@ Rune.initLogic({
   },
 })
 
-export function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max)
-}
-
-export function getRandomIntBetween(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min) + min)
-}
-
-export function degreesToRad(degrees: number) {
-  return degrees * (Math.PI / 180)
-}
-
 export function findIntersectionPoint(
   line1: { start: Point; end: Point },
   line2: { start: Point; end: Point }
@@ -264,7 +258,7 @@ function getNewPlayer(playerId: PlayerId, color: string): PlayerInfo {
   return {
     playerId,
     turning: "none",
-    placingGap: 0,
+    gapCounter: 0,
     color,
     line: [
       {

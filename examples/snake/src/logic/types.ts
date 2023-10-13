@@ -25,5 +25,6 @@ export type PlayerInfo = {
   turning: Turning
   gapCounter: number
   color: string
+  state: "alive" | "dead"
   line: Section[]
 }

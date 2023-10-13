@@ -1,7 +1,9 @@
-import { degreesToRad } from "../lib/helpers.ts"
+import { degreesToRad, radToDegrees } from "../lib/helpers.ts"
 import { getNewPlayer } from "./getNewPlayer.ts"
-import { Section, PlayerInfo, Turning } from "./types.ts"
+import { Section, PlayerInfo, Turning, Point } from "./types.ts"
 import { RuneClient } from "rune-games-sdk"
+import { isLastSectionOutOfBounds } from "./isLastSectionOutOfBounds.ts"
+import { findIntersectionPoint } from "./findIntersectionPoint.ts"
 
 export interface GameState {
   players: PlayerInfo[]
@@ -53,10 +55,9 @@ Rune.initLogic({
   },
   updatesPerSecond: 30,
   update: ({ game }) => {
-    // TODO: remove this
-    if (Rune.gameTime() > 10000) return
+    for (const player of game.players) {
+      if (player.state === "dead") continue
 
-    game.players.forEach((player) => {
       let lastSection = player.line[player.line.length - 1]
 
       const turningModifier =
@@ -141,7 +142,20 @@ Rune.initLogic({
             (-90 + turningSpeedDegreesPerTick / 2) * turningModifier
         )
       }
-    })
+    }
+
+    for (const player of game.players) {
+      if (player.state === "dead") continue
+
+      if (
+        isLastSectionOutOfBounds(player) ||
+        isLastSectionIntersectsWithOther(player, game.players)
+      ) {
+        player.state = "dead"
+      }
+    }
+
+    if (game.players.every((p) => p.state === "dead")) Rune.gameOver()
   },
   events: {
     playerJoined: (playerId, { game }) => {
@@ -153,3 +167,96 @@ Rune.initLogic({
     },
   },
 })
+
+function isLastSectionIntersectsWithOther(
+  player: PlayerInfo,
+  players: PlayerInfo[]
+) {
+  const lastSection = player.line[player.line.length - 1]
+
+  if (lastSection.gap) return false
+
+  for (const otherPlayer of players) {
+    for (const otherSection of otherPlayer.line) {
+      if (otherSection.gap) continue
+
+      if (lastSection.turning === "none" && otherSection.turning === "none") {
+        if (findIntersectionPoint(lastSection, otherSection)) return true
+      } else {
+        const lastSectionLastLine =
+          lastSection.turning === "none"
+            ? lastSection
+            : {
+                start: {
+                  x:
+                    lastSection.end.x +
+                    Math.cos(degreesToRad(lastSection.endAngle - 180)) *
+                      forwardSpeedPixelsPerTick,
+                  y:
+                    lastSection.end.y +
+                    Math.sin(degreesToRad(lastSection.endAngle - 180)) *
+                      forwardSpeedPixelsPerTick,
+                },
+                end: lastSection.end,
+              }
+
+        if (otherSection.turning !== "none") {
+          const point = lastSectionLastLine.end
+          const arcCenter = otherSection.arcCenter
+          const distanceToCenter = Math.sqrt(
+            (point.x - arcCenter.x) ** 2 + (point.y - arcCenter.y) ** 2
+          )
+
+          console.log(distanceToCenter)
+
+          if (distanceToCenter > arcRadius) continue
+        }
+
+        console.log("checking hard", lastSection.turning, otherSection.turning)
+
+        const otherSectionLines =
+          otherSection.turning === "none"
+            ? [otherSection]
+            : curvedSectionToLines(otherSection)
+
+        for (const line of otherSectionLines) {
+          if (findIntersectionPoint(lastSectionLastLine, line)) return true
+        }
+      }
+    }
+  }
+
+  return false
+}
+
+function curvedSectionToLines(
+  section: Section & { turning: "left" | "right" }
+) {
+  const iterations =
+    Math.abs(
+      radToDegrees(section.arcStartAngle) - radToDegrees(section.arcEndAngle)
+    ) / turningSpeedDegreesPerTick
+
+  const lines: { start: Point; end: Point }[] = []
+  let startPoint = section.end
+  const turningModifier = section.turning === "right" ? 1 : -1
+  let angle = section.endAngle - 180
+
+  for (let i = 0; i < iterations; i++) {
+    const endPoint = {
+      x:
+        startPoint.x +
+        Math.cos(degreesToRad(angle)) * forwardSpeedPixelsPerTick,
+      y:
+        startPoint.y +
+        Math.sin(degreesToRad(angle)) * forwardSpeedPixelsPerTick,
+    }
+    const line = { start: { ...startPoint }, end: endPoint }
+    startPoint = endPoint
+    angle -= turningSpeedDegreesPerTick * turningModifier
+
+    lines.push(line)
+  }
+
+  return lines
+}

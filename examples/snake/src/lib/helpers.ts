@@ -9,3 +9,7 @@ export function getRandomIntBetween(min: number, max: number) {
 export function degreesToRad(degrees: number) {
   return degrees * (Math.PI / 180)
 }
+
+export function radToDegrees(rad: number) {
+  return rad * (180 / Math.PI)
+}

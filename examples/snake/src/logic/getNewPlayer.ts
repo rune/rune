@@ -1,7 +1,7 @@
 import { PlayerId } from "rune-games-sdk"
-import { PlayerInfo, Point } from "./type.ts"
 import { getRandomInt, getRandomIntBetween } from "../lib/helpers.ts"
 import { boardSize } from "./logic.ts"
+import { Point, PlayerInfo } from "./types.ts"
 
 export function getNewPlayer(playerId: PlayerId, color: string): PlayerInfo {
   const startPoint = {
@@ -31,6 +31,7 @@ export function getNewPlayer(playerId: PlayerId, color: string): PlayerInfo {
     turning: "none",
     gapCounter: 0,
     color,
+    state: "alive",
     line: [
       {
         start: startPoint,

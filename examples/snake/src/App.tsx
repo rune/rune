@@ -1,13 +1,62 @@
 import "./base.css"
 
-import { useEffect, useRef, useState, useMemo, CSSProperties } from "react"
+import { CSSProperties, useEffect, useMemo, useRef, useState } from "react"
 import { boardSize, arcRadius } from "./logic/logic.ts"
 import { styled } from "styled-components"
 import { InputTracker } from "./components/InputTracker.tsx"
 import { $state, store } from "./state/state.ts"
 import { Point } from "./logic/types.ts"
+import { degreesToRad } from "./lib/helpers.ts"
 
 const headerHeight = 100
+
+function drawArrow(
+  ctx: CanvasRenderingContext2D,
+  point: Point,
+  angle: number,
+  color: string
+) {
+  const angleInRad = degreesToRad(angle)
+  const size = 10 * window.devicePixelRatio
+  const sharpness = 10
+
+  ctx.beginPath()
+  ctx.moveTo(point.x, point.y)
+  ctx.lineTo(
+    point.x - size * Math.cos(angleInRad - Math.PI / sharpness),
+    point.y - size * Math.sin(angleInRad - Math.PI / sharpness)
+  )
+  ctx.lineTo(
+    point.x - size * Math.cos(angleInRad + Math.PI / sharpness),
+    point.y - size * Math.sin(angleInRad + Math.PI / sharpness)
+  )
+  ctx.lineTo(point.x, point.y)
+
+  ctx.lineWidth = 2 * window.devicePixelRatio
+  ctx.fillStyle = color
+  ctx.shadowBlur = 10 * window.devicePixelRatio
+
+  ctx.stroke()
+  ctx.stroke()
+  ctx.fill()
+}
+
+function drawCircle(
+  ctx: CanvasRenderingContext2D,
+  point: Point,
+  color: string
+) {
+  ctx.beginPath()
+  ctx.arc(point.x, point.y, 7.5 * window.devicePixelRatio, 0, 2 * Math.PI)
+
+  ctx.lineWidth = 2 * window.devicePixelRatio
+  ctx.fillStyle = color
+  ctx.shadowBlur = 10 * window.devicePixelRatio
+
+  ctx.stroke()
+  ctx.stroke()
+  ctx.fill()
+}
 
 function drawLine(
   ctx: CanvasRenderingContext2D,
@@ -24,7 +73,6 @@ function drawLine(
   ctx.shadowBlur = 10 * window.devicePixelRatio
   ctx.shadowColor = color
 
-  // to make a thicker shadow
   ctx.stroke()
   ctx.stroke()
 }
@@ -47,7 +95,6 @@ function drawArc(
   ctx.shadowBlur = 10 * window.devicePixelRatio
   ctx.shadowColor = color
 
-  // to make a thicker shadow
   ctx.stroke()
   ctx.stroke()
 }
@@ -84,6 +131,23 @@ function draw(canvas: HTMLCanvasElement, scale: number) {
           player.color
         )
       }
+    }
+
+    const lastSection = player.line[player.line.length - 1]
+
+    if (player.state === "alive") {
+      drawArrow(
+        ctx,
+        { x: lastSection.end.x * scale, y: lastSection.end.y * scale },
+        lastSection.endAngle,
+        player.color
+      )
+    } else {
+      drawCircle(
+        ctx,
+        { x: lastSection.end.x * scale, y: lastSection.end.y * scale },
+        player.color
+      )
     }
   }
 }

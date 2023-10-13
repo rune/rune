@@ -1,4 +1,4 @@
-import { Point } from "./type.ts"
+import { Point } from "./types.ts"
 
 export function findIntersectionPoint(
   line1: { start: Point; end: Point },

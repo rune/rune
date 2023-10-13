@@ -48,8 +48,8 @@ declare global {
 }
 
 export const boardSize = {
-  width: 400,
-  height: 500,
+  width: 600,
+  height: 900,
 }
 
 export const forwardSpeedPixelsPerTick = 3
@@ -58,14 +58,14 @@ export const turningSpeedDegreesPerTick = 3
 const arcRadius =
   (180 * forwardSpeedPixelsPerTick) / (Math.PI * turningSpeedDegreesPerTick)
 
-const gapFrequency = 0.02
+const gapFrequency = 0.01
 
 const gapLength = 15
 
 const colors = ["#BCFE00", "#10D4FF", "#FF32D2", "#FF9C27"]
 
 Rune.initLogic({
-  minPlayers: 1,
+  minPlayers: 2,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
     return {

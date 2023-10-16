@@ -2,7 +2,7 @@ const { createConfigTester } = require("../createConfigTester")
 
 const test = createConfigTester()
 
-test("variable scope", ({ type }) => ({
+test("global scope mutation", ({ type }) => ({
   valid: [
     "(() => { let hest; hest = 'snel' })()",
     "() => { Rune.initLogic() }",
@@ -48,11 +48,22 @@ test("variable scope", ({ type }) => ({
     // These are unsafe and ways to circumvent the intention of the rule, but still allowed
     "const hest = ['snel']; const klap = (hest) => { hest.push('klad') }; (() => { klap(hest) })()",
     "[Rune].map((r) => { r.hest = 'snel' })",
+    //Valid since it is not modifying global scope
+    "() => { let hest; () => { hest = 'snel' } }",
+    `Rune.initLogic({
+      setup: () => {
+      
+        const arr = []
+      
+        return {
+          data: [1, 2, 3].forEach(el => arr.push(el)),
+        }
+      },
+    })`,
   ],
   invalid: [
     "let hest; (() => { hest = 'snel' })()",
     "Math.smth = 4",
-    "() => { let hest; () => { hest = 'snel' } }",
     "const hest = ['snel', 'klad']; (() => { hest.splice(0, 1) })()",
     "const hest = { snel: true }; () => Object.assign(hest, { klad: true })",
     "const hest = {}; () => { Object.defineProperty(hest, 'snel', { value: true }) }",
@@ -87,9 +98,22 @@ test("variable scope", ({ type }) => ({
     "Object.__defineGetter__(Rune, () => 'hest')",
     "Object.__defineSetter__(Rune, () => 'hest')",
     "Object.setPrototypeOf(Rune, { hest: true })",
+    `
+    const arr = [1, 2, 3];
+    
+     function globalReference() {
+       return {
+         arr
+       };
+     }
+    
+    function abc() {
+      const a = arr;
+      const b = a.splice(1);
+    }`,
     //deleting Rune will throw Parsing error: Deleting local variable in strict mode in case of running in module
     type === "script" && "delete Rune",
   ]
     .filter((x) => !!x)
-    .map((s) => [s, "rune/no-parent-scope-mutation"]),
+    .map((s) => [s, "rune/no-global-scope-mutation"]),
 }))

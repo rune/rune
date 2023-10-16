@@ -59,7 +59,8 @@ export const create: Rule.RuleModule["create"] = (context) => {
 
   const isRuntimeGlobalVariable = (variable: Scope.Variable | null): boolean =>
     variable
-      ? variable.scope.type === "global" &&
+      ? (variable.scope.type === "global" ||
+          variable.scope.type === "module") &&
         (variable.identifiers.length === 0 ||
           findFunctionScope(variable.scope) !==
             findFunctionScope(context.getScope()))
@@ -71,10 +72,10 @@ export const create: Rule.RuleModule["create"] = (context) => {
   ) => {
     const scope = context.getScope()
     const variable = resolveVariable(findVariable(variableName, scope))
+
     if (
       variable && // undefined variables are handled by builtin rule
-      (isRuntimeGlobalVariable(variable) ||
-        findFunctionScope(variable.scope) !== findFunctionScope(scope))
+      isRuntimeGlobalVariable(variable)
     ) {
       context.report({
         node: reportNode,

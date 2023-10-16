@@ -113,12 +113,6 @@ test("global scope mutation", ({ type }) => ({
     `
     const arr = [1, 2, 3];
     
-     function globalReference() {
-       return {
-         arr
-       };
-     }
-    
     function abc() {
       const a = arr;
       const b = a.splice(1);

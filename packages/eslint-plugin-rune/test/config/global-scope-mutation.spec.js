@@ -60,6 +60,18 @@ test("global scope mutation", ({ type }) => ({
         }
       },
     })`,
+    `Rune.initLogic({
+      setup: () => {
+        return {
+          data: []
+        }
+      },
+      actions: {
+        action: (_, {game}) => {
+          [1, 2, 3].forEach((el) => game[el] = el);
+        }
+      }
+    })`,
   ],
   invalid: [
     "let hest; (() => { hest = 'snel' })()",

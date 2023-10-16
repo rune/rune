@@ -19,6 +19,7 @@
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "eslint": "7.22.0",
+    "eslint-plugin-rune": "^0.1.9",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
     "vite-plugin-rune": "0.1.0"

@@ -53,8 +53,8 @@ const createConfigTester = () => {
    * @param {TestSuite} tests
    */
   return (testName, testGetter) => {
-    ;["typescript"].forEach((language) => {
-      ;["module"].forEach((sourceType) => {
+    ;["typescript", "javascript"].forEach((language) => {
+      ;["module", "script"].forEach((sourceType) => {
         const eslint = new ESLint({
           useEslintrc: false,
           allowInlineConfig: false,

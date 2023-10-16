@@ -49,7 +49,6 @@ export function PhotoSphereViewer({
   panorama: Panorama
   onFirstInteraction?: () => void
 }) {
-  // eslint-disable-next-line no-restricted-globals
   const panoramaUrl = `${baseUrl}/${name}`
   const containerRef = useRef<HTMLDivElement>(null)
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 
 import { useGames, useMyGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
+import { CliFlags } from "../../lib/cli.js"
 
 import { ChooseGameStep } from "./ChooseGameStep.js"
 import { ConfirmationStep } from "./ConfirmationStep.js"
@@ -11,7 +12,7 @@ import { CreateGameVersionStep } from "./CreateGameVersionStep.js"
 import { GameDirInputStep } from "./GameDirInputStep.js"
 import { ReadyForReleaseStep } from "./ReadyForReleaseStep.js"
 
-export function Upload() {
+export function Upload({ flags }: { flags: CliFlags }) {
   const [gameDir, setGameDir] = useState<string | undefined>()
   const [gameId, setGameId] = useState<number | null | undefined>()
   const [readyForRelease, setReadyForRelease] = useState<boolean | undefined>(
@@ -22,10 +23,23 @@ export function Upload() {
   const { me } = useMe()
   const { games } = useGames({ skip: !me })
   const { myGames } = useMyGames({ games, devId: me?.devId })
+  const { release, name, confirm } = flags
 
   useEffect(() => {
     if (myGames && myGames.length > 1) setNeedConfirmation(true)
   }, [myGames])
+
+  useEffect(() => {
+    release && setReadyForRelease(release)
+    const gameFromInputFlag =
+      name &&
+      myGames?.filter(
+        (game) => game.title.toLowerCase() === name.toLowerCase()
+      )[0]
+    gameFromInputFlag && setGameId(gameFromInputFlag.id)
+
+    confirm && setConfirmed(confirm)
+  }, [confirm, myGames, name, release])
 
   return (
     <Box flexDirection="column">
@@ -38,12 +52,14 @@ export function Upload() {
           setGameDir(gameDir)
         }}
       />
-      {gameDir !== undefined && (
+      {gameDir !== undefined && readyForRelease === undefined && (
         <ReadyForReleaseStep onComplete={setReadyForRelease} />
       )}
-      {gameDir !== undefined && readyForRelease !== undefined && (
-        <ChooseGameStep currentGameId={gameId} onComplete={setGameId} />
-      )}
+      {gameDir !== undefined &&
+        readyForRelease !== undefined &&
+        (gameId === undefined || gameId === null) && (
+          <ChooseGameStep currentGameId={gameId} onComplete={setGameId} />
+        )}
       {gameId === null && readyForRelease !== undefined && (
         <CreateGameStep onComplete={setGameId} />
       )}

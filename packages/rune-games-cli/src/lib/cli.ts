@@ -28,6 +28,18 @@ export const cli = meow(
         type: "boolean",
         alias: "v",
       },
+      release: {
+        type: "boolean",
+        alias: "r",
+      },
+      name: {
+        type: "string",
+        alias: "n",
+      },
+      confirm: {
+        type: "boolean",
+        alias: "c",
+      },
     },
   }
 )
@@ -48,5 +60,9 @@ export function cliCommand() {
     command,
     args: cli.input.slice(1),
     commandInvalid: command && !validCommands.includes(command),
+    flags: cli.flags,
   }
 }
+
+export type CLI = typeof cli
+export type CliFlags = CLI["flags"]

@@ -33,7 +33,3 @@ const CanvasContainer = styled.div`
   flex: 1 0 auto;
   background: blue;
 `
-
-const Canvas = styled.canvas`
-  background: black;
-`

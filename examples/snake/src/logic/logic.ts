@@ -17,6 +17,8 @@ declare global {
   const Rune: RuneClient<GameState, GameActions>
 }
 
+const maxScore = 10
+
 export const boardSize = {
   width: 600,
   height: 900,
@@ -96,7 +98,7 @@ Rune.initLogic({
   updatesPerSecond: Math.round(30 * speed),
   update: ({ game }) => {
     for (const player of game.players) {
-      if (player.state === "dead") continue
+      if (player.state !== "alive") continue
 
       let lastSection = player.line[player.line.length - 1]
 
@@ -198,6 +200,7 @@ Rune.initLogic({
           game.collisionGrid[collisionSquareIndex])
       ) {
         player.state = "dead"
+        checkWinnersAndGameOver(game)
       } else if (!lastSection.gap) {
         const oldCollisionCellCords = collisionGridIndexToPoint(
           oldCollisionSquareIndex,
@@ -277,12 +280,13 @@ Rune.initLogic({
         game.collisionGrid[collisionSquareIndex] = true
       }
     }
-
-    if (game.players.every((p) => p.state === "dead")) Rune.gameOver()
   },
   events: {
     playerJoined: (playerId, { game }) => {
-      game.players.push(getNewPlayer(playerId, colors[game.players.length]))
+      game.players.push({
+        ...getNewPlayer(playerId, colors[game.players.length]),
+        state: "pending",
+      })
     },
     playerLeft: (playerId, { game }) => {
       const index = game.players.findIndex((p) => p.playerId === playerId)
@@ -290,3 +294,30 @@ Rune.initLogic({
     },
   },
 })
+
+function checkWinnersAndGameOver(game: GameState) {
+  const playersAlive = game.players.filter((p) => p.state === "alive")
+
+  if (playersAlive.length > 1) return
+
+  if (playersAlive.length === 1) {
+    playersAlive[0].score++
+
+    if (playersAlive[0].score === maxScore) {
+      Rune.gameOver({
+        players: game.players.reduce(
+          (acc, p) => ({ ...acc, [p.playerId]: p.score }),
+          {},
+        ),
+      })
+    }
+  }
+
+  for (let i = 0; i < game.players.length; i++) {
+    game.collisionGrid = []
+    game.players[i] = {
+      ...getNewPlayer(game.players[i].playerId, game.players[i].color),
+      score: game.players[i].score,
+    }
+  }
+}

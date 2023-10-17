@@ -12,11 +12,17 @@ export function Header() {
 
   return (
     <Root>
-      {Object.values(game.players).map(({ playerId, color }) => (
+      {Object.values(game.players).map(({ playerId, color, score, state }) => (
         <PlayerContainer key={playerId}>
-          <Avatar src={players[playerId].avatarUrl} $playerColor={color} />
+          {state === "pending" ? (
+            <div style={{ color: "white" }}>pending</div>
+          ) : state === "dead" ? (
+            <div style={{ color: "white" }}>dead</div>
+          ) : (
+            <Avatar src={players[playerId].avatarUrl} $playerColor={color} />
+          )}
           <Name $playerColor={color}>{players[playerId].displayName}</Name>
-          <Score $playerColor={color}>23</Score>
+          <Score $playerColor={color}>{score}</Score>
         </PlayerContainer>
       ))}
     </Root>
@@ -51,7 +57,7 @@ const Name = styled.div<{ $playerColor: string }>`
   font-size: ${rel(9)};
   line-height: normal;
   position: relative;
-  //top: ${rel(-4)};
+  top: ${rel(-4)};
   padding: ${rel(2)} ${rel(4)};
   border-radius: ${rel(14)};
   box-shadow: 0 0 ${rel(15)} ${rel(3)} ${({ $playerColor }) => $playerColor};

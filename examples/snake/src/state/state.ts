@@ -11,7 +11,10 @@ export const $state = atom<{
   yourPlayerId: PlayerId | undefined
 }>({
   ready: false,
-  game: { collisionGrid: [], players: [] },
+  game: {
+    collisionGrid: [],
+    players: [],
+  },
   players: {},
   yourPlayerId: undefined,
 })

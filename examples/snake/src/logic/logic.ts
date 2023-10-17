@@ -117,12 +117,6 @@ Rune.initLogic({
       }
     }
 
-    if (game.stage === "endOfRound") {
-      if ((Rune.gameTime() - game.timerStartedAt) / 1000 > endOfRoundDuration) {
-        newRound(game)
-      }
-    }
-
     if (game.stage === "playing") {
       for (const player of game.players) {
         if (player.state !== "alive") continue
@@ -311,6 +305,12 @@ Rune.initLogic({
 
           game.collisionGrid[collisionSquareIndex] = true
         }
+      }
+    }
+
+    if (game.stage === "endOfRound") {
+      if ((Rune.gameTime() - game.timerStartedAt) / 1000 > endOfRoundDuration) {
+        newRound(game)
       }
     }
   },

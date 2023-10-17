@@ -60,7 +60,7 @@ export function collisionGridIndexToPoint(index: number) {
 }
 
 Rune.initLogic({
-  minPlayers: 4,
+  minPlayers: 2,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
     const collisionGrid: boolean[] = []

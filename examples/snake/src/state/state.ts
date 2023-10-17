@@ -17,3 +17,7 @@ export const $state = atom<{
 })
 
 export const $ready = atom((get) => get($state).ready)
+
+export const $players = atom((get) => get($state).players)
+
+export const $game = atom((get) => get($state).game)

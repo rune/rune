@@ -4,6 +4,8 @@ import { $timer } from "../state/state.ts"
 export function Countdown() {
   const timer = useAtomValue($timer)
 
+  console.log("render", timer)
+
   return (
     <div
       style={{ position: "absolute", color: "white", left: "50%", top: "50%" }}

@@ -107,8 +107,9 @@ Rune.initLogic({
   updatesPerSecond: Math.round(30 * speed),
   update: ({ game }) => {
     if (game.stage === "countdown") {
-      game.timer =
-        countdownDuration - (Rune.gameTime() - game.timerStartedAt) / 1000
+      game.timer = Math.ceil(
+        countdownDuration - (Rune.gameTime() - game.timerStartedAt) / 1000,
+      )
 
       if (game.timer <= 0) {
         game.timer = 0

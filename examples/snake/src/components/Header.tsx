@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai"
 import { $game, $players, $yourPlayerId } from "../state/state.ts"
 import { rel } from "../lib/rel.ts"
 
+// TODO: should be defined via rel(), board should get it dynamically
 export const headerHeight = 100
 
 export function Header() {

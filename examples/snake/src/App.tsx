@@ -14,7 +14,7 @@ function drawArrow(
   ctx: CanvasRenderingContext2D,
   point: Point,
   angle: number,
-  color: string
+  color: string,
 ) {
   const angleInRad = degreesToRad(angle)
   const size = 10 * window.devicePixelRatio
@@ -24,11 +24,11 @@ function drawArrow(
   ctx.moveTo(point.x, point.y)
   ctx.lineTo(
     point.x - size * Math.cos(angleInRad - Math.PI / sharpness),
-    point.y - size * Math.sin(angleInRad - Math.PI / sharpness)
+    point.y - size * Math.sin(angleInRad - Math.PI / sharpness),
   )
   ctx.lineTo(
     point.x - size * Math.cos(angleInRad + Math.PI / sharpness),
-    point.y - size * Math.sin(angleInRad + Math.PI / sharpness)
+    point.y - size * Math.sin(angleInRad + Math.PI / sharpness),
   )
   ctx.lineTo(point.x, point.y)
 
@@ -46,7 +46,7 @@ function drawArrow(
 function drawCircle(
   ctx: CanvasRenderingContext2D,
   point: Point,
-  color: string
+  color: string,
 ) {
   ctx.beginPath()
   ctx.arc(point.x, point.y, 7.5 * window.devicePixelRatio, 0, 2 * Math.PI)
@@ -66,7 +66,7 @@ function drawLine(
   ctx: CanvasRenderingContext2D,
   start: Point,
   end: Point,
-  color: string
+  color: string,
 ) {
   ctx.beginPath()
   ctx.moveTo(start.x, start.y)
@@ -89,7 +89,7 @@ function drawArc(
   startAngle: number,
   endAngle: number,
   counterclockwise: boolean,
-  color: string
+  color: string,
 ) {
   ctx.beginPath()
   ctx.arc(x, y, radius, startAngle, endAngle, counterclockwise)
@@ -103,6 +103,28 @@ function drawArc(
   ctx.stroke()
 }
 
+function drawRect(
+  ctx: CanvasRenderingContext2D,
+  point: Point,
+  width: number,
+  height: number,
+  color: string,
+  fillColor?: string,
+) {
+  ctx.beginPath()
+  ctx.rect(point.x, point.y, width, height)
+
+  ctx.lineWidth = 2 * window.devicePixelRatio
+  ctx.strokeStyle = color
+  ctx.shadowBlur = 0
+  ctx.stroke()
+
+  if (fillColor) {
+    ctx.fillStyle = fillColor
+    ctx.fill()
+  }
+}
+
 function draw(canvas: HTMLCanvasElement, scale: number) {
   const ctx = canvas.getContext("2d")
 
@@ -111,6 +133,19 @@ function draw(canvas: HTMLCanvasElement, scale: number) {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
   const game = store.get($state).game
+
+  // for (let cellIndex = 0; cellIndex < game.collisionGrid.length; cellIndex++) {
+  //   const point = collisionGridIndexToPoint(cellIndex)
+  //
+  //   drawRect(
+  //     ctx,
+  //     { x: point.x * scale, y: point.y * scale },
+  //     pixelsPerCollisionGridSquare * scale,
+  //     pixelsPerCollisionGridSquare * scale,
+  //     "rgba(255,255,255,.1)",
+  //     game.collisionGrid[cellIndex] ? "rgba(255,255,255,.5)" : undefined,
+  //   )
+  // }
 
   for (const player of game.players) {
     for (const section of player.line) {
@@ -125,14 +160,14 @@ function draw(canvas: HTMLCanvasElement, scale: number) {
           section.arcStartAngle,
           section.arcEndAngle,
           section.turning === "left",
-          player.color
+          player.color,
         )
       } else {
         drawLine(
           ctx,
           { x: section.start.x * scale, y: section.start.y * scale },
           { x: section.end.x * scale, y: section.end.y * scale },
-          player.color
+          player.color,
         )
       }
     }
@@ -146,16 +181,24 @@ function draw(canvas: HTMLCanvasElement, scale: number) {
         ctx,
         { x: lastSection.end.x * scale, y: lastSection.end.y * scale },
         lastSection.endAngle,
-        player.color
+        player.color,
       )
     } else {
       drawCircle(
         ctx,
         { x: lastSection.end.x * scale, y: lastSection.end.y * scale },
-        player.color
+        player.color,
       )
     }
   }
+
+  // for(let x = 0; x < boardSize.width; x++) {
+  //   if (x % pixelsPerCollisionGridSquare !== 0) continue
+  //   for(let y = 0; y < boardSize.height; y++) {
+  //     if (y % pixelsPerCollisionGridSquare !== 0) continue
+  //
+  //   }
+  // }
 }
 
 export function App() {
@@ -204,7 +247,7 @@ export function App() {
       width: boardSize.width * scale,
       height: boardSize.height * scale,
     }),
-    [scale]
+    [scale],
   )
 
   return (

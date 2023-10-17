@@ -1,9 +1,8 @@
-import { degreesToRad, radToDegrees } from "../lib/helpers.ts"
+import { degreesToRad } from "../lib/helpers.ts"
 import { getNewPlayer } from "./getNewPlayer.ts"
 import { Section, PlayerInfo, Turning, Point } from "./types.ts"
 import { RuneClient } from "rune-games-sdk"
 import { isLastSectionOutOfBounds } from "./isLastSectionOutOfBounds.ts"
-import { findIntersectionPoint } from "./findIntersectionPoint.ts"
 
 export interface GameState {
   players: PlayerInfo[]
@@ -273,8 +272,6 @@ Rune.initLogic({
               })
             ] = true
           }
-
-          console.log("diagonal")
         }
 
         game.collisionGrid[collisionSquareIndex] = true
@@ -293,90 +290,3 @@ Rune.initLogic({
     },
   },
 })
-
-function isLastSectionIntersectsWithOther(
-  player: PlayerInfo,
-  players: PlayerInfo[],
-) {
-  const lastSection = player.line[player.line.length - 1]
-
-  if (lastSection.gap) return false
-
-  for (const otherPlayer of players) {
-    for (const otherSection of otherPlayer.line) {
-      if (otherSection.gap) continue
-
-      const lastSectionLastLine = {
-        start: {
-          x:
-            lastSection.end.x +
-            Math.cos(degreesToRad(lastSection.endAngle - 180)) *
-              forwardSpeedPixelsPerTick,
-          y:
-            lastSection.end.y +
-            Math.sin(degreesToRad(lastSection.endAngle - 180)) *
-              forwardSpeedPixelsPerTick,
-        },
-        end: { ...lastSection.end },
-      }
-
-      if (otherSection.turning !== "none") {
-        const lastSectionEnd = lastSectionLastLine.end
-        const arcCenter = otherSection.arcCenter
-        const distanceToCenter = Math.sqrt(
-          (lastSectionEnd.x - arcCenter.x) ** 2 +
-            (lastSectionEnd.y - arcCenter.y) ** 2,
-        )
-
-        if (distanceToCenter > arcRadius) continue
-      }
-
-      const otherSectionLines =
-        otherSection.turning === "none"
-          ? [otherSection]
-          : curvedSectionToLines(otherSection)
-
-      for (const line of otherSectionLines) {
-        if (findIntersectionPoint(lastSectionLastLine, line)) return true
-      }
-    }
-  }
-
-  return false
-}
-
-function curvedSectionToLines(
-  section: Section & { turning: "left" | "right" },
-) {
-  const iterations =
-    Math.abs(
-      section.turning === "left"
-        ? radToDegrees(section.arcStartAngle) -
-            radToDegrees(section.arcEndAngle)
-        : radToDegrees(section.arcEndAngle) -
-            radToDegrees(section.arcStartAngle),
-    ) / turningSpeedDegreesPerTick
-
-  const lines: { start: Point; end: Point }[] = []
-  let startPoint = { ...section.end }
-  const turningModifier = section.turning === "right" ? 1 : -1
-  let angle = section.endAngle - 180
-
-  for (let i = 0; i < iterations; i++) {
-    const endPoint = {
-      x:
-        startPoint.x +
-        Math.cos(degreesToRad(angle)) * forwardSpeedPixelsPerTick,
-      y:
-        startPoint.y +
-        Math.sin(degreesToRad(angle)) * forwardSpeedPixelsPerTick,
-    }
-    const line = { start: { ...startPoint }, end: endPoint }
-    startPoint = { ...endPoint }
-    angle -= turningSpeedDegreesPerTick * turningModifier
-
-    lines.push(line)
-  }
-
-  return lines
-}

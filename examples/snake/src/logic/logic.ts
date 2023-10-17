@@ -11,7 +11,7 @@ declare global {
 
 const countdownDuration = 5
 
-const endOfRoundDuration = 39999999
+const endOfRoundDuration = 3
 
 export const maxScore = 10
 
@@ -76,7 +76,7 @@ Rune.initLogic({
     }
 
     return {
-      stage: "playing",
+      stage: "gettingReady",
       players: allPlayerIds.map((playerId, index) =>
         getNewPlayer(playerId, colors[index]),
       ),

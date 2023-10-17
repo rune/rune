@@ -4,12 +4,14 @@ import { Section, Point, GameActions, GameState } from "./types.ts"
 import { RuneClient } from "rune-games-sdk"
 import { isLastSectionOutOfBounds } from "./isLastSectionOutOfBounds.ts"
 import { checkWinnersAndGameOver } from "./checkWinnersAndGameOver.ts"
+import { newRound } from "./newRound.ts"
+import { checkReady } from "./checkReady.ts"
 
 declare global {
   const Rune: RuneClient<GameState, GameActions>
 }
 
-const countdownDuration = 5
+export const countdownDuration = 5
 
 const endOfRoundDuration = 3
 
@@ -95,15 +97,11 @@ Rune.initLogic({
 
       player.turning = turning
     },
-    setReady(_, { game, playerId }) {
+    setReady(_, { game, playerId, allPlayerIds }) {
       if (game.readyPlayerIds.includes(playerId)) throw Rune.invalidAction()
       game.readyPlayerIds.push(playerId)
 
-      if (game.readyPlayerIds.length === game.players.length) {
-        game.stage = "countdown"
-        game.timer = countdownDuration
-        game.timerStartedAt = Rune.gameTime()
-      }
+      checkReady(game, allPlayerIds)
     },
   },
   updatesPerSecond: Math.round(30 * speed),
@@ -322,22 +320,10 @@ Rune.initLogic({
         state: "pending",
       })
     },
-    playerLeft: (playerId, { game }) => {
+    playerLeft: (playerId, { game, allPlayerIds }) => {
       const index = game.players.findIndex((p) => p.playerId === playerId)
       if (~index) game.players.splice(index, 1)
+      checkReady(game, allPlayerIds)
     },
   },
 })
-
-function newRound(game: GameState) {
-  for (let i = 0; i < game.players.length; i++) {
-    game.collisionGrid = []
-    game.players[i] = {
-      ...getNewPlayer(game.players[i].playerId, game.players[i].color),
-      score: game.players[i].score,
-    }
-    game.stage = "countdown"
-    game.timer = countdownDuration
-    game.timerStartedAt = Rune.gameTime()
-  }
-}

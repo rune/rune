@@ -1,6 +1,6 @@
 import { styled } from "styled-components"
 import { useAtomValue } from "jotai"
-import { $game, $players } from "../state/state.ts"
+import { $game, $players, $yourPlayerId } from "../state/state.ts"
 import { rel } from "../lib/rel.ts"
 
 export const headerHeight = 100
@@ -9,6 +9,7 @@ export function Header() {
   // TODO: think how to avoid re-rendering on every tick because we use the full game state
   const game = useAtomValue($game)
   const players = useAtomValue($players)
+  const yourPlayerId = useAtomValue($yourPlayerId)
 
   return (
     <Root>
@@ -21,7 +22,9 @@ export function Header() {
           ) : (
             <Avatar src={players[playerId].avatarUrl} $playerColor={color} />
           )}
-          <Name $playerColor={color}>{players[playerId].displayName}</Name>
+          <Name $playerColor={color}>
+            {playerId === yourPlayerId ? "You" : players[playerId].displayName}
+          </Name>
           <Score $playerColor={color}>{score}</Score>
         </PlayerContainer>
       ))}

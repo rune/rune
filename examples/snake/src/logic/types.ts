@@ -1,3 +1,5 @@
+import { PlayerId } from "rune-games-sdk"
+
 export type Turning = "left" | "right" | "none"
 
 export type Point = {
@@ -28,4 +30,19 @@ export type PlayerInfo = {
   state: "pending" | "alive" | "dead"
   line: Section[]
   score: number
+}
+
+export interface GameState {
+  stage: "gettingReady" | "countdown" | "playing" | "endOfRound"
+  players: PlayerInfo[]
+  collisionGrid: boolean[]
+  readyPlayerIds: PlayerId[]
+  timer: number
+  timerStartedAt: number
+  lastRoundWinnerId: PlayerId | undefined
+}
+
+export type GameActions = {
+  setTurning(turning: Turning): void
+  setReady(): void
 }

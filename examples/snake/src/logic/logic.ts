@@ -1,23 +1,19 @@
 import { degreesToRad } from "../lib/helpers.ts"
 import { getNewPlayer } from "./getNewPlayer.ts"
-import { Section, PlayerInfo, Turning, Point } from "./types.ts"
+import { Section, Point, GameActions, GameState } from "./types.ts"
 import { RuneClient } from "rune-games-sdk"
 import { isLastSectionOutOfBounds } from "./isLastSectionOutOfBounds.ts"
-
-export interface GameState {
-  players: PlayerInfo[]
-  collisionGrid: boolean[]
-}
-
-type GameActions = {
-  setTurning(turning: Turning): void
-}
+import { checkWinnersAndGameOver } from "./checkWinnersAndGameOver.ts"
 
 declare global {
   const Rune: RuneClient<GameState, GameActions>
 }
 
-const maxScore = 10
+const countdownDuration = 5
+
+const endOfRoundDuration = 3
+
+export const maxScore = 10
 
 export const boardSize = {
   width: 600,
@@ -80,204 +76,242 @@ Rune.initLogic({
     }
 
     return {
+      stage: "gettingReady",
       players: allPlayerIds.map((playerId, index) =>
         getNewPlayer(playerId, colors[index]),
       ),
       collisionGrid,
+      readyPlayerIds: [],
+      timer: 0,
+      timerStartedAt: 0,
+      lastRoundWinnerId: undefined,
     }
   },
   actions: {
-    setTurning: (turning, { game, playerId }) => {
+    setTurning(turning, { game, playerId }) {
       const player = game.players.find((p) => p.playerId === playerId)
 
       if (!player) throw Rune.invalidAction()
 
       player.turning = turning
     },
+    setReady(_, { game, playerId }) {
+      if (game.readyPlayerIds.includes(playerId)) throw Rune.invalidAction()
+      game.readyPlayerIds.push(playerId)
+
+      if (game.readyPlayerIds.length === game.players.length) {
+        game.stage = "countdown"
+        game.timer = countdownDuration
+        game.timerStartedAt = Rune.gameTime()
+      }
+    },
   },
   updatesPerSecond: Math.round(30 * speed),
   update: ({ game }) => {
-    for (const player of game.players) {
-      if (player.state !== "alive") continue
+    if (game.stage === "countdown") {
+      game.timer =
+        countdownDuration - (Rune.gameTime() - game.timerStartedAt) / 1000
 
-      let lastSection = player.line[player.line.length - 1]
-
-      const turningModifier =
-        player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
-
-      const wasPlacingGap = player.gapCounter > 0
-
-      if (player.gapCounter < -minTicksToNextGap) {
-        if (Math.random() < gapFrequency) {
-          player.gapCounter = gapPlacementDurationTicks
-        }
+      if (game.timer <= 0) {
+        game.timer = 0
+        game.stage = "playing"
       }
+    }
 
-      player.gapCounter--
+    if (game.stage === "endOfRound") {
+      if ((Rune.gameTime() - game.timerStartedAt) / 1000 > endOfRoundDuration) {
+        newRound(game)
+      }
+    }
 
-      const isPlacingGap = player.gapCounter > 0
+    if (game.stage === "playing") {
+      for (const player of game.players) {
+        if (player.state !== "alive") continue
 
-      if (
-        lastSection.turning !== player.turning ||
-        wasPlacingGap !== isPlacingGap
-      ) {
-        const point = lastSection.end
+        let lastSection = player.line[player.line.length - 1]
 
-        const newSectionCommonProps = {
-          start: { ...point },
-          end: { ...point },
-          startAngle: lastSection.endAngle,
-          endAngle: lastSection.endAngle,
-          gap: player.gapCounter > 0,
+        const turningModifier =
+          player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
+
+        const wasPlacingGap = player.gapCounter > 0
+
+        if (player.gapCounter < -minTicksToNextGap) {
+          if (Math.random() < gapFrequency) {
+            player.gapCounter = gapPlacementDurationTicks
+          }
         }
 
-        if (player.turning === "none") {
-          const newSection: Section = {
-            ...newSectionCommonProps,
-            turning: "none",
-          }
+        player.gapCounter--
 
-          player.line.push(newSection)
-          lastSection = newSection
-        } else {
-          const angleToCenter =
-            newSectionCommonProps.endAngle +
-            (+90 + turningSpeedDegreesPerTick / 2) * turningModifier
-
-          const arcCenter = {
-            x:
-              newSectionCommonProps.start.x +
-              Math.cos(degreesToRad(angleToCenter)) * arcRadius,
-            y:
-              newSectionCommonProps.start.y +
-              Math.sin(degreesToRad(angleToCenter)) * arcRadius,
-          }
-
-          const arcStartAngle = degreesToRad(
-            newSectionCommonProps.startAngle +
-              (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
-          )
-
-          const newSection: Section = {
-            ...newSectionCommonProps,
-            turning: player.turning,
-            arcCenter,
-            arcStartAngle,
-            arcEndAngle: arcStartAngle,
-          }
-
-          player.line.push(newSection)
-          lastSection = newSection
-        }
-      }
-
-      lastSection.endAngle += turningSpeedDegreesPerTick * turningModifier
-
-      const oldEnd = { ...lastSection.end }
-
-      lastSection.end.x +=
-        Math.cos(degreesToRad(lastSection.endAngle)) * forwardSpeedPixelsPerTick
-      lastSection.end.y +=
-        Math.sin(degreesToRad(lastSection.endAngle)) * forwardSpeedPixelsPerTick
-
-      if (lastSection.turning !== "none") {
-        lastSection.arcEndAngle = degreesToRad(
-          lastSection.endAngle +
-            (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
-        )
-      }
-
-      const oldCollisionSquareIndex = pointToCollisionGridIndex(oldEnd)
-      const collisionSquareIndex = pointToCollisionGridIndex(lastSection.end)
-
-      // TODO when moving diagonally between two collision squares, we need to
-      //  check which one of the remaining two squares to mark (and also check) because a line has crossed it
-
-      if (
-        isLastSectionOutOfBounds(player) ||
-        (!lastSection.gap &&
-          collisionSquareIndex !== oldCollisionSquareIndex &&
-          game.collisionGrid[collisionSquareIndex])
-      ) {
-        player.state = "dead"
-        checkWinnersAndGameOver(game)
-      } else if (!lastSection.gap) {
-        const oldCollisionCellCords = collisionGridIndexToPoint(
-          oldCollisionSquareIndex,
-        )
-        const collisionCellCords =
-          collisionGridIndexToPoint(collisionSquareIndex)
+        const isPlacingGap = player.gapCounter > 0
 
         if (
-          oldCollisionCellCords.x !== collisionCellCords.x &&
-          oldCollisionCellCords.y !== collisionCellCords.y
+          lastSection.turning !== player.turning ||
+          wasPlacingGap !== isPlacingGap
         ) {
-          // TODO: only mark one of the remaining squares depending on which one the line crossed
+          const point = lastSection.end
 
-          const point =
-            collisionCellCords.x > oldCollisionCellCords.y &&
-            collisionCellCords.y > oldCollisionCellCords.y
-              ? {
-                  ...collisionCellCords,
-                }
-              : collisionCellCords.x < oldCollisionCellCords.y &&
-                collisionCellCords.y < oldCollisionCellCords.y
-              ? {
-                  ...oldCollisionCellCords,
-                }
-              : collisionCellCords.x > oldCollisionCellCords.y &&
-                collisionCellCords.y < oldCollisionCellCords.y
-              ? {
-                  x: collisionCellCords.x,
-                  y: oldCollisionCellCords.y,
-                }
-              : {
-                  x: oldCollisionCellCords.x,
-                  y: collisionCellCords.y,
-                }
-
-          const lastSectionLineEquation = {
-            a: (lastSection.end.y - oldEnd.y) / (lastSection.end.x - oldEnd.x),
-            b:
-              lastSection.end.y -
-              (lastSection.end.x * (lastSection.end.y - oldEnd.y)) /
-                (lastSection.end.x - oldEnd.x),
+          const newSectionCommonProps = {
+            start: { ...point },
+            end: { ...point },
+            startAngle: lastSection.endAngle,
+            endAngle: lastSection.endAngle,
+            gap: player.gapCounter > 0,
           }
 
-          const pointAboveLine =
-            point.y >
-            lastSectionLineEquation.a * point.x + lastSectionLineEquation.b
+          if (player.turning === "none") {
+            const newSection: Section = {
+              ...newSectionCommonProps,
+              turning: "none",
+            }
 
-          const lastSectionGoingDown = lastSection.end.y > oldEnd.y
-          const lastSectionGoingRight = lastSection.end.x > oldEnd.x
-
-          if (
-            (lastSectionGoingDown && lastSectionGoingRight && pointAboveLine) ||
-            (!lastSectionGoingDown &&
-              !lastSectionGoingRight &&
-              pointAboveLine) ||
-            (lastSectionGoingDown &&
-              !lastSectionGoingRight &&
-              pointAboveLine) ||
-            (!lastSectionGoingDown && lastSectionGoingRight && pointAboveLine)
-          ) {
-            game.collisionGrid[
-              pointToCollisionGridIndex({
-                x: oldCollisionCellCords.x,
-                y: collisionCellCords.y,
-              })
-            ] = true
+            player.line.push(newSection)
+            lastSection = newSection
           } else {
-            game.collisionGrid[
-              pointToCollisionGridIndex({
-                x: collisionCellCords.x,
-                y: oldCollisionCellCords.y,
-              })
-            ] = true
+            const angleToCenter =
+              newSectionCommonProps.endAngle +
+              (+90 + turningSpeedDegreesPerTick / 2) * turningModifier
+
+            const arcCenter = {
+              x:
+                newSectionCommonProps.start.x +
+                Math.cos(degreesToRad(angleToCenter)) * arcRadius,
+              y:
+                newSectionCommonProps.start.y +
+                Math.sin(degreesToRad(angleToCenter)) * arcRadius,
+            }
+
+            const arcStartAngle = degreesToRad(
+              newSectionCommonProps.startAngle +
+                (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
+            )
+
+            const newSection: Section = {
+              ...newSectionCommonProps,
+              turning: player.turning,
+              arcCenter,
+              arcStartAngle,
+              arcEndAngle: arcStartAngle,
+            }
+
+            player.line.push(newSection)
+            lastSection = newSection
           }
         }
 
-        game.collisionGrid[collisionSquareIndex] = true
+        lastSection.endAngle += turningSpeedDegreesPerTick * turningModifier
+
+        const oldEnd = { ...lastSection.end }
+
+        lastSection.end.x +=
+          Math.cos(degreesToRad(lastSection.endAngle)) *
+          forwardSpeedPixelsPerTick
+        lastSection.end.y +=
+          Math.sin(degreesToRad(lastSection.endAngle)) *
+          forwardSpeedPixelsPerTick
+
+        if (lastSection.turning !== "none") {
+          lastSection.arcEndAngle = degreesToRad(
+            lastSection.endAngle +
+              (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
+          )
+        }
+
+        const oldCollisionSquareIndex = pointToCollisionGridIndex(oldEnd)
+        const collisionSquareIndex = pointToCollisionGridIndex(lastSection.end)
+
+        // TODO when moving diagonally between two collision squares, we need to
+        //  check which one of the remaining two squares to mark (and also check) because a line has crossed it
+
+        if (
+          isLastSectionOutOfBounds(player) ||
+          (!lastSection.gap &&
+            collisionSquareIndex !== oldCollisionSquareIndex &&
+            game.collisionGrid[collisionSquareIndex])
+        ) {
+          player.state = "dead"
+          checkWinnersAndGameOver(game)
+        } else if (!lastSection.gap) {
+          const oldCollisionCellCords = collisionGridIndexToPoint(
+            oldCollisionSquareIndex,
+          )
+          const collisionCellCords =
+            collisionGridIndexToPoint(collisionSquareIndex)
+
+          if (
+            oldCollisionCellCords.x !== collisionCellCords.x &&
+            oldCollisionCellCords.y !== collisionCellCords.y
+          ) {
+            // TODO: only mark one of the remaining squares depending on which one the line crossed
+
+            const point =
+              collisionCellCords.x > oldCollisionCellCords.y &&
+              collisionCellCords.y > oldCollisionCellCords.y
+                ? {
+                    ...collisionCellCords,
+                  }
+                : collisionCellCords.x < oldCollisionCellCords.y &&
+                  collisionCellCords.y < oldCollisionCellCords.y
+                ? {
+                    ...oldCollisionCellCords,
+                  }
+                : collisionCellCords.x > oldCollisionCellCords.y &&
+                  collisionCellCords.y < oldCollisionCellCords.y
+                ? {
+                    x: collisionCellCords.x,
+                    y: oldCollisionCellCords.y,
+                  }
+                : {
+                    x: oldCollisionCellCords.x,
+                    y: collisionCellCords.y,
+                  }
+
+            const lastSectionLineEquation = {
+              a:
+                (lastSection.end.y - oldEnd.y) / (lastSection.end.x - oldEnd.x),
+              b:
+                lastSection.end.y -
+                (lastSection.end.x * (lastSection.end.y - oldEnd.y)) /
+                  (lastSection.end.x - oldEnd.x),
+            }
+
+            const pointAboveLine =
+              point.y >
+              lastSectionLineEquation.a * point.x + lastSectionLineEquation.b
+
+            const lastSectionGoingDown = lastSection.end.y > oldEnd.y
+            const lastSectionGoingRight = lastSection.end.x > oldEnd.x
+
+            if (
+              (lastSectionGoingDown &&
+                lastSectionGoingRight &&
+                pointAboveLine) ||
+              (!lastSectionGoingDown &&
+                !lastSectionGoingRight &&
+                pointAboveLine) ||
+              (lastSectionGoingDown &&
+                !lastSectionGoingRight &&
+                pointAboveLine) ||
+              (!lastSectionGoingDown && lastSectionGoingRight && pointAboveLine)
+            ) {
+              game.collisionGrid[
+                pointToCollisionGridIndex({
+                  x: oldCollisionCellCords.x,
+                  y: collisionCellCords.y,
+                })
+              ] = true
+            } else {
+              game.collisionGrid[
+                pointToCollisionGridIndex({
+                  x: collisionCellCords.x,
+                  y: oldCollisionCellCords.y,
+                })
+              ] = true
+            }
+          }
+
+          game.collisionGrid[collisionSquareIndex] = true
+        }
       }
     }
   },
@@ -295,29 +329,15 @@ Rune.initLogic({
   },
 })
 
-function checkWinnersAndGameOver(game: GameState) {
-  const playersAlive = game.players.filter((p) => p.state === "alive")
-
-  if (playersAlive.length > 1) return
-
-  if (playersAlive.length === 1) {
-    playersAlive[0].score++
-
-    if (playersAlive[0].score === maxScore) {
-      Rune.gameOver({
-        players: game.players.reduce(
-          (acc, p) => ({ ...acc, [p.playerId]: p.score }),
-          {},
-        ),
-      })
-    }
-  }
-
+function newRound(game: GameState) {
   for (let i = 0; i < game.players.length; i++) {
     game.collisionGrid = []
     game.players[i] = {
       ...getNewPlayer(game.players[i].playerId, game.players[i].color),
       score: game.players[i].score,
     }
+    game.stage = "countdown"
+    game.timer = countdownDuration
+    game.timerStartedAt = Rune.gameTime()
   }
 }

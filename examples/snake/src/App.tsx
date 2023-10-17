@@ -3,16 +3,31 @@ import { styled } from "styled-components"
 import { InputTracker } from "./components/InputTracker.tsx"
 import { Board } from "./components/Board.tsx"
 import { Header } from "./components/Header.tsx"
+import { useAtomValue } from "jotai"
+import { $stage } from "./state/state.ts"
+import { GettingReady } from "./components/GettingReady.tsx"
+import { Countdown } from "./components/Countdown.tsx"
+import { EndOfRound } from "./components/EndOfRound.tsx"
 
 export function App() {
+  const stage = useAtomValue($stage)
+
   return (
     <>
       <InputTracker />
       <Root>
-        <Header />
-        <CanvasContainer>
-          <Board />
-        </CanvasContainer>
+        {stage === "gettingReady" ? (
+          <GettingReady />
+        ) : (
+          <>
+            <Header />
+            <CanvasContainer>
+              <Board />
+            </CanvasContainer>
+          </>
+        )}
+        {stage === "countdown" && <Countdown />}
+        {stage === "endOfRound" && <EndOfRound />}
       </Root>
     </>
   )

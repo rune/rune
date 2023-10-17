@@ -193,15 +193,9 @@ function draw(canvas: HTMLCanvasElement, scale: number) {
       )
     }
   }
-
-  // for(let x = 0; x < boardSize.width; x++) {
-  //   if (x % pixelsPerCollisionGridSquare !== 0) continue
-  //   for(let y = 0; y < boardSize.height; y++) {
-  //     if (y % pixelsPerCollisionGridSquare !== 0) continue
-  //
-  //   }
-  // }
 }
+
+// TODO: show avatars during countdown stage
 
 export function Board() {
   const canvasRef = useRef<HTMLCanvasElement>(null)

@@ -19,8 +19,6 @@ export function InputTracker() {
     }
 
     function onTouch(e: TouchEvent) {
-      e.preventDefault()
-
       const touches = [...e.touches]
 
       setRightPressed(touches.some((t) => t.clientX > window.innerWidth / 2))

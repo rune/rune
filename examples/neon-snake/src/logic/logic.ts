@@ -60,6 +60,7 @@ Rune.initLogic({
 
       if (~index) game.players.splice(index, 1)
 
+      // TODO: not working if leaving during countdown
       if (game.stage === "playing") checkWinnersAndGameOver(game)
     },
   },

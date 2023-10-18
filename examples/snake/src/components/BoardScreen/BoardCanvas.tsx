@@ -1,36 +1,20 @@
 import "../../base.css"
 
-import { CSSProperties, useEffect, useMemo, useRef, useState } from "react"
-import { styled } from "styled-components"
-import { drawBoard } from "./drawBoard.ts"
+import { CSSProperties, useMemo, useRef, useEffect } from "react"
 import { boardSize } from "../../logic/logicConfig.ts"
+import { drawBoard } from "./drawBoard.ts"
 
-export function BoardCanvas({
-  containerWidth,
-  containerHeight,
-}: {
-  containerWidth: number
-  containerHeight: number
-}) {
+export function BoardCanvas({ scale }: { scale: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [scale, setScale] = useState(1)
 
-  useEffect(() => {
-    function calculateScale() {
-      const widthScale = containerWidth / boardSize.width
-      const heightScale = containerHeight / boardSize.height
-
-      const newScale = Math.min(widthScale, heightScale)
-
-      setScale(newScale > 0 ? newScale : 1)
-    }
-
-    calculateScale()
-
-    window.addEventListener("resize", calculateScale)
-
-    return () => window.removeEventListener("resize", calculateScale)
-  }, [containerHeight, containerWidth])
+  const canvasSizeStyle = useMemo<CSSProperties>(
+    () => ({
+      width: boardSize.width * scale,
+      height: boardSize.height * scale,
+      background: "black", // TODO: remove
+    }),
+    [scale],
+  )
 
   useEffect(() => {
     let handle: ReturnType<typeof requestAnimationFrame> | undefined
@@ -50,16 +34,8 @@ export function BoardCanvas({
     }
   }, [scale])
 
-  const canvasSizeStyle = useMemo<CSSProperties>(
-    () => ({
-      width: boardSize.width * scale,
-      height: boardSize.height * scale,
-    }),
-    [scale],
-  )
-
   return (
-    <Root
+    <canvas
       ref={canvasRef}
       width={boardSize.width * scale * window.devicePixelRatio}
       height={boardSize.height * scale * window.devicePixelRatio}
@@ -67,7 +43,3 @@ export function BoardCanvas({
     />
   )
 }
-
-const Root = styled.canvas`
-  background: black;
-`

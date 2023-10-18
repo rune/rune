@@ -6,6 +6,8 @@ import noAvatar from "./noAvatar.png"
 import background from "./background.jpg"
 import { useMemo } from "react"
 import { pickFreeColor } from "../../logic/pickFreeColor.ts"
+import { Skull } from "./Skull.tsx"
+import { Clock } from "./Clock.tsx"
 
 export function Header() {
   // TODO: think how to avoid re-rendering on every tick because we use the full game state
@@ -25,11 +27,11 @@ export function Header() {
         <PlayerContainer key={playerId}>
           {state === "pending" ? (
             <DarkCircle $playerColor={color} style={{ color: "white" }}>
-              pending
+              <Clock size={rel(24)} color={color} />
             </DarkCircle>
           ) : state === "dead" ? (
             <DarkCircle $playerColor={color} style={{ color: "white" }}>
-              dead
+              <Skull size={rel(24)} color={color} />
             </DarkCircle>
           ) : (
             <Avatar src={players[playerId].avatarUrl} $playerColor={color} />
@@ -37,9 +39,7 @@ export function Header() {
           <Name $playerColor={color}>
             {playerId === yourPlayerId ? "You" : players[playerId].displayName}
           </Name>
-          <Score $playerColor={state === "pending" ? "transparent" : color}>
-            {score}
-          </Score>
+          <Score $playerColor={color}>{score}</Score>
         </PlayerContainer>
       ))}
       {invite && (
@@ -103,4 +103,7 @@ const DarkCircle = styled.div<{ $playerColor: string }>`
   height: ${rel(36)};
   border-radius: 50%;
   box-shadow: 0 0 ${rel(15)} ${rel(3)} ${({ $playerColor }) => $playerColor};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

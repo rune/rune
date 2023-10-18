@@ -98,7 +98,15 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
 
     if (player.state === "alive") {
       drawArrow(ctx, scale, lastSection.end, lastSection.endAngle, player.color)
-    } else {
+    }
+  }
+
+  for (const player of game.players) {
+    if (player.state === "pending") continue
+
+    const lastSection = { ...player.line[player.line.length - 1] }
+
+    if (player.state === "dead") {
       drawDead(ctx, scale, lastSection.end, player.color)
     }
   }

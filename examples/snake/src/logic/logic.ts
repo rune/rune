@@ -133,7 +133,6 @@ Rune.initLogic({
           const newSectionCommonProps = {
             start: { ...point },
             end: { ...point },
-            startAngle: lastSection.endAngle,
             endAngle: lastSection.endAngle,
             gap: player.gapCounter > 0,
           }
@@ -161,7 +160,7 @@ Rune.initLogic({
             }
 
             const arcStartAngle = degreesToRad(
-              newSectionCommonProps.startAngle +
+              newSectionCommonProps.endAngle +
                 (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
             )
 

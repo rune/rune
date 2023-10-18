@@ -4,9 +4,10 @@ export function drawCircle(
   ctx: CanvasRenderingContext2D,
   point: Point,
   color: string,
+  radius: number,
 ) {
   ctx.beginPath()
-  ctx.arc(point.x, point.y, 7.5 * window.devicePixelRatio, 0, 2 * Math.PI)
+  ctx.arc(point.x, point.y, radius * window.devicePixelRatio, 0, 2 * Math.PI)
 
   ctx.lineWidth = 2 * window.devicePixelRatio
   ctx.fillStyle = color

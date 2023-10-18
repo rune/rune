@@ -1,16 +1,21 @@
-import { store, $game } from "../../state/state.ts"
+import { store, $game, $players } from "../../state/state.ts"
 import {
   arcRadius,
   collisionGridIndexToPoint,
   pixelsPerCollisionGridSquare,
+  turningSpeedDegreesPerTick,
+  forwardSpeedPixelsPerTick,
 } from "../../logic/logic.ts"
 import { drawArc } from "./drawArc.ts"
 import { drawLine } from "./drawLine.ts"
 import { drawArrow } from "./drawArrow.ts"
 import { drawCircle } from "./drawCircle.ts"
 import { drawRect } from "./drawRect.ts"
+import { degreesToRad } from "../../lib/helpers.ts"
 
 const showCollisionGrid = false
+
+const images = new Map<string, HTMLImageElement>()
 
 export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   const ctx = canvas.getContext("2d")
@@ -71,7 +76,107 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   for (const player of game.players) {
     if (player.state === "pending") continue
 
-    const lastSection = player.line[player.line.length - 1]
+    const lastSection = { ...player.line[player.line.length - 1] }
+
+    if (game.stage === "countdown") {
+      const turningModifier =
+        player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
+
+      const optimisticIterations = 6
+
+      const oldAngle = lastSection.endAngle
+
+      for (let i = 0; i < optimisticIterations; i++) {
+        lastSection.turning = player.turning
+        lastSection.endAngle =
+          lastSection.endAngle + turningSpeedDegreesPerTick * turningModifier
+        lastSection.end = {
+          x:
+            lastSection.end.x +
+            Math.cos(degreesToRad(lastSection.endAngle)) *
+              forwardSpeedPixelsPerTick,
+          y:
+            lastSection.end.y +
+            Math.sin(degreesToRad(lastSection.endAngle)) *
+              forwardSpeedPixelsPerTick,
+        }
+
+        if (lastSection.turning !== "none") {
+          const angleToCenter =
+            oldAngle + (+90 + turningSpeedDegreesPerTick / 2) * turningModifier
+
+          lastSection.arcCenter = {
+            x:
+              lastSection.start.x +
+              Math.cos(degreesToRad(angleToCenter)) * arcRadius,
+            y:
+              lastSection.start.y +
+              Math.sin(degreesToRad(angleToCenter)) * arcRadius,
+          }
+          lastSection.arcStartAngle = degreesToRad(
+            oldAngle + (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
+          )
+          lastSection.arcEndAngle = degreesToRad(
+            lastSection.endAngle +
+              (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
+          )
+        }
+      }
+
+      if (lastSection.turning !== "none") {
+        drawArc(
+          ctx,
+          lastSection.arcCenter.x * scale,
+          lastSection.arcCenter.y * scale,
+          arcRadius * scale,
+          lastSection.arcStartAngle,
+          lastSection.arcEndAngle,
+          lastSection.turning === "left",
+          player.color,
+        )
+      } else {
+        drawLine(
+          ctx,
+          { x: lastSection.start.x * scale, y: lastSection.start.y * scale },
+          { x: lastSection.end.x * scale, y: lastSection.end.y * scale },
+          player.color,
+        )
+      }
+
+      const avatarUrl = store.get($players)[player.playerId].avatarUrl
+
+      if (!images.has(avatarUrl)) {
+        const image = new Image()
+        image.src = avatarUrl
+        images.set(avatarUrl, image)
+      }
+
+      const image = images.get(avatarUrl)
+
+      if (image) {
+        drawCircle(
+          ctx,
+          {
+            x: lastSection.start.x * scale,
+            y: lastSection.start.y * scale,
+          },
+          player.color,
+          10 + 1,
+        )
+
+        ctx.drawImage(
+          image,
+          0,
+          0,
+          image.width,
+          image.height,
+          lastSection.start.x * scale - 10 * window.devicePixelRatio,
+          lastSection.start.y * scale - 10 * window.devicePixelRatio,
+          20 * window.devicePixelRatio,
+          20 * window.devicePixelRatio,
+        )
+      }
+    }
 
     if (player.state === "alive") {
       drawArrow(
@@ -85,6 +190,7 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
         ctx,
         { x: lastSection.end.x * scale, y: lastSection.end.y * scale },
         player.color,
+        7.5,
       )
     }
   }

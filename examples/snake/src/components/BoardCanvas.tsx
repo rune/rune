@@ -5,7 +5,6 @@ import { boardSize, arcRadius } from "../logic/logic.ts"
 import { styled } from "styled-components"
 import { store, $game } from "../state/state.ts"
 import { Point } from "../logic/types.ts"
-import { headerHeight } from "./Header.tsx"
 
 function drawArrow(
   ctx: CanvasRenderingContext2D,
@@ -190,15 +189,18 @@ function draw(canvas: HTMLCanvasElement, scale: number) {
 
 // TODO: show avatars during countdown stage
 
-export function Board() {
+export function BoardCanvas({
+  containerWidth,
+  containerHeight,
+}: {
+  containerWidth: number
+  containerHeight: number
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [scale, setScale] = useState(1)
 
   useEffect(() => {
     function calculateScale() {
-      const containerWidth = window.innerWidth
-      const containerHeight = window.innerHeight - headerHeight
-
       const widthScale = containerWidth / boardSize.width
       const heightScale = containerHeight / boardSize.height
 
@@ -212,7 +214,7 @@ export function Board() {
     window.addEventListener("resize", calculateScale)
 
     return () => window.removeEventListener("resize", calculateScale)
-  }, [])
+  }, [containerHeight, containerWidth])
 
   useEffect(() => {
     let handle: ReturnType<typeof requestAnimationFrame> | undefined

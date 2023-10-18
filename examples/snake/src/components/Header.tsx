@@ -3,9 +3,6 @@ import { useAtomValue } from "jotai"
 import { $game, $players, $yourPlayerId } from "../state/state.ts"
 import { rel } from "../lib/rel.ts"
 
-// TODO: should be defined via rel(), board should get it dynamically
-export const headerHeight = 100
-
 export function Header() {
   // TODO: think how to avoid re-rendering on every tick because we use the full game state
   const game = useAtomValue($game)
@@ -34,7 +31,7 @@ export function Header() {
 }
 
 const Root = styled.div`
-  height: ${headerHeight}px;
+  height: ${rel(80)};
   background: black;
   display: flex;
   align-items: center;
@@ -58,19 +55,23 @@ const Avatar = styled.img<{ $playerColor: string }>`
 
 const Name = styled.div<{ $playerColor: string }>`
   background-color: ${({ $playerColor }) => $playerColor};
-  font-size: ${rel(9)};
-  line-height: normal;
   position: relative;
   top: ${rel(-4)};
   padding: ${rel(2)} ${rel(4)};
   border-radius: ${rel(14)};
   box-shadow: 0 0 ${rel(15)} ${rel(3)} ${({ $playerColor }) => $playerColor};
+
+  font-family: Arial Rounded MT Bold;
+  font-size: ${rel(9)};
+  line-height: normal;
 `
 
 const Score = styled.div<{ $playerColor: string }>`
-  height: ${rel(21)};
-  font-size: ${rel(24)};
-  line-height: 130%;
   color: ${({ $playerColor }) => $playerColor};
   text-shadow: 0 0 ${rel(15)} ${({ $playerColor }) => $playerColor};
+
+  font-family: Arial Rounded MT Bold;
+  font-size: ${rel(24)};
+  height: ${rel(21)};
+  line-height: ${rel(21)}; // TODO: this is not right
 `

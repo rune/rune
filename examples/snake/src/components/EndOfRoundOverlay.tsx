@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai"
 import { $lastRoundWinnerId, $players, $yourPlayerId } from "../state/state.ts"
 
-export function EndOfRound() {
+export function EndOfRoundOverlay() {
   const lastRoundWinnerId = useAtomValue($lastRoundWinnerId)
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)

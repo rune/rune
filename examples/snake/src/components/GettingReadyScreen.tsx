@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai"
 import { $readyPlayerIds, $yourPlayerId } from "../state/state.ts"
 
-export function GettingReady() {
+export function GettingReadyScreen() {
   const readyPlayerIds = useAtomValue($readyPlayerIds)
   const yourPlayerId = useAtomValue($yourPlayerId)
 

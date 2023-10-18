@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai"
 import { $timer } from "../state/state.ts"
 
-export function Countdown() {
+export function CountdownOverlay() {
   const timer = useAtomValue($timer)
 
   return (

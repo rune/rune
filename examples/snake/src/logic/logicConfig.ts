@@ -1,6 +1,6 @@
 export const countdownDuration = 5
 
-export const endOfRoundDuration = 30000
+export const endOfRoundDuration = 3
 
 export const maxScore = 10
 

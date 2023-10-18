@@ -4,6 +4,8 @@ import { styled } from "styled-components"
 import { rel } from "../lib/rel.ts"
 import { colors } from "../logic/logicConfig.ts"
 
+// TODO: no header/walls?
+
 export function CountdownOverlay() {
   const timer = useAtomValue($timer)
 

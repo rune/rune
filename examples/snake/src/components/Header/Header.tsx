@@ -37,11 +37,13 @@ export function Header() {
           <Name $playerColor={color}>
             {playerId === yourPlayerId ? "You" : players[playerId].displayName}
           </Name>
-          {state === "alive" && <Score $playerColor={color}>{score}</Score>}
+          <Score $playerColor={state === "pending" ? "transparent" : color}>
+            {score}
+          </Score>
         </PlayerContainer>
       ))}
       {invite && (
-        <PlayerContainer onClick={() => Rune.showInvitePlayers()}>
+        <PlayerContainer $center onClick={() => Rune.showInvitePlayers()}>
           <Avatar src={noAvatar} $playerColor={pickFreeColor(game)} />
           <Invite $playerColor={invite.color}>Invite</Invite>
         </PlayerContainer>
@@ -51,19 +53,18 @@ export function Header() {
 }
 
 const Root = styled.div`
-  height: ${rel(80)};
   background:
     url("${background}") no-repeat center center / cover,
     black;
   display: flex;
-  align-items: center;
 `
 
-const PlayerContainer = styled.div`
+const PlayerContainer = styled.div<{ $center?: boolean }>`
+  height: ${rel(80)};
   width: 25vw;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: ${({ $center }) => ($center ? "center" : "flex-end")};
   flex-direction: column;
 `
 
@@ -76,7 +77,7 @@ const Avatar = styled.img<{ $playerColor: string }>`
 `
 
 const Name = styled.div<{ $playerColor: string }>`
-  margin-top: ${rel(-6)};
+  margin-top: ${rel(-4)};
 
   background-color: ${({ $playerColor }) => $playerColor};
   padding: ${rel(2)} ${rel(4)};
@@ -98,8 +99,8 @@ const Score = styled.div<{ $playerColor: string }>`
 `
 
 const DarkCircle = styled.div<{ $playerColor: string }>`
-  width: ${rel(66)};
-  height: ${rel(66)};
+  width: ${rel(36)};
+  height: ${rel(36)};
   border-radius: 50%;
   box-shadow: 0 0 ${rel(15)} ${rel(3)} ${({ $playerColor }) => $playerColor};
 `

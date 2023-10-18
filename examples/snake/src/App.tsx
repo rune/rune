@@ -5,7 +5,7 @@ import { $stage } from "./state/state.ts"
 import { GettingReadyScreen } from "./components/GettingReadyScreen.tsx"
 import { CountdownOverlay } from "./components/CountdownOverlay.tsx"
 import { EndOfRoundOverlay } from "./components/EndOfRoundOverlay.tsx"
-import { BoardScreen } from "./components/BoardScreen.tsx"
+import { BoardScreen } from "./components/BoardScreen/BoardScreen.tsx"
 
 export function App() {
   const stage = useAtomValue($stage)

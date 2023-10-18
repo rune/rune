@@ -63,26 +63,12 @@ Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
-    const collisionGrid: boolean[] = []
-
-    for (let x = 0; x < boardSize.width; x++) {
-      if (x % pixelsPerCollisionGridSquare !== 0) continue
-
-      for (let y = 0; y < boardSize.height; y++) {
-        if (y % pixelsPerCollisionGridSquare !== 0) continue
-
-        const index = pointToCollisionGridIndex({ x, y })
-
-        collisionGrid[index] = false
-      }
-    }
-
     return {
       stage: "gettingReady",
       players: allPlayerIds.map((playerId, index) =>
         getNewPlayer(playerId, colors[index]),
       ),
-      collisionGrid,
+      collisionGrid: [],
       readyPlayerIds: [],
       timer: 0,
       timerStartedAt: 0,

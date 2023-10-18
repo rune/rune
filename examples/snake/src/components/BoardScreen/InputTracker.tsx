@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai"
 import { useState, useEffect } from "react"
-import { $ready } from "../state/state.ts"
+import { $ready } from "../../state/state.ts"
 
 export function InputTracker() {
   const ready = useAtomValue($ready)

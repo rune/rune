@@ -1,6 +1,6 @@
 import { styled } from "styled-components"
 import { InputTracker } from "./InputTracker.tsx"
-import { Header } from "./Header.tsx"
+import { Header } from "../Header.tsx"
 import { BoardCanvas } from "./BoardCanvas.tsx"
 import { useRef, useState, useEffect } from "react"
 

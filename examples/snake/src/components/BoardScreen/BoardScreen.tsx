@@ -2,7 +2,7 @@ import { styled } from "styled-components"
 import { InputTracker } from "./InputTracker.tsx"
 import { Header } from "../Header/Header.tsx"
 import { BoardCanvas } from "./BoardCanvas.tsx"
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useMemo } from "react"
 import { boardSize } from "../../logic/logicConfig.ts"
 import { gridBackground } from "../../lib/gridBackground.ts"
 
@@ -12,6 +12,8 @@ export function BoardScreen() {
   const canvasContainerRef = useRef<HTMLDivElement>(null)
 
   const [canvasScale, setCanvasScale] = useState(1)
+  const [containerWidth, setContainerWidth] = useState(0)
+  const [containerHeight, setContainerHeight] = useState(0)
 
   useEffect(() => {
     function adjustSize() {
@@ -26,6 +28,8 @@ export function BoardScreen() {
       const newScale = Math.min(widthScale, heightScale)
 
       setCanvasScale(newScale > 0 ? newScale : 1)
+      setContainerWidth(containerWidth)
+      setContainerHeight(containerHeight)
     }
 
     adjustSize()
@@ -35,12 +39,24 @@ export function BoardScreen() {
     return () => window.removeEventListener("resize", adjustSize)
   }, [])
 
+  const borderWidth = useMemo(() => {
+    const horizontalWallSize = Math.max(
+      (containerHeight - boardSize.height * canvasScale) / 2,
+      minWallSize,
+    )
+    const verticalWallSize = Math.max(
+      (containerWidth - boardSize.width * canvasScale) / 2,
+      minWallSize,
+    )
+    return `${horizontalWallSize}px ${verticalWallSize}px`
+  }, [canvasScale, containerHeight, containerWidth])
+
   return (
     <>
       <InputTracker />
       <Header />
       <CanvasOuterContainer>
-        <Wall />
+        <Wall style={{ borderWidth }} />
         <CanvasContainer ref={canvasContainerRef}>
           <BoardCanvas scale={canvasScale} />
         </CanvasContainer>
@@ -56,7 +72,7 @@ const CanvasOuterContainer = styled.div`
   ${gridBackground};
 `
 
-const wallSize = 10
+const minWallSize = 10
 
 const CanvasContainer = styled.div`
   position: absolute;
@@ -64,7 +80,7 @@ const CanvasContainer = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  border: ${wallSize}px solid rgba(17, 212, 255, 0.5);
+  border: ${minWallSize}px solid transparent;
   box-sizing: content-box;
 
   display: flex;
@@ -74,9 +90,10 @@ const CanvasContainer = styled.div`
 
 const Wall = styled.div`
   position: absolute;
-  left: ${wallSize}px;
-  right: ${wallSize}px;
-  top: ${wallSize}px;
-  bottom: ${wallSize}px;
-  background-color: rgba(17, 212, 255, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-style: solid;
+  border-color: rgba(17, 212, 255, 0.5);
 `

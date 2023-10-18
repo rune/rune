@@ -11,7 +11,6 @@ export function BoardCanvas({ scale }: { scale: number }) {
     () => ({
       width: boardSize.width * scale,
       height: boardSize.height * scale,
-      background: "black", // TODO: remove
     }),
     [scale],
   )

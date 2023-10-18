@@ -15,11 +15,11 @@ export function drawSection(
     ctx.lineTo(section.end.x * scale, section.end.y * scale)
   } else {
     ctx.arc(
-      section.arcCenter.x * scale,
-      section.arcCenter.y * scale,
+      section.arc.center.x * scale,
+      section.arc.center.y * scale,
       arcRadius * scale,
-      section.arcStartAngle,
-      section.arcEndAngle,
+      section.arc.startAngle,
+      section.arc.endAngle,
       section.turning === "left",
     )
   }

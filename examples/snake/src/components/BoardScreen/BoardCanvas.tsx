@@ -5,8 +5,6 @@ import { styled } from "styled-components"
 import { drawBoard } from "./drawBoard.ts"
 import { boardSize } from "../../logic/logicConfig.ts"
 
-// TODO: show avatars during countdown stage
-
 export function BoardCanvas({
   containerWidth,
   containerHeight,

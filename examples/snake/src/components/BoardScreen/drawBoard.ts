@@ -45,7 +45,7 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
       const turningModifier =
         player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
 
-      const optimisticIterations = 5
+      const optimisticIterations = 15
 
       const oldAngle = lastSection.endAngle
 
@@ -68,21 +68,24 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
           const angleToCenter =
             oldAngle + (+90 + turningSpeedDegreesPerTick / 2) * turningModifier
 
-          lastSection.arcCenter = {
-            x:
-              lastSection.start.x +
-              Math.cos(degreesToRad(angleToCenter)) * arcRadius,
-            y:
-              lastSection.start.y +
-              Math.sin(degreesToRad(angleToCenter)) * arcRadius,
+          lastSection.arc = {
+            center: {
+              x:
+                lastSection.start.x +
+                Math.cos(degreesToRad(angleToCenter)) * arcRadius,
+              y:
+                lastSection.start.y +
+                Math.sin(degreesToRad(angleToCenter)) * arcRadius,
+            },
+            startAngle: degreesToRad(
+              oldAngle +
+                (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
+            ),
+            endAngle: degreesToRad(
+              lastSection.endAngle +
+                (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
+            ),
           }
-          lastSection.arcStartAngle = degreesToRad(
-            oldAngle + (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
-          )
-          lastSection.arcEndAngle = degreesToRad(
-            lastSection.endAngle +
-              (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
-          )
         }
       }
 

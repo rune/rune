@@ -1,4 +1,4 @@
-import { pixelsPerCollisionGridSquare } from "../../logic/logicConfig.ts"
+import { collisionGridSize } from "../../logic/logicConfig.ts"
 import { collisionGridPointer } from "../../logic/collisionGridHelpers.ts"
 
 export function drawCollisionGrid(
@@ -13,8 +13,8 @@ export function drawCollisionGrid(
     ctx.rect(
       point.x * scale,
       point.y * scale,
-      pixelsPerCollisionGridSquare * scale,
-      pixelsPerCollisionGridSquare * scale,
+      collisionGridSize * scale,
+      collisionGridSize * scale,
     )
 
     ctx.lineWidth = 2 * window.devicePixelRatio

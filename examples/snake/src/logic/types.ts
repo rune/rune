@@ -34,10 +34,11 @@ export type Section = {
     }
   | {
       turning: "left" | "right"
-      // TODO: nest under arc object when SDK is updated
-      arcCenter: Point
-      arcStartAngle: number
-      arcEndAngle: number
+      arc: {
+        center: Point
+        startAngle: number
+        endAngle: number
+      }
     }
 )
 

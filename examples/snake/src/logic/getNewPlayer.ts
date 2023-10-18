@@ -6,7 +6,6 @@ import { boardSize } from "./logicConfig.ts"
 // TODO: improve color selection to account for players leaving and joining arbitrarily
 export function getNewPlayer(playerId: PlayerId, color: string): PlayerInfo {
   const startPoint = {
-    // TODO: center of each quadrant instead of random? or just far enough away from each other?
     x: getRandomInt(boardSize.width),
     y: getRandomInt(boardSize.height),
   }

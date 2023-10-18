@@ -1,6 +1,6 @@
 import { getNewPlayer } from "./getNewPlayer.ts"
 import { checkReady } from "./checkReady.ts"
-import { colors, speed } from "./logicConfig.ts"
+import { colors } from "./logicConfig.ts"
 import { updateCountdown } from "./updateCountdown.ts"
 import { updateEndOfRound } from "./updateEndOfRound.ts"
 import { updatePlaying } from "./updatePlaying.ts"
@@ -21,7 +21,7 @@ Rune.initLogic({
       lastRoundWinnerId: undefined,
     }
   },
-  updatesPerSecond: Math.round(30 * speed), // TODO: change to scalar value before upload
+  updatesPerSecond: 30,
   actions: {
     setTurning(turning, { game, playerId }) {
       const player = game.players.find((p) => p.playerId === playerId)

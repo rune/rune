@@ -76,9 +76,11 @@ export function updatePlaying(game: GameState) {
         const newSection: Section = {
           ...newSectionCommonProps,
           turning: player.turning,
-          arcCenter,
-          arcStartAngle,
-          arcEndAngle: arcStartAngle,
+          arc: {
+            center: arcCenter,
+            startAngle: arcStartAngle,
+            endAngle: arcStartAngle,
+          },
         }
 
         player.line.push(newSection)
@@ -96,7 +98,7 @@ export function updatePlaying(game: GameState) {
       Math.sin(degreesToRad(lastSection.endAngle)) * forwardSpeedPixelsPerTick
 
     if (lastSection.turning !== "none") {
-      lastSection.arcEndAngle = degreesToRad(
+      lastSection.arc.endAngle = degreesToRad(
         lastSection.endAngle +
           (-90 + turningSpeedDegreesPerTick / 2) * turningModifier,
       )
@@ -104,9 +106,6 @@ export function updatePlaying(game: GameState) {
 
     const oldCollisionSquareIndex = collisionGridPointer(oldEnd)
     const collisionSquareIndex = collisionGridPointer(lastSection.end)
-
-    // TODO when moving diagonally between two collision squares, we need to
-    //  check which one of the remaining two squares to mark (and also check) because a line has crossed it
 
     if (
       isLastSectionOutOfBounds(player) ||
@@ -126,8 +125,6 @@ export function updatePlaying(game: GameState) {
         oldCollisionCellCords.x !== collisionCellCords.x &&
         oldCollisionCellCords.y !== collisionCellCords.y
       ) {
-        // TODO: only mark one of the remaining squares depending on which one the line crossed
-
         const point =
           collisionCellCords.x > oldCollisionCellCords.y &&
           collisionCellCords.y > oldCollisionCellCords.y

@@ -3,8 +3,8 @@ import { InputTracker } from "./InputTracker.tsx"
 import { Header } from "../Header/Header.tsx"
 import { BoardCanvas } from "./BoardCanvas.tsx"
 import { useRef, useState, useEffect } from "react"
-import backgroundGridCell from "./backgroundGridCell.png"
 import { boardSize } from "../../logic/logicConfig.ts"
+import { gridBackground } from "../../lib/gridBackground.ts"
 
 export function BoardScreen() {
   const canvasContainerRef = useRef<HTMLDivElement>(null)
@@ -47,21 +47,11 @@ export function BoardScreen() {
   )
 }
 
-const horizontalCellCount = 23
-const cellSizePx = 17
-const cellBorderPx = 0.68
-const cellSizeVw = (1 / horizontalCellCount) * 100
-const cellSizeWithNextBorderVw =
-  cellSizeVw - ((cellSizeVw / cellSizePx) * cellBorderPx) / horizontalCellCount
-
 const CanvasOuterContainer = styled.div`
   display: flex;
   flex: 1 1 auto;
   position: relative;
-  background:
-    url("${backgroundGridCell}") repeat left top / ${cellSizeWithNextBorderVw}vw
-      ${cellSizeWithNextBorderVw}vw,
-    black;
+  ${gridBackground};
 `
 
 const wallSize = 10

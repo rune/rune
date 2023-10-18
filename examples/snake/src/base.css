@@ -9,7 +9,7 @@ body,
 
 @font-face {
   font-family: Comfortaa;
-  src: url(fonts/Comfortaa-Bold.ttf);
+  src: url(@/fonts/Comfortaa-Bold.ttf);
   font-weight: 700;
 }
 

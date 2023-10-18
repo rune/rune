@@ -42,6 +42,7 @@ const StartButton = styled.div`
   box-shadow:
     0 0 ${rel(15)} ${rel(3)} #ff32d2,
     inset 0 0 ${rel(15)} ${rel(3)} #ff32d2;
+  letter-spacing: ${rel(3)};
 `
 
 const Instructions = styled.img`

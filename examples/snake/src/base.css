@@ -7,12 +7,6 @@ body,
   height: 100%;
 }
 
-body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-}
-
 * {
   user-select: none;
   box-sizing: border-box;

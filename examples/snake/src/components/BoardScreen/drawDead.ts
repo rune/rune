@@ -23,6 +23,8 @@ export function drawDead(
   ctx.fill()
   ctx.fill()
 
+  // TODO: update skull
+
   const skullWidth = 24
   const skullHeight = 24
   const skullPaths = [

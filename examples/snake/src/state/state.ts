@@ -36,3 +36,10 @@ export const $timer = atom((get) => get($game).timer)
 export const $yourPlayerId = atom((get) => get($state).yourPlayerId)
 
 export const $lastRoundWinnerId = atom((get) => get($game).lastRoundWinnerId)
+
+export const $winnerColor = atom(
+  (get) =>
+    get($game).players.find(
+      (player) => player.playerId === get($lastRoundWinnerId),
+    )?.color,
+)

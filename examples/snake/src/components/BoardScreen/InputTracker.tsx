@@ -9,22 +9,16 @@ export function InputTracker() {
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      e.preventDefault()
-
       if (e.code === "ArrowLeft") setLeftPressed(true)
       if (e.code === "ArrowRight") setRightPressed(true)
     }
 
     function onKeyUp(e: KeyboardEvent) {
-      e.preventDefault()
-
       if (e.code === "ArrowLeft") setLeftPressed(false)
       if (e.code === "ArrowRight") setRightPressed(false)
     }
 
     function onTouch(e: TouchEvent) {
-      e.preventDefault()
-
       const touches = [...e.touches]
 
       setRightPressed(touches.some((t) => t.clientX > window.innerWidth / 2))

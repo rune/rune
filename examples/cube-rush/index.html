@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+  </head>
+  <body>
+    <div class="screen pausedScreen" id="pausedScreen">
+      <img src="/src/logo.svg" class="logo" />
+      <button class="startBtn" type="button">Start</button>
+    </div>
+
+    <div class="screen countdownScreen" id="countdownScreen">
+      <div class="countdown"></div>
+    </div>
+
+    <div class="screen playingScreen" id="playingScreen">
+      <div class="info" id="info">
+        <div class="side">
+          <div class="infoValue">
+            <p>Place</p>
+            <div class="place">-</div>
+          </div>
+          <div class="infoValue">
+            <p>Speed</p>
+            <div class="speed">-</div>
+          </div>
+        </div>
+        <div class="middle">
+          <div class="trackProgress">
+            <div class="trackProgressTrack"></div>
+          </div>
+          <div class="spectating">
+            You are spectating <span class="displayName">-</span>
+            <img class="avatar" />
+          </div>
+        </div>
+        <div class="side"></div>
+      </div>
+      <div class="statsContainer">
+        <div class="stats" id="stats">
+          <div class="infoValue">
+            <p>You placed</p>
+            <div class="place">-</div>
+          </div>
+          <div class="infoValue">
+            <p>Time</p>
+            <div class="elapse">-</div>
+          </div>
+          <div class="infoValue">
+            <p>Top speed</p>
+            <div class="topSpeed">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="controlsPreview"></div>
+    </div>
+
+    <script type="module" src="/src/logic.ts"></script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

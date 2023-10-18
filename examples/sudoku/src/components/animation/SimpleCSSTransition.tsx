@@ -43,7 +43,7 @@ export function SimpleCSSTransition({
 export function simpleCSSTransitionStyles(
   from: CSSObject,
   to: CSSObject,
-  easing: string = "ease-out"
+  easing = "ease-out"
 ) {
   return css<{ animationDuration?: number }>`
     ${({ animationDuration }) =>

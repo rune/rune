@@ -3,7 +3,7 @@ export function animate(
   duration: number,
   onUpdate: (value: number) => void
 ) {
-  let timeoutHandle = setTimeout(tick, delay)
+  const timeoutHandle = setTimeout(tick, delay)
   let animateHandle: number
   const start = Date.now() + delay
 

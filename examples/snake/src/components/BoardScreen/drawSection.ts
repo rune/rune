@@ -10,7 +10,10 @@ export function drawSection(
 ) {
   ctx.beginPath()
 
-  if (section.turning !== "none") {
+  if (section.turning === "none") {
+    ctx.moveTo(section.start.x * scale, section.start.y * scale)
+    ctx.lineTo(section.end.x * scale, section.end.y * scale)
+  } else {
     ctx.arc(
       section.arcCenter.x * scale,
       section.arcCenter.y * scale,
@@ -19,20 +22,12 @@ export function drawSection(
       section.arcEndAngle,
       section.turning === "left",
     )
-
-    ctx.lineWidth = sectionLineWidth * window.devicePixelRatio
-    ctx.strokeStyle = color
-    ctx.shadowBlur = shadowBlur * window.devicePixelRatio
-    ctx.shadowColor = color
-  } else {
-    ctx.moveTo(section.start.x * scale, section.start.y * scale)
-    ctx.lineTo(section.end.x * scale, section.end.y * scale)
-
-    ctx.lineWidth = sectionLineWidth * window.devicePixelRatio
-    ctx.strokeStyle = color
-    ctx.shadowBlur = shadowBlur * window.devicePixelRatio
-    ctx.shadowColor = color
   }
+
+  ctx.lineWidth = sectionLineWidth * window.devicePixelRatio
+  ctx.strokeStyle = color
+  ctx.shadowBlur = shadowBlur * window.devicePixelRatio
+  ctx.shadowColor = color
 
   ctx.stroke()
   ctx.stroke()

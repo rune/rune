@@ -1,7 +1,6 @@
 import { Point } from "../../logic/types.ts"
 import { shadowBlur, avatarBorder, avatarRadius } from "./drawConfig.ts"
-
-const images = new Map<string, HTMLImageElement>()
+import { getDrawableImage } from "./getDrawableImage.ts"
 
 export function drawAvatar(
   ctx: CanvasRenderingContext2D,
@@ -26,20 +25,14 @@ export function drawAvatar(
   ctx.fill()
   ctx.fill()
 
-  let image = images.get(url)
-
-  if (!image) {
-    image = new Image()
-    image.src = url
-    images.set(url, image)
-  }
+  const avatar = getDrawableImage(url)
 
   ctx.drawImage(
-    image,
+    avatar,
     0,
     0,
-    image.width,
-    image.height,
+    avatar.width,
+    avatar.height,
     point.x * scale - avatarRadius * window.devicePixelRatio,
     point.y * scale - avatarRadius * window.devicePixelRatio,
     avatarRadius * 2 * window.devicePixelRatio,

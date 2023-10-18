@@ -10,6 +10,8 @@ export function EndOfRoundOverlay() {
 
   if (!winner) return null
 
+  return null
+
   return (
     <div
       style={{ position: "absolute", color: "white", left: "50%", top: "50%" }}

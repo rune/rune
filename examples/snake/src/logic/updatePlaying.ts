@@ -7,10 +7,10 @@ import {
   arcRadius,
   forwardSpeedPixelsPerTick,
 } from "./logicConfig.ts"
-import { degreesToRad } from "../lib/helpers.ts"
 import { collisionGridPointer } from "./collisionGridHelpers.ts"
 import { isLastSectionOutOfBounds } from "./isLastSectionOutOfBounds.ts"
 import { checkWinnersAndGameOver } from "./checkWinnersAndGameOver.ts"
+import { degreesToRad } from "../lib/degreesToRad.ts"
 
 export function updatePlaying(game: GameState) {
   for (const player of game.players) {

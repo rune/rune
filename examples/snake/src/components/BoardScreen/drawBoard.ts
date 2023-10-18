@@ -1,6 +1,5 @@
 import { store, $game, $players } from "../../state/state.ts"
 import { drawArrow } from "./drawArrow.ts"
-import { degreesToRad } from "../../lib/helpers.ts"
 import { drawSection } from "./drawSection.ts"
 import { drawCollisionGrid } from "./drawCollisionGrid.ts"
 import { drawDead } from "./drawDead.ts"
@@ -10,6 +9,7 @@ import {
   turningSpeedDegreesPerTick,
   forwardSpeedPixelsPerTick,
 } from "../../logic/logicConfig.ts"
+import { degreesToRad } from "../../lib/degreesToRad.ts"
 
 const showCollisionGrid = false
 

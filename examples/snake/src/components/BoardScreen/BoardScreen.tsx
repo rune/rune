@@ -32,21 +32,45 @@ export function BoardScreen() {
     <>
       <InputTracker />
       <Header />
-      <CanvasContainer ref={canvasContainerRef}>
-        <BoardCanvas
-          containerWidth={canvasContainerSize.width}
-          containerHeight={canvasContainerSize.height}
-        />
-      </CanvasContainer>
+      <CanvasOuterContainer>
+        <Wall />
+        <CanvasContainer ref={canvasContainerRef}>
+          <BoardCanvas
+            containerWidth={canvasContainerSize.width}
+            containerHeight={canvasContainerSize.height}
+          />
+        </CanvasContainer>
+      </CanvasOuterContainer>
     </>
   )
 }
 
+const CanvasOuterContainer = styled.div`
+  display: flex;
+  flex: 1 1 auto;
+  position: relative;
+`
+
+const wallSize = 10
+
 const CanvasContainer = styled.div`
+  position: absolute;
+  left: ${wallSize}px;
+  right: ${wallSize}px;
+  top: ${wallSize}px;
+  bottom: ${wallSize}px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 auto;
-  overflow: hidden;
-  background: blue;
+`
+
+const Wall = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #11d4ff;
+  opacity: 0.5;
 `

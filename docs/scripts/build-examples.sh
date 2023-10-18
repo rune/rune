@@ -42,4 +42,5 @@ perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/s
 cd ../cube-rush
 yarn
 yarn build
-cp -r build/. ../../docs/static/_examples/cube-rush
+cp -r dist/. ../../docs/static/_examples/cube-rush
+perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_examples/cube-rush/index.html

@@ -40,14 +40,11 @@ export function BoardScreen() {
   }, [])
 
   const borderWidth = useMemo(() => {
-    const horizontalWallSize = Math.max(
-      (containerHeight - boardSize.height * canvasScale) / 2,
-      minWallSize,
-    )
-    const verticalWallSize = Math.max(
-      (containerWidth - boardSize.width * canvasScale) / 2,
-      minWallSize,
-    )
+    const horizontalWallSize =
+      (containerHeight - boardSize.height * canvasScale) / 2 + minWallSize
+    const verticalWallSize =
+      (containerWidth - boardSize.width * canvasScale) / 2 + minWallSize
+
     return `${horizontalWallSize}px ${verticalWallSize}px`
   }, [canvasScale, containerHeight, containerWidth])
 

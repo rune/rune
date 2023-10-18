@@ -1,11 +1,11 @@
 import { getNewPlayer } from "./getNewPlayer.ts"
-import { checkReady } from "./checkReady.ts"
 import { colors } from "./logicConfig.ts"
 import { updateCountdown } from "./updateCountdown.ts"
 import { updateEndOfRound } from "./updateEndOfRound.ts"
 import { updatePlaying } from "./updatePlaying.ts"
 import { checkWinnersAndGameOver } from "./checkWinnersAndGameOver.ts"
 import { pickFreeColor } from "./pickFreeColor.ts"
+import { newRound } from "./newRound.ts"
 
 Rune.initLogic({
   minPlayers: 2,
@@ -14,7 +14,11 @@ Rune.initLogic({
     return {
       stage: "gettingReady",
       players: allPlayerIds.map((playerId, index) =>
-        getNewPlayer(playerId, "alive", colors[index]),
+        getNewPlayer({
+          playerId,
+          state: "alive",
+          color: colors[index],
+        }),
       ),
       collisionGrid: [],
       readyPlayerIds: [],
@@ -32,12 +36,8 @@ Rune.initLogic({
 
       player.turning = turning
     },
-    setReady(_, { game, playerId, allPlayerIds }) {
-      if (game.readyPlayerIds.includes(playerId)) throw Rune.invalidAction()
-
-      game.readyPlayerIds.push(playerId)
-
-      checkReady(game, allPlayerIds)
+    setReady(_, { game }) {
+      newRound(game)
     },
   },
   update: ({ game }) => {
@@ -47,14 +47,20 @@ Rune.initLogic({
   },
   events: {
     playerJoined: (playerId, { game }) => {
-      game.players.push(getNewPlayer(playerId, "pending", pickFreeColor(game)))
+      game.players.push(
+        getNewPlayer({
+          playerId,
+          state: "pending",
+          color: pickFreeColor(game),
+        }),
+      )
     },
-    playerLeft: (playerId, { game, allPlayerIds }) => {
+    playerLeft: (playerId, { game }) => {
       const index = game.players.findIndex((p) => p.playerId === playerId)
+
       if (~index) game.players.splice(index, 1)
 
-      if (game.stage === "gettingReady") checkReady(game, allPlayerIds)
-      else checkWinnersAndGameOver(game)
+      if (game.stage === "playing") checkWinnersAndGameOver(game)
     },
   },
 })

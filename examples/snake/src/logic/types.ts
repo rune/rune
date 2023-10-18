@@ -8,7 +8,6 @@ export interface GameState {
   stage: "gettingReady" | "countdown" | "playing" | "endOfRound"
   players: PlayerInfo[]
   collisionGrid: boolean[]
-  readyPlayerIds: PlayerId[]
   timer: number
   timerStartedAt: number
   lastRoundWinnerId: PlayerId | undefined

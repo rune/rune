@@ -1,63 +1,23 @@
 import { degreesToRad } from "../lib/helpers.ts"
 import { getNewPlayer } from "./getNewPlayer.ts"
-import { Section, Point, GameActions, GameState } from "./types.ts"
-import { RuneClient } from "rune-games-sdk"
+import { Section } from "./types.ts"
 import { isLastSectionOutOfBounds } from "./isLastSectionOutOfBounds.ts"
 import { checkWinnersAndGameOver } from "./checkWinnersAndGameOver.ts"
 import { newRound } from "./newRound.ts"
 import { checkReady } from "./checkReady.ts"
-
-declare global {
-  const Rune: RuneClient<GameState, GameActions>
-}
-
-export const countdownDuration = 5
-
-const endOfRoundDuration = 3
-
-export const maxScore = 10
-
-export const boardSize = {
-  width: 600,
-  height: 900,
-}
-
-const speed = 1 / 3
-
-export const forwardSpeedPixelsPerTick = 3 / speed
-export const turningSpeedDegreesPerTick = 3 / speed
-
-export const arcRadius =
-  (180 * forwardSpeedPixelsPerTick) / (Math.PI * turningSpeedDegreesPerTick)
-
-const gapFrequency = 0.01 / speed
-const gapPlacementDurationTicks = 20 * speed
-const minTicksToNextGap = 30 * speed
-
-const colors = ["#BCFE00", "#10D4FF", "#FF32D2", "#FF9C27"]
-
-export const pixelsPerCollisionGridSquare = Math.round(
-  forwardSpeedPixelsPerTick * 1.5,
-) // TODO: could be 1:1 if we fix serialization issue?
-function pointToCollisionGridIndex(point: Point) {
-  return (
-    Math.floor(point.x / pixelsPerCollisionGridSquare) *
-      Math.floor(boardSize.height / pixelsPerCollisionGridSquare) +
-    Math.floor(point.y / pixelsPerCollisionGridSquare)
-  )
-}
-
-export function collisionGridIndexToPoint(index: number) {
-  const x = Math.floor(
-    index / Math.floor(boardSize.height / pixelsPerCollisionGridSquare),
-  )
-  const y = index % Math.floor(boardSize.height / pixelsPerCollisionGridSquare)
-
-  return {
-    x: x * pixelsPerCollisionGridSquare,
-    y: y * pixelsPerCollisionGridSquare,
-  }
-}
+import {
+  colors,
+  minTicksToNextGap,
+  gapPlacementDurationTicks,
+  gapFrequency,
+  arcRadius,
+  turningSpeedDegreesPerTick,
+  forwardSpeedPixelsPerTick,
+  speed,
+  endOfRoundDuration,
+  countdownDuration,
+} from "./logicConfig.ts"
+import { collisionGridPointer } from "./collisionGridHelpers.ts"
 
 Rune.initLogic({
   minPlayers: 2,
@@ -195,8 +155,8 @@ Rune.initLogic({
           )
         }
 
-        const oldCollisionSquareIndex = pointToCollisionGridIndex(oldEnd)
-        const collisionSquareIndex = pointToCollisionGridIndex(lastSection.end)
+        const oldCollisionSquareIndex = collisionGridPointer(oldEnd)
+        const collisionSquareIndex = collisionGridPointer(lastSection.end)
 
         // TODO when moving diagonally between two collision squares, we need to
         //  check which one of the remaining two squares to mark (and also check) because a line has crossed it
@@ -210,11 +170,10 @@ Rune.initLogic({
           player.state = "dead"
           checkWinnersAndGameOver(game)
         } else if (!lastSection.gap) {
-          const oldCollisionCellCords = collisionGridIndexToPoint(
+          const oldCollisionCellCords = collisionGridPointer(
             oldCollisionSquareIndex,
           )
-          const collisionCellCords =
-            collisionGridIndexToPoint(collisionSquareIndex)
+          const collisionCellCords = collisionGridPointer(collisionSquareIndex)
 
           if (
             oldCollisionCellCords.x !== collisionCellCords.x &&
@@ -273,14 +232,14 @@ Rune.initLogic({
               (!lastSectionGoingDown && lastSectionGoingRight && pointAboveLine)
             ) {
               game.collisionGrid[
-                pointToCollisionGridIndex({
+                collisionGridPointer({
                   x: oldCollisionCellCords.x,
                   y: collisionCellCords.y,
                 })
               ] = true
             } else {
               game.collisionGrid[
-                pointToCollisionGridIndex({
+                collisionGridPointer({
                   x: collisionCellCords.x,
                   y: oldCollisionCellCords.y,
                 })

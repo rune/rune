@@ -1,7 +1,7 @@
 import { PlayerId } from "rune-games-sdk"
 import { getRandomInt, getRandomIntBetween } from "../lib/helpers.ts"
-import { boardSize } from "./logic.ts"
 import { Point, PlayerInfo } from "./types.ts"
+import { boardSize } from "./logicConfig.ts"
 
 // TODO: improve color selection to account for players leaving and joining arbitrarily
 export function getNewPlayer(playerId: PlayerId, color: string): PlayerInfo {

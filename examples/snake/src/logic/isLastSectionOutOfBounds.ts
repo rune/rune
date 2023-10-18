@@ -1,5 +1,6 @@
 import { PlayerInfo } from "./types.ts"
-import { boardSize } from "./logic.ts"
+
+import { boardSize } from "./logicConfig.ts"
 
 export function isLastSectionOutOfBounds(player: PlayerInfo) {
   const lastSection = player.line[player.line.length - 1]

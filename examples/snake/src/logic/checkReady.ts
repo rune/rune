@@ -1,5 +1,6 @@
 import { GameState } from "./types.ts"
-import { countdownDuration } from "./logic.ts"
+
+import { countdownDuration } from "./logicConfig.ts"
 
 export function checkReady(game: GameState, allPlayerIds: string[]) {
   if (

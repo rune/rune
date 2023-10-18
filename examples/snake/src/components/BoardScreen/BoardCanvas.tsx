@@ -1,9 +1,9 @@
 import "../../base.css"
 
 import { CSSProperties, useEffect, useMemo, useRef, useState } from "react"
-import { boardSize } from "../../logic/logic.ts"
 import { styled } from "styled-components"
 import { drawBoard } from "./drawBoard.ts"
+import { boardSize } from "../../logic/logicConfig.ts"
 
 // TODO: show avatars during countdown stage
 

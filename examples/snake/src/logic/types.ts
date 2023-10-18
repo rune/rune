@@ -1,35 +1,7 @@
-import { PlayerId } from "rune-games-sdk"
+import { PlayerId, RuneClient } from "rune-games-sdk"
 
-export type Turning = "left" | "right" | "none"
-
-export type Point = {
-  x: number
-  y: number
-}
-
-export type Section = {
-  start: Point
-  end: Point
-  endAngle: number
-  gap: boolean
-} & (
-  | { turning: "none" }
-  | {
-      turning: "left" | "right"
-      arcCenter: Point
-      arcStartAngle: number
-      arcEndAngle: number
-    }
-)
-
-export type PlayerInfo = {
-  playerId: string
-  turning: Turning
-  gapCounter: number
-  color: string
-  state: "pending" | "alive" | "dead"
-  line: Section[]
-  score: number
+declare global {
+  const Rune: RuneClient<GameState, GameActions>
 }
 
 export interface GameState {
@@ -45,4 +17,36 @@ export interface GameState {
 export type GameActions = {
   setTurning(turning: Turning): void
   setReady(): void
+}
+
+export type Turning = "left" | "right" | "none"
+
+export type Point = { x: number; y: number }
+
+export type Section = {
+  start: Point
+  end: Point
+  endAngle: number
+  gap: boolean
+} & (
+  | {
+      turning: "none"
+    }
+  | {
+      turning: "left" | "right"
+      // TODO: nest under arc object when SDK is updated
+      arcCenter: Point
+      arcStartAngle: number
+      arcEndAngle: number
+    }
+)
+
+export type PlayerInfo = {
+  playerId: string
+  turning: "left" | "right" | "none"
+  gapCounter: number
+  color: string
+  state: "pending" | "alive" | "dead"
+  line: Section[]
+  score: number
 }

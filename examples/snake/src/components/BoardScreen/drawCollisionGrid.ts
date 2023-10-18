@@ -1,7 +1,5 @@
-import {
-  collisionGridIndexToPoint,
-  pixelsPerCollisionGridSquare,
-} from "../../logic/logic.ts"
+import { pixelsPerCollisionGridSquare } from "../../logic/logicConfig.ts"
+import { collisionGridPointer } from "../../logic/collisionGridHelpers.ts"
 
 export function drawCollisionGrid(
   ctx: CanvasRenderingContext2D,
@@ -9,7 +7,7 @@ export function drawCollisionGrid(
   collisionGrid: boolean[],
 ) {
   for (let cellIndex = 0; cellIndex < collisionGrid.length; cellIndex++) {
-    const point = collisionGridIndexToPoint(cellIndex)
+    const point = collisionGridPointer(cellIndex)
 
     ctx.beginPath()
     ctx.rect(

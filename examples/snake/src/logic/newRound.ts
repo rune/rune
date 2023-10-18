@@ -1,6 +1,7 @@
 import { GameState } from "./types.ts"
 import { getNewPlayer } from "./getNewPlayer.ts"
-import { countdownDuration } from "./logic.ts"
+
+import { countdownDuration } from "./logicConfig.ts"
 
 export function newRound(game: GameState) {
   for (let i = 0; i < game.players.length; i++) {

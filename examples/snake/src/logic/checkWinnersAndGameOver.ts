@@ -1,5 +1,6 @@
 import { GameState } from "./types.ts"
-import { maxScore } from "./logic.ts"
+
+import { maxScore } from "./logicConfig.ts"
 
 export function checkWinnersAndGameOver(game: GameState) {
   const playersAlive = game.players.filter((p) => p.state === "alive")

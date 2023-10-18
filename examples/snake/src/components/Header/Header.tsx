@@ -26,11 +26,11 @@ export function Header() {
       {game.players.map(({ playerId, color, score, state }) => (
         <PlayerContainer key={playerId}>
           {state === "pending" ? (
-            <DarkCircle $playerColor={color} style={{ color: "white" }}>
+            <DarkCircle $playerColor={color}>
               <Clock size={rel(24)} color={color} />
             </DarkCircle>
           ) : state === "dead" ? (
-            <DarkCircle $playerColor={color} style={{ color: "white" }}>
+            <DarkCircle $playerColor={color}>
               <Skull size={rel(24)} color={color} />
             </DarkCircle>
           ) : (
@@ -103,6 +103,7 @@ const DarkCircle = styled.div<{ $playerColor: string }>`
   height: ${rel(36)};
   border-radius: 50%;
   box-shadow: 0 0 ${rel(15)} ${rel(3)} ${({ $playerColor }) => $playerColor};
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;

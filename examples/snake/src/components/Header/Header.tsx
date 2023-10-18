@@ -68,24 +68,22 @@ const PlayerContainer = styled.div`
 `
 
 const Avatar = styled.img<{ $playerColor: string }>`
-  width: ${rel(32)};
-  height: ${rel(32)};
+  width: ${rel(36)};
+  height: ${rel(36)};
   border-radius: 50%;
   border: ${rel(2)} solid ${({ $playerColor }) => $playerColor};
   box-shadow: 0 0 ${rel(15)} ${rel(3)} ${({ $playerColor }) => $playerColor};
 `
 
 const Name = styled.div<{ $playerColor: string }>`
+  margin-top: ${rel(-6)};
+
   background-color: ${({ $playerColor }) => $playerColor};
-  position: relative;
-  top: ${rel(-4)};
   padding: ${rel(2)} ${rel(4)};
   border-radius: ${rel(14)};
   box-shadow: 0 0 ${rel(15)} ${rel(3)} ${({ $playerColor }) => $playerColor};
 
-  font-family: Arial Rounded MT Bold;
   font-size: ${rel(9)};
-  line-height: normal;
 `
 
 const Invite = styled(Name)`
@@ -96,10 +94,7 @@ const Score = styled.div<{ $playerColor: string }>`
   color: ${({ $playerColor }) => $playerColor};
   text-shadow: 0 0 ${rel(15)} ${({ $playerColor }) => $playerColor};
 
-  font-family: Arial Rounded MT Bold;
   font-size: ${rel(24)};
-  height: ${rel(21)};
-  line-height: ${rel(21)}; // TODO: this is not right
 `
 
 const DarkCircle = styled.div<{ $playerColor: string }>`

@@ -1,17 +1,18 @@
 import { GameState } from "./types.ts"
-import { getNewPlayer } from "./getNewPlayer.ts"
 
 import { countdownDuration } from "./logicConfig.ts"
+import { getInitialLine } from "./getInitialLine.ts"
 
 export function newRound(game: GameState) {
-  for (let i = 0; i < game.players.length; i++) {
-    game.collisionGrid = []
-    game.players[i] = {
-      ...getNewPlayer(game.players[i].playerId, game.players[i].color),
-      score: game.players[i].score,
-    }
-    game.stage = "countdown"
-    game.timer = countdownDuration
-    game.timerStartedAt = Rune.gameTime()
+  game.stage = "countdown"
+  game.timer = countdownDuration
+  game.timerStartedAt = Rune.gameTime()
+  game.collisionGrid = []
+
+  for (const player of game.players) {
+    player.line = getInitialLine()
+    player.state = "alive"
+    player.turning = "none"
+    player.gapCounter = 0
   }
 }

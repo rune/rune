@@ -1,47 +1,19 @@
 import { PlayerId } from "rune-games-sdk"
-import { getRandomInt, getRandomIntBetween } from "../lib/helpers.ts"
-import { Point, PlayerInfo } from "./types.ts"
-import { boardSize } from "./logicConfig.ts"
+import { PlayerInfo, State } from "./types.ts"
+import { getInitialLine } from "./getInitialLine.ts"
 
-// TODO: improve color selection to account for players leaving and joining arbitrarily
-export function getNewPlayer(playerId: PlayerId, color: string): PlayerInfo {
-  const startPoint = {
-    x: getRandomInt(boardSize.width),
-    y: getRandomInt(boardSize.height),
-  }
-
-  const boardCenterX = boardSize.width / 2
-  const boardCenterY = boardSize.height / 2
-
-  function getAngleLimits(startPoint: Point): [number, number] {
-    return startPoint.x < boardCenterX && startPoint.y < boardCenterY
-      ? [0, 90]
-      : startPoint.x > boardCenterX && startPoint.y < boardCenterY
-      ? [90, 180]
-      : startPoint.x < boardCenterX && startPoint.y > boardCenterY
-      ? [270, 360]
-      : startPoint.x > boardCenterX && startPoint.y > boardCenterY
-      ? [180, 270]
-      : [0, 360]
-  }
-
-  const angle = getRandomIntBetween(...getAngleLimits(startPoint))
-
+export function getNewPlayer(
+  playerId: PlayerId,
+  state: State,
+  color: string,
+): PlayerInfo {
   return {
     playerId,
     turning: "none",
     gapCounter: 0,
     color,
-    state: "alive",
-    line: [
-      {
-        start: startPoint,
-        end: startPoint,
-        turning: "none",
-        endAngle: angle,
-        gap: false,
-      },
-    ],
+    state,
+    line: getInitialLine(),
     score: 0,
   }
 }

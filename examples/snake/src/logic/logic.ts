@@ -14,7 +14,7 @@ Rune.initLogic({
     return {
       stage: "gettingReady",
       players: allPlayerIds.map((playerId, index) =>
-        getNewPlayer(playerId, colors[index]),
+        getNewPlayer(playerId, "alive", colors[index]),
       ),
       collisionGrid: [],
       readyPlayerIds: [],
@@ -47,10 +47,7 @@ Rune.initLogic({
   },
   events: {
     playerJoined: (playerId, { game }) => {
-      game.players.push({
-        ...getNewPlayer(playerId, pickFreeColor(game)),
-        state: "pending",
-      })
+      game.players.push(getNewPlayer(playerId, "pending", pickFreeColor(game)))
     },
     playerLeft: (playerId, { game, allPlayerIds }) => {
       const index = game.players.findIndex((p) => p.playerId === playerId)

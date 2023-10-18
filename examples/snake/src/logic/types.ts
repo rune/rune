@@ -21,6 +21,8 @@ export type GameActions = {
 
 export type Turning = "left" | "right" | "none"
 
+export type State = "pending" | "alive" | "dead"
+
 export type Point = { x: number; y: number }
 
 export type Section = {
@@ -47,7 +49,7 @@ export type PlayerInfo = {
   turning: "left" | "right" | "none"
   gapCounter: number
   color: string
-  state: "pending" | "alive" | "dead"
+  state: State
   line: Section[]
   score: number
 }

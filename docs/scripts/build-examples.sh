@@ -37,3 +37,10 @@ yarn
 ../../scripts/copy-assets.sh paddle && yarn build
 cp -r dist/. ../../docs/static/_examples/paddle
 perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_examples/paddle/index.html
+
+# Cube Rush
+cd ../cube-rush
+yarn
+yarn build
+cp -r dist/. ../../docs/static/_examples/cube-rush
+perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_examples/cube-rush/index.html

@@ -82,7 +82,7 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
       const turningModifier =
         player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
 
-      const optimisticIterations = 6
+      const optimisticIterations = 5
 
       const oldAngle = lastSection.endAngle
 

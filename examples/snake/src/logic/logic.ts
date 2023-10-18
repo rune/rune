@@ -104,7 +104,7 @@ Rune.initLogic({
       checkReady(game, allPlayerIds)
     },
   },
-  updatesPerSecond: Math.round(30 * speed),
+  updatesPerSecond: Math.round(30 * speed), // TODO: change to scalar value before upload
   update: ({ game }) => {
     if (game.stage === "countdown") {
       game.timer = Math.ceil(

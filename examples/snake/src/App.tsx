@@ -14,12 +14,12 @@ export function App() {
 
   return (
     <>
-      <InputTracker />
       <Root>
         {stage === "gettingReady" ? (
           <GettingReady />
         ) : (
           <>
+            {stage === "playing" && <InputTracker />}
             <Header />
             <CanvasContainer>
               <Board />

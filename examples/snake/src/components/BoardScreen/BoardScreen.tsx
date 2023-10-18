@@ -1,0 +1,99 @@
+import { styled } from "styled-components"
+import { InputTracker } from "./InputTracker.tsx"
+import { Header } from "../Header/Header.tsx"
+import { BoardCanvas } from "./BoardCanvas.tsx"
+import { useRef, useState, useEffect, useMemo } from "react"
+import { boardSize } from "../../logic/logicConfig.ts"
+import { gridBackground } from "../../lib/gridBackground.ts"
+
+// TODO: glow below header
+
+export function BoardScreen() {
+  const canvasContainerRef = useRef<HTMLDivElement>(null)
+
+  const [canvasScale, setCanvasScale] = useState(1)
+  const [containerWidth, setContainerWidth] = useState(0)
+  const [containerHeight, setContainerHeight] = useState(0)
+
+  useEffect(() => {
+    function adjustSize() {
+      if (!canvasContainerRef.current) return
+
+      const containerWidth = canvasContainerRef.current.clientWidth
+      const containerHeight = canvasContainerRef.current.clientHeight
+
+      const widthScale = containerWidth / boardSize.width
+      const heightScale = containerHeight / boardSize.height
+
+      const newScale = Math.min(widthScale, heightScale)
+
+      setCanvasScale(newScale > 0 ? newScale : 1)
+      setContainerWidth(containerWidth)
+      setContainerHeight(containerHeight)
+    }
+
+    adjustSize()
+
+    window.addEventListener("resize", adjustSize)
+
+    return () => window.removeEventListener("resize", adjustSize)
+  }, [])
+
+  const borderWidth = useMemo(() => {
+    const horizontalWallSize = Math.max(
+      (containerHeight - boardSize.height * canvasScale) / 2,
+      minWallSize,
+    )
+    const verticalWallSize = Math.max(
+      (containerWidth - boardSize.width * canvasScale) / 2,
+      minWallSize,
+    )
+    return `${horizontalWallSize}px ${verticalWallSize}px`
+  }, [canvasScale, containerHeight, containerWidth])
+
+  return (
+    <>
+      <InputTracker />
+      <Header />
+      <CanvasOuterContainer>
+        <Wall style={{ borderWidth }} />
+        <CanvasContainer ref={canvasContainerRef}>
+          <BoardCanvas scale={canvasScale} />
+        </CanvasContainer>
+      </CanvasOuterContainer>
+    </>
+  )
+}
+
+const CanvasOuterContainer = styled.div`
+  display: flex;
+  flex: 1 1 auto;
+  position: relative;
+  ${gridBackground};
+`
+
+const minWallSize = 10
+
+const CanvasContainer = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: ${minWallSize}px solid transparent;
+  box-sizing: content-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const Wall = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-style: solid;
+  border-color: rgba(17, 212, 255, 0.5);
+`

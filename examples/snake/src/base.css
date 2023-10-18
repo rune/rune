@@ -1,0 +1,28 @@
+html,
+body,
+#root {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* TODO: figure out how to avoid including the font file twice in the build */
+
+@font-face {
+  font-family: Comfortaa;
+  src: url(@/fonts/Comfortaa-Bold.ttf);
+  font-weight: 700;
+}
+
+body {
+  font-family: Comfortaa, sans-serif;
+  font-weight: 700;
+  color: black;
+}
+
+* {
+  user-select: none;
+  box-sizing: border-box;
+  line-height: 115%;
+}

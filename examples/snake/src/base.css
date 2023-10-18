@@ -7,6 +7,8 @@ body,
   height: 100%;
 }
 
+/* TODO: figure out how to avoid including the font file twice in the build */
+
 @font-face {
   font-family: Comfortaa;
   src: url(@/fonts/Comfortaa-Bold.ttf);

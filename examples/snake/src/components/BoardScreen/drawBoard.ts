@@ -1,14 +1,16 @@
 import { store, $game } from "../../state/state.ts"
 import {
+  arcRadius,
   collisionGridIndexToPoint,
   pixelsPerCollisionGridSquare,
-  arcRadius,
 } from "../../logic/logic.ts"
-import { drawRect } from "./drawRect.ts"
 import { drawArc } from "./drawArc.ts"
 import { drawLine } from "./drawLine.ts"
 import { drawArrow } from "./drawArrow.ts"
 import { drawCircle } from "./drawCircle.ts"
+import { drawRect } from "./drawRect.ts"
+
+const showCollisionGrid = false
 
 export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   const ctx = canvas.getContext("2d")
@@ -19,17 +21,23 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
 
   const game = store.get($game)
 
-  for (let cellIndex = 0; cellIndex < game.collisionGrid.length; cellIndex++) {
-    const point = collisionGridIndexToPoint(cellIndex)
+  if (showCollisionGrid) {
+    for (
+      let cellIndex = 0;
+      cellIndex < game.collisionGrid.length;
+      cellIndex++
+    ) {
+      const point = collisionGridIndexToPoint(cellIndex)
 
-    drawRect(
-      ctx,
-      { x: point.x * scale, y: point.y * scale },
-      pixelsPerCollisionGridSquare * scale,
-      pixelsPerCollisionGridSquare * scale,
-      "rgba(255,255,255,.1)",
-      game.collisionGrid[cellIndex] ? "rgba(255,255,255,.5)" : undefined,
-    )
+      drawRect(
+        ctx,
+        { x: point.x * scale, y: point.y * scale },
+        pixelsPerCollisionGridSquare * scale,
+        pixelsPerCollisionGridSquare * scale,
+        "rgba(255,255,255,.1)",
+        game.collisionGrid[cellIndex] ? "rgba(255,255,255,.5)" : undefined,
+      )
+    }
   }
 
   for (const player of game.players) {

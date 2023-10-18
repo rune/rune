@@ -4,6 +4,8 @@ import { colors } from "./logicConfig.ts"
 import { updateCountdown } from "./updateCountdown.ts"
 import { updateEndOfRound } from "./updateEndOfRound.ts"
 import { updatePlaying } from "./updatePlaying.ts"
+import { checkWinnersAndGameOver } from "./checkWinnersAndGameOver.ts"
+import { pickFreeColor } from "./pickFreeColor.ts"
 
 Rune.initLogic({
   minPlayers: 2,
@@ -46,14 +48,16 @@ Rune.initLogic({
   events: {
     playerJoined: (playerId, { game }) => {
       game.players.push({
-        ...getNewPlayer(playerId, colors[game.players.length]),
+        ...getNewPlayer(playerId, pickFreeColor(game)),
         state: "pending",
       })
     },
     playerLeft: (playerId, { game, allPlayerIds }) => {
       const index = game.players.findIndex((p) => p.playerId === playerId)
       if (~index) game.players.splice(index, 1)
-      checkReady(game, allPlayerIds)
+
+      if (game.stage === "gettingReady") checkReady(game, allPlayerIds)
+      else checkWinnersAndGameOver(game)
     },
   },
 })

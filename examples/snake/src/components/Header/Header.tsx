@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai"
 import { $game, $players, $yourPlayerId } from "../../state/state.ts"
 import { rel } from "../../lib/rel.ts"
 import noAvatar from "./noAvatar.png"
+import background from "./background.jpg"
 import { useMemo } from "react"
 import { pickFreeColor } from "../../logic/pickFreeColor.ts"
 
@@ -51,7 +52,9 @@ export function Header() {
 
 const Root = styled.div`
   height: ${rel(80)};
-  background: black;
+  background:
+    url("${background}") no-repeat center center / cover,
+    black;
   display: flex;
   align-items: center;
 `

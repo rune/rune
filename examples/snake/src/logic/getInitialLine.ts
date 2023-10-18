@@ -1,25 +1,15 @@
 import { Section, Point } from "./types.ts"
-import { boardSize } from "./logicConfig.ts"
+import { boardSize, forwardSpeedPixelsPerTick } from "./logicConfig.ts"
 import { getRandomIntBetween } from "../lib/getRandomIntBetween.ts"
 
 const boardCenterX = boardSize.width / 2
 const boardCenterY = boardSize.height / 2
-
-const safeMargin = 0.05
-
-const boardSafeMarginX = Math.round(boardSize.width * safeMargin)
-const boardSafeMarginY = Math.round(boardSize.height * safeMargin)
+const boardSafeMargin = forwardSpeedPixelsPerTick * 10
 
 export function getInitialLine(): Section[] {
   const startPoint = {
-    x: getRandomIntBetween(
-      boardSafeMarginX,
-      boardSize.width - boardSafeMarginX,
-    ),
-    y: getRandomIntBetween(
-      boardSafeMarginY,
-      boardSize.height - boardSafeMarginY,
-    ),
+    x: getRandomIntBetween(boardSafeMargin, boardSize.width - boardSafeMargin),
+    y: getRandomIntBetween(boardSafeMargin, boardSize.height - boardSafeMargin),
   }
 
   const angle = getRandomIntBetween(...getAngleLimits(startPoint))

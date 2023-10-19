@@ -8,6 +8,7 @@ import {
 import { styled } from "styled-components"
 import { rel } from "../lib/rel.ts"
 import { colors } from "../logic/logicConfig.ts"
+import { useState, useEffect } from "react"
 
 const winnerString = "Winner"
 
@@ -16,13 +17,19 @@ export function EndOfRoundOverlay() {
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
   const winnerColor = useAtomValue($winnerColor)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const handle = requestAnimationFrame(() => setVisible(true))
+    return () => cancelAnimationFrame(handle)
+  }, [])
 
   const winner = lastRoundWinnerId ? players[lastRoundWinnerId] : null
 
   if (!winner || !winnerColor) return null
 
   return (
-    <Root>
+    <Root $visible={visible}>
       <Box>
         <User>
           <Avatar src={winner.avatarUrl} $playerColor={winnerColor} />
@@ -43,7 +50,7 @@ export function EndOfRoundOverlay() {
   )
 }
 
-const Root = styled.div`
+const Root = styled.div<{ $visible: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -52,6 +59,9 @@ const Root = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transition: opacity 0.6s 0.4s ease-out;
 `
 
 const Box = styled.div`

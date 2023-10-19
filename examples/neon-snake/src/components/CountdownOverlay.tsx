@@ -22,4 +22,5 @@ const Root = styled.div`
 
   font-size: ${rel(300)};
   letter-spacing: ${rel(-6)};
+  transition: color 0.4s ease-out;
 `

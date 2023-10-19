@@ -13,7 +13,7 @@ export const $state = atom<{
   ready: false,
   game: {
     stage: "gettingReady",
-    collisionGrid: [],
+    collisionGrid: {},
     players: [],
     timer: 0,
     timerStartedAt: 0,

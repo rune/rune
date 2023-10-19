@@ -20,7 +20,7 @@ Rune.initLogic({
           color: colors[index],
         }),
       ),
-      collisionGrid: [],
+      collisionGrid: {},
       readyPlayerIds: [],
       timer: 0,
       timerStartedAt: 0,

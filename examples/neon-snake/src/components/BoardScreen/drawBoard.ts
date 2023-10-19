@@ -1,7 +1,6 @@
 import { store, $game, $players } from "../../state/state.ts"
 import { drawArrow } from "./drawArrow.ts"
 import { drawSection } from "./drawSection.ts"
-import { drawCollisionGrid } from "./drawCollisionGrid.ts"
 import { drawDead } from "./drawDead.ts"
 import { drawAvatar } from "./drawAvatar.ts"
 import {
@@ -11,8 +10,6 @@ import {
 } from "../../logic/logicConfig.ts"
 import { degreesToRad } from "../../lib/degreesToRad.ts"
 
-const showCollisionGrid = false
-
 export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   const ctx = canvas.getContext("2d")
 
@@ -21,10 +18,6 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
   const game = store.get($game)
-
-  if (showCollisionGrid) {
-    drawCollisionGrid(ctx, scale, game.collisionGrid)
-  }
 
   for (const player of game.players) {
     if (player.state === "pending") continue

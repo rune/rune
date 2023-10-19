@@ -7,7 +7,7 @@ export function newRound(game: GameState) {
   game.stage = "countdown"
   game.timer = countdownDuration
   game.timerStartedAt = Rune.gameTime()
-  game.collisionGrid = []
+  game.collisionGrid = {}
 
   for (const player of game.players) {
     player.line = getInitialLine()

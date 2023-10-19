@@ -7,7 +7,7 @@ declare global {
 export interface GameState {
   stage: "gettingReady" | "countdown" | "playing" | "endOfRound"
   players: PlayerInfo[]
-  collisionGrid: boolean[]
+  collisionGrid: { [index: number]: boolean }
   timer: number
   timerStartedAt: number
   lastRoundWinnerId: PlayerId | undefined

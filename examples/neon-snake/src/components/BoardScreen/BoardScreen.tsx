@@ -6,8 +6,6 @@ import { useRef, useState, useEffect, useMemo } from "react"
 import { boardSize } from "../../logic/logicConfig.ts"
 import { gridBackground } from "../../lib/gridBackground.ts"
 
-// TODO: glow below header
-
 export function BoardScreen() {
   const canvasContainerRef = useRef<HTMLDivElement>(null)
 

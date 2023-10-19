@@ -64,9 +64,11 @@ Rune.initLogic({
       }
     },
     playerLeft: (playerId, { game }) => {
-      const index = game.players.findIndex((p) => p.playerId === playerId)
+      const playerIndex = game.players.findIndex((p) => p.playerId === playerId)
 
-      if (~index) game.players.splice(index, 1)
+      if (!~playerIndex) throw Rune.invalidAction()
+
+      game.players.splice(playerIndex, 1)
       delete game.snakes[playerId]
 
       if (game.stage === "playing" || game.stage === "countdown") {

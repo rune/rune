@@ -2,7 +2,7 @@ import { Snake } from "../types.ts"
 import {
   minTicksToNextGap,
   gapChancePerTick,
-  placeGapForTicks,
+  gapLengthTicks,
 } from "../logicConfig.ts"
 
 export function updateSnakePlacingGap(snake: Snake) {
@@ -10,7 +10,7 @@ export function updateSnakePlacingGap(snake: Snake) {
 
   if (snake.gapCounter < -minTicksToNextGap) {
     if (Math.random() < gapChancePerTick) {
-      snake.gapCounter = placeGapForTicks
+      snake.gapCounter = gapLengthTicks
     }
   }
 

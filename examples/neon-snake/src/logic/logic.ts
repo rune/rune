@@ -60,7 +60,7 @@ Rune.initLogic({
       game.snakes[playerId] = {
         gapCounter: 0,
         turning: "none",
-        line: [],
+        sections: [],
       }
     },
     playerLeft: (playerId, { game }) => {

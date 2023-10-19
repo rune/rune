@@ -54,5 +54,5 @@ export type PlayerInfo = {
 export type Snake = {
   gapCounter: number
   turning: "left" | "right" | "none"
-  line: Section[]
+  sections: Section[]
 }

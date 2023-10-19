@@ -9,7 +9,7 @@ export function checkLatestSectionForCollisions(
   game: GameState,
 ) {
   const snake = game.snakes[player.playerId]
-  const latestSection = snake.line[snake.line.length - 1]
+  const latestSection = snake.sections[snake.sections.length - 1]
 
   const oldCollisionSquareIndex = collisionGridPointer(oldTail)
   const collisionSquareIndex = collisionGridPointer(latestSection.end)

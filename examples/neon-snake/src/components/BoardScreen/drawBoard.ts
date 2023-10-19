@@ -33,13 +33,13 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
         player.color,
       )
     } else {
-      for (const section of snake.line) {
+      for (const section of snake.sections) {
         if (section.gap) continue
         drawSection(ctx, scale, section, player.color)
       }
 
       if (player.state === "alive") {
-        const latestSection = { ...snake.line[snake.line.length - 1] }
+        const latestSection = { ...snake.sections[snake.sections.length - 1] }
 
         drawArrow(
           ctx,
@@ -56,7 +56,7 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
     if (player.state !== "dead") continue
 
     const snake = game.snakes[player.playerId]
-    const latestSection = { ...snake.line[snake.line.length - 1] }
+    const latestSection = { ...snake.sections[snake.sections.length - 1] }
 
     drawDeadEnd(ctx, scale, latestSection.end, player.color)
   }

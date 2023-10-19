@@ -14,7 +14,7 @@ export function newRound(game: GameState) {
 
     const snake = game.snakes[player.playerId]
 
-    snake.line = [getRandomInitialSection()]
+    snake.sections = [getRandomInitialSection()]
     snake.turning = "none"
     snake.gapCounter = 0
   }

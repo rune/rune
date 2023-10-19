@@ -2,7 +2,7 @@ import { Snake } from "./types.ts"
 import { boardSize } from "./logicConfig.ts"
 
 export function isLatestSectionOutOfBounds(snake: Snake) {
-  const latestSection = snake.line[snake.line.length - 1]
+  const latestSection = snake.sections[snake.sections.length - 1]
 
   return (
     latestSection.end.x < 0 ||

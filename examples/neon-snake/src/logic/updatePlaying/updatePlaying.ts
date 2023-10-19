@@ -10,7 +10,7 @@ export function updatePlaying(game: GameState) {
 
     const snake = game.snakes[player.playerId]
 
-    let latestSection = snake.line[snake.line.length - 1]
+    let latestSection = snake.sections[snake.sections.length - 1]
 
     const { wasPlacingGap, isPlacingGap } = updateSnakePlacingGap(snake)
 
@@ -18,10 +18,10 @@ export function updatePlaying(game: GameState) {
       latestSection.turning !== snake.turning ||
       wasPlacingGap !== isPlacingGap
     ) {
-      snake.line.push(
+      snake.sections.push(
         getNextSection(latestSection, snake.turning, isPlacingGap),
       )
-      latestSection = snake.line[snake.line.length - 1]
+      latestSection = snake.sections[snake.sections.length - 1]
     }
 
     const oldTail = { ...latestSection.end }

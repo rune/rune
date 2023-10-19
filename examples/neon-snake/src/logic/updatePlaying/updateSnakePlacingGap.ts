@@ -1,16 +1,16 @@
 import { Snake } from "../types.ts"
 import {
   minTicksToNextGap,
-  gapFrequency,
-  gapPlacementDurationTicks,
+  gapChancePerTick,
+  placeGapForTicks,
 } from "../logicConfig.ts"
 
 export function updateSnakePlacingGap(snake: Snake) {
   const wasPlacingGap = snake.gapCounter > 0
 
   if (snake.gapCounter < -minTicksToNextGap) {
-    if (Math.random() < gapFrequency) {
-      snake.gapCounter = gapPlacementDurationTicks
+    if (Math.random() < gapChancePerTick) {
+      snake.gapCounter = placeGapForTicks
     }
   }
 

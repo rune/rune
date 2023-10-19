@@ -2,12 +2,12 @@ import { useAtomValue } from "jotai"
 import { $timer } from "../state/state.ts"
 import { styled } from "styled-components"
 import { rel } from "../lib/rel.ts"
-import { colors, countdownDuration } from "../logic/logicConfig.ts"
+import { colors, countdownDurationSeconds } from "../logic/logicConfig.ts"
 
 export function CountdownOverlay() {
   const timer = useAtomValue($timer)
 
-  const color = colors[(countdownDuration - timer) % 4]
+  const color = colors[(countdownDurationSeconds - timer) % 4]
 
   return <Root $color={color}>{timer}</Root>
 }

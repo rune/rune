@@ -1,10 +1,10 @@
 import { Section, Point } from "./types.ts"
-import { boardSize, forwardSpeedPixelsPerTick } from "./logicConfig.ts"
+import { boardSize, forwardPixelsPerTick } from "./logicConfig.ts"
 import { getRandomIntBetween } from "../lib/getRandomIntBetween.ts"
 
 const boardCenterX = boardSize.width / 2
 const boardCenterY = boardSize.height / 2
-const boardSafeMargin = forwardSpeedPixelsPerTick * 10
+const boardSafeMargin = forwardPixelsPerTick * 10
 
 export function getInitialLine(): Section[] {
   const startPoint = {

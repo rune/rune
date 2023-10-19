@@ -1,6 +1,6 @@
 import { Section } from "../../logic/types.ts"
 import { shadowBlur, sectionLineWidth } from "./drawConfig.ts"
-import { arcRadius } from "../../logic/logicConfig.ts"
+import { arcRadius } from "../../logic/updatePlaying/getNextSection.ts"
 
 export function drawSection(
   ctx: CanvasRenderingContext2D,

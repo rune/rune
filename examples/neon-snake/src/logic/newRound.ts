@@ -1,11 +1,11 @@
 import { GameState } from "./types.ts"
 
-import { countdownDuration } from "./logicConfig.ts"
+import { countdownDurationSeconds } from "./logicConfig.ts"
 import { getInitialLine } from "./getInitialLine.ts"
 
 export function newRound(game: GameState) {
   game.stage = "countdown"
-  game.timer = countdownDuration
+  game.timer = countdownDurationSeconds
   game.timerStartedAt = Rune.gameTime()
   game.collisionGrid = {}
 

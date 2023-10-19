@@ -1,5 +1,7 @@
 import { Point } from "./types.ts"
-import { collisionGridSize, boardSize } from "./logicConfig.ts"
+import { boardSize, forwardPixelsPerTick } from "./logicConfig.ts"
+
+const collisionGridSize = Math.round(forwardPixelsPerTick * 1.5)
 
 export function collisionGridPointer(point: Point): number
 export function collisionGridPointer(index: number): Point

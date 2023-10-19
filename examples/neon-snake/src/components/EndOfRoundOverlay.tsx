@@ -39,7 +39,7 @@ export function EndOfRoundOverlay() {
         </User>
         <Winner>
           {winnerString.split("").map((letter, index) => (
-            <span key={index} style={{ color: colors[index % 4] }}>
+            <span key={index} style={{ color: colors[index % colors.length] }}>
               {letter}
             </span>
           ))}

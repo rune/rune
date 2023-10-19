@@ -7,7 +7,7 @@ import { colors, countdownDurationSeconds } from "../logic/logicConfig.ts"
 export function CountdownOverlay() {
   const value = useAtomValue($countdownTimer)
 
-  const color = colors[(countdownDurationSeconds - value) % 4]
+  const color = colors[(countdownDurationSeconds - value) % colors.length]
 
   return <Root $color={color}>{value}</Root>
 }

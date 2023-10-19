@@ -9,10 +9,10 @@ export function CountdownOverlay() {
 
   const color = colors[(countdownDuration - timer) % 4]
 
-  return <Root style={{ color }}>{timer}</Root>
+  return <Root $color={color}>{timer}</Root>
 }
 
-const Root = styled.div`
+const Root = styled.div<{ $color: string }>`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -22,5 +22,10 @@ const Root = styled.div`
 
   font-size: ${rel(300)};
   letter-spacing: ${rel(-6)};
-  transition: color 0.4s ease-out;
+
+  color: ${({ $color }) => $color};
+  text-shadow: 0 0 ${rel(15)} ${({ $color }) => $color};
+  transition:
+    color 0.4s ease-out,
+    text-shadow 0.4s ease-out;
 `

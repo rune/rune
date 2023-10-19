@@ -1,7 +1,7 @@
 import { colors } from "./logicConfig.ts"
 import { updateCountdown } from "./updateCountdown.ts"
 import { updateEndOfRound } from "./updateEndOfRound.ts"
-import { updatePlaying } from "./updatePlaying.ts"
+import { updatePlaying } from "./updatePlaying/updatePlaying.ts"
 import { checkWinnersAndGameOver } from "./checkWinnersAndGameOver.ts"
 import { pickFreeColor } from "./pickFreeColor.ts"
 import { newRound } from "./newRound.ts"

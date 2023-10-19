@@ -6,7 +6,7 @@ import { useRef, useState, useEffect, useMemo } from "react"
 import { boardSize } from "../../logic/logicConfig.ts"
 import { gridBackground } from "../../lib/gridBackground.ts"
 
-export function BoardScreen() {
+export function BoardScreen({ minimalUI }: { minimalUI: boolean }) {
   const canvasContainerRef = useRef<HTMLDivElement>(null)
 
   const [canvasScale, setCanvasScale] = useState(1)
@@ -49,9 +49,9 @@ export function BoardScreen() {
   return (
     <>
       <InputTracker />
-      <Header />
+      <Header hidden={minimalUI} />
       <CanvasOuterContainer>
-        <Wall style={{ borderWidth }} />
+        <Wall style={{ borderWidth }} $hidden={minimalUI} />
         <CanvasContainer ref={canvasContainerRef}>
           <BoardCanvas scale={canvasScale} />
         </CanvasContainer>
@@ -83,7 +83,7 @@ const CanvasContainer = styled.div`
   justify-content: center;
 `
 
-const Wall = styled.div`
+const Wall = styled.div<{ $hidden: boolean }>`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -91,4 +91,5 @@ const Wall = styled.div`
   right: 0;
   border-style: solid;
   border-color: rgba(17, 212, 255, 0.5);
+  visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
 `

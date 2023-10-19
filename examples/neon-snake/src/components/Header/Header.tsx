@@ -9,7 +9,7 @@ import { pickFreeColor } from "../../logic/pickFreeColor.ts"
 import { Skull } from "./Skull.tsx"
 import { Clock } from "./Clock.tsx"
 
-export function Header() {
+export function Header({ hidden }: { hidden: boolean }) {
   // TODO: think how to avoid re-rendering on every tick because we use the full game state
   const game = useAtomValue($game)
   const players = useAtomValue($players)
@@ -22,7 +22,7 @@ export function Header() {
   )
 
   return (
-    <Root>
+    <Root $hidden={hidden}>
       {game.players.map(({ playerId, color, score, state }) => (
         <PlayerContainer key={playerId}>
           {state === "pending" ? (
@@ -52,11 +52,12 @@ export function Header() {
   )
 }
 
-const Root = styled.div`
+const Root = styled.div<{ $hidden: boolean }>`
   background:
     url("${background}") no-repeat center center / cover,
     black;
   display: flex;
+  visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
 `
 
 const PlayerContainer = styled.div<{ $center?: boolean }>`

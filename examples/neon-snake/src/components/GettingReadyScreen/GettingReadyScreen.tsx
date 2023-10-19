@@ -2,7 +2,6 @@ import { styled } from "styled-components"
 import { rel } from "../../lib/rel.ts"
 import logo from "./logo.png"
 import instructions from "./instructions.png"
-import { gridBackground } from "../../lib/gridBackground.ts"
 
 export function GettingReadyScreen() {
   return (
@@ -20,7 +19,6 @@ const Root = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  ${gridBackground};
 `
 
 const Logo = styled.img`

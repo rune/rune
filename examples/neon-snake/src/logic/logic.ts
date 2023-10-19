@@ -38,8 +38,7 @@ Rune.initLogic({
   updatesPerSecond: 30,
   actions: {
     setTurning(turning, { game, playerId }) {
-      const snake = game.snakes[playerId]
-      snake.turning = turning
+      game.snakes[playerId].turning = turning
     },
     setReady(_, { game }) {
       newRound(game)

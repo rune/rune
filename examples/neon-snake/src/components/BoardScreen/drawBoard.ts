@@ -1,7 +1,7 @@
 import { store, $game, $players } from "../../state/state.ts"
 import { drawArrow } from "./drawArrow.ts"
 import { drawSection } from "./drawSection.ts"
-import { drawDead } from "./drawDead.ts"
+import { drawDeadEnd } from "./drawDeadEnd.ts"
 import { drawAvatar } from "./drawAvatar.ts"
 import { getOptimisticStartSection } from "./getOptimisticStartSection.ts"
 
@@ -58,6 +58,6 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
     const snake = game.snakes[player.playerId]
     const latestSection = { ...snake.line[snake.line.length - 1] }
 
-    drawDead(ctx, scale, latestSection.end, player.color)
+    drawDeadEnd(ctx, scale, latestSection.end, player.color)
   }
 }

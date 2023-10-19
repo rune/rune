@@ -1,7 +1,7 @@
 import { Point } from "../../logic/types.ts"
 import { shadowBlur, deadCircleRadius } from "./drawConfig.ts"
 
-export function drawDead(
+export function drawDeadEnd(
   ctx: CanvasRenderingContext2D,
   scale: number,
   point: Point,

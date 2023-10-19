@@ -6,7 +6,7 @@ const boardCenterX = boardSize.width / 2
 const boardCenterY = boardSize.height / 2
 const boardSafeMargin = movePixelsPerTick * 10
 
-export function getInitialLine(): Section[] {
+export function getRandomInitialSection(): Section {
   const startPoint = {
     x: getRandomIntBetween(boardSafeMargin, boardSize.width - boardSafeMargin),
     y: getRandomIntBetween(boardSafeMargin, boardSize.height - boardSafeMargin),
@@ -14,15 +14,13 @@ export function getInitialLine(): Section[] {
 
   const angle = getRandomIntBetween(...getAngleLimits(startPoint))
 
-  return [
-    {
-      start: startPoint,
-      end: startPoint,
-      turning: "none",
-      endAngle: angle,
-      gap: false,
-    },
-  ]
+  return {
+    start: startPoint,
+    end: startPoint,
+    turning: "none",
+    endAngle: angle,
+    gap: false,
+  }
 }
 
 function getAngleLimits(startPoint: Point): [number, number] {

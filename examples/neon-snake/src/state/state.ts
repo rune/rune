@@ -16,7 +16,7 @@ export const $state = atom<{
     collisionGrid: {},
     players: [],
     snakes: {},
-    timer: 0,
+    countdownTimer: 0,
     timerStartedAt: 0,
     lastRoundWinnerId: undefined,
   },
@@ -34,7 +34,7 @@ export const $playerInfos = atom((get) => get($game).players)
 
 export const $stage = atom((get) => get($game).stage)
 
-export const $timer = atom((get) => get($game).timer)
+export const $countdownTimer = atom((get) => get($game).countdownTimer)
 
 export const $yourPlayerId = atom((get) => get($state).yourPlayerId)
 

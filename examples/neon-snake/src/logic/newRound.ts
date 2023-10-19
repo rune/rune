@@ -5,7 +5,7 @@ import { getInitialLine } from "./getInitialLine.ts"
 
 export function newRound(game: GameState) {
   game.stage = "countdown"
-  game.timer = countdownDurationSeconds
+  game.countdownTimer = countdownDurationSeconds
   game.timerStartedAt = Rune.gameTime()
   game.collisionGrid = {}
 

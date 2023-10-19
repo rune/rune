@@ -9,7 +9,7 @@ export interface GameState {
   players: PlayerInfo[]
   snakes: { [playerId: PlayerId]: Snake }
   collisionGrid: { [index: number]: boolean }
-  timer: number
+  countdownTimer: number
   timerStartedAt: number
   lastRoundWinnerId: PlayerId | undefined
 }

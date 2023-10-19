@@ -1,4 +1,4 @@
-import { colors } from "./logicConfig.ts"
+import { colors, countdownDurationSeconds } from "./logicConfig.ts"
 import { updateCountdown } from "./updateCountdown.ts"
 import { updateEndOfRound } from "./updateEndOfRound.ts"
 import { updatePlaying } from "./updatePlaying/updatePlaying.ts"
@@ -30,8 +30,7 @@ Rune.initLogic({
         {},
       ),
       collisionGrid: {},
-      readyPlayerIds: [],
-      timer: 0,
+      countdownTimer: countdownDurationSeconds,
       timerStartedAt: 0,
       lastRoundWinnerId: undefined,
     }

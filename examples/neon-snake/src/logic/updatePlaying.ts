@@ -14,27 +14,29 @@ import { degreesToRad } from "../lib/degreesToRad.ts"
 
 export function updatePlaying(game: GameState) {
   for (const player of game.players) {
+    const snake = game.snakes[player.playerId]
+
     if (player.state !== "alive") continue
 
-    let lastSection = player.line[player.line.length - 1]
+    let lastSection = snake.line[snake.line.length - 1]
 
     const turningModifier =
-      player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
+      snake.turning === "none" ? 0 : snake.turning === "right" ? 1 : -1
 
-    const wasPlacingGap = player.gapCounter > 0
+    const wasPlacingGap = snake.gapCounter > 0
 
-    if (player.gapCounter < -minTicksToNextGap) {
+    if (snake.gapCounter < -minTicksToNextGap) {
       if (Math.random() < gapFrequency) {
-        player.gapCounter = gapPlacementDurationTicks
+        snake.gapCounter = gapPlacementDurationTicks
       }
     }
 
-    player.gapCounter--
+    snake.gapCounter--
 
-    const isPlacingGap = player.gapCounter > 0
+    const isPlacingGap = snake.gapCounter > 0
 
     if (
-      lastSection.turning !== player.turning ||
+      lastSection.turning !== snake.turning ||
       wasPlacingGap !== isPlacingGap
     ) {
       const point = lastSection.end
@@ -43,16 +45,16 @@ export function updatePlaying(game: GameState) {
         start: { ...point },
         end: { ...point },
         endAngle: lastSection.endAngle,
-        gap: player.gapCounter > 0,
+        gap: snake.gapCounter > 0,
       }
 
-      if (player.turning === "none") {
+      if (snake.turning === "none") {
         const newSection: Section = {
           ...newSectionCommonProps,
           turning: "none",
         }
 
-        player.line.push(newSection)
+        snake.line.push(newSection)
         lastSection = newSection
       } else {
         const angleToCenter =
@@ -75,7 +77,7 @@ export function updatePlaying(game: GameState) {
 
         const newSection: Section = {
           ...newSectionCommonProps,
-          turning: player.turning,
+          turning: snake.turning,
           arc: {
             center: arcCenter,
             startAngle: arcStartAngle,
@@ -83,7 +85,7 @@ export function updatePlaying(game: GameState) {
           },
         }
 
-        player.line.push(newSection)
+        snake.line.push(newSection)
         lastSection = newSection
       }
     }
@@ -108,7 +110,7 @@ export function updatePlaying(game: GameState) {
     const collisionSquareIndex = collisionGridPointer(lastSection.end)
 
     if (
-      isLastSectionOutOfBounds(player) ||
+      isLastSectionOutOfBounds(snake) ||
       (!lastSection.gap &&
         collisionSquareIndex !== oldCollisionSquareIndex &&
         game.collisionGrid[collisionSquareIndex])

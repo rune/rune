@@ -1,4 +1,3 @@
-import { getNewPlayer } from "./getNewPlayer.ts"
 import { colors } from "./logicConfig.ts"
 import { updateCountdown } from "./updateCountdown.ts"
 import { updateEndOfRound } from "./updateEndOfRound.ts"
@@ -13,12 +12,22 @@ Rune.initLogic({
   setup: (allPlayerIds) => {
     return {
       stage: "gettingReady",
-      players: allPlayerIds.map((playerId, index) =>
-        getNewPlayer({
-          playerId,
-          state: "alive",
-          color: colors[index],
+      players: allPlayerIds.map((playerId, index) => ({
+        playerId,
+        color: colors[index],
+        state: "alive",
+        score: 0,
+      })),
+      snakes: allPlayerIds.reduce(
+        (acc, playerId) => ({
+          ...acc,
+          [playerId]: {
+            gapCounter: 0,
+            turning: "none",
+            line: [],
+          },
         }),
+        {},
       ),
       collisionGrid: {},
       readyPlayerIds: [],
@@ -30,11 +39,8 @@ Rune.initLogic({
   updatesPerSecond: 30,
   actions: {
     setTurning(turning, { game, playerId }) {
-      const player = game.players.find((p) => p.playerId === playerId)
-
-      if (!player) throw Rune.invalidAction()
-
-      player.turning = turning
+      const snake = game.snakes[playerId]
+      snake.turning = turning
     },
     setReady(_, { game }) {
       newRound(game)
@@ -47,18 +53,23 @@ Rune.initLogic({
   },
   events: {
     playerJoined: (playerId, { game }) => {
-      game.players.push(
-        getNewPlayer({
-          playerId,
-          state: "pending",
-          color: pickFreeColor(game),
-        }),
-      )
+      game.players.push({
+        playerId,
+        color: pickFreeColor(game.players),
+        state: "pending",
+        score: 0,
+      })
+      game.snakes[playerId] = {
+        gapCounter: 0,
+        turning: "none",
+        line: [],
+      }
     },
     playerLeft: (playerId, { game }) => {
       const index = game.players.findIndex((p) => p.playerId === playerId)
 
       if (~index) game.players.splice(index, 1)
+      delete game.snakes[playerId]
 
       if (game.stage === "playing" || game.stage === "countdown") {
         checkWinnersAndGameOver(game)

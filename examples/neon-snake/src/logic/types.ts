@@ -7,6 +7,7 @@ declare global {
 export interface GameState {
   stage: "gettingReady" | "countdown" | "playing" | "endOfRound"
   players: PlayerInfo[]
+  snakes: { [playerId: PlayerId]: Snake }
   collisionGrid: { [index: number]: boolean }
   timer: number
   timerStartedAt: number
@@ -45,10 +46,13 @@ export type Section = {
 
 export type PlayerInfo = {
   playerId: string
-  turning: "left" | "right" | "none"
-  gapCounter: number
   color: string
   state: State
-  line: Section[]
   score: number
+}
+
+export type Snake = {
+  gapCounter: number
+  turning: "left" | "right" | "none"
+  line: Section[]
 }

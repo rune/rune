@@ -10,9 +10,12 @@ export function newRound(game: GameState) {
   game.collisionGrid = {}
 
   for (const player of game.players) {
-    player.line = getInitialLine()
     player.state = "alive"
-    player.turning = "none"
-    player.gapCounter = 0
+
+    const snake = game.snakes[player.playerId]
+
+    snake.line = getInitialLine()
+    snake.turning = "none"
+    snake.gapCounter = 0
   }
 }

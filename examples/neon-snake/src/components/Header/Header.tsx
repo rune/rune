@@ -1,6 +1,6 @@
 import { styled } from "styled-components"
 import { useAtomValue } from "jotai"
-import { $game, $players, $yourPlayerId } from "../../state/state.ts"
+import { $players, $yourPlayerId, $playerInfos } from "../../state/state.ts"
 import { rel } from "../../lib/rel.ts"
 import noAvatar from "./noAvatar.png"
 import background from "./background.jpg"
@@ -10,20 +10,21 @@ import { Skull } from "./Skull.tsx"
 import { Clock } from "./Clock.tsx"
 
 export function Header({ hidden }: { hidden: boolean }) {
-  // TODO: think how to avoid re-rendering on every tick because we use the full game state
-  const game = useAtomValue($game)
+  const playerInfos = useAtomValue($playerInfos)
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
 
   const invite = useMemo(
     () =>
-      Object.keys(players).length < 4 ? { color: pickFreeColor(game) } : null,
-    [game, players],
+      Object.keys(players).length < 4
+        ? { color: pickFreeColor(playerInfos) }
+        : null,
+    [playerInfos, players],
   )
 
   return (
     <Root $hidden={hidden}>
-      {game.players.map(({ playerId, color, score, state }) => (
+      {playerInfos.map(({ playerId, color, score, state }) => (
         <PlayerContainer key={playerId}>
           {state === "pending" ? (
             <DarkCircle $playerColor={color}>
@@ -44,7 +45,7 @@ export function Header({ hidden }: { hidden: boolean }) {
       ))}
       {invite && (
         <PlayerContainer $center onClick={() => Rune.showInvitePlayers()}>
-          <Avatar src={noAvatar} $playerColor={pickFreeColor(game)} />
+          <Avatar src={noAvatar} $playerColor={invite.color} />
           <Invite $playerColor={invite.color}>Invite</Invite>
         </PlayerContainer>
       )}

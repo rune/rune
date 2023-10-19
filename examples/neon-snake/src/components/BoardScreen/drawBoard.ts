@@ -22,7 +22,9 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   for (const player of game.players) {
     if (player.state === "pending") continue
 
-    for (const section of player.line) {
+    const snake = game.snakes[player.playerId]
+
+    for (const section of snake.line) {
       if (section.gap) continue
 
       drawSection(ctx, scale, section, player.color)
@@ -32,18 +34,20 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   for (const player of game.players) {
     if (player.state === "pending") continue
 
-    const lastSection = { ...player.line[player.line.length - 1] }
+    const snake = game.snakes[player.playerId]
+
+    const lastSection = { ...snake.line[snake.line.length - 1] }
 
     if (game.stage === "countdown") {
       const turningModifier =
-        player.turning === "none" ? 0 : player.turning === "right" ? 1 : -1
+        snake.turning === "none" ? 0 : snake.turning === "right" ? 1 : -1
 
       const optimisticIterations = 15
 
       const oldAngle = lastSection.endAngle
 
       for (let i = 0; i < optimisticIterations; i++) {
-        lastSection.turning = player.turning
+        lastSection.turning = snake.turning
         lastSection.endAngle =
           lastSection.endAngle + turningSpeedDegreesPerTick * turningModifier
         lastSection.end = {
@@ -97,7 +101,9 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   for (const player of game.players) {
     if (player.state === "pending") continue
 
-    const lastSection = { ...player.line[player.line.length - 1] }
+    const snake = game.snakes[player.playerId]
+
+    const lastSection = { ...snake.line[snake.line.length - 1] }
 
     if (player.state === "dead") {
       drawDead(ctx, scale, lastSection.end, player.color)

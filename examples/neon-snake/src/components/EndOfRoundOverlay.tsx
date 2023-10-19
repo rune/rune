@@ -29,7 +29,7 @@ export function EndOfRoundOverlay() {
   if (!winner || !winnerColor) return null
 
   return (
-    <Root $visible={visible}>
+    <Root style={{ opacity: visible ? 1 : 0 }}>
       <Box>
         <User>
           <Avatar src={winner.avatarUrl} $playerColor={winnerColor} />
@@ -50,7 +50,7 @@ export function EndOfRoundOverlay() {
   )
 }
 
-const Root = styled.div<{ $visible: boolean }>`
+const Root = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -60,7 +60,6 @@ const Root = styled.div<{ $visible: boolean }>`
   justify-content: center;
   align-items: center;
 
-  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   transition: opacity 0.6s 0.4s ease-out;
 `
 

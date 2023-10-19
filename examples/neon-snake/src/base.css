@@ -23,4 +23,5 @@ body {
   user-select: none;
   box-sizing: border-box;
   line-height: 115%;
+  -webkit-touch-callout: none;
 }

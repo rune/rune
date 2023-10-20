@@ -363,10 +363,6 @@ function animate() {
 
     // Blur render
     renderer.domElement.style.filter = "blur(5px)"
-
-    // This is needed because of absolute positioning
-    uiStats.style.visibility = "hidden"
-    uiControlsPreview.style.visibility = "hidden"
   } else if (game.phase === "COUNTDOWN") {
     // Choose screen
     uiPausedScreen.style.visibility = "hidden"
@@ -375,10 +371,6 @@ function animate() {
 
     // Blur render
     renderer.domElement.style.filter = "blur(5px)"
-
-    // This is needed because of absolute positioning
-    uiStats.style.visibility = "hidden"
-    uiControlsPreview.style.visibility = "hidden"
 
     // Countdown
     if (game.startedAt) {
@@ -424,9 +416,9 @@ function animate() {
       const elapse = yourCompletedPlayer.elapse
       uiStatsElapse.textContent = renderElapse(elapse)
 
-      uiStats.style.visibility = "visible"
+      uiStats.classList.add("visible")
     } else {
-      uiStats.style.visibility = "hidden"
+      uiStats.classList.remove("visible")
     }
 
     // Show controls only while playing

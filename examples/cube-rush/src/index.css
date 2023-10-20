@@ -36,6 +36,12 @@ body {
   font-weight: 700;
 }
 
+.visible {
+  /* Use visibility inline style and !important to prevent transitioning on load */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 canvas {
   position: absolute;
   bottom: 0;
@@ -210,8 +216,7 @@ canvas {
   height: 0.73rem;
 }
 
-.playingScreen .statsContainer {
-  visibility: hidden;
+.playingScreen .stats {
   position: absolute;
   top: 0;
   left: 0;
@@ -220,9 +225,15 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0.5s linear,
+    opacity 0.5s linear;
 }
 
-.playingScreen .stats {
+.playingScreen .stats .content {
   padding: 1.25rem;
   border-radius: 1.6875rem;
   opacity: 0.85;
@@ -236,14 +247,14 @@ canvas {
   gap: 1.19rem;
   text-align: center;
 }
-.playingScreen .stats .infoValue > p {
+.playingScreen .stats .content .infoValue > p {
   color: #33f4c6;
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 130%;
   text-transform: uppercase;
 }
-.playingScreen .stats .infoValue > div {
+.playingScreen .stats .content .infoValue > div {
   margin-top: -0.38rem;
   color: #ffffff;
 
@@ -253,7 +264,7 @@ canvas {
   letter-spacing: 0.125rem;
   white-space: nowrap;
 }
-.playingScreen .stats .infoValue > div > sup {
+.playingScreen .stats .content .infoValue > div > sup {
   font-size: 0.5em;
 }
 

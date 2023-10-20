@@ -25,16 +25,19 @@ import {
 import { createShipLabel, createShip } from "./ship"
 
 // UI
+const uiScreens = {
+  PAUSED: document.getElementById("pausedScreen")!,
+  COUNTDOWN: document.getElementById("countdownScreen")!,
+  PLAYING: document.getElementById("playingScreen")!,
+}
+
 /* Start Screen */
-const uiPausedScreen = document.getElementById("pausedScreen")!
-const uiStartBtn = uiPausedScreen.getElementsByClassName("startBtn")[0]!
+const uiStartBtn = uiScreens.PAUSED.getElementsByClassName("startBtn")[0]!
 
 /* Countdown Screen */
-const uiCountdownScreen = document.getElementById("countdownScreen")!
-const uiCountdown = uiCountdownScreen.getElementsByClassName("countdown")[0]!
+const uiCountdown = uiScreens.COUNTDOWN.getElementsByClassName("countdown")[0]!
 
 /* Playing Screen */
-const uiPlayingScreen = document.getElementById("playingScreen")!
 const uiInfo = document.getElementById("info")!
 const uiPlace = uiInfo.getElementsByClassName("place")[0]!
 const uiSpeed = uiInfo.getElementsByClassName("speed")[0]!
@@ -54,7 +57,7 @@ const uiStatsPlace = uiStats.getElementsByClassName("place")[0]!
 const uiStatsTopSpeed = uiStats.getElementsByClassName("topSpeed")[0]!
 const uiStatsElapse = uiStats.getElementsByClassName("elapse")[0]!
 
-const uiControlsPreview = uiPlayingScreen.getElementsByClassName(
+const uiControlsPreview = uiScreens.PLAYING.getElementsByClassName(
   "controlsPreview",
 )[0]! as HTMLElement
 
@@ -280,7 +283,7 @@ function initPlayers() {
   playerHtmlObjs = {}
 
   uiTrackProgress.innerHTML = ""
-  uiSpectating.style.visibility = "hidden"
+  uiSpectating.classList.remove("visible")
 
   Object.keys(players).forEach((playerId, idx) => {
     const ship = createShip(scene, idx)
@@ -356,21 +359,11 @@ function animate() {
 
   // Update based on phase
   if (game.phase === "PAUSED") {
-    // Choose screen
-    uiPausedScreen.style.visibility = "visible"
-    uiCountdownScreen.style.visibility = "hidden"
-    uiPlayingScreen.style.visibility = "hidden"
-
-    // Blur render
-    renderer.domElement.style.filter = "blur(5px)"
+    showScreen(uiScreens.PAUSED)
+    renderer.domElement.classList.add("blurred")
   } else if (game.phase === "COUNTDOWN") {
-    // Choose screen
-    uiPausedScreen.style.visibility = "hidden"
-    uiCountdownScreen.style.visibility = "visible"
-    uiPlayingScreen.style.visibility = "hidden"
-
-    // Blur render
-    renderer.domElement.style.filter = "blur(5px)"
+    showScreen(uiScreens.COUNTDOWN)
+    renderer.domElement.classList.add("blurred")
 
     // Countdown
     if (game.startedAt) {
@@ -380,13 +373,8 @@ function animate() {
       uiCountdown.textContent = leftSeconds.toFixed(0)
     }
   } else if (game.phase === "PLAYING") {
-    // Choose screen
-    uiPausedScreen.style.visibility = "hidden"
-    uiCountdownScreen.style.visibility = "hidden"
-    uiPlayingScreen.style.visibility = "visible"
-
-    // Blur render
-    renderer.domElement.style.filter = "blur(0px)"
+    showScreen(uiScreens.PLAYING)
+    renderer.domElement.classList.remove("blurred")
 
     // Info
     const place = getPlace(attachedToPlayerId)
@@ -398,7 +386,7 @@ function animate() {
 
     // Spectating
     if (spectatingPlayerId) {
-      uiSpectating.style.visibility = "visible"
+      uiSpectating.classList.add("visible")
       const player = players[attachedToPlayerId]
       uiSpectatingDisplayName.textContent = player.displayName
       uiSpectatingAvatar.src = player.avatarUrl
@@ -423,9 +411,9 @@ function animate() {
 
     // Show controls only while playing
     if (yourPlayerId && !yourCompletedPlayer) {
-      uiControlsPreview.style.visibility = "visible"
+      uiControlsPreview.classList.add("visible")
     } else {
-      uiControlsPreview.style.visibility = "hidden"
+      uiControlsPreview.classList.remove("visible")
     }
   }
 
@@ -475,6 +463,16 @@ function animate() {
 }
 
 // OTHER HELPERS
+function showScreen(uiScreen: HTMLElement) {
+  Object.values(uiScreens).forEach((s) => {
+    if (s == uiScreen) {
+      s.classList.add("visible")
+    } else {
+      s.classList.remove("visible")
+    }
+  })
+}
+
 function handlePlayerLeft(playerId: PlayerId) {
   const threeObj = playerThreeObjs[playerId]
   if (threeObj) {

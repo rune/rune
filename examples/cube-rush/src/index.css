@@ -51,6 +51,9 @@ canvas {
   background-color: inherit;
   transition: filter 1000ms;
 }
+canvas.blurred {
+  filter: blur(5px);
+}
 
 .screen {
   position: absolute;
@@ -64,6 +67,7 @@ canvas {
 
 /* Start Screen */
 .pausedScreen {
+  visibility: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -200,6 +204,7 @@ canvas {
 }
 
 .playingScreen .spectating {
+  visibility: hidden;
   margin-top: 0.56rem;
   border-radius: 1.625rem;
   background: #33f4c6;

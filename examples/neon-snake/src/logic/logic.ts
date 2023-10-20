@@ -35,6 +35,7 @@ Rune.initLogic({
       lastRoundWinnerId: undefined,
     }
   },
+  inputDelay: 100,
   updatesPerSecond: 30,
   actions: {
     setTurning(turning, { game, playerId }) {

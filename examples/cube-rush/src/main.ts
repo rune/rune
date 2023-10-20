@@ -243,9 +243,10 @@ function initRender() {
   renderer = new THREE.WebGLRenderer({
     powerPreference: "high-performance",
     antialias: false,
-    stencil: false,
-    depth: false,
+    stencil: true,
+    depth: true,
   })
+  scene.background = new THREE.Color(0x0c2074)
   renderer.outputColorSpace = THREE.SRGBColorSpace
   renderer.setClearColor(0xffffff, 0)
   renderer.setSize(width, height)

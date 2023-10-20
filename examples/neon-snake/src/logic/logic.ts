@@ -44,6 +44,7 @@ Rune.initLogic({
       game.snakes[playerId].turning = turning
     },
     setReady(_, { game }) {
+      if (game.stage !== "gettingReady") throw Rune.invalidAction()
       newRound(game)
     },
   },

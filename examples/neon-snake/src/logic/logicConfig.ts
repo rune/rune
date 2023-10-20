@@ -1,5 +1,5 @@
 export const countdownDurationSeconds = 5
-export const endOfRoundDurationSeconds = 3
+export const endOfRoundDurationSeconds = 4
 export const maxScoreBeforeGameOver = 10
 export const boardSize = { width: 600, height: 900 }
 export const movePixelsPerTick = 3

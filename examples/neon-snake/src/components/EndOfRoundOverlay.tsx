@@ -60,7 +60,8 @@ const Root = styled.div`
   justify-content: center;
   align-items: center;
 
-  transition: opacity 0.6s 0.4s ease-out;
+  // TODO: 1s delay should be a const shared with other delays (score, deadEnd)
+  transition: opacity 0.6s 1s ease-out;
 `
 
 const Box = styled.div`

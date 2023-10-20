@@ -260,13 +260,29 @@ canvas {
 .playingScreen .controlsPreview {
   visibility: hidden;
   position: absolute;
-  bottom: 1.69rem;
-  height: 4.06rem;
-  left: 1rem;
-  right: 1rem;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.playingScreen .controlsPreview .left,
+.playingScreen .controlsPreview .right {
+  width: 50%;
+  height: 100%;
 
   opacity: 0.6;
-  background:
-    left center / contain no-repeat url(/src/controlLeft.svg),
-    right center / contain no-repeat url(/src/controlRight.svg);
+  background: bottom 3.06rem left 1rem / 4.06rem 4.06rem no-repeat
+    url(/src/controlLeft.svg);
+}
+.playingScreen .controlsPreview .right {
+  transform: scaleX(-1);
+}
+
+.playingScreen .controlsPreview .left:active,
+.playingScreen .controlsPreview .right:active {
+  background-image: url(/src/controlLeftActive.svg);
 }

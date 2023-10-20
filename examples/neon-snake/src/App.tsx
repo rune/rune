@@ -14,11 +14,7 @@ export function App() {
   return (
     <>
       <Root>
-        {stage === "gettingReady" ? (
-          <GettingReadyScreen />
-        ) : (
-          <BoardScreen minimalUI={stage === "countdown"} />
-        )}
+        {stage === "gettingReady" ? <GettingReadyScreen /> : <BoardScreen />}
         {stage === "countdown" && <CountdownOverlay />}
         {stage === "endOfRound" && <EndOfRoundOverlay />}
       </Root>

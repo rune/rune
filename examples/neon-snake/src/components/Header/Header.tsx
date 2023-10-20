@@ -10,7 +10,7 @@ import { Skull } from "./Skull.tsx"
 import { Clock } from "./Clock.tsx"
 import { deathRevealDelayMs } from "../BoardScreen/drawConfig.ts"
 
-export function Header({ hidden }: { hidden: boolean }) {
+export function Header() {
   const playerInfos = useAtomValue($playerInfos, { delay: deathRevealDelayMs })
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
@@ -24,7 +24,7 @@ export function Header({ hidden }: { hidden: boolean }) {
   )
 
   return (
-    <Root $hidden={hidden}>
+    <Root>
       {playerInfos.map(({ playerId, color, score, state }) => (
         <PlayerContainer key={playerId}>
           {state === "pending" ? (
@@ -54,12 +54,11 @@ export function Header({ hidden }: { hidden: boolean }) {
   )
 }
 
-const Root = styled.div<{ $hidden: boolean }>`
+const Root = styled.div`
   background:
     url("${background}") no-repeat center center / cover,
     black;
   display: flex;
-  visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
 `
 
 const PlayerContainer = styled.div<{ $center?: boolean }>`

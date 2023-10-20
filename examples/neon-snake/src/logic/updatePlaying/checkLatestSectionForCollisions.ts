@@ -4,14 +4,14 @@ import { isLatestSectionOutOfBounds } from "../isLatestSectionOutOfBounds.ts"
 import { checkWinnersAndGameOver } from "../checkWinnersAndGameOver.ts"
 
 export function checkLatestSectionForCollisions(
-  oldTail: Point,
+  previousEnd: Point,
   player: PlayerInfo,
   game: GameState,
 ) {
   const snake = game.snakes[player.playerId]
   const latestSection = snake.sections[snake.sections.length - 1]
 
-  const oldCollisionSquareIndex = collisionGridPointer(oldTail)
+  const oldCollisionSquareIndex = collisionGridPointer(previousEnd)
   const collisionSquareIndex = collisionGridPointer(latestSection.end)
 
   if (
@@ -54,19 +54,20 @@ export function checkLatestSectionForCollisions(
 
       const latestSectionLineEquation = {
         a:
-          (latestSection.end.y - oldTail.y) / (latestSection.end.x - oldTail.x),
+          (latestSection.end.y - previousEnd.y) /
+          (latestSection.end.x - previousEnd.x),
         b:
           latestSection.end.y -
-          (latestSection.end.x * (latestSection.end.y - oldTail.y)) /
-            (latestSection.end.x - oldTail.x),
+          (latestSection.end.x * (latestSection.end.y - previousEnd.y)) /
+            (latestSection.end.x - previousEnd.x),
       }
 
       const pointAboveLine =
         point.y >
         latestSectionLineEquation.a * point.x + latestSectionLineEquation.b
 
-      const latestSectionGoingDown = latestSection.end.y > oldTail.y
-      const latestSectionGoingRight = latestSection.end.x > oldTail.x
+      const latestSectionGoingDown = latestSection.end.y > previousEnd.y
+      const latestSectionGoingRight = latestSection.end.x > previousEnd.x
 
       if (
         (latestSectionGoingDown && latestSectionGoingRight && pointAboveLine) ||

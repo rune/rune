@@ -2,7 +2,7 @@ import { Section } from "../types.ts"
 import { turnDegreesPerTick, movePixelsPerTick } from "../logicConfig.ts"
 import { degreesToRad } from "../../lib/degreesToRad.ts"
 
-export function updateSectionTail(section: Section) {
+export function updateSectionEnd(section: Section) {
   const turningModifier =
     section.turning === "none" ? 0 : section.turning === "right" ? 1 : -1
 

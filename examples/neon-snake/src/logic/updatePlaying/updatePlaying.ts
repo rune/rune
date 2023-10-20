@@ -1,7 +1,7 @@
 import { GameState } from "../types.ts"
 import { getNextSection } from "./getNextSection.ts"
 import { updateSnakePlacingGap } from "./updateSnakePlacingGap.ts"
-import { updateSectionTail } from "./updateSectionTail.ts"
+import { updateSectionEnd } from "./updateSectionEnd.ts"
 import { checkLatestSectionForCollisions } from "./checkLatestSectionForCollisions.ts"
 
 export function updatePlaying(game: GameState) {
@@ -24,10 +24,10 @@ export function updatePlaying(game: GameState) {
       latestSection = snake.sections[snake.sections.length - 1]
     }
 
-    const oldTail = { ...latestSection.end }
+    const previousEnd = { ...latestSection.end }
 
-    updateSectionTail(latestSection)
+    updateSectionEnd(latestSection)
 
-    checkLatestSectionForCollisions(oldTail, player, game)
+    checkLatestSectionForCollisions(previousEnd, player, game)
   }
 }

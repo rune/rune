@@ -1,20 +1,19 @@
 import { useAtomValue } from "jotai"
-import { $timer } from "../state/state.ts"
+import { $countdownTimer } from "../state/state.ts"
 import { styled } from "styled-components"
 import { rel } from "../lib/rel.ts"
-import { colors, countdownDuration } from "../logic/logicConfig.ts"
-
-// TODO: no header/walls?
+import { colors, countdownDurationSeconds } from "../logic/logicConfig.ts"
+import { defaultTransitionMs } from "./BoardScreen/drawConfig.ts"
 
 export function CountdownOverlay() {
-  const timer = useAtomValue($timer)
+  const value = useAtomValue($countdownTimer)
 
-  const color = colors[(countdownDuration - timer) % 4]
+  const color = colors[(countdownDurationSeconds - value) % colors.length]
 
-  return <Root style={{ color }}>{timer}</Root>
+  return <Root $color={color}>{value}</Root>
 }
 
-const Root = styled.div`
+const Root = styled.div<{ $color: string }>`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -24,4 +23,10 @@ const Root = styled.div`
 
   font-size: ${rel(300)};
   letter-spacing: ${rel(-6)};
+
+  color: ${({ $color }) => $color};
+  text-shadow: 0 0 ${rel(15)} ${({ $color }) => $color};
+  transition:
+    color ${defaultTransitionMs}ms ease-out,
+    text-shadow ${defaultTransitionMs}ms ease-out;
 `

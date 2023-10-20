@@ -8,6 +8,11 @@ import {
 import { styled } from "styled-components"
 import { rel } from "../lib/rel.ts"
 import { colors } from "../logic/logicConfig.ts"
+import { useState, useEffect } from "react"
+import {
+  endOfRoundRevealDelayMs,
+  defaultTransitionMs,
+} from "./BoardScreen/drawConfig.ts"
 
 const winnerString = "Winner"
 
@@ -16,13 +21,19 @@ export function EndOfRoundOverlay() {
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
   const winnerColor = useAtomValue($winnerColor)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const handle = requestAnimationFrame(() => setVisible(true))
+    return () => cancelAnimationFrame(handle)
+  }, [])
 
   const winner = lastRoundWinnerId ? players[lastRoundWinnerId] : null
 
   if (!winner || !winnerColor) return null
 
   return (
-    <Root>
+    <Root style={{ opacity: visible ? 1 : 0 }}>
       <Box>
         <User>
           <Avatar src={winner.avatarUrl} $playerColor={winnerColor} />
@@ -32,7 +43,7 @@ export function EndOfRoundOverlay() {
         </User>
         <Winner>
           {winnerString.split("").map((letter, index) => (
-            <span key={index} style={{ color: colors[index % 4] }}>
+            <span key={index} style={{ color: colors[index % colors.length] }}>
               {letter}
             </span>
           ))}
@@ -52,6 +63,8 @@ const Root = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: opacity ${defaultTransitionMs}ms ${endOfRoundRevealDelayMs}ms
+    ease-out;
 `
 
 const Box = styled.div`

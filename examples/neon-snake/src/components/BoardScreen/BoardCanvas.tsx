@@ -3,6 +3,9 @@ import "../../base.css"
 import { CSSProperties, useMemo, useRef, useEffect } from "react"
 import { boardSize } from "../../logic/logicConfig.ts"
 import { drawBoard } from "./drawBoard.ts"
+import { styled } from "styled-components"
+import { rel } from "../../lib/rel.ts"
+import { gridBackground } from "../../lib/gridBackground.ts"
 
 export function BoardCanvas({ scale }: { scale: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -34,7 +37,7 @@ export function BoardCanvas({ scale }: { scale: number }) {
   }, [scale])
 
   return (
-    <canvas
+    <Root
       ref={canvasRef}
       width={boardSize.width * scale * window.devicePixelRatio}
       height={boardSize.height * scale * window.devicePixelRatio}
@@ -42,3 +45,8 @@ export function BoardCanvas({ scale }: { scale: number }) {
     />
   )
 }
+
+const Root = styled.canvas`
+  border: ${rel(3)} solid rgba(17, 212, 255, 0.5);
+  ${gridBackground};
+`

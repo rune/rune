@@ -6,6 +6,7 @@ import { GettingReadyScreen } from "./components/GettingReadyScreen/GettingReady
 import { CountdownOverlay } from "./components/CountdownOverlay.tsx"
 import { EndOfRoundOverlay } from "./components/EndOfRoundOverlay.tsx"
 import { BoardScreen } from "./components/BoardScreen/BoardScreen.tsx"
+import { gridBackground } from "./lib/gridBackground.ts"
 
 export function App() {
   const stage = useAtomValue($stage)
@@ -24,7 +25,7 @@ export function App() {
 const Root = styled.div`
   width: 100%;
   height: 100%;
-  background: black;
+  ${gridBackground};
   display: flex;
   flex-direction: column;
 `

@@ -13,9 +13,10 @@ export const $state = atom<{
   ready: false,
   game: {
     stage: "gettingReady",
-    collisionGrid: [],
+    collisionGrid: {},
     players: [],
-    timer: 0,
+    snakes: {},
+    countdownTimer: 0,
     timerStartedAt: 0,
     lastRoundWinnerId: undefined,
   },
@@ -29,9 +30,11 @@ export const $players = atom((get) => get($state).players)
 
 export const $game = atom((get) => get($state).game)
 
+export const $playerInfos = atom((get) => get($game).players)
+
 export const $stage = atom((get) => get($game).stage)
 
-export const $timer = atom((get) => get($game).timer)
+export const $countdownTimer = atom((get) => get($game).countdownTimer)
 
 export const $yourPlayerId = atom((get) => get($state).yourPlayerId)
 

@@ -1,18 +1,21 @@
 import { GameState } from "./types.ts"
 
-import { countdownDuration } from "./logicConfig.ts"
-import { getInitialLine } from "./getInitialLine.ts"
+import { countdownDurationSeconds } from "./logicConfig.ts"
+import { getRandomInitialSection } from "./getRandomInitialSection.ts"
 
 export function newRound(game: GameState) {
   game.stage = "countdown"
-  game.timer = countdownDuration
+  game.countdownTimer = countdownDurationSeconds
   game.timerStartedAt = Rune.gameTime()
-  game.collisionGrid = []
+  game.collisionGrid = {}
 
   for (const player of game.players) {
-    player.line = getInitialLine()
     player.state = "alive"
-    player.turning = "none"
-    player.gapCounter = 0
+
+    const snake = game.snakes[player.playerId]
+
+    snake.sections = [getRandomInitialSection()]
+    snake.turning = "none"
+    snake.gapCounter = 0
   }
 }

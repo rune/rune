@@ -16,8 +16,7 @@ export function checkLatestSectionForCollisions(
 
   if (
     isLatestSectionOutOfBounds(snake) ||
-    (!latestSection.gap &&
-      collisionSquareIndex !== oldCollisionSquareIndex &&
+    (collisionSquareIndex !== oldCollisionSquareIndex &&
       game.collisionGrid[collisionSquareIndex])
   ) {
     player.state = "dead"

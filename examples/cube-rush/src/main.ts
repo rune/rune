@@ -182,7 +182,7 @@ function initControls() {
     camera.updateProjectionMatrix()
   })
 
-  window.addEventListener("pointerdown", (event) => {
+  const pressStart = (isLeft: boolean) => {
     if (game.phase !== "PLAYING") return
     if (spectatingPlayerId) {
       spectatingPlayerId = getNextSpectatingPlayerId()
@@ -192,12 +192,10 @@ function initControls() {
 
     if (game.completedPlayers[yourPlayerId]) return
 
-    const isLeft = event.clientX / window.innerWidth < 0.5
-
     Rune.actions.setShipDirection(isLeft ? "left" : "right")
-  })
+  }
 
-  window.addEventListener("pointerup", (event) => {
+  const pressEnd = () => {
     if (game.phase !== "PLAYING") return
     if (!yourPlayerId) {
       // Ignore because handled in pointerdown already
@@ -206,7 +204,19 @@ function initControls() {
     if (game.completedPlayers[yourPlayerId]) return
 
     Rune.actions.setShipDirection(null)
+  }
+
+  window.addEventListener("pointerdown", (event) =>
+    pressStart(event.clientX / window.innerWidth < 0.5),
+  )
+
+  window.addEventListener("pointerup", pressEnd)
+
+  document.body.addEventListener("keydown", (event) => {
+    if (event.code === "ArrowLeft") pressStart(true)
+    if (event.code === "ArrowRight") pressStart(false)
   })
+  document.body.addEventListener("keyup", pressEnd)
 }
 
 function initRender() {

@@ -5,6 +5,8 @@ import { updatePlaying } from "./updatePlaying/updatePlaying.ts"
 import { checkWinnersAndGameOver } from "./checkWinnersAndGameOver.ts"
 import { pickFreeColor } from "./pickFreeColor.ts"
 import { newRound } from "./newRound.ts"
+import { getRandomInitialSection } from "./getRandomInitialSection.ts"
+import { GameState } from "./types.ts"
 
 Rune.initLogic({
   minPlayers: 2,
@@ -18,13 +20,13 @@ Rune.initLogic({
         state: "alive",
         score: 0,
       })),
-      snakes: allPlayerIds.reduce(
+      snakes: allPlayerIds.reduce<GameState["snakes"]>(
         (acc, playerId) => ({
           ...acc,
           [playerId]: {
             gapCounter: 0,
             turning: "none",
-            line: [],
+            sections: [getRandomInitialSection()],
           },
         }),
         {},
@@ -61,7 +63,7 @@ Rune.initLogic({
       game.snakes[playerId] = {
         gapCounter: 0,
         turning: "none",
-        sections: [],
+        sections: [getRandomInitialSection()],
       }
     },
     playerLeft: (playerId, { game }) => {

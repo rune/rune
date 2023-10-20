@@ -37,9 +37,9 @@ export type Section = {
   | {
       turning: "left" | "right"
       arc: {
-        center: Point
+        // Static data that never changes after starting turn
         startAngle: number
-        endAngle: number
+        angleToCenter: number
       }
     }
 )

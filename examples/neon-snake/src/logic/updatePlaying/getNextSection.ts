@@ -8,7 +8,7 @@ export const arcRadius =
 export function getNextSection(
   previousSection: Section,
   turning: Turning,
-  isPlacingGap: boolean,
+  isPlacingGap: boolean
 ): Section {
   if (turning === "none") {
     return {
@@ -27,7 +27,7 @@ export function getNextSection(
 
     const startAngle = degreesToRad(
       previousSection.endAngle +
-        (-90 + turnDegreesPerTick / 2) * turningModifier,
+        (-90 + turnDegreesPerTick / 2) * turningModifier
     )
 
     return {
@@ -37,16 +37,9 @@ export function getNextSection(
       gap: isPlacingGap,
       turning,
       arc: {
-        center: {
-          x:
-            previousSection.end.x +
-            Math.cos(degreesToRad(angleToCenter)) * arcRadius,
-          y:
-            previousSection.end.y +
-            Math.sin(degreesToRad(angleToCenter)) * arcRadius,
-        },
         startAngle: startAngle,
         endAngle: startAngle,
+        angleToCenter,
       },
     }
   }

@@ -1,12 +1,14 @@
 import { Section } from "../../logic/types.ts"
 import { shadowBlur, sectionLineWidth } from "./drawConfig.ts"
 import { arcRadius } from "../../logic/updatePlaying/getNextSection.ts"
+import { degreesToRad } from "../../lib/degreesToRad"
+import { turnDegreesPerTick } from "../../logic/logicConfig"
 
 export function drawSection(
   ctx: CanvasRenderingContext2D,
   scale: number,
   section: Section,
-  color: string,
+  color: string
 ) {
   ctx.beginPath()
 
@@ -14,13 +16,23 @@ export function drawSection(
     ctx.moveTo(section.start.x * scale, section.start.y * scale)
     ctx.lineTo(section.end.x * scale, section.end.y * scale)
   } else {
+    const centerX =
+      section.start.x +
+      Math.cos(degreesToRad(section.arc.angleToCenter)) * arcRadius
+    const centerY =
+      section.start.y +
+      Math.sin(degreesToRad(section.arc.angleToCenter)) * arcRadius
+
+    const turningModifier = section.turning === "right" ? 1 : -1
+    const arcEndAngle = degreesToRad(section.endAngle - 90 * turningModifier)
+
     ctx.arc(
-      section.arc.center.x * scale,
-      section.arc.center.y * scale,
+      centerX * scale,
+      centerY * scale,
       arcRadius * scale,
       section.arc.startAngle,
-      section.arc.endAngle,
-      section.turning === "left",
+      arcEndAngle,
+      section.turning === "left"
     )
   }
 

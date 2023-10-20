@@ -90,6 +90,6 @@ const Wall = styled.div<{ $hidden: boolean }>`
   left: 0;
   right: 0;
   border-style: solid;
-  border-color: rgba(17, 212, 255, 0.5);
+  border-color: rgba(0, 0, 0, 1);
   visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
 `

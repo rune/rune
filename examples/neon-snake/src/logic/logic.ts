@@ -27,7 +27,7 @@ Rune.initLogic({
             line: [],
           },
         }),
-        {},
+        {}
       ),
       collisionGrid: {},
       countdownTimer: countdownDurationSeconds,
@@ -36,6 +36,7 @@ Rune.initLogic({
     }
   },
   updatesPerSecond: 30,
+  inputDelay: 100,
   actions: {
     setTurning(turning, { game, playerId }) {
       game.snakes[playerId].turning = turning

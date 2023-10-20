@@ -8,9 +8,10 @@ import { useMemo } from "react"
 import { pickFreeColor } from "../../logic/pickFreeColor.ts"
 import { Skull } from "./Skull.tsx"
 import { Clock } from "./Clock.tsx"
+import { deathRevealDelayMs } from "../BoardScreen/drawConfig.ts"
 
 export function Header({ hidden }: { hidden: boolean }) {
-  const playerInfos = useAtomValue($playerInfos)
+  const playerInfos = useAtomValue($playerInfos, { delay: deathRevealDelayMs })
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
 

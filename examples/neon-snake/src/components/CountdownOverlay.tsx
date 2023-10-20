@@ -3,6 +3,7 @@ import { $countdownTimer } from "../state/state.ts"
 import { styled } from "styled-components"
 import { rel } from "../lib/rel.ts"
 import { colors, countdownDurationSeconds } from "../logic/logicConfig.ts"
+import { defaultTransitionMs } from "./BoardScreen/drawConfig.ts"
 
 export function CountdownOverlay() {
   const value = useAtomValue($countdownTimer)
@@ -26,6 +27,6 @@ const Root = styled.div<{ $color: string }>`
   color: ${({ $color }) => $color};
   text-shadow: 0 0 ${rel(15)} ${({ $color }) => $color};
   transition:
-    color 0.4s ease-out,
-    text-shadow 0.4s ease-out;
+    color ${defaultTransitionMs}ms ease-out,
+    text-shadow ${defaultTransitionMs}ms ease-out;
 `

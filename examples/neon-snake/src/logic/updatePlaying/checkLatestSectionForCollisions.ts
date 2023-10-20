@@ -20,6 +20,7 @@ export function checkLatestSectionForCollisions(
       game.collisionGrid[collisionSquareIndex])
   ) {
     player.state = "dead"
+    player.diedAt = Rune.gameTime()
     checkWinnersAndGameOver(game)
   } else if (!latestSection.gap) {
     const oldCollisionCellCords = collisionGridPointer(oldCollisionSquareIndex)

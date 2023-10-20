@@ -1,12 +1,38 @@
 import { Point } from "../../logic/types.ts"
-import { shadowBlur, deadCircleRadius } from "./drawConfig.ts"
+import {
+  shadowBlur,
+  deadCircleRadius,
+  deathRevealDelayMs,
+  defaultTransitionMs,
+} from "./drawConfig.ts"
+import { easeOutCubic } from "../../lib/easeOutCubic.ts"
+import { clamp } from "../../lib/clamp.ts"
+import { remap } from "../../lib/remap.ts"
 
 export function drawDeadEnd(
   ctx: CanvasRenderingContext2D,
   scale: number,
   point: Point,
   color: string,
+  diedAt: number | undefined,
 ) {
+  if (diedAt) {
+    ctx.globalAlpha = easeOutCubic(
+      clamp(
+        remap(
+          Rune.gameTime(),
+          [
+            diedAt + deathRevealDelayMs,
+            diedAt + deathRevealDelayMs + defaultTransitionMs,
+          ],
+          [0, 1],
+        ),
+        0,
+        1,
+      ),
+    )
+  }
+
   ctx.beginPath()
   ctx.arc(
     point.x * scale,
@@ -47,4 +73,6 @@ export function drawDeadEnd(
   ctx.fillStyle = "black"
   ctx.shadowBlur = 0
   ctx.fill(skull)
+
+  ctx.globalAlpha = 1
 }

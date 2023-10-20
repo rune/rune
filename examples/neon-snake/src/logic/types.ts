@@ -49,6 +49,7 @@ export type PlayerInfo = {
   color: string
   state: State
   score: number
+  diedAt?: number
 }
 
 export type Snake = {

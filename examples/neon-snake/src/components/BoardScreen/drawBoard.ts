@@ -58,6 +58,6 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
     const snake = game.snakes[player.playerId]
     const latestSection = { ...snake.sections[snake.sections.length - 1] }
 
-    drawDeadEnd(ctx, scale, latestSection.end, player.color)
+    drawDeadEnd(ctx, scale, latestSection.end, player.color, player.diedAt)
   }
 }

@@ -9,6 +9,10 @@ import { styled } from "styled-components"
 import { rel } from "../lib/rel.ts"
 import { colors } from "../logic/logicConfig.ts"
 import { useState, useEffect } from "react"
+import {
+  endOfRoundRevealDelayMs,
+  defaultTransitionMs,
+} from "./BoardScreen/drawConfig.ts"
 
 const winnerString = "Winner"
 
@@ -59,9 +63,8 @@ const Root = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  // TODO: 1s delay should be a const shared with other delays (score, deadEnd)
-  transition: opacity 0.6s 1s ease-out;
+  transition: opacity ${defaultTransitionMs}ms ${endOfRoundRevealDelayMs}ms
+    ease-out;
 `
 
 const Box = styled.div`

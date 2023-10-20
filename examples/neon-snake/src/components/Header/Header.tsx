@@ -11,7 +11,11 @@ import { Clock } from "./Clock.tsx"
 import { deathRevealDelayMs } from "../BoardScreen/drawConfig.ts"
 
 export function Header() {
-  const playerInfos = useAtomValue($playerInfos, { delay: deathRevealDelayMs })
+  const playerInfos = useAtomValue($playerInfos)
+  const playerInfosDelayed = useAtomValue($playerInfos, {
+    delay: deathRevealDelayMs,
+  })
+
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
 
@@ -23,9 +27,27 @@ export function Header() {
     [playerInfos, players],
   )
 
+  const playerInfosCombined = useMemo(
+    () =>
+      playerInfos.map(({ playerId, color, score, state }) => {
+        const playerInfoDelayed = playerInfosDelayed.find(
+          (p) => p.playerId === playerId,
+        )
+
+        return {
+          playerId,
+          color,
+          ...(playerInfoDelayed
+            ? { score: playerInfoDelayed.score, state: playerInfoDelayed.state }
+            : { score, state }),
+        }
+      }),
+    [playerInfos, playerInfosDelayed],
+  )
+
   return (
     <Root>
-      {playerInfos.map(({ playerId, color, score, state }) => (
+      {playerInfosCombined.map(({ playerId, color, score, state }) => (
         <PlayerContainer key={playerId}>
           {state === "pending" ? (
             <DarkCircle $playerColor={color}>

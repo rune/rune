@@ -14,7 +14,7 @@ import {
   CUBE_COLORS,
 } from "./config"
 
-type Cube = { x: number; z: number; colorIdx: number }
+type Cube = [x: number, z: number, colorIdx: number]
 export type ShipDirection = "left" | "right" | null
 
 type Ship = {
@@ -82,13 +82,18 @@ Rune.initLogic({
     // Setup cubes
     const cubes: Cube[] = []
     for (let i = 0; i < NUMBER_OF_CUBES; i++) {
-      cubes.push({
-        x:
-          Math.random() * (Math.abs(LEFT_WALL_POSITION) + RIGHT_WALL_POSITION) -
-          RIGHT_WALL_POSITION,
-        z: -(20 + Math.random() * (TRACK_DISTANCE - 20)),
-        colorIdx: Math.floor(Math.random() * CUBE_COLORS.length),
-      })
+      const x =
+        Math.random() * (Math.abs(LEFT_WALL_POSITION) + RIGHT_WALL_POSITION) -
+        RIGHT_WALL_POSITION
+      const z = -(20 + Math.random() * (TRACK_DISTANCE - 20))
+      const colorIdx = Math.floor(Math.random() * CUBE_COLORS.length)
+
+      // Use 2-digit precision
+      cubes.push([
+        Math.floor(x * 100) / 100,
+        Math.floor(z * 100) / 100,
+        colorIdx,
+      ])
     }
 
     return {
@@ -169,11 +174,10 @@ Rune.initLogic({
       ship.rotation.z = Math.min(0.4, Math.max(-0.4, ship.rotation.z))
 
       // Decrease speed on collision
-      for (const cube of game.cubes) {
+      for (const [x, z] of game.cubes) {
         if (
-          Math.abs(ship.position.z - cube.z) <
-            CUBE_DEPTH / 2 + SHIP_DEPTH / 2 &&
-          Math.abs(ship.position.x - cube.x) < CUBE_WIDTH / 2 + HALF_SHIP_WIDTH
+          Math.abs(ship.position.z - z) < CUBE_DEPTH / 2 + SHIP_DEPTH / 2 &&
+          Math.abs(ship.position.x - x) < CUBE_WIDTH / 2 + HALF_SHIP_WIDTH
         ) {
           ship.zSpeed *= 0.5
           // Cap min speed

@@ -265,8 +265,8 @@ function initRender() {
   createFinishLine(scene)
 
   // Create Cubes
-  game.cubes.forEach((cube, idx) => {
-    cubes[idx] = createCube(scene, cube.colorIdx)
+  game.cubes.forEach(([, , colorIdx], idx) => {
+    cubes[idx] = createCube(scene, colorIdx)
   })
 
   // Directional Light
@@ -330,8 +330,8 @@ function initPlayers() {
 }
 
 function initCubes() {
-  game.cubes.forEach((cube, idx) => {
-    cubes[idx].set(cube.x, cube.z, cube.colorIdx)
+  game.cubes.forEach(([x, z, colorIdx], idx) => {
+    cubes[idx].set(x, z, colorIdx)
   })
 }
 

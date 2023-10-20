@@ -15,7 +15,7 @@ import {
 } from "./config"
 
 type Cube = { x: number; z: number; colorIdx: number }
-type ShipDirection = "left" | "right" | null
+export type ShipDirection = "left" | "right" | null
 
 type Ship = {
   position: {

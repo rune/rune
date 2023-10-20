@@ -14,7 +14,7 @@ import {
 import "./index.css"
 import { createCube } from "./cube"
 import { createFinishLine, createGroundPlane, createWall } from "./bounders"
-import { GameState } from "./logic"
+import { GameState, ShipDirection } from "./logic"
 import {
   COUNTDOWN_MS,
   TRACK_DISTANCE,
@@ -182,6 +182,9 @@ function initControls() {
     camera.updateProjectionMatrix()
   })
 
+  // Do not send the same actions
+  let shipDirection: ShipDirection = null
+
   const pressStart = (isLeft: boolean) => {
     if (game.phase !== "PLAYING") return
     if (spectatingPlayerId) {
@@ -192,7 +195,11 @@ function initControls() {
 
     if (game.completedPlayers[yourPlayerId]) return
 
-    Rune.actions.setShipDirection(isLeft ? "left" : "right")
+    const newShipDirection = isLeft ? "left" : "right"
+    if (newShipDirection === shipDirection) return
+
+    shipDirection = newShipDirection
+    Rune.actions.setShipDirection(newShipDirection)
   }
 
   const pressEnd = () => {
@@ -203,7 +210,11 @@ function initControls() {
     }
     if (game.completedPlayers[yourPlayerId]) return
 
-    Rune.actions.setShipDirection(null)
+    const newShipDirection = null
+    if (newShipDirection === shipDirection) return
+
+    shipDirection = newShipDirection
+    Rune.actions.setShipDirection(newShipDirection)
   }
 
   window.addEventListener("pointerdown", (event) =>

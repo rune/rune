@@ -18,6 +18,11 @@ export const SHIP_START_POSITIONS = [
   [-0.12, -0.04, 0.04, 0.12],
 ]
 export const SHIP_COLORS = [0x00eaa9, 0x79a2ff, 0xf59a00, 0x467eff]
+export const SHIP_X_SPEED_RATE = 0.14
+export const SHIP_Z_SPEED_RATE = 0.002
+export const SHIP_INIT_SPEED = 50
+export const SHIP_MIN_SPEED = 50
+export const SHIP_MAX_SPEED = 800
 
 export const TRACK_DISTANCE = 1000
 export const NUMBER_OF_CUBES = TRACK_DISTANCE * 0.5

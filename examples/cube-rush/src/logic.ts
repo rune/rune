@@ -12,6 +12,11 @@ import {
   UPDATES_PER_SECOND,
   NUMBER_OF_CUBES,
   CUBE_COLORS,
+  SHIP_INIT_SPEED,
+  SHIP_MIN_SPEED,
+  SHIP_MAX_SPEED,
+  SHIP_X_SPEED_RATE,
+  SHIP_Z_SPEED_RATE,
 } from "./config"
 
 type Cube = [x: number, z: number, colorIdx: number]
@@ -74,7 +79,7 @@ Rune.initLogic({
           z: 0,
         },
         xSpeed: 0,
-        zSpeed: 50,
+        zSpeed: SHIP_INIT_SPEED,
         topZSpeed: 0,
         direction: null,
         lastPassedCubeIdx: -1,
@@ -145,24 +150,22 @@ Rune.initLogic({
       const ship = game.ships[playerId]
 
       // Horizontal speed used for changing ship direction
-      const xSpeedRate = 0.14
       if (ship.direction === null) {
         ship.xSpeed *= 0.8
       } else if (ship.direction === "left") {
-        ship.xSpeed += 0.02 * xSpeedRate
+        ship.xSpeed += 0.02 * SHIP_X_SPEED_RATE
       } else if (ship.direction === "right") {
-        ship.xSpeed -= 0.02 * xSpeedRate
+        ship.xSpeed -= 0.02 * SHIP_X_SPEED_RATE
       }
 
       ship.xSpeed = Math.max(-0.5, Math.min(0.5, ship.xSpeed))
-      ship.position.x += ship.xSpeed * xSpeedRate * -10
+      ship.position.x += ship.xSpeed * SHIP_X_SPEED_RATE * -10
       ship.position.x = Math.min(
         Math.max(ship.position.x, LEFT_WALL_POSITION + HALF_SHIP_WIDTH),
         RIGHT_WALL_POSITION - HALF_SHIP_WIDTH,
       )
 
       // Forward speed
-      const zSpeedRate = 0.002
       if (ship.zSpeed < 300) {
         // Quickly increase speed
         ship.zSpeed *= 1.01
@@ -172,10 +175,10 @@ Rune.initLogic({
         // Slowly increase speed
         ship.zSpeed += 10 / UPDATES_PER_SECOND
         // Cap max speed
-        ship.zSpeed = Math.min(ship.zSpeed, 800)
+        ship.zSpeed = Math.min(ship.zSpeed, SHIP_MAX_SPEED)
       }
       ship.topZSpeed = Math.max(ship.topZSpeed, ship.zSpeed)
-      ship.position.z -= ship.zSpeed * zSpeedRate
+      ship.position.z -= ship.zSpeed * SHIP_Z_SPEED_RATE
 
       ship.rotation.z = (ship.rotation.z + ship.xSpeed * 10) * 0.7
       ship.rotation.z = Math.min(0.4, Math.max(-0.4, ship.rotation.z))
@@ -210,7 +213,7 @@ Rune.initLogic({
             // Ship is in collision on all dimensions
             ship.zSpeed *= 0.5
             // Cap min speed
-            ship.zSpeed = Math.max(ship.zSpeed, 50)
+            ship.zSpeed = Math.max(ship.zSpeed, SHIP_MIN_SPEED)
             break
           }
         }

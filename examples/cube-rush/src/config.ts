@@ -1,9 +1,6 @@
-export const AVATAR_WIDTH = 0.8
+export const UPDATES_PER_SECOND = 30
 
-export const CUBE_WIDTH = 0.3
-export const CUBE_HEIGHT = 0.35
-export const CUBE_DEPTH = 0.8
-export const CUBE_COLORS = [0xf00044, 0x9c05fa] // L is 5% darker
+export const AVATAR_WIDTH = 0.8
 
 export const LEFT_WALL_POSITION = -1.5
 export const RIGHT_WALL_POSITION = 1.5
@@ -18,14 +15,18 @@ export const SHIP_START_POSITIONS = [
   [-0.12, -0.04, 0.04, 0.12],
 ]
 export const SHIP_COLORS = [0x00eaa9, 0x79a2ff, 0xf59a00, 0x467eff]
-export const SHIP_X_SPEED_RATE = 0.14
-export const SHIP_Z_SPEED_RATE = 0.002
+export const SHIP_X_SPEED_RATE = (1 / UPDATES_PER_SECOND) * 4
+export const SHIP_Z_SPEED_RATE = (1 / UPDATES_PER_SECOND) * 0.06
 export const SHIP_INIT_SPEED = 50
 export const SHIP_MIN_SPEED = 50
 export const SHIP_MAX_SPEED = 800
+
+export const CUBE_WIDTH = 0.3
+export const CUBE_HEIGHT = 0.35
+export const CUBE_DEPTH = SHIP_Z_SPEED_RATE * SHIP_MAX_SPEED // Make sure it does not pass through
+export const CUBE_COLORS = [0xf00044, 0x9c05fa] // L is 5% darker
 
 export const TRACK_DISTANCE = 1000
 export const NUMBER_OF_CUBES = TRACK_DISTANCE * 0.5
 export const COUNTDOWN_MS = 5000
 export const COMPLETED_PLAYER_START_SPECTATING_MS = 3000
-export const UPDATES_PER_SECOND = 30

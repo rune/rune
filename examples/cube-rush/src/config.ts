@@ -27,6 +27,6 @@ export const CUBE_DEPTH = SHIP_Z_SPEED_RATE * SHIP_MAX_SPEED // Make sure it doe
 export const CUBE_COLORS = [0xf00044, 0x9c05fa] // L is 5% darker
 
 export const TRACK_DISTANCE = 1000
-export const NUMBER_OF_CUBES = TRACK_DISTANCE * 0.5
+export const NUMBER_OF_CUBES = TRACK_DISTANCE * 0.4
 export const COUNTDOWN_MS = 5000
 export const COMPLETED_PLAYER_START_SPECTATING_MS = 3000

@@ -306,6 +306,8 @@ function initPlayers() {
 
   uiTrackProgress.innerHTML = ""
   uiSpectating.classList.remove("visible")
+  uiControlsPreview.classList.remove("visible")
+  uiStats.classList.remove("visible")
 
   Object.keys(players).forEach((playerId, idx) => {
     const ship = createShip(scene, idx)

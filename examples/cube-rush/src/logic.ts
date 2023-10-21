@@ -29,6 +29,7 @@ type Ship = {
   xSpeed: number
   zSpeed: number
   topZSpeed: number
+  lastPassedCubeIdx: number
 }
 
 type Phase = "PAUSED" | "COUNTDOWN" | "PLAYING"
@@ -74,8 +75,9 @@ Rune.initLogic({
         },
         xSpeed: 0,
         zSpeed: 50,
-        topZSpeed: 50,
+        topZSpeed: 0,
         direction: null,
+        lastPassedCubeIdx: -1,
       }
     }
 
@@ -96,11 +98,16 @@ Rune.initLogic({
       ])
     }
 
+    // Order by z desc
+    const orderedCubes = cubes.sort(([, z1], [, z2]) =>
+      z1 === z2 ? 0 : z1 < z2 ? 1 : -1,
+    )
+
     return {
       startedAt: null,
       phase: "PAUSED",
       ships,
-      cubes,
+      cubes: orderedCubes,
       completedPlayers: {},
     }
   },
@@ -173,16 +180,42 @@ Rune.initLogic({
       ship.rotation.z = (ship.rotation.z + ship.xSpeed * 10) * 0.7
       ship.rotation.z = Math.min(0.4, Math.max(-0.4, ship.rotation.z))
 
-      // Decrease speed on collision
-      for (const [x, z] of game.cubes) {
-        if (
-          Math.abs(ship.position.z - z) < CUBE_DEPTH / 2 + SHIP_DEPTH / 2 &&
-          Math.abs(ship.position.x - x) < CUBE_WIDTH / 2 + HALF_SHIP_WIDTH
-        ) {
-          ship.zSpeed *= 0.5
-          // Cap min speed
-          ship.zSpeed = Math.max(ship.zSpeed, 50)
+      // Collision detection
+      const shipStartZ = ship.position.z + SHIP_DEPTH / 2
+      const shipEndZ = ship.position.z - SHIP_DEPTH / 2
+
+      let idx = ship.lastPassedCubeIdx + 1
+      while (true) {
+        const cube = game.cubes[idx]
+        if (!cube) break // No more cubes
+
+        const [x, z] = cube
+
+        // Ship is before the cube on z dimension
+        const cubeStartZ = z + CUBE_DEPTH / 2
+        if (shipEndZ > cubeStartZ) break // No cubes yet
+
+        const cubeEndZ = z - CUBE_DEPTH / 2
+        if (shipStartZ < cubeEndZ) {
+          // Ship is after the cube on z dimension
+          ship.lastPassedCubeIdx = idx
+
+          // Do not break out of while loop in order to apply potential collision with other cubes
+        } else {
+          // Ship is in collision on z dimension
+          if (
+            Math.abs(ship.position.x - x) <
+            CUBE_WIDTH / 2 + HALF_SHIP_WIDTH
+          ) {
+            // Ship is in collision on all dimensions
+            ship.zSpeed *= 0.5
+            // Cap min speed
+            ship.zSpeed = Math.max(ship.zSpeed, 50)
+            break
+          }
         }
+
+        idx += 1
       }
 
       // Add to completedPlayers when player finishes

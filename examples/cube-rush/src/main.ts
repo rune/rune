@@ -258,6 +258,10 @@ function initRender() {
   camera = new THREE.PerspectiveCamera(15, width / height, 0.1, 100)
   camera.position.set(0, 0.25, 2.0)
 
+  // CAMERA_FROM_TOP
+  camera.position.set(0, 28, -2)
+  camera.lookAt(0, -1, -2)
+
   // Objects
   createGroundPlane(scene)
   createWall("left", scene)
@@ -481,6 +485,9 @@ function animate() {
   // Camera position
   camera.position.x = playerThreeObjs[attachedToPlayerId].ship.position.x
   camera.position.z = playerThreeObjs[attachedToPlayerId].ship.position.z + 2.2
+
+  // CAMERA_FROM_TOP
+  camera.position.z = playerThreeObjs[attachedToPlayerId].ship.position.z - 2
 
   // Composer
   composer.render()

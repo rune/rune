@@ -23,7 +23,7 @@ export const SHIP_MAX_SPEED = 800
 
 export const CUBE_WIDTH = 0.3
 export const CUBE_HEIGHT = 0.35
-export const CUBE_DEPTH = SHIP_Z_SPEED_RATE * SHIP_MAX_SPEED // Make sure it does not pass through
+export const CUBE_DEPTH = SHIP_Z_SPEED_RATE * SHIP_MAX_SPEED // Make sure ship does not pass through even on max speed
 export const CUBE_COLORS = [0xf00044, 0x9c05fa] // L is 5% darker
 
 export const TRACK_DISTANCE = 1000

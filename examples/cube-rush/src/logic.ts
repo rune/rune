@@ -203,7 +203,7 @@ Rune.initLogic({
           // Ship is after the cube on z dimension
           ship.lastPassedCubeIdx = idx
 
-          // Do not break out of while loop in order to apply potential collision with other cubes
+          // Do not break out of the loop in order to apply potential collision with other cubes
         } else {
           // Ship is in collision on z dimension
           if (

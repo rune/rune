@@ -187,12 +187,12 @@ Rune.initLogic({
       const shipStartZ = ship.position.z + SHIP_DEPTH / 2
       const shipEndZ = ship.position.z - SHIP_DEPTH / 2
 
-      let idx = ship.lastPassedCubeIdx + 1
-      while (true) {
-        const cube = game.cubes[idx]
-        if (!cube) break // No more cubes
-
-        const [x, z] = cube
+      for (
+        let idx = ship.lastPassedCubeIdx + 1;
+        idx < game.cubes.length;
+        idx++
+      ) {
+        const [x, z] = game.cubes[idx]
 
         // Ship is before the cube on z dimension
         const cubeStartZ = z + CUBE_DEPTH / 2
@@ -217,8 +217,6 @@ Rune.initLogic({
             break
           }
         }
-
-        idx += 1
       }
 
       // Add to completedPlayers when player finishes

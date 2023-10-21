@@ -1,6 +1,6 @@
 import { styled } from "styled-components"
 import { useAtomValue } from "jotai"
-import { $game, $players, $yourPlayerId } from "../../state/state.ts"
+import { $players, $yourPlayerId, $playerInfos } from "../../state/state.ts"
 import { rel } from "../../lib/rel.ts"
 import noAvatar from "./noAvatar.png"
 import background from "./background.jpg"
@@ -8,22 +8,46 @@ import { useMemo } from "react"
 import { pickFreeColor } from "../../logic/pickFreeColor.ts"
 import { Skull } from "./Skull.tsx"
 import { Clock } from "./Clock.tsx"
+import { deathRevealDelayMs } from "../BoardScreen/drawConfig.ts"
 
 export function Header() {
-  // TODO: think how to avoid re-rendering on every tick because we use the full game state
-  const game = useAtomValue($game)
+  const playerInfos = useAtomValue($playerInfos)
+  const playerInfosDelayed = useAtomValue($playerInfos, {
+    delay: deathRevealDelayMs,
+  })
+
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
 
   const invite = useMemo(
     () =>
-      Object.keys(players).length < 4 ? { color: pickFreeColor(game) } : null,
-    [game, players],
+      Object.keys(players).length < 4
+        ? { color: pickFreeColor(playerInfos) }
+        : null,
+    [playerInfos, players],
+  )
+
+  const playerInfosCombined = useMemo(
+    () =>
+      playerInfos.map(({ playerId, color, score, state }) => {
+        const playerInfoDelayed = playerInfosDelayed.find(
+          (p) => p.playerId === playerId,
+        )
+
+        return {
+          playerId,
+          color,
+          ...(playerInfoDelayed
+            ? { score: playerInfoDelayed.score, state: playerInfoDelayed.state }
+            : { score, state }),
+        }
+      }),
+    [playerInfos, playerInfosDelayed],
   )
 
   return (
     <Root>
-      {game.players.map(({ playerId, color, score, state }) => (
+      {playerInfosCombined.map(({ playerId, color, score, state }) => (
         <PlayerContainer key={playerId}>
           {state === "pending" ? (
             <DarkCircle $playerColor={color}>
@@ -44,7 +68,7 @@ export function Header() {
       ))}
       {invite && (
         <PlayerContainer $center onClick={() => Rune.showInvitePlayers()}>
-          <Avatar src={noAvatar} $playerColor={pickFreeColor(game)} />
+          <Avatar src={noAvatar} $playerColor={invite.color} />
           <Invite $playerColor={invite.color}>Invite</Invite>
         </PlayerContainer>
       )}

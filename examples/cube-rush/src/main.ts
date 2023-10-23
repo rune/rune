@@ -21,8 +21,29 @@ import {
   AVATAR_WIDTH,
   SHIP_HEIGHT,
   COMPLETED_PLAYER_START_SPECTATING_MS,
+  NUMBER_OF_CUBES,
+  LEFT_WALL_POSITION,
+  RIGHT_WALL_POSITION,
+  CUBE_COLORS,
 } from "./config"
 import { createShipLabel, createShip } from "./ship"
+
+type Cube = [x: number, z: number, colorIdx: number]
+const gameCubes: Cube[] = []
+for (let i = 0; i < NUMBER_OF_CUBES; i++) {
+  const x =
+    Math.random() * (Math.abs(LEFT_WALL_POSITION) + RIGHT_WALL_POSITION) -
+    RIGHT_WALL_POSITION
+  const z = -(20 + Math.random() * (TRACK_DISTANCE - 20))
+  const colorIdx = Math.floor(Math.random() * CUBE_COLORS.length)
+
+  // Use 2-digit precision
+  gameCubes.push([
+    Math.floor(x * 100) / 100,
+    Math.floor(z * 100) / 100,
+    colorIdx,
+  ])
+}
 
 // UI
 const uiScreens = {
@@ -265,7 +286,7 @@ function initRender() {
   createFinishLine(scene)
 
   // Create Cubes
-  game.cubes.forEach(([, , colorIdx], idx) => {
+  gameCubes.forEach(([, , colorIdx], idx) => {
     cubes[idx] = createCube(scene, colorIdx)
   })
 
@@ -332,7 +353,7 @@ function initPlayers() {
 }
 
 function initCubes() {
-  game.cubes.forEach(([x, z, colorIdx], idx) => {
+  gameCubes.forEach(([x, z, colorIdx], idx) => {
     cubes[idx].set(x, z, colorIdx)
   })
 }

@@ -184,6 +184,7 @@ Rune.initLogic({
       ship.rotation.z = Math.min(0.4, Math.max(-0.4, ship.rotation.z))
 
       // Collision detection
+      /*
       const shipStartZ = ship.position.z + SHIP_DEPTH / 2
       const shipEndZ = ship.position.z - SHIP_DEPTH / 2
 
@@ -218,6 +219,7 @@ Rune.initLogic({
           }
         }
       }
+      */
 
       // Add to completedPlayers when player finishes
       if (-ship.position.z >= TRACK_DISTANCE) {

@@ -12,10 +12,15 @@ import {
   UPDATES_PER_SECOND,
   NUMBER_OF_CUBES,
   CUBE_COLORS,
+  SHIP_INIT_SPEED,
+  SHIP_MIN_SPEED,
+  SHIP_MAX_SPEED,
+  SHIP_X_SPEED_RATE,
+  SHIP_Z_SPEED_RATE,
 } from "./config"
 
-type Cube = { x: number; z: number; colorIdx: number }
-type ShipDirection = "left" | "right" | null
+type Cube = [x: number, z: number, colorIdx: number]
+export type ShipDirection = "left" | "right" | null
 
 type Ship = {
   position: {
@@ -29,6 +34,7 @@ type Ship = {
   xSpeed: number
   zSpeed: number
   topZSpeed: number
+  lastPassedCubeIdx: number
 }
 
 type Phase = "PAUSED" | "COUNTDOWN" | "PLAYING"
@@ -73,29 +79,40 @@ Rune.initLogic({
           z: 0,
         },
         xSpeed: 0,
-        zSpeed: 50,
-        topZSpeed: 50,
+        zSpeed: SHIP_INIT_SPEED,
+        topZSpeed: 0,
         direction: null,
+        lastPassedCubeIdx: -1,
       }
     }
 
     // Setup cubes
     const cubes: Cube[] = []
     for (let i = 0; i < NUMBER_OF_CUBES; i++) {
-      cubes.push({
-        x:
-          Math.random() * (Math.abs(LEFT_WALL_POSITION) + RIGHT_WALL_POSITION) -
-          RIGHT_WALL_POSITION,
-        z: -(20 + Math.random() * (TRACK_DISTANCE - 20)),
-        colorIdx: Math.floor(Math.random() * CUBE_COLORS.length),
-      })
+      const x =
+        Math.random() * (Math.abs(LEFT_WALL_POSITION) + RIGHT_WALL_POSITION) -
+        RIGHT_WALL_POSITION
+      const z = -(20 + Math.random() * (TRACK_DISTANCE - 20))
+      const colorIdx = Math.floor(Math.random() * CUBE_COLORS.length)
+
+      // Use 2-digit precision
+      cubes.push([
+        Math.floor(x * 100) / 100,
+        Math.floor(z * 100) / 100,
+        colorIdx,
+      ])
     }
+
+    // Order by z desc
+    const orderedCubes = cubes.sort(([, z1], [, z2]) =>
+      z1 === z2 ? 0 : z1 < z2 ? 1 : -1,
+    )
 
     return {
       startedAt: null,
       phase: "PAUSED",
       ships,
-      cubes,
+      cubes: orderedCubes,
       completedPlayers: {},
     }
   },
@@ -133,24 +150,22 @@ Rune.initLogic({
       const ship = game.ships[playerId]
 
       // Horizontal speed used for changing ship direction
-      const xSpeedRate = 0.14
       if (ship.direction === null) {
         ship.xSpeed *= 0.8
       } else if (ship.direction === "left") {
-        ship.xSpeed += 0.02 * xSpeedRate
+        ship.xSpeed += 0.02 * SHIP_X_SPEED_RATE
       } else if (ship.direction === "right") {
-        ship.xSpeed -= 0.02 * xSpeedRate
+        ship.xSpeed -= 0.02 * SHIP_X_SPEED_RATE
       }
 
       ship.xSpeed = Math.max(-0.5, Math.min(0.5, ship.xSpeed))
-      ship.position.x += ship.xSpeed * xSpeedRate * -10
+      ship.position.x += ship.xSpeed * SHIP_X_SPEED_RATE * -10
       ship.position.x = Math.min(
         Math.max(ship.position.x, LEFT_WALL_POSITION + HALF_SHIP_WIDTH),
         RIGHT_WALL_POSITION - HALF_SHIP_WIDTH,
       )
 
       // Forward speed
-      const zSpeedRate = 0.002
       if (ship.zSpeed < 300) {
         // Quickly increase speed
         ship.zSpeed *= 1.01
@@ -160,24 +175,47 @@ Rune.initLogic({
         // Slowly increase speed
         ship.zSpeed += 10 / UPDATES_PER_SECOND
         // Cap max speed
-        ship.zSpeed = Math.min(ship.zSpeed, 800)
+        ship.zSpeed = Math.min(ship.zSpeed, SHIP_MAX_SPEED)
       }
       ship.topZSpeed = Math.max(ship.topZSpeed, ship.zSpeed)
-      ship.position.z -= ship.zSpeed * zSpeedRate
+      ship.position.z -= ship.zSpeed * SHIP_Z_SPEED_RATE
 
       ship.rotation.z = (ship.rotation.z + ship.xSpeed * 10) * 0.7
       ship.rotation.z = Math.min(0.4, Math.max(-0.4, ship.rotation.z))
 
-      // Decrease speed on collision
-      for (const cube of game.cubes) {
-        if (
-          Math.abs(ship.position.z - cube.z) <
-            CUBE_DEPTH / 2 + SHIP_DEPTH / 2 &&
-          Math.abs(ship.position.x - cube.x) < CUBE_WIDTH / 2 + HALF_SHIP_WIDTH
-        ) {
-          ship.zSpeed *= 0.5
-          // Cap min speed
-          ship.zSpeed = Math.max(ship.zSpeed, 50)
+      // Collision detection
+      const shipStartZ = ship.position.z + SHIP_DEPTH / 2
+      const shipEndZ = ship.position.z - SHIP_DEPTH / 2
+
+      for (
+        let idx = ship.lastPassedCubeIdx + 1;
+        idx < game.cubes.length;
+        idx++
+      ) {
+        const [x, z] = game.cubes[idx]
+
+        // Ship is before the cube on z dimension
+        const cubeStartZ = z + CUBE_DEPTH / 2
+        if (shipEndZ > cubeStartZ) break // No cubes yet
+
+        const cubeEndZ = z - CUBE_DEPTH / 2
+        if (shipStartZ < cubeEndZ) {
+          // Ship is after the cube on z dimension
+          ship.lastPassedCubeIdx = idx
+
+          // Do not break out of the loop in order to apply potential collision with other cubes
+        } else {
+          // Ship is in collision on z dimension
+          if (
+            Math.abs(ship.position.x - x) <
+            CUBE_WIDTH / 2 + HALF_SHIP_WIDTH
+          ) {
+            // Ship is in collision on all dimensions
+            ship.zSpeed *= 0.5
+            // Cap min speed
+            ship.zSpeed = Math.max(ship.zSpeed, SHIP_MIN_SPEED)
+            break
+          }
         }
       }
 

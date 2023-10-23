@@ -36,6 +36,12 @@ body {
   font-weight: 700;
 }
 
+.visible {
+  /* Use visibility inline style and !important to prevent transitioning on load */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 canvas {
   position: absolute;
   bottom: 0;
@@ -44,6 +50,9 @@ canvas {
   height: 100%;
   background-color: inherit;
   transition: filter 1000ms;
+}
+canvas.blurred {
+  filter: blur(5px);
 }
 
 .screen {
@@ -58,6 +67,7 @@ canvas {
 
 /* Start Screen */
 .pausedScreen {
+  visibility: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -194,6 +204,7 @@ canvas {
 }
 
 .playingScreen .spectating {
+  visibility: hidden;
   margin-top: 0.56rem;
   border-radius: 1.625rem;
   background: #33f4c6;
@@ -210,8 +221,7 @@ canvas {
   height: 0.73rem;
 }
 
-.playingScreen .statsContainer {
-  visibility: hidden;
+.playingScreen .stats {
   position: absolute;
   top: 0;
   left: 0;
@@ -220,9 +230,15 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0.5s linear,
+    opacity 0.5s linear;
 }
 
-.playingScreen .stats {
+.playingScreen .stats .content {
   padding: 1.25rem;
   border-radius: 1.6875rem;
   opacity: 0.85;
@@ -236,14 +252,14 @@ canvas {
   gap: 1.19rem;
   text-align: center;
 }
-.playingScreen .stats .infoValue > p {
+.playingScreen .stats .content .infoValue > p {
   color: #33f4c6;
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 130%;
   text-transform: uppercase;
 }
-.playingScreen .stats .infoValue > div {
+.playingScreen .stats .content .infoValue > div {
   margin-top: -0.38rem;
   color: #ffffff;
 
@@ -253,20 +269,36 @@ canvas {
   letter-spacing: 0.125rem;
   white-space: nowrap;
 }
-.playingScreen .stats .infoValue > div > sup {
+.playingScreen .stats .content .infoValue > div > sup {
   font-size: 0.5em;
 }
 
 .playingScreen .controlsPreview {
   visibility: hidden;
   position: absolute;
-  bottom: 1.69rem;
-  height: 4.06rem;
-  left: 1rem;
-  right: 1rem;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.playingScreen .controlsPreview .left,
+.playingScreen .controlsPreview .right {
+  width: 50%;
+  height: 100%;
 
   opacity: 0.6;
-  background:
-    left center / contain no-repeat url(/src/controlLeft.svg),
-    right center / contain no-repeat url(/src/controlRight.svg);
+  background: bottom 3.06rem left 1rem / 4.06rem 4.06rem no-repeat
+    url(/src/controlLeft.svg);
+}
+.playingScreen .controlsPreview .right {
+  transform: scaleX(-1);
+}
+
+.playingScreen .controlsPreview .left:active,
+.playingScreen .controlsPreview .right:active {
+  background-image: url(/src/controlLeftActive.svg);
 }

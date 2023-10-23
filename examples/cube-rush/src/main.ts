@@ -14,7 +14,7 @@ import {
 import "./index.css"
 import { createCube } from "./cube"
 import { createFinishLine, createGroundPlane, createWall } from "./bounders"
-import { GameState } from "./logic"
+import { GameState, ShipDirection } from "./logic"
 import {
   COUNTDOWN_MS,
   TRACK_DISTANCE,
@@ -25,16 +25,19 @@ import {
 import { createShipLabel, createShip } from "./ship"
 
 // UI
+const uiScreens = {
+  PAUSED: document.getElementById("pausedScreen")!,
+  COUNTDOWN: document.getElementById("countdownScreen")!,
+  PLAYING: document.getElementById("playingScreen")!,
+}
+
 /* Start Screen */
-const uiPausedScreen = document.getElementById("pausedScreen")!
-const uiStartBtn = uiPausedScreen.getElementsByClassName("startBtn")[0]!
+const uiStartBtn = uiScreens.PAUSED.getElementsByClassName("startBtn")[0]!
 
 /* Countdown Screen */
-const uiCountdownScreen = document.getElementById("countdownScreen")!
-const uiCountdown = uiCountdownScreen.getElementsByClassName("countdown")[0]!
+const uiCountdown = uiScreens.COUNTDOWN.getElementsByClassName("countdown")[0]!
 
 /* Playing Screen */
-const uiPlayingScreen = document.getElementById("playingScreen")!
 const uiInfo = document.getElementById("info")!
 const uiPlace = uiInfo.getElementsByClassName("place")[0]!
 const uiSpeed = uiInfo.getElementsByClassName("speed")[0]!
@@ -54,7 +57,7 @@ const uiStatsPlace = uiStats.getElementsByClassName("place")[0]!
 const uiStatsTopSpeed = uiStats.getElementsByClassName("topSpeed")[0]!
 const uiStatsElapse = uiStats.getElementsByClassName("elapse")[0]!
 
-const uiControlsPreview = uiPlayingScreen.getElementsByClassName(
+const uiControlsPreview = uiScreens.PLAYING.getElementsByClassName(
   "controlsPreview",
 )[0]! as HTMLElement
 
@@ -179,7 +182,10 @@ function initControls() {
     camera.updateProjectionMatrix()
   })
 
-  window.addEventListener("pointerdown", (event) => {
+  // Do not send the same actions
+  let shipDirection: ShipDirection = null
+
+  const pressStart = (isLeft: boolean) => {
     if (game.phase !== "PLAYING") return
     if (spectatingPlayerId) {
       spectatingPlayerId = getNextSpectatingPlayerId()
@@ -189,12 +195,14 @@ function initControls() {
 
     if (game.completedPlayers[yourPlayerId]) return
 
-    const isLeft = event.clientX / window.innerWidth < 0.5
+    const newShipDirection = isLeft ? "left" : "right"
+    if (newShipDirection === shipDirection) return
 
-    Rune.actions.setShipDirection(isLeft ? "left" : "right")
-  })
+    shipDirection = newShipDirection
+    Rune.actions.setShipDirection(newShipDirection)
+  }
 
-  window.addEventListener("pointerup", (event) => {
+  const pressEnd = () => {
     if (game.phase !== "PLAYING") return
     if (!yourPlayerId) {
       // Ignore because handled in pointerdown already
@@ -202,8 +210,24 @@ function initControls() {
     }
     if (game.completedPlayers[yourPlayerId]) return
 
-    Rune.actions.setShipDirection(null)
+    const newShipDirection = null
+    if (newShipDirection === shipDirection) return
+
+    shipDirection = newShipDirection
+    Rune.actions.setShipDirection(newShipDirection)
+  }
+
+  window.addEventListener("pointerdown", (event) =>
+    pressStart(event.clientX / window.innerWidth < 0.5),
+  )
+
+  window.addEventListener("pointerup", pressEnd)
+
+  document.body.addEventListener("keydown", (event) => {
+    if (event.code === "ArrowLeft") pressStart(true)
+    if (event.code === "ArrowRight") pressStart(false)
   })
+  document.body.addEventListener("keyup", pressEnd)
 }
 
 function initRender() {
@@ -219,9 +243,10 @@ function initRender() {
   renderer = new THREE.WebGLRenderer({
     powerPreference: "high-performance",
     antialias: false,
-    stencil: false,
-    depth: false,
+    stencil: true,
+    depth: true,
   })
+  scene.background = new THREE.Color(0x0c2074)
   renderer.outputColorSpace = THREE.SRGBColorSpace
   renderer.setClearColor(0xffffff, 0)
   renderer.setSize(width, height)
@@ -240,8 +265,8 @@ function initRender() {
   createFinishLine(scene)
 
   // Create Cubes
-  game.cubes.forEach((cube, idx) => {
-    cubes[idx] = createCube(scene, cube.colorIdx)
+  game.cubes.forEach(([, , colorIdx], idx) => {
+    cubes[idx] = createCube(scene, colorIdx)
   })
 
   // Directional Light
@@ -280,7 +305,9 @@ function initPlayers() {
   playerHtmlObjs = {}
 
   uiTrackProgress.innerHTML = ""
-  uiSpectating.style.visibility = "hidden"
+  uiSpectating.classList.remove("visible")
+  uiControlsPreview.classList.remove("visible")
+  uiStats.classList.remove("visible")
 
   Object.keys(players).forEach((playerId, idx) => {
     const ship = createShip(scene, idx)
@@ -305,8 +332,8 @@ function initPlayers() {
 }
 
 function initCubes() {
-  game.cubes.forEach((cube, idx) => {
-    cubes[idx].set(cube.x, cube.z, cube.colorIdx)
+  game.cubes.forEach(([x, z, colorIdx], idx) => {
+    cubes[idx].set(x, z, colorIdx)
   })
 }
 
@@ -356,29 +383,11 @@ function animate() {
 
   // Update based on phase
   if (game.phase === "PAUSED") {
-    // Choose screen
-    uiPausedScreen.style.visibility = "visible"
-    uiCountdownScreen.style.visibility = "hidden"
-    uiPlayingScreen.style.visibility = "hidden"
-
-    // Blur render
-    renderer.domElement.style.filter = "blur(5px)"
-
-    // This is needed because of absolute positioning
-    uiStats.style.visibility = "hidden"
-    uiControlsPreview.style.visibility = "hidden"
+    showScreen(uiScreens.PAUSED)
+    renderer.domElement.classList.add("blurred")
   } else if (game.phase === "COUNTDOWN") {
-    // Choose screen
-    uiPausedScreen.style.visibility = "hidden"
-    uiCountdownScreen.style.visibility = "visible"
-    uiPlayingScreen.style.visibility = "hidden"
-
-    // Blur render
-    renderer.domElement.style.filter = "blur(5px)"
-
-    // This is needed because of absolute positioning
-    uiStats.style.visibility = "hidden"
-    uiControlsPreview.style.visibility = "hidden"
+    showScreen(uiScreens.COUNTDOWN)
+    renderer.domElement.classList.add("blurred")
 
     // Countdown
     if (game.startedAt) {
@@ -388,13 +397,8 @@ function animate() {
       uiCountdown.textContent = leftSeconds.toFixed(0)
     }
   } else if (game.phase === "PLAYING") {
-    // Choose screen
-    uiPausedScreen.style.visibility = "hidden"
-    uiCountdownScreen.style.visibility = "hidden"
-    uiPlayingScreen.style.visibility = "visible"
-
-    // Blur render
-    renderer.domElement.style.filter = "blur(0px)"
+    showScreen(uiScreens.PLAYING)
+    renderer.domElement.classList.remove("blurred")
 
     // Info
     const place = getPlace(attachedToPlayerId)
@@ -406,7 +410,7 @@ function animate() {
 
     // Spectating
     if (spectatingPlayerId) {
-      uiSpectating.style.visibility = "visible"
+      uiSpectating.classList.add("visible")
       const player = players[attachedToPlayerId]
       uiSpectatingDisplayName.textContent = player.displayName
       uiSpectatingAvatar.src = player.avatarUrl
@@ -424,16 +428,16 @@ function animate() {
       const elapse = yourCompletedPlayer.elapse
       uiStatsElapse.textContent = renderElapse(elapse)
 
-      uiStats.style.visibility = "visible"
+      uiStats.classList.add("visible")
     } else {
-      uiStats.style.visibility = "hidden"
+      uiStats.classList.remove("visible")
     }
 
     // Show controls only while playing
     if (yourPlayerId && !yourCompletedPlayer) {
-      uiControlsPreview.style.visibility = "visible"
+      uiControlsPreview.classList.add("visible")
     } else {
-      uiControlsPreview.style.visibility = "hidden"
+      uiControlsPreview.classList.remove("visible")
     }
   }
 
@@ -483,6 +487,16 @@ function animate() {
 }
 
 // OTHER HELPERS
+function showScreen(uiScreen: HTMLElement) {
+  Object.values(uiScreens).forEach((s) => {
+    if (s == uiScreen) {
+      s.classList.add("visible")
+    } else {
+      s.classList.remove("visible")
+    }
+  })
+}
+
 function handlePlayerLeft(playerId: PlayerId) {
   const threeObj = playerThreeObjs[playerId]
   if (threeObj) {

@@ -112,7 +112,7 @@ Rune.initLogic({
       startedAt: null,
       phase: "PAUSED",
       ships,
-      cubes: orderedCubes,
+      cubes: [], //orderedCubes,
       completedPlayers: {},
     }
   },

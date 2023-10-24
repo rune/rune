@@ -32,3 +32,8 @@ SDK for building multiplayer HTML5 games that run inside Rune on [Android](https
 ## Help
 
 If you're having trouble, please feel free to file an issue in our [GitHub issue tracker](https://github.com/rune/rune-games-sdk/issues) or join our [Discord server](https://discord.gg/rune-devs).
+
+## Contributing
+
+We'd really appreciate your help in making this SDK as useful as possible for everyone making multiplayer games on Rune. If you have any ideas, please don't hesistate open a PR!
+

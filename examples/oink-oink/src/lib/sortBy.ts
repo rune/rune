@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function sortBy<T>(list: T[], ...selectors: ((item: T) => any)[]) {
   return list.slice().sort((a, b) => {
     for (const selector of selectors) {

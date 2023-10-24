@@ -17,7 +17,7 @@ export function PlayerLabels() {
   return (
     <Root ref={rootRef}>
       {Object.entries(positionedLabelMap).map(
-        ([playerId, { color, position, direction }], i) => (
+        ([playerId, { color, position, direction }]) => (
           <Label
             key={playerId}
             playerId={playerId}

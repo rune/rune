@@ -8,7 +8,7 @@ const store = createStore()
 
 import("./logic").then(() => {
   Rune.initClient({
-    onChange: ({ game, players, yourPlayerId, event }) => {
+    onChange: ({ game, players, yourPlayerId }) => {
       store.set($state, {
         ready: true,
         game,

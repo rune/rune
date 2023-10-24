@@ -19,11 +19,12 @@ export function fittingString(
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const throttle = (fn: (...args: any[]) => void, wait = 300) => {
   let inThrottle: boolean,
     lastFn: ReturnType<typeof setTimeout>,
     lastTime: number
-  return function (...args: any[]) {
+  return function (...args: unknown[]) {
     if (!inThrottle) {
       // eslint-disable-next-line prefer-spread
       fn.apply(null, args)

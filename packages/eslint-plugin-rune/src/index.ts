@@ -119,7 +119,7 @@ const logicConfig: ESLint.ConfigData = {
       },
       ...restrictedSyntaxBase,
     ],
-    "rune/no-parent-scope-mutation": 2,
+    "rune/no-global-scope-mutation": 2,
   },
 }
 

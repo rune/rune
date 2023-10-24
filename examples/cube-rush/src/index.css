@@ -1,0 +1,304 @@
+@font-face {
+  font-family: "Oswald";
+  src: url(/src/style/Oswald.ttf);
+}
+
+:root {
+  font-size: 16px;
+
+  color: #213547;
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  height: 100vh;
+  background-color: #0c2074;
+  margin: 0;
+  display: flex;
+  place-items: center;
+  overflow-x: hidden;
+  touch-action: none;
+  position: relative;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  font-family: Oswald, system-ui;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.visible {
+  /* Use visibility inline style and !important to prevent transitioning on load */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+canvas {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: inherit;
+  transition: filter 1000ms;
+}
+canvas.blurred {
+  filter: blur(5px);
+}
+
+.screen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  z-index: 1;
+}
+
+/* Start Screen */
+.pausedScreen {
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pausedScreen .logo {
+  width: 12.5rem;
+  height: 9.2rem;
+  margin-top: 4.62rem;
+}
+
+.pausedScreen .startBtn {
+  border-radius: 0.5625rem;
+  border: 1.282px solid #9dfff9;
+  background: linear-gradient(180deg, #14d1c5 20.77%, #0c739f 100%);
+  box-shadow: 0px 5.12844px 5.12844px 0px rgba(11, 34, 61, 0.5);
+
+  color: #0c2074;
+  font-size: 1.25rem;
+  line-height: 130%;
+  text-transform: uppercase;
+  padding: 0.62rem;
+  min-width: 10.7rem;
+  margin-bottom: 6.8rem;
+}
+
+/* Countdown Screen */
+.countdownScreen {
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.countdownScreen .countdown {
+  color: #33f4c6;
+  text-shadow: 0px 0px 26px #14d1c5;
+  font-family: Oswald;
+  font-size: 7.44rem;
+  font-weight: 700;
+  line-height: 130%;
+}
+
+/* Playing Screen */
+.playingScreen {
+  visibility: hidden;
+}
+
+.playingScreen .info {
+  display: flex;
+  padding: 2.19rem 0.81rem 0;
+}
+
+.playingScreen .info .side {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.44rem;
+  min-width: 4rem;
+}
+
+.playingScreen .info .middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playingScreen .info .infoValue > p {
+  color: #33f4c6;
+
+  font-size: 0.75rem;
+  line-height: 130%;
+  text-transform: uppercase;
+}
+.playingScreen .info .infoValue > div {
+  color: #ffffff;
+
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 130%;
+  letter-spacing: 0.125rem;
+  white-space: nowrap;
+}
+.playingScreen .info .infoValue > div > sup {
+  font-size: 0.5em;
+}
+
+.playingScreen .info .place {
+  color: #808080;
+  font-size: 4em;
+}
+
+.playingScreen .info .speed {
+  color: #ffffff;
+  font-size: 2em;
+}
+
+.playingScreen .info .trackProgress {
+  color: #ffffff;
+  width: 8.56rem;
+  height: 1.44rem;
+  border-radius: 0.125rem;
+  background: #051763;
+  position: relative;
+
+  box-sizing: border-box;
+  padding: 0 0.6rem;
+}
+.playingScreen .info .trackProgress::before {
+  content: "";
+  background:
+    left 0.19rem center / contain no-repeat url(/src/trackProgressStart.svg),
+    right 0.22rem center / 0.65rem no-repeat url(/src/trackProgressFinish.svg);
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.playingScreen .info .trackProgress .trackProgressTrack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.playingScreen .info .trackProgress .trackProgressTrack > img {
+  height: 0.8rem; /* AVATAR_WIDTH */
+  width: 0.8rem; /* AVATAR_WIDTH */
+  position: absolute;
+  top: 0.3rem;
+  left: -0.4rem;
+}
+
+.playingScreen .spectating {
+  visibility: hidden;
+  margin-top: 0.56rem;
+  border-radius: 1.625rem;
+  background: #33f4c6;
+
+  color: #0c2074;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 130%;
+  padding: 0.2rem 0.75rem;
+}
+
+.playingScreen .spectating > img {
+  width: 0.73rem;
+  height: 0.73rem;
+}
+
+.playingScreen .stats {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0.5s linear,
+    opacity 0.5s linear;
+}
+
+.playingScreen .stats .content {
+  padding: 1.25rem;
+  border-radius: 1.6875rem;
+  opacity: 0.85;
+  background: #0c2074;
+
+  display: flex;
+  min-width: 15.125rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.19rem;
+  text-align: center;
+}
+.playingScreen .stats .content .infoValue > p {
+  color: #33f4c6;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 130%;
+  text-transform: uppercase;
+}
+.playingScreen .stats .content .infoValue > div {
+  margin-top: -0.38rem;
+  color: #ffffff;
+
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 130%;
+  letter-spacing: 0.125rem;
+  white-space: nowrap;
+}
+.playingScreen .stats .content .infoValue > div > sup {
+  font-size: 0.5em;
+}
+
+.playingScreen .controlsPreview {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.playingScreen .controlsPreview .left,
+.playingScreen .controlsPreview .right {
+  width: 50%;
+  height: 100%;
+
+  opacity: 0.6;
+  background: bottom 3.06rem left 1rem / 4.06rem 4.06rem no-repeat
+    url(/src/controlLeft.svg);
+}
+.playingScreen .controlsPreview .right {
+  transform: scaleX(-1);
+}
+
+.playingScreen .controlsPreview .left:active,
+.playingScreen .controlsPreview .right:active {
+  background-image: url(/src/controlLeftActive.svg);
+}

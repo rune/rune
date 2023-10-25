@@ -1093,7 +1093,7 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@4.16.1:
+rune-games-sdk@^4.16.1:
   version "4.16.1"
   resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.16.1.tgz#869a2058ab59c25c68c9579f62f9d2a353c1e725"
   integrity sha512-VCY6GcY9EhEbKXBXk5tJ95PaTy6U994nh2cdy3VibrdTU4l7s5Vn6h+mV79ZaIndn1CHFWdXnyzQS2KShLCd0Q==

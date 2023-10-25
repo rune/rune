@@ -10,7 +10,8 @@
     "build": "yarn workspaces run build",
     "lint": "eslint .",
     "test": "yarn workspaces run test",
-    "typecheck": "yarn workspaces run typecheck"
+    "typecheck": "yarn workspaces run typecheck",
+    "updateExampleGames": "node scripts/update-example-games.js"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.57.1",

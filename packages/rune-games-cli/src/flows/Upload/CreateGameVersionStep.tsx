@@ -62,6 +62,8 @@ export function CreateGameVersionStep({
             "Uploading a new game version"
           ) : createGameVersionError ? (
             formatApolloError(createGameVersionError, {
+              "[tango][GAME_VALIDATION_FAILED]":
+                "Game validation failed. Make sure you are using latest CLI version. If it is still failing, notify us in discord. https://discord.gg/rune-devs",
               default: "Something went wrong",
             })
           ) : (

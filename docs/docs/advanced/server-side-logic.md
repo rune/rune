@@ -17,9 +17,15 @@ The Rune SDK will help check your code for unsafe patterns such as:
 - Non-deterministic runtime built-ins such as `Date` and `fetch`
 - Regular expressions because they are stateful
 
-A notable exception to this list is `Math.random()` which is ensured to be deterministic, see [Randomness](randomness.md) for more info.
+A notable exception to this list is `Math.random()` which Rune makes deterministic (see [Randomness](randomness.md) for more info).
 
 The [Rune CLI](publishing/cli.md) will also warn you if it detects that your game logic seems to be using potentially unsafe code when uploading. Don't worry, we'll also help ensure that your game runs smoothly across devices when testing it before it's released.
+
+## Why this approach using deterministic code?
+
+Because it's the future! 😎 All modern multiplayer engines use predict-rollback netcode with deterministic physics. For instance, [Coherence](https://coherence.io) and [Photon Quantum](https://www.photonengine.com/quantum) for Unity and the [rollback plugin](https://gitlab.com/snopek-games/godot-rollback-netcode) for Godot. It's how you make great multiplayer games that work even in bad network conditions.
+
+Rune's predict-rollback approach is extremely bandwidth-efficient as only the action payloads are sent between clients and server, not the entire game state. Clients can also simulate the world ahead of the server, which makes real-time games possible even on bad mobile internet with frequent latency spikes.
 
 ## Editor Integration
 

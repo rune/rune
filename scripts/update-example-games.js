@@ -26,7 +26,7 @@ exampleGames.forEach((exampleGame) => {
   if (fs.existsSync(packageJsonPath)) {
     const packageJson = require(packageJsonPath)
 
-    packageJson.dependencies["rune-games-sdk"] = version
+    packageJson.dependencies["rune-games-sdk"] = `^${version}`
 
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 

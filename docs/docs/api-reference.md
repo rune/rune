@@ -249,18 +249,8 @@ Number of milliseconds indicating how often `update` function is called. Only av
 
 ### `Rune.interpolator()`
 
-Returns an instance of interpolator. See [Reducing stutter](advanced/reducing-stutter.md).
+Returns an instance of interpolator. See [Reducing Stutter](advanced/reducing-stutter.md)
 
 ### `Rune.interpolatorLatency()`
 
 Returns an instance of interpolator. See [Reducing stutter](advanced/reducing-stutter.md).
-
-## Interpolator
-
-### `Interpolator.update({ game: number | number[], futureGame: number | number[]})`
-
-See [Reducing stutter](advanced/reducing-stutter.md).
-
-### `Interpolator.getPosition()`
-
-See [Reducing stutter](advanced/reducing-stutter.md).

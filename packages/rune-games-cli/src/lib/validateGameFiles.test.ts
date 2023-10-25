@@ -32,6 +32,7 @@ const validLogicMultiplayer = {
   handlesPlayerLeft: true,
   minPlayers: 1,
   maxPlayers: 4,
+  updatesPerSecondDefined: false,
 }
 
 describe("validateGameFiles", () => {
@@ -473,6 +474,7 @@ describe("validateGameFiles", () => {
           handlesPlayerLeft: true,
           minPlayers: undefined,
           maxPlayers: undefined,
+          updatesPerSecondDefined: false,
         },
       }
     )
@@ -522,6 +524,7 @@ describe("validateGameFiles", () => {
           handlesPlayerLeft: true,
           minPlayers: 6,
           maxPlayers: 5,
+          updatesPerSecondDefined: false,
         },
       }
     )
@@ -582,6 +585,7 @@ describe("validateGameFiles", () => {
           handlesPlayerLeft: true,
           minPlayers: 2,
           maxPlayers: 4,
+          updatesPerSecondDefined: false,
         },
       }
     )
@@ -625,6 +629,7 @@ describe("validateGameFiles", () => {
           handlesPlayerLeft: true,
           minPlayers: 2,
           maxPlayers: 4,
+          updatesPerSecondDefined: false,
         },
       }
     )
@@ -701,6 +706,7 @@ describe("validateGameFiles", () => {
           handlesPlayerLeft: true,
           maxPlayers: 4,
           minPlayers: 2,
+          updatesPerSecondDefined: false,
         },
       }
     )
@@ -751,6 +757,7 @@ describe("validateGameFiles", () => {
           minPlayers: 1,
           maxPlayers: 4,
           updatesPerSecond: 40,
+          updatesPerSecondDefined: true,
           inputDelay: 50,
         },
       }
@@ -803,6 +810,7 @@ describe("validateGameFiles", () => {
           maxPlayers: 4,
           inputDelay: 60,
           updatesPerSecond: 10,
+          updatesPerSecondDefined: true,
         },
       }
     )
@@ -847,6 +855,109 @@ describe("validateGameFiles", () => {
           minPlayers: 1,
           maxPlayers: 4,
           updatesPerSecond: 10,
+          updatesPerSecondDefined: true,
+        },
+      }
+    )
+
+    await check(
+      [
+        {
+          path: "index.html",
+          size: 1 * 1e6,
+          content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+        },
+        {
+          path: "logic.js",
+          size: 1 * 1e6,
+          // language=JavaScript
+          content: `
+            const UPDATES_PER_SECOND = 30;
+            
+            Rune.initLogic({
+              minPlayers: 1,
+              maxPlayers: 4,
+              updatesPerSecond: UPDATES_PER_SECOND,
+              inputDelay: 50,
+              setup: () => {
+                return { cells: Array(25).fill(null) }
+              },
+              actions: {},
+              events: {
+                playerJoined: () => {},
+                playerLeft () {},
+              },
+            })`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [
+          {
+            message:
+              "logic.js: updatesPerSecond must be a constant (updatesPerSecond: 1-30)",
+          },
+        ],
+        multiplayer: {
+          handlesPlayerJoined: true,
+          handlesPlayerLeft: true,
+          minPlayers: 1,
+          maxPlayers: 4,
+          updatesPerSecond: undefined,
+          updatesPerSecondDefined: true,
+          inputDelay: 50,
+        },
+      }
+    )
+
+    await check(
+      [
+        {
+          path: "index.html",
+          size: 1 * 1e6,
+          content: `
+              <html>
+                <!-- multiplayer-dev.js is also detected as multiplayer -->
+                <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer-dev.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+        },
+        {
+          path: "logic.js",
+          size: 1 * 1e6 + 1,
+          // language=JavaScript
+          content: `
+            Rune.initLogic({
+              minPlayers: 1,
+              maxPlayers: 4,
+              setup: () => {
+                return { cells: Array(25).fill(null) }
+              },
+              actions: {},
+              events: {
+                playerJoined: () => {},
+                playerLeft () {} ,
+              },
+            })`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [
+          {
+            message: "logic.js size can't be more than 1MB",
+          },
+        ],
+        multiplayer: {
+          handlesPlayerJoined: true,
+          handlesPlayerLeft: true,
+          minPlayers: 1,
+          maxPlayers: 4,
+          updatesPerSecondDefined: false,
         },
       }
     )

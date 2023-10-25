@@ -3,6 +3,7 @@ const regexes = {
   maxPlayers: /maxPlayers\s*:\s*?([0-9]+)/,
   playerJoined: /playerJoined\s*[:(]/,
   playerLeft: /playerLeft\s*[:(]/,
+  updatesPerSecondDefined: /updatesPerSecond\s*:/,
   updatesPerSecond: /updatesPerSecond\s*:\s*?([0-9]+)/,
   inputDelay: /inputDelay\s*:\s*?([0-9]+)/,
 }
@@ -14,6 +15,8 @@ export function extractMultiplayerMetadata(logicJsContent: string) {
   const maxPlayersString = logicJsContent.match(regexes.maxPlayers)?.at(1)
   const maxPlayers = maxPlayersString ? parseInt(maxPlayersString) : undefined
 
+  const updatesPerSecondDefined =
+    logicJsContent.match(regexes.updatesPerSecondDefined) !== null
   const updatesPerSecondString = logicJsContent
     .match(regexes.updatesPerSecond)
     ?.at(1)
@@ -34,6 +37,7 @@ export function extractMultiplayerMetadata(logicJsContent: string) {
     handlesPlayerJoined,
     handlesPlayerLeft,
     updatesPerSecond,
+    updatesPerSecondDefined,
     inputDelay,
   }
 }

@@ -44,6 +44,7 @@ export interface ValidationResult {
     handlesPlayerJoined?: boolean
     handlesPlayerLeft?: boolean
     updatesPerSecond?: number
+    updatesPerSecondDefined?: boolean
     inputDelay?: number
   }
 }
@@ -82,6 +83,10 @@ export async function validateGameFiles(
 
   const indexHtml = findShortestPathFileThatEndsWith(files, "index.html")
   const logicJs = findShortestPathFileThatEndsWith(files, "logic.js")
+
+  if (logicJs && logicJs.size > 1e6) {
+    errors.push({ message: `logic.js size can't be more than 1MB` })
+  }
 
   let multiplayerValidationResult: ValidationResult["multiplayer"]
 
@@ -270,8 +275,13 @@ async function validateMultiplayerLogicJsContent({
       })
     }
 
-    if (multiplayerMetadata.updatesPerSecond !== undefined) {
-      if (
+    if (multiplayerMetadata.updatesPerSecondDefined) {
+      if (multiplayerMetadata.updatesPerSecond === undefined) {
+        errors.push({
+          message:
+            "logic.js: updatesPerSecond must be a constant (updatesPerSecond: 1-30)",
+        })
+      } else if (
         multiplayerMetadata.updatesPerSecond < 1 ||
         multiplayerMetadata.updatesPerSecond > 30
       ) {

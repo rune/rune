@@ -6,6 +6,14 @@ const version = process.argv[2]
 
 const examplesDir = path.resolve(__dirname, "../examples")
 
+//These example games also have sdk version inside html
+const gamesWithHtml = {
+  "oink-oink": "public/index.html",
+  pinpoint: "public/index.html",
+  sudoku: "public/index.html",
+  "tic-tac-toe": "index.html",
+}
+
 if (version === undefined) {
   console.log("Please provide SDK version")
   process.exit(1)
@@ -47,8 +55,14 @@ exampleGames.forEach((exampleGame) => {
         })
       })
     )
-  } else {
-    const indexHtmlPath = path.join(examplesDir, exampleGame, "index.html")
+  }
+
+  if (gamesWithHtml[exampleGame]) {
+    const indexHtmlPath = path.join(
+      examplesDir,
+      exampleGame,
+      gamesWithHtml[exampleGame]
+    )
 
     const indexHtml = fs.readFileSync(indexHtmlPath).toString()
 

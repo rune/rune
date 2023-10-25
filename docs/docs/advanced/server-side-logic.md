@@ -25,7 +25,7 @@ The [Rune CLI](publishing/cli.md) will also warn you if it detects that your gam
 
 Because it's the future! 😎 All modern multiplayer engines use predict-rollback netcode with deterministic physics. For instance, [Coherence](https://coherence.io) and [Photon Quantum](https://www.photonengine.com/quantum) for Unity and the [rollback plugin](https://gitlab.com/snopek-games/godot-rollback-netcode) for Godot. It's how you make great multiplayer games that work even in bad network conditions.
 
-Rune's predict-rollback approach is extremely bandwidth-efficient as only the action payloads are sent between clients and server, not the entire game state. Clients can also simulate the world ahead of the server, which makes real-time games possible even on bad mobile internet with frequent latency spikes.
+Rune's predict-rollback approach is extremely bandwidth-efficient as only the action payloads are sent between clients and server, not the entire game state. Clients can also simulate the world ahead of the server, which makes real-time games possible even on bad mobile internet with frequent latency spikes. This is all done by having the exact same deterministic game logic running on both the clients and the server.
 
 ## Editor Integration
 

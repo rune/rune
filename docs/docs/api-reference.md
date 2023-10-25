@@ -9,7 +9,9 @@ Rune methods for writing multiplayer games. The SDK is split into two parts:
 - **Game logic**, this code needs to be located in a file called `logic.js`
 - **UI integration**, that can live anywhere, but the docs will refer to `client.js`
 
-## `Rune.initLogic(options)`
+## Game logic
+
+### `Rune.initLogic(options)`
 
 The `initLogic` function should be called directly at the top level of your `logic.js` file. This should contain all logic required to control your game state and handle player life cycle events. All options except `events` are required. Example:
 
@@ -57,35 +59,45 @@ Rune.initLogic({
       game.currentPlayerIndex = (game.currentPlayerIndex + 1) % allPlayerIds.length;
       game.currentPlayerStartedAt = Rune.gameTimeInSeconds();
     }
-  }
+  },
+  updatesPerSecond: 10,
+  inputDelay: 30,
 })
 ```
 
-### `minPlayers: number`
+#### `minPlayers: number`
 
 A value between 1-4 of the minmum amount of players that is required to play the game. See [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players).
 
-### `maxPlayers: number`
+#### `maxPlayers: number`
 
 A value between 1-4, must be equal to or greater than `minPlayers`. If the value is lower than 4, other users may join the game as spectators. See [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players).
 
-### `setup(allPlayerIds: string[]): any`
+#### `setup(allPlayerIds: string[]): any`
 
 The `setup` function returns the initial values for the game state, which is the game information that’s synced across players. The function gets the `allPlayerIds` argument which is an array of the player IDs at the time of starting the game and must return the initial game state.
 
-### `actions: { [string]: (payload, { game: any, playerId: string, allPlayerIds: string[] }) => void}`
+#### `actions: { [string]: (payload, { game: object, playerId: string, allPlayerIds: string[] }) => void}`
 
 The `actions` option is an object with actions functions exposed to the UI integration layer, called with [`Rune.actions.myAction(payload)`](#runeactionspayload). The functions are responsible for [validating the action](#runeinvalidaction), mutating the `game` state and [end the game](#runegameover) when appropriate.
 
-### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any, allPlayerIds: string[] }) => void }` _optional_
+#### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any, allPlayerIds: string[] }) => void }` _optional_
 
 By default a game will end if a player leaves (see [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players)), but by defining the `playerJoined`/`playerLeft` events you can [Support Players Joining Midgame](advanced/joining-leaving.md#supporting-players-joining-midgame).
 
-### `update({game: any,  allPlayerIds: string[]}) => void` _optional_
+#### `update({game: object,  allPlayerIds: string[]}) => void` _optional_
 
 Function that is executed every second. See [Using Time in your Game](advanced/real-time-games.md#update-function).
 
-## `Rune.invalidAction()`
+#### `updatesPerSecond?: number`
+
+How many times `update` function should be executed per second. Allowed values 1-30. Default 1. See  [Real time games](advanced/real-time-games.md).
+
+#### `inputDelay?: number`
+
+How many milliseconds user action is delayed before notifying client. Allowed values 0-250. Default value 25.
+
+### `Rune.invalidAction()`
 
 Whenever a player tries to do an action that is not allowed, the action handler should reject it by calling `throw Rune.invalidAction()` which will cancel the action and roll back any local optimistic updates.
 
@@ -104,7 +116,7 @@ Rune.initLogic({
 })
 ```
 
-## `Rune.gameOver(options)`
+### `Rune.gameOver(options)`
 
 When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](how-it-works/game-over.md) guide.
 
@@ -130,23 +142,21 @@ Rune.initLogic({
 })
 ```
 
-## `Rune.gameTimeInSeconds()`
-
-Returns the amount of seconds that have passed since the start of the game. See [Using Time in your Game](advanced/real-time-games.md#game-time).
-
-### `players: Record<string, "WON" | "LOST" | number>`
+#### `players: Record<string, "WON" | "LOST" | number>`
 
 `players` is an object with player IDs as keys and the game result as values. The game result for each player can be either `WON`/`LOST` or an integer score (higher is better) score. Mixing `WON`/`LOST` and scores at the same time is not allowed. All players present in the game at the moment the game ends must be mentioned in the `players` object.
 
-### `delayPopUp?: boolean`
+#### `delayPopUp?: boolean`
 
 Optional. Set to `true` if you want to instruct Rune to delay showing of the game over popup until you call `Rune.showGameOverPopUp()`.
 
-## `Rune.showGameOverPopUp()`
+### `Rune.gameTime()`
 
-If you set `delayPopUp` to `true` in `Rune.gameOver()`, you should call this function in your `client.js` to show the game over popup.
+Returns the amount of milliseconds that have passed since the start of the game. See [Using Time in your Game](advanced/real-time-games.md#game-time).
 
-## `Rune.initClient(options)`
+## Client
+
+### `Rune.initClient(options)`
 
 The `initClient` function should be called after your game is fully ready, but should not start the actual gameplay until `onChange` is called.
 
@@ -156,6 +166,7 @@ Rune.initClient({
   onChange: ({
     game,
     previousGame,
+    futureGame,
     yourPlayerId,
     players,
     action,
@@ -167,21 +178,25 @@ Rune.initClient({
 })
 ```
 
-### `onChange: () => void`
+#### `onChange: () => void`
 
-#### `game: any`
+##### `game: object`
 
 This argument is the current game state. Your `onChange()` function should update the UI to reflect its values.
 
-#### `previousGame: any`
+##### `previousGame: object`
 
 This argument is the previous game state. Usually this can be ignored, but it's useful if your game needs to detect changes of certain values.
 
-#### `yourPlayerId?: string`
+##### `futureGame?: object`
+
+This argument is the predicted future game state. This value is only available if game uses `update` function. Used in cases game wants to do interpolations. See [Reducing stutter](advanced/reducing-stutter.md).
+
+##### `yourPlayerId?: string`
 
 Your player id, if the current user is a spectator this argument is undefined.
 
-#### `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>`
+##### `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>`
 
 The `players` argument is an object of the current players, useful to display their names and avatars in the game.
 
@@ -191,15 +206,15 @@ Do not rely on `players` argument for determining player order, instead use `set
 
 :::
 
-#### `action?: { name: string, playerId: string, params: any }`
+##### `action?: { name: string, playerId: string, params: any }`
 
 If the update was triggered from a `Rune.actions.*` call, this argument will contain info about it, such as the payload and who initiated. Usually this should be ignored and rely on `game` instead.
 
-#### `event?: { name: string, params: any }`
+##### `event?: { name: string, params: any }`
 
-Currently this is always the `stateSync` event, you can ignore it for now.
+Possible events: `playerJoined`, `playerLeft`, `stateSync`, `update`, `timeSync`.
 
-## `Rune.actions.*(payload)`
+### `Rune.actions.*(payload)`
 
 All functions passed in the `actions` object in `Rune.initLogic()` will be exposed to the client via `Rune.actions.myActionName`. This is the only way game state may be updated to make sure it's propagated to every player. You may call it with one argument of any type, but usually an object is recommended.
 
@@ -211,3 +226,41 @@ button.onClick = () => {
   })
 }
 ```
+
+### `Rune.showGameOverPopUp()`
+
+If you set `delayPopUp` to `true` in `Rune.gameOver()`, you should call this function in your `client.js` to show the game over popup.
+
+### `Rune.showInvitePlayers()`
+
+Opens invite modal inside the Rune app. Useful if you want to incentivize players to invite their friends.
+
+### `Rune.gameTime()`
+
+Returns the amount of milliseconds that have passed since the start of the game. See [Using Time in your Game](advanced/real-time-games.md#game-time).
+
+### `Rune.timeSinceLastUpdate()`
+
+Returns the amount of milliseconds that have passed since the last `update` call. Can be used to smoothly render timers or interpolate between two positions.
+
+### `Rune.msPerUpdate`
+
+Number of milliseconds indicating how often `update` function is called. Only available if game uses updates.
+
+### `Rune.interpolator()`
+
+Returns an instance of interpolator. See [Reducing stutter](advanced/reducing-stutter.md).
+
+### `Rune.interpolatorLatency()`
+
+Returns an instance of interpolator. See [Reducing stutter](advanced/reducing-stutter.md).
+
+## Interpolator
+
+### `Interpolator.update({ game: number | number[], futureGame: number | number[]})`
+
+See [Reducing stutter](advanced/reducing-stutter.md).
+
+### `Interpolator.getPosition()`
+
+See [Reducing stutter](advanced/reducing-stutter.md).

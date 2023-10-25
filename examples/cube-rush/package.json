@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "postprocessing": "6.33.2",
-    "rune-games-sdk": "4.16.0",
+    "rune-games-sdk": "4.16.1",
     "three": "0.157.0",
     "troika-three-text": "0.49.0"
   },

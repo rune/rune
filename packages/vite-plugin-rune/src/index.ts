@@ -2,6 +2,7 @@ import type { Plugin } from "vite"
 import { createRequire } from "node:module"
 import path from "node:path"
 import { existsSync, readFileSync } from "node:fs"
+import { terserPlugin } from "./terser.js"
 
 const require = createRequire(import.meta.url)
 
@@ -108,5 +109,6 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
         },
       }),
     },
+    terserPlugin(),
   ]
 }

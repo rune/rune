@@ -1,6 +1,7 @@
 import { Point } from "./types.ts"
 import { boardSize, movePixelsPerTick } from "./logicConfig.ts"
 
+// Use coarse collision grid for performance optimization
 const collisionGridSize = Math.round(movePixelsPerTick * 3)
 
 export function collisionGridPointer(point: Point): number

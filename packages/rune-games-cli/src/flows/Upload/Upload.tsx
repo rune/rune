@@ -30,15 +30,14 @@ export function Upload({ flags }: { flags: CliFlags }) {
   }, [myGames])
 
   useEffect(() => {
-    release && setReadyForRelease(release)
+    release !== undefined && release !== null && setReadyForRelease(release)
     const gameFromInputFlag =
       name &&
       myGames?.filter(
         (game) => game.title.toLowerCase() === name.toLowerCase()
       )[0]
     gameFromInputFlag && setGameId(gameFromInputFlag.id)
-
-    confirm && setConfirmed(confirm)
+    confirm !== undefined && confirm !== null && setConfirmed(confirm)
   }, [confirm, myGames, name, release])
 
   return (

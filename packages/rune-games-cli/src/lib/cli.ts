@@ -9,7 +9,12 @@ export const cli = meow(
     $ rune list         [Lists all your games]
 
   Options
-    --version, -v   Show CLI version
+    --version, -v   Show CLI version 
+
+  Upload Options
+    --release, -r   <true|false> Sets the game to either release or playtest
+    --confirm, -c   <true|false> Confirm overriding the current game version
+    --name,    -n   <game name>  Name of the existing game.
 
   Examples
     $ rune create my-game
@@ -17,12 +22,15 @@ export const cli = meow(
     $ cd my-game && rune upload
 
     $ rune upload my-game
+
+    $ rune upload my-game --release false --name "My Awesome Game"
     
 `,
   {
     importMeta: import.meta,
     autoHelp: false,
     autoVersion: false,
+
     flags: {
       version: {
         type: "boolean",

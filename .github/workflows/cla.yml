@@ -29,8 +29,10 @@ jobs:
           path-to-document: 'https://github.com/cla-assistant/github-action/blob/staging/CLA.md' # e.g. a CLA or a DCO document
           # branch should not be protected
           branch: 'main'
-          allowlist: 'AmaniAlbrecht', 'bfelbo', 'helios1138', 'LyndaMcD', 'mieszko4', 'mzbyszynski', 'rune-ci', 'sanjaypojo', 'shanehelm72'
+          allowlist: AmaniAlbrecht,bfelbo,helios1138,LyndaMcD,mieszko4,mzbyszynski,rune-ci,sanjaypojo,shanehelm72
 
           # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken
           remote-organization-name: 'rune'
           remote-repository-name: 'rune-games-sdk-cla'
+
+

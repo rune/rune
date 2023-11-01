@@ -27,7 +27,7 @@ jobs:
         with:
           path-to-document: 'https://github.com/rune/rune-games-sdk/blob/staging/CLA.md' # e.g. a CLA or a DCO document
           # branch should not be protected
-          allowlist: AmaniAlbrecht,bfelbo,helios1138,LyndaMcD,mieszko4,mzbyszynski,rune-ci,sanjaypojo,shanehelm72
+          allowlist: AmaniAlbrecht,bfelbo,helios1138,LyndaMcD,mieszko4,mzbyszynski,rune-ci,sanjaypojo,shanehelm72,Gongreg
 
           # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken
           remote-organization-name: rune

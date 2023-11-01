@@ -43,7 +43,6 @@ let yourPlayerId: string | undefined
 let opponentIndex = 0
 let playerIndex = 0
 
-const isReady = false
 const images = [new Image(22, 22), new Image(22, 22)]
 
 let lastScoredAt = 0

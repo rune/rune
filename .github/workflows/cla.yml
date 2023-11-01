@@ -32,5 +32,5 @@ jobs:
           allowlist: 'AmaniAlbrecht', 'bfelbo', 'helios1138', 'LyndaMcD', 'mieszko4', 'mzbyszynski', 'rune-ci', 'sanjaypojo', 'shanehelm72'
 
           # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken
-          remote-organization-name: rune
-          remote-repository-name: rune-games-sdk-cla
+          remote-organization-name: 'rune'
+          remote-repository-name: 'rune-games-sdk-cla'

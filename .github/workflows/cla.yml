@@ -27,7 +27,7 @@ jobs:
         with:
           path-to-document: 'https://github.com/rune/rune-games-sdk/blob/staging/CLA.md' # e.g. a CLA or a DCO document
           # branch should not be protected
-          allowlist: AmaniAlbrecht,bfelbo,helios1138,LyndaMcD,mieszko4,mzbyszynski,rune-ci,sanjaypojo,shanehelm72
+          allowlist: AmaniAlbrecht,bfelbo,helios1138,LyndaMcD,mieszko4,mzbyszynski,rune-ci,sanjaypojo,shanehelm72,Gongreg
 
           # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken
           remote-organization-name: rune
@@ -35,3 +35,4 @@ jobs:
           lock-pullrequest-aftermerge: false
           branch: main
           path-to-signatures: cla.json
+          custom-notsigned-prcomment: '<br/>Thank you for your submission, we really appreciate it! Like many open-source projects, we ask that you read and sign our [Contributor License Agreement](https://github.com/rune/rune-games-sdk/blob/staging/CLA.md) before we can accept your contribution. You can sign the CLA by posting a comment on this PR using the text below.<br/>'

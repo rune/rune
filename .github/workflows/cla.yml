@@ -35,3 +35,4 @@ jobs:
           lock-pullrequest-aftermerge: false
           branch: main
           path-to-signatures: cla.json
+          custom-notsigned-prcomment: '<br/>Thank you for your submission, we really appreciate it! Like many open-source projects, we ask that you read and sign our [Contributor License Agreement](https://github.com/rune/rune-games-sdk/blob/staging/CLA.md) before we can accept your contribution. You can sign the CLA by posting a comment on this PR using the text below.<br/>'

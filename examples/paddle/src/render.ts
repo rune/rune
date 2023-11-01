@@ -127,7 +127,9 @@ export function renderScore(
   name: string,
   score: number
 ) {
-  context.drawImage(image, 20, y - 10, 22, 22)
+  if (name) {
+    context.drawImage(image, 20, y - 10, 22, 22)
+  }
 
   context.beginPath()
   context.roundRect(20, y - 10, 80, 22, [26])

@@ -1,10 +1,19 @@
 import { throttle } from "./helpers.ts"
 import { GAME_WIDTH, PADDLE_WIDTH } from "./logic.ts"
 
+let controlsInitialized = false
+
 export function initControls(
   onMove: () => void,
+  getIsPlayer: () => boolean,
   getPaddlePosition: () => number
 ) {
+  if (controlsInitialized) {
+    return
+  }
+
+  controlsInitialized = true
+
   let allowMove = false
 
   const calculatePosition = (x: number) => {
@@ -18,7 +27,9 @@ export function initControls(
   }
 
   const move = throttle((position: number) => {
-    Rune.actions.setPosition(position)
+    if (getIsPlayer()) {
+      Rune.actions.setPosition(position)
+    }
   }, 100)
 
   window.addEventListener("pointerdown", (event) => {
@@ -28,8 +39,7 @@ export function initControls(
 
     const distanceFromPaddleCenter = Math.abs(paddle - cursor)
 
-    //Allow tapping 2 times the size of paddle
-    if (distanceFromPaddleCenter < PADDLE_WIDTH) {
+    if (distanceFromPaddleCenter < PADDLE_WIDTH * 1.4) {
       allowMove = true
       move(cursor)
     } else {
@@ -37,7 +47,7 @@ export function initControls(
     }
   })
 
-  window.addEventListener("pointerup", (event) => {
+  window.addEventListener("pointerup", () => {
     allowMove = false
   })
 

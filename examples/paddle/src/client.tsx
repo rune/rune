@@ -197,7 +197,7 @@ window.onload = function () {
       )
 
       const position =
-        yourPlayerId && game.totalScore === 0 && !hasMoved
+        yourPlayerId && !hasMoved
           ? playerPaddleInterpolator.getPosition() +
             Math.sin(frame / 60) * GAME_WIDTH * 0.03
           : playerPaddleInterpolator.getPosition()
@@ -208,7 +208,7 @@ window.onload = function () {
         position
       )
 
-      if (yourPlayerId && game.totalScore === 0 && !hasMoved) {
+      if (yourPlayerId && !hasMoved) {
         renderHelp(
           context,
           GAME_RENDERED_HEIGHT - PADDLE_OFFSET - PADDLE_HEIGHT,

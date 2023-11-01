@@ -34,3 +34,4 @@ jobs:
           remote-repository-name: rune-games-sdk-cla
           lock-pullrequest-aftermerge: false
           branch: main
+          path-to-signatures: cla.json

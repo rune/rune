@@ -91,7 +91,7 @@ We want to let you unleash your creativity while still avoiding content inapprop
 
 ### Can I Add Network Requests Into My Game?
 
-We don’t allow network requests of any kind. This protects players' privacy and allows seamless gameplay regardless of internet connection.
+Your game should not use network requests of any kind. Avoiding network requests protects players' privacy/security and allows seamless gameplay regardless of internet connection. It also guarantees that your game will keep running even if some external servers get shutdown.
 
 <br />
 <br />

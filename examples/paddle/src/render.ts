@@ -92,6 +92,9 @@ export function renderPopup(
   context.fillText(displayName, GAME_WIDTH / 2, 150)
 }
 
+const handImage = new Image(22, 22)
+handImage.src = "hand.png"
+
 export function renderPaddle(
   context: CanvasRenderingContext2D,
   y: number,
@@ -102,6 +105,19 @@ export function renderPaddle(
   context.beginPath()
   context.roundRect(x, y, PADDLE_WIDTH, PADDLE_HEIGHT, [4])
   context.fill()
+}
+
+export function renderHelp(
+  context: CanvasRenderingContext2D,
+  y: number,
+  x: number
+) {
+  context.font = "400 10px Poppins"
+  context.fillStyle = "rgba(255, 255, 255, 1)"
+  context.textAlign = "center"
+  context.fillText("Hold to move", x + PADDLE_WIDTH / 2, y + 55)
+
+  context.drawImage(handImage, x + PADDLE_WIDTH / 2 - 20, y - 8, 69, 54)
 }
 
 export function renderScore(

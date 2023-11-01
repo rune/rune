@@ -10,6 +10,7 @@ import {
 } from "./logic"
 import {
   renderBall,
+  renderHelp,
   renderPaddle,
   renderPopup,
   renderScore,
@@ -29,6 +30,7 @@ const ballInterpolator = Rune.interpolator<[number, number]>()
 // Prevent paddle from teleporting around when receiving action from the past
 const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
   maxSpeed: PADDLE_SPEED + 1,
+  timeToMaxSpeed: 200,
 })
 
 const { canvas, context } = setupCanvas()
@@ -46,6 +48,8 @@ const images = [new Image(22, 22), new Image(22, 22)]
 
 let lastScoredAt = 0
 let lastScoredBy: number | null = null
+
+let hasMoved = false
 
 window.onload = function () {
   document.body.appendChild(canvas)
@@ -69,7 +73,10 @@ window.onload = function () {
         opponentIndex = playerIndex === 0 ? 1 : 0
 
         if (yourPlayerId) {
-          initControls()
+          initControls(
+            () => (hasMoved = true),
+            () => game.paddles[playerIndex].position
+          )
         }
 
         if (!yourPlayerId) {
@@ -135,7 +142,10 @@ window.onload = function () {
     },
   })
 
+  let frame = 0
+
   function render() {
+    frame++
     context.clearRect(0, 0, canvas.width, canvas.height)
 
     context.fillStyle = "#150813"
@@ -187,11 +197,26 @@ window.onload = function () {
         PADDLE_OFFSET / 2,
         opponentPaddleInterpolator.getPosition()
       )
+
+      const position =
+        game.totalScore === 0 && !hasMoved
+          ? playerPaddleInterpolator.getPosition() +
+            Math.sin(frame / 60) * GAME_WIDTH * 0.03
+          : playerPaddleInterpolator.getPosition()
+
       renderPaddle(
         context,
         GAME_RENDERED_HEIGHT - PADDLE_OFFSET - PADDLE_HEIGHT,
-        playerPaddleInterpolator.getPosition()
+        position
       )
+
+      if (game.totalScore === 0) {
+        renderHelp(
+          context,
+          GAME_RENDERED_HEIGHT - PADDLE_OFFSET - PADDLE_HEIGHT,
+          position
+        )
+      }
     }
 
     // Call render() again when browser is ready to render another frame

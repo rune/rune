@@ -23,12 +23,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # the below token should have repo scope and must be manually added by you in the repository's secret
           # This token is required only if you have configured to store the signatures in a remote repository/organization
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          # PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
           path-to-signatures: 'signatures/version1/cla.json'
           path-to-document: 'https://github.com/cla-assistant/github-action/blob/staging/CLA.md' # e.g. a CLA or a DCO document
           # branch should not be protected
-          branch: 'main'
+          branch: 'staging'
           allowlist: AmaniAlbrecht,bfelbo,helios1138,LyndaMcD,mieszko4,mzbyszynski,rune-ci,sanjaypojo,shanehelm72
 
           # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken

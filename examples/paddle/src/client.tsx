@@ -63,6 +63,7 @@ window.onload = function () {
       yourPlayerId = params.yourPlayerId
 
       if (params.event?.name === "stateSync") {
+        hasMoved = false
         images[0].src = players[game.players[0].id]?.avatarUrl
         images[1].src = players[game.players[1].id]?.avatarUrl
 
@@ -207,7 +208,7 @@ window.onload = function () {
         position
       )
 
-      if (yourPlayerId && game.totalScore === 0) {
+      if (yourPlayerId && game.totalScore === 0 && !hasMoved) {
         renderHelp(
           context,
           GAME_RENDERED_HEIGHT - PADDLE_OFFSET - PADDLE_HEIGHT,

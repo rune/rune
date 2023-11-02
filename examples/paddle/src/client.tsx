@@ -21,6 +21,8 @@ import { Interpolator, InterpolatorLatency, Players } from "rune-games-sdk"
 import { initControls } from "./controls"
 import { playSound } from "./playSound.ts"
 
+import "./roundRectPolyfill.js"
+
 // Interpolate between updates to support variable FPS
 let playerPaddleInterpolator:
   | Interpolator<number>

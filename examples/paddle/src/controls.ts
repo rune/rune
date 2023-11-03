@@ -2,6 +2,7 @@ import { throttle } from "./helpers.ts"
 import { GAME_WIDTH, PADDLE_WIDTH } from "./logic.ts"
 
 let controlsInitialized = false
+const MIN_MOVE_DISTANCE = 2
 
 export function initControls(
   onMove: () => void,
@@ -27,19 +28,20 @@ export function initControls(
   }
 
   const move = throttle((position: number) => {
-    if (getIsPlayer()) {
+    // Don't send actions if player is spectator or trying to hold paddle still
+    if (
+      getIsPlayer() &&
+      Math.abs(position - getPaddlePosition()) > MIN_MOVE_DISTANCE
+    ) {
       Rune.actions.setPosition(position)
     }
   }, 100)
 
   window.addEventListener("pointerdown", (event) => {
-    const paddle = getPaddlePosition()
-
     const cursor = calculatePosition(event.clientX)
 
-    const distanceFromPaddleCenter = Math.abs(paddle - cursor)
-
-    if (distanceFromPaddleCenter < PADDLE_WIDTH * 1.4) {
+    // Only move if player is holding paddle and moving it
+    if (Math.abs(getPaddlePosition() - cursor) < PADDLE_WIDTH * 1.4) {
       allowMove = true
       move(cursor)
     } else {
@@ -53,9 +55,8 @@ export function initControls(
 
   window.addEventListener("pointermove", (event) => {
     if (allowMove) {
-      const position = calculatePosition(event.clientX)
-
-      move(position)
+      const cursor = calculatePosition(event.clientX)
+      move(cursor)
 
       onMove()
     }

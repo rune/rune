@@ -15,7 +15,7 @@ export function initControls(
 
   controlsInitialized = true
 
-  let allowMove = false
+  let holdingPaddle = false
 
   const calculatePosition = (x: number) => {
     return Math.max(
@@ -42,19 +42,19 @@ export function initControls(
 
     // Only move if player is holding paddle and moving it
     if (Math.abs(getPaddlePosition() - cursor) < PADDLE_WIDTH * 1.4) {
-      allowMove = true
+      holdingPaddle = true
       move(cursor)
     } else {
-      allowMove = false
+      holdingPaddle = false
     }
   })
 
   window.addEventListener("pointerup", () => {
-    allowMove = false
+    holdingPaddle = false
   })
 
   window.addEventListener("pointermove", (event) => {
-    if (allowMove) {
+    if (holdingPaddle) {
       const cursor = calculatePosition(event.clientX)
       move(cursor)
 

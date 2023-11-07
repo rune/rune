@@ -23,22 +23,36 @@ export function Upload({ flags }: { flags: CliFlags }) {
   const { me } = useMe()
   const { games } = useGames({ skip: !me })
   const { myGames } = useMyGames({ games, devId: me?.devId })
-  const { release, name, confirm } = flags
+  const { release: releaseFlag, name, draft: draftFlag } = flags
 
   useEffect(() => {
     if (myGames && myGames.length > 1) setNeedConfirmation(true)
   }, [myGames])
 
   useEffect(() => {
-    release !== undefined && release !== null && setReadyForRelease(release)
+    //Uses --release && --draft flags to indicate whether the game is ready for production or is a draft
+    //This will lead to step about it being skipped
+    if (releaseFlag) {
+      setReadyForRelease(true)
+    }
+
+    if (draftFlag) {
+      setReadyForRelease(false)
+    }
+
     const gameFromInputFlag =
       name &&
       myGames?.filter(
         (game) => game.title.toLowerCase() === name.toLowerCase()
       )[0]
+
     gameFromInputFlag && setGameId(gameFromInputFlag.id)
-    confirm !== undefined && confirm !== null && setConfirmed(confirm)
-  }, [confirm, myGames, name, release])
+
+    //In case --release flag is used, automatically confirm to skip interactive step
+    if (releaseFlag || draftFlag) {
+      setConfirmed(true)
+    }
+  }, [myGames, name, releaseFlag, draftFlag])
 
   return (
     <Box flexDirection="column">
@@ -51,33 +65,38 @@ export function Upload({ flags }: { flags: CliFlags }) {
           setGameDir(gameDir)
         }}
       />
-      {gameDir !== undefined && readyForRelease === undefined && (
-        <ReadyForReleaseStep onComplete={setReadyForRelease} />
+      {gameDir !== undefined && (
+        <>
+          {readyForRelease === undefined ? (
+            <ReadyForReleaseStep onComplete={setReadyForRelease} />
+          ) : (
+            <>
+              {(gameId === undefined || gameId === null) && (
+                <ChooseGameStep currentGameId={gameId} onComplete={setGameId} />
+              )}
+              {gameId === null && <CreateGameStep onComplete={setGameId} />}
+
+              {!!gameId && (
+                <>
+                  {confirmed || !needConfirmation ? (
+                    <CreateGameVersionStep
+                      gameId={gameId}
+                      gameDir={gameDir}
+                      readyForRelease={readyForRelease}
+                    />
+                  ) : (
+                    <ConfirmationStep
+                      gameId={gameId}
+                      gameDir={gameDir}
+                      onComplete={setConfirmed}
+                    />
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </>
       )}
-      {gameDir !== undefined &&
-        readyForRelease !== undefined &&
-        (gameId === undefined || gameId === null) && (
-          <ChooseGameStep currentGameId={gameId} onComplete={setGameId} />
-        )}
-      {gameId === null && readyForRelease !== undefined && (
-        <CreateGameStep onComplete={setGameId} />
-      )}
-      {!!gameId &&
-        !!gameDir &&
-        readyForRelease !== undefined &&
-        (confirmed || !needConfirmation ? (
-          <CreateGameVersionStep
-            gameId={gameId}
-            gameDir={gameDir}
-            readyForRelease={readyForRelease}
-          />
-        ) : (
-          <ConfirmationStep
-            gameId={gameId}
-            gameDir={gameDir}
-            onComplete={setConfirmed}
-          />
-        ))}
     </Box>
   )
 }

@@ -67,6 +67,13 @@ export function GameDirInputStep({
     }
   }, [existsGameDir])
 
+  //Skip directory selection step in case a valid directory is provided
+  useEffect(() => {
+    if (cli.input[1]) {
+      onSubmitGameDir()
+    }
+  }, [onSubmitGameDir])
+
   return (
     <>
       {(!existsGameDir || !!validateGameResult?.errors.length) && (

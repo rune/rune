@@ -11,9 +11,9 @@ export const cli = meow(
   Options
     --version, -v   Show CLI version 
 
-  Upload Options
-    --release, -r   <true|false> Sets the game to either release or playtest
-    --confirm, -c   <true|false> Confirm overriding the current game version
+  Optional Upload Options
+    --release, -r   Mark the game version as ready for release
+    --draft,   -d   Mark the game version as draft
     --name,    -n   <game name>  Name of the existing game.
 
   Examples
@@ -37,16 +37,19 @@ export const cli = meow(
         alias: "v",
       },
       release: {
-        type: "boolean",
         alias: "r",
+        type: "boolean",
+        default: false,
       },
+      draft: {
+        alias: "d",
+        type: "boolean",
+        default: false,
+      },
+
       name: {
         type: "string",
         alias: "n",
-      },
-      confirm: {
-        type: "boolean",
-        alias: "c",
       },
     },
   }

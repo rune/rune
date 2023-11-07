@@ -23,7 +23,7 @@ export const cli = meow(
 
     $ rune upload my-game
 
-    $ rune upload my-game --release false --name "My Awesome Game"
+    $ rune upload my-game --release --name "My Awesome Game"
     
 `,
   {

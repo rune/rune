@@ -30,8 +30,6 @@ export function Upload({ flags }: { flags: CliFlags }) {
   }, [myGames])
 
   useEffect(() => {
-    //Uses --release && --draft flags to indicate whether the game is ready for production or is a draft
-    //This will lead to step about it being skipped
     if (releaseFlag) {
       setReadyForRelease(true)
     }
@@ -48,7 +46,7 @@ export function Upload({ flags }: { flags: CliFlags }) {
 
     gameFromInputFlag && setGameId(gameFromInputFlag.id)
 
-    //In case --release flag is used, automatically confirm to skip interactive step
+    //In case --release or --draft flag is used, automatically confirm to skip interactive step
     if (releaseFlag || draftFlag) {
       setConfirmed(true)
     }

@@ -21,9 +21,9 @@ export const cli = meow(
 
     $ cd my-game && rune upload
 
-    $ rune upload my-game
+    $ rune upload ./my-game
 
-    $ rune upload my-game --release --name "My Awesome Game"
+    $ rune upload ./my-game --release --name "My Awesome Game"
     
 `,
   {

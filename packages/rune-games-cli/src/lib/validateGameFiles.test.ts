@@ -294,7 +294,7 @@ describe("validateGameFiles", () => {
         valid: false,
         multiplayer: validLogicMultiplayer,
         errors: [
-          { message: "Game size must be less than 25MB" },
+          { message: "Game size must be less than 10MB" },
           { message: "Rune SDK must be the first script in index.html" },
         ],
       }

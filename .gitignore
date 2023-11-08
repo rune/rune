@@ -12,3 +12,6 @@ yarn-error.log
 !.vscode/tasks.json
 .idea
 dist/
+bun.lockb
+package-lock.json
+yarn.lock

@@ -13,7 +13,7 @@ import { LoginGate } from "./LoginGate.js"
 import { VersionCheckGate } from "./VersionCheckGate.js"
 
 export function App() {
-  const { command, args, commandInvalid } = cliCommand()
+  const { command, args, commandInvalid, flags } = cliCommand()
 
   if (commandInvalid) {
     return <Text color="red">Invalid command `{command}`</Text>
@@ -34,7 +34,7 @@ export function App() {
           {command === "list" ? (
             <List />
           ) : command === "upload" ? (
-            <Upload />
+            <Upload flags={flags} />
           ) : command === "update-info" ? (
             <Update args={args} />
           ) : null}

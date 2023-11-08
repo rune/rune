@@ -1,6 +1,10 @@
 name: CI
 
-on: push
+on:
+  push:
+  pull_request:
+    types: [opened,synchronize]
+
 
 concurrency:
   group: tests-${{ github.ref }}

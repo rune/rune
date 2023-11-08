@@ -2,6 +2,8 @@ name: CI
 
 on:
   push:
+    branches:
+      - staging
   pull_request_target:
     types: [opened,synchronize]
 

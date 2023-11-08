@@ -14,9 +14,9 @@ Rune players love playing with one hand and swiping between games so players pre
 
 Rune’s UI provides a simple way to pause/play/restart that works for all games so you don’t need a menu screen or a pause button in your game. This lets players get into the action of your game, thereby making it faster to start playing and more fun for players.
 
-### Avoid External Branding or Ads
+### Avoid Ads, Branding and Links
 
-One of the amazing things about Rune is that there’s no ads. Leave out any branding or ads to keep the focus on the gameplay experience.
+One of the amazing things about Rune is that there’s no ads. Leave out any ads, branding and links from your game to keep the focus on the gameplay experience.
 
 ### Avoid Using Cookies, `localStorage` or `IndexedDB`
 

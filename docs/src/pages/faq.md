@@ -91,7 +91,7 @@ We want to let you unleash your creativity while still avoiding content inapprop
 
 ### Can I Add Network Requests Into My Game?
 
-We don’t allow network requests of any kind. This protects players' privacy and allows seamless gameplay regardless of internet connection.
+Your game should not use network requests of any kind. Avoiding network requests protects players' privacy/security and allows seamless gameplay regardless of internet connection. It also guarantees that your game will keep running even if some external servers get shutdown.
 
 <br />
 <br />
@@ -104,7 +104,10 @@ See [Publishing](/docs/publishing/publishing-your-game) docs. We'll keep improvi
 
 ### What Is the Size Limit?
 
-We support games up to 25MB when unzipped. However, it’s worth making your game small as it’ll load faster for your players!
+Your game should be below 10MB when unzipped. It’s worth making your game as small as possible to make it load faster for your players!
+
+You'd be impressed with what can be done in under 10MB. Just take a look at all the amazing games on the Rune platform or the
+[open-source example games](/docs/examples)!
 
 ### Who Makes the Game Logo and What Should It Look Like?
 

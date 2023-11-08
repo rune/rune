@@ -1113,11 +1113,6 @@ ignore@^5.2.0:
   resolved "https://registry.npmjs.org/ignore/-/ignore-5.2.4.tgz"
   integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
-immer@10.0.1:
-  version "10.0.1"
-  resolved "https://registry.npmjs.org/immer/-/immer-10.0.1.tgz"
-  integrity sha512-zg++jJLsKKTwXGeSYIw0HgChSYQGtu0UDTnbKx5aGLYgte4CwTmH9eJDYyQ6FheyUtBe+lQW9FrGxya1G+Dtmg==
-
 import-fresh@^3.0.0, import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.0.tgz"
@@ -1283,6 +1278,11 @@ ms@2.1.2:
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
+mutative@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/mutative/-/mutative-0.6.0.tgz#43a007237ee7dbec6ff7a6384de2e3510d6993e7"
+  integrity sha512-TcEBPDJHauFxiLtrgDLZBn2lfW6FMKBcr7lyRHimwdznrqWsmXHLXnBjb+7mTLXRg6GebKWHV1v0qtSGvQp5Yw==
+
 nanoid@^3.3.6:
   version "3.3.6"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.6.tgz"
@@ -1444,14 +1444,14 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.16.1:
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.16.1.tgz#869a2058ab59c25c68c9579f62f9d2a353c1e725"
-  integrity sha512-VCY6GcY9EhEbKXBXk5tJ95PaTy6U994nh2cdy3VibrdTU4l7s5Vn6h+mV79ZaIndn1CHFWdXnyzQS2KShLCd0Q==
+rune-games-sdk@^4.16.2:
+  version "4.16.2"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.16.2.tgz#ab8789d4e187a7aae04cf770231ea73b814bfa49"
+  integrity sha512-8OXUCloPphKpBva7Oa50xiuYGuWHQ9MiebPTeeVQfhOySPzBWoPyse6gwHxBIfT6WodqeV/rFGXSdIZhxphhIQ==
   dependencies:
     base-64 "1.0.0"
     core-js "3.31.1"
-    immer "10.0.1"
+    mutative "0.6.0"
     rune-msgpack "1.0.0"
     xstate "4.32.1"
 

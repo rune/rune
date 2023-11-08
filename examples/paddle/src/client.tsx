@@ -10,6 +10,7 @@ import {
 } from "./logic"
 import {
   renderBall,
+  renderHelp,
   renderPaddle,
   renderPopup,
   renderScore,
@@ -20,6 +21,8 @@ import { Interpolator, InterpolatorLatency, Players } from "rune-games-sdk"
 import { initControls } from "./controls"
 import { playSound } from "./playSound.ts"
 
+import "./roundRectPolyfill.js"
+
 // Interpolate between updates to support variable FPS
 let playerPaddleInterpolator:
   | Interpolator<number>
@@ -29,6 +32,7 @@ const ballInterpolator = Rune.interpolator<[number, number]>()
 // Prevent paddle from teleporting around when receiving action from the past
 const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
   maxSpeed: PADDLE_SPEED + 1,
+  timeToMaxSpeed: 200,
 })
 
 const { canvas, context } = setupCanvas()
@@ -41,11 +45,12 @@ let yourPlayerId: string | undefined
 let opponentIndex = 0
 let playerIndex = 0
 
-let isReady = false
 const images = [new Image(22, 22), new Image(22, 22)]
 
 let lastScoredAt = 0
 let lastScoredBy: number | null = null
+
+let hasMoved = false
 
 window.onload = function () {
   document.body.appendChild(canvas)
@@ -59,18 +64,14 @@ window.onload = function () {
       players = params.players
       yourPlayerId = params.yourPlayerId
 
-      if (!isReady) {
-        isReady = true
-        images[0].src = players[game.players[0].id].avatarUrl
-        images[1].src = players[game.players[1].id].avatarUrl
+      if (params.event?.name === "stateSync") {
+        hasMoved = false
+        images[0].src = players[game.players[0].id]?.avatarUrl
+        images[1].src = players[game.players[1].id]?.avatarUrl
 
         playerIndex =
           yourPlayerId && game.players[0].id === yourPlayerId ? 0 : 1
         opponentIndex = playerIndex === 0 ? 1 : 0
-
-        if (yourPlayerId) {
-          initControls()
-        }
 
         if (!yourPlayerId) {
           // In case client is a spectator, use latency interpolator for both paddles
@@ -78,6 +79,12 @@ window.onload = function () {
             maxSpeed: PADDLE_SPEED + 1,
           })
         }
+
+        initControls(
+          () => (hasMoved = true),
+          () => yourPlayerId !== undefined,
+          () => game.paddles[playerIndex].position
+        )
       }
 
       // Always interpolate except when the score changes
@@ -135,7 +142,10 @@ window.onload = function () {
     },
   })
 
+  let frame = 0
+
   function render() {
+    frame++
     context.clearRect(0, 0, canvas.width, canvas.height)
 
     context.fillStyle = "#150813"
@@ -146,7 +156,7 @@ window.onload = function () {
         context,
         25,
         images[opponentIndex],
-        players[game.players[opponentIndex].id].displayName,
+        players[game.players[opponentIndex].id]?.displayName || "",
         game.players[opponentIndex].score
       )
 
@@ -156,7 +166,7 @@ window.onload = function () {
         images[playerIndex],
         yourPlayerId !== undefined
           ? "You"
-          : players[game.players[playerIndex].id].displayName,
+          : players[game.players[playerIndex].id]?.displayName || "",
         game.players[playerIndex].score
       )
 
@@ -187,11 +197,26 @@ window.onload = function () {
         PADDLE_OFFSET / 2,
         opponentPaddleInterpolator.getPosition()
       )
+
+      const position =
+        yourPlayerId && !hasMoved
+          ? playerPaddleInterpolator.getPosition() +
+            Math.sin(frame / 60) * GAME_WIDTH * 0.03
+          : playerPaddleInterpolator.getPosition()
+
       renderPaddle(
         context,
         GAME_RENDERED_HEIGHT - PADDLE_OFFSET - PADDLE_HEIGHT,
-        playerPaddleInterpolator.getPosition()
+        position
       )
+
+      if (yourPlayerId && !hasMoved) {
+        renderHelp(
+          context,
+          GAME_RENDERED_HEIGHT - PADDLE_OFFSET - PADDLE_HEIGHT,
+          position
+        )
+      }
     }
 
     // Call render() again when browser is ready to render another frame

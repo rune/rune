@@ -9,24 +9,47 @@ export const cli = meow(
     $ rune list         [Lists all your games]
 
   Options
-    --version, -v   Show CLI version
+    --version, -v   Show CLI version 
+
+  Optional Upload Options
+    --release, -r   Mark the game version as ready for release
+    --draft,   -d   Mark the game version as draft
+    --name,    -n   <game name>  Name of the existing game.
 
   Examples
     $ rune create my-game
 
     $ cd my-game && rune upload
 
-    $ rune upload my-game
+    $ rune upload ./my-game
+
+    $ rune upload ./my-game --release --name "My Awesome Game"
     
 `,
   {
     importMeta: import.meta,
     autoHelp: false,
     autoVersion: false,
+
     flags: {
       version: {
         type: "boolean",
         alias: "v",
+      },
+      release: {
+        alias: "r",
+        type: "boolean",
+        default: false,
+      },
+      draft: {
+        alias: "d",
+        type: "boolean",
+        default: false,
+      },
+
+      name: {
+        type: "string",
+        alias: "n",
       },
     },
   }
@@ -48,5 +71,9 @@ export function cliCommand() {
     command,
     args: cli.input.slice(1),
     commandInvalid: command && !validCommands.includes(command),
+    flags: cli.flags,
   }
 }
+
+export type CLI = typeof cli
+export type CliFlags = CLI["flags"]

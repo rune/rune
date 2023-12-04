@@ -2,7 +2,7 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 const lightCodeTheme = require("prism-react-renderer/themes/github")
-const darkCodeTheme = require("prism-react-renderer/themes/dracula")
+const darkCodeTheme = require("prism-react-renderer/themes/vsDark")
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -59,7 +59,9 @@ const config = {
     ({
       image: "img/social-preview.jpg",
       colorMode: {
-        respectPrefersColorScheme: true,
+        defaultMode: "dark",
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
       },
       navbar: {
         title: "Rune",

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useRef, useEffect, useCallback } from "react"
 import clsx from "clsx"
 import Link from "@docusaurus/Link"
 
@@ -49,6 +49,137 @@ const features = [
   },
 ]
 
+const videos = [
+  {
+    poster: require("@site/static/img/games/flip-jump-poster.png").default,
+    sources: [
+      {
+        src: require("@site/static/img/games/flip-jump-h265.mp4").default,
+        type: "video/mp4; codecs=hevc",
+      },
+      {
+        src: require("@site/static/img/games/flip-jump-h264.mp4").default,
+        type: "video/mp4; codecs=avc1",
+      },
+      {
+        src: require("@site/static/img/games/flip-jump-vp8.webm").default,
+        type: "video/webm",
+      },
+    ],
+  },
+  {
+    poster:
+      require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
+        .default,
+    sources: [
+      {
+        src: require("@site/static/img/home/games/converted/TavernPartymp4.mp4.mp4")
+          .default,
+        type: "video/mp4",
+      },
+      {
+        src: require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.webm")
+          .default,
+        type: "video/webm",
+      },
+    ],
+  },
+  {
+    poster: require("@site/static/img/games/flip-jump-poster.png").default,
+    sources: [
+      {
+        src: require("@site/static/img/games/flip-jump-h265.mp4").default,
+        type: "video/mp4; codecs=hevc",
+      },
+      {
+        src: require("@site/static/img/games/flip-jump-h264.mp4").default,
+        type: "video/mp4; codecs=avc1",
+      },
+      {
+        src: require("@site/static/img/games/flip-jump-vp8.webm").default,
+        type: "video/webm",
+      },
+    ],
+  },
+]
+
+const scrollDuration = 600
+
+function Phone() {
+  const [cursor, setCursor] = useState(0)
+
+  const currentVideoIndex = cursor % videos.length
+  const nextVideoIndex = (cursor + 1) % videos.length
+
+  const currentVideo = videos[currentVideoIndex]
+  const nextVideo = videos[nextVideoIndex]
+
+  const currentVideoRef = useRef()
+  const nextVideoRef = useRef()
+
+  const [videoOffset, setVideoOffset] = useState(0)
+
+  const scrollToNextVideo = useCallback(() => {
+    nextVideoRef.current.currentTime = 0
+    nextVideoRef.current.play()
+    setVideoOffset(-100)
+
+    setTimeout(() => {
+      setVideoOffset(0)
+      setCursor(cursor + 1)
+    }, scrollDuration)
+  }, [cursor])
+
+  const scrollToNextVideoRef = useRef(scrollToNextVideo)
+  scrollToNextVideoRef.current = scrollToNextVideo
+
+  useEffect(() => {
+    if (currentVideoRef.current) {
+      currentVideoRef.current.currentTime = 0
+      currentVideoRef.current.play()
+    }
+  }, [])
+
+  return (
+    <div className={styles.phoneFrame}>
+      <div className={styles.containerOuter}>
+        <div
+          className={styles.container}
+          style={{
+            transition:
+              videoOffset === 0 ? "" : `top ${scrollDuration}ms ease-in`,
+            top: `${videoOffset}%`,
+          }}
+        >
+          <video
+            key={currentVideoIndex}
+            ref={currentVideoRef}
+            poster={currentVideo.poster}
+            muted
+            playsInline
+            onEnded={scrollToNextVideo}
+          >
+            {currentVideo.sources.map((source, idx) => (
+              <source key={idx} src={source.src} type={source.type} />
+            ))}
+          </video>
+          <video
+            key={nextVideoIndex}
+            ref={nextVideoRef}
+            poster={nextVideo.poster}
+            muted
+            playsInline
+          >
+            {nextVideo.sources.map((source, idx) => (
+              <source key={idx} src={source.src} type={source.type} />
+            ))}
+          </video>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   return (
     <div className={styles.home}>
@@ -81,6 +212,8 @@ export default function Home() {
       </div>
       <div className={styles.content}>
         <div className={styles.hero1}>
+          <Phone />
+
           <h2>Build a multiplayer game played by millions</h2>
           <p>
             Your game runs inside the Rune app with 10 million installs across

@@ -165,16 +165,61 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 
     padding-top: 325px;
 
     h2 {
       max-width: 932px;
       margin-bottom: 24px;
+      z-index: 1;
     }
 
     p {
       margin-bottom: 48px;
+      z-index: 1;
+    }
+
+    .phoneFrame {
+      position: absolute;
+      top: 0;
+      width: 268px;
+      height: 546px;
+      background: url("@site/static/img/home/phoneFrame.png") no-repeat center
+        center/268.54px 546.27px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 10px;
+
+      mask-image: -webkit-gradient(
+        linear,
+        left 30%,
+        left 80%,
+        from(rgba(0, 0, 0, 1)),
+        to(rgba(0, 0, 0, 0))
+      );
+
+      .containerOuter {
+        overflow: hidden;
+      }
+
+      .container,
+      .containerOuter {
+        width: 241px;
+        height: 523px;
+        border-radius: 34px;
+        position: relative;
+
+        video {
+          width: 241px;
+          height: 523px;
+          object-fit: cover;
+          vertical-align: bottom;
+        }
+      }
     }
   }
 

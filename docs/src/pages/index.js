@@ -84,23 +84,6 @@ const videos = [
       },
     ],
   },
-  {
-    poster: require("@site/static/img/games/flip-jump-poster.png").default,
-    sources: [
-      {
-        src: require("@site/static/img/games/flip-jump-h265.mp4").default,
-        type: "video/mp4; codecs=hevc",
-      },
-      {
-        src: require("@site/static/img/games/flip-jump-h264.mp4").default,
-        type: "video/mp4; codecs=avc1",
-      },
-      {
-        src: require("@site/static/img/games/flip-jump-vp8.webm").default,
-        type: "video/webm",
-      },
-    ],
-  },
 ]
 
 const scrollDuration = 600

@@ -8,6 +8,8 @@ import styles from "./index.module.scss"
 
 // TODO: real videos and game info from DB
 
+// TODO: v1 mobile header just use DOCS menu item instead of hamburger
+
 const features = [
   {
     icon: require("@site/static/img/home/features/players.png").default,

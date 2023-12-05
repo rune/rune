@@ -80,45 +80,47 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.content}>
-        <h2 className={styles.hero1}>
-          Build a multiplayer game played by millions
-        </h2>
-        <p>
-          Your game runs inside the Rune app with 10 million installs across iOS
-          and Android.
-        </p>
-        <div class={styles.ctaButtons}>
-          <Link className={styles.ctaButton} to="/docs/quick-start">
-            Get Started
-          </Link>
-          <a
-            className={clsx(styles.ctaButton, styles.blue)}
-            href="https://discord.gg/rune-devs"
-            target="_blank"
-          >
-            <img
-              alt="Discord Logo"
-              src={require("@site/static/img/home/discord.png").default}
-            />
-            <span>Join Discord</span>
-          </a>
+        <div className={styles.hero1}>
+          <h2>Build a multiplayer game played by millions</h2>
+          <p>
+            Your game runs inside the Rune app with 10 million installs across
+            iOS and Android.
+          </p>
+          <div className={styles.ctaButtons}>
+            <Link className={styles.ctaButton} to="/docs/quick-start">
+              Get Started
+            </Link>
+            <a
+              className={clsx(styles.ctaButton, styles.blue)}
+              href="https://discord.gg/rune-devs"
+              target="_blank"
+            >
+              <img
+                alt="Discord Logo"
+                src={require("@site/static/img/home/discord.png").default}
+              />
+              <span>Join Discord</span>
+            </a>
+          </div>
         </div>
-        <h2 className={styles.hero2}>
-          You focus on your game, we handle everything else
-        </h2>
-        <div className={styles.features}>
-          {features.map(({ icon, title, description }, idx) => (
-            <div key={idx} className={styles.feature}>
-              <img className={styles.icon} src={icon} />
-              <div className={styles.main}>
-                <h5>{title}</h5>
-                {description.map((line, idx2) => (
-                  <p key={idx2}>{line}</p>
-                ))}
+
+        <div className={styles.hero2}>
+          <h2>You focus on your game, we handle everything else</h2>
+          <div className={styles.features}>
+            {features.map(({ icon, title, description }, idx) => (
+              <div key={idx} className={styles.feature}>
+                <img className={styles.icon} src={icon} />
+                <div className={styles.main}>
+                  <h5>{title}</h5>
+                  {description.map((line, idx2) => (
+                    <p key={idx2}>{line}</p>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
         <div className={styles.cta}>
           <h3>Use your favorite web framework</h3>
           <Link className={styles.ctaButton} to="/docs/quick-start">
@@ -126,7 +128,58 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <div className={styles.footer}>footer</div>
+
+      <div className={styles.footer}>
+        <div className={styles.line}>
+          <div className={clsx(styles.link, styles.side)}>
+            © 2023 Rune AI, Inc.
+          </div>
+          <div className={styles.center}>
+            <Link className={styles.link} to="/docs/quick-start">
+              Docs
+            </Link>
+            <Link className={styles.link} to="/docs/examples">
+              Examples
+            </Link>
+            <a className={styles.link} href="https://rune.ai" target="_blank">
+              Get Rune
+            </a>
+            <a
+              className={styles.link}
+              href="https://rune.ai/team"
+              target="_blank"
+            >
+              About
+            </a>
+          </div>
+          <div className={clsx(styles.side, styles.social)}>
+            <a href="https://github.com/rune/rune-games-sdk" target="_blank">
+              <img
+                src={
+                  require("!!url-loader!@site/static/img/home/social/github.svg")
+                    .default
+                }
+              />
+            </a>
+            <a href="https://discord.gg/rune-devs" target="_blank">
+              <img
+                src={
+                  require("!!url-loader!@site/static/img/home/social/discord.svg")
+                    .default
+                }
+              />
+            </a>
+            <a href="https://twitter.com/joinrune" target="_blank">
+              <img
+                src={
+                  require("!!url-loader!@site/static/img/home/social/twitter.svg")
+                    .default
+                }
+              />
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

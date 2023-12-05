@@ -124,42 +124,69 @@ function Phone() {
   }, [])
 
   return (
-    <div className={styles.phoneFrame}>
-      <div className={styles.containerOuter}>
-        <div
-          className={styles.container}
-          style={{
-            transition:
-              videoOffset === 0 ? "" : `top ${scrollDuration}ms ease-in`,
-            top: `${videoOffset}%`,
-          }}
-        >
-          <video
-            key={currentVideoIndex}
-            ref={currentVideoRef}
-            poster={currentVideo.poster}
-            muted
-            playsInline
-            onEnded={scrollToNextVideo}
-          >
-            {currentVideo.sources.map((source, idx) => (
-              <source key={idx} src={source.src} type={source.type} />
-            ))}
-          </video>
-          <video
-            key={nextVideoIndex}
-            ref={nextVideoRef}
-            poster={nextVideo.poster}
-            muted
-            playsInline
-          >
-            {nextVideo.sources.map((source, idx) => (
-              <source key={idx} src={source.src} type={source.type} />
-            ))}
-          </video>
+    <>
+      <div className={styles.gameInfo}>
+        <div className={styles.author}>
+          <img
+            alt="avatar"
+            src="https://app.rune.ai/avatar?base=9&hair=49&tilt=1&headgear=76&accessory=66&background=97&expression=15&size=420&isCropped=1&isBackgroundTransparent=0"
+          />
+          <img
+            alt="avatar"
+            src="https://app.rune.ai/avatar?base=3&hair=36&tilt=0&headgear=58&accessory=84&background=69&expression=15&size=420&isCropped=1&isBackgroundTransparent=0"
+          />
+          <span>json & viturowski</span>
+        </div>
+        <div className={styles.game}>
+          <span>Pipeline Panic</span>
+          <div className={styles.info}>
+            <img
+              src={
+                require("!!url-loader!@site/static/img/home/players.svg")
+                  .default
+              }
+            />
+            <span>1-4</span>
+          </div>
         </div>
       </div>
-    </div>
+      <div className={styles.phoneFrame}>
+        <div className={styles.containerOuter}>
+          <div
+            className={styles.container}
+            style={{
+              transition:
+                videoOffset === 0 ? "" : `top ${scrollDuration}ms ease-in`,
+              top: `${videoOffset}%`,
+            }}
+          >
+            <video
+              key={currentVideoIndex}
+              ref={currentVideoRef}
+              poster={currentVideo.poster}
+              muted
+              playsInline
+              onEnded={scrollToNextVideo}
+            >
+              {currentVideo.sources.map((source, idx) => (
+                <source key={idx} src={source.src} type={source.type} />
+              ))}
+            </video>
+            <video
+              key={nextVideoIndex}
+              ref={nextVideoRef}
+              poster={nextVideo.poster}
+              muted
+              playsInline
+            >
+              {nextVideo.sources.map((source, idx) => (
+                <source key={idx} src={source.src} type={source.type} />
+              ))}
+            </video>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -225,7 +252,7 @@ export default function Home() {
           <div className={styles.features}>
             {features.map(({ icon, title, description }, idx) => (
               <div key={idx} className={styles.feature}>
-                <img className={styles.icon} src={icon} />
+                <img alt={title} className={styles.icon} src={icon} />
                 <div className={styles.main}>
                   <h5>{title}</h5>
                   {description.map((line, idx2) => (
@@ -271,6 +298,7 @@ export default function Home() {
           <div className={clsx(styles.side, styles.social)}>
             <a href="https://github.com/rune/rune-games-sdk" target="_blank">
               <img
+                alt="GitHub Logo"
                 src={
                   require("!!url-loader!@site/static/img/home/social/github.svg")
                     .default
@@ -279,6 +307,7 @@ export default function Home() {
             </a>
             <a href="https://discord.gg/rune-devs" target="_blank">
               <img
+                alt="Discord Logo"
                 src={
                   require("!!url-loader!@site/static/img/home/social/discord.svg")
                     .default
@@ -287,6 +316,7 @@ export default function Home() {
             </a>
             <a href="https://twitter.com/joinrune" target="_blank">
               <img
+                alt="Twitter Logo"
                 src={
                   require("!!url-loader!@site/static/img/home/social/twitter.svg")
                     .default

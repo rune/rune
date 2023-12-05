@@ -221,6 +221,84 @@
         }
       }
     }
+
+    .gameInfo {
+      left: calc(50% + 50px);
+      top: 135px;
+      position: absolute;
+      z-index: 1;
+      background: #1b0329;
+      padding: 14px 36px 14px 23px;
+      border-radius: 14.4px;
+      box-shadow: 0px 3.596px 35.955px 0px rgba(0, 0, 0, 0.25);
+
+      > :not(:first-child) {
+        margin-top: 3.6px;
+      }
+
+      .author {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 14.38px;
+          height: 14.38px;
+          position: relative;
+        }
+        span {
+          margin-left: 2.7px;
+          color: white;
+          font-size: 11.685px;
+          font-weight: 700;
+          line-height: 130%;
+        }
+      }
+
+      .game {
+        display: flex;
+        align-items: center;
+
+        > :not(:first-child) {
+          margin-left: 5.39px;
+        }
+
+        > span {
+          color: white;
+          font-size: 18.876px;
+          font-weight: 700;
+          line-height: 130%;
+        }
+
+        .info {
+          display: flex;
+          align-items: center;
+          padding: 3.6px 7.19px;
+          border-radius: 26.07px;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(223, 168, 255, 0.3) 100%
+          );
+
+          > :not(:first-child) {
+            margin-left: 1.8px;
+          }
+
+          img {
+            width: 14.38px;
+            height: 14.38px;
+          }
+
+          span {
+            color: white;
+            text-align: center;
+            font-size: 11.685px;
+            font-weight: 700;
+            line-height: 130%;
+          }
+        }
+      }
+    }
   }
 
   .hero2 {

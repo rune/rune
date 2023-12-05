@@ -4,7 +4,9 @@ import Link from "@docusaurus/Link"
 
 import styles from "./index.module.scss"
 
-// TODO: svg images via url loader!
+// TODO: more svg images via url loader!
+
+// TODO: real videos and game info from DB
 
 const features = [
   {

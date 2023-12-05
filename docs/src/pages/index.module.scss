@@ -1,6 +1,11 @@
 .home {
   flex: 1;
-  background-color: #1b0329;
+  background:
+    url("@site/static/img/home/background-top.svg") no-repeat top 40px left
+      calc(50% - 300px) / 2274px 2579px,
+    url("@site/static/img/home/background-footer.svg") no-repeat bottom -765px left
+      calc(50% + 100px) / 2118px 2058px,
+    #1b0329;
 }
 
 .header {

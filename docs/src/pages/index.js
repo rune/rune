@@ -67,18 +67,18 @@ const videos = [
       minPlayers: 1,
       maxPlayers: 2,
     },
-    poster: require("@site/static/img/games/flip-jump-poster.png").default,
+    poster:
+      require("@site/static/img/home/games/thumbnails/SpookyCookie.mp4.png")
+        .default,
     sources: [
       {
-        src: require("@site/static/img/games/flip-jump-h265.mp4").default,
-        type: "video/mp4; codecs=hevc",
+        src: require("@site/static/img/home/games/SpookyCookie.mp4.mp4")
+          .default,
+        type: "video/mp4",
       },
       {
-        src: require("@site/static/img/games/flip-jump-h264.mp4").default,
-        type: "video/mp4; codecs=avc1",
-      },
-      {
-        src: require("@site/static/img/games/flip-jump-vp8.webm").default,
+        src: require("@site/static/img/home/games/SpookyCookie.webmhd.webm")
+          .default,
         type: "video/webm",
       },
     ],
@@ -97,16 +97,16 @@ const videos = [
       maxPlayers: 2,
     },
     poster:
-      require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
+      require("@site/static/img/home/games/thumbnails/RockPaperShoot.mp4.png")
         .default,
     sources: [
       {
-        src: require("@site/static/img/home/games/converted/TavernPartymp4.mp4.mp4")
+        src: require("@site/static/img/home/games/RockPaperShoot.mp4.mp4")
           .default,
         type: "video/mp4",
       },
       {
-        src: require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.webm")
+        src: require("@site/static/img/home/games/RockPaperShoot.webmhd.webm")
           .default,
         type: "video/webm",
       },
@@ -126,16 +126,15 @@ const videos = [
       maxPlayers: 4,
     },
     poster:
-      require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
+      require("@site/static/img/home/games/thumbnails/TavernParty.mp4.png")
         .default,
     sources: [
       {
-        src: require("@site/static/img/home/games/converted/TavernPartymp4.mp4.mp4")
-          .default,
+        src: require("@site/static/img/home/games/TavernParty.mp4.mp4").default,
         type: "video/mp4",
       },
       {
-        src: require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.webm")
+        src: require("@site/static/img/home/games/TavernParty.webmhd.webm")
           .default,
         type: "video/webm",
       },
@@ -160,16 +159,16 @@ const videos = [
       maxPlayers: 4,
     },
     poster:
-      require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
+      require("@site/static/img/home/games/thumbnails/PipelinePanic.mp4.png")
         .default,
     sources: [
       {
-        src: require("@site/static/img/home/games/converted/TavernPartymp4.mp4.mp4")
+        src: require("@site/static/img/home/games/PipelinePanic.mp4.mp4")
           .default,
         type: "video/mp4",
       },
       {
-        src: require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.webm")
+        src: require("@site/static/img/home/games/PipelinePanic.webmhd.webm")
           .default,
         type: "video/webm",
       },
@@ -193,17 +192,15 @@ const videos = [
       minPlayers: 1,
       maxPlayers: 4,
     },
-    poster:
-      require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
-        .default,
+    poster: require("@site/static/img/home/games/thumbnails/NeonSnake.mp4.png")
+      .default,
     sources: [
       {
-        src: require("@site/static/img/home/games/converted/TavernPartymp4.mp4.mp4")
-          .default,
+        src: require("@site/static/img/home/games/NeonSnake.mp4.mp4").default,
         type: "video/mp4",
       },
       {
-        src: require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.webm")
+        src: require("@site/static/img/home/games/NeonSnake.webmhd.webm")
           .default,
         type: "video/webm",
       },

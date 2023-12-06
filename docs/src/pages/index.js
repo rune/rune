@@ -184,7 +184,7 @@ const videos = [
             "https://app.rune.ai/avatar?base=2&hair=44&tilt=0&headgear=56&accessory=66&background=72&expression=14&size=90&isCropped=1&isBackgroundTransparent=0",
         },
         {
-          name: "Shane",
+          name: "shanehelm",
           avatar:
             "https://app.rune.ai/avatar?base=9&hair=49&tilt=1&headgear=76&accessory=66&background=97&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
         },

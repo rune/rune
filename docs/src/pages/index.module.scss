@@ -12,6 +12,15 @@
     url("@site/static/img/home/background-footer.svg") no-repeat bottom -765px left
       calc(50% + 100px) / 2118px 2058px,
     #1b0329;
+
+  @media (max-width: 996px) {
+    background:
+      url("@site/static/img/home/background-top-mobile.svg") no-repeat top 70px
+        left calc(50% - 25px) / 1094px 1811px,
+      url("@site/static/img/home/background-footer-mobile.svg") no-repeat bottom -396px
+        left calc(50% + 137px) / 856px 1339px,
+      #1b0329;
+  }
 }
 
 .header {

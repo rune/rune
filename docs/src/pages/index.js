@@ -55,6 +55,18 @@ const features = [
 
 const videos = [
   {
+    game: {
+      title: "Spooky Cookie",
+      developers: [
+        {
+          name: "alexwoods",
+          avatar:
+            "https://app.rune.ai/avatar?base=2&hair=29&tilt=1&headgear=55&accessory=64&background=72&expression=18&size=90&isCropped=1&isBackgroundTransparent=0",
+        },
+      ],
+      minPlayers: 1,
+      maxPlayers: 2,
+    },
     poster: require("@site/static/img/games/flip-jump-poster.png").default,
     sources: [
       {
@@ -72,6 +84,115 @@ const videos = [
     ],
   },
   {
+    game: {
+      title: "Rock Paper Shoot",
+      developers: [
+        {
+          name: "KIO Studios",
+          avatar:
+            "https://app.rune.ai/avatar?base=12&hair=24&tilt=1&headgear=60&accessory=62&background=75&expression=17&size=90&isCropped=1&isBackgroundTransparent=0",
+        },
+      ],
+      minPlayers: 2,
+      maxPlayers: 2,
+    },
+    poster:
+      require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
+        .default,
+    sources: [
+      {
+        src: require("@site/static/img/home/games/converted/TavernPartymp4.mp4.mp4")
+          .default,
+        type: "video/mp4",
+      },
+      {
+        src: require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.webm")
+          .default,
+        type: "video/webm",
+      },
+    ],
+  },
+  {
+    game: {
+      title: "Tavern Party",
+      developers: [
+        {
+          name: "wawasensei",
+          avatar:
+            "https://app.rune.ai/avatar?base=10&hair=20&tilt=1&headgear=61&accessory=67&background=71&expression=16&size=90&isCropped=1&isBackgroundTransparent=0",
+        },
+      ],
+      minPlayers: 1,
+      maxPlayers: 4,
+    },
+    poster:
+      require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
+        .default,
+    sources: [
+      {
+        src: require("@site/static/img/home/games/converted/TavernPartymp4.mp4.mp4")
+          .default,
+        type: "video/mp4",
+      },
+      {
+        src: require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.webm")
+          .default,
+        type: "video/webm",
+      },
+    ],
+  },
+  {
+    game: {
+      title: "Pipeline Panic",
+      developers: [
+        {
+          name: "json",
+          avatar:
+            "https://app.rune.ai/avatar?base=5&hair=43&tilt=1&headgear=59&accessory=67&background=95&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
+        },
+        {
+          name: "viturowski",
+          avatar:
+            "https://app.rune.ai/avatar?base=12&hair=30&tilt=0&headgear=55&accessory=67&background=73&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
+        },
+      ],
+      minPlayers: 1,
+      maxPlayers: 4,
+    },
+    poster:
+      require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
+        .default,
+    sources: [
+      {
+        src: require("@site/static/img/home/games/converted/TavernPartymp4.mp4.mp4")
+          .default,
+        type: "video/mp4",
+      },
+      {
+        src: require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.webm")
+          .default,
+        type: "video/webm",
+      },
+    ],
+  },
+  {
+    game: {
+      title: "Neon Snake",
+      developers: [
+        {
+          name: "Helios1138",
+          avatar:
+            "https://app.rune.ai/avatar?base=2&hair=44&tilt=0&headgear=56&accessory=66&background=72&expression=14&size=90&isCropped=1&isBackgroundTransparent=0",
+        },
+        {
+          name: "Shane",
+          avatar:
+            "https://app.rune.ai/avatar?base=9&hair=49&tilt=1&headgear=76&accessory=66&background=97&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
+        },
+      ],
+      minPlayers: 1,
+      maxPlayers: 4,
+    },
     poster:
       require("@site/static/img/home/games/converted/TavernPartymp4.webmhd.png")
         .default,
@@ -127,22 +248,26 @@ function Phone() {
     }
   }, [])
 
+  // useEffect(() => {
+  //   const handle = setInterval(() => {
+  //     scrollToNextVideoRef.current()
+  //   }, 2000)
+  //   return () => clearInterval(handle)
+  // }, [])
+
   return (
     <>
       <div className={styles.gameInfo}>
         <div className={styles.author}>
-          <img
-            alt="avatar"
-            src="https://app.rune.ai/avatar?base=9&hair=49&tilt=1&headgear=76&accessory=66&background=97&expression=15&size=420&isCropped=1&isBackgroundTransparent=0"
-          />
-          <img
-            alt="avatar"
-            src="https://app.rune.ai/avatar?base=3&hair=36&tilt=0&headgear=58&accessory=84&background=69&expression=15&size=420&isCropped=1&isBackgroundTransparent=0"
-          />
-          <span>json & viturowski</span>
+          {currentVideo.game.developers.map(({ avatar }) => (
+            <img alt="avatar" src={avatar} />
+          ))}
+          <span>
+            {currentVideo.game.developers.map((d) => d.name).join(" & ")}
+          </span>
         </div>
         <div className={styles.game}>
-          <span>Pipeline Panic</span>
+          <span>{currentVideo.game.title}</span>
           <div className={styles.info}>
             <img
               src={
@@ -150,7 +275,11 @@ function Phone() {
                   .default
               }
             />
-            <span>1-4</span>
+            <span>
+              {currentVideo.game.minPlayers === currentVideo.game.maxPlayers
+                ? currentVideo.game.minPlayers
+                : `${currentVideo.game.minPlayers}-${currentVideo.game.maxPlayers}`}
+            </span>
           </div>
         </div>
       </div>
@@ -343,3 +472,13 @@ export default function Home() {
     </div>
   )
 }
+
+/*
+SELECT
+	display_name,
+	'https://app.rune.ai/avatar?base=' || avatar_base_id || '&hair=' || avatar_hair_id || '&tilt=' || avatar_tilt || '&headgear=' || avatar_headgear_id || '&accessory=' || avatar_accessory_id || '&background=' || avatar_background_id || '&expression=' || avatar_expression_id || '&size=90&isCropped=1&isBackgroundTransparent=0' avatar
+FROM
+	tango.user_profile_editable
+WHERE
+	display_name ILIKE '%helios%';
+ */

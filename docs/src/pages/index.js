@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react"
 import clsx from "clsx"
 import Link from "@docusaurus/Link"
+import { Player } from "@lottiefiles/react-lottie-player"
 
 import styles from "./index.module.scss"
 
@@ -466,6 +467,14 @@ export default function Home() {
           <Link className={styles.ctaButton} to="/docs/quick-start">
             Get Started
           </Link>
+          <div className={styles.starsContainer}>
+            <Player
+              autoplay
+              loop
+              src={require("@site/static/img/home/starsLottie.json")}
+              className={styles.stars}
+            />
+          </div>
         </div>
       </div>
 

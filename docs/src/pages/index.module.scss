@@ -494,6 +494,7 @@
       876px;
     padding-top: 566px;
     margin-bottom: 211px;
+    position: relative;
 
     @media (max-width: 996px) {
       min-height: 323px;
@@ -512,6 +513,32 @@
 
       @media (max-width: 996px) {
         margin-top: 48px;
+      }
+    }
+
+    .ctaButton {
+      z-index: 1;
+    }
+
+    .starsContainer {
+      position: absolute;
+      z-index: 0;
+      left: calc(50% - 233px / 2);
+      bottom: calc(-149px / 2 + 64px / 2);
+
+      @media (max-width: 996px) {
+        left: calc(50% - 149px / 2);
+        bottom: calc(-96px / 2 + 48px / 2);
+      }
+
+      .stars {
+        width: 233px;
+        height: 149px;
+
+        @media (max-width: 996px) {
+          width: 149px;
+          height: 96px;
+        }
       }
     }
   }

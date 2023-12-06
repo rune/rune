@@ -1,3 +1,9 @@
+.hiddenOnMobile {
+  @media (max-width: 996px) {
+    display: none;
+  }
+}
+
 .home {
   flex: 1;
   background:
@@ -11,12 +17,12 @@
 .header {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   position: fixed;
   width: 100%;
   z-index: 100;
-  height: 111px;
+  height: 110px;
 
   border-bottom: 1px solid transparent;
   backdrop-filter: blur(0);
@@ -37,9 +43,11 @@
   color: white;
   text-transform: uppercase;
 
-  padding: 37px 77px 0;
+  padding: 0 77px;
 
-  .left {
+  @media (max-width: 996px) {
+    height: 85px;
+    padding: 0 24px;
   }
 
   .right {
@@ -124,7 +132,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 83px 60px 0;
+  padding: 135px 60px 0;
 
   h2 {
     margin: 0;
@@ -189,7 +197,7 @@
     align-items: center;
     position: relative;
 
-    padding-top: 325px;
+    padding-top: 300px;
 
     h2 {
       max-width: 932px;
@@ -204,7 +212,7 @@
 
     .phoneFrame {
       position: absolute;
-      top: 50px;
+      top: 0;
       width: 268px;
       height: 546px;
       background: url("@site/static/img/home/phoneFrame.png") no-repeat center
@@ -214,7 +222,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding-top: 10px;
+      padding-top: 12px;
 
       mask-image: -webkit-gradient(
         linear,
@@ -225,19 +233,22 @@
       );
 
       .containerOuter {
+        border-radius: 34px;
         overflow: hidden;
       }
 
       .container,
-      .containerOuter {
+      .containerOuter,
+      video {
         width: 241px;
-        height: 350px;
-        border-radius: 34px;
+        height: 289px;
+      }
+
+      .container,
+      .containerOuter {
         position: relative;
 
         video {
-          width: 241px;
-          height: 350px;
           vertical-align: bottom;
         }
       }
@@ -245,7 +256,7 @@
 
     .gameInfo {
       left: calc(50% + 50px);
-      top: 200px;
+      top: 150px;
       position: absolute;
       z-index: 1;
       background: #1b0329;

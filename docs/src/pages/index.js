@@ -257,7 +257,7 @@ function Phone() {
       <div className={styles.gameInfo}>
         <div className={styles.author}>
           {currentVideo.game.developers.map(({ avatar }) => (
-            <img alt="avatar" src={avatar} />
+            <img key={avatar} alt="avatar" src={avatar} />
           ))}
           <span>
             {currentVideo.game.developers.map((d) => d.name).join(" & ")}
@@ -350,13 +350,16 @@ export default function Home() {
           <Link to="/docs/quick-start" className={styles.menuLink}>
             Docs
           </Link>
-          <Link to="/faq" className={styles.menuLink}>
+          <Link
+            to="/faq"
+            className={clsx(styles.menuLink, styles.hiddenOnMobile)}
+          >
             FAQ
           </Link>
           <a
             href="https://github.com/rune/rune-games-sdk"
             target="_blank"
-            className={styles.menuBtn}
+            className={clsx(styles.menuBtn, styles.hiddenOnMobile)}
           >
             <div className={styles.normal}>GitHub</div>
             <div className={styles.hover}>GitHub</div>

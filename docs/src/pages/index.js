@@ -195,9 +195,22 @@ function Phone() {
 }
 
 export default function Home() {
+  const [scrolledFromTop, setScrolledFromTop] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolledFromTop(window.scrollY > 10)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
   return (
     <div className={styles.home}>
-      <div className={styles.header}>
+      <div
+        className={clsx(
+          styles.header,
+          scrolledFromTop && styles.scrolledFromTop,
+        )}
+      >
         <div className={styles.left}>
           <Link to="/">
             <img
@@ -279,12 +292,9 @@ export default function Home() {
       <div className={styles.footer}>
         <div className={styles.line}>
           <div className={clsx(styles.link, styles.side)}>
-            © 2023 Rune AI, Inc.
+            © {new Date().getFullYear()} Rune
           </div>
           <div className={styles.center}>
-            <Link className={styles.link} to="/docs/quick-start">
-              Docs
-            </Link>
             <Link className={styles.link} to="/docs/examples">
               Examples
             </Link>

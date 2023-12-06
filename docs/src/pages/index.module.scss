@@ -11,7 +11,24 @@
 .header {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  height: 111px;
+
+  border: 1px solid transparent;
+  backdrop-filter: blur(0);
+  background: rgba(27, 3, 41, 0);
+
+  &.scrolledFromTop {
+    border-color: rgba(188, 184, 255, 0.3);
+    backdrop-filter: blur(15px);
+    background: rgba(27, 3, 41, 0.75);
+  }
+
+  transition: all 0.2s ease-in;
 
   font-size: 15px;
   font-weight: 700;
@@ -108,7 +125,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 60px;
+  padding: 83px 60px 0;
 
   h2 {
     margin: 0;
@@ -188,7 +205,7 @@
 
     .phoneFrame {
       position: absolute;
-      top: 0;
+      top: 50px;
       width: 268px;
       height: 546px;
       background: url("@site/static/img/home/phoneFrame.png") no-repeat center
@@ -203,7 +220,7 @@
       mask-image: -webkit-gradient(
         linear,
         left 30%,
-        left 80%,
+        left 60%,
         from(rgba(0, 0, 0, 1)),
         to(rgba(0, 0, 0, 0))
       );
@@ -229,7 +246,7 @@
 
     .gameInfo {
       left: calc(50% + 50px);
-      top: 135px;
+      top: 200px;
       position: absolute;
       z-index: 1;
       background: #1b0329;

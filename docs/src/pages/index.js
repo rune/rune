@@ -452,6 +452,10 @@ export default function Home() {
                     <p key={idx2}>{line}</p>
                   ))}
                 </div>
+                <div className={styles.mainMobile}>
+                  <h5>{title}</h5>
+                  <p>{description.join(" ")}</p>
+                </div>
               </div>
             ))}
           </div>

@@ -135,7 +135,9 @@
   padding: 135px 60px 0;
 
   @media (max-width: 996px) {
-    padding: 114px 26px 0;
+    width: 375px;
+    margin: 0 auto;
+    padding: 114px 16px 0;
   }
 
   h2 {
@@ -188,6 +190,12 @@
     letter-spacing: -0.64px;
 
     color: white;
+
+    @media (max-width: 996px) {
+      font-size: 22px;
+      line-height: normal;
+      letter-spacing: -0.22px;
+    }
   }
 
   p {
@@ -393,15 +401,28 @@
   .hero2 {
     margin: 225px 0;
 
+    @media (max-width: 996px) {
+      margin: 150px 0;
+    }
+
     h2 {
       max-width: 982px;
       margin-bottom: 80px;
+
+      @media (max-width: 996px) {
+        max-width: 322px;
+        margin-bottom: 48px;
+      }
     }
   }
 
   .features {
     > :not(:first-child) {
       margin-top: 64px;
+
+      @media (max-width: 996px) {
+        margin-top: 32px;
+      }
     }
 
     .feature {
@@ -410,10 +431,18 @@
 
       > :not(:first-child) {
         margin-left: 16px;
+
+        @media (max-width: 996px) {
+          margin-left: 8px;
+        }
       }
 
       h5 {
         margin-bottom: 16px;
+
+        @media (max-width: 996px) {
+          margin-bottom: 8px;
+        }
       }
 
       p {
@@ -424,12 +453,31 @@
       .icon {
         width: 120px;
         height: 120px;
+
+        @media (max-width: 996px) {
+          width: 60px;
+          height: 60px;
+        }
       }
 
       .main {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+
+        @media (max-width: 996px) {
+          display: none;
+        }
+      }
+
+      .mainMobile {
+        display: none;
+
+        @media (max-width: 996px) {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
     }
   }

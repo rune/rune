@@ -99,3 +99,7 @@
   width: 24px;
   height: 24px;
 }
+
+.menu__list-item:not(:first-child) {
+  margin-top: 10px;
+}

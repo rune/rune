@@ -465,6 +465,7 @@ export default function Home() {
             <Player
               autoplay
               loop
+              speed={0.25}
               src={require("@site/static/img/home/starsLottie.json")}
               className={styles.stars}
             />

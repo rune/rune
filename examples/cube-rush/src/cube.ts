@@ -31,9 +31,13 @@ export function setCube(x: number, z: number, i: number, colorIdx: number) {
 }
 
 export function confirmUpdate() {
-  //Necessary to inform GPU that one of the cubes color has changed
+  //Necessary to inform GPU that one of the cubes color/position has changed
   if (mesh.instanceColor) {
     mesh.instanceColor.needsUpdate = true
+  }
+
+  if (mesh.instanceMatrix) {
+    mesh.instanceMatrix.needsUpdate = true
   }
 }
 

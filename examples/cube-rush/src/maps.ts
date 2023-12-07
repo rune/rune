@@ -1,3 +1,5 @@
+//Pregenerated maps, to reduce the size of game state.
+
 //Code for cube generation
 
 // const allCubes = []

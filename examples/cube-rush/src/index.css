@@ -23,7 +23,6 @@ body {
   display: flex;
   place-items: center;
   overflow-x: hidden;
-  touch-action: none;
   position: relative;
 }
 

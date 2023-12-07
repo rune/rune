@@ -1,30 +1,42 @@
 import * as THREE from "three"
-import { CUBE_WIDTH, CUBE_HEIGHT, CUBE_DEPTH, CUBE_COLORS } from "./config"
+import {
+  CUBE_WIDTH,
+  CUBE_HEIGHT,
+  CUBE_DEPTH,
+  CUBE_COLORS,
+  NUMBER_OF_CUBES,
+} from "./config"
 
-const geometry = new THREE.BoxGeometry(CUBE_WIDTH, CUBE_HEIGHT, CUBE_DEPTH)
-const meshMaterials = [
-  new THREE.MeshBasicMaterial({ color: CUBE_COLORS[0] }),
-  new THREE.MeshBasicMaterial({ color: CUBE_COLORS[1] }),
-]
+const colors = CUBE_COLORS.map((color) => new THREE.Color(color))
 
-export function createCube(scene: THREE.Scene, colorIdx: number) {
-  const material = meshMaterials[colorIdx]
+//Using instanced mesh to reduce number of GPU calls
+const mesh = new THREE.InstancedMesh(
+  new THREE.BoxGeometry(CUBE_WIDTH, CUBE_HEIGHT, CUBE_DEPTH),
+  new THREE.MeshBasicMaterial({ color: 0xffffff }),
+  NUMBER_OF_CUBES,
+)
 
-  // Mesh
-  const mesh = new THREE.Mesh(geometry, material)
-  mesh.position.x = 0
-  mesh.position.y = -1
-  mesh.position.z = 0
+//Used to generate matrix necessary to set the position of cubes
+const objectForMatrix = new THREE.Object3D()
 
-  // Add to scene
-  scene.add(mesh)
+export function setCube(x: number, z: number, i: number, colorIdx: number) {
+  objectForMatrix.position.y = CUBE_HEIGHT / 2
+  objectForMatrix.position.x = x
+  objectForMatrix.position.z = z
+  objectForMatrix.updateMatrix()
 
-  return {
-    set(x: number, z: number, colorIdx: number) {
-      mesh.position.y = CUBE_HEIGHT / 2
-      mesh.position.x = x
-      mesh.position.z = z
-      mesh.material = meshMaterials[colorIdx]
-    },
+  //Update the position/color of
+  mesh.setMatrixAt(i, objectForMatrix.matrix)
+  mesh.setColorAt(i, colors[colorIdx])
+}
+
+export function confirmUpdate() {
+  //Necessary to inform GPU that one of the cubes color has changed
+  if (mesh.instanceColor) {
+    mesh.instanceColor.needsUpdate = true
   }
+}
+
+export function getInstancedMesh() {
+  return mesh
 }

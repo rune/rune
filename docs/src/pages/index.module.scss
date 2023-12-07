@@ -1,5 +1,5 @@
 .hiddenOnMobile {
-  @media (max-width: 996px) {
+  @media (max-width: 700px) {
     display: none;
   }
 }
@@ -13,7 +13,7 @@
       calc(50% + 100px) / 2118px 2058px,
     #1b0329;
 
-  @media (max-width: 996px) {
+  @media (max-width: 700px) {
     background:
       url("@site/static/img/home/background-top-mobile.svg") no-repeat top 70px
         left calc(50% - 25px) / 1094px 1811px,
@@ -54,7 +54,7 @@
 
   padding: 0 77px;
 
-  @media (max-width: 996px) {
+  @media (max-width: 700px) {
     height: 85px;
     padding: 0 24px;
   }
@@ -146,7 +146,7 @@
   align-items: center;
   padding: 135px 60px 0;
 
-  @media (max-width: 996px) {
+  @media (max-width: 700px) {
     width: 375px;
     margin: 0 auto;
     padding: 114px 16px 0;
@@ -159,7 +159,7 @@
     line-height: 88px;
     letter-spacing: -1.64px;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       font-size: 32px;
       line-height: 32px;
       letter-spacing: -0.64px;
@@ -183,7 +183,7 @@
     line-height: normal;
     letter-spacing: -1.12px;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       font-size: 32px;
       line-height: 32px;
       letter-spacing: -0.64px;
@@ -209,7 +209,7 @@
 
     color: white;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       font-size: 22px;
       line-height: normal;
       letter-spacing: -0.22px;
@@ -226,7 +226,7 @@
     text-align: center;
     color: white;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       font-size: 16px;
       line-height: 24px;
       letter-spacing: -0.32px;
@@ -241,7 +241,7 @@
 
     padding-top: 300px;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       padding-top: 180px;
     }
 
@@ -250,7 +250,7 @@
       margin-bottom: 24px;
       z-index: 1;
 
-      @media (max-width: 996px) {
+      @media (max-width: 700px) {
         max-width: 322px;
         margin-bottom: 16px;
       }
@@ -260,7 +260,7 @@
       margin-bottom: 48px;
       z-index: 1;
 
-      @media (max-width: 996px) {
+      @media (max-width: 700px) {
         margin-bottom: 36px;
       }
     }
@@ -279,7 +279,7 @@
       justify-content: flex-start;
       padding-top: 12px;
 
-      @media (max-width: 996px) {
+      @media (max-width: 700px) {
         width: 159.26px;
         height: 323.97px;
         background: url("@site/static/img/home/phoneFrame.png") no-repeat center
@@ -298,7 +298,7 @@
       .containerOuter {
         border-radius: 34px;
 
-        @media (max-width: 996px) {
+        @media (max-width: 700px) {
           border-radius: 22px;
         }
 
@@ -311,7 +311,7 @@
         width: 241px;
         height: 385px;
 
-        @media (max-width: 996px) {
+        @media (max-width: 700px) {
           width: 143px;
           height: 229px;
         }
@@ -328,7 +328,7 @@
     }
 
     .gameInfo {
-      left: 505px;
+      left: 50%;
       top: 150px;
       position: absolute;
       z-index: 1;
@@ -337,7 +337,7 @@
       border-radius: 14.4px;
       box-shadow: 0px 3.596px 35.955px 0px rgba(0, 0, 0, 0.25);
 
-      @media (max-width: 996px) {
+      @media (max-width: 700px) {
         left: 150px;
         top: 60px;
         transform: scale(0.59);
@@ -419,7 +419,7 @@
   .hero2 {
     margin: 225px 0;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       margin: 136px 0;
     }
 
@@ -427,7 +427,7 @@
       max-width: 982px;
       margin-bottom: 80px;
 
-      @media (max-width: 996px) {
+      @media (max-width: 700px) {
         max-width: 322px;
         margin-bottom: 48px;
       }
@@ -438,7 +438,7 @@
     > :not(:first-child) {
       margin-top: 64px;
 
-      @media (max-width: 996px) {
+      @media (max-width: 700px) {
         margin-top: 32px;
       }
     }
@@ -450,7 +450,7 @@
       > :not(:first-child) {
         margin-left: 16px;
 
-        @media (max-width: 996px) {
+        @media (max-width: 700px) {
           margin-left: 8px;
         }
       }
@@ -458,7 +458,7 @@
       h5 {
         margin-bottom: 16px;
 
-        @media (max-width: 996px) {
+        @media (max-width: 700px) {
           margin-bottom: 8px;
         }
       }
@@ -472,7 +472,7 @@
         width: 120px;
         height: 120px;
 
-        @media (max-width: 996px) {
+        @media (max-width: 700px) {
           width: 60px;
           height: 60px;
         }
@@ -483,7 +483,7 @@
         flex-direction: column;
         align-items: flex-start;
 
-        @media (max-width: 996px) {
+        @media (max-width: 700px) {
           display: none;
         }
       }
@@ -491,7 +491,7 @@
       .mainMobile {
         display: none;
 
-        @media (max-width: 996px) {
+        @media (max-width: 700px) {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -508,7 +508,7 @@
     margin-bottom: 211px;
     position: relative;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       min-height: 323px;
       background: url("@site/static/img/home/cta.png") no-repeat top
         center/302px 323px;
@@ -523,7 +523,7 @@
     > :not(:first-child) {
       margin-top: 64px;
 
-      @media (max-width: 996px) {
+      @media (max-width: 700px) {
         margin-top: 48px;
       }
     }
@@ -538,7 +538,7 @@
       left: calc(50% - 233px / 2);
       bottom: calc(-149px / 2 + 64px / 2);
 
-      @media (max-width: 996px) {
+      @media (max-width: 700px) {
         left: calc(50% - 149px / 2);
         bottom: calc(-96px / 2 + 48px / 2);
       }
@@ -547,7 +547,7 @@
         width: 233px;
         height: 149px;
 
-        @media (max-width: 996px) {
+        @media (max-width: 700px) {
           width: 149px;
           height: 96px;
         }
@@ -563,7 +563,7 @@
   > :not(:first-child) {
     margin-left: 16px;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       margin-left: 8px;
     }
   }
@@ -587,7 +587,7 @@
   line-height: normal;
   letter-spacing: -0.18px;
 
-  @media (max-width: 996px) {
+  @media (max-width: 700px) {
     padding: 0 24px;
     height: 48px;
     font-size: 11px;
@@ -606,7 +606,7 @@
     width: 24px;
     height: 24px;
 
-    @media (max-width: 996px) {
+    @media (max-width: 700px) {
       width: 20px;
       height: 20px;
     }
@@ -652,7 +652,7 @@ a.link:hover {
 }
 
 .footer {
-  @media (max-width: 996px) {
+  @media (max-width: 700px) {
     display: none;
   }
 
@@ -704,7 +704,7 @@ a.link:hover {
 .footerMobile {
   display: none;
 
-  @media (max-width: 996px) {
+  @media (max-width: 700px) {
     display: flex;
   }
 

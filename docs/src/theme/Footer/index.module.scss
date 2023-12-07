@@ -23,7 +23,7 @@ a.link:hover {
   margin: 0 77px;
   height: 180px;
   padding-top: 43px;
-  border-top: 1px solid #bcb8ff;
+  border-top: 1px solid rgba(188, 184, 255, 0.3);
 
   * {
     white-space: nowrap;
@@ -76,7 +76,7 @@ a.link:hover {
   align-items: center;
   margin: 0 16px;
   padding: 60px 0 56px;
-  border-top: 1px solid #bcb8ff;
+  border-top: 1px solid rgba(188, 184, 255, 0.3);
 
   .links {
     display: flex;

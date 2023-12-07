@@ -22,30 +22,80 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #59028b;
-  --ifm-color-primary-dark: #420665;
-  --ifm-color-primary-darker: #30153e;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #a601ee;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --ifm-heading-font-family: GTWalsheim, sans-serif;
-  --ifm-font-family-base: GTWalsheim, sans-serif;
-  --ifm-footer-background-color: #59028b;
-  --ifm-footer-link-hover-color: #e432dd;
-  --ifm-background-color: #fff;
+  /*  --ifm-color-primary: #59028b;*/
+  /*  --ifm-color-primary-dark: #420665;*/
+  /*  --ifm-color-primary-darker: #30153e;*/
+  /*  --ifm-color-primary-darkest: #205d3b;*/
+  /*  --ifm-color-primary-light: #a601ee;*/
+  /*  --ifm-color-primary-lighter: #359962;*/
+  /*  --ifm-color-primary-lightest: #3cad6e;*/
+  /*  --ifm-code-font-size: 95%;*/
+  /*  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);*/
+  /*--ifm-heading-font-family: GTWalsheim, sans-serif;*/
+  /*--ifm-font-family-base: GTWalsheim, sans-serif;*/
+  /*  --ifm-footer-background-color: #59028b;*/
+  /*  --ifm-footer-link-hover-color: #e432dd;*/
+  /*  --ifm-background-color: #fff;*/
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme="dark"] {
-  --ifm-color-primary: #e432dd;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+/*!* For readability concerns, you should choose a lighter palette in dark mode. *!*/
+/*[data-theme="dark"] {*/
+/*  --ifm-color-primary: #e432dd;*/
+/*  --ifm-color-primary-dark: #21af90;*/
+/*  --ifm-color-primary-darker: #1fa588;*/
+/*  --ifm-color-primary-darkest: #1a8870;*/
+/*  --ifm-color-primary-light: #29d5b0;*/
+/*  --ifm-color-primary-lighter: #32d8b4;*/
+/*  --ifm-color-primary-lightest: #4fddbf;*/
+/*  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);*/
+/*}*/
+
+:root {
+  --ifm-heading-font-family: GTWalsheim, sans-serif;
+  --ifm-font-family-base: GTWalsheim, sans-serif;
+
+  --ifm-breadcrumb-item-background-active: #9263ff;
+  --ifm-menu-color-background-active: #9263ff;
+  --ifm-link-color: #9263ff;
+  --ifm-menu-color-active: white;
+  --ifm-breadcrumb-color-active: white;
+
+  /*@media (max-width: 996px) {*/
+  /*  --ifm-menu-color-background-active: #222;*/
+  /*}*/
+
+  --doc-sidebar-width: 338px !important;
+  --ifm-menu-link-padding-horizontal: 9px !important;
+  --ifm-menu-link-padding-vertical: 7px !important;
+}
+
+.menu__link,
+.breadcrumbs__link {
+  text-transform: uppercase;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 2.8px;
+}
+
+.theme-doc-breadcrumbs {
+  margin-bottom: 64px !important;
+}
+
+.menu {
+  padding: 48px 18px 48px 68px !important;
+}
+
+.menu__link,
+.menu__link:hover,
+.menu__list-item-collapsible:hover {
+  border-radius: 8px;
+}
+
+.menu__link--sublist-caret:after {
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
 }

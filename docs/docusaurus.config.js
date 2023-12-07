@@ -52,6 +52,7 @@ const config = {
 
   plugins: [
     [require.resolve("@cmfcmf/docusaurus-search-local"), { indexPages: true }],
+    "docusaurus-plugin-sass",
   ],
 
   themeConfig:
@@ -59,7 +60,9 @@ const config = {
     ({
       image: "img/social-preview.jpg",
       colorMode: {
-        respectPrefersColorScheme: true,
+        defaultMode: "dark",
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
       },
       navbar: {
         title: "Rune",

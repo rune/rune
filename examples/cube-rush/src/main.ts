@@ -448,8 +448,9 @@ function animate() {
       uiStats.classList.remove("visible")
     }
 
-    //Warning - when doing performance investigations on android chrome, these buttons have to be removed, otherwise the performance becomes really bad
+    // Warning - when doing performance investigations on android chrome, these buttons have to be removed, otherwise the performance becomes really bad
     // Show controls only while playing
+    // This is an artifact when doing android chrome profiling, but it does not have any impact on production experience
     if (yourPlayerId && !yourCompletedPlayer) {
       uiControlsPreview.classList.add("visible")
     } else {

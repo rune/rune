@@ -6,19 +6,6 @@
 
 .home {
   flex: 1;
-  background: url("@site/static/img/home/background-top.svg") no-repeat top 40px
-      left calc(50% - 300px) / 2274px 2579px,
-    url("@site/static/img/home/background-footer.svg") no-repeat bottom -765px left
-      calc(50% + 100px) / 2118px 2058px,
-    #1b0329;
-
-  @media (max-width: 700px) {
-    background: url("@site/static/img/home/background-top-mobile.svg") no-repeat
-        top 70px left calc(50% - 25px) / 1094px 1811px,
-      url("@site/static/img/home/background-footer-mobile.svg") no-repeat bottom -396px
-        left calc(50% + 137px) / 856px 1339px,
-      #1b0329;
-  }
 }
 
 .header {
@@ -652,117 +639,6 @@
 
     &:hover {
       color: white;
-    }
-  }
-}
-
-.link {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 130%;
-  letter-spacing: 2.8px;
-
-  color: #bcb8ff;
-  text-transform: uppercase;
-
-  text-decoration: none;
-}
-
-a.link:hover {
-  color: white;
-  text-decoration: none;
-}
-
-.footer {
-  @media (max-width: 700px) {
-    display: none;
-  }
-
-  margin: 0 77px;
-  height: 180px;
-  padding-top: 43px;
-  border-top: 1px solid #bcb8ff;
-
-  * {
-    white-space: nowrap;
-  }
-
-  .line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    > .side {
-      width: 200px;
-    }
-
-    .center {
-      display: flex;
-      > :not(:first-child) {
-        margin-left: 40px;
-      }
-    }
-
-    .social {
-      display: flex;
-      justify-content: flex-end;
-
-      > :not(:first-child) {
-        margin-left: 24px;
-      }
-
-      a {
-        display: flex;
-
-        img {
-          width: 16px;
-          height: 16px;
-        }
-      }
-    }
-  }
-}
-
-.footerMobile {
-  display: none;
-
-  @media (max-width: 700px) {
-    display: flex;
-  }
-
-  flex-direction: column;
-  align-items: center;
-  margin: 0 16px;
-  padding: 60px 0 56px;
-  border-top: 1px solid #bcb8ff;
-
-  .links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    > :not(:first-child) {
-      margin-top: 32px;
-    }
-  }
-
-  .social {
-    margin: 74px 0 32px;
-
-    display: flex;
-    justify-content: flex-end;
-
-    > :not(:first-child) {
-      margin-left: 24px;
-    }
-
-    a {
-      display: flex;
-
-      img {
-        width: 16px;
-        height: 16px;
-      }
     }
   }
 }

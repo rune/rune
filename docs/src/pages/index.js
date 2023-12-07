@@ -330,10 +330,20 @@ export default function Home() {
       <Link className={styles.link} to="/docs/examples">
         Examples
       </Link>
-      <a className={styles.link} href="https://rune.ai" target="_blank">
+      <a
+        className={styles.link}
+        href="https://rune.ai"
+        target="_blank"
+        rel="noreferrer"
+      >
         Get Rune
       </a>
-      <a className={styles.link} href="https://rune.ai/team" target="_blank">
+      <a
+        className={styles.link}
+        href="https://rune.ai/team"
+        target="_blank"
+        rel="noreferrer"
+      >
         About
       </a>
     </>
@@ -341,7 +351,11 @@ export default function Home() {
 
   const footerSocial = (
     <>
-      <a href="https://github.com/rune/rune-games-sdk" target="_blank">
+      <a
+        href="https://github.com/rune/rune-games-sdk"
+        target="_blank"
+        rel="noreferrer"
+      >
         <img
           alt="GitHub Logo"
           src={
@@ -350,7 +364,7 @@ export default function Home() {
           }
         />
       </a>
-      <a href="https://discord.gg/rune-devs" target="_blank">
+      <a href="https://discord.gg/rune-devs" target="_blank" rel="noreferrer">
         <img
           alt="Discord Logo"
           src={
@@ -359,7 +373,7 @@ export default function Home() {
           }
         />
       </a>
-      <a href="https://twitter.com/joinrune" target="_blank">
+      <a href="https://twitter.com/joinrune" target="_blank" rel="noreferrer">
         <img
           alt="Twitter Logo"
           src={
@@ -376,7 +390,7 @@ export default function Home() {
       <div
         className={clsx(
           styles.header,
-          scrolledFromTop && styles.scrolledFromTop,
+          scrolledFromTop && styles.scrolledFromTop
         )}
       >
         <div className={styles.left}>
@@ -401,6 +415,7 @@ export default function Home() {
           <a
             href="https://github.com/rune/rune-games-sdk"
             target="_blank"
+            rel="noreferrer"
             className={clsx(styles.menuBtn, styles.hiddenOnMobile)}
           >
             <div className={styles.normal}>GitHub</div>
@@ -425,6 +440,7 @@ export default function Home() {
               className={clsx(styles.ctaButton, styles.blue)}
               href="https://discord.gg/rune-devs"
               target="_blank"
+              rel="noreferrer"
             >
               <img
                 alt="Discord Logo"

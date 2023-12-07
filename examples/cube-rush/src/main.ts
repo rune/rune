@@ -250,8 +250,8 @@ function initRender() {
     antialias: false,
     stencil: true,
     depth: true,
+    alpha: true,
   })
-  scene.background = new THREE.Color(0x0c2074)
   renderer.outputColorSpace = THREE.SRGBColorSpace
   renderer.setClearColor(0xffffff, 0)
   renderer.setSize(width, height)

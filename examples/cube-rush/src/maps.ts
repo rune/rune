@@ -1,3 +1,30 @@
+//Code for cube generation
+
+// const allCubes = []
+// for (let i = 0; i < 50; i++) {
+//   // Setup cubes
+//   const cubes: Cube[] = []
+//   for (let i = 0; i < NUMBER_OF_CUBES; i++) {
+//     const x =
+//       Math.random() * (Math.abs(LEFT_WALL_POSITION) + RIGHT_WALL_POSITION) -
+//       RIGHT_WALL_POSITION
+//     const z = -(20 + Math.random() * (TRACK_DISTANCE - 20))
+//     const colorIdx = Math.floor(Math.random() * CUBE_COLORS.length)
+//
+//     // Use 2-digit precision
+//     cubes.push([Math.floor(x * 100) / 100, Math.floor(z * 100) / 100, colorIdx])
+//   }
+//
+//   // Order by z desc
+//   const orderedCubes = cubes.sort(([, z1], [, z2]) =>
+//     z1 === z2 ? 0 : z1 < z2 ? 1 : -1,
+//   )
+//
+//   allCubes.push(cubes)
+// }
+//
+// console.log(JSON.stringify(allCubes))
+
 export const MAPS = [
   [
     [0.74, -20.72, 0],
@@ -20100,28 +20127,3 @@ export const MAPS = [
     [-0.09, -995.17, 1],
   ],
 ]
-
-// const allCubes = []
-// for (let i = 0; i < 50; i++) {
-//   // Setup cubes
-//   const cubes: Cube[] = []
-//   for (let i = 0; i < NUMBER_OF_CUBES; i++) {
-//     const x =
-//       Math.random() * (Math.abs(LEFT_WALL_POSITION) + RIGHT_WALL_POSITION) -
-//       RIGHT_WALL_POSITION
-//     const z = -(20 + Math.random() * (TRACK_DISTANCE - 20))
-//     const colorIdx = Math.floor(Math.random() * CUBE_COLORS.length)
-//
-//     // Use 2-digit precision
-//     cubes.push([Math.floor(x * 100) / 100, Math.floor(z * 100) / 100, colorIdx])
-//   }
-//
-//   // Order by z desc
-//   const orderedCubes = cubes.sort(([, z1], [, z2]) =>
-//     z1 === z2 ? 0 : z1 < z2 ? 1 : -1,
-//   )
-//
-//   allCubes.push(cubes)
-// }
-//
-// console.log(JSON.stringify(allCubes))

@@ -159,6 +159,12 @@
     line-height: 88px;
     letter-spacing: -1.64px;
 
+    @media (max-width: 1024px) {
+      font-size: 56px;
+      line-height: 60px;
+      letter-spacing: -1.12px;
+    }
+
     @media (max-width: 700px) {
       font-size: 32px;
       line-height: 32px;
@@ -182,6 +188,12 @@
     font-weight: 700;
     line-height: normal;
     letter-spacing: -1.12px;
+
+    @media (max-width: 1024px) {
+      font-size: 48px;
+      line-height: 52px;
+      letter-spacing: -0.96px;
+    }
 
     @media (max-width: 700px) {
       font-size: 32px;
@@ -209,6 +221,12 @@
 
     color: white;
 
+    @media (max-width: 1024px) {
+      font-size: 24px;
+      line-height: 28px;
+      letter-spacing: -0.48px;
+    }
+
     @media (max-width: 700px) {
       font-size: 22px;
       line-height: normal;
@@ -225,6 +243,12 @@
 
     text-align: center;
     color: white;
+
+    @media (max-width: 1024px) {
+      font-size: 18px;
+      line-height: 24px;
+      letter-spacing: -0.36px;
+    }
 
     @media (max-width: 700px) {
       font-size: 16px;
@@ -483,7 +507,7 @@
         flex-direction: column;
         align-items: flex-start;
 
-        @media (max-width: 700px) {
+        @media (max-width: 1024px) {
           display: none;
         }
       }
@@ -491,7 +515,7 @@
       .mainMobile {
         display: none;
 
-        @media (max-width: 700px) {
+        @media (max-width: 1024px) {
           display: flex;
           flex-direction: column;
           align-items: flex-start;

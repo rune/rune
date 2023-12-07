@@ -83,11 +83,6 @@ const config = {
             label: "FAQ",
           },
           {
-            to: "/help",
-            position: "left",
-            label: "Help",
-          },
-          {
             href: "https://github.com/rune/rune-games-sdk",
             label: "GitHub",
             position: "right",

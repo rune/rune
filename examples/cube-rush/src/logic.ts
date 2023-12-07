@@ -10,16 +10,14 @@ import {
   SHIP_START_POSITIONS,
   TRACK_DISTANCE,
   UPDATES_PER_SECOND,
-  NUMBER_OF_CUBES,
-  CUBE_COLORS,
   SHIP_INIT_SPEED,
   SHIP_MIN_SPEED,
   SHIP_MAX_SPEED,
   SHIP_X_SPEED_RATE,
   SHIP_Z_SPEED_RATE,
 } from "./config"
+import { MAPS } from "./maps.ts"
 
-type Cube = [x: number, z: number, colorIdx: number]
 export type ShipDirection = "left" | "right" | null
 
 type Ship = {
@@ -35,6 +33,7 @@ type Ship = {
   zSpeed: number
   topZSpeed: number
   lastPassedCubeIdx: number
+  isColliding: boolean
 }
 
 type Phase = "PAUSED" | "COUNTDOWN" | "PLAYING"
@@ -43,7 +42,7 @@ export interface GameState {
   startedAt: number | null
   phase: Phase
   ships: Record<PlayerId, Ship>
-  cubes: Cube[]
+  mapIndex: number
   completedPlayers: Record<PlayerId, { place: number; elapse: number }>
 }
 
@@ -83,36 +82,15 @@ Rune.initLogic({
         topZSpeed: 0,
         direction: null,
         lastPassedCubeIdx: -1,
+        isColliding: false,
       }
     }
-
-    // Setup cubes
-    const cubes: Cube[] = []
-    for (let i = 0; i < NUMBER_OF_CUBES; i++) {
-      const x =
-        Math.random() * (Math.abs(LEFT_WALL_POSITION) + RIGHT_WALL_POSITION) -
-        RIGHT_WALL_POSITION
-      const z = -(20 + Math.random() * (TRACK_DISTANCE - 20))
-      const colorIdx = Math.floor(Math.random() * CUBE_COLORS.length)
-
-      // Use 2-digit precision
-      cubes.push([
-        Math.floor(x * 100) / 100,
-        Math.floor(z * 100) / 100,
-        colorIdx,
-      ])
-    }
-
-    // Order by z desc
-    const orderedCubes = cubes.sort(([, z1], [, z2]) =>
-      z1 === z2 ? 0 : z1 < z2 ? 1 : -1,
-    )
 
     return {
       startedAt: null,
       phase: "PAUSED",
       ships,
-      cubes: orderedCubes,
+      mapIndex: Math.floor(Math.random() * MAPS.length),
       completedPlayers: {},
     }
   },
@@ -165,6 +143,8 @@ Rune.initLogic({
         RIGHT_WALL_POSITION - HALF_SHIP_WIDTH,
       )
 
+      ship.isColliding = false
+
       // Forward speed
       if (ship.zSpeed < 300) {
         // Quickly increase speed
@@ -189,10 +169,10 @@ Rune.initLogic({
 
       for (
         let idx = ship.lastPassedCubeIdx + 1;
-        idx < game.cubes.length;
+        idx < MAPS[game.mapIndex].length;
         idx++
       ) {
-        const [x, z] = game.cubes[idx]
+        const [x, z] = MAPS[game.mapIndex][idx]
 
         // Ship is before the cube on z dimension
         const cubeStartZ = z + CUBE_DEPTH / 2
@@ -210,6 +190,7 @@ Rune.initLogic({
             Math.abs(ship.position.x - x) <
             CUBE_WIDTH / 2 + HALF_SHIP_WIDTH
           ) {
+            ship.isColliding = true
             // Ship is in collision on all dimensions
             ship.zSpeed *= 0.5
             // Cap min speed

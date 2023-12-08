@@ -118,6 +118,10 @@
 
 .theme-doc-breadcrumbs {
   margin-bottom: 64px !important;
+
+  @media (max-width: 996px) {
+    margin-bottom: 0 !important;
+  }
 }
 
 .theme-doc-sidebar-container {

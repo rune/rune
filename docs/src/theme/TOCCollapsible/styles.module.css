@@ -1,7 +1,7 @@
 .tocCollapsible {
   background-color: #222222;
   border-radius: var(--ifm-global-radius);
-  margin: 1rem 0;
+  margin: 25px 0 31px;
 }
 
 .tocCollapsibleContent > ul {

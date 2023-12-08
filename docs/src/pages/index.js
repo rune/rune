@@ -32,7 +32,7 @@ const features = [
   },
   {
     icon: require("@site/static/img/home/features/dollar.png").default,
-    title: "We help you make money",
+    title: "We help you make money (coming soon!)",
     description: [
       "Players can soon spend Rune gems on your games.",
       "Earn money by adding skins and power-ups to your game!",

@@ -86,6 +86,30 @@
   letter-spacing: 0.7px;
 }
 
+.breadcrumbs__link {
+  padding: 8px 12px;
+}
+
+.breadcrumbs__link:hover {
+  color: white;
+}
+
+.breadcrumbs__item--active {
+  margin-left: 12px;
+}
+
+.breadcrumbs__item:not(:last-child):after {
+  content: "";
+  background: url("@site/static/img/arrowWhite.svg") no-repeat center / 24px
+    24px;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  filter: none;
+  opacity: 1;
+  margin: 0 -2px;
+}
+
 .theme-doc-breadcrumbs {
   margin-bottom: 64px !important;
 }

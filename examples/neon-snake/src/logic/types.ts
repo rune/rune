@@ -8,7 +8,7 @@ export interface GameState {
   stage: "gettingReady" | "countdown" | "playing" | "endOfRound"
   players: PlayerInfo[]
   snakes: { [playerId: PlayerId]: Snake }
-  collisionGrid: { [index: number]: boolean }
+  collisionGrid: Record<Point["x"], Record<Point["y"], boolean>>
   countdownTimer: number
   timerStartedAt: number
   lastRoundWinnerId: PlayerId | undefined

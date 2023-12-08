@@ -1,7 +1,20 @@
 import { Point, PlayerInfo, GameState } from "../types.ts"
-import { collisionGridPointer } from "../collisionGridHelpers.ts"
+import {
+  collisionToGlobalPoint,
+  globalToCollisionPoint,
+} from "../collisionGridHelpers.ts"
 import { isLatestSectionOutOfBounds } from "../isLatestSectionOutOfBounds.ts"
 import { checkWinnersAndGameOver } from "../checkWinnersAndGameOver.ts"
+
+function markCollisionGrid(game: GameState, collisionPoint: Point) {
+  //Initialize collision grid if it does not exist yet
+
+  if (!game.collisionGrid[collisionPoint.x]) {
+    game.collisionGrid[collisionPoint.x] = {}
+  }
+
+  game.collisionGrid[collisionPoint.x][collisionPoint.y] = true
+}
 
 export function checkLatestSectionForCollisions(
   previousEnd: Point,
@@ -11,45 +24,46 @@ export function checkLatestSectionForCollisions(
   const snake = game.snakes[player.playerId]
   const latestSection = snake.sections[snake.sections.length - 1]
 
-  const oldCollisionSquareIndex = collisionGridPointer(previousEnd)
-  const collisionSquareIndex = collisionGridPointer(latestSection.end)
+  const prevCollisionPoint = globalToCollisionPoint(previousEnd)
+  const currentCollisionPoint = globalToCollisionPoint(latestSection.end)
 
   if (
     isLatestSectionOutOfBounds(snake) ||
-    (collisionSquareIndex !== oldCollisionSquareIndex &&
-      game.collisionGrid[collisionSquareIndex])
+    ((currentCollisionPoint.x !== prevCollisionPoint.x ||
+      currentCollisionPoint.y !== prevCollisionPoint.y) &&
+      game.collisionGrid[currentCollisionPoint.x]?.[currentCollisionPoint.y])
   ) {
     player.state = "dead"
     player.diedAt = Rune.gameTime()
     checkWinnersAndGameOver(game)
   } else if (!latestSection.gap) {
-    const oldCollisionCellCords = collisionGridPointer(oldCollisionSquareIndex)
-    const collisionCellCords = collisionGridPointer(collisionSquareIndex)
+    const prevGlobalPoint = collisionToGlobalPoint(prevCollisionPoint)
+    const currentGlobalPoint = collisionToGlobalPoint(currentCollisionPoint)
 
     if (
-      oldCollisionCellCords.x !== collisionCellCords.x &&
-      oldCollisionCellCords.y !== collisionCellCords.y
+      prevGlobalPoint.x !== currentGlobalPoint.x &&
+      prevGlobalPoint.y !== currentGlobalPoint.y
     ) {
       const point =
-        collisionCellCords.x > oldCollisionCellCords.y &&
-        collisionCellCords.y > oldCollisionCellCords.y
+        currentGlobalPoint.x > prevGlobalPoint.y &&
+        currentGlobalPoint.y > prevGlobalPoint.y
           ? {
-              ...collisionCellCords,
+              ...currentGlobalPoint,
             }
-          : collisionCellCords.x < oldCollisionCellCords.y &&
-            collisionCellCords.y < oldCollisionCellCords.y
+          : currentGlobalPoint.x < prevGlobalPoint.y &&
+            currentGlobalPoint.y < prevGlobalPoint.y
           ? {
-              ...oldCollisionCellCords,
+              ...prevGlobalPoint,
             }
-          : collisionCellCords.x > oldCollisionCellCords.y &&
-            collisionCellCords.y < oldCollisionCellCords.y
+          : currentGlobalPoint.x > prevGlobalPoint.y &&
+            currentGlobalPoint.y < prevGlobalPoint.y
           ? {
-              x: collisionCellCords.x,
-              y: oldCollisionCellCords.y,
+              x: currentGlobalPoint.x,
+              y: prevGlobalPoint.y,
             }
           : {
-              x: oldCollisionCellCords.x,
-              y: collisionCellCords.y,
+              x: prevGlobalPoint.x,
+              y: currentGlobalPoint.y,
             }
 
       const latestSectionLineEquation = {
@@ -79,22 +93,24 @@ export function checkLatestSectionForCollisions(
           pointAboveLine) ||
         (!latestSectionGoingDown && latestSectionGoingRight && pointAboveLine)
       ) {
-        game.collisionGrid[
-          collisionGridPointer({
-            x: oldCollisionCellCords.x,
-            y: collisionCellCords.y,
-          })
-        ] = true
+        markCollisionGrid(
+          game,
+          globalToCollisionPoint({
+            x: prevGlobalPoint.x,
+            y: currentGlobalPoint.y,
+          }),
+        )
       } else {
-        game.collisionGrid[
-          collisionGridPointer({
-            x: collisionCellCords.x,
-            y: oldCollisionCellCords.y,
-          })
-        ] = true
+        markCollisionGrid(
+          game,
+          globalToCollisionPoint({
+            x: currentGlobalPoint.x,
+            y: prevGlobalPoint.y,
+          }),
+        )
       }
     }
 
-    game.collisionGrid[collisionSquareIndex] = true
+    markCollisionGrid(game, currentCollisionPoint)
   }
 }

@@ -6,12 +6,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 135px 60px 0;
+  padding: 24px 60px 0;
 
   @media (max-width: 700px) {
     width: 375px;
     margin: 0 auto;
-    padding: 114px 16px 0;
+    padding: 30px 16px 0;
   }
 
   h2 {

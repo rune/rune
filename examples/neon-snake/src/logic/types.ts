@@ -8,7 +8,7 @@ export interface GameState {
   stage: "gettingReady" | "countdown" | "playing" | "endOfRound"
   players: PlayerInfo[]
   snakes: { [playerId: PlayerId]: Snake }
-  collisionGrid: Record<Point["x"], Record<Point["y"], boolean>>
+  collisionGrid: CollisionGrid
   countdownTimer: number
   timerStartedAt: number
   lastRoundWinnerId: PlayerId | undefined
@@ -22,6 +22,8 @@ export type GameActions = {
 export type Turning = "left" | "right" | "none"
 
 export type State = "pending" | "alive" | "dead"
+
+export type CollisionGrid = Record<Point["x"], Record<Point["y"], boolean>>
 
 export type Point = { x: number; y: number }
 
@@ -56,4 +58,5 @@ export type Snake = {
   gapCounter: number
   turning: "left" | "right" | "none"
   sections: [Section, ...Section[]]
+  lastCollisionGridPoints: Point[]
 }

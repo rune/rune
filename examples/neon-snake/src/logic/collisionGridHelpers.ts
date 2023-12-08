@@ -2,7 +2,7 @@ import { Point } from "./types.ts"
 import { movePixelsPerTick } from "./logicConfig.ts"
 
 // Use coarse collision grid for performance optimization
-const collisionGridSize = Math.round(movePixelsPerTick * 3)
+export const collisionGridSize = Math.round(movePixelsPerTick * 3)
 
 export function globalToCollisionPoint(globalPoint: Point) {
   return {

@@ -27,6 +27,7 @@ Rune.initLogic({
             gapCounter: 0,
             turning: "none",
             sections: [getRandomInitialSection()],
+            lastCollisionGridPoints: [],
           },
         }),
         {},
@@ -65,6 +66,7 @@ Rune.initLogic({
         gapCounter: 0,
         turning: "none",
         sections: [getRandomInitialSection()],
+        lastCollisionGridPoints: [],
       }
     },
     playerLeft: (playerId, { game }) => {

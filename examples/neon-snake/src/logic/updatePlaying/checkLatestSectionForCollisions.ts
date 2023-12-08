@@ -1,19 +1,45 @@
-import { Point, PlayerInfo, GameState } from "../types.ts"
+import { Point, PlayerInfo, GameState, CollisionGrid, Snake } from "../types.ts"
 import {
   collisionToGlobalPoint,
   globalToCollisionPoint,
 } from "../collisionGridHelpers.ts"
 import { isLatestSectionOutOfBounds } from "../isLatestSectionOutOfBounds.ts"
 import { checkWinnersAndGameOver } from "../checkWinnersAndGameOver.ts"
+import { ALLOWED_COLLISION_POINTS } from "../logicConfig.ts"
 
-function markCollisionGrid(game: GameState, collisionPoint: Point) {
+function markCollisionGrid(
+  collisionGrid: CollisionGrid,
+  collisionPoint: Point,
+  snake: Snake,
+) {
   //Initialize collision grid if it does not exist yet
 
-  if (!game.collisionGrid[collisionPoint.x]) {
-    game.collisionGrid[collisionPoint.x] = {}
+  if (!collisionGrid[collisionPoint.x]) {
+    collisionGrid[collisionPoint.x] = {}
   }
 
-  game.collisionGrid[collisionPoint.x][collisionPoint.y] = true
+  collisionGrid[collisionPoint.x][collisionPoint.y] = true
+
+  if (!isCollisionPointRecentlyVisitedBySnake(snake, collisionPoint)) {
+    //Save where the snake was recently at.
+    snake.lastCollisionGridPoints = [
+      collisionPoint,
+      ...snake.lastCollisionGridPoints.slice(0, ALLOWED_COLLISION_POINTS - 1),
+    ]
+  }
+}
+
+// With current angle calculation, it is possible to visit a cell that was just marked by the same snake.
+// To avoid self collisions, we ignore the collision if the cell is recently visited.
+function isCollisionPointRecentlyVisitedBySnake(
+  snake: Snake,
+  currentCollisionPoint: Point,
+) {
+  return snake.lastCollisionGridPoints.some(
+    (recentPoint) =>
+      recentPoint.x === currentCollisionPoint.x &&
+      recentPoint.y === currentCollisionPoint.y,
+  )
 }
 
 export function checkLatestSectionForCollisions(
@@ -23,15 +49,24 @@ export function checkLatestSectionForCollisions(
 ) {
   const snake = game.snakes[player.playerId]
   const latestSection = snake.sections[snake.sections.length - 1]
+  const { collisionGrid } = game
 
   const prevCollisionPoint = globalToCollisionPoint(previousEnd)
   const currentCollisionPoint = globalToCollisionPoint(latestSection.end)
 
+  const isSameCollisionPointAsBefore =
+    currentCollisionPoint.x === prevCollisionPoint.x &&
+    currentCollisionPoint.y === prevCollisionPoint.y
+
   if (
+    //If snake is out of bounds or
     isLatestSectionOutOfBounds(snake) ||
-    ((currentCollisionPoint.x !== prevCollisionPoint.x ||
-      currentCollisionPoint.y !== prevCollisionPoint.y) &&
-      game.collisionGrid[currentCollisionPoint.x]?.[currentCollisionPoint.y])
+    //Snake has moved from previous position
+    (!isSameCollisionPointAsBefore &&
+      //Snake is in already marked collision grid point
+      collisionGrid[currentCollisionPoint.x]?.[currentCollisionPoint.y] &&
+      //This point was not recently visited by this snake
+      !isCollisionPointRecentlyVisitedBySnake(snake, currentCollisionPoint))
   ) {
     player.state = "dead"
     player.diedAt = Rune.gameTime()
@@ -40,6 +75,7 @@ export function checkLatestSectionForCollisions(
     const prevGlobalPoint = collisionToGlobalPoint(prevCollisionPoint)
     const currentGlobalPoint = collisionToGlobalPoint(currentCollisionPoint)
 
+    //Diagonal line check
     if (
       prevGlobalPoint.x !== currentGlobalPoint.x &&
       prevGlobalPoint.y !== currentGlobalPoint.y
@@ -94,23 +130,25 @@ export function checkLatestSectionForCollisions(
         (!latestSectionGoingDown && latestSectionGoingRight && pointAboveLine)
       ) {
         markCollisionGrid(
-          game,
+          collisionGrid,
           globalToCollisionPoint({
             x: prevGlobalPoint.x,
             y: currentGlobalPoint.y,
           }),
+          snake,
         )
       } else {
         markCollisionGrid(
-          game,
+          collisionGrid,
           globalToCollisionPoint({
             x: currentGlobalPoint.x,
             y: prevGlobalPoint.y,
           }),
+          snake,
         )
       }
     }
 
-    markCollisionGrid(game, currentCollisionPoint)
+    markCollisionGrid(collisionGrid, currentCollisionPoint, snake)
   }
 }

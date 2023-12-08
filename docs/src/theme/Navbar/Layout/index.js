@@ -62,21 +62,20 @@ export default function NavbarLayout({ children }) {
         <Link to="/docs/quick-start" className={styles.menuLink}>
           Docs
         </Link>
-        <Link
-          to="/faq"
-          className={clsx(styles.menuLink, styles.hiddenOnMobile)}
-        >
+        <Link to="/faq" className={styles.menuLink}>
           FAQ
         </Link>
         <a
           href="https://github.com/rune/rune-games-sdk"
           target="_blank"
           rel="noreferrer"
-          className={clsx(styles.menuBtn, styles.hiddenOnMobile)}
+          className={styles.menuBtn}
         >
           <div className={styles.normal}>GitHub</div>
           <div className={styles.hover}>GitHub</div>
         </a>
+      </div>
+      <div className={clsx(styles.right, styles.rightMobile)}>
         {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
       </div>
       <NavbarBackdrop onClick={mobileSidebar.toggle} />

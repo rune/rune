@@ -59,6 +59,17 @@
     > :not(:first-child) {
       margin-left: 32px;
     }
+
+    @media (max-width: 996px) {
+      display: none;
+    }
+  }
+
+  .rightMobile {
+    display: none;
+    @media (max-width: 996px) {
+      display: flex;
+    }
   }
 }
 

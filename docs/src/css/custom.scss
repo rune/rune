@@ -69,9 +69,11 @@
   --ifm-menu-link-padding-vertical: 7px;
   --ifm-toc-padding-horizontal: 16px;
   --ifm-toc-padding-vertical: 12px;
+  --ifm-navbar-height: 110px;
 
   @media (max-width: 996px) {
     --ifm-spacing-horizontal: 16px;
+    --ifm-navbar-height: 85px;
   }
 }
 
@@ -229,4 +231,22 @@
     padding-top: 25px !important;
     padding-bottom: 60px !important;
   }
+}
+
+.theme-doc-sidebar-container {
+  border-right: 0 !important;
+
+  display: flex !important;
+  &::after {
+    content: "";
+    width: 1px;
+    background: rgba(188, 184, 255, 0.3);
+    flex-shrink: 0;
+    position: relative;
+    margin-top: calc(var(--ifm-navbar-height) + 48px);
+  }
+}
+
+.navbar-sidebar {
+  height: 100vh;
 }

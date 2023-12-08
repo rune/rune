@@ -318,55 +318,11 @@ function Phone() {
 }
 
 export default function Home() {
-  const [scrolledFromTop, setScrolledFromTop] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolledFromTop(window.scrollY > 10)
-    window.addEventListener("scroll", onScroll)
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-
   const { siteConfig } = useDocusaurusContext()
 
   return (
     <Layout description={siteConfig.description} homeBackground>
       <div className={styles.home}>
-        <div
-          className={clsx(
-            styles.header,
-            scrolledFromTop && styles.scrolledFromTop
-          )}
-        >
-          <div className={styles.left}>
-            <Link to="/">
-              <img
-                alt="Rune Logo"
-                className={styles.logo}
-                src={require("@site/static/img/home/logo.png").default}
-              />
-            </Link>
-          </div>
-          <div className={styles.right}>
-            <Link to="/docs/quick-start" className={styles.menuLink}>
-              Docs
-            </Link>
-            <Link
-              to="/faq"
-              className={clsx(styles.menuLink, styles.hiddenOnMobile)}
-            >
-              FAQ
-            </Link>
-            <a
-              href="https://github.com/rune/rune-games-sdk"
-              target="_blank"
-              rel="noreferrer"
-              className={clsx(styles.menuBtn, styles.hiddenOnMobile)}
-            >
-              <div className={styles.normal}>GitHub</div>
-              <div className={styles.hover}>GitHub</div>
-            </a>
-          </div>
-        </div>
         <div className={styles.content}>
           <div className={styles.hero1}>
             <Phone />

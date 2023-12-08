@@ -27,7 +27,7 @@ export default function LayoutWrapper(props) {
                   no-repeat bottom -765px left calc(50% + 100px) / 2118px 2058px,
                 #1b0329;
 
-              @media (max-width: 700px) {
+              @media (max-width: 996px) {
                 background: url(${require("!!url-loader!@site/static/img/layout/background-top-mobile.svg")
                       .default})
                     no-repeat top 70px left calc(50% - 25px) / 1094px 1811px,
@@ -45,7 +45,7 @@ export default function LayoutWrapper(props) {
                   no-repeat top -314px left -517px / 1319px 676px fixed,
                 #1b0329;
 
-              @media (max-width: 700px) {
+              @media (max-width: 996px) {
                 background: url(${require("!!url-loader!@site/static/img/layout/background-docs-mobile.svg")
                       .default})
                     no-repeat top -200px left -300px / 819px 521px fixed,

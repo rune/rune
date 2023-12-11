@@ -1,9 +1,10 @@
-import { store, $game, $players } from "../../state/state.ts"
+import { store, $game, $players, $yourPlayerId } from "../../state/state.ts"
 import { drawArrow } from "./drawArrow.ts"
 import { drawSection } from "./drawSection.ts"
 import { drawDeadEnd } from "./drawDeadEnd.ts"
 import { drawAvatar } from "./drawAvatar.ts"
 import { getOptimisticStartSection } from "./getOptimisticStartSection.ts"
+import { drawLoops } from "./drawLoops.ts"
 
 ////Draws a board showing collision grid. Useful for testing
 // function highlightCollisionGrid(
@@ -55,6 +56,8 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   const ctx = canvas.getContext("2d")
   const game = store.get($game)
 
+  const yourPlayerId = store.get($yourPlayerId)
+
   if (!ctx) return
 
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -64,25 +67,38 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
   for (const player of game.players) {
     if (player.state === "pending") continue
 
+    const isOpponent = !!(yourPlayerId && yourPlayerId !== player.playerId)
+
     const snake = game.snakes[player.playerId]
 
     if (game.stage === "countdown") {
       const optimisticSection = getOptimisticStartSection(snake)
       const avatarUrl = store.get($players)[player.playerId].avatarUrl
 
-      drawSection(ctx, scale, optimisticSection, player.color)
-      drawAvatar(ctx, scale, avatarUrl, optimisticSection.start, player.color)
+      if (player.playerId === yourPlayerId) {
+        drawLoops(
+          ctx,
+          scale,
+          optimisticSection.start,
+          game.timerStartedAt,
+          player.color,
+        )
+      }
+
+      drawSection(ctx, scale, optimisticSection, player.color, isOpponent)
       drawArrow(
         ctx,
         scale,
         optimisticSection.end,
         optimisticSection.endAngle,
         player.color,
+        isOpponent,
       )
+      drawAvatar(ctx, scale, avatarUrl, optimisticSection.start, player.color)
     } else {
       for (const section of snake.sections) {
         if (section.gap) continue
-        drawSection(ctx, scale, section, player.color)
+        drawSection(ctx, scale, section, player.color, isOpponent)
       }
 
       if (player.state === "alive") {
@@ -94,6 +110,7 @@ export function drawBoard(canvas: HTMLCanvasElement, scale: number) {
           latestSection.end,
           latestSection.endAngle,
           player.color,
+          isOpponent,
         )
       }
     }

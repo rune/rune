@@ -1,12 +1,14 @@
 import { Section } from "../../logic/types.ts"
 import { shadowBlur, sectionLineWidth } from "./drawConfig.ts"
 import { arcRadius } from "../../logic/updatePlaying/getNextSection.ts"
+import { fadeColor } from "./fadeColor.ts"
 
 export function drawSection(
   ctx: CanvasRenderingContext2D,
   scale: number,
   section: Section,
   color: string,
+  isOpponent: boolean,
 ) {
   ctx.beginPath()
 
@@ -25,10 +27,12 @@ export function drawSection(
   }
 
   ctx.lineWidth = sectionLineWidth * window.devicePixelRatio
-  ctx.strokeStyle = color
+  ctx.strokeStyle = isOpponent ? fadeColor(color, "0.5") : color
+
   ctx.shadowBlur = shadowBlur * window.devicePixelRatio
   ctx.shadowColor = color
 
   ctx.stroke()
+
   ctx.stroke()
 }

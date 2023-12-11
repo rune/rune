@@ -1,5 +1,6 @@
 import { Point } from "../../logic/types.ts"
 import { shadowBlur } from "./drawConfig.ts"
+import { fadeColor } from "./fadeColor.ts"
 
 export function drawArrow(
   ctx: CanvasRenderingContext2D,
@@ -7,6 +8,7 @@ export function drawArrow(
   tip: Point,
   angle: number,
   color: string,
+  isOpponent: boolean,
 ) {
   const arrowWidth = 7
   const arrowPath =
@@ -22,7 +24,7 @@ export function drawArrow(
 
   arrow.addPath(new Path2D(arrowPath), transforms)
 
-  ctx.fillStyle = color
+  ctx.fillStyle = isOpponent ? fadeColor(color, "0.7") : color
   ctx.shadowColor = color
   ctx.shadowBlur = shadowBlur * window.devicePixelRatio
 

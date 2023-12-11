@@ -87,7 +87,7 @@ export default function NavbarLayout() {
         </a>
       </div>
       <div className={clsx(styles.right, styles.rightMobile)}>
-        <SearchBar />
+        {location.pathname !== "/" && <SearchBar />}
         {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
       </div>
       <NavbarBackdrop onClick={mobileSidebar.toggle} />

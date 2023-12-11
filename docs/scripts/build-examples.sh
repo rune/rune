@@ -48,6 +48,6 @@ perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/s
 # Neon Snake
 cd ../neon-snake
 yarn
-yarn build
+../../scripts/copy-assets.sh neon-snake && yarn build
 cp -r dist/. ../../docs/static/_examples/neon-snake
 perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_examples/neon-snake/index.html

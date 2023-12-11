@@ -20,36 +20,6 @@
   font-style: normal;
 }
 
-/* You can override the default Infima variables here. */
-:root {
-  /*  --ifm-color-primary: #59028b;*/
-  /*  --ifm-color-primary-dark: #420665;*/
-  /*  --ifm-color-primary-darker: #30153e;*/
-  /*  --ifm-color-primary-darkest: #205d3b;*/
-  /*  --ifm-color-primary-light: #a601ee;*/
-  /*  --ifm-color-primary-lighter: #359962;*/
-  /*  --ifm-color-primary-lightest: #3cad6e;*/
-  /*  --ifm-code-font-size: 95%;*/
-  /*  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);*/
-  /*--ifm-heading-font-family: GTWalsheim, sans-serif;*/
-  /*--ifm-font-family-base: GTWalsheim, sans-serif;*/
-  /*  --ifm-footer-background-color: #59028b;*/
-  /*  --ifm-footer-link-hover-color: #e432dd;*/
-  /*  --ifm-background-color: #fff;*/
-}
-
-/*!* For readability concerns, you should choose a lighter palette in dark mode. *!*/
-/*[data-theme="dark"] {*/
-/*  --ifm-color-primary: #e432dd;*/
-/*  --ifm-color-primary-dark: #21af90;*/
-/*  --ifm-color-primary-darker: #1fa588;*/
-/*  --ifm-color-primary-darkest: #1a8870;*/
-/*  --ifm-color-primary-light: #29d5b0;*/
-/*  --ifm-color-primary-lighter: #32d8b4;*/
-/*  --ifm-color-primary-lightest: #4fddbf;*/
-/*  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);*/
-/*}*/
-
 :root {
   --ifm-heading-font-family: GTWalsheim, sans-serif;
   --ifm-font-family-base: GTWalsheim, sans-serif;
@@ -202,31 +172,6 @@
   border-radius: 8px;
 }
 
-/*.pagination-nav__link {*/
-/*  border: 1px solid rgba(188, 184, 255, 0.3);*/
-/*  border-radius: 8px;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: space-between;*/
-/*  padding: 24px;*/
-
-/*  @media (max-width: 996px) {*/
-/*    flex-direction: column;*/
-/*    padding: 12px;*/
-/*  }*/
-/*}*/
-
-/*.pagination-nav__sublabel {*/
-/*  margin-bottom: 0;*/
-
-/*  font-size: 22px;*/
-/*  font-style: normal;*/
-/*  font-weight: 400;*/
-/*  line-height: 30px;*/
-/*  letter-spacing: -0.44px;*/
-/*  color: white;*/
-/*}*/
-
 .pagination-nav__label {
   font-size: 14px;
   font-style: normal;
@@ -278,15 +223,6 @@
   transform: rotate(180deg);
   flex-shrink: 0;
 }
-
-/*.pagination-nav__link--prev .pagination-nav__label::before {*/
-/*  content: "";*/
-/*  width: 24px;*/
-/*  height: 24px;*/
-/*  background: url("@site/static/img/arrow.svg") no-repeat center / 24px 24px;*/
-/*  display: block;*/
-/*  transform: rotate(180deg);*/
-/*}*/
 
 .container {
   padding-top: 48px !important;

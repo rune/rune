@@ -256,11 +256,15 @@
   height: 100vh;
 }
 
-.navbar-sidebar__footer {
-  height: 100px;
+.navbar-sidebar__brand {
+  border-bottom: 1px solid rgba(188, 184, 255, 0.3);
+}
 
+.navbar-sidebar__footer {
+  flex: 1 0 auto;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  min-height: 46px;
   justify-content: center;
 
   > :not(:first-child) {
@@ -277,8 +281,9 @@
   }
 }
 
-.navbar-sidebar__items {
-  height: calc(100% - var(--ifm-navbar-height) - 100px);
+.navbar-sidebar__item.menu {
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar__toggle {

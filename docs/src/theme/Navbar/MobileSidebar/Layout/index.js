@@ -14,10 +14,13 @@ export default function ({ header, primaryMenu, secondaryMenu }) {
         })}
       >
         <div className="navbar-sidebar__item menu">{primaryMenu}</div>
-        <div className="navbar-sidebar__item menu">{secondaryMenu}</div>
-      </div>
-      <div className="navbar-sidebar__footer">
-        <Social />
+        <div className="navbar-sidebar__item menu">
+          {secondaryMenu}
+
+          <div className="navbar-sidebar__footer">
+            <Social />
+          </div>
+        </div>
       </div>
     </div>
   )

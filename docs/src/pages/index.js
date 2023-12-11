@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react"
+import React, { useState, useRef, useCallback } from "react"
 import clsx from "clsx"
 import Link from "@docusaurus/Link"
 import { Player } from "@lottiefiles/react-lottie-player"
@@ -235,20 +235,6 @@ function Phone() {
   const scrollToNextVideoRef = useRef(scrollToNextVideo)
   scrollToNextVideoRef.current = scrollToNextVideo
 
-  useEffect(() => {
-    if (currentVideoRef.current) {
-      currentVideoRef.current.currentTime = 0
-      currentVideoRef.current.play()
-    }
-  }, [])
-
-  // useEffect(() => {
-  //   const handle = setInterval(() => {
-  //     scrollToNextVideoRef.current()
-  //   }, 2000)
-  //   return () => clearInterval(handle)
-  // }, [])
-
   return (
     <>
       <div className={styles.gameInfo}>
@@ -294,6 +280,7 @@ function Phone() {
               muted
               playsInline
               onEnded={scrollToNextVideo}
+              autoPlay
             >
               {currentVideo.sources.map((source, idx) => (
                 <source key={idx} src={source.src} type={source.type} />

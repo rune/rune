@@ -3,7 +3,8 @@ import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal"
 import { translate } from "@docusaurus/Translate"
 import NavbarColorModeToggle from "@theme/Navbar/ColorModeToggle"
 import IconClose from "@theme/Icon/Close"
-import NavbarLogo from "@theme/Navbar/Logo"
+import styles from "../../Layout/styles.module.scss"
+import Link from "@docusaurus/Link"
 
 function CloseButton() {
   const mobileSidebar = useNavbarMobileSidebar()
@@ -25,7 +26,13 @@ function CloseButton() {
 export default function NavbarMobileSidebarHeader() {
   return (
     <div className="navbar-sidebar__brand">
-      <NavbarLogo />
+      <Link to="/">
+        <img
+          alt="Rune Logo"
+          className={styles.logo}
+          src={require("@site/static/img/home/logo.png").default}
+        />
+      </Link>
       <NavbarColorModeToggle className="margin-right--md" />
       <CloseButton />
     </div>

@@ -2,6 +2,7 @@ import React from "react"
 import styles from "./index.module.scss"
 import clsx from "clsx"
 import Link from "@docusaurus/Link"
+import { Social } from "../../components/Social"
 
 function Footer() {
   const footerCopyright = <>© {new Date().getFullYear()} Rune</>
@@ -30,42 +31,6 @@ function Footer() {
     </>
   )
 
-  const footerSocial = (
-    <>
-      <a
-        href="https://github.com/rune/rune-games-sdk"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <img
-          alt="GitHub Logo"
-          src={
-            require("!!url-loader!@site/static/img/home/social/github.svg")
-              .default
-          }
-        />
-      </a>
-      <a href="https://discord.gg/rune-devs" target="_blank" rel="noreferrer">
-        <img
-          alt="Discord Logo"
-          src={
-            require("!!url-loader!@site/static/img/home/social/discord.svg")
-              .default
-          }
-        />
-      </a>
-      <a href="https://twitter.com/joinrune" target="_blank" rel="noreferrer">
-        <img
-          alt="Twitter Logo"
-          src={
-            require("!!url-loader!@site/static/img/home/social/twitter.svg")
-              .default
-          }
-        />
-      </a>
-    </>
-  )
-
   return (
     <>
       <div className={styles.footer}>
@@ -74,13 +39,17 @@ function Footer() {
             {footerCopyright}
           </div>
           <div className={styles.center}>{footerLinks}</div>
-          <div className={clsx(styles.side, styles.social)}>{footerSocial}</div>
+          <div className={clsx(styles.side, styles.social)}>
+            <Social />
+          </div>
         </div>
       </div>
 
       <div className={styles.footerMobile}>
         <div className={styles.links}>{footerLinks}</div>
-        <div className={styles.social}>{footerSocial}</div>
+        <div className={styles.social}>
+          <Social />
+        </div>
         <div className={styles.link}>{footerCopyright}</div>
       </div>
     </>

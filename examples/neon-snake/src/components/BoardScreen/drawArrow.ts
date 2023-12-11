@@ -1,6 +1,6 @@
 import { Point } from "../../logic/types.ts"
 import { shadowBlur } from "./drawConfig.ts"
-import { fadeColor } from "./fadeColor.ts"
+import { fadeRgbaColor } from "./fadeRgbaColor.ts"
 
 export function drawArrow(
   ctx: CanvasRenderingContext2D,
@@ -24,7 +24,7 @@ export function drawArrow(
 
   arrow.addPath(new Path2D(arrowPath), transforms)
 
-  ctx.fillStyle = isOpponent ? fadeColor(color, "0.7") : color
+  ctx.fillStyle = isOpponent ? fadeRgbaColor(color, "0.7") : color
   ctx.shadowColor = color
   ctx.shadowBlur = shadowBlur * window.devicePixelRatio
 

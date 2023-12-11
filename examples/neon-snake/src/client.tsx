@@ -8,8 +8,6 @@ import { playSound } from "./sounds.ts"
 Rune.initClient({
   onChange: ({ previousGame, game, players, yourPlayerId }) => {
     if (yourPlayerId) {
-      //Player collided
-
       const previousPlayer = previousGame.players.find(
         (p) => p.playerId === yourPlayerId,
       )
@@ -17,6 +15,7 @@ Rune.initClient({
         (p) => p.playerId === yourPlayerId,
       )
 
+      //Player collided
       if (
         previousPlayer?.state === "alive" &&
         currentPlayer?.state === "dead"

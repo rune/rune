@@ -5,7 +5,7 @@ import {
 } from "../collisionGridHelpers.ts"
 import { isLatestSectionOutOfBounds } from "../isLatestSectionOutOfBounds.ts"
 import { checkWinnersAndGameOver } from "../checkWinnersAndGameOver.ts"
-import { ALLOWED_COLLISION_POINTS } from "../logicConfig.ts"
+import { allowedCollisionPoints } from "../logicConfig.ts"
 
 function markCollisionGrid(
   collisionGrid: CollisionGrid,
@@ -24,7 +24,7 @@ function markCollisionGrid(
     //Save where the snake was recently at.
     snake.lastCollisionGridPoints = [
       collisionPoint,
-      ...snake.lastCollisionGridPoints.slice(0, ALLOWED_COLLISION_POINTS - 1),
+      ...snake.lastCollisionGridPoints.slice(0, allowedCollisionPoints - 1),
     ]
   }
 }

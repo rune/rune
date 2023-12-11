@@ -20,7 +20,7 @@ function NavbarBackdrop(props) {
     />
   )
 }
-export default function NavbarLayout({ children }) {
+export default function NavbarLayout() {
   const location = useLocation()
 
   const [scrolledFromTop, setScrolledFromTop] = useState(false)
@@ -35,7 +35,9 @@ export default function NavbarLayout({ children }) {
     navbar: { hideOnScroll, style },
   } = useThemeConfig()
   const mobileSidebar = useNavbarMobileSidebar()
-  const { navbarRef, isNavbarVisible } = useHideableNavbar(hideOnScroll)
+  const { navbarRef } = useHideableNavbar(hideOnScroll)
+
+  console.log(location)
 
   return (
     <div
@@ -59,10 +61,20 @@ export default function NavbarLayout({ children }) {
         </Link>
       </div>
       <div className={styles.right}>
-        <Link to="/docs/quick-start" className={styles.menuLink}>
+        <Link
+          to="/docs/quick-start"
+          className={clsx(styles.menuLink, {
+            [styles.active]: location.pathname === "/docs/quick-start",
+          })}
+        >
           Docs
         </Link>
-        <Link to="/faq" className={styles.menuLink}>
+        <Link
+          to="/faq"
+          className={clsx(styles.menuLink, {
+            [styles.active]: location.pathname === "/faq",
+          })}
+        >
           FAQ
         </Link>
         <a

@@ -84,7 +84,8 @@
   opacity: 0.5;
   transition: opacity 0.2s ease-out;
 
-  &:hover {
+  &:hover,
+  &.active {
     color: white;
     text-decoration: none;
     opacity: 1;

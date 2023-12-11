@@ -69,6 +69,10 @@
     display: none;
     @media (max-width: 996px) {
       display: flex;
+
+      > :not(:first-child) {
+        margin-left: 15px;
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ import styles from "./styles.module.scss"
 import Link from "@docusaurus/Link"
 import NavbarMobileSidebarToggle from "@theme/Navbar/MobileSidebar/Toggle"
 import { useLocation } from "@docusaurus/router"
+import SearchBar from "@cmfcmf/docusaurus-search-local/lib/client/theme/SearchBar"
 
 function NavbarBackdrop(props) {
   return (
@@ -86,6 +87,7 @@ export default function NavbarLayout() {
         </a>
       </div>
       <div className={clsx(styles.right, styles.rightMobile)}>
+        <SearchBar />
         {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
       </div>
       <NavbarBackdrop onClick={mobileSidebar.toggle} />

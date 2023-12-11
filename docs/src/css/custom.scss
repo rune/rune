@@ -95,7 +95,9 @@
   font-weight: 400;
   line-height: 130%;
   letter-spacing: 2.8px;
+}
 
+.menu__link {
   @media (max-width: 996px) {
     font-size: 15px;
     font-weight: 700;
@@ -354,6 +356,10 @@
 
 .dsla-search-wrapper {
   margin-bottom: 32px;
+
+  @media (max-width: 996px) {
+    margin-bottom: 0;
+  }
 }
 
 .aa-DetachedSearchButton {
@@ -368,10 +374,26 @@
   font-weight: 400 !important;
   line-height: 150% !important;
   letter-spacing: -0.32px !important;
-}
 
-.aa-DetachedSearchButtonIcon {
-  width: 40px !important;
+  .aa-DetachedSearchButtonIcon {
+    width: 40px !important;
+  }
+
+  @media (max-width: 996px) {
+    background-color: transparent !important;
+    border: none !important;
+    height: auto !important;
+    padding: 0 !important;
+
+    .aa-DetachedSearchButtonIcon {
+      width: 32px !important;
+      height: 32px !important;
+    }
+
+    .aa-DetachedSearchButtonPlaceholder {
+      display: none;
+    }
+  }
 }
 
 .aa-SubmitIcon {

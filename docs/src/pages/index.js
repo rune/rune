@@ -353,22 +353,24 @@ export default function Home() {
 
           <div className={styles.hero2}>
             <h2>You focus on your game, we handle everything&nbsp;else</h2>
-            <div className={styles.features}>
-              {features.map(({ icon, title, description }, idx) => (
-                <div key={idx} className={styles.feature}>
-                  <img alt={title} className={styles.icon} src={icon} />
-                  <div className={styles.main}>
-                    <h5>{title}</h5>
-                    {description.map((line, idx2) => (
-                      <p key={idx2}>{line}</p>
-                    ))}
+            <div className={styles.featuresOuter}>
+              <div className={styles.features}>
+                {features.map(({ icon, title, description }, idx) => (
+                  <div key={idx} className={styles.feature}>
+                    <img alt={title} className={styles.icon} src={icon} />
+                    <div className={styles.main}>
+                      <h5>{title}</h5>
+                      {description.map((line, idx2) => (
+                        <p key={idx2}>{line}</p>
+                      ))}
+                    </div>
+                    <div className={styles.mainMobile}>
+                      <h5>{title}</h5>
+                      <p>{description.join(" ")}</p>
+                    </div>
                   </div>
-                  <div className={styles.mainMobile}>
-                    <h5>{title}</h5>
-                    <p>{description.join(" ")}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 

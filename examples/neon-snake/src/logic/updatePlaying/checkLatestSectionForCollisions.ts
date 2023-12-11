@@ -20,6 +20,7 @@ function markCollisionGrid(
 
   collisionGrid[collisionPoint.x][collisionPoint.y] = true
 
+  //Check to make sure we don't push same value in multiple times
   if (!isCollisionPointRecentlyVisitedBySnake(snake, collisionPoint)) {
     //Save where the snake was recently at.
     snake.lastCollisionGridPoints = [

@@ -337,6 +337,21 @@
   height: calc(100% - var(--ifm-navbar-height) - 100px);
 }
 
+.navbar__toggle {
+  margin-right: 0;
+  img {
+    width: 24px;
+    height: 14px;
+  }
+}
+
+.navbar-sidebar__close {
+  img {
+    width: 16.26px;
+    height: 16.26px;
+  }
+}
+
 .dsla-search-wrapper {
   margin-bottom: 32px;
 }

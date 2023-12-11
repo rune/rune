@@ -2,7 +2,6 @@ import React from "react"
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal"
 import { translate } from "@docusaurus/Translate"
 import NavbarColorModeToggle from "@theme/Navbar/ColorModeToggle"
-import IconClose from "@theme/Icon/Close"
 import styles from "../../Layout/styles.module.scss"
 import Link from "@docusaurus/Link"
 
@@ -19,10 +18,14 @@ function CloseButton() {
       className="clean-btn navbar-sidebar__close"
       onClick={() => mobileSidebar.toggle()}
     >
-      <IconClose color="var(--ifm-color-emphasis-600)" />
+      <img
+        alt="close"
+        src={require("!!url-loader!!@site/static/img/close.svg").default}
+      />
     </button>
   )
 }
+
 export default function NavbarMobileSidebarHeader() {
   return (
     <div className="navbar-sidebar__brand">

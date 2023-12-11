@@ -374,9 +374,24 @@
   font-weight: 400 !important;
   line-height: 150% !important;
   letter-spacing: -0.32px !important;
+  padding: 0 8px !important;
 
   .aa-DetachedSearchButtonIcon {
     width: 40px !important;
+  }
+
+  .aa-DetachedSearchButtonIcon {
+    width: 32px !important;
+    height: 32px !important;
+    background: url("@site/static/img/search.svg") no-repeat center / 32px 32px !important;
+
+    > svg {
+      display: none;
+    }
+  }
+
+  .aa-DetachedSearchButtonPlaceholder {
+    margin-left: 8px !important;
   }
 
   @media (max-width: 996px) {
@@ -384,11 +399,6 @@
     border: none !important;
     height: auto !important;
     padding: 0 !important;
-
-    .aa-DetachedSearchButtonIcon {
-      width: 32px !important;
-      height: 32px !important;
-    }
 
     .aa-DetachedSearchButtonPlaceholder {
       display: none;

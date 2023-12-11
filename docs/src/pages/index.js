@@ -352,7 +352,7 @@ export default function Home() {
           </div>
 
           <div className={styles.hero2}>
-            <h2>You focus on your game, we handle everything else</h2>
+            <h2>You focus on your game, we handle everything&nbsp;else</h2>
             <div className={styles.features}>
               {features.map(({ icon, title, description }, idx) => (
                 <div key={idx} className={styles.feature}>

@@ -8,7 +8,6 @@ import {
 import Link from "@docusaurus/Link"
 import useBaseUrl from "@docusaurus/useBaseUrl"
 import { translate } from "@docusaurus/Translate"
-import IconHome from "@theme/Icon/Home"
 import styles from "./styles.module.css"
 
 // TODO move to design system folder
@@ -65,11 +64,16 @@ function HomeBreadcrumbItem() {
         className={clsx("breadcrumbs__link", styles.breadcrumbsItemLink)}
         href={homeHref}
       >
-        <IconHome className={styles.breadcrumbHomeIcon} />
+        <img
+          className={styles.breadcrumbHomeIcon}
+          alt="home"
+          src={require("!!url-loader!!@site/static/img/home.svg").default}
+        />
       </Link>
     </li>
   )
 }
+
 export default function DocBreadcrumbs() {
   const breadcrumbs = useSidebarBreadcrumbs()
   const homePageRoute = useHomePageRoute()

@@ -113,6 +113,12 @@
   padding: 8px 12px;
 }
 
+.breadcrumbs__item:first-child {
+  .breadcrumbs__link {
+    padding-left: 0;
+  }
+}
+
 .breadcrumbs__link:hover {
   color: white;
 }

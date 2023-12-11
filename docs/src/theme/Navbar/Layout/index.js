@@ -37,8 +37,6 @@ export default function NavbarLayout() {
   const mobileSidebar = useNavbarMobileSidebar()
   const { navbarRef } = useHideableNavbar(hideOnScroll)
 
-  console.log(location)
-
   return (
     <div
       ref={navbarRef}
@@ -64,7 +62,7 @@ export default function NavbarLayout() {
         <Link
           to="/docs/quick-start"
           className={clsx(styles.menuLink, {
-            [styles.active]: location.pathname === "/docs/quick-start",
+            [styles.active]: location.pathname.startsWith("/docs/"),
           })}
         >
           Docs

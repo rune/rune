@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Proprietary assets
-/public/sounds
+public/sounds/

@@ -156,7 +156,7 @@
       top: 0;
       width: 268px;
       height: 546px;
-      background: url("@site/static/img/home/phoneFrame.png") no-repeat center
+      background: url("@site/static/img/home/phoneFrame.svg") no-repeat center
         center/268.54px 546.27px;
 
       display: flex;
@@ -168,7 +168,7 @@
       @media (max-width: 700px) {
         width: 159.26px;
         height: 323.97px;
-        background: url("@site/static/img/home/phoneFrame.png") no-repeat center
+        background: url("@site/static/img/home/phoneFrame.svg") no-repeat center
           center/159.26px 323.97px;
         padding-top: 9px;
       }

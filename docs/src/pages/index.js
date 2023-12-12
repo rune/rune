@@ -6,6 +6,7 @@ import { Player } from "@lottiefiles/react-lottie-player"
 import styles from "./index.module.scss"
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 import Layout from "@theme/Layout"
+import { HomeGameDemo } from "../components/HomeGameDemo/HomeGameDemo"
 
 const features = [
   {
@@ -359,6 +360,11 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className={styles.hero3}>
+            <h2>No backend needed</h2>
+            <HomeGameDemo />
           </div>
 
           <div className={styles.cta}>

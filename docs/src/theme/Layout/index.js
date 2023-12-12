@@ -21,7 +21,7 @@ export default function LayoutWrapper(props) {
             body {
               background: url(${require("!!url-loader!@site/static/img/layout/background-top.svg")
                     .default})
-                  no-repeat top 40px left calc(50% - 300px) / 2274px 2579px,
+                  no-repeat top 40px left calc(50% - 300px) / 2326px 5761px,
                 url(${require("!!url-loader!@site/static/img/layout/background-footer.svg")
                     .default})
                   no-repeat bottom -765px left calc(50% + 100px) / 2118px 2058px,

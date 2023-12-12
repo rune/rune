@@ -303,7 +303,7 @@
   }
 
   .hero2 {
-    margin: 225px 0;
+    margin: 225px 0 297px;
 
     @media (max-width: 700px) {
       margin: 136px 0;
@@ -318,6 +318,11 @@
         margin-bottom: 48px;
       }
     }
+  }
+
+  .hero3 {
+    width: 100%;
+    max-width: 953px;
   }
 
   .featuresOuter {

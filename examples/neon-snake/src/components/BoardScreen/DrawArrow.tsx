@@ -8,19 +8,17 @@ export function DrawArrow({
   color,
   scale,
   angle,
-  isOpponent,
 }: {
   point: Point
   angle: number
   color: string
   scale: number
-  isOpponent: boolean
 }) {
   const draw = useCallback(
     (g: PixiGraphics) => {
       g.clear()
 
-      g.beginFill(color, isOpponent ? 0.6 : 1)
+      g.beginFill(color, 1)
 
       //M -3.4884 3.4735 C -3.1712 0.423 -0.9514 -5 0 -5 C 0.9514 -5 3.1712 0.423 3.4884 3.4735 C 3.8386 6.8422 -3.8386 6.8422 -3.4884 3.4735 Z
       g.moveTo(-3.4884, 3.4735)
@@ -30,7 +28,7 @@ export function DrawArrow({
 
       g.endFill()
     },
-    [color, isOpponent],
+    [color],
   )
 
   return (

@@ -53,7 +53,6 @@ function DrawOptimistic({
         angle={optimisticSection.endAngle}
         color={color}
         scale={scale}
-        isOpponent={isOpponent}
       />
       <Container
         x={optimisticSection.start.x * scale}
@@ -130,7 +129,6 @@ export function DrawPlayer({
               angle={latestSection.endAngle}
               color={player.color}
               scale={scale}
-              isOpponent={isOpponent}
             />
           ) : (
             <DrawDeadEnd

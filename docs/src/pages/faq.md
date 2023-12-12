@@ -141,7 +141,3 @@ Yes, you're always free to remove your game whenever you'd like. It's your game.
 ### I Found a Bug or Have Suggestions for a New Feature. How Do I Tell You?
 
 We’d love to hear from you! Let us know what you think in the `feedback-for-rune` channel on Discord.
-
-### I Need Help / Have a Question. Who Do I Ask?
-
-See the [Help section](/help).

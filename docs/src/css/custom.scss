@@ -1,0 +1,359 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+@font-face {
+  font-family: "GTWalsheim";
+  src: url("/fonts/gt-walsheim-regular-webfont.woff2") format("woff2"),
+    url("/fonts/gt-walsheim-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GTWalsheim";
+  src: url("/fonts/gt-walsheim-bold-webfont.woff2") format("woff2"),
+    url("/fonts/gt-walsheim-bold-webfont.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  --ifm-heading-font-family: GTWalsheim, sans-serif;
+  --ifm-font-family-base: GTWalsheim, sans-serif;
+
+  --ifm-breadcrumb-item-background-active: #9263ff;
+  --ifm-menu-color-background-active: #9263ff;
+  --ifm-link-color: #9263ff;
+  --ifm-menu-color: #bcb8ff;
+  --ifm-menu-color-active: white;
+  --ifm-breadcrumb-color-active: white;
+  --ifm-toc-link-color: #bcb8ff;
+  --ifm-color-primary: #9263ff;
+  --ifm-toc-border-color: rgba(188, 184, 255, 0.3) !important;
+
+  --ifm-spacing-horizontal: 27px;
+  --doc-sidebar-width: 338px !important;
+  --ifm-menu-link-padding-horizontal: 9px;
+  --ifm-menu-link-padding-vertical: 7px;
+  --ifm-toc-padding-horizontal: 16px;
+  --ifm-toc-padding-vertical: 12px;
+  --ifm-navbar-height: 110px;
+  --ifm-navbar-sidebar-width: 100vw;
+  --ifm-navbar-background-color: #1b0329;
+
+  @media (max-width: 996px) {
+    --ifm-spacing-horizontal: 16px;
+    --ifm-navbar-height: 85px;
+
+    --ifm-menu-link-padding-horizontal: 9px;
+    --ifm-menu-link-padding-vertical: 10px;
+
+    --ifm-navbar-padding-vertical: 25px;
+    --ifm-navbar-padding-horizontal: 24px;
+  }
+}
+
+.menu__link,
+.breadcrumbs__link {
+  text-transform: uppercase;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.7px;
+}
+
+.menu__link {
+  @media (max-width: 996px) {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+  }
+}
+
+.menu__link {
+  letter-spacing: 0.7px;
+}
+
+.breadcrumbs__link {
+  padding: 8px 12px;
+}
+
+.breadcrumbs__item:first-child {
+  .breadcrumbs__link {
+    padding-left: 0;
+  }
+}
+
+.breadcrumbs__link:hover {
+  color: white;
+  background: none !important;
+}
+
+.breadcrumbs__item--active {
+  margin-left: 12px;
+}
+
+.breadcrumbs__item:not(:last-child):after {
+  content: "";
+  background: url("@site/static/img/arrowWhite.svg") no-repeat center / 24px
+    24px;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  filter: none;
+  opacity: 1;
+  margin: 0 -2px;
+}
+
+.theme-doc-breadcrumbs {
+  margin-bottom: 64px !important;
+
+  @media (max-width: 996px) {
+    margin-bottom: 0 !important;
+  }
+}
+
+.theme-doc-sidebar-container {
+  margin-bottom: 130px;
+}
+
+.menu {
+  padding: 48px 18px 48px 68px !important;
+
+  @media (max-width: 996px) {
+    padding: 33px 24px !important;
+  }
+}
+
+.menu__link,
+.menu__link:hover,
+.menu__list-item-collapsible:hover {
+  border-radius: 8px;
+}
+
+.menu__link--sublist-caret:after {
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.menu__list-item:not(:first-child) {
+  margin-top: 10px;
+
+  @media (max-width: 996px) {
+    margin-top: 19px;
+
+    .theme-doc-sidebar-item-category & {
+      margin-top: 3px;
+    }
+  }
+}
+
+.menu__list .menu__list {
+  margin-top: 16px;
+  padding-left: 23px;
+}
+
+.table-of-contents {
+  //text-transform: uppercase;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  //letter-spacing: 2.8px;
+}
+
+.pagination-nav__link {
+  border: 1px solid rgba(188, 184, 255, 0.3);
+  border-radius: 8px;
+}
+
+.pagination-nav__label {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #bcb8ff;
+}
+
+.pagination-nav__sublabel {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-nav__link--next .pagination-nav__sublabel {
+  justify-content: flex-end;
+}
+
+.pagination-nav__link--prev .pagination-nav__sublabel {
+  justify-content: flex-start;
+}
+
+.pagination-nav__link--next .pagination-nav__label::after {
+  content: none;
+}
+
+.pagination-nav__link--next .pagination-nav__sublabel::after {
+  content: "";
+  width: 24px;
+  height: 12px;
+  background: url("@site/static/img/arrow.svg") no-repeat center / 24px 24px;
+  display: block;
+  margin-right: -10px;
+  flex-shrink: 0;
+}
+
+.pagination-nav__link--prev .pagination-nav__label::before {
+  content: none;
+}
+
+.pagination-nav__link--prev .pagination-nav__sublabel::before {
+  content: "";
+  width: 24px;
+  height: 12px;
+  background: url("@site/static/img/arrow.svg") no-repeat center / 24px 24px;
+  display: block;
+  margin-left: -10px;
+  transform: rotate(180deg);
+  flex-shrink: 0;
+}
+
+.container {
+  padding-top: 48px !important;
+  padding-bottom: 120px !important;
+
+  @media (max-width: 996px) {
+    padding-top: 25px !important;
+    padding-bottom: 60px !important;
+  }
+}
+
+.theme-doc-sidebar-container {
+  border-right: 0 !important;
+
+  display: flex !important;
+  &::after {
+    content: "";
+    width: 1px;
+    background: rgba(188, 184, 255, 0.3);
+    flex-shrink: 0;
+    position: relative;
+    margin-top: calc(var(--ifm-navbar-height) + 48px);
+
+    @media (max-width: 996px) {
+      content: none;
+    }
+  }
+}
+
+.navbar-sidebar {
+  height: 100vh;
+}
+
+.navbar-sidebar__brand {
+  border-bottom: 1px solid rgba(188, 184, 255, 0.3);
+}
+
+.navbar-sidebar__footer {
+  flex: 1 0 auto;
+  display: flex;
+  align-items: flex-end;
+  min-height: 46px;
+  justify-content: center;
+
+  > :not(:first-child) {
+    margin-left: 24px;
+  }
+
+  a {
+    display: flex;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.navbar-sidebar__item.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar__toggle {
+  margin-right: 0;
+  img {
+    width: 24px;
+    height: 14px;
+  }
+}
+
+.navbar-sidebar__close {
+  img {
+    width: 16.26px;
+    height: 16.26px;
+  }
+}
+
+.dsla-search-wrapper {
+  margin-bottom: 32px;
+
+  @media (max-width: 996px) {
+    margin-bottom: 0;
+  }
+}
+
+.aa-DetachedSearchButton {
+  background-color: #1b0329 !important;
+  border: 1px solid #5d4e70 !important;
+  border-radius: 8px !important;
+  height: 48px !important;
+
+  color: rgba(255, 255, 255, 0.5) !important;
+
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 150% !important;
+  letter-spacing: -0.32px !important;
+  padding: 0 8px !important;
+
+  .aa-DetachedSearchButtonIcon {
+    width: 40px !important;
+  }
+
+  .aa-DetachedSearchButtonIcon {
+    width: 32px !important;
+    height: 32px !important;
+    background: url("@site/static/img/search.svg") no-repeat center / 32px 32px !important;
+
+    > svg {
+      display: none;
+    }
+  }
+
+  .aa-DetachedSearchButtonPlaceholder {
+    margin-left: 8px !important;
+  }
+
+  @media (max-width: 996px) {
+    background-color: transparent !important;
+    border: none !important;
+    height: auto !important;
+    padding: 0 !important;
+
+    .aa-DetachedSearchButtonPlaceholder {
+      display: none;
+    }
+  }
+}
+
+.aa-SubmitIcon {
+  color: white;
+}

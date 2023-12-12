@@ -4,9 +4,9 @@ import * as THREE from "three"
 import { Text } from "troika-three-text"
 import oswald from "./style/Oswald.ttf?url"
 
-import { SHIP_DEPTH, HALF_SHIP_WIDTH, SHIP_COLORS, SHIP_HEIGHT } from "./config"
+import { SHIP_DEPTH, HALF_SHIP_WIDTH, SHIP_HEIGHT } from "./config"
 
-export function createShip(scene: THREE.Scene, idx: number) {
+export function createShip(scene: THREE.Scene, color: number) {
   const geometry = new THREE.BufferGeometry()
   const vertices = new Float32Array([
     // v0: front
@@ -30,7 +30,7 @@ export function createShip(scene: THREE.Scene, idx: number) {
   geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3))
 
   const material = new THREE.MeshBasicMaterial({
-    color: SHIP_COLORS[idx % SHIP_COLORS.length],
+    color,
   })
 
   const ship = new THREE.Mesh(geometry, material)

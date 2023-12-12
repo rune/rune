@@ -12,7 +12,7 @@ import {
 } from "postprocessing"
 
 import "./index.css"
-import { createCube } from "./cube"
+import { confirmUpdate, getInstancedMesh, setCube } from "./cube"
 import { createFinishLine, createGroundPlane, createWall } from "./bounders"
 import { GameState, ShipDirection } from "./logic"
 import {
@@ -21,8 +21,11 @@ import {
   AVATAR_WIDTH,
   SHIP_HEIGHT,
   COMPLETED_PLAYER_START_SPECTATING_MS,
+  SHIP_COLORS,
+  BLINK_DURATION,
 } from "./config"
 import { createShipLabel, createShip } from "./ship"
+import { MAPS } from "./maps.ts"
 
 // UI
 const uiScreens = {
@@ -153,13 +156,15 @@ let scene: THREE.Scene
 let camera: THREE.Camera
 let renderer: THREE.WebGLRenderer
 let composer: EffectComposer
-const cubes: ReturnType<typeof createCube>[] = []
 let playerThreeObjs: Record<
   PlayerId,
   {
     ship: THREE.Mesh
     displayName: Text
     avatar: THREE.Mesh
+    color: number
+    blinking: boolean
+    colorChangedAt: number
   }
 > = {}
 let playerHtmlObjs: Record<PlayerId, { avatar: HTMLImageElement }> = {}
@@ -245,8 +250,8 @@ function initRender() {
     antialias: false,
     stencil: true,
     depth: true,
+    alpha: true,
   })
-  scene.background = new THREE.Color(0x0c2074)
   renderer.outputColorSpace = THREE.SRGBColorSpace
   renderer.setClearColor(0xffffff, 0)
   renderer.setSize(width, height)
@@ -265,9 +270,12 @@ function initRender() {
   createFinishLine(scene)
 
   // Create Cubes
-  game.cubes.forEach(([, , colorIdx], idx) => {
-    cubes[idx] = createCube(scene, colorIdx)
+  MAPS[game.mapIndex].forEach(([x, z, colorIdx], idx) => {
+    setCube(x, z, idx, colorIdx)
   })
+  confirmUpdate()
+
+  scene.add(getInstancedMesh())
 
   // Directional Light
   let light: THREE.DirectionalLight | null = null
@@ -288,6 +296,7 @@ function initRender() {
     luminanceThreshold: 0.08,
   })
   composer.addPass(new EffectPass(camera, bloomEffect))
+  initCubes()
 }
 
 function initPlayers() {
@@ -310,7 +319,9 @@ function initPlayers() {
   uiStats.classList.remove("visible")
 
   Object.keys(players).forEach((playerId, idx) => {
-    const ship = createShip(scene, idx)
+    const color = SHIP_COLORS[idx % SHIP_COLORS.length]
+
+    const ship = createShip(scene, color)
     const { displayNameObj, avatarObj } = createShipLabel(
       scene,
       players[playerId].displayName,
@@ -318,6 +329,9 @@ function initPlayers() {
     )
     playerThreeObjs[playerId] = {
       ship,
+      color,
+      blinking: false,
+      colorChangedAt: performance.now(),
       displayName: displayNameObj,
       avatar: avatarObj,
     }
@@ -332,9 +346,10 @@ function initPlayers() {
 }
 
 function initCubes() {
-  game.cubes.forEach(([x, z, colorIdx], idx) => {
-    cubes[idx].set(x, z, colorIdx)
+  MAPS[game.mapIndex].forEach(([x, z, colorIdx], idx) => {
+    setCube(x, z, idx, colorIdx)
   })
+  confirmUpdate()
 }
 
 function initSpectating() {
@@ -433,7 +448,9 @@ function animate() {
       uiStats.classList.remove("visible")
     }
 
+    // Warning - when doing performance investigations on android chrome, these buttons have to be removed, otherwise the performance becomes really bad
     // Show controls only while playing
+    // This is an artifact when doing android chrome profiling, but it does not have any impact on production experience
     if (yourPlayerId && !yourCompletedPlayer) {
       uiControlsPreview.classList.add("visible")
     } else {
@@ -443,7 +460,7 @@ function animate() {
 
   // Players
   Object.keys(playerThreeObjs).forEach((playerId) => {
-    const { ship, displayName, avatar } = playerThreeObjs[playerId]
+    const { ship, displayName, avatar, color } = playerThreeObjs[playerId]
     if (playerId === yourPlayerId) {
       const position = playerInterpolator.getPosition()
 
@@ -454,6 +471,24 @@ function animate() {
       ship.position.x = opponentInterpolators[playerId].x.getPosition()
       ship.position.z = opponentInterpolators[playerId].z.getPosition()
       ship.rotation.z = opponentInterpolators[playerId].r.getPosition()
+    }
+
+    //Blink the ship while it is colliding with a cube
+    const material = ship.material as THREE.MeshBasicMaterial
+    if (game.ships[playerId].isColliding) {
+      const shouldChangeColor =
+        performance.now() - playerThreeObjs[playerId].colorChangedAt >
+        BLINK_DURATION
+
+      if (shouldChangeColor) {
+        material.color.setHex(
+          playerThreeObjs[playerId].blinking ? color : 0xffffff,
+        )
+        playerThreeObjs[playerId].blinking = !playerThreeObjs[playerId].blinking
+        playerThreeObjs[playerId].colorChangedAt = performance.now()
+      }
+    } else {
+      material.color.setHex(color)
     }
 
     // Render trackProgress

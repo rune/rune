@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start --host 0.0.0.0",
+    "start": "node scripts/update-game-demo-code.js && docusaurus start --host 0.0.0.0",
     "prebuild": "scripts/build-examples.sh && node scripts/update-game-demo-code.js",
     "build": "rm -rf .docusaurus && rm -rf build && docusaurus build",
     "swizzle": "docusaurus swizzle",

@@ -62,9 +62,9 @@ export function HomeGameDemo() {
     return () => window.removeEventListener("message", onMessage)
   }, [])
 
-  const url = `http://127.0.0.1:5173/?devDemo=${JSON.stringify({
+  const url = `/_examples/tic-tac-toe/?devDemo=${JSON.stringify({
     latency,
-  })}&embedded=1&gameUrl=https://games-launchpad.rune.ai/80/28/`
+  })}&embedded=1`
 
   return (
     <>

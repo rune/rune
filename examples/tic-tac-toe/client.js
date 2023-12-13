@@ -8,8 +8,6 @@ Rune.initClient({
   onChange: ({ game, players: playerData, yourPlayerId, action }) => {
     const { cells, players, winCombo, lastPlayerId, gameOver } = game
 
-    board.className = "" // Remove loading class
-
     // Initialize button elements if not already created
     if (!buttons) {
       buttons = cells.map((_, cellIndex) => {

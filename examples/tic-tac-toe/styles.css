@@ -24,35 +24,6 @@ main {
   column-gap: 0;
 }
 
-#board.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  column-count: 1;
-}
-
-.loading:before,
-.loading:after {
-  content: "";
-  width: 30px;
-  height: 30px;
-  display: block;
-  margin: 10px;
-  background: url(x.svg) no-repeat center;
-  background-size: contain;
-  animation: left 1s infinite ease-in-out;
-}
-
-.loading:after {
-  background-image: url(o.svg);
-  animation-name: right;
-}
-
-.loading button {
-  display: none;
-}
-
 @keyframes right {
   0%,
   100% {

@@ -300,7 +300,7 @@
     margin: 225px 0 297px;
 
     @media (max-width: 700px) {
-      margin: 136px 0;
+      margin: 136px 0 165px;
     }
 
     h2 {
@@ -340,7 +340,8 @@
       padding: 48px 40px;
       border-radius: 16px;
       background: #282a36;
-      width: 955px;
+      width: 100%;
+      max-width: 955px;
 
       * {
         box-shadow: none !important;

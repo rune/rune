@@ -8,9 +8,19 @@
   justify-content: center;
   align-items: flex-end;
 
+  @media screen and (max-width: 1024px) {
+    transform: scale(0.41);
+    margin: -40px 0 -79px;
+  }
+
   .subtitle {
     width: 218px;
     margin-bottom: -50px;
+
+    @media screen and (max-width: 1024px) {
+      margin-bottom: 0;
+      transform: scale(1.7) translateY(-170px);
+    }
   }
 
   .dot {

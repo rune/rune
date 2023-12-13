@@ -15,7 +15,7 @@ Rune.initClient({
       buttons = cells.map((_, cellIndex) => {
         const button = document.createElement("button")
         button.addEventListener("click", () =>
-          Rune.actions.claimCell(cellIndex)
+          Rune.actions.claimCell(cellIndex),
         )
         board.appendChild(button)
         return button
@@ -56,7 +56,10 @@ Rune.initClient({
       const li = playerItems[i]
       const player = playerData[id]
       li.className = id !== lastPlayerId ? "current" : ""
-      li.textContent = player && player.displayName
+      li.innerHTML = `
+        <img src="${player.avatarUrl}" />
+        <span>${player.displayName + (player.playerId === yourPlayerId ? " (You)" : "")}</span>
+      `
     })
 
     if (action && action.name === "claimCell") {

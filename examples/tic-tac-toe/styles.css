@@ -5,7 +5,7 @@ html {
   background: #333;
   color: #e6e6e6;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 main {
@@ -13,7 +13,7 @@ main {
   flex-direction: column;
   height: 100vh;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 #board {
@@ -76,7 +76,7 @@ main {
 button {
   position: relative;
   background: transparent;
-  border: 5px solid #e6e6e620;
+  border: 1.3vw solid #e6e6e620;
   border-left: 0;
   border-top: 0;
   width: 100%;
@@ -161,16 +161,28 @@ button:not([disabled]) {
 
 ul {
   list-style: none;
-  font-size: max(1rem, 5vw);
-  margin: 1em 0;
+  font-size: min(14px, 3vw);
   padding: 0;
   font-weight: bold;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 }
 
 li {
   opacity: 0.5;
   line-height: 1.7;
-  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.2s ease-in-out;
+}
+
+li img {
+  width: 20vw;
+  height: 20vw;
+  margin-top: 6.4vw;
+  margin-bottom: 2.1vw;
 }
 
 li.current {
@@ -181,9 +193,8 @@ li:before {
   content: "";
   display: inline-block;
   vertical-align: middle;
-  width: 1em;
-  height: 1em;
-  margin-right: 0.5em;
+  width: 13vw;
+  height: 13vw;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

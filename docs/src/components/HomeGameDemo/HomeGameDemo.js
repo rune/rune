@@ -69,6 +69,7 @@ export function HomeGameDemo() {
   return (
     <>
       <div className={styles.server}>
+        <p className={styles.subtitle}>Your game logic on Rune’s Servers</p>
         {dots.map((dot, i) => {
           const left = i < dots.length / 2
           const sideI = i % (dots.length / 2)

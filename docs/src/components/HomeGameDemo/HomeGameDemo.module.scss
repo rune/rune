@@ -4,6 +4,14 @@
   background: url("@site/static/img/home/server.svg") no-repeat center center /
     187px 243px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  .subtitle {
+    width: 218px;
+    margin-bottom: -50px;
+  }
 
   .dot {
     width: 16px;

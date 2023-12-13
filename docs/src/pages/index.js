@@ -365,6 +365,12 @@ export default function Home() {
           <div className={styles.hero3}>
             <h2>No backend needed</h2>
             <HomeGameDemo />
+            <p className={styles.description}>
+              You write your game logic in JavaScript and Rune runs it on
+              servers all over the world for low latency. Our predict-rollback
+              approach removes the need for any game networking code and ensures
+              that players have an amazing experience even on bad internet.
+            </p>
           </div>
 
           <div className={styles.cta}>

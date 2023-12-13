@@ -377,7 +377,7 @@ export default function Home() {
           </div>
 
           <div className={styles.hero4}>
-            <h2>Multiplayer in 100&nbsp;lines&nbsp;of&nbsp;JS</h2>
+            <h2>Multiplayer in 100 lines&nbsp;of&nbsp;JS</h2>
             <p>
               Here’s the code for the Tic Tac Toe game above. The game has
               built-in voice chat, matchmaking, and spectating. All powered by

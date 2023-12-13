@@ -59,4 +59,8 @@
 .gameFrame {
   width: 100%;
   height: 611px;
+
+  @media screen and (max-width: 1024px) {
+    margin: -165px 0;
+  }
 }

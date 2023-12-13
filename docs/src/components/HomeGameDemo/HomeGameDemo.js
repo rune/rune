@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from "react"
 import styles from "./HomeGameDemo.module.scss"
 
 const numDots = 10
-const delay = 750
+const delay = 1000
 const latency = (delay + 100) / 2
 const highlightFor = (delay / numDots) * 2
 
@@ -13,6 +13,7 @@ export function HomeGameDemo() {
       highlightCount: 0,
     }))
   )
+  const [serverHighlighted, setServerHighlighted] = useState(false)
 
   const scheduleAnimation = useCallback((ltr) => {
     const timeouts = []
@@ -22,7 +23,7 @@ export function HomeGameDemo() {
 
       i = i >= dots.length / 2 ? dots.length - 1 - (i - 5) : i
 
-      const delayInsideServer = 3
+      const delayInsideServer = 2
 
       const showFor =
         (t >= 5 ? t + delayInsideServer : t) *
@@ -30,6 +31,10 @@ export function HomeGameDemo() {
 
       timeouts.push(
         setTimeout(() => {
+          if (t === dots.length / 2 - 1) {
+            setServerHighlighted(true)
+          }
+
           setDots((prev) => {
             prev[i].highlightCount++
             return [...prev]
@@ -39,6 +44,10 @@ export function HomeGameDemo() {
 
       timeouts.push(
         setTimeout(() => {
+          if (t === dots.length / 2 - 1) {
+            setServerHighlighted(false)
+          }
+
           setDots((prev) => {
             prev[i].highlightCount--
             return [...prev]
@@ -69,8 +78,16 @@ export function HomeGameDemo() {
   return (
     <>
       <div className={styles.server}>
+        <div
+          className={clsx(styles.serverHighlight, {
+            [styles.highlighted]: serverHighlighted,
+          })}
+          style={{
+            transition: `all ${highlightFor}ms ease-in-out`,
+          }}
+        />
         <p className={styles.subtitle}>
-          Your game logic on Rune’s&nbsp;Servers
+          Your game logic on Rune’s&nbsp;servers
         </p>
         {dots.map((dot, i) => {
           const left = i < dots.length / 2

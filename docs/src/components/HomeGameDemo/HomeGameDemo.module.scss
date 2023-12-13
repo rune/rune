@@ -1,12 +1,25 @@
 .server {
   height: 318px;
   margin: -20px 0 20px;
-  background: url("@site/static/img/home/server.svg") no-repeat center center /
-    187px 243px;
+  background: url("@site/static/img/home/server.svg") no-repeat top
+    calc(50% + 18px) center / 187px 208px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
+
+  .serverHighlight {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("@site/static/img/home/server-highlight.svg") no-repeat top
+      calc(50% + 18px) center / 187px 208px;
+    opacity: 0;
+
+    &.highlighted {
+      opacity: 1;
+    }
+  }
 
   @media screen and (max-width: 1024px) {
     transform: scale(0.41);
@@ -19,7 +32,7 @@
 
     @media screen and (max-width: 1024px) {
       margin-bottom: 0;
-      transform: scale(1.7) translateY(-170px);
+      transform: scale(2.5) translateY(-120px);
     }
   }
 

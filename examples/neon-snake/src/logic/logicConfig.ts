@@ -8,12 +8,11 @@ export const gapChancePerTick = 0.01
 export const gapLengthTicks = 20
 export const minTicksToNextGap = 30
 
-//Make sure to list colors as rgba.
 export const colors = [
-  "rgba(188,254,0,1)",
-  "rgba(16,212,255,1)",
-  "rgba(255,50,210,1)",
-  "rgba(255,156,39,1)",
+  "rgb(188,254,0)",
+  "rgb(16,212,255)",
+  "rgb(255,50,210)",
+  "rgb(255,156,39)",
 ]
 
 export const allowedCollisionPoints = 3

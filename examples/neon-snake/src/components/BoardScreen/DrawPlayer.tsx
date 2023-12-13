@@ -8,6 +8,7 @@ import { getOptimisticStartSection } from "./getOptimisticStartSection.ts"
 import { Graphics as PixiGraphics } from "@pixi/graphics"
 import { avatarRadius } from "./drawConfig.ts"
 import { DrawLoops } from "./DrawLoops.tsx"
+import { GlowFilter } from "@pixi/filter-glow"
 
 function DrawOptimistic({
   color,
@@ -94,13 +95,30 @@ export function DrawPlayer({
   avatar: string
   timerStartedAt: number
 }) {
+  const latestSection = snake.sections.at(-1)
+
+  const filters = useMemo(() => {
+    const glowFilter = new GlowFilter({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      color: player.color as any, //Color works as string as well
+      distance: 10,
+      outerStrength: 4,
+      alpha: 0.6,
+      quality: 0.4,
+    })
+
+    //Render at higher density to support mobile devices
+    glowFilter.resolution = window.devicePixelRatio
+
+    return [glowFilter]
+  }, [player.color])
+
   if (!player || player.state === "pending") {
     return
   }
-  const latestSection = snake.sections.at(-1)
 
   return (
-    <Container>
+    <Container filters={filters}>
       {stage === "countdown" ? (
         <DrawOptimistic
           scale={scale}

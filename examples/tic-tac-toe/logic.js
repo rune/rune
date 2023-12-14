@@ -39,34 +39,25 @@ function claimCell(cellIndex, { game, playerId }) {
 
   game.cells[cellIndex] = playerId
   game.winCombo = findWinningCombo(game.cells)
-
-  // Game is over if someone won or if there are no available moves
-  const gameOver =
-    game.winCombo || game.cells.findIndex((cell) => cell === null) === -1
   game.lastPlayerId = playerId
 
-  if (gameOver) {
-    if (game.winCombo) {
-      // Last person to make a move is the winner
-      const winner = game.lastPlayerId
-      // The other one must be the loser
-      const loser = game.players.find((id) => id !== winner)
+  if (game.winCombo) {
+    Rune.gameOver({
+      players: {
+        [game.lastPlayerId]: "WON",
+        [game.players.find((id) => id !== game.lastPlayerId)]: "LOST",
+      },
+    })
+  }
 
-      Rune.gameOver({
-        players: {
-          [winner]: "WON",
-          [loser]: "LOST",
-        },
-      })
-    } else {
-      // Game is a draw
-      Rune.gameOver({
-        players: {
-          [game.players[0]]: "LOST",
-          [game.players[1]]: "LOST",
-        },
-      })
-    }
+  // Are there no more available moves? (i.e. it's a draw)
+  if (game.cells.findIndex((cell) => cell === null) === -1) {
+    Rune.gameOver({
+      players: {
+        [game.players[0]]: "LOST",
+        [game.players[1]]: "LOST",
+      },
+    })
   }
 }
 

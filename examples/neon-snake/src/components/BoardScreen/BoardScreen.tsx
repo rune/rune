@@ -2,13 +2,14 @@ import { styled } from "styled-components"
 import { InputTracker } from "./InputTracker.tsx"
 import { Header } from "../Header/Header.tsx"
 import { BoardCanvas } from "./BoardCanvas.tsx"
-import { useRef, useState, useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import { boardSize } from "../../logic/logicConfig.ts"
 
 export function BoardScreen() {
   const canvasContainerRef = useRef<HTMLDivElement>(null)
 
   const [canvasScale, setCanvasScale] = useState(1)
+  const [renderCanvas, setRenderCanvas] = useState(false)
 
   useEffect(() => {
     function adjustSize() {
@@ -23,6 +24,7 @@ export function BoardScreen() {
       const newScale = Math.min(widthScale, heightScale)
 
       setCanvasScale(newScale > 0 ? newScale : 1)
+      setRenderCanvas(true)
     }
 
     adjustSize()
@@ -38,7 +40,7 @@ export function BoardScreen() {
       <Header />
       <CanvasOuterContainer>
         <CanvasContainer ref={canvasContainerRef}>
-          <BoardCanvas scale={canvasScale} />
+          {renderCanvas && <BoardCanvas scale={canvasScale} />}
         </CanvasContainer>
       </CanvasOuterContainer>
     </>

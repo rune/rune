@@ -7,6 +7,12 @@ export const turnDegreesPerTick = 5
 export const gapChancePerTick = 0.01
 export const gapLengthTicks = 20
 export const minTicksToNextGap = 30
-export const colors = ["#BCFE00", "#10D4FF", "#FF32D2", "#FF9C27"]
+
+export const colors = [
+  "rgb(188,254,0)",
+  "rgb(16,212,255)",
+  "rgb(255,50,210)",
+  "rgb(255,156,39)",
+]
 
 export const allowedCollisionPoints = 3

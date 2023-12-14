@@ -1,14 +1,14 @@
 import { styled } from "styled-components"
 import { rel } from "../../lib/rel.ts"
 import logo from "./logo.png"
-import instructions from "./instructions.png"
+import { Instructions } from "../Instructions/Intructions.tsx"
 
 export function GettingReadyScreen() {
   return (
     <Root>
       <Logo src={logo} />
       <StartButton onClick={() => Rune.actions.setReady()}>Start</StartButton>
-      <Instructions src={instructions} />
+      <Instructions />
     </Root>
   )
 }
@@ -18,12 +18,13 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
 `
 
 const Logo = styled.img`
   width: ${rel(218)};
   height: ${rel(209)};
+  margin-top: ${rel(120)};
+  margin-bottom: ${rel(110)};
 `
 
 const StartButton = styled.div`
@@ -41,9 +42,4 @@ const StartButton = styled.div`
     0 0 ${rel(15)} ${rel(3)} #ff32d2,
     inset 0 0 ${rel(15)} ${rel(3)} #ff32d2;
   letter-spacing: ${rel(3)};
-`
-
-const Instructions = styled.img`
-  width: ${rel(246.69)};
-  height: ${rel(94)};
 `

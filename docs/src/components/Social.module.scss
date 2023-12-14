@@ -1,0 +1,15 @@
+.socialLink {
+  position: relative;
+
+  img:nth-child(2) {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+  }
+
+  &:hover {
+    img:nth-child(2) {
+      opacity: 1;
+    }
+  }
+}

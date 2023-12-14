@@ -1,4 +1,5 @@
 import React from "react"
+import styles from "./Social.module.scss"
 
 export function Social() {
   return (
@@ -7,6 +8,7 @@ export function Social() {
         href="https://github.com/rune/rune-games-sdk"
         target="_blank"
         rel="noreferrer"
+        className={styles.socialLink}
       >
         <img
           alt="GitHub Logo"
@@ -15,8 +17,20 @@ export function Social() {
               .default
           }
         />
+        <img
+          alt="GitHub Logo"
+          src={
+            require("!!url-loader!@site/static/img/home/social/github-hover.svg")
+              .default
+          }
+        />
       </a>
-      <a href="https://discord.gg/rune-devs" target="_blank" rel="noreferrer">
+      <a
+        href="https://discord.gg/rune-devs"
+        target="_blank"
+        rel="noreferrer"
+        className={styles.socialLink}
+      >
         <img
           alt="Discord Logo"
           src={
@@ -24,12 +38,31 @@ export function Social() {
               .default
           }
         />
+        <img
+          alt="Discord Logo"
+          src={
+            require("!!url-loader!@site/static/img/home/social/discord-hover.svg")
+              .default
+          }
+        />
       </a>
-      <a href="https://twitter.com/joinrune" target="_blank" rel="noreferrer">
+      <a
+        href="https://twitter.com/joinrune"
+        target="_blank"
+        rel="noreferrer"
+        className={styles.socialLink}
+      >
         <img
           alt="Twitter Logo"
           src={
             require("!!url-loader!@site/static/img/home/social/twitter.svg")
+              .default
+          }
+        />
+        <img
+          alt="Twitter Logo"
+          src={
+            require("!!url-loader!@site/static/img/home/social/twitter-hover.svg")
               .default
           }
         />

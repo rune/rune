@@ -20,7 +20,7 @@
       rgba(27, 3, 41, 0) 50%
     ),
     url("!!url-loader!@site/static/img/layout/background-docs.svg") no-repeat
-      top -314px left -517px / 1319px 676px fixed,
+      top -314px left -517px / 1319px 676px,
     #1b0329;
   @media (max-width: 996px) {
     background: linear-gradient(
@@ -29,7 +29,7 @@
         rgba(27, 3, 41, 0) 50%
       ),
       url("!!url-loader!@site/static/img/layout/background-docs-mobile.svg")
-        no-repeat top -200px left -300px / 819px 521px fixed,
+        no-repeat top -200px left -300px / 819px 521px,
       #1b0329;
   }
 

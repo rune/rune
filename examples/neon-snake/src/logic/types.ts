@@ -4,8 +4,10 @@ declare global {
   const Rune: RuneClient<GameState, GameActions>
 }
 
+export type GameStage = "gettingReady" | "countdown" | "playing" | "endOfRound"
+
 export interface GameState {
-  stage: "gettingReady" | "countdown" | "playing" | "endOfRound"
+  stage: GameStage
   players: PlayerInfo[]
   snakes: { [playerId: PlayerId]: Snake }
   collisionGrid: CollisionGrid

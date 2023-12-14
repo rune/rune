@@ -1,3 +1,13 @@
+function setup(players) {
+  return {
+    players,
+    lastPlayerId: null,
+    cells: new Array(9).fill(null),
+    winCombo: null,
+    gameOver: false,
+  }
+}
+
 const findWinningCombo = (cells) => {
   const WINNING_COMBOS = [
     [0, 1, 2],
@@ -22,58 +32,54 @@ const findWinningCombo = (cells) => {
   return null
 }
 
+function claimCell(cellIndex, { game, playerId }) {
+  // Cannot play during someone else's turn or claim existing cells
+  if (game.cells[cellIndex] !== null || playerId === game.lastPlayerId) {
+    throw Rune.invalidAction()
+  }
+
+  game.cells[cellIndex] = playerId
+  game.winCombo = findWinningCombo(game.cells)
+
+  // Game is over if someone won or if there are no available moves
+  const gameOver =
+    game.winCombo || game.cells.findIndex((cell) => cell === null) === -1
+  game.lastPlayerId = playerId
+
+  if (gameOver) {
+    game.gameOver = true
+
+    if (game.winCombo) {
+      // Last person to make a move is the winner
+      const winner = game.lastPlayerId
+      // The other one must be the loser
+      const loser = game.players.find((id) => id !== winner)
+
+      Rune.gameOver({
+        players: {
+          [winner]: "WON",
+          [loser]: "LOST",
+        },
+        delayPopUp: true,
+      })
+    } else {
+      // Game is a draw
+      Rune.gameOver({
+        players: {
+          [game.players[0]]: "LOST",
+          [game.players[1]]: "LOST",
+        },
+        delayPopUp: true,
+      })
+    }
+  }
+}
+
 Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
-  setup: (players) => ({
-    players,
-    lastPlayerId: null,
-    cells: new Array(9).fill(null),
-    winCombo: null,
-    gameOver: false,
-  }),
+  setup,
   actions: {
-    claimCell: (cellIndex, { game, playerId }) => {
-      // Cannot play during someone else's turn or claim existing cells
-      if (game.cells[cellIndex] !== null || playerId === game.lastPlayerId) {
-        throw Rune.invalidAction()
-      }
-
-      game.cells[cellIndex] = playerId
-      game.winCombo = findWinningCombo(game.cells)
-
-      // Game is over if someone won or if there are no available moves
-      const gameOver =
-        game.winCombo || game.cells.findIndex((cell) => cell === null) === -1
-      game.lastPlayerId = playerId
-
-      if (gameOver) {
-        game.gameOver = true
-
-        if (game.winCombo) {
-          // Last person to make a move is the winner
-          const winner = game.lastPlayerId
-          // The other one must be the loser
-          const loser = game.players.find((id) => id !== winner)
-
-          Rune.gameOver({
-            players: {
-              [winner]: "WON",
-              [loser]: "LOST",
-            },
-            delayPopUp: true,
-          })
-        } else {
-          // Game is a draw
-          Rune.gameOver({
-            players: {
-              [game.players[0]]: "LOST",
-              [game.players[1]]: "LOST",
-            },
-            delayPopUp: true,
-          })
-        }
-      }
-    },
+    claimCell,
   },
 })

@@ -1,10 +1,11 @@
 function setup(allPlayerIds) {
-  return {
+  const game = {
     cells: new Array(9).fill(null),
     winCombo: null,
     lastMovePlayerId: null,
     playerIds: allPlayerIds,
   }
+  return game
 }
 
 function claimCell(cellIndex, { game, playerId }) {

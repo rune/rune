@@ -4,7 +4,6 @@ function setup(players) {
     lastPlayerId: null,
     cells: new Array(9).fill(null),
     winCombo: null,
-    gameOver: false,
   }
 }
 
@@ -47,8 +46,6 @@ function claimCell(cellIndex, { game, playerId }) {
   game.lastPlayerId = playerId
 
   if (gameOver) {
-    game.gameOver = true
-
     if (game.winCombo) {
       // Last person to make a move is the winner
       const winner = game.lastPlayerId
@@ -60,7 +57,6 @@ function claimCell(cellIndex, { game, playerId }) {
           [winner]: "WON",
           [loser]: "LOST",
         },
-        delayPopUp: true,
       })
     } else {
       // Game is a draw
@@ -69,7 +65,6 @@ function claimCell(cellIndex, { game, playerId }) {
           [game.players[0]]: "LOST",
           [game.players[1]]: "LOST",
         },
-        delayPopUp: true,
       })
     }
   }

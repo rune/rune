@@ -21,7 +21,7 @@ function initUI(cells, players) {
 }
 
 function onChange({ game, players: playerData, yourPlayerId, action }) {
-  const { cells, players, winCombo, lastPlayerId, gameOver } = game
+  const { cells, players, winCombo, lastPlayerId } = game
 
   if (!buttons) initUI(cells, players)
 
@@ -55,12 +55,6 @@ function onChange({ game, players: playerData, yourPlayerId, action }) {
 
   if (action && action.name === "claimCell") {
     selectSound.play()
-  }
-
-  if (gameOver) {
-    setTimeout(() => {
-      Rune.showGameOverPopUp()
-    }, 1500)
   }
 }
 

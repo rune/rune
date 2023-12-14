@@ -7,9 +7,27 @@ import { CountdownOverlay } from "./components/CountdownOverlay.tsx"
 import { EndOfRoundOverlay } from "./components/EndOfRoundOverlay.tsx"
 import { BoardScreen } from "./components/BoardScreen/BoardScreen.tsx"
 import { gridBackground } from "./lib/gridBackground.ts"
+import { useEffect } from "react"
+import { playSound } from "./sounds.ts"
 
 export function App() {
   const stage = useAtomValue($stage)
+
+  useEffect(() => {
+    const listener = () => {
+      playSound("background")
+    }
+
+    //Try to play background music. If it fails, wait for user to interact with website.
+    //This should only be necessary in browser.
+    playSound("background", true).catch(() => {
+      document.addEventListener("click", listener)
+    })
+
+    return () => {
+      document.removeEventListener("click", listener)
+    }
+  }, [])
 
   return (
     <>

@@ -2,6 +2,15 @@ import { useAtomValue } from "jotai"
 import { useState, useEffect } from "react"
 import { $ready } from "../../state/state.ts"
 
+// https://stackoverflow.com/a/4819886
+function isTouchDevice() {
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    navigator.maxTouchPoints > 0
+  )
+}
+
 export function InputTracker() {
   const ready = useAtomValue($ready)
   const [leftPressed, setLeftPressed] = useState(false)
@@ -19,22 +28,42 @@ export function InputTracker() {
     }
 
     function onTouch(e: TouchEvent) {
+      e.preventDefault()
       const touches = [...e.touches]
-
       setRightPressed(touches.some((t) => t.clientX > window.innerWidth / 2))
       setLeftPressed(touches.some((t) => t.clientX < window.innerWidth / 2))
     }
 
+    function onMouseDown(e: MouseEvent) {
+      setRightPressed(e.clientX > window.innerWidth / 2)
+      setLeftPressed(e.clientX < window.innerWidth / 2)
+    }
+
+    function onMouseUp() {
+      setRightPressed(false)
+      setLeftPressed(false)
+    }
+
     document.body.addEventListener("keydown", onKeyDown)
     document.body.addEventListener("keyup", onKeyUp)
-    document.body.addEventListener("touchstart", onTouch)
-    document.body.addEventListener("touchend", onTouch)
+    if (isTouchDevice()) {
+      document.body.addEventListener("touchstart", onTouch)
+      document.body.addEventListener("touchend", onTouch)
+    } else {
+      document.body.addEventListener("mousedown", onMouseDown)
+      document.body.addEventListener("mouseup", onMouseUp)
+    }
 
     return () => {
       document.body.removeEventListener("keydown", onKeyDown)
       document.body.removeEventListener("keyup", onKeyUp)
-      document.body.removeEventListener("touchstart", onTouch)
-      document.body.removeEventListener("touchend", onTouch)
+      if (isTouchDevice()) {
+        document.body.removeEventListener("touchstart", onTouch)
+        document.body.removeEventListener("touchend", onTouch)
+      } else {
+        document.body.removeEventListener("mousedown", onMouseDown)
+        document.body.removeEventListener("mouseup", onMouseUp)
+      }
     }
   }, [])
 

@@ -14,11 +14,21 @@
   width: 100%;
 
   border-bottom: 1px solid rgba(188, 184, 255, 0.3);
-  background: url("!!url-loader!@site/static/img/layout/background-docs.svg")
-      no-repeat top -314px left -517px / 1319px 676px fixed,
+  background: linear-gradient(
+      180deg,
+      rgba(27, 3, 41, 1) 0%,
+      rgba(27, 3, 41, 0) 50%
+    ),
+    url("!!url-loader!@site/static/img/layout/background-docs.svg") no-repeat
+      top -314px left -517px / 1319px 676px fixed,
     #1b0329;
   @media (max-width: 996px) {
-    background: url("!!url-loader!@site/static/img/layout/background-docs-mobile.svg")
+    background: linear-gradient(
+        180deg,
+        rgba(27, 3, 41, 1) 0%,
+        rgba(27, 3, 41, 0) 50%
+      ),
+      url("!!url-loader!@site/static/img/layout/background-docs-mobile.svg")
         no-repeat top -200px left -300px / 819px 521px fixed,
       #1b0329;
   }
@@ -32,7 +42,11 @@
     &.scrolledFromTop {
       border-bottom-color: rgba(188, 184, 255, 0.3);
       backdrop-filter: blur(15px);
-      background: rgba(27, 3, 41, 0.75);
+      background: linear-gradient(
+        180deg,
+        rgba(27, 3, 41, 1) 0%,
+        rgba(27, 3, 41, 0.5) 50%
+      );
     }
   }
 

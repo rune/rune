@@ -70,7 +70,7 @@ button:before {
   transition: all 1s ease-out;
 }
 
-button.loser:before {
+button[dim="true"]:before {
   opacity: 0.2;
   scale: 0.8;
 }
@@ -84,12 +84,12 @@ button.loser:before {
   }
 }
 
-button[data-player="0"]:before {
+button[player="0"]:before {
   background-image: url(x.svg);
   animation: scale-in 0.2s ease-in-out;
 }
 
-button[data-player="1"]:before {
+button[player="1"]:before {
   background-image: url(o.svg);
   animation: scale-in 0.2s ease-in-out;
 }
@@ -104,12 +104,12 @@ button:nth-child(9) {
   border-right: 0;
 }
 
-button:not([disabled]) {
+button[clickable="true"] {
   cursor: pointer;
 }
 
 @media (hover: hover) {
-  button:not([disabled]):after {
+  button[clickable="true"]:after {
     content: "";
     display: block;
     position: absolute;
@@ -156,7 +156,7 @@ li img {
   margin-bottom: 2.1vw;
 }
 
-li.current {
+li[your-turn="true"] {
   opacity: 1;
 }
 
@@ -171,10 +171,10 @@ li:before {
   background-position: center;
 }
 
-li[data-player="0"]:before {
+li[player="0"]:before {
   background-image: url(x.svg);
 }
 
-li[data-player="1"]:before {
+li[player="1"]:before {
   background-image: url(o.svg);
 }

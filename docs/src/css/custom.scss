@@ -409,3 +409,8 @@
 body.aa-Detached {
   overflow: hidden !important;
 }
+
+.aa-DetachedOverlay {
+  backdrop-filter: blur(10px) !important;
+  background: rgba(127, 127, 127, 0.25) !important;
+}

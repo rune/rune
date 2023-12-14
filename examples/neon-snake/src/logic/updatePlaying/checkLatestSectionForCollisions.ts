@@ -1,7 +1,47 @@
-import { Point, PlayerInfo, GameState } from "../types.ts"
-import { collisionGridPointer } from "../collisionGridHelpers.ts"
+import { Point, PlayerInfo, GameState, CollisionGrid, Snake } from "../types.ts"
+import {
+  collisionToGlobalPoint,
+  globalToCollisionPoint,
+} from "../collisionGridHelpers.ts"
 import { isLatestSectionOutOfBounds } from "../isLatestSectionOutOfBounds.ts"
 import { checkWinnersAndGameOver } from "../checkWinnersAndGameOver.ts"
+import { allowedCollisionPoints } from "../logicConfig.ts"
+
+function markCollisionGrid(
+  collisionGrid: CollisionGrid,
+  collisionPoint: Point,
+  snake: Snake,
+) {
+  //Initialize collision grid if it does not exist yet
+
+  if (!collisionGrid[collisionPoint.x]) {
+    collisionGrid[collisionPoint.x] = {}
+  }
+
+  collisionGrid[collisionPoint.x][collisionPoint.y] = true
+
+  //Check to make sure we don't push same value in multiple times
+  if (!isCollisionPointRecentlyVisitedBySnake(snake, collisionPoint)) {
+    //Save where the snake was recently at.
+    snake.lastCollisionGridPoints = [
+      collisionPoint,
+      ...snake.lastCollisionGridPoints.slice(0, allowedCollisionPoints - 1),
+    ]
+  }
+}
+
+// With current angle calculation, it is possible to visit a cell that was just marked by the same snake.
+// To avoid self collisions, we ignore the collision if the cell is recently visited.
+function isCollisionPointRecentlyVisitedBySnake(
+  snake: Snake,
+  currentCollisionPoint: Point,
+) {
+  return snake.lastCollisionGridPoints.some(
+    (recentPoint) =>
+      recentPoint.x === currentCollisionPoint.x &&
+      recentPoint.y === currentCollisionPoint.y,
+  )
+}
 
 export function checkLatestSectionForCollisions(
   previousEnd: Point,
@@ -10,46 +50,57 @@ export function checkLatestSectionForCollisions(
 ) {
   const snake = game.snakes[player.playerId]
   const latestSection = snake.sections[snake.sections.length - 1]
+  const { collisionGrid } = game
 
-  const oldCollisionSquareIndex = collisionGridPointer(previousEnd)
-  const collisionSquareIndex = collisionGridPointer(latestSection.end)
+  const prevCollisionPoint = globalToCollisionPoint(previousEnd)
+  const currentCollisionPoint = globalToCollisionPoint(latestSection.end)
+
+  const isSameCollisionPointAsBefore =
+    currentCollisionPoint.x === prevCollisionPoint.x &&
+    currentCollisionPoint.y === prevCollisionPoint.y
 
   if (
+    //If snake is out of bounds or
     isLatestSectionOutOfBounds(snake) ||
-    (collisionSquareIndex !== oldCollisionSquareIndex &&
-      game.collisionGrid[collisionSquareIndex])
+    //Snake has moved from previous position
+    (!isSameCollisionPointAsBefore &&
+      //Snake is in already marked collision grid point
+      collisionGrid[currentCollisionPoint.x]?.[currentCollisionPoint.y] &&
+      //This point was not recently visited by this snake
+      !isCollisionPointRecentlyVisitedBySnake(snake, currentCollisionPoint))
   ) {
     player.state = "dead"
     player.diedAt = Rune.gameTime()
     checkWinnersAndGameOver(game)
   } else if (!latestSection.gap) {
-    const oldCollisionCellCords = collisionGridPointer(oldCollisionSquareIndex)
-    const collisionCellCords = collisionGridPointer(collisionSquareIndex)
+    const prevGlobalPoint = collisionToGlobalPoint(prevCollisionPoint)
+    const currentGlobalPoint = collisionToGlobalPoint(currentCollisionPoint)
 
+    //Diagonal line check
     if (
-      oldCollisionCellCords.x !== collisionCellCords.x &&
-      oldCollisionCellCords.y !== collisionCellCords.y
+      prevGlobalPoint.x !== currentGlobalPoint.x &&
+      prevGlobalPoint.y !== currentGlobalPoint.y
     ) {
       const point =
-        collisionCellCords.x > oldCollisionCellCords.y &&
-        collisionCellCords.y > oldCollisionCellCords.y
+        currentGlobalPoint.x > prevGlobalPoint.y &&
+        currentGlobalPoint.y > prevGlobalPoint.y
           ? {
-              ...collisionCellCords,
+              ...currentGlobalPoint,
             }
-          : collisionCellCords.x < oldCollisionCellCords.y &&
-            collisionCellCords.y < oldCollisionCellCords.y
+          : currentGlobalPoint.x < prevGlobalPoint.y &&
+            currentGlobalPoint.y < prevGlobalPoint.y
           ? {
-              ...oldCollisionCellCords,
+              ...prevGlobalPoint,
             }
-          : collisionCellCords.x > oldCollisionCellCords.y &&
-            collisionCellCords.y < oldCollisionCellCords.y
+          : currentGlobalPoint.x > prevGlobalPoint.y &&
+            currentGlobalPoint.y < prevGlobalPoint.y
           ? {
-              x: collisionCellCords.x,
-              y: oldCollisionCellCords.y,
+              x: currentGlobalPoint.x,
+              y: prevGlobalPoint.y,
             }
           : {
-              x: oldCollisionCellCords.x,
-              y: collisionCellCords.y,
+              x: prevGlobalPoint.x,
+              y: currentGlobalPoint.y,
             }
 
       const latestSectionLineEquation = {
@@ -79,22 +130,26 @@ export function checkLatestSectionForCollisions(
           pointAboveLine) ||
         (!latestSectionGoingDown && latestSectionGoingRight && pointAboveLine)
       ) {
-        game.collisionGrid[
-          collisionGridPointer({
-            x: oldCollisionCellCords.x,
-            y: collisionCellCords.y,
-          })
-        ] = true
+        markCollisionGrid(
+          collisionGrid,
+          globalToCollisionPoint({
+            x: prevGlobalPoint.x,
+            y: currentGlobalPoint.y,
+          }),
+          snake,
+        )
       } else {
-        game.collisionGrid[
-          collisionGridPointer({
-            x: collisionCellCords.x,
-            y: oldCollisionCellCords.y,
-          })
-        ] = true
+        markCollisionGrid(
+          collisionGrid,
+          globalToCollisionPoint({
+            x: currentGlobalPoint.x,
+            y: prevGlobalPoint.y,
+          }),
+          snake,
+        )
       }
     }
 
-    game.collisionGrid[collisionSquareIndex] = true
+    markCollisionGrid(collisionGrid, currentCollisionPoint, snake)
   }
 }

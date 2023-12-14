@@ -1,28 +1,19 @@
 import { Point } from "./types.ts"
-import { boardSize, movePixelsPerTick } from "./logicConfig.ts"
+import { movePixelsPerTick } from "./logicConfig.ts"
 
 // Use coarse collision grid for performance optimization
-const collisionGridSize = Math.round(movePixelsPerTick * 3)
+export const collisionGridSize = Math.round(movePixelsPerTick * 3)
 
-export function collisionGridPointer(point: Point): number
-export function collisionGridPointer(index: number): Point
+export function globalToCollisionPoint(globalPoint: Point) {
+  return {
+    x: Math.floor(globalPoint.x / collisionGridSize),
+    y: Math.floor(globalPoint.y / collisionGridSize),
+  }
+}
 
-export function collisionGridPointer(pointOrIndex: Point | number) {
-  if (typeof pointOrIndex === "number") {
-    const x = Math.floor(
-      pointOrIndex / Math.floor(boardSize.height / collisionGridSize)
-    )
-    const y = pointOrIndex % Math.floor(boardSize.height / collisionGridSize)
-
-    return {
-      x: x * collisionGridSize,
-      y: y * collisionGridSize,
-    }
-  } else {
-    return (
-      Math.floor(pointOrIndex.x / collisionGridSize) *
-        Math.floor(boardSize.height / collisionGridSize) +
-      Math.floor(pointOrIndex.y / collisionGridSize)
-    )
+export function collisionToGlobalPoint(collisionPoint: Point) {
+  return {
+    x: collisionPoint.x * collisionGridSize,
+    y: collisionPoint.y * collisionGridSize,
   }
 }

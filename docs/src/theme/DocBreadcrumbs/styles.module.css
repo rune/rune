@@ -1,0 +1,12 @@
+.breadcrumbsContainer {
+  --ifm-breadcrumb-size-multiplier: 0.8;
+  margin-bottom: 0.8rem;
+}
+
+.breadcrumbHomeIcon {
+  position: relative;
+  top: -1px;
+  vertical-align: middle;
+  height: 24px;
+  width: 24px;
+}

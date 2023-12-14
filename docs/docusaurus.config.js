@@ -44,7 +44,7 @@ const config = {
           editUrl: "https://github.com/rune/rune-games-sdk/tree/staging/docs/",
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
+          customCss: require.resolve("./src/css/custom.scss"),
         },
       }),
     ],
@@ -81,16 +81,6 @@ const config = {
             to: "/faq",
             position: "left",
             label: "FAQ",
-          },
-          {
-            to: "/help",
-            position: "left",
-            label: "Help",
-          },
-          {
-            href: "https://github.com/rune/rune-games-sdk",
-            label: "GitHub",
-            position: "right",
           },
         ],
       },

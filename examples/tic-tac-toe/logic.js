@@ -1,9 +1,9 @@
-function setup(players) {
+function setup(allPlayerIds) {
   return {
-    players,
-    lastPlayerId: null,
     cells: new Array(9).fill(null),
     winCombo: null,
+    lastPlayerId: null,
+    playerIds: allPlayerIds,
   }
 }
 
@@ -45,17 +45,17 @@ function claimCell(cellIndex, { game, playerId }) {
     Rune.gameOver({
       players: {
         [game.lastPlayerId]: "WON",
-        [game.players.find((id) => id !== game.lastPlayerId)]: "LOST",
+        [game.playerIds.find((id) => id !== game.lastPlayerId)]: "LOST",
       },
     })
   }
 
-  // Are there no more available moves? (i.e. it's a draw)
-  if (game.cells.findIndex((cell) => cell === null) === -1) {
+  game.freeCells = game.cells.findIndex((cell) => cell === null) !== -1
+  if (!game.freeCells) {
     Rune.gameOver({
       players: {
-        [game.players[0]]: "LOST",
-        [game.players[1]]: "LOST",
+        [game.playerIds[0]]: "LOST",
+        [game.playerIds[1]]: "LOST",
       },
     })
   }

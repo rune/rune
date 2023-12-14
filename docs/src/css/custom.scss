@@ -358,3 +358,50 @@
 .aa-SubmitIcon {
   color: white;
 }
+
+.aa-DetachedContainer,
+.aa-Panel {
+  background: #1b0329 !important;
+}
+
+.aa-DetachedFormContainer {
+  border-bottom: none !important;
+}
+
+.aa-Form {
+  border: 1px solid #5d4e70 !important;
+}
+
+.aa-DetachedCancelButton {
+  color: #bcb8ff !important;
+}
+
+.aa-Input {
+  box-shadow: none !important;
+}
+
+.aa-Input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.aa-ItemLink {
+  color: #bcb8ff !important;
+  padding: 0 9px !important;
+}
+
+.aa-Item[aria-selected="true"] {
+  background: #9263ff !important;
+
+  .aa-ItemLink {
+    color: white !important;
+  }
+}
+
+.aa-Label svg,
+.aa-LoadingIndicator svg {
+  color: white !important;
+}
+
+.aa-SubmitButton {
+  padding-left: 10px !important;
+}

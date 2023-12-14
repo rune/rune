@@ -9,7 +9,7 @@ const highlightFor = (delay / numDots) * 2
 
 export function HomeGameDemo() {
   const [dots, setDots] = useState(() =>
-    new Array(numDots).fill(1).map((_, i) => ({
+    new Array(numDots).fill(1).map(() => ({
       highlightCount: 0,
     }))
   )

@@ -8,14 +8,13 @@ function setup(allPlayerIds) {
 }
 
 function claimCell(cellIndex, { game, playerId }) {
-  // Cannot play during someone else's turn or claim existing cells
   if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
     throw Rune.invalidAction()
   }
 
   game.cells[cellIndex] = playerId
-  game.winCombo = findWinningCombo(game.cells)
   game.lastMovePlayerId = playerId
+  game.winCombo = findWinningCombo(game.cells)
 
   if (game.winCombo) {
     Rune.gameOver({
@@ -46,7 +45,5 @@ Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   setup,
-  actions: {
-    claimCell,
-  },
+  actions: { claimCell }
 })

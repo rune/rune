@@ -2,26 +2,26 @@ function setup(allPlayerIds) {
   return {
     cells: new Array(9).fill(null),
     winCombo: null,
-    lastPlayerId: null,
+    lastMovePlayerId: null,
     playerIds: allPlayerIds,
   }
 }
 
 function claimCell(cellIndex, { game, playerId }) {
   // Cannot play during someone else's turn or claim existing cells
-  if (game.cells[cellIndex] !== null || playerId === game.lastPlayerId) {
+  if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
     throw Rune.invalidAction()
   }
 
   game.cells[cellIndex] = playerId
   game.winCombo = findWinningCombo(game.cells)
-  game.lastPlayerId = playerId
+  game.lastMovePlayerId = playerId
 
   if (game.winCombo) {
     Rune.gameOver({
       players: {
-        [game.lastPlayerId]: "WON",
-        [game.playerIds.find((id) => id !== game.lastPlayerId)]: "LOST",
+        [game.lastMovePlayerId]: "WON",
+        [game.playerIds.find((id) => id !== game.lastMovePlayerId)]: "LOST",
       },
     })
   }

@@ -28,18 +28,18 @@ function initUI(cells, playerIds, players, yourPlayerId) {
 }
 
 function onChange({ game, players, yourPlayerId, action }) {
-  const { cells, playerIds, winCombo, lastPlayerId, freeCells } = game
+  const { cells, playerIds, winCombo, lastMovePlayerId, freeCells } = game
 
   if (!cellButtons) initUI(cells, playerIds, players, yourPlayerId)
 
   cellButtons.forEach((button, i) => {
     button.setAttribute("player", playerIds.indexOf(cells[i]))
-    button.setAttribute("clickable", !cells[i] && lastPlayerId !== yourPlayerId)
+    button.setAttribute("clickable", !cells[i] && lastMovePlayerId !== yourPlayerId)
     button.setAttribute("dim", (winCombo && !winCombo.includes(i)) || !freeCells)
   })
 
   playerContainers.forEach((container, i) => {
-    container.setAttribute("your-turn", playerIds[i] !== lastPlayerId)
+    container.setAttribute("your-turn", playerIds[i] !== lastMovePlayerId)
   })
 
   if (action && action.name === "claimCell") {

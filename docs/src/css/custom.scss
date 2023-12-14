@@ -44,6 +44,7 @@
   --ifm-navbar-height: 110px;
   --ifm-navbar-sidebar-width: 100vw;
   --ifm-navbar-background-color: #1b0329;
+  --ifm-font-size-base: 113%;
 
   @media (max-width: 996px) {
     --ifm-spacing-horizontal: 16px;
@@ -357,4 +358,69 @@
 
 .aa-SubmitIcon {
   color: white;
+}
+
+.aa-DetachedContainer,
+.aa-Panel {
+  background: #1b0329 !important;
+}
+
+.aa-DetachedContainer {
+  box-shadow: none !important;
+  border: 1px solid rgba(188, 184, 255, 0.3) !important;
+}
+
+.aa-DetachedFormContainer {
+  border-bottom: none !important;
+}
+
+.aa-Form {
+  border: 1px solid #5d4e70 !important;
+}
+
+.aa-DetachedCancelButton {
+  color: #bcb8ff !important;
+}
+
+.aa-Input {
+  box-shadow: none !important;
+}
+
+.aa-Input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.aa-ItemLink {
+  color: #bcb8ff !important;
+  padding: 0 9px !important;
+}
+
+.aa-Item[aria-selected="true"] {
+  background: #9263ff !important;
+
+  .aa-ItemLink {
+    color: white !important;
+  }
+}
+
+.aa-Label svg,
+.aa-LoadingIndicator svg {
+  color: white !important;
+}
+
+.aa-SubmitButton {
+  padding-left: 10px !important;
+}
+
+body.aa-Detached {
+  overflow: hidden !important;
+}
+
+.aa-DetachedOverlay {
+  backdrop-filter: blur(15px) !important;
+  background: rgb(32 32 32 / 38%) !important;
+}
+
+.aa-GradientBottom {
+  display: none !important;
 }

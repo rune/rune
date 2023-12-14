@@ -12,7 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "rune-games-sdk": "^4.16.2"
+    "rune-games-sdk": "4.16.15"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

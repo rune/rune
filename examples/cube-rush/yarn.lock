@@ -1209,6 +1209,11 @@ json5@^2.2.3:
   resolved "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
+just-clone@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/just-clone/-/just-clone-6.2.0.tgz#a4614d9bf7e4bbdcae7f9ba904aea5ea9cae8ae5"
+  integrity sha512-1IynUYEc/HAwxhi3WDpIpxJbZpMCvvrrmZVqvj9EhpvbH8lls7HhdhiByjL7DkAaWlLIzpC0Xc/VPvy/UxLNjA==
+
 keyv@^4.5.3:
   version "4.5.4"
   resolved "https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz"
@@ -1278,10 +1283,10 @@ ms@2.1.2:
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-mutative@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/mutative/-/mutative-0.6.0.tgz#43a007237ee7dbec6ff7a6384de2e3510d6993e7"
-  integrity sha512-TcEBPDJHauFxiLtrgDLZBn2lfW6FMKBcr7lyRHimwdznrqWsmXHLXnBjb+7mTLXRg6GebKWHV1v0qtSGvQp5Yw==
+mutative@0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/mutative/-/mutative-0.7.1.tgz#ea64959342bc48612a248b53d99fdd5b7a0d086d"
+  integrity sha512-R5EhjpPbUX9uTPn5GT1Nz6NqGdoeb5PfDy7AO3lKMEOH++XD1cljRM7WGA9JIKF2VZdigGGwrskxBc4RDSmGQQ==
 
 nanoid@^3.3.6:
   version "3.3.6"
@@ -1444,14 +1449,15 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.16.2:
-  version "4.16.2"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.16.2.tgz#ab8789d4e187a7aae04cf770231ea73b814bfa49"
-  integrity sha512-8OXUCloPphKpBva7Oa50xiuYGuWHQ9MiebPTeeVQfhOySPzBWoPyse6gwHxBIfT6WodqeV/rFGXSdIZhxphhIQ==
+rune-games-sdk@4.16.15:
+  version "4.16.15"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.16.15.tgz#b1d7ac65b2fe08fd9c319c9dd1791cec0911252d"
+  integrity sha512-5kiuZizrutQIblHo2JGl70GvRqCrxX9hYdc4jhxj2d2UYgXV7TSJOT2tmnWNp7risDgfP2ymaXFkXrU1HRlJEA==
   dependencies:
     base-64 "1.0.0"
     core-js "3.31.1"
-    mutative "0.6.0"
+    just-clone "6.2.0"
+    mutative "0.7.1"
     rune-msgpack "1.0.0"
     xstate "4.32.1"
 

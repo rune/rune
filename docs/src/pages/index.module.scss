@@ -33,10 +33,7 @@
       letter-spacing: -0.64px;
     }
 
-    background: var(
-      --Gradient-Shine,
-      linear-gradient(242deg, #eeedff 7.25%, #b2adff 92.6%)
-    );
+    background: linear-gradient(242deg, #eeedff 7.25%, #b2adff 92.6%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -63,10 +60,7 @@
       letter-spacing: -0.64px;
     }
 
-    background: var(
-      --Gradient-Shine,
-      linear-gradient(242deg, #eeedff 7.25%, #b2adff 92.6%)
-    );
+    background: linear-gradient(242deg, #eeedff 7.25%, #b2adff 92.6%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -303,10 +297,10 @@
   }
 
   .hero2 {
-    margin: 225px 0;
+    margin: 225px 0 297px;
 
     @media (max-width: 700px) {
-      margin: 136px 0;
+      margin: 136px 0 165px;
     }
 
     h2 {
@@ -316,6 +310,109 @@
       @media (max-width: 700px) {
         max-width: 322px;
         margin-bottom: 48px;
+      }
+    }
+  }
+
+  .hero3 {
+    width: 100%;
+    max-width: 953px;
+    margin-bottom: 297px;
+
+    @media (max-width: 1024px) {
+      max-width: 500px;
+      margin-bottom: 159px;
+    }
+
+    .description {
+      margin-top: 54px;
+    }
+  }
+
+  .hero4 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 237px;
+
+    @media (max-width: 700px) {
+      margin-bottom: 136px;
+    }
+
+    p {
+      max-width: 768px;
+      margin: 24px 0 64px;
+
+      @media (max-width: 1024px) {
+        margin: 24px 0;
+      }
+    }
+
+    .codeContainer {
+      padding: 48px 40px;
+      border-radius: 16px;
+      background: #282a36;
+      width: 100%;
+      max-width: 955px;
+
+      > div:last-child {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 700px) {
+        padding: 16px;
+
+        pre {
+          font-size: 6px;
+        }
+      }
+
+      * {
+        box-shadow: none !important;
+      }
+
+      .buttons {
+        display: flex;
+        > :not(:first-child) {
+          margin-left: 16px;
+
+          @media (max-width: 700px) {
+            margin-left: 5.75px;
+          }
+        }
+        margin-bottom: 35px;
+        @media (max-width: 700px) {
+          margin-bottom: 0;
+        }
+
+        .button {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 130%;
+          letter-spacing: 2.8px;
+          cursor: pointer;
+
+          padding: 10px 16px;
+          border-radius: 4px;
+          border: 1px solid #bcb8ff;
+          color: #bcb8ff;
+
+          @media (max-width: 700px) {
+            font-size: 11px;
+            line-height: normal;
+            letter-spacing: -0.11px;
+
+            padding: 4px 8px;
+            border-radius: 1.44px;
+          }
+
+          &.active {
+            background: #ff8888;
+            color: #1b0329;
+            border-color: transparent;
+          }
+        }
       }
     }
   }

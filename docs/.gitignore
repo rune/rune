@@ -4,6 +4,7 @@
 # Production
 /build
 /static/_examples
+/src/pages/demoCode.json
 
 # Generated files
 .docusaurus

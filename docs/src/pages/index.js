@@ -2,10 +2,13 @@ import React, { useState, useRef, useCallback } from "react"
 import clsx from "clsx"
 import Link from "@docusaurus/Link"
 import { Player } from "@lottiefiles/react-lottie-player"
+import CodeBlock from "@theme/CodeBlock"
 
 import styles from "./index.module.scss"
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 import Layout from "@theme/Layout"
+import { HomeGameDemo } from "../components/HomeGameDemo/HomeGameDemo"
+import demoCode from "./demoCode.json"
 
 const features = [
   {
@@ -306,6 +309,7 @@ function Phone() {
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext()
+  const [selectedFile, setSelectedFile] = useState("logic")
 
   return (
     <Layout description={siteConfig.description} homeBackground>
@@ -358,6 +362,49 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          <div className={styles.hero3}>
+            <h2>No backend needed</h2>
+            <HomeGameDemo />
+            <p className={styles.description}>
+              You write your game logic in JavaScript and Rune runs it on
+              servers all over the world for low latency. Our predict-rollback
+              approach removes the need for any game networking code and ensures
+              that players have an amazing experience even on bad internet.
+            </p>
+          </div>
+
+          <div className={styles.hero4}>
+            <h2>Multiplayer in 100 lines&nbsp;of&nbsp;JS</h2>
+            <p>
+              Here’s the code for the Tic Tac Toe game above. The game has
+              built-in voice chat, matchmaking, and spectating. All powered by
+              Rune!
+            </p>
+            <div className={styles.codeContainer}>
+              <div className={styles.buttons}>
+                <div
+                  className={clsx(styles.button, {
+                    [styles.active]: selectedFile === "logic",
+                  })}
+                  onClick={() => setSelectedFile("logic")}
+                >
+                  logic.js
+                </div>
+                <div
+                  className={clsx(styles.button, {
+                    [styles.active]: selectedFile === "client",
+                  })}
+                  onClick={() => setSelectedFile("client")}
+                >
+                  client.js
+                </div>
+              </div>
+              <CodeBlock language="js" showLineNumbers>
+                {selectedFile === "logic" ? demoCode.logic : demoCode.client}
+              </CodeBlock>
             </div>
           </div>
 

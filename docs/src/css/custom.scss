@@ -364,6 +364,11 @@
   background: #1b0329 !important;
 }
 
+.aa-DetachedContainer {
+  box-shadow: none !important;
+  border: 1px solid rgba(188, 184, 255, 0.3) !important;
+}
+
 .aa-DetachedFormContainer {
   border-bottom: none !important;
 }
@@ -411,6 +416,10 @@ body.aa-Detached {
 }
 
 .aa-DetachedOverlay {
-  backdrop-filter: blur(10px) !important;
-  background: rgba(127, 127, 127, 0.25) !important;
+  backdrop-filter: blur(15px) !important;
+  background: rgb(32 32 32 / 38%) !important;
+}
+
+.aa-GradientBottom {
+  display: none !important;
 }

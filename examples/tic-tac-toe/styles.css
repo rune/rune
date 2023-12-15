@@ -104,12 +104,12 @@ button:nth-child(9) {
   border-right: 0;
 }
 
-button[clickable="true"] {
+button:not([disabled]) {
   cursor: pointer;
 }
 
 @media (hover: hover) {
-  button[clickable="true"]:after {
+  button:not([disabled]):after {
     content: "";
     display: block;
     position: absolute;

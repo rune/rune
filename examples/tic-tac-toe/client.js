@@ -34,7 +34,9 @@ function onChange({ game, players, yourPlayerId, action }) {
 
   cellButtons.forEach((button, i) => {
     button.setAttribute("player", playerIds.indexOf(cells[i]))
-    button.setAttribute("clickable", !cells[i] && lastMovePlayerId !== yourPlayerId)
+    if(cells[i] || lastMovePlayerId === yourPlayerId)
+      button.setAttribute("disabled", "disabled")
+    else button.removeAttribute("disabled")
     button.setAttribute("dim", (winCombo && !winCombo.includes(i)) || !freeCells)
   })
 
@@ -42,9 +44,7 @@ function onChange({ game, players, yourPlayerId, action }) {
     container.setAttribute("your-turn", playerIds[i] !== lastMovePlayerId)
   })
 
-  if (action && action.name === "claimCell") {
-    selectSound.play()
-  }
+  if (action && action.name === "claimCell") selectSound.play()
 }
 
 Rune.initClient({ onChange })

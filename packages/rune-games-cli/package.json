@@ -12,7 +12,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rune/rune-games-sdk.git",
+    "url": "git+https://github.com/rune/rune.git",
     "directory": "packages/rune-games-cli"
   },
   "author": "Rune AI Inc.",

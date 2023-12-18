@@ -18,20 +18,20 @@ Build multiplayer web games that run inside Rune on [Android](https://play.googl
 
 ## Packages
 
-- [`eslint-plugin-rune`](https://github.com/rune/rune-games-sdk/tree/staging/packages/eslint-plugin-rune) – collection of rules and configuration for writing safe logic code for the Rune SDK
-- [`rune-games-cli`](https://github.com/rune/rune-games-sdk/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
-- [`vite-plugin-rune`](https://github.com/rune/rune-games-sdk/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
+- [`eslint-plugin-rune`](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-rune) – collection of rules and configuration for writing safe logic code for the Rune SDK
+- [`rune-games-cli`](https://github.com/rune/rune/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
+- [`vite-plugin-rune`](https://github.com/rune/rune/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
 
 ## Examples
 
 | Tic Tac Toe                                                                                                                                  | Outmatched                                                                                                                                 | Sudoku                                                                                                                             | Pinpoint                                                                                                                               |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
 | [<img src="docs/static/img/multiplayer-games/tic-tac-toe.png" width=500>](https://developers.rune.ai/examples/tic-tac-toe/)                  | [<img src="docs/static/img/multiplayer-games/outmatched.png" width=500>](https://developers.rune.ai/examples/outmatched/)                  | [<img src="docs/static/img/multiplayer-games/sudoku.png" width=500>](https://developers.rune.ai/examples/sudoku/)                  | [<img src="docs/static/img/multiplayer-games/pinpoint.png" width=500>](https://developers.rune.ai/examples/pinpoint/)                  |
-| [Demo](https://developers.rune.ai/examples/tic-tac-toe/), [Source](https://github.com/rune/rune-games-sdk/tree/staging/examples/tic-tac-toe) | [Demo](https://developers.rune.ai/examples/outmatched/), [Source](https://github.com/rune/rune-games-sdk/tree/staging/examples/outmatched) | [Demo](https://developers.rune.ai/examples/sudoku/), [Source](https://github.com/rune/rune-games-sdk/tree/staging/examples/sudoku) | [Demo](https://developers.rune.ai/examples/pinpoint/), [Source](https://github.com/rune/rune-games-sdk/tree/staging/examples/pinpoint) |
+| [Demo](https://developers.rune.ai/examples/tic-tac-toe/), [Source](https://github.com/rune/rune/tree/staging/examples/tic-tac-toe) | [Demo](https://developers.rune.ai/examples/outmatched/), [Source](https://github.com/rune/rune/tree/staging/examples/outmatched) | [Demo](https://developers.rune.ai/examples/sudoku/), [Source](https://github.com/rune/rune/tree/staging/examples/sudoku) | [Demo](https://developers.rune.ai/examples/pinpoint/), [Source](https://github.com/rune/rune/tree/staging/examples/pinpoint) |
 
 ## Help
 
-If you're having trouble, please feel free to file an issue in our [GitHub issue tracker](https://github.com/rune/rune-games-sdk/issues) or join our [Discord server](https://discord.gg/rune-devs).
+If you're having trouble, please feel free to file an issue in our [GitHub issue tracker](https://github.com/rune/rune/issues) or join our [Discord server](https://discord.gg/rune-devs).
 
 ## Contributing
 

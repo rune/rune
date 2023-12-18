@@ -129,7 +129,7 @@ const config = {
               },
               {
                 label: "GitHub",
-                href: "https://github.com/rune/rune-games-sdk",
+                href: "https://github.com/rune/rune",
               },
             ],
           },

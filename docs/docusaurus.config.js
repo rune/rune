@@ -6,7 +6,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula")
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Rune SDK",
+  title: "Rune - multiplayer web games",
   tagline: "Make multiplayer games that reach a community of millions.",
   url: "http://developers.rune.ai/",
   baseUrl: "/",

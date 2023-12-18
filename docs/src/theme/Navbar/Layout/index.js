@@ -77,7 +77,7 @@ export default function NavbarLayout() {
           FAQ
         </Link>
         <a
-          href="https://github.com/rune/rune-games-sdk"
+          href="https://github.com/rune/rune"
           target="_blank"
           rel="noreferrer"
           className={styles.menuBtn}

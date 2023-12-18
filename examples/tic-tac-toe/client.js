@@ -33,7 +33,7 @@ function onChange({ game, players, yourPlayerId, action }) {
   cellButtons.forEach((button, i) => {
     button.setAttribute("player", playerIds.indexOf(cells[i]))
     button.setAttribute("dim", (winCombo && !winCombo.includes(i)) || !freeCells)
-    if(cells[i] || lastMovePlayerId === yourPlayerId)
+    if(cells[i] || lastMovePlayerId === yourPlayerId || winCombo)
       button.setAttribute("disabled", "")
     else
       button.removeAttribute("disabled")

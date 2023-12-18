@@ -167,12 +167,10 @@
         padding-top: 9px;
       }
 
-      mask-image: -webkit-gradient(
-        linear,
-        left 30%,
-        left 60%,
-        from(rgba(0, 0, 0, 1)),
-        to(rgba(0, 0, 0, 0))
+      mask-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 1) 30%,
+        rgba(0, 0, 0, 0) 60%
       );
 
       .containerOuter {

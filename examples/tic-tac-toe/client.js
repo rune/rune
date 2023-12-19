@@ -4,7 +4,7 @@ const selectSound = new Audio("select.wav")
 
 let cellButtons, playerContainers
 
-function initUI (cells, playerIds, players, yourPlayerId) {
+function initUI(cells, playerIds, players, yourPlayerId) {
   cellButtons = cells.map((_, cellIndex) => {
     const button = document.createElement("button")
     button.addEventListener("click", () => Rune.actions.claimCell(cellIndex))
@@ -26,7 +26,7 @@ function initUI (cells, playerIds, players, yourPlayerId) {
   })
 }
 
-function onChange ({ game, players, yourPlayerId, action }) {
+function onChange({ game, players, yourPlayerId, action }) {
   const { cells, playerIds, winCombo, lastMovePlayerId, freeCells } = game
   if (!cellButtons) initUI(cells, playerIds, players, yourPlayerId)
   if (lastMovePlayerId) board.classList.remove("initial")

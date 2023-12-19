@@ -133,17 +133,17 @@ button:not([disabled]) {
   height: 100%;
 
   text-align: center;
-  font-size: 6.7vw;
+  font-size: 8vw;
   font-weight: 700;
-  line-height: 8vw;
-  letter-spacing: -0.13vw;
+  line-height: 11vw;
+  letter-spacing: 0vw;
 
   background: linear-gradient(90deg, #cb89fc 0.24%, #fea9ab 96.17%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  animation: tap-to-play 1s ease-in-out infinite;
+  animation: tap-to-play 1.5s ease-in-out infinite;
 }
 
 @media (hover: hover) {

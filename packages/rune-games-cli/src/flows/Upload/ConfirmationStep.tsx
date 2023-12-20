@@ -5,10 +5,12 @@ import { Step } from "../../components/Step.js"
 import { useGame } from "../../gql/useGame.js"
 
 export function ConfirmationStep({
+  label,
   gameId,
   gameDir,
   onComplete,
 }: {
+  label: (gameTitle: string, gameDir: string) => string
   gameId: number
   gameDir: string
   onComplete: (confirmed: boolean) => void
@@ -17,7 +19,7 @@ export function ConfirmationStep({
   const [confirmed, setConfirmed] = useState<boolean | undefined>()
 
   useEffect(() => {
-    if (confirmed) onComplete(confirmed)
+    if (typeof confirmed === "boolean") onComplete(confirmed)
   }, [confirmed, onComplete])
 
   return (
@@ -33,7 +35,12 @@ export function ConfirmationStep({
       }
       label={
         game
-          ? `Will upload a new version of "${game.title}" from ${gameDir}. Are you sure?`
+          ? label(game.title, gameDir) +
+            (typeof confirmed === "boolean"
+              ? confirmed
+                ? " (Yes)"
+                : " (No)"
+              : "")
           : "..."
       }
       view={

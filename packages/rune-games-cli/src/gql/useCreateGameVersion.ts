@@ -28,10 +28,16 @@ gql`
   mutation CreateGameVersion(
     $gameId: Int!
     $content: Upload!
-    $isDraft: Boolean
+    $isDraft: Boolean!
+    $postToDiscord: Boolean!
   ) {
     createGameVersion(
-      input: { gameId: $gameId, content: $content, isDraft: $isDraft }
+      input: {
+        gameId: $gameId
+        content: $content
+        isDraft: $isDraft
+        postToDiscord: $postToDiscord
+      }
     ) {
       previewLink
       congratulationMsg

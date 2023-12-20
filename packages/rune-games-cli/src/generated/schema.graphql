@@ -26,6 +26,7 @@ input CreateGameVersionInput {
   content: Upload!
   gameId: Int!
   isDraft: Boolean
+  postToDiscord: Boolean
 }
 
 type CreateGameVersionPayload {
@@ -45,7 +46,7 @@ A point in time as described by the [ISO
 scalar Datetime
 
 type Game {
-  blurredImgDataUrl: String
+  blurredImgDataUrl: String @deprecated(reason: "true")
 
   """(Denormalized) Total number of comments ."""
   commentCount: Int!
@@ -129,7 +130,7 @@ input GameCondition {
 }
 
 type GameDev {
-  displayName: String
+  displayName: String!
 
   """Reads a single `Game` that is related to this `GameDev`."""
   game: Game
@@ -148,6 +149,8 @@ input GameDevCondition {
 
 enum GameDevType {
   ADMIN
+  DEV
+  TESTER
 }
 
 """A connection to a list of `GameDev` values."""
@@ -211,7 +214,7 @@ type GameValidationLintError {
 }
 
 type GameVersion {
-  createdByDevId: Int
+  createdByDevId: Int!
 
   """Reads a single `Game` that is related to this `GameVersion`."""
   game: Game

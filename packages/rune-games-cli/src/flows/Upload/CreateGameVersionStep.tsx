@@ -12,10 +12,12 @@ export function CreateGameVersionStep({
   gameId,
   gameDir,
   readyForRelease,
+  shouldPostToDiscord,
 }: {
   gameId: number
   gameDir: string
   readyForRelease: boolean
+  shouldPostToDiscord: boolean
 }) {
   const {
     createGameVersion,
@@ -43,9 +45,10 @@ export function CreateGameVersionStep({
           content: zip.toBuffer(),
           type: "application/zip",
         },
+        postToDiscord: shouldPostToDiscord,
       })
     })
-  }, [readyForRelease, createGameVersion, gameDir, gameId])
+  }, [readyForRelease, createGameVersion, gameDir, gameId, shouldPostToDiscord])
 
   return (
     <Box flexDirection="column">
@@ -77,6 +80,15 @@ export function CreateGameVersionStep({
                 (only share this link with other devs who are helping playtest
                 your game)
               </Text>
+              {shouldPostToDiscord && (
+                <>
+                  <Newline />
+                  <Text color="blue">
+                    Check Discord #game-launch channel for feedback from Rune
+                    and other game devs!
+                  </Text>
+                </>
+              )}
               {congratulationMsg && (
                 <>
                   <Newline />

@@ -18,16 +18,22 @@ export function Upload({ flags }: { flags: CliFlags }) {
   const [readyForRelease, setReadyForRelease] = useState<boolean | undefined>(
     undefined
   )
-  const [needConfirmation, setNeedConfirmation] = useState(false)
-  const [confirmed, setConfirmed] = useState(false)
+
   const { me } = useMe()
   const { games } = useGames({ skip: !me })
   const { myGames } = useMyGames({ games, devId: me?.devId })
   const { release: releaseFlag, name, draft: draftFlag } = flags
 
-  useEffect(() => {
-    if (myGames && myGames.length > 1) setNeedConfirmation(true)
-  }, [myGames])
+  const shouldConfirmDiscordPost =
+    me?.email?.endsWith("@rune.ai") && readyForRelease
+  const [discordPostConfirmed, setDiscordPostConfirmed] = useState<
+    boolean | undefined
+  >(undefined)
+
+  const shouldConfirmUpload = (myGames?.length ?? 0) > 1
+  const [uploadConfirmed, setUploadConfirmed] = useState<boolean | undefined>(
+    undefined
+  )
 
   useEffect(() => {
     if (releaseFlag) {
@@ -48,7 +54,7 @@ export function Upload({ flags }: { flags: CliFlags }) {
 
     //In case --release or --draft flag is used, automatically confirm to skip interactive step
     if (releaseFlag || draftFlag) {
-      setConfirmed(true)
+      setUploadConfirmed(true)
     }
   }, [myGames, name, releaseFlag, draftFlag])
 
@@ -74,23 +80,45 @@ export function Upload({ flags }: { flags: CliFlags }) {
               )}
               {gameId === null && <CreateGameStep onComplete={setGameId} />}
 
-              {!!gameId && (
-                <>
-                  {confirmed || !needConfirmation ? (
-                    <CreateGameVersionStep
-                      gameId={gameId}
-                      gameDir={gameDir}
-                      readyForRelease={readyForRelease}
-                    />
-                  ) : (
-                    <ConfirmationStep
-                      gameId={gameId}
-                      gameDir={gameDir}
-                      onComplete={setConfirmed}
-                    />
-                  )}
-                </>
+              {!!gameId && shouldConfirmDiscordPost && (
+                <ConfirmationStep
+                  label={() =>
+                    "Do you want to post a message about the game upload to Discord?"
+                  }
+                  gameId={gameId}
+                  gameDir={gameDir}
+                  onComplete={setDiscordPostConfirmed}
+                />
               )}
+
+              {!!gameId &&
+                (typeof discordPostConfirmed === "boolean" ||
+                  !shouldConfirmDiscordPost) &&
+                shouldConfirmUpload && (
+                  <ConfirmationStep
+                    label={(gameTitle, gameDir) =>
+                      `Will upload a new version of "${gameTitle}" from ${gameDir}. Are you sure?`
+                    }
+                    gameId={gameId}
+                    gameDir={gameDir}
+                    onComplete={setUploadConfirmed}
+                  />
+                )}
+
+              {!!gameId &&
+                (typeof discordPostConfirmed === "boolean" ||
+                  !shouldConfirmDiscordPost) &&
+                (uploadConfirmed || !shouldConfirmUpload) && (
+                  <CreateGameVersionStep
+                    gameId={gameId}
+                    gameDir={gameDir}
+                    readyForRelease={readyForRelease}
+                    shouldPostToDiscord={
+                      readyForRelease &&
+                      (discordPostConfirmed || !shouldConfirmDiscordPost)
+                    }
+                  />
+                )}
             </>
           )}
         </>

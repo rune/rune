@@ -33,7 +33,7 @@ function onChange({ game, players, yourPlayerId, action }) {
 
   cellButtons.forEach((button, i) => {
     button.setAttribute("player", playerIds.indexOf(cells[i]))
-    button.setAttribute("dim", (winCombo && !winCombo.includes(i)) || !freeCells)
+    button.setAttribute("dim", (winCombo && !winCombo.includes(i)) || (!freeCells && !winCombo))
     if (cells[i] || lastMovePlayerId === yourPlayerId || winCombo)
       button.setAttribute("disabled", "")
     else
@@ -41,7 +41,7 @@ function onChange({ game, players, yourPlayerId, action }) {
   })
 
   playerContainers.forEach((container, i) => {
-    container.setAttribute("your-turn", playerIds[i] !== lastMovePlayerId)
+    container.setAttribute("your-turn", playerIds[i] !== lastMovePlayerId && !winCombo && freeCells)
   })
 
   if (action && action.name === "claimCell") selectSound.play()

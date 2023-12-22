@@ -193,7 +193,7 @@ To start the project, run:
 
 To upload your game, run:
   ${formatRunCommand("build")}
-  rune upload
+  npx rune-games-cli@latest upload
 `}</Text>
       )}
     </Box>

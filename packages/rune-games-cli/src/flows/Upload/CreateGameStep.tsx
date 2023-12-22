@@ -20,8 +20,8 @@ export function CreateGameStep({
   const [titleSubmitted, setTitleSubmitted] = useState(false)
   const [description, setDescription] = useState("")
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false)
-  const [logoPath, setLogoPath] = useState("")
-  const [logoPathSubmitted, setLogoPathSubmitted] = useState(false)
+  const [previewImgPath, setPreviewImgPath] = useState("")
+  const [previewImgPathSubmitted, setPreviewImgPathSubmitted] = useState(false)
   const { createGame, createGameLoading, createGameError, createdGameId } =
     useCreateGame()
 
@@ -33,16 +33,18 @@ export function CreateGameStep({
     setDescriptionSubmitted(true)
   }, [])
 
-  const onSubmitLogoPath = useCallback(() => {
-    setLogoPathSubmitted(true)
+  const onSubmitPreviewImgPath = useCallback(() => {
+    setPreviewImgPathSubmitted(true)
   }, [])
 
   useEffect(() => {
-    if (titleSubmitted && descriptionSubmitted && logoPathSubmitted) {
+    if (titleSubmitted && descriptionSubmitted && previewImgPathSubmitted) {
       createGame({
         title,
         description,
-        ...(logoPath && { logo: prepareFileUpload(logoPath) }),
+        ...(previewImgPath && {
+          previewImg: prepareFileUpload(previewImgPath),
+        }),
         type: GameType.MULTIPLAYER,
       })
     }
@@ -50,8 +52,8 @@ export function CreateGameStep({
     createGame,
     description,
     descriptionSubmitted,
-    logoPath,
-    logoPathSubmitted,
+    previewImgPath,
+    previewImgPathSubmitted,
     title,
     titleSubmitted,
   ])
@@ -60,7 +62,7 @@ export function CreateGameStep({
     if (createGameError) {
       setTitleSubmitted(false)
       setDescriptionSubmitted(false)
-      setLogoPathSubmitted(false)
+      setPreviewImgPathSubmitted(false)
     }
   }, [createGameError])
 
@@ -126,21 +128,21 @@ export function CreateGameStep({
       )}
       {descriptionSubmitted && (
         <Step
-          status={logoPathSubmitted ? "success" : "userInput"}
+          status={previewImgPathSubmitted ? "success" : "userInput"}
           label={
-            logoPathSubmitted
-              ? logoPath === ""
-                ? "Will create a game without a logo"
-                : `Will use the logo at ${logoPath}`
-              : "Provide path to game logo (optional)"
+            previewImgPathSubmitted
+              ? previewImgPath === ""
+                ? "Will create a game without a preview image"
+                : `Will use the preview image at ${previewImgPath}`
+              : "Provide path to game preview image (optional)"
           }
           view={
-            !logoPathSubmitted && (
+            !previewImgPathSubmitted && (
               <TextInput
-                placeholder="/path/to/logo.png"
-                value={logoPath}
-                onChange={setLogoPath}
-                onSubmit={onSubmitLogoPath}
+                placeholder="/path/to/preview_img.png"
+                value={previewImgPath}
+                onChange={setPreviewImgPath}
+                onSubmit={onSubmitPreviewImgPath}
               />
             )
           }

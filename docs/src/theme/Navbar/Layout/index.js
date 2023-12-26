@@ -51,7 +51,7 @@ export default function NavbarLayout() {
       )}
     >
       <div className={styles.left}>
-        <Link to="/">
+        <Link to="https://www.rune.ai">
           <img
             alt="Rune Logo"
             className={styles.logo}

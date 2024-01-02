@@ -89,9 +89,9 @@ We’ve talked with a lot of players in the Rune community and accumulated their
 
 We want to let you unleash your creativity while still avoiding content inappropriate for the players in the Rune community. As a start, we’re following the Google Play Store Policy, but we’re working on making our own guidelines and age verification. Until then, please make sure that your game adheres to Google’s guidelines on “Inappropriate Content”.
 
-### Can I Add Network Requests Into My Game?
+### Can I Use Network Requests / External Resources?
 
-Your game should not use network requests of any kind. Avoiding network requests protects players' privacy/security and allows seamless gameplay regardless of internet connection. It also guarantees that your game will keep running even if some external servers get shutdown.
+Your game should not use any network requests or external resources. Avoiding these protect player privacy/security and guarantees that your game will keep running even if some external servers get shutdown.
 
 <br />
 <br />

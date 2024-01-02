@@ -5,6 +5,8 @@ import { Select } from "../../components/Select.js"
 import { useGames, useMyGames, gameItemLabel } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
 
+import { Details } from "./Details.js"
+
 export function List() {
   const { me } = useMe()
   const { games, gamesLoading } = useGames({ skip: !me })
@@ -32,12 +34,8 @@ export function List() {
 
   if (!me) return <></>
 
-  if (submitted) {
-    return (
-      <Box flexDirection="column">
-        <Text bold>Game #{gameId}</Text>
-      </Box>
-    )
+  if (submitted && gameId) {
+    return <Details gameId={gameId} />
   }
 
   return (

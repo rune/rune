@@ -20,7 +20,7 @@ export function useGames({
 
 gql`
   query Games {
-    games(orderBy: [PRIMARY_KEY_DESC]) {
+    games {
       nodes {
         id
         title
@@ -50,19 +50,30 @@ export function useMyGames({
   games?: NonNullable<GamesQuery["games"]>["nodes"]
   devId?: number
 } = {}) {
-  const myGames = useMemo(
-    () =>
-      devId && games
-        ? games.filter((game) =>
-            game.gameDevs.nodes.some((gameDev) => gameDev.userId === devId)
-          )
-        : undefined,
-    [devId, games]
-  )
+  const groupedGames = useMemo(() => {
+    if (!devId || !games) {
+      return { myGames: undefined, otherGames: undefined }
+    }
 
-  return {
-    myGames,
-  }
+    const sortedGames = [...games].sort((g1, g2) =>
+      g1.title > g2.title ? 1 : -1
+    )
+
+    const myGames = []
+    const otherGames = []
+
+    for (const game of sortedGames) {
+      if (game.gameDevs.nodes.some((gameDev) => gameDev.userId === devId)) {
+        myGames.push(game)
+      } else {
+        otherGames.push(game)
+      }
+    }
+
+    return { myGames, otherGames }
+  }, [devId, games])
+
+  return groupedGames
 }
 
 export function gameItemLabel({

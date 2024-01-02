@@ -2,6 +2,7 @@ import { Text, Box } from "ink"
 import React, { useCallback, useMemo, useState } from "react"
 
 import { Select } from "../../components/Select.js"
+import { Step } from "../../components/Step.js"
 import { useGames, useMyGames, gameItemLabel } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
 
@@ -41,7 +42,7 @@ export function List() {
   return (
     <Box flexDirection="column">
       {gamesLoading ? (
-        <Text dimColor>Loading...</Text>
+        <Step status="waiting" label="Loading games" />
       ) : items.length > 0 ? (
         <Select
           items={items}

@@ -1,9 +1,9 @@
 import { Text, Box } from "ink"
 import React, { useCallback, useMemo, useState } from "react"
 
-import { Select } from "../components/Select.js"
-import { useGames, useMyGames, gameItemLabel } from "../gql/useGames.js"
-import { useMe } from "../gql/useMe.js"
+import { Select } from "../../components/Select.js"
+import { useGames, useMyGames, gameItemLabel } from "../../gql/useGames.js"
+import { useMe } from "../../gql/useMe.js"
 
 export function List() {
   const { me } = useMe()

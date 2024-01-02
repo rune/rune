@@ -22,10 +22,10 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
   const [titleSubmitted, setTitleSubmitted] = useState(false)
   const [description, setDescription] = useState("")
   const [descriptionSubmitted, setDescriptionSubmitted] = useState(false)
-  const [logoPath, setLogoPath] = useState("")
-  const [logoPathSubmitted, setLogoPathSubmitted] = useState(false)
   const [previewImgPath, setPreviewImgPath] = useState("")
   const [previewImgPathSubmitted, setPreviewImgPathSubmitted] = useState(false)
+  const [logoPath, setLogoPath] = useState("")
+  const [logoPathSubmitted, setLogoPathSubmitted] = useState(false)
   const { updateGame, updateGameLoading, updateGameError, updatedGame } =
     useUpdateGame()
 
@@ -37,29 +37,30 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
     setDescriptionSubmitted(true)
   }, [])
 
-  const onSubmitLogoPath = useCallback(() => {
-    setLogoPathSubmitted(true)
-  }, [])
   const onSubmitPreviewImgPath = useCallback(() => {
     setPreviewImgPathSubmitted(true)
+  }, [])
+
+  const onSubmitLogoPath = useCallback(() => {
+    setLogoPathSubmitted(true)
   }, [])
 
   useEffect(() => {
     if (
       titleSubmitted &&
       descriptionSubmitted &&
-      logoPathSubmitted &&
-      // Only allow admin to upload previewImg
-      (!isAdmin || previewImgPathSubmitted)
+      previewImgPathSubmitted &&
+      // Only allow admin to upload logo
+      (!isAdmin || logoPathSubmitted)
     ) {
       updateGame({
         gameId,
         title,
         description,
-        ...(logoPath && { logo: prepareFileUpload(logoPath) }),
         ...(previewImgPath && {
           previewImg: prepareFileUpload(previewImgPath),
         }),
+        ...(logoPath && { logo: prepareFileUpload(logoPath) }),
       })
     }
   }, [
@@ -67,10 +68,10 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
     description,
     descriptionSubmitted,
     gameId,
-    logoPath,
-    logoPathSubmitted,
     previewImgPath,
     previewImgPathSubmitted,
+    logoPath,
+    logoPathSubmitted,
     title,
     titleSubmitted,
     updateGame,
@@ -80,8 +81,8 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
     if (updateGameError) {
       setTitleSubmitted(false)
       setDescriptionSubmitted(false)
-      setLogoPathSubmitted(false)
       setPreviewImgPathSubmitted(false)
+      setLogoPathSubmitted(false)
     }
   }, [updateGameError])
 
@@ -143,29 +144,6 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
       )}
       {descriptionSubmitted && (
         <Step
-          status={logoPathSubmitted ? "success" : "userInput"}
-          label={
-            logoPathSubmitted
-              ? logoPath === ""
-                ? "Will not update the game logo"
-                : `Will update the logo to the one from ${logoPath}`
-              : "Provide path to game logo (optional)"
-          }
-          view={
-            !logoPathSubmitted && (
-              <TextInput
-                placeholder="/path/to/logo.png"
-                value={logoPath}
-                onChange={setLogoPath}
-                onSubmit={onSubmitLogoPath}
-              />
-            )
-          }
-        />
-      )}
-      {/* Only allow admin to upload previewImg */}
-      {logoPathSubmitted && isAdmin && (
-        <Step
           status={previewImgPathSubmitted ? "success" : "userInput"}
           label={
             previewImgPathSubmitted
@@ -181,6 +159,29 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
                 value={previewImgPath}
                 onChange={setPreviewImgPath}
                 onSubmit={onSubmitPreviewImgPath}
+              />
+            )
+          }
+        />
+      )}
+      {/* Only allow admin to upload logo */}
+      {previewImgPathSubmitted && isAdmin && (
+        <Step
+          status={logoPathSubmitted ? "success" : "userInput"}
+          label={
+            logoPathSubmitted
+              ? logoPath === ""
+                ? "Will not update the game logo"
+                : `Will update the logo to the one from ${logoPath}`
+              : "Provide path to game logo (optional)"
+          }
+          view={
+            !logoPathSubmitted && (
+              <TextInput
+                placeholder="/path/to/logo.png"
+                value={logoPath}
+                onChange={setLogoPath}
+                onSubmit={onSubmitLogoPath}
               />
             )
           }

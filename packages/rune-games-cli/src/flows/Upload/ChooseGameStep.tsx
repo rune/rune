@@ -29,7 +29,7 @@ export function ChooseGameStep({
       ...(onlyExisting ? [] : [{ label: "New game", value: null }]),
       ...(me
         ? ((me.admin ? games : myGames) ?? []).map((game) => ({
-            label: gameItemLabel({ game, me, showGameDevs: me.admin }),
+            label: gameItemLabel({ game, showGameDevs: me.admin }),
             value: game.id,
           }))
         : []),

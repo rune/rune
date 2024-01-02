@@ -1,7 +1,7 @@
 import { useQuery, gql } from "@apollo/client/index.js"
 import { useMemo } from "react"
 
-import { GamesDocument, GamesQuery, Me } from "../generated/types.js"
+import { GamesDocument, GamesQuery } from "../generated/types.js"
 
 export function useGames({
   skip,
@@ -68,16 +68,12 @@ export function useMyGames({
 export function gameItemLabel({
   game,
   showGameDevs,
-  me,
 }: {
   game: NonNullable<GamesQuery["games"]>["nodes"][0]
   showGameDevs: boolean
-  me: Me
 }) {
   const gameDevs = game.gameDevs.nodes
-  const gameDevMe = gameDevs.find((gameDev) => gameDev.userId === me.devId)
   const gameDevAdmin = gameDevs.find((gameDev) => gameDev.type === "ADMIN") // only first admin
-  const myRole = me.admin ? "ADMIN" : gameDevMe ? gameDevMe.type : "PLAYER"
   const latestVersionStatus = game.gameVersions.nodes[0]?.status ?? "NONE"
 
   // Prepare label parts
@@ -90,7 +86,6 @@ export function gameItemLabel({
 
   const gameTitle = game.title
   const tag = showGameDevs ? ` [by ${gameDevsLabel}]` : ""
-  const props = [`latestVersion: ${latestVersionStatus}`, `myRole: ${myRole}`]
 
-  return `${gameTitle}${tag} (${props.join(", ")})`
+  return `${gameTitle}${tag} (latestVersion: ${latestVersionStatus})`
 }

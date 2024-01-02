@@ -1,5 +1,5 @@
 import { Text, Box } from "ink"
-import React, { useMemo, useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 
 import { Select } from "../components/Select.js"
 import { useGames, useMyGames, gameItemLabel } from "../gql/useGames.js"
@@ -10,6 +10,9 @@ export function List() {
   const { games, gamesLoading } = useGames({ skip: !me })
   const { myGames } = useMyGames({ games, devId: me?.devId })
   const [gameId, setGameId] = useState<number | null>(null)
+  const [submitted, setSubmitted] = useState(false)
+
+  const onSubmit = useCallback(() => setSubmitted(true), [])
 
   const items = useMemo(
     () =>
@@ -27,6 +30,14 @@ export function List() {
 
   if (!me) return <></>
 
+  if (submitted) {
+    return (
+      <Box flexDirection="column">
+        <Text bold>Game #{gameId}</Text>
+      </Box>
+    )
+  }
+
   return (
     <Box flexDirection="column">
       <Text bold>{me?.admin ? "All games:" : "Your games:"}</Text>
@@ -37,7 +48,7 @@ export function List() {
           items={items}
           value={gameId}
           onChange={setGameId}
-          onSubmit={() => console.log("SHOW IT", gameId)}
+          onSubmit={onSubmit}
         />
       ) : (
         <Text dimColor>You have not uploaded any games yet</Text>

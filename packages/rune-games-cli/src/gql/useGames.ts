@@ -56,7 +56,7 @@ export function useMyGames({
     }
 
     const sortedGames = [...games].sort((g1, g2) =>
-      g1.title > g2.title ? 1 : -1
+      g1.title.localeCompare(g2.title)
     )
 
     const myGames = []

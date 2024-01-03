@@ -1,12 +1,17 @@
 import { useMemo } from "react"
 
-import { GamesQuery } from "../generated/types.js"
-
-export function useMyGames({
+export function useMyGames<T>({
   games,
   devId,
 }: {
-  games?: NonNullable<GamesQuery["games"]>["nodes"]
+  games?: (T & {
+    title: string
+    gameDevs: {
+      nodes: {
+        userId: number
+      }[]
+    }
+  })[]
   devId?: number
 } = {}) {
   const groupedGames = useMemo(() => {

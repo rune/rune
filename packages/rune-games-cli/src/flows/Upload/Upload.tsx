@@ -1,9 +1,10 @@
 import { Box, Text } from "ink"
 import React, { useEffect, useState } from "react"
 
-import { useGames, useMyGames } from "../../gql/useGames.js"
+import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
 import { CliFlags } from "../../lib/cli.js"
+import { useMyGames } from "../../lib/useMyGames.js"
 
 import { ChooseGameStep } from "./ChooseGameStep.js"
 import { ConfirmationStep } from "./ConfirmationStep.js"

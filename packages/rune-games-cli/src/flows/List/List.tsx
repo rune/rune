@@ -3,8 +3,10 @@ import React, { useCallback, useMemo, useState } from "react"
 
 import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
-import { useGames, useMyGames, gameItemLabel } from "../../gql/useGames.js"
+import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
+import { gameItemLabel } from "../../lib/gameItemLabel.js"
+import { useMyGames } from "../../lib/useMyGames.js"
 
 import { Details } from "./Details.js"
 

@@ -24,6 +24,7 @@ gql`
       nodes {
         id
         title
+        description
         gameDevs {
           nodes {
             userId

@@ -1,19 +1,17 @@
 import { Text, Box } from "ink"
 import React from "react"
 
-import { Step } from "../../components/Step.js"
-import { useGame } from "../../gql/useGame.js"
-import { useMe } from "../../gql/useMe.js"
+import { GamesQuery, Me } from "../../generated/types.js"
 
-export function Details({ gameId }: { gameId: number }) {
-  const { me } = useMe()
-  const { game, gameLoading } = useGame(gameId)
+export function Details({
+  game,
+  me,
+}: {
+  game: NonNullable<GamesQuery["games"]>["nodes"][0]
+  me: Me
+}) {
   const gameDevs = game?.gameDevs.nodes
   const gameDevMe = gameDevs?.find((gameDev) => gameDev.userId === me?.devId)
-
-  if (gameLoading) {
-    return <Step status="waiting" label="Loading game" />
-  }
 
   if (!game) return <></>
 

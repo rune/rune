@@ -33,10 +33,15 @@ export function List() {
     [myGames, otherGames, me]
   )
 
+  const game = useMemo(
+    () => games?.find((g) => g.id === gameId),
+    [games, gameId]
+  )
+
   if (!me) return <></>
 
-  if (submitted && gameId) {
-    return <Details gameId={gameId} />
+  if (submitted && game) {
+    return <Details game={game} me={me} />
   }
 
   return (

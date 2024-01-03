@@ -7,14 +7,14 @@ sidebar_position: 2
 All games on Rune have game previews. These help players get a feel for what the game will look like before they play it. Here's the design guidelines:
 
 - PNG format
-- 600×868 resolution
+- 686x960 resolution
 - No transparency
 - No rounded edges
 - No text
 
-The bottom 130px of the game preview is where the text and dev info will be shown. The focal point of the game previews should be above this area:
+The bottom 240 pixels of the game preview is where the text and dev info will be shown. The focal point of the game previews should be above this area.
 
-<img src="/img/publishing/game-preview-example.png" height="100" />
+<img src="/img/publishing/game-preview-example.png" width="400" />
 
 ## Wanna Skip Making One?
 

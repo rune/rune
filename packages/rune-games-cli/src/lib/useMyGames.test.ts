@@ -99,18 +99,22 @@ describe("useMyGames", () => {
     expect(label).toEqual({ myGames: undefined, otherGames: undefined })
   })
   test("should get sorted games", async () => {
+    const games = [...otherGames, ...collaborationGames, ...onlyMyGames]
     const label = useMyGames({
-      games: [...otherGames, ...collaborationGames, ...onlyMyGames],
+      games,
       devId,
     })
 
     const expectedMyGames = [
-      collaborationGames[1],
-      onlyMyGames[1],
-      collaborationGames[0],
-      onlyMyGames[0],
+      games.find((g) => g.title === "A Collaboration Game"),
+      games.find((g) => g.title === "A My Game"),
+      games.find((g) => g.title === "Z Collaboration Game"),
+      games.find((g) => g.title === "Z My Game"),
     ]
-    const expectedOtherGames = [otherGames[1], otherGames[0]]
+    const expectedOtherGames = [
+      games.find((g) => g.title === "A Other Game"),
+      games.find((g) => g.title === "Z Other Game"),
+    ]
 
     expect(label).toEqual({
       myGames: expectedMyGames,

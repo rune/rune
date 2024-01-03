@@ -1,7 +1,4 @@
 import { describe, test, expect, jest } from "@jest/globals"
-//import * as path from "path"
-
-//import { GameDevType, GameVersionStatus } from "../generated/types"
 
 import { useMyGames } from "./useMyGames"
 

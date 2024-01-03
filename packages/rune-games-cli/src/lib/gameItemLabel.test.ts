@@ -29,31 +29,37 @@ const multipleGameDevs = {
     {
       __typename: "GameDev" as const,
       userId: 10,
-      displayName: "Game Admin",
-      type: GameDevType.ADMIN,
+      displayName: "Super Game Dev Tester",
+      type: GameDevType.TESTER,
     },
     {
       __typename: "GameDev" as const,
       userId: 10,
-      displayName: "Super Game Dev Tester",
-      type: GameDevType.TESTER,
+      displayName: "Game Admin",
+      type: GameDevType.ADMIN,
     },
   ],
 }
 
-const singleActiveGameVersion = {
+const activeLatestGameVersion = {
   __typename: "GameVersionsConnection" as const,
   nodes: [
     {
       __typename: "GameVersion" as const,
       gameId: 100,
-      gameVersionId: 1000,
+      gameVersionId: 1001,
       status: GameVersionStatus.ACTIVE,
+    },
+    {
+      __typename: "GameVersion" as const,
+      gameId: 100,
+      gameVersionId: 1000,
+      status: GameVersionStatus.DRAFT,
     },
   ],
 }
 
-const multipleGameVersions = {
+const draftLatestGameVersion = {
   __typename: "GameVersionsConnection" as const,
   nodes: [
     {
@@ -77,7 +83,7 @@ describe("gameItemLabel", () => {
       game: {
         ...game,
         gameDevs: singleGameDev,
-        gameVersions: singleActiveGameVersion,
+        gameVersions: activeLatestGameVersion,
       },
       showGameDevs: true,
     })
@@ -89,7 +95,7 @@ describe("gameItemLabel", () => {
       game: {
         ...game,
         gameDevs: multipleGameDevs,
-        gameVersions: singleActiveGameVersion,
+        gameVersions: activeLatestGameVersion,
       },
       showGameDevs: true,
     })
@@ -103,7 +109,7 @@ describe("gameItemLabel", () => {
       game: {
         ...game,
         gameDevs: multipleGameDevs,
-        gameVersions: singleActiveGameVersion,
+        gameVersions: activeLatestGameVersion,
       },
       showGameDevs: false,
     })
@@ -115,7 +121,7 @@ describe("gameItemLabel", () => {
       game: {
         ...game,
         gameDevs: multipleGameDevs,
-        gameVersions: multipleGameVersions,
+        gameVersions: draftLatestGameVersion,
       },
       showGameDevs: false,
     })

@@ -21,6 +21,13 @@ gql`
       title
       description
       createdAt
+      gameDevs {
+        nodes {
+          userId
+          displayName
+          type
+        }
+      }
       gameVersions(orderBy: [PRIMARY_KEY_DESC]) {
         nodes {
           gameId

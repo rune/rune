@@ -1,7 +1,7 @@
 import { useQuery, gql } from "@apollo/client/index.js"
 import { useMemo } from "react"
 
-import { GamesDocument, GamesQuery, Me } from "../generated/types.js"
+import { GamesDocument, GamesQuery } from "../generated/types.js"
 
 export function useGames({
   skip,
@@ -20,10 +20,11 @@ export function useGames({
 
 gql`
   query Games {
-    games(orderBy: [PRIMARY_KEY_DESC]) {
+    games {
       nodes {
         id
         title
+        description
         gameDevs {
           nodes {
             userId
@@ -50,34 +51,41 @@ export function useMyGames({
   games?: NonNullable<GamesQuery["games"]>["nodes"]
   devId?: number
 } = {}) {
-  const myGames = useMemo(
-    () =>
-      devId && games
-        ? games.filter((game) =>
-            game.gameDevs.nodes.some((gameDev) => gameDev.userId === devId)
-          )
-        : undefined,
-    [devId, games]
-  )
+  const groupedGames = useMemo(() => {
+    if (!devId || !games) {
+      return { myGames: undefined, otherGames: undefined }
+    }
 
-  return {
-    myGames,
-  }
+    const sortedGames = [...games].sort((g1, g2) =>
+      g1.title.localeCompare(g2.title)
+    )
+
+    const myGames = []
+    const otherGames = []
+
+    for (const game of sortedGames) {
+      if (game.gameDevs.nodes.some((gameDev) => gameDev.userId === devId)) {
+        myGames.push(game)
+      } else {
+        otherGames.push(game)
+      }
+    }
+
+    return { myGames, otherGames }
+  }, [devId, games])
+
+  return groupedGames
 }
 
 export function gameItemLabel({
   game,
   showGameDevs,
-  me,
 }: {
   game: NonNullable<GamesQuery["games"]>["nodes"][0]
   showGameDevs: boolean
-  me: Me
 }) {
   const gameDevs = game.gameDevs.nodes
-  const gameDevMe = gameDevs.find((gameDev) => gameDev.userId === me.devId)
   const gameDevAdmin = gameDevs.find((gameDev) => gameDev.type === "ADMIN") // only first admin
-  const myRole = me.admin ? "ADMIN" : gameDevMe ? gameDevMe.type : "PLAYER"
   const latestVersionStatus = game.gameVersions.nodes[0]?.status ?? "NONE"
 
   // Prepare label parts
@@ -90,7 +98,6 @@ export function gameItemLabel({
 
   const gameTitle = game.title
   const tag = showGameDevs ? ` [by ${gameDevsLabel}]` : ""
-  const props = [`latestVersion: ${latestVersionStatus}`, `myRole: ${myRole}`]
 
-  return `${gameTitle}${tag} (${props.join(", ")})`
+  return `${gameTitle}${tag} (latestVersion: ${latestVersionStatus})`
 }

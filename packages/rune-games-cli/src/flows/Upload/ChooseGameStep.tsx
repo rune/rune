@@ -16,7 +16,7 @@ export function ChooseGameStep({
 }) {
   const { me } = useMe()
   const { games, gamesLoading } = useGames({ skip: !me })
-  const { myGames } = useMyGames({ games, devId: me?.devId })
+  const { myGames, otherGames } = useMyGames({ games, devId: me?.devId })
   const [gameId, setGameId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
@@ -27,14 +27,18 @@ export function ChooseGameStep({
   const items = useMemo(
     () => [
       ...(onlyExisting ? [] : [{ label: "New game", value: null }]),
-      ...(me
-        ? ((me.admin ? games : myGames) ?? []).map((game) => ({
-            label: gameItemLabel({ game, me, showGameDevs: me.admin }),
+      ...(myGames ?? []).map((game) => ({
+        label: gameItemLabel({ game, showGameDevs: false }),
+        value: game.id,
+      })),
+      ...(me?.admin
+        ? (otherGames ?? []).map((game) => ({
+            label: gameItemLabel({ game, showGameDevs: true }),
             value: game.id,
           }))
         : []),
     ],
-    [games, me, myGames, onlyExisting]
+    [myGames, otherGames, me, onlyExisting]
   )
 
   useEffect(() => {

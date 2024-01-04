@@ -2,7 +2,7 @@ import { Text } from "ink"
 import React from "react"
 
 import { Create } from "../flows/Create.js"
-import { List } from "../flows/List.js"
+import { List } from "../flows/List/List.js"
 import { Logout } from "../flows/Logout.js"
 import { Update } from "../flows/Update/Update.js"
 import { Upload } from "../flows/Upload/Upload.js"

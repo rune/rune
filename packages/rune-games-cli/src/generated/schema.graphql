@@ -11,7 +11,10 @@ type CheckVerificationPayload {
 input CreateGameInput {
   clientMutationId: String
   description: String
+
+  """@deprecated: Use previewImg"""
   logo: Upload
+  previewImg: Upload
   title: String!
   type: GameType!
 }

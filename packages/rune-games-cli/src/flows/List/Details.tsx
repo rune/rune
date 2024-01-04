@@ -21,14 +21,14 @@ export function Details({
         <Text bold>{game.title}</Text>
       </Box>
       <Box flexDirection="column">
-        <Text>Game description: {game.description}</Text>
-        <Text>Team role: {gameDevMe ? gameDevMe.type : "PLAYER"}</Text>
+        <Text>Description: {game.description}</Text>
         <Text>
-          Game devs:{" "}
+          Devs:{" "}
           {gameDevs
             ?.map((gameDev) => `${gameDev.displayName} (${gameDev.type})`)
             .join(", ")}
         </Text>
+        <Text>Your team role: {gameDevMe ? gameDevMe.type : "PLAYER"}</Text>
       </Box>
     </Box>
   )

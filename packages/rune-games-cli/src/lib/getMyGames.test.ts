@@ -1,10 +1,6 @@
-import { describe, test, expect, jest } from "@jest/globals"
+import { describe, test, expect } from "@jest/globals"
 
-import { useMyGames } from "./useMyGames"
-
-jest.mock("react", () => ({
-  useMemo: (fn: () => object) => fn(),
-}))
+import { getMyGames } from "./getMyGames"
 
 const devId = 1
 const onlyMyGames = [
@@ -89,9 +85,9 @@ const otherGames = [
   },
 ]
 
-describe("useMyGames", () => {
+describe("getMyGames", () => {
   test("should get undefined if games is not provided", async () => {
-    const label = useMyGames({
+    const label = getMyGames({
       games: undefined,
       devId,
     })
@@ -100,7 +96,7 @@ describe("useMyGames", () => {
   })
   test("should get sorted games", async () => {
     const games = [...otherGames, ...collaborationGames, ...onlyMyGames]
-    const label = useMyGames({
+    const label = getMyGames({
       games,
       devId,
     })

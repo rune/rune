@@ -5,7 +5,7 @@ import { Step } from "../../components/Step.js"
 import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
 import { gameItemLabel } from "../../lib/gameItemLabel.js"
-import { useMyGames } from "../../lib/useMyGames.js"
+import { getMyGames } from "../../lib/getMyGames.js"
 
 export function ChooseGameStep({
   currentGameId,
@@ -18,7 +18,6 @@ export function ChooseGameStep({
 }) {
   const { me } = useMe()
   const { games, gamesLoading } = useGames({ skip: !me })
-  const { myGames, otherGames } = useMyGames({ games, devId: me?.devId })
   const [gameId, setGameId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
@@ -26,8 +25,10 @@ export function ChooseGameStep({
     if (currentGameId) setGameId(currentGameId)
   }, [currentGameId])
 
-  const items = useMemo(
-    () => [
+  const items = useMemo(() => {
+    const { myGames, otherGames } = getMyGames({ games, devId: me?.devId })
+
+    return [
       ...(onlyExisting ? [] : [{ label: "New game", value: null }]),
       ...(myGames ?? []).map((game) => ({
         label: gameItemLabel({ game, showGameDevs: false }),
@@ -39,9 +40,8 @@ export function ChooseGameStep({
             value: game.id,
           }))
         : []),
-    ],
-    [myGames, otherGames, me, onlyExisting]
-  )
+    ]
+  }, [games, me, onlyExisting])
 
   useEffect(() => {
     if (onlyExisting && items.length && !gameId) setGameId(items[0]!.value)

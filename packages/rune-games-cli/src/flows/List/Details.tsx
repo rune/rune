@@ -21,15 +21,31 @@ export function Details({
         <Text bold>{game.title}</Text>
       </Box>
       <Box flexDirection="column">
-        <Text>Game description: {game.description}</Text>
-        <Text>Team role: {gameDevMe ? gameDevMe.type : "PLAYER"}</Text>
-        <Text>
-          Game devs:{" "}
-          {gameDevs
+        <DetailsRow name="Description" value={game.description} />
+        <DetailsRow
+          name="Team"
+          value={gameDevs
             ?.map((gameDev) => `${gameDev.displayName} (${gameDev.type})`)
             .join(", ")}
-        </Text>
+        />
+        <DetailsRow
+          name="Your role"
+          value={gameDevMe ? gameDevMe.type : "PLAYER"}
+        />
       </Box>
     </Box>
   )
 }
+
+const DetailsRow = ({
+  name,
+  value,
+}: {
+  name: string
+  value: string | null
+}) => (
+  <Box flexDirection="row">
+    <Text bold>{name}: </Text>
+    <Text>{value}</Text>
+  </Box>
+)

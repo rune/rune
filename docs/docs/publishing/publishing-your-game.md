@@ -12,7 +12,8 @@ Use the [Rune CLI](publishing/cli.md) to upload your game to millions of players
 npx rune-games-cli@latest upload
 ```
 
-That's it! You can now playtest your game with friends and others. To release your game to the larger Rune community, your game will need a [Game Preview](publishing/game-preview.md). We can [make one for your game](publishing/game-preview.md#wanna-skip-making-one) if you'd like.
+That's it! You can now playtest your game with friends and others. To release your game to the larger Rune community, your game will need a [Game Preview](publishing/game-preview.md). We can [make one for your game](publishing/game-preview.md#wanna-skip-making-one) if you'd like. If you want to upload a new version of your game, just run the command again.
+
 
 ## Sit Back, Relax
 

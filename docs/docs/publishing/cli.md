@@ -38,7 +38,7 @@ cd my-game && rune upload
 rune upload my-game
 ```
 
-This command will log you in using your email (if it's the first time) and then guide you through the game upload process.
+This command will log you in using your email (if it's the first time) and then guide you through the game upload process. If you want to upload a new version of your game, just run the command again.
 
 ### `rune list`
 

@@ -1,6 +1,6 @@
 {
   "name": "rune-games-cli",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "Easy way to test your HTML5 game before releasing it on Rune.",
   "license": "MIT",
   "keywords": [

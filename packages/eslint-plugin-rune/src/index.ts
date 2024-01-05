@@ -71,6 +71,8 @@ const restrictedGlobals = [
   "WeakRef",
   "Performance",
   "Intl",
+  "setInterval",
+  "setTimeout",
 ]
 
 const logicConfig: ESLint.ConfigData = {

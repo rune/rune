@@ -79,6 +79,14 @@ test("syntax", ({ type }) => ({
       "no-restricted-syntax",
     ],
     ['function* hest() { yield "snel" }', "no-restricted-syntax"],
+    [
+      'setTimeout(() => { console.log("Delayed for 1 second.") }, "1000");',
+      "no-restricted-globals",
+    ],
+    [
+      'setInterval(() => { console.log("Prints every 1 second.") }, "1000");',
+      "no-restricted-globals",
+    ],
   ].concat(
     type === "module"
       ? [

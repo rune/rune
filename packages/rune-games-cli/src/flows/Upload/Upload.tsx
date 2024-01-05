@@ -1,9 +1,10 @@
 import { Box, Text } from "ink"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
-import { useGames, useMyGames } from "../../gql/useGames.js"
+import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
 import { CliFlags } from "../../lib/cli.js"
+import { getMyGames } from "../../lib/getMyGames.js"
 
 import { ChooseGameStep } from "./ChooseGameStep.js"
 import { ConfirmationStep } from "./ConfirmationStep.js"
@@ -21,7 +22,6 @@ export function Upload({ flags }: { flags: CliFlags }) {
 
   const { me } = useMe()
   const { games } = useGames({ skip: !me })
-  const { myGames } = useMyGames({ games, devId: me?.devId })
   const { release: releaseFlag, name, draft: draftFlag } = flags
 
   const shouldConfirmDiscordPost =
@@ -29,6 +29,11 @@ export function Upload({ flags }: { flags: CliFlags }) {
   const [discordPostConfirmed, setDiscordPostConfirmed] = useState<
     boolean | undefined
   >(undefined)
+
+  const { myGames } = useMemo(
+    () => getMyGames({ games, devId: me?.devId }),
+    [games, me]
+  )
 
   const shouldConfirmUpload = (myGames?.length ?? 0) > 1
   const [uploadConfirmed, setUploadConfirmed] = useState<boolean | undefined>(

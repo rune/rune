@@ -3,22 +3,25 @@ import React, { useCallback, useMemo, useState } from "react"
 
 import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
-import { useGames, useMyGames, gameItemLabel } from "../../gql/useGames.js"
+import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
+import { gameItemLabel } from "../../lib/gameItemLabel.js"
+import { getMyGames } from "../../lib/getMyGames.js"
 
 import { Details } from "./Details.js"
 
 export function List() {
   const { me } = useMe()
   const { games, gamesLoading } = useGames({ skip: !me })
-  const { myGames, otherGames } = useMyGames({ games, devId: me?.devId })
   const [gameId, setGameId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
   const onSubmit = useCallback(() => setSubmitted(true), [])
 
-  const items = useMemo(
-    () => [
+  const items = useMemo(() => {
+    const { myGames, otherGames } = getMyGames({ games, devId: me?.devId })
+
+    return [
       ...(myGames ?? []).map((game) => ({
         label: gameItemLabel({ game, showGameDevs: false }),
         value: game.id,
@@ -29,9 +32,8 @@ export function List() {
             value: game.id,
           }))
         : []),
-    ],
-    [myGames, otherGames, me]
-  )
+    ]
+  }, [games, me])
 
   const game = useMemo(
     () => games?.find((g) => g.id === gameId),

@@ -48,7 +48,7 @@ test("global scope mutation", ({ type }) => ({
     // These are unsafe and ways to circumvent the intention of the rule, but still allowed
     "const hest = ['snel']; const klap = (hest) => { hest.push('klad') }; (() => { klap(hest) })()",
     "[Rune].map((r) => { r.hest = 'snel' })",
-    //Valid since it is not modifying global scope
+    // Valid since it is not modifying global scope
     "() => { let hest; () => { hest = 'snel' } }",
     `Rune.initLogic({
       setup: () => {
@@ -72,6 +72,15 @@ test("global scope mutation", ({ type }) => ({
         }
       }
     })`,
+    // Classes are fine as long as they don't use the `this` keyword
+    `class MyPureClass {
+      constructor(initInput) {
+        console.log(initInput)
+      }
+      pureFunction(someInput) {
+        return someInput * 2
+      }
+    }`,
   ],
   invalid: [
     "let hest; (() => { hest = 'snel' })()",
@@ -117,7 +126,7 @@ test("global scope mutation", ({ type }) => ({
       const a = arr;
       const b = a.splice(1);
     }`,
-    //deleting Rune will throw Parsing error: Deleting local variable in strict mode in case of running in module
+    // Deleting Rune will throw Parsing error: Deleting local variable in strict mode in case of running in module
     type === "script" && "delete Rune",
   ]
     .filter((x) => !!x)

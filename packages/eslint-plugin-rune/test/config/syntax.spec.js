@@ -71,6 +71,18 @@ test("syntax", ({ type }) => ({
     ["try { throw new Error('hest') } catch (_e) { }", "no-restricted-syntax"],
     ["try { throw new Error('hest') } finally { }", "no-restricted-syntax"],
     ['this.hest = "snel"', "no-restricted-syntax"],
+    [
+      `class MyImpureClass {
+        constructor(initInput) {
+          this.state = initInput
+        }
+        impureFunction() {
+          this.state = this.state * 2 
+          return this.state
+        }
+      }`,
+      "no-restricted-syntax",
+    ],
     ['async () => "hest"', "no-restricted-syntax"],
     ['async () => { await Promise.resolve("hest") }', "no-restricted-syntax"],
     ['async function hest() { return "snel" }', "no-restricted-syntax"],

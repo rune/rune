@@ -5,5 +5,5 @@ export function gameDevItemLabel({
 }: {
   gameDev: NonNullable<GameQuery["gameById"]>["gameDevs"]["nodes"][0]
 }) {
-  return `${gameDev.displayName} (role: ${gameDev.type}, status: ${gameDev.status})`
+  return `${gameDev.displayName} (role: ${gameDev.type})`
 }

@@ -6,6 +6,7 @@ import { GameDevType } from "../../generated/types.js"
 import { ChooseGameStep } from "./ChooseGameStep.js"
 import { ChooseMemberStep } from "./ChooseMemberStep.js"
 import { ChooseMemberTypeStep } from "./ChooseMemberTypeStep.js"
+import { InviteMemberStep } from "./InviteMemberStep.js"
 
 export function UpdateMembers() {
   const [gameId, setGameId] = useState<number | null>()
@@ -28,7 +29,15 @@ export function UpdateMembers() {
           onComplete={setMemberType}
         />
       )}
-      {memberType !== undefined && <Text>TODO: next {memberId}</Text>}
+      {!!gameId &&
+        memberType !== undefined &&
+        (memberId === null ? (
+          <InviteMemberStep gameId={gameId} memberType={memberType} />
+        ) : (
+          <Text>
+            TODO: updateGameDev {gameId}, {memberId}
+          </Text>
+        ))}
     </Box>
   )
 }

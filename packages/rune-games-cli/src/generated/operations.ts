@@ -8,6 +8,7 @@ export const operations = {
     CheckVerification: 'CheckVerification',
     CreateGame: 'CreateGame',
     CreateGameVersion: 'CreateGameVersion',
+    InviteGameDev: 'InviteGameDev',
     StartVerification: 'StartVerification',
     UpdateGame: 'UpdateGame',
     UpdateGameSdk: 'UpdateGameSdk'

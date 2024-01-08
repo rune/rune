@@ -5,8 +5,9 @@ export const cli = meow(
   Usage
     $ rune create <[optional] project name, defaults to current directory>
     $ rune upload <[optional] game path, defaults to current directory>
-    $ rune update-info  [Updating game info (title, description, logo)]
-    $ rune list         [Lists all your games]
+    $ rune update-info    [Updating game info (title, description, logo)]
+    $ rune list           [Lists all your games]
+    $ rune update-members [Sets up team for your game]
 
   Options
     --version, -v   Show CLI version 
@@ -61,6 +62,7 @@ export const validCommands = [
   "list",
   "upload",
   "update-info",
+  "update-members",
   "create",
 ] as const
 

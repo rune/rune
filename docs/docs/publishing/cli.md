@@ -48,6 +48,10 @@ Displays a list of your games on Rune.
 
 Update your game's info such as title, description or game preview.
 
+### `rune update-members`
+
+Sets up team for your game.
+
 ### `rune logout`
 
 Log out from the CLI.

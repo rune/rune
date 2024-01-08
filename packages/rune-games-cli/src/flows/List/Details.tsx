@@ -2,6 +2,7 @@ import { Text, Box } from "ink"
 import React, { useMemo } from "react"
 
 import { GamesQuery, Me } from "../../generated/types.js"
+import { gameDevItemLabel } from "../../lib/gameDevItemLabel.js"
 
 export function Details({
   game,
@@ -28,7 +29,7 @@ export function Details({
         <DetailsRow
           name="Team"
           value={gameDevs
-            ?.map((gameDev) => `${gameDev.displayName} (${gameDev.type})`)
+            ?.map((gameDev) => gameDevItemLabel({ gameDev }))
             .join(", ")}
         />
         <DetailsRow

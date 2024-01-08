@@ -29,6 +29,7 @@ gql`
             userId
             displayName
             type
+            status
           }
         }
         gameVersions(orderBy: [PRIMARY_KEY_DESC]) {

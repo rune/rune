@@ -11,6 +11,7 @@ export const operations = {
     InviteGameDev: 'InviteGameDev',
     StartVerification: 'StartVerification',
     UpdateGame: 'UpdateGame',
+    UpdateGameDev: 'UpdateGameDev',
     UpdateGameSdk: 'UpdateGameSdk'
   }
 }

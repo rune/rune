@@ -1,4 +1,4 @@
-import { Box, Text } from "ink"
+import { Box } from "ink"
 import React, { useState } from "react"
 
 import { GameDevType } from "../../generated/types.js"
@@ -7,6 +7,7 @@ import { ChooseGameStep } from "./ChooseGameStep.js"
 import { ChooseMemberStep } from "./ChooseMemberStep.js"
 import { ChooseMemberTypeStep } from "./ChooseMemberTypeStep.js"
 import { InviteMemberStep } from "./InviteMemberStep.js"
+import { UpdateMemberStep } from "./UpdateMemberStep.js"
 
 export function UpdateMembers() {
   const [gameId, setGameId] = useState<number | null>()
@@ -34,9 +35,11 @@ export function UpdateMembers() {
         (memberId === null ? (
           <InviteMemberStep gameId={gameId} memberType={memberType} />
         ) : (
-          <Text>
-            TODO: updateGameDev {gameId}, {memberId}
-          </Text>
+          <UpdateMemberStep
+            gameId={gameId}
+            memberId={memberId!}
+            memberType={memberType}
+          />
         ))}
     </Box>
   )

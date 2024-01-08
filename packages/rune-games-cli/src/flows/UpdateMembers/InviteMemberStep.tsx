@@ -30,10 +30,10 @@ export function InviteMemberStep({
 
     inviteGameDev({
       gameId,
-      type: memberType,
       userTag,
+      type: memberType,
     })
-  }, [userTag, gameId, memberType, inviteGameDev])
+  }, [gameId, userTag, memberType, inviteGameDev])
 
   return (
     <Step

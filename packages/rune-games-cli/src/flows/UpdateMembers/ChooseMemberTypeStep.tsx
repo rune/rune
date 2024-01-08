@@ -44,10 +44,11 @@ export function ChooseMemberTypeStep({
 
   const onSubmit = useCallback(() => setSubmitted(true), [])
 
-  const chosenMemberTypeLabel = useMemo(
-    () => `${memberType} role selected`,
-    [memberType]
-  )
+  const chosenMemberTypeLabel = useMemo(() => {
+    if (memberType === null) return "Remove member selected"
+
+    return `${memberType} role selected`
+  }, [memberType])
 
   useEffect(() => {
     if (submitted) onComplete(memberType)

@@ -14,7 +14,7 @@ export function Details({
   const gameDevs = useMemo(() => game?.gameDevs.nodes, [game])
   const gameDevMe = useMemo(
     () => gameDevs?.find((gameDev) => gameDev.userId === me?.devId),
-    [gameDevs, me]
+    [gameDevs, me?.devId]
   )
 
   if (!game) return <></>

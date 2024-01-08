@@ -11,7 +11,7 @@ export function UpdateMemberStep({
 }: {
   gameId: number
   memberId: number
-  memberType: GameDevType
+  memberType: GameDevType | null
 }) {
   const { updateGameDev, updateGameDevLoading, updateGameDevError } =
     useUpdateGameDev()
@@ -38,6 +38,8 @@ export function UpdateMemberStep({
           ? "Updating the Member"
           : updateGameDevError
           ? "Something went wrong"
+          : memberType === null
+          ? "Member removed"
           : "Member updated"
       }
     />

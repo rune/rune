@@ -4,26 +4,43 @@ import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
 import { GameDevType } from "../../generated/types.js"
 
-const items = Object.values(GameDevType)
-  .map((value) => ({
-    label: value,
-    value,
-  }))
-  .sort((i1, i2) => i1.label.localeCompare(i2.value))
-
 export function ChooseMemberTypeStep({
   currentMemberType,
   onComplete,
+  showRemove,
 }: {
   currentMemberType: GameDevType | null | undefined
-  onComplete: (memberType: GameDevType) => void
+  onComplete: (memberType: GameDevType | null) => void
+  showRemove: boolean
 }) {
-  const [memberType, setMemberType] = useState<GameDevType>(GameDevType.TESTER)
+  const [memberType, setMemberType] = useState<GameDevType | null>(
+    GameDevType.TESTER
+  )
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     if (currentMemberType) setMemberType(currentMemberType)
   }, [currentMemberType])
+
+  const items = useMemo(
+    () => [
+      ...(showRemove
+        ? [
+            {
+              label: "Remove member",
+              value: null,
+            },
+          ]
+        : []),
+      ...Object.values(GameDevType)
+        .map((value) => ({
+          label: value,
+          value,
+        }))
+        .sort((i1, i2) => i1.label.localeCompare(i2.value)),
+    ],
+    [showRemove]
+  )
 
   const onSubmit = useCallback(() => setSubmitted(true), [])
 

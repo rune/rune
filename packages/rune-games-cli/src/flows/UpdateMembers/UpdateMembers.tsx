@@ -12,7 +12,7 @@ import { UpdateMemberStep } from "./UpdateMemberStep.js"
 export function UpdateMembers() {
   const [gameId, setGameId] = useState<number | null>()
   const [memberId, setMemberId] = useState<number | null>()
-  const [memberType, setMemberType] = useState<GameDevType>()
+  const [memberType, setMemberType] = useState<GameDevType | null>()
 
   return (
     <Box flexDirection="column">
@@ -28,19 +28,23 @@ export function UpdateMembers() {
         <ChooseMemberTypeStep
           currentMemberType={memberType}
           onComplete={setMemberType}
+          showRemove={memberId !== null}
         />
       )}
-      {!!gameId &&
-        memberType !== undefined &&
-        (memberId === null ? (
-          <InviteMemberStep gameId={gameId} memberType={memberType} />
-        ) : (
-          <UpdateMemberStep
-            gameId={gameId}
-            memberId={memberId!}
-            memberType={memberType}
-          />
-        ))}
+      {!!gameId && memberType !== undefined && (
+        <>
+          {memberId === null && memberType !== null && (
+            <InviteMemberStep gameId={gameId} memberType={memberType} />
+          )}
+          {!!memberId && (
+            <UpdateMemberStep
+              gameId={gameId}
+              memberId={memberId}
+              memberType={memberType}
+            />
+          )}
+        </>
+      )}
     </Box>
   )
 }

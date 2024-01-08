@@ -1,5 +1,5 @@
 import { Text, Box } from "ink"
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
@@ -39,6 +39,10 @@ export function List() {
     () => games?.find((g) => g.id === gameId),
     [games, gameId]
   )
+
+  useEffect(() => {
+    if (items.length && !gameId) setGameId(items[0]!.value)
+  }, [gameId, items])
 
   if (!me) return <></>
 

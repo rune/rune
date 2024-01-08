@@ -15,7 +15,7 @@ export function ChooseMemberStep({
   currentMemberId: number | null | undefined
   onComplete: (memberId: number | null) => void
 }) {
-  const { me } = useMe()
+  const { me, meLoading } = useMe()
   const { game, gameLoading } = useGame(gameId)
   const [memberId, setMemberId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
@@ -58,7 +58,7 @@ export function ChooseMemberStep({
     } member selected`
   }, [memberId, gameDevs])
 
-  if (gameDevMe?.type !== "ADMIN" && !me?.admin) {
+  if (!gameLoading && !meLoading && gameDevMe?.type !== "ADMIN" && !me?.admin) {
     return <Step status="error" label="You are not admin of this game" />
   }
 

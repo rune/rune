@@ -1,5 +1,5 @@
 import { Text, Box } from "ink"
-import React from "react"
+import React, { useMemo } from "react"
 
 import { GamesQuery, Me } from "../../generated/types.js"
 
@@ -10,8 +10,11 @@ export function Details({
   game: NonNullable<GamesQuery["games"]>["nodes"][0]
   me: Me
 }) {
-  const gameDevs = game?.gameDevs.nodes
-  const gameDevMe = gameDevs?.find((gameDev) => gameDev.userId === me?.devId)
+  const gameDevs = useMemo(() => game?.gameDevs.nodes, [game])
+  const gameDevMe = useMemo(
+    () => gameDevs?.find((gameDev) => gameDev.userId === me?.devId),
+    [gameDevs, me]
+  )
 
   if (!game) return <></>
 

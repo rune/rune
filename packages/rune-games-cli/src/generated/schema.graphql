@@ -138,6 +138,7 @@ type GameDev {
   """Reads a single `Game` that is related to this `GameDev`."""
   game: Game
   gameId: Int!
+  status: GameDevStatus!
   type: GameDevType!
   userId: Int!
 }
@@ -148,6 +149,12 @@ A condition to be used against `GameDev` object types. All fields are tested for
 input GameDevCondition {
   """Checks for equality with the object’s `gameId` field."""
   gameId: Int
+}
+
+enum GameDevStatus {
+  ACTIVE
+  INACTIVE
+  INVITED
 }
 
 enum GameDevType {
@@ -323,6 +330,17 @@ enum GamesOrderBy {
   PRIMARY_KEY_DESC
 }
 
+input InviteGameDevInput {
+  clientMutationId: String
+  gameId: Int!
+  type: GameDevType!
+  userTag: String!
+}
+
+type InviteGameDevPayload {
+  clientMutationId: String
+}
+
 type Me {
   admin: Boolean!
   devId: Int!
@@ -352,6 +370,12 @@ type Mutation {
     """
     input: CreateGameVersionInput!
   ): CreateGameVersionPayload!
+  inviteGameDev(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: InviteGameDevInput!
+  ): InviteGameDevPayload!
   startVerification(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -364,6 +388,12 @@ type Mutation {
     """
     input: UpdateGameInput!
   ): UpdateGamePayload!
+  updateGameDev(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateGameDevInput!
+  ): UpdateGameDevPayload!
   updateGameSdk(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -564,6 +594,19 @@ input StartVerificationInput {
 type StartVerificationPayload {
   clientMutationId: String
   verificationToken: String!
+}
+
+input UpdateGameDevInput {
+  clientMutationId: String
+  gameId: Int!
+
+  """Use null to remove game dev from the team"""
+  type: GameDevType
+  userId: Int!
+}
+
+type UpdateGameDevPayload {
+  clientMutationId: String
 }
 
 input UpdateGameInput {

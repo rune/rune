@@ -47,11 +47,10 @@ export function ChooseGameStep({
     if (onlyExisting && items.length && !gameId) setGameId(items[0]!.value)
   }, [gameId, items, onlyExisting])
 
-  const onSubmit = useCallback(() => setSubmitted(true), [])
-
-  useEffect(() => {
-    if (submitted) onComplete(gameId)
-  }, [gameId, onComplete, submitted])
+  const onSubmit = useCallback(() => {
+    setSubmitted(true)
+    onComplete(gameId)
+  }, [gameId, onComplete])
 
   const chosenGameLabel = useMemo(() => {
     if (gameId === null) return "New Game selected"

@@ -40,11 +40,10 @@ export function ChooseMemberStep({
     if (currentMemberId) setMemberId(currentMemberId)
   }, [currentMemberId])
 
-  const onSubmit = useCallback(() => setSubmitted(true), [])
-
-  useEffect(() => {
-    if (submitted) onComplete(memberId)
-  }, [memberId, onComplete, submitted])
+  const onSubmit = useCallback(() => {
+    setSubmitted(true)
+    onComplete(memberId)
+  }, [memberId, onComplete])
 
   const chosenMemberLabel = useMemo(() => {
     if (memberId === null) return "New Member selected"

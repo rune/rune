@@ -11,11 +11,12 @@ export function Details({
   game: NonNullable<GamesQuery["games"]>["nodes"][0]
   me: Me
 }) {
-  const gameDevs = useMemo(() => game?.gameDevs.nodes, [game])
-  const gameDevMe = useMemo(
-    () => gameDevs?.find((gameDev) => gameDev.userId === me?.devId),
-    [gameDevs, me?.devId]
-  )
+  const { gameDevs, gameDevMe } = useMemo(() => {
+    const gameDevs = game?.gameDevs.nodes
+    const gameDevMe = gameDevs?.find((gameDev) => gameDev.userId === me?.devId)
+
+    return { gameDevs, gameDevMe }
+  }, [game, me?.devId])
 
   if (!game) return <></>
 

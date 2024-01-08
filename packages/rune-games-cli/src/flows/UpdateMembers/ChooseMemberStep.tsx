@@ -20,18 +20,10 @@ export function ChooseMemberStep({
   const [memberId, setMemberId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
-  const gameDevs = useMemo(() => game?.gameDevs.nodes, [game])
-  const gameDevMe = useMemo(
-    () => gameDevs?.find((gameDev) => gameDev.userId === me?.devId),
-    [gameDevs, me?.devId]
-  )
-
-  useEffect(() => {
-    if (currentMemberId) setMemberId(currentMemberId)
-  }, [currentMemberId])
-
-  const items = useMemo(
-    () => [
+  const { gameDevs, gameDevMe, items } = useMemo(() => {
+    const gameDevs = game?.gameDevs.nodes
+    const gameDevMe = gameDevs?.find((gameDev) => gameDev.userId === me?.devId)
+    const items = [
       { label: "New member", value: null },
       ...(gameDevs ?? [])
         .filter((gameDev) => gameDev.userId !== gameDevMe?.userId)
@@ -39,9 +31,14 @@ export function ChooseMemberStep({
           label: gameDevItemLabel({ gameDev }),
           value: gameDev.userId,
         })),
-    ],
-    [gameDevs, gameDevMe?.userId]
-  )
+    ]
+
+    return { gameDevs, gameDevMe, items }
+  }, [game, me?.devId])
+
+  useEffect(() => {
+    if (currentMemberId) setMemberId(currentMemberId)
+  }, [currentMemberId])
 
   const onSubmit = useCallback(() => setSubmitted(true), [])
 

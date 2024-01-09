@@ -35,7 +35,7 @@ export function UpdateMemberStep({
       }
       label={
         updateGameDevLoading
-          ? "Updating the Member"
+          ? "Updating the member"
           : updateGameDevError
           ? "Something went wrong"
           : memberType === null

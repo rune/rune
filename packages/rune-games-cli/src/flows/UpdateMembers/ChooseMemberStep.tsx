@@ -46,12 +46,12 @@ export function ChooseMemberStep({
   }, [memberId, onComplete])
 
   const chosenMemberLabel = useMemo(() => {
-    if (memberId === null) return "New Member selected"
+    if (memberId === null) return "New member"
 
-    return `${
+    return (
       gameDevs?.find((gameDev) => gameDev.userId === memberId)?.displayName ??
       "..."
-    } member selected`
+    )
   }, [memberId, gameDevs])
 
   if (!gameLoading && !meLoading && gameDevMe?.type !== "ADMIN" && !me?.admin) {

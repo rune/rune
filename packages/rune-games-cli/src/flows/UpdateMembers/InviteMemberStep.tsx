@@ -48,24 +48,24 @@ export function InviteMemberStep({
       }
       label={
         inviteGameDevLoading
-          ? "Inviting new Member"
+          ? "Inviting new member"
           : inviteGameDevError
           ? formatApolloError(inviteGameDevError, {
               "[tango][INVITE_GAME_DEV_FAILED_INVALID_USER_TAG]":
-                "Rune's Tag is invalid. Verify Rune's Tag and try again",
+                "Rune Tag is invalid. Verify Rune Tag and try again",
               "[tango][INVITE_GAME_DEV_FAILED_ALREADY_INVITED]":
                 "Member was already invited",
               default: `Something went wrong`,
             })
           : isGameDevInvited
-          ? "New Member invited"
-          : "Enter Rune's Tag"
+          ? "New member invited"
+          : "Enter Rune Tag (it's on their profile)"
       }
       view={(status) => (
         <Box flexDirection="column">
           {(status === "userInput" || status === "error") && (
             <Box>
-              <Text>Rune&apos;s Tag: </Text>
+              <Text>Rune Tag: </Text>
               <TextInput
                 value={userTag}
                 onChange={setUserTag}

@@ -50,11 +50,9 @@ export function ChooseGameStep({
   }, [gameId, onComplete])
 
   const chosenGameLabel = useMemo(() => {
-    if (gameId === null) return "New Game selected"
+    if (gameId === null) return "New game"
 
-    return `${
-      games?.find((game) => game.id === gameId)?.title ?? "..."
-    } game selected`
+    return games?.find((game) => game.id === gameId)?.title ?? "..."
   }, [gameId, games])
 
   if (!gamesLoading && items.length === 0) {

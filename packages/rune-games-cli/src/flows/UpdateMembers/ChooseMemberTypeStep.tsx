@@ -49,9 +49,9 @@ export function ChooseMemberTypeStep({
   }, [memberType, onComplete])
 
   const chosenMemberTypeLabel = useMemo(() => {
-    if (memberType === null) return "Remove member selected"
+    if (memberType === null) return "REMOVE MEMBER"
 
-    return `${memberType} role selected`
+    return renderGameDevType(memberType)
   }, [memberType])
 
   return (

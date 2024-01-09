@@ -53,6 +53,8 @@ export function InviteMemberStep({
           ? formatApolloError(inviteGameDevError, {
               "[tango][INVITE_GAME_DEV_FAILED_INVALID_USER_TAG]":
                 "Rune's Tag is invalid. Verify Rune's Tag and try again",
+              "[tango][INVITE_GAME_DEV_FAILED_ALREADY_INVITED]":
+                "Member was already invited",
               default: `Something went wrong`,
             })
           : isGameDevInvited

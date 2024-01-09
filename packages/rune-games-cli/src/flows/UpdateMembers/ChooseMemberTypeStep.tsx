@@ -3,6 +3,7 @@ import React, { useState, useCallback, useEffect, useMemo } from "react"
 import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
 import { GameDevType } from "../../generated/types.js"
+import { renderGameDevType } from "../../lib/renderGameDevType.js"
 
 export function ChooseMemberTypeStep({
   currentMemberType,
@@ -27,14 +28,14 @@ export function ChooseMemberTypeStep({
       ...(showRemove
         ? [
             {
-              label: "Remove member",
+              label: "REMOVE MEMBER",
               value: null,
             },
           ]
         : []),
       ...Object.values(GameDevType)
         .map((value) => ({
-          label: value,
+          label: renderGameDevType(value),
           value,
         }))
         .sort((i1, i2) => i1.label.localeCompare(i2.value)),

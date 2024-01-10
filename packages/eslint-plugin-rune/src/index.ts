@@ -73,6 +73,8 @@ const restrictedGlobals = [
   "Intl",
   "setInterval",
   "setTimeout",
+  "require",
+  "alert",
 ]
 
 const logicConfig: ESLint.ConfigData = {

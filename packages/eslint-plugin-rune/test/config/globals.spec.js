@@ -28,7 +28,7 @@ test("globals", () => ({
   invalid: [
     ["Prune.initLogic()", "no-undef"],
     ["Object.assign(window, { hest: 'snel' })", "no-undef"],
-    ['require("hest")', "no-undef"],
+    ['require("hest")', "no-restricted-globals"],
     ["window.Math.pow()", "no-restricted-globals"],
     ["global.Math.pow()", "no-restricted-globals"],
     ["Performance.now()", "no-undef"],

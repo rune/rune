@@ -42,11 +42,11 @@ const normalizeInvalidCodeTest = (test) => {
   return test
 }
 
-//Need to run tests in :
-//JS script
-//JS module
-//TS script
-//TS module
+// Need to run tests in:
+// JS script
+// JS module
+// TS script
+// TS module
 const createConfigTester = () => {
   /**
    * @param {string} testName
@@ -70,6 +70,13 @@ const createConfigTester = () => {
               language === "typescript"
                 ? "@typescript-eslint/parser"
                 : undefined,
+          },
+          // Don't use no-undef when testing as these only show up on rune upload.
+          // It's a better DX if the errors are shown while developing.
+          overrideConfig: {
+            rules: {
+              "no-undef": "off",
+            },
           },
         })
 

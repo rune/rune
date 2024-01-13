@@ -29,7 +29,7 @@ Rune's predict-rollback approach is extremely bandwidth-efficient as only the ac
 
 ## Editor Integration
 
-If you use [ESLint](https://eslint.org/), you can get warnings for potentially unsafe code directly in your editor!
+Rune has created an eslint plugin to give warnings for potentially unsafe code directly in your editor! If you're using the Rune quickstart template created using `npx rune-games-cli@latest create`, then this eslint plugin is already set up for you. If not, then follow the steps below.
 
 First, install the Rune eslint plugin:
 
@@ -45,7 +45,9 @@ Next, add the plugin to the extends section of your `.eslintrc` configuration fi
 }
 ```
 
-The Rune eslint plugin will by default check files named `logic.js`/`logic.ts` or files in a `logic` folder for the Rune SDK rules. If needed, you can specify more files to lint yourself with:
+That's it. Your logic code will now be linted to detect potentially unsafe code and prevent desyncs! 🧙‍♂️
+
+By default, the plugin will check files named `logic.js`/`logic.ts` or files in a `logic` folder for the Rune SDK rules. If needed, you can specify more files to lint yourself with:
 
 ```json
 {

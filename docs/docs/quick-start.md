@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # Quick Start
 
-Build a multiplayer game for the Rune platform and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
+Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
 ## Install
 

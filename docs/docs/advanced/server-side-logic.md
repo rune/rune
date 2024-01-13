@@ -57,3 +57,5 @@ The Rune eslint plugin will by default check files named `logic.js`/`logic.ts` o
   ]
 }
 ```
+
+You can also check out the [eslint plugin code](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-rune).

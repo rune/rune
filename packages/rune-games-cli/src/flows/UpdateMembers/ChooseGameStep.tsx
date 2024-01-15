@@ -10,11 +10,9 @@ import { getMyGames } from "../../lib/getMyGames.js"
 export function ChooseGameStep({
   currentGameId,
   onComplete,
-  onlyExisting,
 }: {
   currentGameId: number | null | undefined
   onComplete: (gameId: number | null) => void
-  onlyExisting?: boolean
 }) {
   const { me } = useMe()
   const { games, gamesLoading } = useGames({ skip: !me })
@@ -29,7 +27,6 @@ export function ChooseGameStep({
     const { myGames, otherGames } = getMyGames({ games, devId: me?.devId })
 
     return [
-      ...(onlyExisting ? [] : [{ label: "New game", value: null }]),
       ...(myGames ?? []).map((game) => ({
         label: gameItemLabel({ game, showGameDevs: false }),
         value: game.id,
@@ -41,11 +38,11 @@ export function ChooseGameStep({
           }))
         : []),
     ]
-  }, [games, me, onlyExisting])
+  }, [games, me])
 
   useEffect(() => {
-    if (onlyExisting && items.length && !gameId) setGameId(items[0]!.value)
-  }, [gameId, items, onlyExisting])
+    if (items.length && !gameId) setGameId(items[0]!.value)
+  }, [gameId, items])
 
   const onSubmit = useCallback(() => {
     setSubmitted(true)
@@ -59,7 +56,7 @@ export function ChooseGameStep({
   }, [gameId, games])
 
   if (!gamesLoading && items.length === 0) {
-    return <Step status="error" label="No games found" />
+    return <Step status="error" label="You have not uploaded any games yet" />
   }
 
   return (

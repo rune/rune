@@ -38,6 +38,6 @@ Many players speak little to no English so it's ideal if your game can be unders
 
 Players on Rune can spectate your game. This can happen in many ways, e.g. if someone joins after the room has hit your game's `maxPlayers` or if someone joins after your game has called `Rune.gameOver()`. You can identify spectators by having `yourPlayerId` as undefined (see [Player Info](../how-it-works/player-info.md)). Spectators should see all gameplay, but not have any UI for performing actions.
 
-### Polish Your User Profile
+### Polish Your Rune Profile
 
-Adjust your name and avatar in Rune app Profile tab - your profile will be publicly visible in Rune App for games that you created or contributed to.
+Adjust your name, avatar, and description in Rune app Profile tab. Your profile will be publicly visible in Rune app for games that you have created or contributed to.

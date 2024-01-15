@@ -13,9 +13,9 @@ When you create a game, you become an admin. As an admin, you can add other Rune
 
 Invited member receive an email invitation that they accept to become a part of the game team.
 
-Each game has its own set of Playtesters / Developers / Admins so you can easily collaborate with different people on each game.
+## Team Roles
 
-## Roles
+Each game has its own set of Playtesters / Developers / Admins so you can easily collaborate with different people.
 
 All game members can playtest game versions in draft / under review in the Rune app (see section below). Only Developers and Admins can [publish](/docs/publishing/publishing-your-game) new versions of the game. Note that a game can have multiple Admins.
 

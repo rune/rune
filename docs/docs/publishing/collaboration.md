@@ -17,4 +17,10 @@ Each game has its own set of Playtesters / Developers / Admins so you can easily
 
 ## Roles
 
-All game members can [playtest](/docs/publishing/simulating-multiplayer) game versions in draft / under review in the Rune app. Only Developers and Admins can [publish](/docs/publishing/publishing-your-game) new versions of the game. Note that a game can have multiple Admins.
+All game members can playtest game versions in draft / under review in the Rune app (see section below). Only Developers and Admins can [publish](/docs/publishing/publishing-your-game) new versions of the game. Note that a game can have multiple Admins.
+
+## Playtesting in Rune App
+
+As part of the team who made the game, you can play your game in the Rune app before it's published to everyone. Just create a room in the app and select your game in the list. You can also invite others who are not on your team to playtest with you. They can't see your game in the list, but can play the game with you once you've selected it.
+
+Once your game has been published, everyone in the Rune community will have access to the latest active version of the game. You're likely continuously improving your game and anyone on your team will have access to the latest uploaded draft / in review version. In this way, you are able to playtest the actual multiplayer game experience of new versions before they're released! 

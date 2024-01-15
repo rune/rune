@@ -11,7 +11,7 @@ When you create a game, you become an admin. As an admin, you can add other Rune
 - Change role of existing member
 - Remove existing member
 
-Invited member receive an email invitation that they accept to become a part of the game team.
+Invited members receive an email invitation that they accept to become a part of the game team.
 
 ## Team Roles
 

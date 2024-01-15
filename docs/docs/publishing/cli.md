@@ -50,7 +50,7 @@ Update your game's info such as title, description or game preview.
 
 ### `rune update-members`
 
-Sets up team for your game.
+Update the team for your game (e.g. adding a new team member), see [Collaboration](collaboration.md) for more info.
 
 ### `rune logout`
 

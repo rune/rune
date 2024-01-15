@@ -17,4 +17,4 @@ Each game has its own set of Playtesters / Developers / Admins so you can easily
 
 ## Roles
 
-All game members can [playtest](/docs/publishing/simulating-multiplayer) game versions in draft / under review in the Rune app. Only Developer and Admins can [publish](/docs/publishing/publishing-your-game) a new version of the game. Note that a game can have multiple Admins.
+All game members can [playtest](/docs/publishing/simulating-multiplayer) game versions in draft / under review in the Rune app. Only Developers and Admins can [publish](/docs/publishing/publishing-your-game) new versions of the game. Note that a game can have multiple Admins.

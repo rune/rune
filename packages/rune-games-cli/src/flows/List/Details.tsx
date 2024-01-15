@@ -1,7 +1,8 @@
 import { Text, Box } from "ink"
-import React from "react"
+import React, { useMemo } from "react"
 
 import { GamesQuery, Me } from "../../generated/types.js"
+import { gameDevItemLabel } from "../../lib/gameDevItemLabel.js"
 
 export function Details({
   game,
@@ -10,8 +11,12 @@ export function Details({
   game: NonNullable<GamesQuery["games"]>["nodes"][0]
   me: Me
 }) {
-  const gameDevs = game?.gameDevs.nodes
-  const gameDevMe = gameDevs?.find((gameDev) => gameDev.userId === me?.devId)
+  const { gameDevs, gameDevMe } = useMemo(() => {
+    const gameDevs = game?.gameDevs.nodes
+    const gameDevMe = gameDevs?.find((gameDev) => gameDev.userId === me?.devId)
+
+    return { gameDevs, gameDevMe }
+  }, [game, me?.devId])
 
   if (!game) return <></>
 
@@ -25,7 +30,7 @@ export function Details({
         <DetailsRow
           name="Team"
           value={gameDevs
-            ?.map((gameDev) => `${gameDev.displayName} (${gameDev.type})`)
+            ?.map((gameDev) => gameDevItemLabel({ gameDev }))
             .join(", ")}
         />
         <DetailsRow

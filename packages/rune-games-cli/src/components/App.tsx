@@ -5,6 +5,7 @@ import { Create } from "../flows/Create.js"
 import { List } from "../flows/List/List.js"
 import { Logout } from "../flows/Logout.js"
 import { Update } from "../flows/Update/Update.js"
+import { UpdateMembers } from "../flows/UpdateMembers/UpdateMembers.js"
 import { Upload } from "../flows/Upload/Upload.js"
 import { cliCommand, cli } from "../lib/cli.js"
 import { packageJson } from "../lib/packageJson.js"
@@ -37,6 +38,8 @@ export function App() {
             <Upload flags={flags} />
           ) : command === "update-info" ? (
             <Update args={args} />
+          ) : command === "update-members" ? (
+            <UpdateMembers />
           ) : null}
         </LoginGate>
       )}

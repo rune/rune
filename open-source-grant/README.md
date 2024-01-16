@@ -128,3 +128,9 @@ Devs can apply for the **Ignite** grant once they've proven themselves with a **
 
 #### Are there any content restrictions or guidelines for the games?
 We require that all games adhere to basic content guidelines such as avoiding hate speech, pornography, and other potentially offensive content. We seek to promote games that are inclusive and accessible to a wide audience.
+
+#### I have questions about the grant program, where do I ask?
+
+We'd love to answer any questions. Please write your question in the **#general** channel in our [Discord server](https://discord.gg/rune-devs).
+
+[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-devs)

@@ -6,7 +6,7 @@
 
 # Rune Open-Source Grants
 
-We're a [small team](https://www.rune.ai/team), who believe that tons of amazing multiplayer games are just waiting to be made by talented indie devs. We've created a $100k grants program to help indie devs and grow the open-source web game community. Based on us searching GitHub, we've found only [25 open-source multiplayer JS games](./games.md). We hope that these grants will dramatically boost the ecosystem! 
+We believe that tons of amazing multiplayer games are just waiting to be made by talented indie devs. We've created this $100k grants program to help such indie devs and grow the open-source web game community. Based on us searching GitHub, we've found only [25 open-source multiplayer JS games](./games.md). We hope that these grants will dramatically boost the ecosystem! 
 
 [Rune](https://rune.ai) will award two kinds of grants to indie game devs who make an open-source multiplayer web game:
 

@@ -17,13 +17,13 @@ With these grants, we want to give indie devs wanting to make a multiplayer game
 
 ### 🌟 Featured Across The Web 
 
-The devs chosen to be awarded the grant will get featured across the web: 
+The devs who are awarded the grant will get featured across the web: 
 
 - Post on your specific game on Rune's blog
 - Your game highlighted inside the Rune app
 - Shoutouts on Twitter, Reddit and LinkedIn
 
-You can additionally list that you won an extremely-competitive grant on your LinkedIn & GitHub profiles. All of this help boost your future path as a game/web dev!
+Additionally, you can list that you won a competitive grant on your LinkedIn & GitHub profiles. All of this help boost your path as a game/web dev!
 
 ### 🚀 Applying with a Game
 

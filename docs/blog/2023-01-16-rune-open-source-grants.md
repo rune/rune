@@ -10,7 +10,7 @@ authors:
   hide_table_of_contents: true
 ---
 
-Today we're stoked to announce that we're launching a [$100k grant for open-source web games!](https://github.com/rune/rune-multiplayer-web-games/tree/staging/open-source-grant) 🥳
+Today we're stoked to announce that we're launching a [$100k grant for open-source web games!](https://grant.rune.ai) 🥳
 
 Indie game developers and web devs can now receive a grant to make an open-source multiplayer game using JavaScript / TypeScript. With these grants, we hope to support indie devs wanting to make awesome games and dramatically boost the open-source web game ecosystem!
 
@@ -25,4 +25,4 @@ Awardees will also get featured on this blog, in the Rune app and on social medi
 - Interesting open-source code that others can learn from
 - Free money and recognition for talented indie devs
 
-Check out the [grants page](https://github.com/rune/rune-multiplayer-web-games/tree/staging/open-source-grant) for eligibility, application process, and all the details! We're so excited to see all the amazing open-source games that you will make! 
+Check out the [grants page](https://grant.rune.ai) for eligibility, application process, and all the details! We're so excited to see all the amazing open-source games that you will make! 

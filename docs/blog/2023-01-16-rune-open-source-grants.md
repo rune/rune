@@ -1,10 +1,10 @@
 ---
-title: Rune Open-Source Grants
-description: This is my first post on Docusaurus.
+title: Announcing Rune Open-Source Grants
+description: We're stoked to announce that we're launching a $100k grant for open-source web games!
 slug: rune-open-source-grants
 authors:
 - name: Bjarke Felbo
-  title: Co-founder and CTO of Rune
+  title: Cofounder and CTO of Rune
   url: https://www.linkedin.com/in/bjarkefelbo/
   image_url: /img/blog/people/bjarke-felbo.png
   hide_table_of_contents: true

@@ -71,6 +71,16 @@ const config = {
         },
         items: [
           {
+            to: "https://rune.ai",
+            position: "left",
+            label: "App",
+          },
+          {
+            to: "/blog",
+            position: "left",
+            label: "Blog",
+          },
+          {
             type: "doc",
             docId: "quick-start",
             position: "left",

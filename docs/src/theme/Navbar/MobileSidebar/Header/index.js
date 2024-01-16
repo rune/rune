@@ -29,7 +29,7 @@ function CloseButton() {
 export default function NavbarMobileSidebarHeader() {
   return (
     <div className="navbar-sidebar__brand">
-      <Link to="https://www.rune.ai">
+      <Link to="/">
         <img
           alt="Rune Logo"
           className={styles.logo}

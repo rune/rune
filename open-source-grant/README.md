@@ -23,7 +23,7 @@ The devs who are awarded the grant will get featured across the web:
 - Your game highlighted inside the Rune app
 - Shoutouts on Twitter, Reddit and LinkedIn
 
-Additionally, you can list that you won a competitive grant on your LinkedIn & GitHub profiles. All of this help boost your path as a game/web dev!
+Additionally, you can list that you won a competitive grant on your LinkedIn & GitHub. All of this help boost your path as a game/web dev!
 
 ### 🚀 Applying with a Game
 

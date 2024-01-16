@@ -51,7 +51,7 @@ export default function NavbarLayout() {
       )}
     >
       <div className={styles.left}>
-        <Link to="https://www.rune.ai">
+        <Link to="/">
           <img
             alt="Rune Logo"
             className={styles.logo}
@@ -60,6 +60,17 @@ export default function NavbarLayout() {
         </Link>
       </div>
       <div className={styles.right}>
+        <a href="https://rune.ai" target="_blank" className={styles.menuLink}>
+          App
+        </a>
+        <Link
+          to="/blog"
+          className={clsx(styles.menuLink, {
+            [styles.active]: location.pathname.startsWith("/blog"),
+          })}
+        >
+          Blog
+        </Link>
         <Link
           to="/docs/quick-start"
           className={clsx(styles.menuLink, {

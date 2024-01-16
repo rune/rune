@@ -1,6 +1,6 @@
 // Want to add your game?
 // 1. Add it to the array below
-// 2. Run `node update-open-source-games.js`
+// 2. Run `node scripts/update-open-source-games.js`
 // 3. Submit a PR with changes to this file and `games.md`
 
 const games = [
@@ -131,6 +131,12 @@ const games = [
         rune: false,
         links: ["https://swordbattle.io/", "https://github.com/codergautam/swordbattle.io"],
         description: "A multiplayer sword fighting IO game."
+    },
+    {
+        name: "GeoGuess",
+        rune: false,
+        links: ["https://geoguess.games", "https://github.com/GeoGuess/GeoGuess"],
+        description: "Open-source geography game with Google Map StreetView."
     }
 ]
 

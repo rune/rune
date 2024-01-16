@@ -147,7 +147,14 @@ Here's all the open-source multiplayer web games we've found that match the crit
     <td style="vertical-align: middle;"><a href="https://swordbattle.io/">Demo</a>, <a href="https://github.com/codergautam/swordbattle.io">Source</a></td>
     <td style="vertical-align: middle;">A multiplayer sword fighting IO game.</td>
   </tr>
+  <tr>
+    <td style="vertical-align: middle;">GeoGuess</td>
+    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="vertical-align: middle;"><a href="https://geoguess.games">Demo</a>, <a href="https://github.com/GeoGuess/GeoGuess">Source</a></td>
+    <td style="vertical-align: middle;">Open-source geography game with Google Map StreetView.</td>
+  </tr>
 </table>
+
 
 ## Supporting Future Games 
 

@@ -27,7 +27,7 @@ We’re a small passionate team who love making and playing games together. Rune
 
 ### What Is the Benefit of Submitting My Game to Rune?
 
-Rune has 5+ million players so you’ll get tons of people playing your game and giving you feedback. Building a game is fun, but having tons of people actually playing your game makes it 10x more fun. We promote your game for free on our social channels and also provide valuable analytics and use feedback on your game. And don’t forget the bragging rights — Rune shows that you created the game and displays your stats. Next time you meet your friends, you can show them how you built a game with millions of plays.
+Rune has millions of players so you’ll get tons of people playing your game and giving you feedback. Building a game is fun, but having tons of people actually playing your game makes it 10x more fun. We promote your game for free on our social channels and also provide valuable analytics and use feedback on your game. And don’t forget the bragging rights — Rune shows that you created the game and displays your stats. Next time you meet your friends, you can show them how you built a game with millions of plays.
 
 ### Do You Host Game Jams?
 

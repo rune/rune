@@ -55,10 +55,6 @@ All the game code will be MIT-licensed and serve as inspiration for developers b
 
 The deadline for applying for an open-source grant is February 7th. We will open again for another round of grant applications again sometime later in 2024. Stay tuned by giving this repo a star and joining the [Rune Discord](https://discord.gg/rune-devs).
 
-***Application form link will be added shortly. It's currently unavailable as Typeform has an issue with linking from GitHub.** 
-
-
-
 <div align="center">
 <picture>
 <source media="(prefers-color-scheme: light)" srcset="../docs/static/img/star-the-repo-light.gif" >

@@ -32,7 +32,7 @@ Devs can apply for this grant with either an existing game or a new game idea. T
 - Open-source code with MIT license
 - Written using JavaScript / TypeScript
 
-Your content (art, sounds, etc.) can use any license approved by the Open Source Institute or Creative Commons license. This approach of MIT license for code and flexible license for content allows others to get inspired by your game while giving you flexibility in how you share your game with the open-source community.
+Your content (art, sounds, etc.) can use any license approved by the Open Source Institute or Creative Commons license. This approach of MIT license for code and flexible license for content allows others to get inspired by your game while giving you flexibility in how you share your game with the open-source community. For instance, you can make all your content non-commercial so only you can publish the game.
 
 Your game remains yours completely. **You retain full rights to your game** and you can **publish your game anywhere you like** besides Rune.
 

@@ -92,6 +92,9 @@ You're welcome to apply as a team. If that's the case, please designate one team
 #### Can I apply with a Rune game that I already made?
 Yes, you can apply with an existing Rune game. You should make sure to specify in detail in the application form what big improvements you want to make to your game if you get the grant.
 
+#### Can I apply with a WASM web export from Unity, Defold, or another non-JS engine?
+The grant program is currently focused on JS-based games to build momentum in this particular ecosystem, thereby making it easier to share code and get inspired by each other.
+
 #### Are there any age or country restrictions?
 We think anyone can be an awesome game dev and so the only restrictions are those required by GitHub Sponsors. This means that game devs above the age of 13 can participate as long as GitHub can verify info with your legal guardian.
 

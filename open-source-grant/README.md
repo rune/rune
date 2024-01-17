@@ -13,7 +13,7 @@ Rune will award two kinds of grants to indie game devs who make an open-source m
 - **Spark** grants of $500 awarded to promising indie game devs (any background welcome)
 - **Ignite** grants of $5000 awarded to devs who've proven themselves with a **Spark** grant
 
-With these grants, we want to give indie devs wanting to make a multiplayer game an extra boost. 
+With these grants, we want to give indie devs wanting to make a multiplayer game using Rune an extra boost. 
 
 ### 🌟 Featured Across The Web 
 

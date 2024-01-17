@@ -47,7 +47,7 @@ All the game code will be MIT-licensed and serve as inspiration for developers b
 
 ### ⚡️ Application Process
 
-1. **Apply:** Fill out the [application form](https://grant-form.rune.ai/) before the deadline with a new game idea or an existing game
+1. **Apply:** Fill out the [application form](https://www.rune.ai/applygrant) before the deadline with a new game idea or an existing game
 2. **Review:** A panel of experts reviews your application and you hear back from us within 2 weeks after the deadline
 3. **Build:** Once approved, you can take all the time you'd like to make your amazing multiplayer game
 4. **Upload:** Submit your completed game to Rune, fix any major issues, and release it to the world

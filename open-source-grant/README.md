@@ -8,12 +8,12 @@
 
 We at [Rune](https://rune.ai) believe that tons of amazing multiplayer games are just waiting to be made by talented indie devs. We've created this $100k grants program to help such indie devs and grow the open-source web game community. Based on us searching GitHub, we've found only [25 open-source multiplayer JS games](./games.md). We hope that these grants will dramatically boost the ecosystem! 
 
-Rune will award two kinds of grants to indie game devs who make an open-source multiplayer web game:
+Rune will award two kinds of grants to indie devs who make an open-source multiplayer web game:
 
 - **Spark** grants of $500 awarded to promising indie game devs (any background welcome)
 - **Ignite** grants of $5000 awarded to devs who've proven themselves with a **Spark** grant
 
-With these grants, we want to give indie devs wanting to make a multiplayer game an extra boost. 
+With these grants, we want to promote indie devs wanting to make a multiplayer game using Rune.
 
 ### 🌟 Featured Across The Web 
 
@@ -23,7 +23,7 @@ The devs who are awarded the grant will get featured across the web:
 - Your game highlighted inside the Rune app
 - Shoutouts on Twitter, Reddit and LinkedIn
 
-Additionally, you can list that you won a competitive grant on your LinkedIn & GitHub. All of this help boost your path as a game/web dev!
+Additionally, you can list that you won a highly-competitive grant on your LinkedIn & GitHub!
 
 ### 🚀 Applying with a Game
 

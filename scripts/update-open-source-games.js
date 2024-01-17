@@ -156,7 +156,7 @@ const generateTableHTML = () => {
         tableHTML += `
   <tr>
     <td style="vertical-align: middle;">${game.name}</td>
-    <td style="text-align: center; vertical-align: middle;">${game.rune ? '✅' : '❌'}</td>
+    <td style="text-align: center; vertical-align: middle;">${game.rune ? '✅' : ''}</td>
     <td style="vertical-align: middle;"><a href="${game.links[0]}">Demo</a>, <a href="${game.links[1]}">Source</a></td>
     <td style="vertical-align: middle;">${game.description}</td>
   </tr>`

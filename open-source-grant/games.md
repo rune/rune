@@ -95,61 +95,61 @@ Here's all the open-source multiplayer web games we've found that match the crit
   </tr>
   <tr>
     <td style="vertical-align: middle;">Curvytron</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="http://www.curvytron.com/">Demo</a>, <a href="https://github.com/Curvytron/curvytron">Source</a></td>
     <td style="vertical-align: middle;">A multiplayer tron-like game... with curves!</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">ArmorAlley</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://armor-alley.net">Demo</a>, <a href="https://github.com/scottschiller/ArmorAlley">Source</a></td>
     <td style="vertical-align: middle;">Interpretation of Armor Alley, a combat strategy game released in 1990.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">F.LF</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://project-f.github.io">Demo</a>, <a href="https://github.com/Project-F/F.LF">Source</a></td>
     <td style="vertical-align: middle;">Open-source implementation of Little Fighter 2.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">13</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://iioi.herokuapp.com/">Demo</a>, <a href="https://github.com/eliasku/13">Source</a></td>
     <td style="vertical-align: middle;">Fast-action multiplayer game made for js13k-2022.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">TOSIOS</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://tosios.online/">Demo</a>, <a href="https://github.com/halftheopposite/TOSIOS">Source</a></td>
     <td style="vertical-align: middle;">Abbreviation stands for 'The Open-Source IO Shooter'.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Scrabble</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://scrabble.bencuan.me/#/">Demo</a>, <a href="https://github.com/64bitpandas/SimultaneousScrabble">Source</a></td>
     <td style="vertical-align: middle;">Multiplayer party scrabble for 2-10 players.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Edelweiss</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://makc.github.io/Edelweiss/">Demo</a>, <a href="https://github.com/makc/Edelweiss">Source</a></td>
     <td style="vertical-align: middle;">Multiplayer fork of the Edelweiss platformer game.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Monster Valle</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://monstervalle.onrender.com">Demo</a>, <a href="https://github.com/ivopc/Monster-Valle/">Source</a></td>
     <td style="vertical-align: middle;">Full-featured MMORPG based in Pokémon.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Swordbattle.io</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://swordbattle.io/">Demo</a>, <a href="https://github.com/codergautam/swordbattle.io">Source</a></td>
     <td style="vertical-align: middle;">A multiplayer sword fighting IO game.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">GeoGuess</td>
-    <td style="text-align: center; vertical-align: middle;">❌</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
     <td style="vertical-align: middle;"><a href="https://geoguess.games">Demo</a>, <a href="https://github.com/GeoGuess/GeoGuess">Source</a></td>
     <td style="vertical-align: middle;">Open-source geography game with Google Map StreetView.</td>
   </tr>

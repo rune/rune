@@ -39,7 +39,7 @@ Your game remains yours completely. **You retain full rights to your game** and 
 ### 🌱 Why is Rune doing this?
 
 We want to support the open-source community and showcase how Rune can help make awesome multiplayer gaming experiences. We think it's a win-win for everyone:
-- New exciting multiplayer games on Rune
+- New exciting multiplayer games on [Rune](https://rune.ai)
 - Interesting open-source code that others can learn from
 - Free money and recognition for talented indie devs
 

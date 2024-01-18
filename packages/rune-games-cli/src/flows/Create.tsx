@@ -69,15 +69,19 @@ const isRelativePath = (path: string) =>
   path.startsWith(".") || path.startsWith("..")
 
 const getPackageName = (targetDir: string) => {
-  if (!isRelativePath(targetDir)) return targetDir
+  let packageName = targetDir
 
-  const resolvedPath = path.resolve(__dirname, targetDir)
-  const lastFolderName = resolvedPath.split(path.sep).pop()
+  if (isRelativePath(targetDir)) {
+    const resolvedPath = path.resolve(__dirname, targetDir)
+    const lastFolderName = resolvedPath.split(path.sep).pop()
 
-  if (!lastFolderName) return "rune-game-template" // in-case they put in a root relative path
+    if (!lastFolderName) return "rune-game-template" // in-case they put in a root relative path
+
+    packageName = lastFolderName
+  }
 
   // Replace any non-hyphen characters (like spaces or underscores) with hyphens
-  return lastFolderName.replace(/[^a-zA-Z0-9]/g, "-")
+  return packageName.replace(/[^a-zA-Z0-9]/g, "-")
 }
 
 export function Create({ args }: { args: string[] }) {

@@ -65,23 +65,15 @@ function emptyDir(dir: string) {
   }
 }
 
-const isRelativePath = (path: string) =>
-  path.startsWith(".") || path.startsWith("..")
-
 const getPackageName = (targetDir: string) => {
-  let packageName = targetDir
+  const fullTargetDirPath = path.resolve(targetDir)
 
-  if (isRelativePath(targetDir)) {
-    const resolvedPath = path.resolve(__dirname, targetDir)
-    const lastFolderName = resolvedPath.split(path.sep).pop()
+  const lastFolderName = fullTargetDirPath.split(path.sep).pop()
 
-    if (!lastFolderName) return "rune-game-template" // in-case they put in a root relative path
-
-    packageName = lastFolderName
-  }
+  if (!lastFolderName) return "rune-game-template" // in-case they put in a root relative path
 
   // Replace any non-hyphen characters (like spaces or underscores) with hyphens
-  return packageName.replace(/[^a-zA-Z0-9]/g, "-")
+  return lastFolderName.replace(/[^a-zA-Z0-9]/g, "-")
 }
 
 export function Create({ args }: { args: string[] }) {

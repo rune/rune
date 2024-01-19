@@ -1,6 +1,7 @@
 import fs from "fs"
 import { Box, Text } from "ink"
 import { UncontrolledTextInput } from "ink-text-input"
+import { kebabCase } from "lodash"
 import path from "path"
 import React, { useCallback, useEffect } from "react"
 import { fileURLToPath } from "url"
@@ -73,7 +74,7 @@ const getPackageName = (targetDir: string) => {
   if (!lastFolderName) return "rune-game-template" // in-case they put in a root relative path
 
   // Replace any non-hyphen characters (like spaces or underscores) with hyphens
-  return lastFolderName.replace(/[^a-zA-Z0-9]/g, "-")
+  return kebabCase(lastFolderName)
 }
 
 export function Create({ args }: { args: string[] }) {

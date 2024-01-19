@@ -65,6 +65,17 @@ function emptyDir(dir: string) {
   }
 }
 
+const getPackageName = (targetDir: string) => {
+  const fullTargetDirPath = path.resolve(targetDir)
+
+  const lastFolderName = fullTargetDirPath.split(path.sep).pop()
+
+  if (!lastFolderName) return "rune-game-template" // in-case they put in a root relative path
+
+  // Replace any non-hyphen characters (like spaces or underscores) with hyphens
+  return lastFolderName.replace(/[^a-zA-Z0-9]/g, "-")
+}
+
 export function Create({ args }: { args: string[] }) {
   const [targetDir, setTargetDir] = React.useState("")
   const [step, setStep] = React.useState(Steps.Target)
@@ -103,7 +114,7 @@ export function Create({ args }: { args: string[] }) {
       fs.readFileSync(path.join(templateDir, `package.json`), "utf-8")
     )
 
-    pkg.name = targetDir
+    pkg.name = getPackageName(targetDir)
 
     fs.writeFileSync(
       path.join(targetDir, "package.json"),

@@ -12,6 +12,8 @@ Most games don't need the interpolators described here to have a smooth playing 
 
 :::
 
+## Rendering At Variable Frame Rate
+
 We will use the example of [Paddle](/examples/paddle) to explain how Rune makes it simple to make fast-paced multiplayer games. A game like Paddle is updating the position of the ball and the players' paddles many times per second. We can code this in the `logic.js` file by specifying an `update` function and the `updatesPerSecond` value. In the following example, the `update` function will be called 30 times per second on all clients.
 
 ```javascript
@@ -23,8 +25,6 @@ Rune.initLogic({
   updatesPerSecond: 30
 })
 ```
-
-## Rendering At Variable Frame Rate
 
 The update loop will always run at a fixed tick rate, but mobile phones will render your game's graphics slower or faster than that. This is highly dependent on how powerful the device is and how intensive your game is to run. To support rendering at a variable frame rate, your game can interpolate positions between the `update` function calls. This is only needed for fast-moving objects stored in the `game` state such as the ball and paddles in Paddle.
 

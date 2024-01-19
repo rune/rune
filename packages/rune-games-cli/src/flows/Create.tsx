@@ -1,7 +1,6 @@
 import fs from "fs"
 import { Box, Text } from "ink"
 import { UncontrolledTextInput } from "ink-text-input"
-import { kebabCase } from "lodash"
 import path from "path"
 import React, { useCallback, useEffect } from "react"
 import { fileURLToPath } from "url"

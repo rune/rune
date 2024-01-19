@@ -74,7 +74,7 @@ const getPackageName = (targetDir: string) => {
   if (!lastFolderName) return "rune-game-template" // in-case they put in a root relative path
 
   // Replace any non-hyphen characters (like spaces or underscores) with hyphens
-  return kebabCase(lastFolderName)
+  return lastFolderName.replace(/[^a-zA-Z0-9]/g, "-")
 }
 
 export function Create({ args }: { args: string[] }) {

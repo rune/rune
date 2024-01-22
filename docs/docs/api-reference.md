@@ -95,7 +95,7 @@ How many times `update` function should be executed per second. Allowed values 1
 
 #### `inputDelay?: number`
 
-How many milliseconds user action is delayed before notifying client. Allowed values 0-250. Default value 25.
+How many milliseconds user action is delayed before run locally. Allowed values 0-250. Default value 25. Higher values will mean that players are more in sync with each other (i.e. fewer rollbacks), but will feel less snappy locally as it takes longer for a player's actions to be reflected on their screen.
 
 ### `Rune.invalidAction()`
 

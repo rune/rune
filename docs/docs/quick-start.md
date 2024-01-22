@@ -6,7 +6,7 @@ sidebar_position: 0
 
 Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
-## Install
+## Install {#install}
 
 Create a new Rune game project by running: 
 
@@ -20,7 +20,7 @@ or add the SDK to an existing game by including it in your `index.html` above an
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer-dev.js"></script>
 ```
 
-## Game Logic
+## Game Logic {#game-logic}
 
 Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](how-it-works/syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
 
@@ -45,7 +45,7 @@ Rune.initLogic({
 })
 ```
 
-## Rendering
+## Rendering {#rendering}
 
 Next, integrate your game UI to [react to game state changes](api-reference.md#runeinitclientoptions) and [send actions to the logic layer](api-reference.md#runeinitclientoptions). This code may live anywhere except in `logic.js`; the docs will refer to `client.js`:
 
@@ -70,7 +70,7 @@ function onChange({ game, yourPlayerId, players, action, event }) {
 Rune.initClient({ onChange })
 ```
 
-## Next Steps
+## Next Steps {#next-steps}
 
 - [View example games](examples.mdx)
 - [Read more about game state syncing](how-it-works/syncing-game-state.md)

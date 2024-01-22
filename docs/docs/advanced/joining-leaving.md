@@ -21,7 +21,7 @@ Below is an overview comparing actions & events.
 | Update game state?    | Yes        | If using optional callback |
 | Might be rolled back? | Yes        | No                         |
 
-## Spectating
+## Spectating {#spectating}
 
 Many games only support a few players. The remaining users in the room will be spectators. Spectators are:
 
@@ -34,7 +34,7 @@ Many games only support a few players. The remaining users in the room will be s
 
 This means that the number of players that the game SDK sees may not equal the number of users in the room. This is intended.
 
-## Minimum and Maximum Players
+## Minimum and Maximum Players {#minimum-and-maximum-players}
 
 As an argument to `initLogic()` , the game provides `minPlayers`, which is an int from 1 to 4. For instance, chess would specify `minPlayers: 2`. The game cannot be started with fewer players.
 
@@ -42,7 +42,7 @@ If a player leaves and the game drops below `minPlayers`, the game will end. If 
 
 Similar to `minPlayers`, the game provides `maxPlayers`. When anyone joins the room beyond two players, they automatically become a spectator.
 
-## Supporting Players Joining Midgame
+## Supporting Players Joining Midgame {#supporting-players-joining-midgame}
 
 Imagine a card-game like Hearts, where all the cards are dealt at the beginning of the game. It wouldn’t make sense for a player to join the gameplay after the cards have been dealt as they wouldn’t be able to receive any cards. Instead they should join as a spectator, waiting for the game to finish. This is the default behavior for any game. Restarting the game or changing the game will make the late joiners become players (assuming they’re below `maxPlayers` threshold).
 
@@ -70,7 +70,7 @@ Rune.initLogic({
 })
 ```
 
-## Supporting Players Leaving Midgame
+## Supporting Players Leaving Midgame {#supporting-players-leaving-midgame}
 
 Continuing the example of the card-game Hearts, it’s quite complex to decide what should happen if a player leaves. By default, Rune will end the game. Players can then restart or choose an new one from the game selection.
 
@@ -78,7 +78,7 @@ The game can provide a `playerLeft` callback in `initLogic()` to make it clear t
 
 A player will only be determined as having left the game once they leave the room. This means that if one of the players’ connection broke, they have 30 seconds to reconnect. Having a timeout like this lets the game go on if someone is losing internet connection for good.
 
-## Moving to Spectator and Back
+## Moving to Spectator and Back {#moving-to-spectator-and-back}
 
 Users who are currently playing may want to just listen in and not participate in the gameplay. For instance, they may want to grab food / do homework while others play. They should be able to make themselves a spectator. This will trigger a `playerLeft` event and the game will remove that player from the game.
 

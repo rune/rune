@@ -6,11 +6,11 @@ sidebar_position: 10
 
 Underlying all multiplayer gaming is syncing game information. This page will use the simple example of Tic Tac Toe to explain how the game state is synced across players using Rune's custom predict-rollback netcode.
 
-## Separation into Game Logic and Rendering
+## Separation into Game Logic and Rendering {#separation-into-game-logic-and-rendering}
 
 Multiplayer games are generally separated into game logic and rendering. This separation has many benefits, including being able to run dedicated servers that only have game logic. Rune multiplayer games are also separated into logic and rendering.
 
-### Game Logic
+### Game Logic {#game-logic}
 
 The logic is stored in a single file, `logic.js`, and initialized by running `Rune.initLogic()` with `minPlayers`, `maxPlayers`, `setup` and `actions`. The `minPlayers` and `maxPlayers` values ensure the game only have to consider a number of players between those two values. All other cases are Rune, incl. automatically making remaining people in the room spectators (more info in [Joining and Leaving](advanced/joining-leaving.md)).
 
@@ -54,7 +54,7 @@ Rune.initLogic({
 })
 ```
 
-### Rendering
+### Rendering {#rendering}
 
 The game state should be rendered for the player to interact with. That’s the responsibility of `client.js`, which calls `Rune.initClient` with a `onChange` callback function. Whenever an `action` is performed, the `onChange` function is called with read-only info for updating the game experience (animations, graphics, UI, sound effects). The `onChange` has all the info you might need to update your game, including the `action` / `event` that triggered it, the old and new game states, info about the `players`, etc.
 
@@ -76,7 +76,7 @@ const onChange = ({
 Rune.initClient({ onChange })
 ```
 
-## High-Level Game Syncing Flow
+## High-Level Game Syncing Flow {#high-level-game-syncing-flow}
 
 Rune does a lot of magic behind the scenes to sync the game state. Here’s a simplified overview of how it works:
 
@@ -85,7 +85,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 3. If the `action` is valid, the server updates its groundtruth `game` state and sends the `action` out to all connected clients. If the `action` is not valid, it’s ignored.
 4. Each client computes the new `game` state using the `action` payload and the associated function in `actions`. It’s much cheaper bandwidth-wise to send the `action` than the entire `game` state. The client who sent the `action` will also receive the same `action` payload from the server as an acknowledgement message.
 
-## Restrictions
+## Restrictions {#restrictions}
 
 - Game logic must be written in a subset of JavaScript, see [Server-Side Logic](advanced/server-side-logic.md). The client rendering the game can use anything.
 - Max 10 actions per player per second.
@@ -97,7 +97,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 
 These restrictions are necessary to make great multiplayer games using predict-rollback netcode. Here's more info about [why predict-rollback netcode is the future of multiplayer games](advanced/server-side-logic.md#why-this-approach-using-deterministic-code). It's possible to make all kinds of amazing games using this approach (see the [list of supported games](/publishing/supported-games.md) for inspiration).
 
-## StateSync Event
+## StateSync Event {#statesync-event}
 
 Games running on Rune should support initializing the game at any possible moment as someone can join as a spectator/player at any time. This could happen e.g. at the start of the game, in the middle of a match, or after game over. This initialization is done using the `stateSync` event. Additionally, the `stateSync` event is also used when restarting the game, reconnecting after an unexpected disconnect, or if the game crashes.
 

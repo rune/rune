@@ -6,7 +6,7 @@ sidebar_position: 4
 
 Rune handles all the complexity of building a multiplayer game. We've made this SDK to make your life simple and we've tried to make it general enough that you can build almost anything. Any game that follows the [overall game guidelines](how-it-works/syncing-game-state.md#restrictions) and [server-side logic](advanced/server-side-logic.md) guidelines is supported.
 
-## Examples of Supported Games
+## Examples of Supported Games {#examples-of-supported-games}
 
 - Tic Tac Toe, Chess, Connect Four, Battleships, and other board games
 - 8 Ball Pool, Golf Around!, Football Tactics & Glory, and other turn-based sports games

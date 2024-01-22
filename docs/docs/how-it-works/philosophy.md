@@ -12,7 +12,7 @@ Rune synchronizes your game state using our custom predict-rollback framework. S
 
 We try our best to make an amazing SDK for you and we'd love to get your input on how we can improve! Please write us on [Discord](https://discord.gg/rune-devs) if you have any questions or suggestions. 
 
-## Read More
+## Read More {#read-more}
 
 - [How the game state syncs across devices](how-it-works/syncing-game-state.md)
 - [How we run your logic code on Rune servers](advanced/server-side-logic.md)

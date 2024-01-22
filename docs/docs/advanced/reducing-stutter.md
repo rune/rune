@@ -12,7 +12,7 @@ Most games don't need the interpolators described here to have a smooth playing 
 
 :::
 
-## Rendering At Variable Frame Rate
+## Rendering At Variable Frame Rate {#rendering-at-variable-frame-rate}
 
 We will use the example of [Paddle](/examples/paddle) to explain how Rune makes it simple to make fast-paced multiplayer games. A game like Paddle is updating the position of the ball and the players' paddles many times per second. We can code this in the `logic.js` file by specifying an `update` function and the `updatesPerSecond` value. In the following example, the `update` function will be called 30 times per second on all clients.
 
@@ -68,7 +68,7 @@ function onChange({ game, futureGame }) {
 }
 ```
 
-## Interpolating Other Players' Movements
+## Interpolating Other Players' Movements {#interpolating-other-players-movements}
 
 Making fast-paced multiplayer games can be challenging because of the latency between players. No matter how good the device and internet connection is, the network packets cannot travel faster than the speed of light. This means that your game will receive other's players actions some time after they happened. If other players can quickly move around in your game, then you will need to do interpolation of their positions to make their movements look smooth. This is done in the client-side code, i.e. in `client.js`.
 
@@ -162,6 +162,6 @@ function onChange({ previousGame, game }) {
 }
 ```
 
-## Demo and Example Game
+## Demo and Example Game {#demo-and-example-game}
 
 Using the interpolations described above, your game can achieve flexible frame rate rendering and smooth movements for other players regardless of network conditions. This gives the best player experience for the games that need it. If you want to make your own real-time Rune game, it's great to start with the Paddle example game. You can [try the demo](/examples/paddle) and see how the opponent gets interpolated when simulating latency. You can also see the [full code here](https://github.com/rune/rune/blob/staging/examples/paddle)!

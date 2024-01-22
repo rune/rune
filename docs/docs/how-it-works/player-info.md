@@ -6,7 +6,7 @@ sidebar_position: 20
 
 You'll often want to show each player’s name and avatar inside your game. Here's how you do it.
 
-## Players Object
+## Players Object {#players-object}
 
 Info about the players is captured by a `players` object, which has an ID for each player as the key and an object with e.g. `displayName` as the value. These IDs are unique and randomly generated for each game. The players are organized in the players object in no particular order.
 
@@ -16,7 +16,7 @@ Here’s the values for each player:
 - `avatarUrl: string`
 - `playerId: string` (same as key, just provided for simplicity)
 
-## Avatars
+## Avatars {#avatars}
 
 Using avatars is a great way to personalize the UI to show whose turn it is or in a leaderboard. Since the avatar is loaded over the network there might be a slight delay during which you might want to display a placeholder – and we got you covered!
 
@@ -24,7 +24,7 @@ Using avatars is a great way to personalize the UI to show whose turn it is or i
 
 Right click and select download either as [SVG](/img/avatar-placeholder.svg) or [PNG](/img/avatar-placeholder.png).
 
-## Your Player ID
+## Your Player ID {#your-player-id}
 
 In the `onChange` function the client will always get their player ID as well as `yourPlayerId`. This can be used to find their own info in the `players` object.
 

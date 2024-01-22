@@ -6,7 +6,7 @@ sidebar_position: 61
 
 Many games use time as an essential part of their game logic. Rune makes this easy by synchronizing clocks across clients and the server. We provide multiple ways for you to add time-based code in your game logic based on what's most fitting for your game. You can also make fast-paced games with a synchronized update loop running many times pr. second.
 
-## Game Time
+## Game Time {#game-time}
 
 You can use `Rune.gameTime()` inside your game, which returns the milliseconds that have passed since the start of the game. By default, Rune provides time precision of a second, which should work well for most casual game purposes.
 
@@ -52,7 +52,7 @@ Rune.initLogic({
 
 ```
 
-## Update Function
+## Update Function {#update-function}
 
 You can provide an `update` function inside your `logic.js` file to run game logic every second. When game state is changed inside your `update` function, the `onChange` inside `client.js` is called with `update` event. Here’s a game, where players have to make a move within 30 seconds or else their turn will pass:
 
@@ -86,7 +86,7 @@ Rune.initLogic({
 
 The `update` function is run in a synchronized way across all clients and the server. Only actions are sent to the server, which makes Rune real-time games very bandwidth efficient so that they can work even on mobile devices with limited bandwidth. Even with our optimizations, your game might still experience stuttering due to latency between players or varying frame rates across devices. Rune helps you [reduce this stuttering through interpolators](reducing-stutter.md).
 
-## The `timeSync` Event
+## The `timeSync` Event {#the-timesync-event}
 
 Network packets between the client and server are sometimes delayed due to bad internet connection. If that happens, the server might execute the action at different game time compared to the optimistic client action. If this has impact on game state, the client that made the optimistic action will receive a `onChange` call with `timeSync` event.
 
@@ -117,7 +117,7 @@ The game is played by two players (Player A and Player B), who do the following:
 
 Player A's `onChange` function will now be called with `timeSync` event to reconcile that the server processed the action at second 5 (and the server holds the truth). In this way, both players end up with `game.clickedAt = 5`.
 
-## Further Reading
+## Further Reading {#further-reading}
 
 - [See how the Pinpoint example game uses time](https://github.com/rune/rune/blob/staging/examples/pinpoint/src/logic.ts)
 - [See how to reduce stutters in fast-paced games](reducing-stutter.md)

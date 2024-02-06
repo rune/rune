@@ -1,5 +1,5 @@
 __temp/
-tmp
+tmp/
 cjs/package.json
 cjs/lib/*
 !cjs/lib/rootPath.js

@@ -14,7 +14,7 @@
     "skipLibCheck": true,
     "jsx": "react",
     "types": ["node"],
-    "outDir": "dist"
+    "outDir": "tmp"
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx"]

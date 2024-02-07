@@ -9,6 +9,8 @@ import { rootPath } from "./rootPath.js"
 
 import LintMessage = Linter.LintMessage
 
+export const MAX_PLAYERS = 6
+
 export const validationOptions = {
   sdkUrlStart: "https://cdn.jsdelivr.net/npm/rune-games-sdk",
   sdkVersionRegex: /rune-games-sdk@(\d+(\.\d+(\.\d+)?)?)/,
@@ -248,19 +250,21 @@ async function validateMultiplayerLogicJsContent({
 
     if (
       multiplayerMetadata.minPlayers &&
-      (multiplayerMetadata.minPlayers < 1 || multiplayerMetadata.minPlayers > 4)
+      (multiplayerMetadata.minPlayers < 1 ||
+        multiplayerMetadata.minPlayers > MAX_PLAYERS)
     ) {
       errors.push({
-        message: "logic.js: minPlayers must be between 1 and 4",
+        message: `logic.js: minPlayers must be between 1 and ${MAX_PLAYERS}`,
       })
     }
 
     if (
       multiplayerMetadata.maxPlayers &&
-      (multiplayerMetadata.maxPlayers < 1 || multiplayerMetadata.maxPlayers > 4)
+      (multiplayerMetadata.maxPlayers < 1 ||
+        multiplayerMetadata.maxPlayers > MAX_PLAYERS)
     ) {
       errors.push({
-        message: "logic.js: maxPlayers must be between 1 and 4",
+        message: `logic.js: maxPlayers must be between 1 and ${MAX_PLAYERS}`,
       })
     }
 

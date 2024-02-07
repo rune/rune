@@ -530,8 +530,8 @@ describe("validateGameFiles", () => {
         multiplayer: {
           handlesPlayerJoined: true,
           handlesPlayerLeft: true,
-          minPlayers: 6,
-          maxPlayers: 5,
+          minPlayers: 8,
+          maxPlayers: 7,
           updatesPerSecondDefined: false,
         },
       }

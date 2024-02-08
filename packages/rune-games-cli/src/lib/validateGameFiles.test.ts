@@ -3,7 +3,11 @@ import { range } from "lodash"
 import * as path from "path"
 
 import { FileInfo } from "./getGameFiles"
-import { validateGameFiles, ValidationResult } from "./validateGameFiles"
+import {
+  MAX_PLAYERS,
+  validateGameFiles,
+  ValidationResult,
+} from "./validateGameFiles"
 
 jest.mock("./rootPath.ts", () => ({
   rootPath: path.resolve(__dirname, "../.."),
@@ -496,8 +500,8 @@ describe("validateGameFiles", () => {
           // language=JavaScript
           content: `
               Rune.initLogic({
-                minPlayers: 6,
-                maxPlayers: 5,
+                minPlayers: 8,
+                maxPlayers: 7,
                 setup: () => {
                   return { cells: Array(25).fill(null) }
                 },
@@ -512,8 +516,12 @@ describe("validateGameFiles", () => {
       {
         valid: false,
         errors: [
-          { message: "logic.js: minPlayers must be between 1 and 4" },
-          { message: "logic.js: maxPlayers must be between 1 and 4" },
+          {
+            message: `logic.js: minPlayers must be between 1 and ${MAX_PLAYERS}`,
+          },
+          {
+            message: `logic.js: maxPlayers must be between 1 and ${MAX_PLAYERS}`,
+          },
           {
             message:
               "logic.js: maxPlayers must be greater than or equal to minPlayers",
@@ -522,8 +530,8 @@ describe("validateGameFiles", () => {
         multiplayer: {
           handlesPlayerJoined: true,
           handlesPlayerLeft: true,
-          minPlayers: 6,
-          maxPlayers: 5,
+          minPlayers: 8,
+          maxPlayers: 7,
           updatesPerSecondDefined: false,
         },
       }

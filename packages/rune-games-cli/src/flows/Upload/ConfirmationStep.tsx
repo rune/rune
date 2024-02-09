@@ -20,7 +20,7 @@ export function ConfirmationStep({
 
   useEffect(() => {
     if (typeof confirmed === "boolean") onComplete(confirmed, gameDir)
-  }, [confirmed, onComplete])
+  }, [confirmed, onComplete, gameDir])
 
   return (
     <Step

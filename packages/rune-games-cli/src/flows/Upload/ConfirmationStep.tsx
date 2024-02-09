@@ -13,13 +13,13 @@ export function ConfirmationStep({
   label: (gameTitle: string, gameDir: string) => string
   gameId: number
   gameDir: string
-  onComplete: (confirmed: boolean) => void
+  onComplete: (confirmed: boolean, gameDir: string) => void
 }) {
   const { game } = useGame(gameId)
   const [confirmed, setConfirmed] = useState<boolean | undefined>()
 
   useEffect(() => {
-    if (typeof confirmed === "boolean") onComplete(confirmed)
+    if (typeof confirmed === "boolean") onComplete(confirmed, gameDir)
   }, [confirmed, onComplete])
 
   return (

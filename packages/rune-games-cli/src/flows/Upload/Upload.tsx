@@ -1,5 +1,5 @@
 import { Box, Text } from "ink"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
@@ -12,6 +12,8 @@ import { CreateGameStep } from "./CreateGameStep.js"
 import { CreateGameVersionStep } from "./CreateGameVersionStep.js"
 import { GameDirInputStep } from "./GameDirInputStep.js"
 import { ReadyForReleaseStep } from "./ReadyForReleaseStep.js"
+import { buildOutOfDate } from "../../lib/checkBuildUpToDate.js"
+import { execSync } from "child_process"
 
 export function Upload({ flags }: { flags: CliFlags }) {
   const [gameDir, setGameDir] = useState<string | undefined>()
@@ -39,6 +41,34 @@ export function Upload({ flags }: { flags: CliFlags }) {
   const [uploadConfirmed, setUploadConfirmed] = useState<boolean | undefined>(
     undefined
   )
+  const [buildCheckComplete, setBuildCheckComplete] = useState<boolean | undefined>(
+    undefined
+  )
+
+  // check if the a rebuild might be required, if not then mark that we 
+  // don't need to display the build check any more - otherwise
+  // we're prompt the user
+  const buildRequired = useCallback((gameDir: string) => {
+    const required = buildOutOfDate(gameDir);
+
+    if (!required) {
+      setBuildCheckComplete(true);
+    } 
+
+    return required;
+  }, [])
+  
+  // if the build has been requested make some possible naive assumptions
+  // about where the build is and kick it off
+  const runBuild = useCallback((shouldRun: boolean, gameDir: string) => {
+    if (shouldRun) {
+      execSync("npm run build", { cwd: gameDir });
+    } 
+
+    // mark that we've done the build so we can move on to the next
+    // step
+    setBuildCheckComplete(true);
+  }, [])
 
   useEffect(() => {
     if (releaseFlag) {
@@ -96,9 +126,21 @@ export function Upload({ flags }: { flags: CliFlags }) {
                 />
               )}
 
+              {!!gameId && (!buildCheckComplete) &&
+                buildRequired(gameDir) && (
+                  <ConfirmationStep
+                    label={() =>
+                      `The build output is out of date with the source code, would you like to run a build first?`
+                    }
+                    gameId={gameId}
+                    gameDir={gameDir}
+                    onComplete={runBuild}
+                  />
+                )}
+
               {!!gameId &&
                 (typeof discordPostConfirmed === "boolean" ||
-                  !shouldConfirmDiscordPost) &&
+                  !shouldConfirmDiscordPost) && (buildCheckComplete) &&
                 shouldConfirmUpload && (
                   <ConfirmationStep
                     label={(gameTitle, gameDir) =>
@@ -112,7 +154,7 @@ export function Upload({ flags }: { flags: CliFlags }) {
 
               {!!gameId &&
                 (typeof discordPostConfirmed === "boolean" ||
-                  !shouldConfirmDiscordPost) &&
+                  !shouldConfirmDiscordPost) && (buildCheckComplete) &&
                 (uploadConfirmed || !shouldConfirmUpload) && (
                   <CreateGameVersionStep
                     gameId={gameId}

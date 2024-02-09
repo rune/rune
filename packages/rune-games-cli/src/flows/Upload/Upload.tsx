@@ -12,7 +12,7 @@ import { CreateGameStep } from "./CreateGameStep.js"
 import { CreateGameVersionStep } from "./CreateGameVersionStep.js"
 import { GameDirInputStep } from "./GameDirInputStep.js"
 import { ReadyForReleaseStep } from "./ReadyForReleaseStep.js"
-import { buildOutOfDate } from "../../lib/checkBuildUpToDate.js"
+import { buildOutOfDate } from "../../lib/checkBuildUpToDate"
 import { execSync } from "child_process"
 
 export function Upload({ flags }: { flags: CliFlags }) {

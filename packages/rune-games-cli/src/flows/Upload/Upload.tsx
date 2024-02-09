@@ -1,4 +1,3 @@
-import { execSync } from "child_process"
 import { Box, Text } from "ink"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 
@@ -56,18 +55,6 @@ export function Upload({ flags }: { flags: CliFlags }) {
     }
 
     return required
-  }, [])
-
-  // if the build has been requested make some possible naive assumptions
-  // about where the build is and kick it off
-  const runBuild = useCallback((shouldRun: boolean, gameDir: string) => {
-    if (shouldRun) {
-      execSync("npm run build", { cwd: gameDir })
-    }
-
-    // mark that we've done the build so we can move on to the next
-    // step
-    setBuildCheckComplete(true)
   }, [])
 
   useEffect(() => {
@@ -129,11 +116,11 @@ export function Upload({ flags }: { flags: CliFlags }) {
               {!!gameId && !buildCheckComplete && buildRequired(gameDir) && (
                 <ConfirmationStep
                   label={() =>
-                    `The build output is out of date with the source code, would you like to run a build first?`
+                    `Your build files seem to be outdated. You might need to build/compile your game before uploading. Are you sure you want to continue?`
                   }
                   gameId={gameId}
                   gameDir={gameDir}
-                  onComplete={runBuild}
+                  onComplete={setBuildCheckComplete}
                 />
               )}
 

@@ -30,9 +30,9 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 
 ## Packages
 
-- [eslint-plugin-rune](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-rune) – rules and config for writing safe logic code for the Rune SDK
-- [rune-games-cli](https://github.com/rune/rune/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
-- [vite-plugin-rune](https://github.com/rune/rune/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
+- [eslint-plugin-rune](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/eslint-plugin-rune) – rules and config for writing safe logic code for the Rune SDK
+- [rune-games-cli](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
+- [vite-plugin-rune](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
 
 ## Examples
 

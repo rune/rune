@@ -22,7 +22,7 @@ One of the amazing things about Rune is that there’s no ads. Leave out any ads
 
 Players expect any level information to persist indefinitely, but iOS/Android may reset the cache and clear this information. We're working on a way to make saving data more robust and sync it across devices, but until then please avoid saving data.
 
-### Avoid Progress Bars and Calling `Rune.initClient()` Prematurely {#avoid-progress-bars-and-calling-runeinitclient-prematurely}
+### Avoid Loading Bars and Calling `Rune.initClient()` Prematurely {#avoid-progress-bars-and-calling-runeinitclient-prematurely}
 
 Rune shows an animation while your game is loading. It can be confusing if there's another progress bar in your game itself. To avoid this, wait with calling `Rune.initClient()` until your game has fully completed loading.
 

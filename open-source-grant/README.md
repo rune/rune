@@ -6,7 +6,7 @@
 
 # Rune Open-Source Grants
 
-We at [Rune](https://rune.ai) believe that tons of amazing multiplayer games are just waiting to be made by talented indie devs. We've created this $100k grants program to help such indie devs and grow the open-source web game community. Based on us searching GitHub, we've found only [25 open-source multiplayer JS games](./games.md). We hope that these grants will dramatically boost the ecosystem! 
+We at [Rune](https://rune.ai) believe that tons of amazing multiplayer games are just waiting to be made by talented indie devs. We've created this $100k grants initiative to help such indie devs and grow the open-source web game community. Based on us searching GitHub, we've found only [25 open-source multiplayer JS games](./games.md). We hope that these grants will dramatically boost the ecosystem! 
 
 Rune will award two kinds of grants to indie devs who make an open-source multiplayer web game:
 
@@ -70,7 +70,7 @@ The deadline for applying for an open-source grant is February 7th. We will open
 ### Applying
 
 #### Why the focus on multiplayer web games?
-We believe there's lots of awesome multiplayer games just waiting to be made by talented web devs. So we made this grants program to help support them make games using JS. If you're a traditional game dev looking for a grant, you can take a look at e.g. Epic Megagrant or Unity for Humanity.
+We believe there's lots of awesome multiplayer games just waiting to be made by talented web devs. So we made this grants initiative to help support them make games using JS. If you're a traditional game dev looking for a grant, you can take a look at e.g. Epic Megagrant or Unity for Humanity.
 
 #### Are there any existing open-source web multiplayer games?
 Yes, [here's a list of such games](./games.md) made using JS, incl. many games made by the Rune team themselves. If you've made a game like this, then definitely add it to the list!
@@ -91,7 +91,7 @@ You're welcome to apply as a team. If that's the case, please designate one team
 Yes, you can apply with an existing Rune game. You should make sure to specify in detail in the application form what big improvements you want to make to your game if you get the grant.
 
 #### Can I apply with a WASM web export from Unity, Defold, or another non-JS engine?
-The grant program is currently focused on JS-based games to build momentum in this particular ecosystem, thereby making it easier to share code and get inspired by each other.
+The grant initiative is currently focused on JS-based games to build momentum in this particular ecosystem, thereby making it easier to share code and get inspired by each other.
 
 #### Are there any age or country restrictions?
 We think anyone can be an awesome game dev and so the only restrictions are those required by GitHub Sponsors. This means that game devs above the age of 13 can participate as long as GitHub can verify info with your legal guardian.
@@ -130,7 +130,7 @@ Devs can apply for the **Ignite** grant once they've proven themselves with a **
 #### Are there any content restrictions or guidelines for the games?
 We require that all games adhere to basic content guidelines such as avoiding hate speech, pornography, and other potentially offensive content. We seek to promote games that are inclusive and accessible to a wide audience.
 
-#### I have questions about the grant program, where do I ask?
+#### I have questions about the grants initiative, where do I ask?
 
 We'd love to answer any questions. Please write your question in the **#general** channel in our [Discord server](https://discord.gg/rune-devs).
 

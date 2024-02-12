@@ -219,7 +219,7 @@ const ListContainer = styled.div`
 `
 
 const WhiteBackground = styled(Overlay)`
-  background-color: #F8FFFC;
+  background-color: #f8fffc;
   opacity: 0.9;
 `
 
@@ -248,7 +248,6 @@ const Subheader = styled.div`
   font-size: 13px;
   font-weight: 400;
   color: #f8fffc;
-  padding-bottom: 30px;
 `
 
 const BottomContainer = styled.div`
@@ -291,7 +290,7 @@ const MapToggleButton = styled.img<{ position: "left" | "right" }>`
 `
 
 const Photographer = styled.p`
-  margin: 20px;
+  margin: 10px;
   font-size: 13px;
   font-weight: 300;
   color: #01a491;

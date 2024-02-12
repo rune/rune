@@ -9,7 +9,6 @@ import {
 } from "../animation/SimpleCSSTransition"
 import { sortBy } from "../../lib/sortBy"
 
-const itemHeight = 70
 const itemGap = 10
 
 export function ScoreList({
@@ -29,6 +28,8 @@ export function ScoreList({
   show: "score" | "previousScore"
   showLatestScore: boolean
 }) {
+  const itemHeight = Math.min(70, window.innerHeight / (scores.length * 2))
+
   const scoresFixedOrder = useMemo(
     () =>
       sortBy(
@@ -62,7 +63,11 @@ export function ScoreList({
   ) : (
     <Items>
       {scoresFixedOrder.map((item) => (
-        <Item key={item.player.playerId} offset={item.offset}>
+        <Item
+          key={item.player.playerId}
+          offset={item.offset}
+          itemHeight={itemHeight}
+        >
           <Avatar size="small" src={item.player.avatarUrl} />
           <Name>
             {item.player.playerId === myPlayerId
@@ -110,7 +115,7 @@ const Items = styled.div`
   }
 `
 
-const Item = styled.div<{ offset: number }>`
+const Item = styled.div<{ offset: number; itemHeight: number }>`
   background: linear-gradient(0deg, #d8f1e8, #d8f1e8), #d2d2d2;
   border-radius: 15px;
   padding: 10px 30px;
@@ -119,14 +124,14 @@ const Item = styled.div<{ offset: number }>`
   justify-content: space-between;
   width: 90%;
   position: relative;
-  height: ${itemHeight}px;
+  height: ${({ itemHeight }) => itemHeight}px;
   top: ${({ offset }) => offset}px;
   transition: top ${timings.scoreReorder}ms ease-in-out;
 `
 
 const Avatar = styled.img<{ size: "big" | "small" }>`
-  width: ${({ size }) => (size === "big" ? 70 : 50)}px;
-  height: ${({ size }) => (size === "big" ? 70 : 50)}px;
+  height: 100%;
+  margin: 10px 10px;
 `
 
 const Name = styled.div`

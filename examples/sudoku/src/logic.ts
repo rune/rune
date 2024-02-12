@@ -10,8 +10,10 @@ import { generateSudoku } from "./lib/generateSudoku"
 const possibleColors: Color[] = [
   [65, 156, 85],
   [88, 142, 192],
-  [224, 190, 70],
+  [255, 225, 25],
   [198, 98, 188],
+  [168, 50, 50],
+  [255, 165, 0],
 ]
 
 const cornerCells: Coordinate[] = [
@@ -19,11 +21,13 @@ const cornerCells: Coordinate[] = [
   { row: 0, col: 8 },
   { row: 8, col: 0 },
   { row: 8, col: 8 },
+  { row: 3, col: 3 },
+  { row: 5, col: 5 },
 ]
 
 Rune.initLogic({
   minPlayers: 1,
-  maxPlayers: 4,
+  maxPlayers: 6,
   setup: (playerIds) => ({
     session: randomString(10),
     onboardingBoard: generateSudoku({

@@ -82,6 +82,8 @@ export function CreateGameStep({
               "This game title is invalid, it has to be between 5 and 25 characters, and only letters, numbers, and spaces are allowed",
             "Input buffer contains unsupported image format":
               "Not an image file",
+            "[tango][UNEXPECTED_TRANSPARENCY]":
+              "Image should not contain transparency",
             default: `Something went wrong`,
           })}
         />

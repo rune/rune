@@ -28,12 +28,6 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 - [Simulating Multiplayer](https://developers.rune.ai/docs/publishing/simulating-multiplayer)
 - [SDK API Reference](https://developers.rune.ai/docs/api-reference)
 
-## Packages
-
-- [eslint-plugin-rune](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/eslint-plugin-rune) – rules and config for writing safe logic code for the Rune SDK
-- [rune-games-cli](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
-- [vite-plugin-rune](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
-
 ## Examples
 
 | Tic Tac Toe | Outmatched | Sudoku | Pinpoint |
@@ -46,6 +40,11 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 | [<img src="docs/static/img/multiplayer-games/oink-oink.png" width=500>](https://developers.rune.ai/examples/oink-oink/) | [<img src="docs/static/img/multiplayer-games/paddle.png" width=500>](https://developers.rune.ai/examples/paddle/) | [<img src="docs/static/img/multiplayer-games/cube-rush.png" width=500>](https://developers.rune.ai/examples/cube-rush/) | [<img src="docs/static/img/multiplayer-games/neon-snake.png" width=500>](https://developers.rune.ai/examples/neon-snake/) |
 | [Demo](https://developers.rune.ai/examples/oink-oink/), [Source](https://github.com/rune/rune/tree/staging/examples/oink-oink) | [Demo](https://developers.rune.ai/examples/paddle/), [Source](https://github.com/rune/rune/tree/staging/examples/paddle) | [Demo](https://developers.rune.ai/examples/cube-rush/), [Source](https://github.com/rune/rune/tree/staging/examples/cube-rush) | [Demo](https://developers.rune.ai/examples/neon-snake/), [Source](https://github.com/rune/rune/tree/staging/examples/neon-snake) |
 
+## Packages
+
+- [eslint-plugin-rune](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/eslint-plugin-rune) – rules and config for writing safe logic code for the Rune SDK
+- [rune-games-cli](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
+- [vite-plugin-rune](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
 
 ## Community
 

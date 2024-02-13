@@ -169,7 +169,7 @@ export function ScoreboardView() {
                   <PlayIcon src={playIcon} />
                   <span>Next Round</span>
                 </CTA>
-                {Object.keys(players).length < 4 && (
+                {Object.keys(players).length < 6 && (
                   <InviteLink onClick={() => Rune.showInvitePlayers()}>
                     Invite more friends!
                   </InviteLink>
@@ -248,6 +248,7 @@ const Subheader = styled.div`
   font-size: 13px;
   font-weight: 400;
   color: #f8fffc;
+  padding-bottom: 30px;
 `
 
 const BottomContainer = styled.div`

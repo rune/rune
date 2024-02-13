@@ -10,7 +10,7 @@ import {
 import { sortBy } from "../../lib/sortBy"
 
 const itemGap = 10
-
+const itemHeight = Math.min(window.innerHeight * 0.075, 75)
 export function ScoreList({
   scores,
   myPlayerId,
@@ -28,8 +28,6 @@ export function ScoreList({
   show: "score" | "previousScore"
   showLatestScore: boolean
 }) {
-  const itemHeight = Math.min(70, window.innerHeight / (scores.length * 2))
-
   const scoresFixedOrder = useMemo(
     () =>
       sortBy(
@@ -63,28 +61,26 @@ export function ScoreList({
   ) : (
     <Items>
       {scoresFixedOrder.map((item) => (
-        <Item
-          key={item.player.playerId}
-          offset={item.offset}
-          itemHeight={itemHeight}
-        >
+        <Item key={item.player.playerId} offset={item.offset}>
           <Avatar size="small" src={item.player.avatarUrl} />
           <Name>
             {item.player.playerId === myPlayerId
               ? "You"
               : item.player.displayName}
           </Name>
-          <Score>
-            <AnimatedNumber value={item[show]} />
-          </Score>
-          <SimpleCSSTransition
-            visible={showLatestScore}
-            duration={timings.default}
-          >
-            <LatestScore missed={item.missed}>
-              {item.missed ? "No guess" : `+${item.latestScore}`}
-            </LatestScore>
-          </SimpleCSSTransition>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Score>
+              <AnimatedNumber value={item[show]} />
+            </Score>
+            <SimpleCSSTransition
+              visible={showLatestScore}
+              duration={timings.default}
+            >
+              <LatestScore missed={item.missed}>
+                {item.missed ? "No guess" : `+${item.latestScore}`}
+              </LatestScore>
+            </SimpleCSSTransition>
+          </div>
         </Item>
       ))}
     </Items>
@@ -115,7 +111,7 @@ const Items = styled.div`
   }
 `
 
-const Item = styled.div<{ offset: number; itemHeight: number }>`
+const Item = styled.div<{ offset: number }>`
   background: linear-gradient(0deg, #d8f1e8, #d8f1e8), #d2d2d2;
   border-radius: 15px;
   padding: 10px 30px;
@@ -124,7 +120,7 @@ const Item = styled.div<{ offset: number; itemHeight: number }>`
   justify-content: space-between;
   width: 90%;
   position: relative;
-  height: ${({ itemHeight }) => itemHeight}px;
+  height: ${itemHeight}px;
   top: ${({ offset }) => offset}px;
   transition: top ${timings.scoreReorder}ms ease-in-out;
 `
@@ -153,6 +149,7 @@ const Score = styled.div`
   border-radius: 45px;
   color: #f8fffc;
   width: 55px;
+  margin-right: 60px;
   text-align: center;
 `
 
@@ -162,8 +159,7 @@ const LatestScore = styled.div<{ missed: boolean }>`
   font-size: 13px;
   font-weight: 700;
   position: absolute;
-  right: 8px;
-  top: 2px;
+  right: 0;
   width: 100px;
   text-align: center;
 `

@@ -10,10 +10,10 @@ import { generateSudoku } from "./lib/generateSudoku"
 const possibleColors: Color[] = [
   [65, 156, 85],
   [88, 142, 192],
-  [255, 225, 25],
+  [224, 190, 70],
   [198, 98, 188],
-  [168, 50, 50],
-  [255, 165, 0],
+  [190, 30, 30],
+  [130, 30, 190],
 ]
 
 const cornerCells: Coordinate[] = [

@@ -195,6 +195,8 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
               ? formatApolloError(updateGameError, {
                   "Input buffer contains unsupported image format":
                     "Not an image file",
+                  "[tango][UNEXPECTED_TRANSPARENCY]":
+                    "Image should not contain transparency",
                   'value violates unique constraint "game_title_key"':
                     "Game with this title already exists",
                   default: `Something went wrong`,

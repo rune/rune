@@ -56,7 +56,7 @@ export function InviteMemberStep({
               "[tango][INVITE_GAME_DEV_FAILED_NO_EMAIL]":
                 "Invitee does not have an email",
               "[tango][INVITE_GAME_DEV_FAILED_BLOCKED_EMAIL]":
-                "Invitee has blocked email",
+                "Invitee's email is blocked",
               "[tango][INVITE_GAME_DEV_FAILED_ALREADY_INVITED]":
                 "Member was already invited",
               default: `Something went wrong`,

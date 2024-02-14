@@ -97,12 +97,27 @@ export function Upload({ flags }: { flags: CliFlags }) {
             <ReadyForReleaseStep onComplete={setReadyForRelease} />
           ) : (
             <>
-              {(gameId === undefined || gameId === null) && (
-                <ChooseGameStep currentGameId={gameId} onComplete={setGameId} />
+              {!buildCheckComplete && buildRequired(gameDir) && (
+                <ConfirmationStep
+                  label={() =>
+                    `Your build files seem to be outdated. You might need to build/compile your game before uploading. Are you sure you want to continue?`
+                  }
+                  gameId={null}
+                  gameDir={gameDir}
+                  onComplete={setBuildCheckComplete}
+                />
               )}
+
+              {buildCheckComplete &&
+                (gameId === undefined || gameId === null) && (
+                  <ChooseGameStep
+                    currentGameId={gameId}
+                    onComplete={setGameId}
+                  />
+                )}
               {gameId === null && <CreateGameStep onComplete={setGameId} />}
 
-              {!!gameId && shouldConfirmDiscordPost && (
+              {buildCheckComplete && !!gameId && shouldConfirmDiscordPost && (
                 <ConfirmationStep
                   label={() =>
                     "Do you want to post a message about the game upload to Discord?"
@@ -110,17 +125,6 @@ export function Upload({ flags }: { flags: CliFlags }) {
                   gameId={gameId}
                   gameDir={gameDir}
                   onComplete={setDiscordPostConfirmed}
-                />
-              )}
-
-              {!!gameId && !buildCheckComplete && buildRequired(gameDir) && (
-                <ConfirmationStep
-                  label={() =>
-                    `Your build files seem to be outdated. You might need to build/compile your game before uploading. Are you sure you want to continue?`
-                  }
-                  gameId={gameId}
-                  gameDir={gameDir}
-                  onComplete={setBuildCheckComplete}
                 />
               )}
 

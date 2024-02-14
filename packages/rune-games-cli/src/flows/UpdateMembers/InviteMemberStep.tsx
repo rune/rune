@@ -54,9 +54,9 @@ export function InviteMemberStep({
               "[tango][INVITE_GAME_DEV_FAILED_INVALID_USER_TAG]":
                 "Rune Tag is invalid. Verify Rune Tag and try again",
               "[tango][INVITE_GAME_DEV_FAILED_NO_EMAIL]":
-                "New member does not have an email",
+                "Invitee does not have an email",
               "[tango][INVITE_GAME_DEV_FAILED_BLOCKED_EMAIL]":
-                "New member has blocked email",
+                "Invitee has blocked email",
               "[tango][INVITE_GAME_DEV_FAILED_ALREADY_INVITED]":
                 "Member was already invited",
               default: `Something went wrong`,

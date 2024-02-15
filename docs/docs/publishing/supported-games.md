@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Supported Games
 
-Rune handles all the complexity of building a multiplayer game. We've made this SDK to make your life simple and we've tried to make it general enough that you can build almost anything. Any game that follows the [overall game guidelines](how-it-works/syncing-game-state.md#restrictions) and [server-side logic](advanced/server-side-logic.md) guidelines is supported.
+You can make any game that follows the [overall game guidelines](how-it-works/syncing-game-state.md#restrictions) and [server-side logic](advanced/server-side-logic.md) guidelines. Rune takes care of netcode, servers, voice chat, matchmaking, and much more. You just focus on your game.
 
 ## Examples of Supported Games {#examples-of-supported-games}
 
@@ -18,4 +18,13 @@ Rune handles all the complexity of building a multiplayer game. We've made this 
 - SimCity, Age of Empires, Tetris, Plants vs. Zombies and other strategy games
 - Snake, Bomberman, Pac-Man, and other fast-paced arcade games
 
-These are just some examples to give you an idea. Pretty much any kind of multiplayer game is possible with the Rune SDK!
+These are just some examples to give you an idea. Pretty much any multiplayer game is possible with Rune!
+
+## Roadmap
+
+We have a lot of exciting things in the pipeline to make your game even more awesome and fun to play together. Some highlights of what will be available soon are:
+- Custom game over
+- Landscape mode
+- Persistence
+
+We're also continuously optimizing the SDK and expanding our server presence so that your players get a smoother experience with less CPU usage and lower latency! 

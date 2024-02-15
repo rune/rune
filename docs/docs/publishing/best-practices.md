@@ -24,7 +24,7 @@ Players expect any level information to persist indefinitely, but iOS/Android ma
 
 ### Avoid Loading Bars and Calling `Rune.initClient()` Prematurely {#avoid-progress-bars-and-calling-runeinitclient-prematurely}
 
-Rune shows an animation while your game is loading. It can be confusing if there's another progress bar in your game itself. To avoid this, wait with calling `Rune.initClient()` until your game has fully completed loading.
+Rune shows an animation while your game is loading. It's a smoother player experience to only have one progress bar to load your game. Avoid having a loading screen in your game by waiting with calling `Rune.initClient()` until your game has fully completed loading.
 
 ### Gameplay Should not be Affected by Screen Size {#gameplay-should-not-be-affected-by-screen-size}
 

@@ -11,21 +11,21 @@ export function ConfirmationStep({
   onComplete,
 }: {
   label: (gameTitle: string, gameDir: string) => string
-  gameId: number
+  gameId: number | null
   gameDir: string
-  onComplete: (confirmed: boolean) => void
+  onComplete: (confirmed: boolean, gameDir: string) => void
 }) {
   const { game } = useGame(gameId)
   const [confirmed, setConfirmed] = useState<boolean | undefined>()
 
   useEffect(() => {
-    if (typeof confirmed === "boolean") onComplete(confirmed)
-  }, [confirmed, onComplete])
+    if (typeof confirmed === "boolean") onComplete(confirmed, gameDir)
+  }, [confirmed, onComplete, gameDir])
 
   return (
     <Step
       status={
-        !game
+        !game && gameId !== null
           ? "waiting"
           : confirmed === undefined
           ? "userInput"
@@ -34,8 +34,8 @@ export function ConfirmationStep({
           : "error"
       }
       label={
-        game
-          ? label(game.title, gameDir) +
+        game || gameId === null
+          ? label(game?.title ?? "", gameDir) +
             (typeof confirmed === "boolean"
               ? confirmed
                 ? " (Yes)"
@@ -44,7 +44,6 @@ export function ConfirmationStep({
           : "..."
       }
       view={
-        !!game &&
         confirmed === undefined && (
           <Choose
             options={["No", "Yes"]}

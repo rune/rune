@@ -1,8 +1,9 @@
 import { Box, Text } from "ink"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
+import { buildOutOfDate } from "../../lib/checkBuildUpToDate.js"
 import { CliFlags } from "../../lib/cli.js"
 import { getMyGames } from "../../lib/getMyGames.js"
 
@@ -39,6 +40,22 @@ export function Upload({ flags }: { flags: CliFlags }) {
   const [uploadConfirmed, setUploadConfirmed] = useState<boolean | undefined>(
     undefined
   )
+  const [buildCheckComplete, setBuildCheckComplete] = useState<
+    boolean | undefined
+  >(undefined)
+
+  // check if the a rebuild might be required, if not then mark that we
+  // don't need to display the build check any more - otherwise
+  // we're prompt the user
+  const buildRequired = useCallback((gameDir: string) => {
+    const required = buildOutOfDate(gameDir)
+
+    if (!required) {
+      setBuildCheckComplete(true)
+    }
+
+    return required
+  }, [])
 
   useEffect(() => {
     if (releaseFlag) {
@@ -80,12 +97,27 @@ export function Upload({ flags }: { flags: CliFlags }) {
             <ReadyForReleaseStep onComplete={setReadyForRelease} />
           ) : (
             <>
-              {(gameId === undefined || gameId === null) && (
-                <ChooseGameStep currentGameId={gameId} onComplete={setGameId} />
+              {!buildCheckComplete && buildRequired(gameDir) && (
+                <ConfirmationStep
+                  label={() =>
+                    `Your build files seem to be outdated. You might need to build/compile your game before uploading. Are you sure you want to continue?`
+                  }
+                  gameId={null}
+                  gameDir={gameDir}
+                  onComplete={setBuildCheckComplete}
+                />
               )}
+
+              {buildCheckComplete &&
+                (gameId === undefined || gameId === null) && (
+                  <ChooseGameStep
+                    currentGameId={gameId}
+                    onComplete={setGameId}
+                  />
+                )}
               {gameId === null && <CreateGameStep onComplete={setGameId} />}
 
-              {!!gameId && shouldConfirmDiscordPost && (
+              {buildCheckComplete && !!gameId && shouldConfirmDiscordPost && (
                 <ConfirmationStep
                   label={() =>
                     "Do you want to post a message about the game upload to Discord?"
@@ -99,6 +131,7 @@ export function Upload({ flags }: { flags: CliFlags }) {
               {!!gameId &&
                 (typeof discordPostConfirmed === "boolean" ||
                   !shouldConfirmDiscordPost) &&
+                buildCheckComplete &&
                 shouldConfirmUpload && (
                   <ConfirmationStep
                     label={(gameTitle, gameDir) =>
@@ -113,6 +146,7 @@ export function Upload({ flags }: { flags: CliFlags }) {
               {!!gameId &&
                 (typeof discordPostConfirmed === "boolean" ||
                   !shouldConfirmDiscordPost) &&
+                buildCheckComplete &&
                 (uploadConfirmed || !shouldConfirmUpload) && (
                   <CreateGameVersionStep
                     gameId={gameId}

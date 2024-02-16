@@ -8,7 +8,7 @@ Here's some good practices to make your game a great experience for the players!
 
 ### Use Portrait Mode {#use-portrait-mode}
 
-Rune players love be able to play with one hand so your game should use portrait mode 📱 
+Rune players love be able to play with one hand so your game should use portrait mode 📱
 
 ### Avoid UI Like Menu Screens, Pause Buttons, High Score Screen, etc. {#avoid-ui-like-menu-screens-pause-buttons-high-score-screen-etc}
 
@@ -24,7 +24,7 @@ Players expect any level information to persist indefinitely, but iOS/Android ma
 
 ### Avoid Loading Bars and Calling `Rune.initClient()` Prematurely {#avoid-progress-bars-and-calling-runeinitclient-prematurely}
 
-Rune shows an animation while your game is loading. It can be confusing if there's another progress bar in your game itself. To avoid this, wait with calling `Rune.initClient()` until your game has fully completed loading.
+Rune shows an animation while your game is loading. It's a smoother player experience to only have one progress bar to load your game. Avoid having a loading screen in your game by waiting with calling `Rune.initClient()` until your game has fully completed loading.
 
 ### Gameplay Should not be Affected by Screen Size {#gameplay-should-not-be-affected-by-screen-size}
 
@@ -32,7 +32,7 @@ Your game should ideally scale from small narrow phones with resolutions like 28
 
 ### Gameplay Should Start Easy and Simple {#gameplay-should-start-easy-and-simple}
 
-As a game dev, it's easy to think that your game is very simple to understand. That's because you made it 😅 Players will need to understand how your game works and what everything means. For that reason, we highly recommend you start your gameplay simple and easy.  
+As a game dev, it's easy to think that your game is very simple to understand. That's because you made it 😅 Players will need to understand how your game works and what everything means. For that reason, we highly recommend you start your gameplay simple and easy.
 
 ### Use Icons Instead of Text {#use-icons-instead-of-text}
 

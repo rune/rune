@@ -4,11 +4,11 @@ sidebar_position: 100
 
 # Setting up existing game
 
-In case you are porting an existing game, there are two possible approaches:
+In case you are porting an existing game, these are the recommended ways to set it up in descending order of preference:
 
 1. Using the Rune game template and copying your code on top of it.
 2. Adding Vite Rune plugin to an already existing vite project.
-3. (Not recommended) Manual standalone setup.
+3. Manual standalone setup.
 
 ## Using Rune game template.
 
@@ -28,7 +28,7 @@ Take a look at [game logic](../quick-start#game-logic) and [rendering](../quick-
 In case your game is already built using Vite, you can add the Rune plugin to it. See [Vite plugin](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/vite-plugin-rune) for setup.
 It is also recommended to setup [eslint](../advanced/server-side-logic#editor-integration) to detect errors in your game logic.
 
-## (Not recommended) Manual standalone setup.
+## Manual standalone setup.
 
 1. Add the SDK to the `index.html` above any other JS scripts:
 
@@ -52,3 +52,5 @@ Your index.html should contain these lines in the following order:
 ```
 
 4. Setup [eslint](../advanced/server-side-logic#editor-integration) to detect errors in your game logic.
+
+You can also look into [Tic Tac Toe](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/tic-tac-toe) as example to understand how to setup a game manually.

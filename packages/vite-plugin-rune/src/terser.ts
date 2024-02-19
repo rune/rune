@@ -6,7 +6,7 @@ import type { MinifyOptions, MinifyOutput } from "terser"
 //This plugin in turn disables minifation on all files, and then runs it on all files except logic.js
 //Implemented using https://github.com/vitejs/vite/blob/main/packages/vite/src/node/plugins/terser.ts as inspiration
 //And adapted according to https://rollupjs.org/plugin-development/#output-generation-hooks chart, so that this plugin runs after esbuild is done.
-export function terserPlugin(): Plugin {
+export function terserPlugin(enableLogicMinification: boolean): Plugin {
   const makeWorker = () =>
     new Worker(
       async (code: string, options: MinifyOptions) => {
@@ -48,7 +48,7 @@ export function terserPlugin(): Plugin {
         Object.keys(bundle).map(async (name) => {
           if (
             !shouldMinify ||
-            (name === "logic.js" && process.env.RUNE_MINIFY_LOGIC !== "1")
+            (name === "logic.js" && !enableLogicMinification)
           ) {
             return
           }

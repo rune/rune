@@ -10,6 +10,9 @@ export default defineConfig({
   plugins: [
     qrcode(), // only applies in dev mode
     react(),
-    rune({ logicPath: path.resolve("./src/logic.ts") }),
+    rune({
+      logicPath: path.resolve("./src/logic.ts"),
+      enableLogicMinification: false, // If your logic reaches the allowed limit, you can enable this flag to minify it. This will make it significantly more difficult to detect validation issues.
+    }),
   ],
 })

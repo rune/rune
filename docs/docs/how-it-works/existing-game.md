@@ -16,7 +16,7 @@ Create a new Rune game project by running:
 npx rune-games-cli@latest create
 ```
 
-You now have a simple example game with game logic and client rendering files. You can then copy your game logic and rendering code into the `logic.ts` and `client.ts` files respectively. Take a look at [Quick Start](../quick-start) for a quick introduction to these files or [Syncing Game State](./syncing-game-state) for a more in-depth explanation on the need for separation between logic and rendering.
+You now have a simple example game with game logic and client rendering files. You can then copy your game logic and rendering code into the `logic.ts` and `client.ts` files respectively. Take a look at [Quick Start](../quick-start) for a quick introduction to these files or [Syncing Game State](./syncing-game-state) for a more in-depth explanation.
 
 We recommend that you enable ESLint in your editor to detect issues while developing your game. The template code already has the necessary configuration for ESLint.
 

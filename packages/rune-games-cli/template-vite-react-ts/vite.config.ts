@@ -12,7 +12,7 @@ export default defineConfig({
     react(),
     rune({
       logicPath: path.resolve("./src/logic.ts"),
-      enableLogicMinification: false, // If your logic reaches the allowed limit, you can enable this flag to minify it. This will make it significantly more difficult to detect validation issues.
+      minifyLogic: false, // This flag can be used if your logic reaches the allowed limit. However, it will make it significantly more difficult to detect validation issues
     }),
   ],
 })

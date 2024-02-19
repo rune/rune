@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url)
 
 export interface ViteRunePluginOptions {
   logicPath: string
-  enableLogicMinification?: boolean
+  minifyLogic?: boolean
 }
 
 const runtimePublicPath = "/@rune-games-sdk"
@@ -110,6 +110,6 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
         },
       }),
     },
-    terserPlugin(options.enableLogicMinification ?? false),
+    terserPlugin(options.minifyLogic ?? false),
   ]
 }

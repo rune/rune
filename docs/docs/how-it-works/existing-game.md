@@ -2,12 +2,13 @@
 sidebar_position: 100
 ---
 
-# Setting up existing game
+# Porting Existing Game
 
-In case you are porting an existing game to Rune you can use the `rune-games-cli` to generate the game template and copy your code on top of it or use a manual standalone setup.
-We strongly recommend to go with the first approach, as it will take care of all the necessary boilerplate out of the box & provide a better development experience.
+Amazing that you're considering adapting your game for multiplayer on Rune! 🥳
 
-## Using Rune game template.
+We recommend you use the `rune-games-cli` to generate a game template and copy your game code into that game template. Following this approach will take care of any boilerplate and provide a nice development experience with Rune-specific ESLint & Vite plugins. You can also quickly get a minimal version of your game working, then add more game logic step-by-step. Alternatively, you can add the SDK manually.
+
+### Approach 1: Rune Template
 
 Create a new Rune game project by running:
 
@@ -15,36 +16,24 @@ Create a new Rune game project by running:
 npx rune-games-cli@latest create
 ```
 
-Select Plain TS template. This will take care of creating the relevant boilerplate for building the game and provides simple example game logic and rendering files.
+You now have a simple example game with game logic and client rendering files. You can then copy your game logic and rendering code into the `logic.ts` and `client.ts` files respectively. Take a look at [Quick Start](../quick-start) for a quick introduction to these files or [Syncing Game State](./syncing-game-state) for a more in-depth explanation on the need for separation between logic and rendering.
 
-Now you just need to copy your game logic and rendering code into the `logic.js` and `client.js` files respectively.
-Take a look at [game logic](../quick-start#game-logic) and [rendering](../quick-start#rendering).
+We recommend that you enable ESLint in your editor to detect issues while developing your game. The template code already has the necessary configuration for ESLint.
 
-We also recommend to enable Eslint in your editor to detect issues while developing your game. The template code already has the necessary configuration for Eslint.
+### Approach 2: Manual Setup
 
-## Manual standalone setup.
-
-1. Add the SDK to the `index.html` above any other JS scripts:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer-dev.js"></script>
-```
-
-2. Create a separate entry file called `logic.js` that is included below the SDK. This file should only contain the [game logic](../quick-start#game-logic).
-```html
-<script src="./logic.js"></script>
-```
-
-3. Create a separate entry file called `client.js`. This file will call `Rune.initClient` and be responsible for [rendering](../quick-start#rendering)
-
-Your index.html should contain these lines in the following order:
-
+1. Create a file called `logic.js` that has all [game logic](../quick-start#game-logic) and calls `Rune.initLogic()`
+2. Create a file called `client.js` that's responsible for [rendering](../quick-start#rendering) and calls `Rune.initClient()`
+3. Load the SDK and the two files mentioned above in your `index.html` in the following order:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer-dev.js"></script>
 <script src="./logic.js"></script>
 <script src="./client.js"></script>
 ```
+4. Setup [Rune's ESLint plugin](../advanced/server-side-logic#editor-integration) to detect issues in your game logic
 
-4. Setup [eslint](../advanced/server-side-logic#editor-integration) to detect errors in your game logic.
+You can also look at the [Tic Tac Toe](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/tic-tac-toe) example game to understand how to set up a game manually. If you're using TypeScript, you will need to update your setup to export a `logic.js` file.
 
-You can also look into [Tic Tac Toe](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/tic-tac-toe) as example to understand how to setup a game manually.
+### Questions?
+
+We're happy to help! Just write us on the [Rune Discord](https://discord.gg/rune-devs) server.

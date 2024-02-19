@@ -6,7 +6,7 @@ sidebar_position: 100
 
 Amazing that you're considering adapting your game for multiplayer on Rune! 🥳
 
-We recommend you use the `rune-games-cli` to generate a game template and copy your game code into that game template. Following this approach will take care of any boilerplate and provide a nice development experience with Rune-specific ESLint & Vite plugins. You can also quickly get a minimal version of your game working, then add more game logic step-by-step. Alternatively, you can add the SDK manually.
+We recommend you follow **approach 1** below, which will take care of any boilerplate and provide a nice development experience with Rune-specific ESLint & Vite plugins. You can quickly get a minimal multiplayer version of your game working, then add more game logic step-by-step. Alternatively, you can add the SDK manually.
 
 ### Approach 1: Rune Template
 
@@ -22,6 +22,8 @@ We recommend that you enable ESLint in your editor to detect issues while develo
 
 ### Approach 2: Manual Setup
 
+This approach requires you to be careful, especially if you're using TypeScript as you will need to update your TypeScript setup to export a `logic.js` file. If you still like to do the setup manually, here's how you do it:
+
 1. Create a file called `logic.js` that has all [game logic](../quick-start#game-logic) and calls `Rune.initLogic()`
 2. Create a file called `client.js` that's responsible for [rendering](../quick-start#rendering) and calls `Rune.initClient()`
 3. Load the SDK and the two files mentioned above in your `index.html` in the following order:
@@ -31,8 +33,9 @@ We recommend that you enable ESLint in your editor to detect issues while develo
 <script src="./client.js"></script>
 ```
 4. Setup [Rune's ESLint plugin](../advanced/server-side-logic#editor-integration) to detect issues in your game logic
+5. Move all your game logic into `logic.js` and make `client.js` import all your rendering code
 
-You can also look at the [Tic Tac Toe](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/tic-tac-toe) example game to understand how to set up a game manually. If you're using TypeScript, you will need to update your setup to export a `logic.js` file.
+You can also look at the [Tic Tac Toe](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/tic-tac-toe) example game to understand how to set up a game manually.
 
 ### Questions?
 

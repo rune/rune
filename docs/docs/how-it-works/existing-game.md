@@ -4,11 +4,8 @@ sidebar_position: 100
 
 # Setting up existing game
 
-In case you are porting an existing game, these are the recommended ways to set it up in descending order of preference:
-
-1. Using the Rune game template and copying your code on top of it.
-2. Adding Vite Rune plugin to an already existing vite project.
-3. Manual standalone setup.
+In case you are porting an existing game to Rune you can use the `rune-games-cli` to generate the game template and copy your code on top of it or use a manual standalone setup.
+We strongly recommend to go with the first approach, as it will take care of all the necessary boilerplate out of the box & provide a better development experience.
 
 ## Using Rune game template.
 
@@ -18,15 +15,12 @@ Create a new Rune game project by running:
 npx rune-games-cli@latest create
 ```
 
-Select Plain TS template. This will take care of creating the relevant boilerplate for building the game, adding eslint rules, and creating example game logic and rendering files.
+Select Plain TS template. This will take care of creating the relevant boilerplate for building the game and provides simple example game logic and rendering files.
 
 Now you just need to copy your game logic and rendering code into the `logic.js` and `client.js` files respectively.
 Take a look at [game logic](../quick-start#game-logic) and [rendering](../quick-start#rendering).
 
-## Adding Rune plugin to already existing vite project.
-
-In case your game is already built using Vite, you can add the Rune plugin to it. See [Vite plugin](https://github.com/rune/rune-multiplayer-web-games/tree/staging/packages/vite-plugin-rune) for setup.
-It is also recommended to setup [eslint](../advanced/server-side-logic#editor-integration) to detect errors in your game logic.
+We also recommend to enable Eslint in your editor to detect issues while developing your game. The template code already has the necessary configuration for Eslint.
 
 ## Manual standalone setup.
 
@@ -41,7 +35,7 @@ It is also recommended to setup [eslint](../advanced/server-side-logic#editor-in
 <script src="./logic.js"></script>
 ```
 
-3. Your current game file should call `Rune.initClient` and be responsible for [rendering](../quick-start#rendering)
+3. Create a separate entry file called `client.js`. This file will call `Rune.initClient` and be responsible for [rendering](../quick-start#rendering)
 
 Your index.html should contain these lines in the following order:
 

@@ -12,6 +12,8 @@ const possibleColors: Color[] = [
   [88, 142, 192],
   [224, 190, 70],
   [198, 98, 188],
+  [190, 30, 30],
+  [130, 30, 190],
 ]
 
 const cornerCells: Coordinate[] = [
@@ -19,11 +21,13 @@ const cornerCells: Coordinate[] = [
   { row: 0, col: 8 },
   { row: 8, col: 0 },
   { row: 8, col: 8 },
+  { row: 3, col: 3 },
+  { row: 5, col: 5 },
 ]
 
 Rune.initLogic({
   minPlayers: 1,
-  maxPlayers: 4,
+  maxPlayers: 6,
   setup: (playerIds) => ({
     session: randomString(10),
     onboardingBoard: generateSudoku({

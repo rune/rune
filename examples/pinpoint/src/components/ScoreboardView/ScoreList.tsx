@@ -9,9 +9,8 @@ import {
 } from "../animation/SimpleCSSTransition"
 import { sortBy } from "../../lib/sortBy"
 
-const itemHeight = 70
 const itemGap = 10
-
+const itemHeight = Math.min(window.innerHeight * 0.075, 75)
 export function ScoreList({
   scores,
   myPlayerId,
@@ -69,17 +68,19 @@ export function ScoreList({
               ? "You"
               : item.player.displayName}
           </Name>
-          <Score>
-            <AnimatedNumber value={item[show]} />
-          </Score>
-          <SimpleCSSTransition
-            visible={showLatestScore}
-            duration={timings.default}
-          >
-            <LatestScore missed={item.missed}>
-              {item.missed ? "No guess" : `+${item.latestScore}`}
-            </LatestScore>
-          </SimpleCSSTransition>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Score>
+              <AnimatedNumber value={item[show]} />
+            </Score>
+            <SimpleCSSTransition
+              visible={showLatestScore}
+              duration={timings.default}
+            >
+              <LatestScore missed={item.missed}>
+                {item.missed ? "No guess" : `+${item.latestScore}`}
+              </LatestScore>
+            </SimpleCSSTransition>
+          </div>
         </Item>
       ))}
     </Items>
@@ -125,8 +126,8 @@ const Item = styled.div<{ offset: number }>`
 `
 
 const Avatar = styled.img<{ size: "big" | "small" }>`
-  width: ${({ size }) => (size === "big" ? 70 : 50)}px;
-  height: ${({ size }) => (size === "big" ? 70 : 50)}px;
+  height: 100%;
+  margin: 10px 10px;
 `
 
 const Name = styled.div`
@@ -148,6 +149,7 @@ const Score = styled.div`
   border-radius: 45px;
   color: #f8fffc;
   width: 55px;
+  margin-right: 60px;
   text-align: center;
 `
 
@@ -157,8 +159,7 @@ const LatestScore = styled.div<{ missed: boolean }>`
   font-size: 13px;
   font-weight: 700;
   position: absolute;
-  right: 8px;
-  top: 2px;
+  right: 0;
   width: 100px;
   text-align: center;
 `

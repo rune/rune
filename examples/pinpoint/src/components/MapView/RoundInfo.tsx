@@ -68,7 +68,7 @@ export function RoundInfo() {
             <Name>{player.displayName}</Name>
           </Player>
         ))}
-        {myPlayer && remainingPlayers.length < 3 && (
+        {myPlayer && remainingPlayers.length < 5 && (
           <Player onClick={() => Rune.showInvitePlayers()}>
             <AvatarPlaceholder src={invitePlayerImg} />
             <Name>Invite</Name>
@@ -97,52 +97,58 @@ const Header = styled.div`
 `
 
 const Players = styled.div`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
   padding: 10px 2vw 5px;
 `
 
 const Player = styled.div`
-  width: 24vw;
   display: flex;
+  flex-basis: 100%;
   flex-direction: column;
   align-items: center;
+  min-width: 0;
 `
 
 const Avatar = styled.img`
-  width: 17vw;
-  height: 17vw;
+  width: 100%;
+  height: 100%;
   border: 1px solid #d8f1e8;
-  border-radius: 17vw;
+  border-radius: 100%;
 `
 
 const AvatarContainer = styled.div`
   background: linear-gradient(180deg, #01a491 0%, #a7e4d5 147.12%);
-  border-radius: 17vw;
+  border-radius: 100%;
   display: flex;
   padding: 1px;
   position: relative;
 `
 
 const AvatarPlaceholder = styled.img`
-  width: calc(17vw + 2px);
-  height: calc(17vw + 2px);
+  width: 100%;
+  height: 100%;
 `
 
 const AvatarCheckmarkContainer = styled.div`
   ${simpleCSSTransitionStyles({ opacity: 0 }, { opacity: 1 })};
   position: absolute;
-  width: 17vw;
-  height: 17vw;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   border: 1px solid #d8f1e8;
   background-color: rgba(30, 98, 82, 0.5);
-  border-radius: 17vw;
+  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 `
 
 const AvatarCheckmark = styled.img`
-  width: 14vw;
+  width: 50%;
 `
 
 const Name = styled.div`

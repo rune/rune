@@ -13,8 +13,12 @@ export const SHIP_START_POSITIONS = [
   [-0.04, 0.04],
   [-0.08, 0, 0.08],
   [-0.12, -0.04, 0.04, 0.12],
+  [-0.16, -0.08, 0, 0.08, 0.16],
+  [-0.2, -0.12, -0.04, 0.04, 0.12, 0.2],
 ]
-export const SHIP_COLORS = [0x00eaa9, 0x79a2ff, 0xf59a00, 0x467eff]
+export const SHIP_COLORS = [
+  0x00eaa9, 0x79a2ff, 0xf59a00, 0x467eff, 0xfff846, 0x18f1ff,
+]
 export const SHIP_X_SPEED_RATE = (1 / UPDATES_PER_SECOND) * 4
 export const SHIP_Z_SPEED_RATE = (1 / UPDATES_PER_SECOND) * 0.06
 export const SHIP_INIT_SPEED = 50

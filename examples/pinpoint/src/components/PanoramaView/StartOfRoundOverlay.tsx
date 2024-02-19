@@ -30,7 +30,9 @@ export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
           </Label>
           <PlayersContainer>
             {playersArray.map((player) => (
-              <PlayerAvatar key={player.playerId} src={player.avatarUrl} />
+              <PlayerAvatarContainer key={player.playerId}>
+                <PlayerAvatar src={player.avatarUrl} />
+              </PlayerAvatarContainer>
             ))}
             {playersArray.length === 1 && (
               <Name>{playersArray[0].displayName}</Name>
@@ -104,11 +106,15 @@ const PlayersContainer = styled.div`
   }
 `
 
+const PlayerAvatarContainer = styled.div`
+  display: flex;
+`
+
 const PlayerAvatar = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   background-color: white;
-  border-radius: 25px;
+  border-radius: 50%;
 `
 
 const Name = styled.div`

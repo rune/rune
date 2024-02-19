@@ -14,11 +14,7 @@ Create a new Rune game project by running:
 npx rune-games-cli@latest create
 ```
 
-or add the SDK to an existing game by including it in your `index.html` above any other JS scripts: 
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer-dev.js"></script>
-```
+or follow this [guide to port your existing game](./how-it-works/existing-game.md) to Rune!
 
 ## Game Logic {#game-logic}
 

@@ -46,7 +46,10 @@ export function terserPlugin(): Plugin {
 
       await Promise.all(
         Object.keys(bundle).map(async (name) => {
-          if (!shouldMinify || name === "logic.js") {
+          if (
+            !shouldMinify ||
+            (name === "logic.js" && process.env.RUNE_MINIFY_LOGIC !== "1")
+          ) {
             return
           }
 

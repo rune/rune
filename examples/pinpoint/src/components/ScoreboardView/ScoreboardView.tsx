@@ -169,7 +169,7 @@ export function ScoreboardView() {
                   <PlayIcon src={playIcon} />
                   <span>Next Round</span>
                 </CTA>
-                {Object.keys(players).length < 4 && (
+                {Object.keys(players).length < 6 && (
                   <InviteLink onClick={() => Rune.showInvitePlayers()}>
                     Invite more friends!
                   </InviteLink>
@@ -219,7 +219,7 @@ const ListContainer = styled.div`
 `
 
 const WhiteBackground = styled(Overlay)`
-  background-color: #F8FFFC;
+  background-color: #f8fffc;
   opacity: 0.9;
 `
 
@@ -291,7 +291,7 @@ const MapToggleButton = styled.img<{ position: "left" | "right" }>`
 `
 
 const Photographer = styled.p`
-  margin: 20px;
+  margin: 10px;
   font-size: 13px;
   font-weight: 300;
   color: #01a491;

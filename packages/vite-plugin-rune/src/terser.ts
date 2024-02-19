@@ -48,7 +48,7 @@ export function terserPlugin(): Plugin {
         Object.keys(bundle).map(async (name) => {
           if (
             !shouldMinify ||
-            (name === "logic.js" && !process.env.RUNE_MINIFY_LOGIC)
+            (name === "logic.js" && process.env.RUNE_MINIFY_LOGIC !== "1")
           ) {
             return
           }

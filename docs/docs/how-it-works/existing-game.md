@@ -22,11 +22,11 @@ We recommend that you enable ESLint in your editor to detect issues while develo
 
 ### Approach 2: Manual Setup
 
-This approach requires you to be careful, especially if you're using TypeScript as you will need to update your TypeScript setup to export a `logic.js` file. If you still like to do the setup manually, here's how you do it:
+This approach requires you to be careful, especially if you're using TypeScript or a bundler as you will need to update your setup to export a `logic.js` file. If you still like to do the setup manually, here's how you do it:
 
 1. Create a file called `logic.js` that has all [game logic](../quick-start#game-logic) and calls `Rune.initLogic()`
 2. Create a file called `client.js` that's responsible for [rendering](../quick-start#rendering) and calls `Rune.initClient()`
-3. Load the SDK and the two files mentioned above in your `index.html` in the following order:
+3. Load the SDK before any other script in your `index.html` along with the two files:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/multiplayer-dev.js"></script>
 <script src="./logic.js"></script>

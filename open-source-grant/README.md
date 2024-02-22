@@ -119,7 +119,10 @@ Applications will be evaluated based on the game's potential for engaging multip
 Yes, and you can also apply with a game you've already made. You should be aware though that you may not be awarded the grant.
 
 #### What is the timeline for game development and release to receive the grant?
-We'll let you know if your application is approved. You can develop your game on your own schedule and take as long as you'd like. The grant is awarded through GitHub Sponsors once your game is approved to be launched on the Rune platform w/o any major bugs and your code + content is made available on GitHub.
+We'll let you know if your application is approved. You can develop your game on your own schedule (see other FAQ answer). The grant is awarded through GitHub Sponsors once your game is approved to be launched on the Rune platform w/o any major bugs and your code + content is made available on GitHub.
+
+#### Is there a deadline or time frame for finishing the game?
+No, you can take as much time as you'd like to make your game. It's just important that there's some minimal progress throughout as otherwise someone else should benefit from the grant instead. We might check in every 3 months or so to hear how things are going and that the game development has progressed a bit.
 
 #### How will the money be divided between $500 **Spark** grants and $5000 **Ignite** grants? 
 This will be decided based on interest from the open-source community. We wanted to have the $500 grants as we think this is a great way to boost the ecosystem. For many aspiring devs, getting the first few $ is an important milestone. That being said, you shouldn't make an open-source game just for the money. 

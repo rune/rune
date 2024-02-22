@@ -128,7 +128,7 @@ No, you can take as much time as you'd like to make your game. It's just importa
 This will be decided based on interest from the open-source community. We wanted to have the $500 grants as we think this is a great way to boost the ecosystem. For many aspiring devs, getting the first few $ is an important milestone. That being said, you shouldn't make an open-source game just for the money. 
 
 #### How do I apply for the Ignite grant?
-Devs can apply for the **Ignite** grant once they've proven themselves with a **Spark** grant. After they've successfully released a game made using a **Spark** grant, they'll receive info on how to apply for the **Ignite** grant and the process for that type of grant. The expectations are obviously higher for games made as part of an **Ignite** grant. 
+Devs can apply for the **Ignite** grant once they've proven themselves with a **Spark** grant, meaning that they've successfully released a game made using a **Spark** grant. Afterwards, they'll receive info on how to apply for the **Ignite** grant and the process for that type of grant. The expectations are obviously higher for games made as part of an **Ignite** grant. 
 
 #### Are there any content restrictions or guidelines for the games?
 We require that all games adhere to basic content guidelines such as avoiding hate speech, pornography, and other potentially offensive content. We seek to promote games that are inclusive and accessible to a wide audience.

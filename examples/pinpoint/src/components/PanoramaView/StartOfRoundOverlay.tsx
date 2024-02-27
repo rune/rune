@@ -115,6 +115,8 @@ const PlayerAvatar = styled.img`
   height: 100%;
   background-color: white;
   border-radius: 50%;
+  max-width: 17vw;
+  max-height: 17vw;
 `
 
 const Name = styled.div`

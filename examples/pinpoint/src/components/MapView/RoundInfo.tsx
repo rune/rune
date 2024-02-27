@@ -100,7 +100,7 @@ const Players = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  gap: 2px;
+  gap: 2vw;
   padding: 10px 2vw 5px;
 `
 
@@ -117,6 +117,8 @@ const Avatar = styled.img`
   height: 100%;
   border: 1px solid #d8f1e8;
   border-radius: 100%;
+  max-width: 17vw;
+  max-height: 17vw;
 `
 
 const AvatarContainer = styled.div`
@@ -130,6 +132,8 @@ const AvatarContainer = styled.div`
 const AvatarPlaceholder = styled.img`
   width: 100%;
   height: 100%;
+  max-width: 17vw;
+  max-height: 17vw;
 `
 
 const AvatarCheckmarkContainer = styled.div`

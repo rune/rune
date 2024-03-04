@@ -56,7 +56,7 @@ Rune.initLogic({
 
 ### Rendering {#rendering}
 
-The game state should be rendered for the player to interact with. That’s the responsibility of `client.js`, which calls `Rune.initClient` with a `onChange` callback function. Whenever an `action` is performed, the `onChange` function is called with read-only info for updating the game experience (animations, graphics, UI, sound effects). The `onChange` has all the info you might need to update your game, including the `action` / `event` that triggered it, the old and new game states, info about the `players`, etc.
+The game state should be rendered for the player to interact with. That’s the responsibility of `client.js`, which calls `Rune.initClient` with a `onChange` callback function. Whenever an `action` is performed, the `onChange` function is called with read-only info for updating the game experience (animations, graphics, UI, sound effects). The `onChange` has all the info you might need to update your game, including the `action` / `event` that triggered it, the old and new game states, info about the `players`, etc. The `onChange` callback is reliable in that it's always called every time, even on laggy clients with bad internet connection. 
 
 The `client.js` also binds the UI to call the `actions`. For instance, for Tic Tac Toe, tapping on a cell would trigger `Rune.actions.markCell({ cellId })`.
 

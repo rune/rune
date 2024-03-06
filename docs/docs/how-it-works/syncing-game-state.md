@@ -91,7 +91,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 - Max 10 actions per player per second.
 - Actions must be synchronous, execute in <10 ms and consume <1 MB memory.
 - The `onChange` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.
-- The `game` state must be <1 MB and any `action` payload below <100 KB to avoid unnecessary network bandwidth usage.
+- The `game` state must be <1 MB and any `action` payload below <25 KB to avoid unnecessary network bandwidth usage.
 - The `game` state must be JSON-serializable (e.g. no classes/functions) so it can be sent over the network.
 - The logic.js file must be <1 MB as it will be fetched by the server and run inside a VM.
 

@@ -34,10 +34,10 @@ function onChange({ game, players, yourPlayerId, action }) {
   cellButtons.forEach((button, i) => {
     button.setAttribute("player", playerIds.indexOf(cells[i]))
     button.setAttribute("dim", (winCombo && !winCombo.includes(i)) || (!freeCells && !winCombo))
-    if (cells[i] || lastMovePlayerId === yourPlayerId || winCombo)
-      button.setAttribute("disabled", "")
-    else
+    if (!cells[i] && yourPlayerId && lastMovePlayerId !== yourPlayerId && !winCombo)
       button.removeAttribute("disabled")
+    else
+      button.setAttribute("disabled", "")
   })
 
   playerContainers.forEach((container, i) => {

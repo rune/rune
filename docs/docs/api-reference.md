@@ -169,6 +169,7 @@ Rune.initClient({
     futureGame,
     yourPlayerId,
     players,
+    allPlayerIds,
     action,
     event,
     rollbacks,
@@ -196,7 +197,7 @@ This argument is the predicted future game state. This value is only available i
 
 Your player id, if the current user is a spectator this argument is undefined.
 
-##### `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>` {#players-recordstring--playerid-string-displayname-string-avatarurl-string-}
+##### (Deprecated) `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>` {#players-recordstring--playerid-string-displayname-string-avatarurl-string-}
 
 The `players` argument is an object of the current players, useful to display their names and avatars in the game.
 
@@ -205,6 +206,10 @@ The `players` argument is an object of the current players, useful to display th
 Do not rely on `players` argument for determining player order, instead use `setup` and `events.playerJoined/playerLeft` callbacks in `logic.js`.
 
 :::
+
+##### `allPlayerIds?: string[]` {#all-player-ids}
+
+The player IDs of all current players in the game.
 
 ##### `action?: { name: string, playerId: string, params: any }` {#action--name-string-playerid-string-params-any-}
 
@@ -238,6 +243,10 @@ Opens invite modal inside the Rune app. Useful if you want to incentivize player
 ### `Rune.gameTime()` {#runegametime-1}
 
 Returns the amount of milliseconds that have passed since the start of the game. See [Using Time in your Game](advanced/real-time-games.md#game-time).
+
+### `Rune.getPlayerInfo(id)` {#dusk-get-player-info}
+
+Returns information about the player with the ID specified. Note that you can pass the ID of a player no longer in game and get placeholder information.
 
 ### `Rune.timeSinceLastUpdate()` {#runetimesincelastupdate}
 

@@ -4,7 +4,7 @@ const selectSound = new Audio("select.wav")
 
 let cellButtons, playerContainers
 
-function initUI(cells, playerIds, players, yourPlayerId) {
+function initUI(cells, playerIds, yourPlayerId) {
   cellButtons = cells.map((_, cellIndex) => {
     const button = document.createElement("button")
     button.addEventListener("click", () => Rune.actions.claimCell(cellIndex))

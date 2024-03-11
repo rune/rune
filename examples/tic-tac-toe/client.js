@@ -13,22 +13,20 @@ function initUI(cells, playerIds, players, yourPlayerId) {
   })
 
   playerContainers = playerIds.map((playerId, index) => {
+    const { displayName, avatarUrl } = Rune.getPlayerInfo(playerId)
     const li = document.createElement("li")
     li.setAttribute("player", index)
     li.innerHTML =
-      `<img src="${players[playerId].avatarUrl}" />
-           <span>${
-        players[playerId].displayName +
-        (players[playerId].playerId === yourPlayerId ? "<br>(You)" : "")
-      }</span>`
+      `<img src="${avatarUrl}"/>
+       <span>${displayName + (playerId === yourPlayerId ? "<br>(You)" : "")}</span>`
     playersSection.appendChild(li)
     return li
   })
 }
 
-function onChange({ game, players, yourPlayerId, action }) {
+function onChange({ game, yourPlayerId, action }) {
   const { cells, playerIds, winCombo, lastMovePlayerId, freeCells } = game
-  if (!cellButtons) initUI(cells, playerIds, players, yourPlayerId)
+  if (!cellButtons) initUI(cells, playerIds, yourPlayerId)
   if (lastMovePlayerId) board.classList.remove("initial")
 
   cellButtons.forEach((button, i) => {

@@ -244,7 +244,7 @@ Opens invite modal inside the Rune app. Useful if you want to incentivize player
 
 Returns the amount of milliseconds that have passed since the start of the game. See [Using Time in your Game](advanced/real-time-games.md#game-time).
 
-### `Rune.getPlayerInfo(id)` {#dusk-get-player-info}
+### `Rune.getPlayerInfo(id)` {#rune-get-player-info}
 
 Returns information about the player with the ID specified. Note that you can pass the ID of a player no longer in game and get placeholder information.
 

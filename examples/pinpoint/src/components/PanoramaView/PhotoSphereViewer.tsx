@@ -33,6 +33,10 @@ portal.style.width = "100%"
 portal.style.height = "100%"
 document.getElementById("hiddenPsv")?.appendChild(portal)
 
+portal.style.transition = `opacity ${timings.default}ms`
+portal.style.opacity = "0"
+let firstPanoramaLoad = true
+
 const viewer = new Viewer({
   container: portal,
   adapter: [CubemapTilesAdapter, { flipTopBottom: true }],
@@ -153,6 +157,13 @@ export function PhotoSphereViewer({
         zoom: mapFovToZoom(90, view),
       })
       .then(() => {
+        // showLoader:false prevents the loader from showing when one panorama
+        // switches to another, but it doesn't work for the first panorama for
+        // some reason
+        if (firstPanoramaLoad) {
+          portal.style.opacity = "1"
+          firstPanoramaLoad = false
+        }
         viewer.addEventListener("position-updated", onInteraction)
         viewer.addEventListener("zoom-updated", onInteraction)
       })

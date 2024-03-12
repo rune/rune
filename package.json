@@ -29,6 +29,6 @@
     "lerna": "^6.1.0",
     "lint-staged": "12.4.1",
     "prettier": "2.6.2",
-    "rune-games-cli": "7.4.2"
+    "rune-games-cli": "7.4.3"
   }
 }

@@ -111,9 +111,15 @@ export async function validateGameFiles(
       const { sdkScript, scripts } = gameIndexHtmlElements
 
       const { sdkUrlStart } = validationOptions
-      if (scripts.filter(script => script.getAttribute("src")?.startsWith(sdkUrlStart)).length > 1) {
+
+      if (
+        scripts.filter((script) =>
+          script.getAttribute("src")?.startsWith(sdkUrlStart)
+        ).length > 1
+      ) {
         errors.push({
-          message: "Rune SDK is imported 2+ times in index.html. If using the Rune Vite plugin, then remove your SDK import in index.html.",
+          message:
+            "Rune SDK is imported 2+ times in index.html. If using the Rune Vite plugin, then remove your SDK import in index.html.",
         })
       }
 

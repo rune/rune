@@ -6,6 +6,8 @@ import { shouldTriggerGameOver } from "./lib/shouldTriggerGameOver"
 import { triggerGameOver } from "./lib/triggerGameOver"
 import { pickRandom } from "./lib/pickRandom"
 import { generateWeightedPanoramas } from "./lib/generateWeightedPanoramas"
+import { hasEveryoneGuessed } from "./lib/hasEveryoneGuessed"
+import { missedGuess } from "./lib/missedGuess"
 
 export const numRounds = 5
 export const roundDuration = 25
@@ -100,6 +102,17 @@ Rune.initLogic({
     playerLeft: (playerId, { game }) => {
       game.playerIds = game.playerIds.filter((id) => id !== playerId)
       game.guesses = game.guesses.filter((guess) => guess.playerId !== playerId)
+
+      if (hasEveryoneGuessed(game)) game.roundTimerStartedAt = null
+    },
+    playerJoined: (playerId, { game }) => {
+      const everyoneGuessedBeforeNewPlayerJoined = hasEveryoneGuessed(game)
+
+      game.playerIds.push(playerId)
+
+      if (everyoneGuessedBeforeNewPlayerJoined) {
+        game.guesses.push(missedGuess(playerId, game))
+      }
     },
   },
   update: ({ game }) => {
@@ -115,14 +128,7 @@ Rune.initLogic({
       )
 
       for (const playerId of playersWhoDidNotGuess) {
-        game.guesses.push({
-          playerId,
-          round: game.currentRound,
-          location: [0, 0],
-          distance: Infinity,
-          missed: true,
-          score: 0,
-        })
+        game.guesses.push(missedGuess(playerId, game))
       }
 
       game.roundTimerStartedAt = null

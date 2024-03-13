@@ -6,7 +6,9 @@ sidebar_position: 20
 
 You'll often want to show each player’s name and avatar inside your game. Here's how you do it.
 
-## (Deprecated) Players Object {#players-object}
+## Players Object {#players-object}
+
+*Deprecated:* Use [allPlayerIds](api-reference.md#all-player-ids) and [Rune.getPlayerInfo](api-reference.md#rune-get-player-info)
 
 Info about the players is captured by a `players` object, which has an ID for each player as the key and an object with e.g. `displayName` as the value. These IDs are unique and randomly generated for each game. The players are organized in the players object in no particular order.
 
@@ -22,12 +24,14 @@ The list of IDs of players who are active in the game is provided in the `OnChan
 
 ## Getting Player Info {#getting-player-info}
 
-The `Rune.getPlayerInfo(id)` function is used to retrieve information about a player. The return player object contains the following values:
+The `Rune.getPlayerInfo(id)` function is used to retrieve information about a player. The returned object contains the following values:
 
 - `displayName: string`
 - `avatarUrl: string`
 - `playerId: string` (same as key, just provided for simplicity)
-  
+
+Note that you can pass the ID of a player that is no longer in game and get placeholder information.
+
 ## Avatars {#avatars}
 
 Using avatars is a great way to personalize the UI to show whose turn it is or in a leaderboard. Since the avatar is loaded over the network there might be a slight delay during which you might want to display a placeholder – and we got you covered!

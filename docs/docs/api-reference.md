@@ -197,7 +197,9 @@ This argument is the predicted future game state. This value is only available i
 
 Your player id, if the current user is a spectator this argument is undefined.
 
-##### (Deprecated) `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>` {#players-recordstring--playerid-string-displayname-string-avatarurl-string-}
+##### `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>` {#players-recordstring--playerid-string-displayname-string-avatarurl-string-}
+
+*Deprecated:* Use [allPlayerIds](#all-player-ids) and [Rune.getPlayerInfo](#rune-get-player-info)
 
 The `players` argument is an object of the current players, useful to display their names and avatars in the game.
 
@@ -246,7 +248,7 @@ Returns the amount of milliseconds that have passed since the start of the game.
 
 ### `Rune.getPlayerInfo(id)` {#rune-get-player-info}
 
-Returns information about the player with the ID specified. Note that you can pass the ID of a player no longer in game and get placeholder information.
+Returns information about the player with the ID specified. Note that you can pass the ID of a player that is no longer in game and get placeholder information.
 
 ### `Rune.timeSinceLastUpdate()` {#runetimesincelastupdate}
 

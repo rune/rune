@@ -1,6 +1,7 @@
 import { atom } from "jotai"
 import { GameState } from "../lib/types/GameState"
 import { $myPlayerId } from "./myPlayerId"
+import { hasEveryoneGuessed } from "../lib/hasEveryoneGuessed"
 
 export const $game = atom<GameState | undefined>(undefined)
 
@@ -20,4 +21,9 @@ export const $myGuess = atom((get) => {
 
 export const $roundTimerStartedAt = atom((get) => {
   return get($game)?.roundTimerStartedAt
+})
+
+export const $everyoneGuessed = atom((get) => {
+  const game = get($game)
+  return game && hasEveryoneGuessed(game)
 })

@@ -29,7 +29,7 @@ function findWinningCombo(cells: Cells) {
       [0, 4, 8],
       [2, 4, 6],
     ].find((combo) =>
-      combo.every((i) => cells[i] && cells[i] === cells[combo[0]]),
+      combo.every((i) => cells[i] && cells[i] === cells[combo[0]])
     ) || null
   )
 }
@@ -37,14 +37,12 @@ function findWinningCombo(cells: Cells) {
 Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
-  setup: (allPlayerIds) => {
-    return {
-      cells: new Array(9).fill(null),
-      winCombo: null,
-      lastMovePlayerId: null,
-      playerIds: allPlayerIds,
-    }
-  },
+  setup: (allPlayerIds) => ({
+    cells: new Array(9).fill(null),
+    winCombo: null,
+    lastMovePlayerId: null,
+    playerIds: allPlayerIds,
+  }),
   actions: {
     claimCell: (cellIndex, { game, playerId, allPlayerIds }) => {
       if (
@@ -70,6 +68,7 @@ Rune.initLogic({
       }
 
       game.freeCells = game.cells.findIndex((cell) => cell === null) !== -1
+
       if (!game.freeCells) {
         Rune.gameOver({
           players: {

@@ -1,8 +1,9 @@
 import "./styles.css"
 
+import { PlayerId } from "rune-games-sdk/multiplayer"
+
 import selectSoundAudio from "./assets/select.wav"
 import { Cells } from "./logic.ts"
-import { PlayerId } from "rune-games-sdk/multiplayer"
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const board = document.getElementById("board")!
@@ -17,12 +18,13 @@ let cellButtons: HTMLButtonElement[], playerContainers: HTMLLIElement[]
 function initUI(
   cells: Cells,
   playerIds: PlayerId[],
-  yourPlayerId: PlayerId | undefined,
+  yourPlayerId: PlayerId | undefined
 ) {
   cellButtons = cells.map((_, cellIndex) => {
     const button = document.createElement("button")
     button.addEventListener("click", () => Rune.actions.claimCell(cellIndex))
     board.appendChild(button)
+
     return button
   })
 
@@ -37,6 +39,7 @@ function initUI(
              (player.playerId === yourPlayerId ? "<br>(You)" : "")
            }</span>`
     playersSection.appendChild(li)
+
     return li
   })
 }
@@ -44,6 +47,7 @@ function initUI(
 Rune.initClient({
   onChange: ({ game, yourPlayerId, action }) => {
     const { cells, playerIds, winCombo, lastMovePlayerId, freeCells } = game
+
     if (!cellButtons) initUI(cells, playerIds, yourPlayerId)
 
     if (lastMovePlayerId) board.classList.remove("initial")
@@ -53,23 +57,24 @@ Rune.initClient({
 
       button.setAttribute(
         "player",
-        (cellValue !== null ? playerIds.indexOf(cellValue) : -1).toString(),
+        (cellValue !== null ? playerIds.indexOf(cellValue) : -1).toString()
       )
       button.setAttribute(
         "dim",
-        String(
-          (winCombo && !winCombo.includes(i)) || (!freeCells && !winCombo),
-        ),
+        String((winCombo && !winCombo.includes(i)) || (!freeCells && !winCombo))
       )
-      if (cells[i] || lastMovePlayerId === yourPlayerId || winCombo)
+
+      if (cells[i] || lastMovePlayerId === yourPlayerId || winCombo) {
         button.setAttribute("disabled", "")
-      else button.removeAttribute("disabled")
+      } else {
+        button.removeAttribute("disabled")
+      }
     })
 
     playerContainers.forEach((container, i) => {
       container.setAttribute(
         "your-turn",
-        String(playerIds[i] !== lastMovePlayerId && !winCombo && freeCells),
+        String(playerIds[i] !== lastMovePlayerId && !winCombo && freeCells)
       )
     })
 

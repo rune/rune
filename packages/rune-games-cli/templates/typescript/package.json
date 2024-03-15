@@ -1,0 +1,26 @@
+{
+  "name": "typescript",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "npm run lint && tsc && vite build",
+    "upload": "npm run build && npx rune-games-cli@latest upload",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "dependencies": {
+    "rune-games-sdk": "^4.16.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "eslint": "7.22.0",
+    "eslint-plugin-rune": "^0.2.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.2",
+    "vite-plugin-qrcode": "^0.2.2",
+    "vite-plugin-rune": "^0.2.1"
+  }
+}

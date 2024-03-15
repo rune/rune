@@ -1,3 +1,4 @@
+import { spawn } from "child_process"
 import fs from "fs"
 import { Box, Text } from "ink"
 import { UncontrolledTextInput } from "ink-text-input"
@@ -11,9 +12,13 @@ import { Step } from "../components/Step.js"
 enum Steps {
   Target,
   Overwrite,
+  CancelOverwrite,
   Creating,
-  Done,
-  Cancelled,
+  PromptInstall,
+  SkipInstall,
+  Installing,
+  InstallError,
+  PostInstall,
 }
 
 const defaultProjectName = "rune-game"
@@ -120,8 +125,29 @@ export function Create({ args }: { args: string[] }) {
       path.join(targetDir, "package.json"),
       `${JSON.stringify(pkg, null, 2)}\n`
     )
-    setStep(Steps.Done)
+    setStep(Steps.PromptInstall)
   }, [targetDir, overwrite, setStep])
+
+  const onInstall = useCallback(() => {
+    const child = spawn(pkgManager, ["install"], {
+      cwd: targetDir,
+    })
+
+    child.on("error", () => {
+      setStep(Steps.InstallError)
+    })
+
+    child.on("close", (code) => {
+      setStep(code === 0 ? Steps.PostInstall : Steps.InstallError)
+    })
+  }, [targetDir])
+
+  const onPostInstall = useCallback(() => {
+    process.chdir(targetDir)
+    spawn(pkgManager, ["run", "dev", "--clearScreen=false"], {
+      stdio: "inherit",
+    })
+  }, [targetDir])
 
   useEffect(() => {
     if (args[0]) {
@@ -133,7 +159,17 @@ export function Create({ args }: { args: string[] }) {
     if (step === Steps.Creating) {
       onCreate()
     }
-  }, [step, onCreate])
+
+    if (step === Steps.Installing) {
+      onInstall()
+    }
+
+    if (step === Steps.PostInstall) {
+      onPostInstall()
+
+      //run dev
+    }
+  }, [step, onCreate, onInstall, onPostInstall])
 
   return (
     <Box flexDirection="column">
@@ -141,8 +177,8 @@ export function Create({ args }: { args: string[] }) {
         status={step > Steps.Target ? "success" : "userInput"}
         label={
           step > Steps.Target
-            ? `Will create a project in "${targetDir}"`
-            : "Project name"
+            ? `Will create a game in "${targetDir}"`
+            : "Game folder name"
         }
         view={
           step <= Steps.Target && (
@@ -153,27 +189,66 @@ export function Create({ args }: { args: string[] }) {
           )
         }
       />
-      {exists && (
+
+      {step === Steps.CancelOverwrite ? (
+        <Text color="red">Operation cancelled</Text>
+      ) : (
+        exists && (
+          <Step
+            status={step > Steps.Overwrite ? "success" : "userInput"}
+            label={
+              step > Steps.Overwrite
+                ? `Will overwrite existing folder`
+                : `Target directory "${targetDir}" is not empty. Remove existing files and continue?`
+            }
+            view={
+              step <= Steps.Overwrite &&
+              !overwrite && (
+                <Choose
+                  options={["No", "Yes"]}
+                  onSubmit={(response) => {
+                    const overwrite = response === "Yes"
+
+                    if (overwrite) {
+                      setOverwrite(true)
+                      setStep(Steps.Creating)
+                    } else {
+                      setStep(Steps.CancelOverwrite)
+                    }
+                  }}
+                />
+              )
+            }
+          />
+        )
+      )}
+
+      {step >= Steps.Creating && (
         <Step
-          status={step > Steps.Overwrite ? "success" : "userInput"}
+          status={step > Steps.Creating ? "success" : "waiting"}
           label={
             step > Steps.Overwrite
-              ? `Will overwrite existing folder`
-              : `Target directory "${targetDir}" is not empty. Remove existing files and continue?`
+              ? `File structure created!`
+              : `Creating file structure...`
           }
-          view={
-            step <= Steps.Overwrite &&
-            !overwrite && (
-              <Choose
-                options={["No", "Yes"]}
-                onSubmit={(response) => {
-                  const overwrite = response === "Yes"
+        />
+      )}
 
-                  if (overwrite) {
-                    setOverwrite(true)
-                    setStep(Steps.Creating)
+      {step === Steps.PromptInstall && (
+        <Step
+          status={step > Steps.PromptInstall ? "success" : "userInput"}
+          label={`Install using ${pkgManager} + open Dev UI?`}
+          view={
+            step <= Steps.PromptInstall && (
+              <Choose
+                options={["Yes", "No"]}
+                onSubmit={(response) => {
+                  const install = response === "Yes"
+
+                  if (install) {
+                    setStep(Steps.Installing)
                   } else {
-                    setStep(Steps.Cancelled)
+                    setStep(Steps.SkipInstall)
                   }
                 }}
               />
@@ -181,30 +256,39 @@ export function Create({ args }: { args: string[] }) {
           }
         />
       )}
-      {step === Steps.Cancelled ? (
-        <Text>Operation cancelled</Text>
-      ) : (
-        step >= Steps.Creating && (
-          <Step
-            status={step > Steps.Creating ? "success" : "waiting"}
-            label={
-              step > Steps.Overwrite
-                ? `Project created!`
-                : `Creating project...`
-            }
-          />
-        )
+      {step >= Steps.Installing && (
+        <Step
+          status={
+            step > Steps.InstallError
+              ? "success"
+              : step === Steps.InstallError
+              ? "error"
+              : "waiting"
+          }
+          label={
+            step > Steps.InstallError
+              ? `Dependencies installed successfully!`
+              : step === Steps.InstallError
+              ? `Failed to install dependencies`
+              : `Installing dependencies...`
+          }
+        />
       )}
-      {step === Steps.Done && (
+
+      {(step === Steps.SkipInstall || step === Steps.InstallError) && (
         <Text>{`
 To start the project, run:
   cd ${targetDir}
   ${pkgManager} install
   ${formatRunCommand("dev")}
+`}</Text>
+      )}
 
-To upload your game, run:
-  ${formatRunCommand("build")}
-  npx rune-games-cli@latest upload
+      {step === Steps.PostInstall && (
+        <Text>{`
+To start the project next time, run:
+  cd ${targetDir}
+  ${formatRunCommand("dev")}
 `}</Text>
       )}
     </Box>

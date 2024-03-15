@@ -14,49 +14,57 @@ Create a new Rune game project by running:
 npx rune-games-cli@latest create
 ```
 
-or follow this [guide to port your existing game](./how-it-works/existing-game.md) to Rune!
+or follow this [guide to port your existing game](./how-it-works/existing-game.md) to Rune.
+
+That's it! 
+
+`rune-games-cli@latest` to see the game inside the Rune app!
+
+Or read on for a short explainer of how Rune is separated into game logic and rendering (...)
+
 
 ## Game Logic {#game-logic}
 
-Create a file named `logic.js` with a `setup` function that returns initial values for your `game` state that should be [synced across players](how-it-works/syncing-game-state.md). Add an action that modifies this `game` state and call `Rune.initLogic()` to initialize. For instance, to give all players a score and have an action that just increments the score:
+
+
+(...) `setup` function that returns initial values for your `game` state that should be [synced across players](how-it-works/syncing-game-state.md) (...)
 
 ```js
-// logic.js
-
-Rune.initLogic({
-  minPlayers: 1,
-  maxPlayers: 4,
-  setup: (allPlayerIds) => {
-    const game = { scores: {} }
-    for (let playerId of allPlayerIds) {
-      game.scores[playerId] = 0
-    }
+function setup(allPlayerIds) {
+    const game = { cells: new Array(9).fill(null) }
     return game
-  },
-  actions: {
-    incrementScore(playerWhoGotPoints, { game }) {
-      game.scores[playerWhoGotPoints]++
-    },
-  },
-})
+}
+```
+
+You modify `game` state via actions (...)
+
+```js
+function claimCell(cellIndex, { game, playerId }) {
+    
+    // Don't allow overwriting 
+    if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
+        throw Rune.invalidAction()
+    }
+
+    // Fill cell and switch turn
+    game.cells[cellIndex] = playerId
+    game.lastMovePlayerId = playerId
+}
+```
+
+(...)
+
+```js
+Rune.initLogic()
 ```
 
 ## Rendering {#rendering}
 
-Next, integrate your game UI to [react to game state changes](api-reference.md#runeinitclientoptions) and [send actions to the logic layer](api-reference.md#runeinitclientoptions). This code may live anywhere except in `logic.js`; the docs will refer to `client.js`:
+Your game UI is integrated to [react to game state changes](api-reference.md#runeinitclientoptions) via the `onChange` callback (...).
+
+Emit actions 
 
 ```js
-// client.js
-
-// Your game setup code...
-
-// Trigger an action based on user input
-button.onClick = () => {
-  Rune.actions.incrementScore({
-    playerWhoGotPoints: "player1",
-  })
-}
-
 // Callback you define for when something changes (e.g. someone made an action)
 function onChange({ game, yourPlayerId, players, action, event }) {
   // Your game visuals update code...
@@ -65,6 +73,10 @@ function onChange({ game, yourPlayerId, players, action, event }) {
 // Initialize the Rune SDK once your game is fully ready
 Rune.initClient({ onChange })
 ```
+
+## Uploading {#uploading}
+
+(...) `rune upload`
 
 ## Next Steps {#next-steps}
 

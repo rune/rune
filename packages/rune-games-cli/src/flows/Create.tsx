@@ -166,8 +166,6 @@ export function Create({ args }: { args: string[] }) {
 
     if (step === Steps.PostInstall) {
       onPostInstall()
-
-      //run dev
     }
   }, [step, onCreate, onInstall, onPostInstall])
 
@@ -199,7 +197,7 @@ export function Create({ args }: { args: string[] }) {
             label={
               step > Steps.Overwrite
                 ? `Will overwrite existing folder`
-                : `Target directory "${targetDir}" is not empty. Remove existing files and continue?`
+                : `Target folder "${targetDir}" is not empty. Remove existing files and continue?`
             }
             view={
               step <= Steps.Overwrite &&

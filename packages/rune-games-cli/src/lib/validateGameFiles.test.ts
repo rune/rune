@@ -970,6 +970,38 @@ describe("validateGameFiles", () => {
       }
     )
 
+    await check(
+      [
+        { path: "media/background.png", size: 1 * 1e6 },
+        validLogicFile,
+        {
+          path: "src/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4.8.1/dist/multiplayer.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@4/dist/multiplayer-dev.js"></script>
+                  <script src="src/logic.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+        },
+      ],
+      {
+        valid: false,
+        errors: [
+          {
+            message:
+              "Rune SDK is imported 2+ times in index.html. If using the Rune Vite plugin, then remove your SDK import in index.html.",
+          },
+        ],
+        multiplayer: validLogicMultiplayer,
+      }
+    )
+
     function check(files: FileInfo[], expected: ValidationResult) {
       return expect(validateGameFiles(files)).resolves.toEqual(expected)
     }

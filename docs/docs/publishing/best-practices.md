@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Best Practices
 
-Here's some good practices to make your game a great experience for the players!
+Here's some advice on making your game a great experience for the players!
 
 ### Use Portrait Mode {#use-portrait-mode}
 

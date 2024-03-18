@@ -73,12 +73,12 @@ function emptyDir(dir: string) {
 const getPackageName = (targetDir: string) => {
   const fullTargetDirPath = path.resolve(targetDir)
 
-  const lastFolderName = fullTargetDirPath.split(path.sep).pop()
+  const lastDirectoryName = fullTargetDirPath.split(path.sep).pop()
 
-  if (!lastFolderName) return "rune-game-template" // in-case they put in a root relative path
+  if (!lastDirectoryName) return "rune-game-template" // in-case they put in a root relative path
 
   // Replace any non-hyphen characters (like spaces or underscores) with hyphens
-  return lastFolderName.replace(/[^a-zA-Z0-9]/g, "-")
+  return lastDirectoryName.replace(/[^a-zA-Z0-9]/g, "-")
 }
 
 export function Create({ args }: { args: string[] }) {
@@ -176,7 +176,7 @@ export function Create({ args }: { args: string[] }) {
         label={
           step > Steps.Target
             ? `Will create a game in "${targetDir}"`
-            : "Game folder name"
+            : "Game directory name"
         }
         view={
           step <= Steps.Target && (
@@ -196,8 +196,8 @@ export function Create({ args }: { args: string[] }) {
             status={step > Steps.Overwrite ? "success" : "userInput"}
             label={
               step > Steps.Overwrite
-                ? `Will overwrite existing folder`
-                : `Target folder "${targetDir}" is not empty. Remove existing files and continue?`
+                ? `Will overwrite existing directory`
+                : `Target directory "${targetDir}" is not empty. Remove existing files and continue?`
             }
             view={
               step <= Steps.Overwrite &&

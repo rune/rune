@@ -4,7 +4,8 @@ This package is a collection of rules and configuration for writing safe logic c
 
 ## Documentation
 
-- [Server-Side Logic](https://developers.rune.ai/docs/advanced/server-side-logic#editor-integration)
+- [Server-Side Logic](https://developers.rune.ai/docs/advanced/server-side-logic)
+- [Editor Integration](https://developers.rune.ai/docs/advanced/server-side-logic#editor-integration)
 
 ## Developing
 

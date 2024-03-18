@@ -56,7 +56,7 @@ Rune.initLogic({
 
 ### Rendering {#rendering}
 
-The game state should be rendered for the player to interact with. That’s the responsibility of `client.js`, which calls `Rune.initClient` with a `onChange` callback function. Whenever an `action` is performed, the `onChange` function is called with read-only info for updating the game experience (animations, graphics, UI, sound effects). The `onChange` has all the info you might need to update your game, including the `action` / `event` that triggered it, the old and new game states, info about the `players`, etc.
+The game state should be rendered for the player to interact with. That’s the responsibility of `client.js`, which calls `Rune.initClient` with a `onChange` callback function. Whenever an `action` is performed, the `onChange` function is called with read-only info for updating the game experience (animations, graphics, UI, sound effects). The `onChange` has all the info you might need to update your game, including the `action` / `event` that triggered it, the old and new game states, info about the `players`, etc. The `onChange` callback is reliable in that it's always called every time, even on laggy clients with bad internet connection. 
 
 The `client.js` also binds the UI to call the `actions`. For instance, for Tic Tac Toe, tapping on a cell would trigger `Rune.actions.markCell({ cellId })`.
 
@@ -91,7 +91,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 - Max 10 actions per player per second.
 - Actions must be synchronous, execute in <10 ms and consume <1 MB memory.
 - The `onChange` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.
-- The `game` state must be <1 MB and any `action` payload below <100 KB to avoid unnecessary network bandwidth usage.
+- The `game` state must be <1 MB and any `action` payload below <25 KB to avoid unnecessary network bandwidth usage.
 - The `game` state must be JSON-serializable (e.g. no classes/functions) so it can be sent over the network.
 - The logic.js file must be <1 MB as it will be fetched by the server and run inside a VM.
 

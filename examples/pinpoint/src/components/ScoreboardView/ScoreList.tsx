@@ -43,7 +43,7 @@ export function ScoreList({
 
   return scores.length === 1 ? (
     <BigItem>
-      <Avatar size="big" src={scores[0].player.avatarUrl} />
+      <Avatar src={scores[0].player.avatarUrl} />
       <Name>
         {scores[0].player.playerId === myPlayerId
           ? "You"
@@ -62,25 +62,23 @@ export function ScoreList({
     <Items>
       {scoresFixedOrder.map((item) => (
         <Item key={item.player.playerId} offset={item.offset}>
-          <Avatar size="small" src={item.player.avatarUrl} />
+          <Avatar src={item.player.avatarUrl} />
           <Name>
             {item.player.playerId === myPlayerId
               ? "You"
               : item.player.displayName}
           </Name>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Score>
-              <AnimatedNumber value={item[show]} />
-            </Score>
-            <SimpleCSSTransition
-              visible={showLatestScore}
-              duration={timings.default}
-            >
-              <LatestScore missed={item.missed}>
-                {item.missed ? "No guess" : `+${item.latestScore}`}
-              </LatestScore>
-            </SimpleCSSTransition>
-          </div>
+          <Score withRightOffset>
+            <AnimatedNumber value={item[show]} />
+          </Score>
+          <SimpleCSSTransition
+            visible={showLatestScore}
+            duration={timings.default}
+          >
+            <LatestScore missed={item.missed}>
+              {item.missed ? "No guess" : `+${item.latestScore}`}
+            </LatestScore>
+          </SimpleCSSTransition>
         </Item>
       ))}
     </Items>
@@ -114,7 +112,7 @@ const Items = styled.div`
 const Item = styled.div<{ offset: number }>`
   background: linear-gradient(0deg, #d8f1e8, #d8f1e8), #d2d2d2;
   border-radius: 15px;
-  padding: 10px 30px;
+  padding: 10px 25px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -125,9 +123,10 @@ const Item = styled.div<{ offset: number }>`
   transition: top ${timings.scoreReorder}ms ease-in-out;
 `
 
-const Avatar = styled.img<{ size: "big" | "small" }>`
+const Avatar = styled.img`
   height: 100%;
-  margin: 10px 10px;
+  max-width: 17vw;
+  max-height: 17vw;
 `
 
 const Name = styled.div`
@@ -141,7 +140,7 @@ const Name = styled.div`
   flex: 1;
 `
 
-const Score = styled.div`
+const Score = styled.div<{ withRightOffset?: boolean }>`
   background-color: #01a491;
   font-size: 13px;
   font-weight: 700;
@@ -149,7 +148,7 @@ const Score = styled.div`
   border-radius: 45px;
   color: #f8fffc;
   width: 55px;
-  margin-right: 60px;
+  margin-right: ${({ withRightOffset }) => (withRightOffset ? 60 : 0)}px;
   text-align: center;
 `
 

@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useMemo } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components/macro"
 import { PanoramaView } from "./PanoramaView/PanoramaView"
 import { GuessingMapView } from "./MapView/GuessingMapView"
 import { ScoreboardView } from "./ScoreboardView/ScoreboardView"
-import { useAtom, useSetAtom } from "jotai"
-import { $game } from "../state/game"
+import { useAtom, useSetAtom, useAtomValue } from "jotai"
+import { $game, $everyoneGuessed } from "../state/game"
 import { $players } from "../state/players"
 import { $myPlayerId } from "../state/myPlayerId"
 import { useFlags } from "../state/flags"
@@ -18,6 +18,7 @@ export function App() {
   const { unsetFlag } = useFlags()
   const setPendingGuess = useSetAtom($pendingGuess)
   const setGuessingMapView = useSetAtom($guessingMapView)
+  const everyoneGuessed = useAtomValue($everyoneGuessed)
 
   useEffect(() => {
     import("../logic").then(() =>
@@ -32,13 +33,6 @@ export function App() {
   }, [setGame, setMyPlayerId, setPlayers])
 
   const [view, setView] = useState<"panorama" | "map">("panorama")
-
-  const roundFinished = useMemo(
-    () =>
-      game?.guesses.filter((guess) => guess.round === game?.currentRound)
-        .length === game?.playerIds.length,
-    [game?.currentRound, game?.guesses, game?.playerIds.length]
-  )
 
   useEffect(() => {
     unsetFlag("startOfRoundShown")
@@ -58,7 +52,7 @@ export function App() {
   return (
     <Root>
       <Timer />
-      {roundFinished ? (
+      {everyoneGuessed ? (
         <ScoreboardView />
       ) : (
         <>

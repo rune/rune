@@ -7,8 +7,8 @@
     "dev": "vite --host",
     "build": "npm run lint && tsc && vite build",
     "upload": "npm run build && npx rune-games-cli@latest upload",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "rune-games-sdk": "^4.16.33"

@@ -226,8 +226,8 @@ export function Create({ args }: { args: string[] }) {
           status={step > Steps.Creating ? "success" : "waiting"}
           label={
             step > Steps.Overwrite
-              ? `File structure created!`
-              : `Creating file structure...`
+              ? `Game directory created!`
+              : `Creating game directory...`
           }
         />
       )}

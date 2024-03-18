@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
+
 import reactLogo from "./assets/rune.svg"
+
 import viteLogo from "/vite.svg"
+
 import "./App.css"
 import { GameState } from "./logic.ts"
 
 function App() {
   const [game, setGame] = useState<GameState>()
+
   useEffect(() => {
     Rune.initClient({
       onChange: ({ game }) => {
@@ -21,10 +25,10 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://developers.rune.ai" target="_blank">
+        <a href="https://developers.rune.ai" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo rune" alt="Rune logo" />
         </a>
       </div>

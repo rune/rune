@@ -8,7 +8,7 @@ You'll often want to show each player’s name and avatar inside your game. Here
 
 ## Getting Player Info {#getting-player-info}
 
-Your game receives `allPlayerIds` array in the `onChange` callback, which contains all players actively playing the game. Then use `Rune.getPlayerInfo(playerId)` with a playerId to get info about that player:
+Your game receives `allPlayerIds` array in the `onChange` callback, which contains the IDs of all players currently playing. Then use `Rune.getPlayerInfo(playerId)` with a playerId to get info about that player:
 
 - `displayName: string`
 - `avatarUrl: string`

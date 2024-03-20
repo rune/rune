@@ -1,6 +1,5 @@
-import type { RuneClient } from "rune-games-sdk/multiplayer"
-import { helpers } from "./shared/helpers"
-import sum from "math-sum"
+import type { RuneClient } from "rune-games-sdk/multiplayer.js"
+import { helpers } from "./shared/helpers.js"
 
 export interface GameState {
   count: number
@@ -22,7 +21,7 @@ Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (): GameState => {
-    return { count: sum([1, 2, 3]) }
+    return { count: 0 }
   },
   actions: {
     increment: ({ amount }, { game }) => {

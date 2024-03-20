@@ -50,15 +50,14 @@ export function getDetectExternalImportsPlugin(
   return [
     {
       name: "vite:rune-plugin:detect-external-imports",
-      apply: "serve",
       enforce: "pre",
 
       transform: async (code, idWithExtension) => {
-        await init
-
-        const id = withoutExtension(idWithExtension)
-
         try {
+          await init
+
+          const id = withoutExtension(idWithExtension)
+
           const importerDirectory = id
             .split(path.sep)
             .slice(0, -1)

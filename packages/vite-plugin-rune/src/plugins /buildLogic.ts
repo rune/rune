@@ -1,6 +1,6 @@
 import type { Plugin } from "vite"
 import path from "node:path"
-import { terserPlugin } from "../terser.js"
+import { terserPlugin } from "./terser.js"
 import { ViteRunePluginOptions } from "../index.js"
 
 export function getBuildLogicPlugin(

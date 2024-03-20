@@ -32,7 +32,6 @@ describe("external dependencies", () => {
     const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
     expect(logicChunk).toBeTruthy()
 
-    //This test also makes sure that math-sum imported by client.js is not detected
     expect(logicChunk?.code).not.toContain("/*! Imported dependencies")
   })
 
@@ -51,6 +50,8 @@ describe("external dependencies", () => {
     expect(logicChunk).toBeTruthy()
 
     //This test also makes sure that math-sum imported by client.js is not detected
+    //In this test deep file is imported both by client and by logic.
+    //So in case we didn't handle this scenario, it would fail from time to time
     expect(logicChunk?.code).toContain(
       "/*! Imported dependencies: array-flatten*/"
     )

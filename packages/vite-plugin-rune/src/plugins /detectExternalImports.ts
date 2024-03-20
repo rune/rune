@@ -18,13 +18,16 @@ export function getDetectExternalImportsPlugin(
   _options: ViteRunePluginOptions,
   logicPath: string
 ): Plugin[] {
-  const treeNodesByFile: Record<string, TreeModel.Node<Model>> = {}
-
   let logger = createLogger()
   let command: "build" | "serve"
 
+  //Storing a reference to every file that was ever imported by logic.js
+  //This is necessary because during vite serve, removing an import to the file and then adding it again will not trigger transform for that file.
+  const treeNodesByFile: Record<string, TreeModel.Node<Model>> = {}
+
+  //Storing a tree of imports starting from logic.js file.
   const logicImportTree = new TreeModel()
-  const logicFileLeaf = logicImportTree.parse<{ fileName: string }>({
+  const logicFileNode = logicImportTree.parse<{ fileName: string }>({
     fileName: withoutExtension(logicPath),
     children: [],
   })
@@ -32,7 +35,7 @@ export function getDetectExternalImportsPlugin(
   function getExternalDeps() {
     const externalDeps: { fileName: string; importedBy: string }[] = []
 
-    logicFileLeaf.walk((node) => {
+    logicFileNode.walk((node) => {
       const name = (node.model as Model).fileName
 
       if (!name.startsWith("/")) {
@@ -48,13 +51,18 @@ export function getDetectExternalImportsPlugin(
   }
 
   const listExternalDeps = () => {
-    const list = getExternalDeps()
-      .map((dep) => `${dep.fileName}, imported by: ${dep.importedBy}`)
-      .join("\n")
+    const externalDeps = getExternalDeps()
 
-    logger.warn(`External dependencies:\n${list}`)
+    if (externalDeps.length > 0) {
+      const list = externalDeps
+        .map((dep) => `${dep.fileName}, imported by: ${dep.importedBy}`)
+        .join("\n")
+
+      logger.warn(`External dependencies:\n${list}`)
+    }
   }
 
+  //I didn't find a way to run this only once in serve mode (didn't see anything that gets called by vite after all files are done), so I'm using debounce to run it only once after all transforms are done.
   const onTransformDone = debounce(listExternalDeps)
 
   return [
@@ -69,6 +77,7 @@ export function getDetectExternalImportsPlugin(
         }
       },
 
+      //List all external dependencies in generated logic.js file as a top level comment.
       banner: (chunk) => {
         if (chunk.fileName !== "logic.js") {
           return ""
@@ -90,8 +99,6 @@ export function getDetectExternalImportsPlugin(
       },
       transform: async (code, idWithExtension) => {
         try {
-          await init
-
           const id = withoutExtension(idWithExtension)
 
           const importerDirectory = id
@@ -100,9 +107,10 @@ export function getDetectExternalImportsPlugin(
             .join(path.sep)
 
           // Taken from https://github.com/vitejs/vite/blob/main/packages/vite/src/node/plugins/importAnalysis.ts
+          await init
           const [imports] = parseImports(code)
 
-          const nodeInTree = logicFileLeaf.first(
+          const nodeInTree = logicFileNode.first(
             (node) => node.model.fileName === id
           )
 
@@ -110,24 +118,27 @@ export function getDetectExternalImportsPlugin(
             nodeInTree.children = []
 
             imports.forEach((imp) => {
-              if (imp.n) {
-                const fullImport = code.slice(imp.ss, imp.se)
+              let filePath = imp.n ? withoutExtension(imp.n) : undefined
+              //.n is the from "..." part
+              if (filePath) {
+                //this returns a full line used for import. We need to use it to check if it's a type import.
+                const importLine = code.slice(imp.ss, imp.se)
 
                 //Ignore type imports
-                if (fullImport.includes("import type")) {
+                if (importLine.includes("import type")) {
                   return
                 }
 
-                let fullPath = imp.n
-                if (imp.n.startsWith(`./`)) {
-                  fullPath = path.join(importerDirectory, imp.n)
+                //In case the import is relative, use full import, because transform is called with full path.
+                if (filePath.startsWith(`./`)) {
+                  filePath = path.join(importerDirectory, filePath)
                 }
 
                 const node =
-                  treeNodesByFile[fullPath] ||
-                  logicImportTree.parse({ fileName: fullPath })
+                  treeNodesByFile[filePath] ||
+                  logicImportTree.parse({ fileName: filePath })
 
-                treeNodesByFile[fullPath] = node
+                treeNodesByFile[filePath] = node
 
                 nodeInTree.addChild(node)
               }

@@ -1,7 +1,7 @@
 import { defineConfig } from "vite"
 
 // @ts-ignore
-import rune from "../../../src"
+import rune from "../../src"
 import path from "node:path"
 
 // https://vitejs.dev/config/

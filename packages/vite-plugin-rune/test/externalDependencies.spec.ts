@@ -1,13 +1,42 @@
-import { describe, it } from "@jest/globals"
+import { describe, expect, it } from "@jest/globals"
 
 import { buildFixture, createLogger } from "./buildFixture.js"
+import type { OutputChunk } from "rollup"
 
 describe("external dependencies", () => {
-  it("basic project", async () => {
+  it("detect an external dependency", async () => {
     const logger = createLogger()
 
-    await buildFixture("external-basic", logger)
+    const output = await buildFixture("external-basic", logger)
 
-    console.log(logger.warn.mock.calls)
+    expect(logger.warn).toHaveBeenCalledWith(
+      expect.stringContaining("External dependencies:\nmath-sum")
+    )
+    const chunks = output.filter(
+      (chunk) => chunk.type === "chunk"
+    ) as OutputChunk[]
+    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
+    expect(logicChunk).toBeTruthy()
+    expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
+  })
+
+  it("detect an deeply nested external dependency", async () => {
+    const logger = createLogger()
+
+    const output = await buildFixture("external-nested", logger)
+
+    expect(logger.warn).toHaveBeenCalledWith(
+      expect.stringContaining("External dependencies:\narray-flatten")
+    )
+    const chunks = output.filter(
+      (chunk) => chunk.type === "chunk"
+    ) as OutputChunk[]
+    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
+    expect(logicChunk).toBeTruthy()
+
+    //This test also makes sure that math-sum imported by client.js is not detected
+    expect(logicChunk?.code).toContain(
+      "/*! Imported dependencies: array-flatten*/"
+    )
   })
 })

@@ -1,4 +1,5 @@
 import { deep } from "./shared/deep.js"
+// eslint-disable-next-line
 //@ts-ignore
 import sum from "math-sum"
 

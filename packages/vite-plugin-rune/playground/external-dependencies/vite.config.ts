@@ -1,5 +1,6 @@
 import { defineConfig } from "vite"
 
+// eslint-disable-next-line
 // @ts-ignore
 import rune from "../../src"
 import path from "node:path"

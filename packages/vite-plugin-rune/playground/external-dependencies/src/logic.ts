@@ -1,5 +1,6 @@
 import type { RuneClient } from "rune-games-sdk/multiplayer"
 import { helpers } from "./shared/helpers"
+// eslint-disable-next-line
 //@ts-ignore
 import sum from "math-sum"
 

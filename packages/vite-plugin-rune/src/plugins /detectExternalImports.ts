@@ -1,4 +1,5 @@
 import type { Plugin } from "vite"
+import { createLogger } from "vite"
 import { init, parse as parseImports } from "es-module-lexer"
 import path from "node:path"
 import TreeModel from "tree-model"
@@ -6,7 +7,7 @@ import { debounce } from "../lib/debounce.js"
 import { ViteRunePluginOptions } from "../index.js"
 
 type Model = {
-  name: string
+  fileName: string
 }
 
 function withoutExtension(str: string) {
@@ -19,39 +20,74 @@ export function getDetectExternalImportsPlugin(
 ): Plugin[] {
   const treeNodesByFile: Record<string, TreeModel.Node<Model>> = {}
 
-  const tree = new TreeModel()
-  const root = tree.parse<{ name: string }>({
-    name: withoutExtension(logicPath),
+  let logger = createLogger()
+  let command: "build" | "serve"
+
+  const logicImportTree = new TreeModel()
+  const logicFileLeaf = logicImportTree.parse<{ fileName: string }>({
+    fileName: withoutExtension(logicPath),
     children: [],
   })
 
-  const printTree = debounce(() => {
-    const externalDeps: { name: string; importedBy: string }[] = []
+  function getExternalDeps() {
+    const externalDeps: { fileName: string; importedBy: string }[] = []
 
-    root.walk((node) => {
-      const name = (node.model as Model).name
+    logicFileLeaf.walk((node) => {
+      const name = (node.model as Model).fileName
 
       if (!name.startsWith("/")) {
         externalDeps.push({
-          name,
-          importedBy: node.parent.model.name,
+          fileName: name,
+          importedBy: node.parent.model.fileName,
         })
       }
       return true
     })
 
-    const list = externalDeps
-      .map((dep) => `${dep.name}, imported by: ${dep.importedBy}`)
+    return externalDeps
+  }
+
+  const listExternalDeps = () => {
+    const list = getExternalDeps()
+      .map((dep) => `${dep.fileName}, imported by: ${dep.importedBy}`)
       .join("\n")
 
-    console.log(`External dependencies:\n${list}`)
-  })
+    logger.warn(`External dependencies:\n${list}`)
+  }
+
+  const onTransformDone = debounce(listExternalDeps)
 
   return [
     {
       name: "vite:rune-plugin:detect-external-imports",
       enforce: "pre",
 
+      config: (config, configEnv) => {
+        command = configEnv.command
+        if (config.customLogger) {
+          logger = config.customLogger
+        }
+      },
+
+      banner: (chunk) => {
+        if (chunk.fileName !== "logic.js") {
+          return ""
+        }
+
+        const externalDeps = getExternalDeps()
+
+        if (externalDeps.length > 0) {
+          //Using ! at the start of comment prevents it from being removed during bundling
+          return `/*! Imported dependencies: ${externalDeps
+            .map((dep) => dep.fileName)
+            .join(", ")}*/`
+        }
+
+        return ""
+      },
+      closeBundle: () => {
+        listExternalDeps()
+      },
       transform: async (code, idWithExtension) => {
         try {
           await init
@@ -66,7 +102,9 @@ export function getDetectExternalImportsPlugin(
           // Taken from https://github.com/vitejs/vite/blob/main/packages/vite/src/node/plugins/importAnalysis.ts
           const [imports] = parseImports(code)
 
-          const nodeInTree = root.first((node) => node.model.name === id)
+          const nodeInTree = logicFileLeaf.first(
+            (node) => node.model.fileName === id
+          )
 
           if (nodeInTree) {
             nodeInTree.children = []
@@ -86,7 +124,8 @@ export function getDetectExternalImportsPlugin(
                 }
 
                 const node =
-                  treeNodesByFile[fullPath] || tree.parse({ name: fullPath })
+                  treeNodesByFile[fullPath] ||
+                  logicImportTree.parse({ fileName: fullPath })
 
                 treeNodesByFile[fullPath] = node
 
@@ -95,7 +134,9 @@ export function getDetectExternalImportsPlugin(
             })
           }
 
-          printTree()
+          if (command === "serve") {
+            onTransformDone()
+          }
         } catch (e) {
           //Do nothing for now
         }

@@ -17,7 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "useUnknownInCatchVariables": true,
     "outDir": "dist",
-    "declaration": true
+    "declaration": true,
   },
-  "include": ["src"]
+  "include": ["src", "test"]
 }

@@ -1,28 +1,9 @@
-import { describe, expect, test } from "@jest/globals"
-import path from "path"
-import { fileURLToPath } from "url"
-import { build } from "vite"
-import rune from "../src"
-import type { RollupOutput, OutputChunk, OutputAsset } from "rollup"
-
-const fixturesPath = fileURLToPath(new URL("./fixtures", import.meta.url))
-
-const buildFixture = async (fixtureName: string) => {
-  const { output } = (await build({
-    root: path.resolve(fixturesPath, fixtureName),
-    logLevel: "silent",
-    build: {
-      write: false,
-    },
-    plugins: [
-      rune({ logicPath: path.resolve(fixturesPath, fixtureName, "logic.ts") }),
-    ],
-  })) as RollupOutput
-  return output
-}
+import { describe, expect, it } from "@jest/globals"
+import type { OutputChunk, OutputAsset } from "rollup"
+import { buildFixture } from "./buildFixture.js"
 
 describe("build output", () => {
-  test("basic project", async () => {
+  it("basic project", async () => {
     const output = await buildFixture("basic")
     const chunks = output.filter(
       (chunk) => chunk.type === "chunk"
@@ -45,7 +26,7 @@ describe("build output", () => {
     )
   })
 
-  test("nested project", async () => {
+  it("nested project", async () => {
     const output = await buildFixture("nested")
     const chunks = output.filter(
       (chunk) => chunk.type === "chunk"

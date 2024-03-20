@@ -20,6 +20,22 @@ describe("external dependencies", () => {
     expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
   })
 
+  it("should ignore type imports", async () => {
+    const logger = createLogger()
+
+    const output = await buildFixture("external-type-import", logger)
+
+    expect(logger.warn).not.toHaveBeenCalledWith()
+    const chunks = output.filter(
+      (chunk) => chunk.type === "chunk"
+    ) as OutputChunk[]
+    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
+    expect(logicChunk).toBeTruthy()
+
+    //This test also makes sure that math-sum imported by client.js is not detected
+    expect(logicChunk?.code).not.toContain("/*! Imported dependencies")
+  })
+
   it("detect an deeply nested external dependency", async () => {
     const logger = createLogger()
 

@@ -27,10 +27,14 @@ export function getDetectExternalImportsPlugin(
 
   //Storing a tree of imports starting from logic.js file.
   const logicImportTree = new TreeModel()
+
   const logicFileNode = logicImportTree.parse<{ fileName: string }>({
     fileName: withoutExtension(logicPath),
     children: [],
   })
+
+  //Also save the logic file in cache, since we always access the data from the cache.
+  treeNodesByFile[withoutExtension(logicPath)] = logicFileNode
 
   function getExternalDeps() {
     const externalDeps: { fileName: string; importedBy: string }[] = []
@@ -110,40 +114,42 @@ export function getDetectExternalImportsPlugin(
           await init
           const [imports] = parseImports(code)
 
-          const nodeInTree = logicFileNode.first(
-            (node) => node.model.fileName === id
-          )
+          const transformedFileNode =
+            treeNodesByFile[id] || logicImportTree.parse({ fileName: id })
 
-          if (nodeInTree) {
-            nodeInTree.children = []
+          //Remove it's children, because we are going to re-add them.
+          //This will make sure to remove any files that are not imported anymore.
+          transformedFileNode.children = []
 
-            imports.forEach((imp) => {
-              let filePath = imp.n ? withoutExtension(imp.n) : undefined
-              //.n is the from "..." part
-              if (filePath) {
-                //this returns a full line used for import. We need to use it to check if it's a type import.
-                const importLine = code.slice(imp.ss, imp.se)
+          //Process even the files that are not part of the game logic.
+          //This is necessary to handle a scenario where a file is imported both by logic and by non logic file.
+          //There is a chance that the file would be processed before logic file, so this way we'll already have info about it.
+          imports.forEach((imp) => {
+            let filePath = imp.n ? withoutExtension(imp.n) : undefined
+            //.n is the name of file/package from where things are imported
+            if (filePath) {
+              //this returns a full line used for import. We need to use it to check if it's a type import.
+              const importLine = code.slice(imp.ss, imp.se)
 
-                //Ignore type imports
-                if (importLine.includes("import type")) {
-                  return
-                }
-
-                //In case the import is relative, use full import, because transform is called with full path.
-                if (filePath.startsWith(`./`)) {
-                  filePath = path.join(importerDirectory, filePath)
-                }
-
-                const node =
-                  treeNodesByFile[filePath] ||
-                  logicImportTree.parse({ fileName: filePath })
-
-                treeNodesByFile[filePath] = node
-
-                nodeInTree.addChild(node)
+              //Ignore type imports
+              if (importLine.includes("import type")) {
+                return
               }
-            })
-          }
+
+              //In case the import is relative, use full import, because transform is called with full path.
+              if (filePath.startsWith(`./`)) {
+                filePath = path.join(importerDirectory, filePath)
+              }
+
+              const node =
+                treeNodesByFile[filePath] ||
+                logicImportTree.parse({ fileName: filePath })
+
+              treeNodesByFile[filePath] = node
+
+              transformedFileNode.addChild(node)
+            }
+          })
 
           if (command === "serve") {
             onTransformDone()

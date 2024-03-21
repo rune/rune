@@ -1,9 +1,9 @@
 import type { Plugin } from "vite"
 import path from "node:path"
 import { existsSync } from "node:fs"
-import { getInjectSdkPlugins } from "./plugins /injectSDK.js"
-import { getBuildLogicPlugin } from "./plugins /buildLogic.js"
-import { getDetectExternalImportsPlugin } from "./plugins /detectExternalImports.js"
+import { getInjectSdkPlugins } from "./plugins/injectSDK.js"
+import { getBuildLogicPlugin } from "./plugins/buildLogic.js"
+import { getDetectExternalImportsPlugin } from "./plugins/detectExternalImports.js"
 
 export interface ViteRunePluginOptions {
   logicPath: string

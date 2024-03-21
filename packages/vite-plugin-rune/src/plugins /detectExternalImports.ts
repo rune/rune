@@ -22,6 +22,8 @@ export function getDetectExternalImportsPlugin(
   let logger = createLogger()
   let command: "build" | "serve"
 
+  let previousError: Error
+
   //Storing a reference to every file that was ever imported by logic.js
   //This is necessary because during vite serve, removing an import to the file and then adding it again will not trigger transform for that file.
   const treeNodesByFile: Record<string, TreeModel.Node<Model>> = {}
@@ -76,7 +78,23 @@ export function getDetectExternalImportsPlugin(
         .map((dep) => `${dep.fileName}, imported by: ${dep.importedBy}`)
         .join("\n")
 
-      logger.warn(`External dependencies:\n${list}`)
+      const message = `Warning, external dependencies detected:\n\n${list}
+
+These dependencies might contain code that is not supported by Rune game logic.
+You can disable this message by adding the dependency to ignoredDependencies array in Rune plugin options.
+
+You can also make a pull request to add the dependency to the whitelist at (https://github.com/rune/rune-multiplayer-web-games/blob/staging/packages/vite-plugin-rune/src/dependency-whitelist.ts)
+`
+      let error = previousError
+      if (previousError?.message !== message) {
+        error = new Error()
+        error.message = message
+      }
+
+      if (!logger.hasErrorLogged(error)) {
+        logger.error(message)
+        previousError = error
+      }
     }
   }
 

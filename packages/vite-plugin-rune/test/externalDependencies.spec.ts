@@ -9,8 +9,8 @@ describe("external dependencies", () => {
 
     const output = await buildFixture("external-basic", logger)
 
-    expect(logger.warn).toHaveBeenCalledWith(
-      expect.stringContaining("External dependencies:\nmath-sum")
+    expect(logger.error).toHaveBeenCalledWith(
+      expect.stringContaining("math-sum")
     )
     const chunks = output.filter(
       (chunk) => chunk.type === "chunk"
@@ -25,8 +25,8 @@ describe("external dependencies", () => {
 
     const output = await buildFixture("external-nested", logger)
 
-    expect(logger.warn).toHaveBeenCalledWith(
-      expect.stringContaining("External dependencies:\narray-flatten")
+    expect(logger.error).toHaveBeenCalledWith(
+      expect.stringContaining("array-flatten")
     )
     const chunks = output.filter(
       (chunk) => chunk.type === "chunk"
@@ -47,7 +47,7 @@ describe("external dependencies", () => {
 
     const output = await buildFixture("external-type-import", logger)
 
-    expect(logger.warn).not.toHaveBeenCalledWith()
+    expect(logger.error).not.toHaveBeenCalledWith("vite")
     const chunks = output.filter(
       (chunk) => chunk.type === "chunk"
     ) as OutputChunk[]
@@ -62,8 +62,8 @@ describe("external dependencies", () => {
 
     const output = await buildFixture("external-allowed", logger)
 
-    expect(logger.warn).not.toHaveBeenCalledWith(
-      expect.stringContaining("External dependencies:")
+    expect(logger.error).not.toHaveBeenCalledWith(
+      expect.stringContaining("sudoku-gen")
     )
     const chunks = output.filter(
       (chunk) => chunk.type === "chunk"
@@ -83,8 +83,8 @@ describe("external dependencies", () => {
       ignoredDependencies: ["math-sum"],
     })
 
-    expect(logger.warn).not.toHaveBeenCalledWith(
-      expect.stringContaining("External dependencies:")
+    expect(logger.error).not.toHaveBeenCalledWith(
+      expect.stringContaining("math-sum")
     )
     const chunks = output.filter(
       (chunk) => chunk.type === "chunk"

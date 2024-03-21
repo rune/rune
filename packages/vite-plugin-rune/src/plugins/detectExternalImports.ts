@@ -22,6 +22,7 @@ export function getDetectExternalImportsPlugin(
   let logger = createLogger()
   let command: "build" | "serve"
 
+  //Playing around with vite logger to try to make the warning message appear as consistent as possible
   let previousError: Error
 
   //Storing a reference to every file that was ever imported by logic.js
@@ -78,9 +79,9 @@ export function getDetectExternalImportsPlugin(
         .map((dep) => `${dep.fileName}, imported by: ${dep.importedBy}`)
         .join("\n")
 
-      const message = `Warning, external dependencies detected:\n\n${list}
+      const message = `\nWarning, external dependencies detected:\n\n${list}
 
-These dependencies might contain code that is not supported by Rune game logic.
+These dependencies might contain code that is not supported by Rune game logic (https://developers.rune.ai/docs/advanced/server-side-logic).
 You can disable this message by adding the dependency to ignoredDependencies array in Rune plugin options.
 
 You can also make a pull request to add the dependency to the whitelist at (https://github.com/rune/rune-multiplayer-web-games/blob/staging/packages/vite-plugin-rune/src/dependency-whitelist.ts)

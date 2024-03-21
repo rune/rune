@@ -26,11 +26,11 @@ export function getBuildLogicPlugin(
         // Force all logic related code into a logic.js chunk.
         manualChunks: (id, { getModuleInfo }) => {
           const moduleInfo = getModuleInfo(id)
-          // const ids = getModuleIds()
 
           //For some reason on windows some paths are returned with \x00 at the beginning. Remove it.
           const idWithoutNull = id.startsWith("\x00") ? id.slice(1) : id
 
+          //TODO - refactor it to use normalizePath from vite
           //Try to unify paths so that no matter what platform they run on they would use /.
           //This is necessary due to vite not providing platform specific paths in some cases
           const platformAgnosticId = idWithoutNull.split(path.sep).join("/")

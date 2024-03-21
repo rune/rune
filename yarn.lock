@@ -10476,6 +10476,11 @@ strong-log-transformer@^2.1.0:
     minimist "^1.2.0"
     through "^2.3.4"
 
+sudoku-gen@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/sudoku-gen/-/sudoku-gen-1.0.2.tgz#17c5f3637047751121aec31647fcfcf9b7c223d4"
+  integrity sha512-zQFQNbar9qGpbteAH7CQShGoR5lk7r4KYlt0Wsvts1eVMzLb2EZUovzc7gAmoHp+HmXGYadmqCyyXoY7QVEyhA==
+
 supports-color@8.1.1, supports-color@^8.0.0:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-8.1.1.tgz#cd6fc17e28500cff56c1b86c0a7fd4a54a73005c"

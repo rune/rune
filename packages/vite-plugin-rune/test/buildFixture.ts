@@ -2,7 +2,7 @@ import { jest } from "@jest/globals"
 
 import { build, Logger } from "vite"
 import path from "node:path"
-import rune from "../src/index.js"
+import rune, { ViteRunePluginOptions } from "../src/index.js"
 import type { RollupOutput } from "rollup"
 import { fileURLToPath } from "url"
 
@@ -28,7 +28,11 @@ export function createLogger(): Record<
   }
 }
 
-export const buildFixture = async (fixtureName: string, logger?: Logger) => {
+export const buildFixture = async (
+  fixtureName: string,
+  logger?: Logger,
+  options?: Omit<ViteRunePluginOptions, "logicPath">
+) => {
   const { output } = (await build({
     root: path.resolve(fixturesPath, fixtureName),
     build: {
@@ -36,7 +40,10 @@ export const buildFixture = async (fixtureName: string, logger?: Logger) => {
     },
     customLogger: logger || createLogger(),
     plugins: [
-      rune({ logicPath: path.resolve(fixturesPath, fixtureName, "logic.ts") }),
+      rune({
+        logicPath: path.resolve(fixturesPath, fixtureName, "logic.ts"),
+        ...(options || {}),
+      }),
     ],
   })) as RollupOutput
   return output

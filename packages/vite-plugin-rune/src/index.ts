@@ -7,6 +7,7 @@ import { getDetectExternalImportsPlugin } from "./plugins /detectExternalImports
 
 export interface ViteRunePluginOptions {
   logicPath: string
+  ignoredDependencies?: string[]
   minifyLogic?: boolean
 }
 

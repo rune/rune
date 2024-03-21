@@ -5,6 +5,7 @@ import path from "node:path"
 import TreeModel from "tree-model"
 import { debounce } from "../lib/debounce.js"
 import { ViteRunePluginOptions } from "../index.js"
+import { DEPENDENCY_WHITELIST } from "../dependency-whitelist.js"
 
 type Model = {
   fileName: string
@@ -15,7 +16,7 @@ function withoutExtension(str: string) {
 }
 
 export function getDetectExternalImportsPlugin(
-  _options: ViteRunePluginOptions,
+  options: ViteRunePluginOptions,
   logicPath: string
 ): Plugin[] {
   let logger = createLogger()
@@ -36,11 +37,24 @@ export function getDetectExternalImportsPlugin(
   //Also save the logic file in cache, since we always access the data from the cache.
   treeNodesByFile[withoutExtension(logicPath)] = logicFileNode
 
-  function getExternalDeps() {
+  function getExternalDeps(skipAllowedDependencies: boolean) {
     const externalDeps: { fileName: string; importedBy: string }[] = []
 
     logicFileNode.walk((node) => {
       const name = (node.model as Model).fileName
+
+      //Not external, ignore it
+      if (name.startsWith("/")) {
+        return true
+      }
+
+      const isInWhitelist =
+        DEPENDENCY_WHITELIST.includes(name) ||
+        options.ignoredDependencies?.includes(name)
+
+      if (skipAllowedDependencies && isInWhitelist) {
+        return true
+      }
 
       if (!name.startsWith("/")) {
         externalDeps.push({
@@ -55,7 +69,7 @@ export function getDetectExternalImportsPlugin(
   }
 
   const listExternalDeps = () => {
-    const externalDeps = getExternalDeps()
+    const externalDeps = getExternalDeps(true)
 
     if (externalDeps.length > 0) {
       const list = externalDeps
@@ -87,7 +101,7 @@ export function getDetectExternalImportsPlugin(
           return ""
         }
 
-        const externalDeps = getExternalDeps()
+        const externalDeps = getExternalDeps(false)
 
         if (externalDeps.length > 0) {
           //Using ! at the start of comment prevents it from being removed during bundling

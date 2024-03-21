@@ -4,7 +4,7 @@ import { buildFixture, createLogger } from "./buildFixture.js"
 import type { OutputChunk } from "rollup"
 
 describe("external dependencies", () => {
-  it("detect an external dependency", async () => {
+  it("should detect an external dependency", async () => {
     const logger = createLogger()
 
     const output = await buildFixture("external-basic", logger)
@@ -20,22 +20,7 @@ describe("external dependencies", () => {
     expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
   })
 
-  it("should ignore type imports", async () => {
-    const logger = createLogger()
-
-    const output = await buildFixture("external-type-import", logger)
-
-    expect(logger.warn).not.toHaveBeenCalledWith()
-    const chunks = output.filter(
-      (chunk) => chunk.type === "chunk"
-    ) as OutputChunk[]
-    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
-    expect(logicChunk).toBeTruthy()
-
-    expect(logicChunk?.code).not.toContain("/*! Imported dependencies")
-  })
-
-  it("detect an deeply nested external dependency", async () => {
+  it("should detect an deeply nested external dependency", async () => {
     const logger = createLogger()
 
     const output = await buildFixture("external-nested", logger)
@@ -55,5 +40,58 @@ describe("external dependencies", () => {
     expect(logicChunk?.code).toContain(
       "/*! Imported dependencies: array-flatten*/"
     )
+  })
+
+  it("should ignore type imports", async () => {
+    const logger = createLogger()
+
+    const output = await buildFixture("external-type-import", logger)
+
+    expect(logger.warn).not.toHaveBeenCalledWith()
+    const chunks = output.filter(
+      (chunk) => chunk.type === "chunk"
+    ) as OutputChunk[]
+    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
+    expect(logicChunk).toBeTruthy()
+
+    expect(logicChunk?.code).not.toContain("/*! Imported dependencies")
+  })
+
+  it("should ignore whitelisted dependencies", async () => {
+    const logger = createLogger()
+
+    const output = await buildFixture("external-allowed", logger)
+
+    expect(logger.warn).not.toHaveBeenCalledWith(
+      expect.stringContaining("External dependencies:")
+    )
+    const chunks = output.filter(
+      (chunk) => chunk.type === "chunk"
+    ) as OutputChunk[]
+    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
+    expect(logicChunk).toBeTruthy()
+
+    expect(logicChunk?.code).toContain(
+      "/*! Imported dependencies: sudoku-gen*/"
+    )
+  })
+
+  it("should ignore dependencies passed in plugin options", async () => {
+    const logger = createLogger()
+
+    const output = await buildFixture("external-basic", logger, {
+      ignoredDependencies: ["math-sum"],
+    })
+
+    expect(logger.warn).not.toHaveBeenCalledWith(
+      expect.stringContaining("External dependencies:")
+    )
+    const chunks = output.filter(
+      (chunk) => chunk.type === "chunk"
+    ) as OutputChunk[]
+    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
+    expect(logicChunk).toBeTruthy()
+
+    expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
   })
 })

@@ -40,7 +40,7 @@
     "@jest/globals": "29.3.1",
     "@types/terser": "^3.12.0",
     "jest": "29.3.1",
-    "rune-games-sdk": "^4.16.0",
+    "rune-games-sdk": "^4.16.33",
     "ts-jest": "29.0.3",
     "typescript": "^4.9.3",
     "vite": "^4.3.2"

@@ -6,11 +6,14 @@
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
     />
-    <title>Vite + React + TS</title>
+    <title>Tic Tac Toe</title>
   </head>
   <body>
-    <div id="root"></div>
+    <main>
+      <div id="board" class="initial"></div>
+      <ul id="playersSection"></ul>
+    </main>
     <script type="module" src="/src/logic.ts"></script>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/client.ts"></script>
   </body>
 </html>

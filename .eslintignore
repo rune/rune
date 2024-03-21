@@ -4,7 +4,6 @@ build
 examples
 packages/rune-games-cli/__temp/
 packages/rune-games-cli/src/generated/
-packages/rune-games-cli/template-*
 packages/rune-games-cli/cjs/
 node_modules/
 docs/static/_examples

@@ -1,19 +1,19 @@
 {
-  "name": "template-vite-react-ts",
+  "name": "react-typescript",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives",
-    "preview": "vite preview"
+    "upload": "npm run build && npx rune-games-cli@latest upload",
+    "lint": "eslint src --ext ts,tsx",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rune-games-sdk": "^4.16.0"
+    "rune-games-sdk": "^4.16.33"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

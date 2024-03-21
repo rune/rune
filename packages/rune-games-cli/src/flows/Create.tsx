@@ -7,12 +7,14 @@ import React, { useCallback, useEffect } from "react"
 import { fileURLToPath } from "url"
 
 import { Choose } from "../components/Choose.js"
+import { Select } from "../components/Select.js"
 import { Step } from "../components/Step.js"
 
 enum Steps {
   Target,
   Overwrite,
   CancelOverwrite,
+  SelectTemplate,
   Creating,
   PromptInstall,
   SkipInstall,
@@ -22,10 +24,15 @@ enum Steps {
 }
 
 const defaultProjectName = "rune-game"
-const templateDir = path.resolve(
+const templatesDirectory = path.resolve(
   fileURLToPath(import.meta.url),
-  "../../../template-vite-react-ts"
+  "../../../templates"
 )
+
+const templates = fs
+  .readdirSync(templatesDirectory)
+  .map((template) => ({ label: template, value: template }))
+
 const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"
 
 function formatRunCommand(command: string) {
@@ -85,6 +92,9 @@ export function Create({ args }: { args: string[] }) {
   const [targetDir, setTargetDir] = React.useState("")
   const [step, setStep] = React.useState(Steps.Target)
   const [exists, setExists] = React.useState(false)
+  const [selectedTemplate, setSelectedTemplate] = React.useState<string | null>(
+    "typescript"
+  )
   const [overwrite, setOverwrite] = React.useState(false)
   const onSubmitTarget = useCallback(
     (value: string) => {
@@ -92,7 +102,7 @@ export function Create({ args }: { args: string[] }) {
       const exists = fs.existsSync(targetDir)
       setTargetDir(targetDir)
       setExists(exists)
-      setStep(exists ? Steps.Overwrite : Steps.Creating)
+      setStep(exists ? Steps.Overwrite : Steps.SelectTemplate)
     },
     [setTargetDir, setStep]
   )
@@ -102,6 +112,10 @@ export function Create({ args }: { args: string[] }) {
     } else if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, { recursive: true })
     }
+
+    const templateDir = path.resolve(
+      path.join(templatesDirectory, "./", selectedTemplate || "typescript")
+    )
 
     const files = fs.readdirSync(templateDir)
 
@@ -126,7 +140,7 @@ export function Create({ args }: { args: string[] }) {
       `${JSON.stringify(pkg, null, 2)}\n`
     )
     setStep(Steps.PromptInstall)
-  }, [targetDir, overwrite, setStep])
+  }, [targetDir, overwrite, selectedTemplate, setStep])
 
   const onInstall = useCallback(() => {
     const child = spawn(pkgManager, ["install"], {
@@ -209,7 +223,7 @@ export function Create({ args }: { args: string[] }) {
 
                     if (overwrite) {
                       setOverwrite(true)
-                      setStep(Steps.Creating)
+                      setStep(Steps.SelectTemplate)
                     } else {
                       setStep(Steps.CancelOverwrite)
                     }
@@ -219,6 +233,27 @@ export function Create({ args }: { args: string[] }) {
             }
           />
         )
+      )}
+
+      {step >= Steps.SelectTemplate && (
+        <Step
+          status={step > Steps.SelectTemplate ? "success" : "userInput"}
+          label={
+            step > Steps.SelectTemplate
+              ? `Selected ${selectedTemplate} template`
+              : "Select a template"
+          }
+          view={
+            step === Steps.SelectTemplate && (
+              <Select
+                items={templates}
+                value={selectedTemplate}
+                onChange={setSelectedTemplate}
+                onSubmit={() => setStep(Steps.Creating)}
+              />
+            )
+          }
+        />
       )}
 
       {step >= Steps.Creating && (

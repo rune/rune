@@ -5,6 +5,8 @@ import type { OutputChunk } from "rollup"
 
 describe("external dependencies", () => {
   it("should detect an external dependency", async () => {
+    //This test also verifies that loading json files in logic works
+
     const logger = createLogger()
 
     const output = await buildFixture("external-basic", logger)

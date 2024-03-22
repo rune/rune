@@ -6,25 +6,9 @@ sidebar_position: 20
 
 You'll often want to show each player’s name and avatar inside your game. Here's how you do it.
 
-## Players Object {#players-object}
-
-*Deprecated:* Use [allPlayerIds](api-reference.md#all-player-ids) and [Rune.getPlayerInfo](api-reference.md#rune-get-player-info)
-
-Info about the players is captured by a `players` object, which has an ID for each player as the key and an object with e.g. `displayName` as the value. These IDs are unique and randomly generated for each game. The players are organized in the players object in no particular order.
-
-Here’s the values for each player:
-
-- `displayName: string`
-- `avatarUrl: string`
-- `playerId: string` (same as key, just provided for simplicity)
-  
-## Players in Game {#players-in-game}
-
-The list of IDs of players who are active in the game is provided in the `OnChange` callback through the `allPlayerIds` array. This list contains all players who are playing and are still connected to the room.
-
 ## Getting Player Info {#getting-player-info}
 
-The `Rune.getPlayerInfo(id)` function is used to retrieve information about a player. The returned object contains the following values:
+Your game receives `allPlayerIds` array in the `onChange` callback, which contains the IDs of all players currently playing. Then use `Rune.getPlayerInfo(playerId)` with a playerId to get info about that player:
 
 - `displayName: string`
 - `avatarUrl: string`
@@ -38,10 +22,11 @@ Using avatars is a great way to personalize the UI to show whose turn it is or i
 
 ![Avatar placeholder](/img/avatar-placeholder.svg)
 
-Right click and select download either as [SVG](/img/avatar-placeholder.svg) or [PNG](/img/avatar-placeholder.png).
+Right click the link above and select download either as [SVG](/img/avatar-placeholder.svg) or [PNG](/img/avatar-placeholder.png).
 
 ## Your Player ID {#your-player-id}
 
-In the `onChange` function the client will always get their player ID as well as `yourPlayerId`. This can be used to find their own info in the `players` object.
+The `onChange` function provides the client's player ID as `yourPlayerId`. This can be used to find their own info using the `getPlayerInfo()` function described above.
 
-Importantly, `yourPlayerId` will be undefined if they themselves are a spectator!
+:::tip
+Importantly, `yourPlayerId` will be undefined if the client is a spectator!

@@ -10,9 +10,7 @@ export function terserPlugin(minifyLogic: boolean): Plugin {
   const makeWorker = () =>
     new Worker(
       async (code: string, options: MinifyOptions) => {
-        // test fails when using `import`. maybe related: https://github.com/nodejs/node/issues/43205
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const terser = require("terser")
+        const terser = await import("terser")
         return terser.minify(code, options) as MinifyOutput
       },
       {

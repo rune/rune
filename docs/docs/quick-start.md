@@ -21,21 +21,20 @@ Now that you have Tic Tac Toe running locally, it would be great to try playing 
 ```sh
 npm run upload
 ```
-That's it. You'll now see your game in inside Rune and can play it with your friends!
+That's it. You'll now see your game inside Rune and can play it with your friends!
 
 ## Game Logic {#game-logic}
 
-Rune games are split into two parts: logic & rendering.
-Let's take a look at the generated Tic Tac Toe game and get familiar with it.
+Rune games are split into two parts: logic & rendering. Let's take a look at the logic for the generated Tic Tac Toe game.
 
-You can find the game logic in the `logic.js` file. The `setup` function is responsible for creating an initial game state that is synced across players:
+You can find the game logic in the `logic.js` file. The `setup` function is responsible for creating an initial `game` state that's synced across players:
 
 ```js
 function setup() {
   return  {
     cells: new Array(9).fill(null), // 3x3 cell grid
     lastMovePlayerId: null,
-    //...rest of the state
+    // ... rest of the game state
   }
 }
 ```
@@ -44,7 +43,7 @@ To modify the game state that is synced between players, we define actions that 
 
 ```js
 function claimCell(cellIndex, { game, playerId }) {
-  //Do not allow to claim cell if it is already claimed or if it is not player's turn
+  // Do not allow to claim cell if it's already claimed or if it is not player's turn
   if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
     throw Rune.invalidAction()
   }
@@ -52,7 +51,7 @@ function claimCell(cellIndex, { game, playerId }) {
   game.cells[cellIndex] = playerId
   game.lastMovePlayerId = playerId
   
-  //...Rest of the logic, like checking for win condition
+  // ... rest of the logic, like checking for win condition
 }
 ```
 

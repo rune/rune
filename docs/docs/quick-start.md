@@ -4,38 +4,31 @@ sidebar_position: 0
 
 # Quick Start
 
-Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more!
+Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
-## Getting Started {#getting-started}
-
-Creating a new game on Rune requires only one command. After it finishes, you'll have a running Tic Tac Toe game!
+Run the command below to get a running multiplayer Tic Tac Toe game!
 
 ```sh
 npx rune-games-cli@latest create
 ```
 
-Alternatively, follow the [guide to port your existing game to Rune](./how-it-works/existing-game.md) if you already have a great game. 
+Alternatively, follow the [guide to port your existing game to Rune](./how-it-works/existing-game.md) if you already have a game. 
 
-## Testing the game in the app {#playing-the-game-in-app}
+## Uploading & Playing In The App {#playing-the-game-in-app}
 
-Now that you have your game running locally, it would be great to see how it looks in the Rune app.
-Run:
+Now that you have Tic Tac Toe running locally, it would be great to try playing it in the Rune app:
 
 ```sh
 npm run upload
 ```
-This is it! After doing this you should see your game in the games list inside the app. Start the room, invite your friends and play together!
+That's it. You'll now see your game in inside Rune and can play it with your friends!
 
-## How it all works {#how-it-all-works}
+## Game Logic {#game-logic}
 
 Rune games are split into two parts: logic & rendering.
-Let's take a look at the generated Tic Tac Toe game and get familiar with it. You can also deep dive into in depth explanation in [syncing game state docs](how-it-works/syncing-game-state.md). 
+Let's take a look at the generated Tic Tac Toe game and get familiar with it.
 
-### Game Logic {#game-logic}
-
-You can find the game logic in `logic.js` file.
-
-The `setup` function is responsible for creating an initial game state that is synced across players:
+You can find the game logic in the `logic.js` file. The `setup` function is responsible for creating an initial game state that is synced across players:
 
 ```js
 function setup() {
@@ -77,8 +70,10 @@ Rune.initLogic({
 ```
 Other `initLogic` options are described in [API game logic reference](api-reference.md#game-logic).
 
+You can also dig deeper into how t dive with the in-depth explanation in [Syncing Game State](how-it-works/syncing-game-state.md).
 
-### Rendering {#rendering}
+
+## Rendering {#rendering}
 
 You can find your game rendering code in `client.js` file.
 

@@ -1,11 +1,12 @@
 import type { Plugin } from "vite"
-import { createLogger } from "vite"
+import { createLogger, normalizePath } from "vite"
 import { init, parse as parseImports } from "es-module-lexer"
 import path from "node:path"
 import TreeModel from "tree-model"
 import { debounce } from "../lib/debounce.js"
 import { ViteRunePluginOptions } from "../index.js"
 import { DEPENDENCY_WHITELIST } from "../dependency-whitelist.js"
+import { normalizeId } from "../lib/normalizeId.js"
 
 type Model = {
   fileName: string
@@ -32,13 +33,15 @@ export function getDetectExternalImportsPlugin(
   //Storing a tree of imports starting from logic.js file.
   const logicImportTree = new TreeModel()
 
+  const normalizedLogicPath = normalizePath(withoutExtension(logicPath))
+
   const logicFileNode = logicImportTree.parse<{ fileName: string }>({
-    fileName: withoutExtension(logicPath),
+    fileName: normalizedLogicPath,
     children: [],
   })
 
   //Also save the logic file in cache, since we always access the data from the cache.
-  treeNodesByFile[withoutExtension(logicPath)] = logicFileNode
+  treeNodesByFile[normalizedLogicPath] = logicFileNode
 
   function getExternalDeps(skipAllowedDependencies: boolean) {
     const externalDeps: { fileName: string; importedBy: string }[] = []
@@ -47,7 +50,7 @@ export function getDetectExternalImportsPlugin(
       const name = (node.model as Model).fileName
 
       //Not external, ignore it
-      if (name.startsWith("/")) {
+      if (path.isAbsolute(name)) {
         return true
       }
 
@@ -59,12 +62,11 @@ export function getDetectExternalImportsPlugin(
         return true
       }
 
-      if (!name.startsWith("/")) {
-        externalDeps.push({
-          fileName: name,
-          importedBy: node.parent.model.fileName,
-        })
-      }
+      externalDeps.push({
+        fileName: name,
+        importedBy: node.parent.model.fileName,
+      })
+
       return true
     })
 
@@ -136,12 +138,9 @@ You can also make a pull request to add the dependency to the whitelist at (http
       },
       transform: async (code, idWithExtension) => {
         try {
-          const id = withoutExtension(idWithExtension)
+          const id = normalizeId(withoutExtension(idWithExtension))
 
-          const importerDirectory = id
-            .split(path.sep)
-            .slice(0, -1)
-            .join(path.sep)
+          const importerDirectory = id.split("/").slice(0, -1).join("/")
 
           // Taken from https://github.com/vitejs/vite/blob/main/packages/vite/src/node/plugins/importAnalysis.ts
           await init
@@ -173,6 +172,8 @@ You can also make a pull request to add the dependency to the whitelist at (http
               if (filePath.startsWith(`./`)) {
                 filePath = path.join(importerDirectory, filePath)
               }
+
+              filePath = normalizePath(filePath)
 
               const node =
                 treeNodesByFile[filePath] ||

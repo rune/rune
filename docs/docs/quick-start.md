@@ -25,9 +25,9 @@ That's it. You'll now see your game inside Rune and can play it with your friend
 
 ## Game Logic {#game-logic}
 
-Rune games are split into two parts: logic & rendering. Let's take a look at the logic for the generated Tic Tac Toe game.
+Rune games are split into two parts: logic & rendering. Let's look at the logic for the generated Tic Tac Toe game.
 
-You can find the game logic in the `logic.js` file. The `setup` function is responsible for creating an initial `game` state that's synced across players:
+You can find the logic code in the `logic.js` file. The `setup` function is responsible for creating an initial `game` state that's synced across players:
 
 ```js
 function setup() {

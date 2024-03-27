@@ -145,6 +145,8 @@ export function Create({ args }: { args: string[] }) {
   const onInstall = useCallback(() => {
     const child = spawn(pkgManager, ["install"], {
       cwd: targetDir,
+      //Fixes issue when running on windows https://stackoverflow.com/a/54515183
+      shell: process.platform === "win32",
     })
 
     child.on("error", () => {
@@ -160,6 +162,8 @@ export function Create({ args }: { args: string[] }) {
     process.chdir(targetDir)
     spawn(pkgManager, ["run", "dev", "--clearScreen=false"], {
       stdio: "inherit",
+      //Fixes issue when running on windows https://stackoverflow.com/a/54515183
+      shell: process.platform === "win32",
     })
   }, [targetDir])
 

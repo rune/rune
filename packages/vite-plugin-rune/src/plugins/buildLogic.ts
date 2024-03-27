@@ -2,6 +2,7 @@ import type { Plugin } from "vite"
 import path from "node:path"
 import { terserPlugin } from "./terser.js"
 import { ViteRunePluginOptions } from "../index.js"
+import { normalizeId } from "../lib/normalizeId.js"
 
 export function getBuildLogicPlugin(
   options: ViteRunePluginOptions,
@@ -27,13 +28,8 @@ export function getBuildLogicPlugin(
         manualChunks: (id, { getModuleInfo }) => {
           const moduleInfo = getModuleInfo(id)
 
-          //For some reason on windows some paths are returned with \x00 at the beginning. Remove it.
-          const idWithoutNull = id.startsWith("\x00") ? id.slice(1) : id
+          const platformAgnosticId = normalizeId(id)
 
-          //TODO - refactor it to use normalizePath from vite
-          //Try to unify paths so that no matter what platform they run on they would use /.
-          //This is necessary due to vite not providing platform specific paths in some cases
-          const platformAgnosticId = idWithoutNull.split(path.sep).join("/")
           const platformAgnosticLogicPath = logicPath.split(path.sep).join("/")
           const platformAgnosticImporters = moduleInfo
             ? moduleInfo.importers.map((importer: string) =>

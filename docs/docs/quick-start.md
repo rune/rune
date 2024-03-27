@@ -56,7 +56,7 @@ function claimCell(cellIndex, { game, playerId }) {
 }
 ```
 
-Finally, we provide setup function, actions, and other game information to `Rune.initLogic`:
+Finally, we provide setup function, actions, and other game info to `Rune.initLogic()`:
 
 ```js
 Rune.initLogic({
@@ -68,7 +68,7 @@ Rune.initLogic({
   },
 })
 ```
-Other `initLogic` options are described in [API game logic reference](api-reference.md#game-logic). You can also read a more in-depth explanation in [Syncing Game State](how-it-works/syncing-game-state.md).
+Other `initLogic()` options are described in [API game logic reference](api-reference.md#game-logic). You can also read a more in-depth explanation in [Syncing Game State](how-it-works/syncing-game-state.md).
 
 
 ## Rendering & Inputs {#rendering}

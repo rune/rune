@@ -81,11 +81,11 @@ The `setup` function returns the initial values for the game state, which is the
 
 The `actions` option is an object with actions functions exposed to the UI integration layer, called with [`Rune.actions.myAction(payload)`](#runeactionspayload). The functions are responsible for [validating the action](#runeinvalidaction), mutating the `game` state and [end the game](#runegameover) when appropriate.
 
-#### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any, allPlayerIds: string[] }) => void }` _optional_ {#events--playerjoined--playerleft-playerid-string--game-any-allplayerids-string---void--_optional_}
+#### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any, allPlayerIds: string[] }) => void }` _optional_ {#events--playerjoined--playerleft-playerid-string--game-any-allplayerids-string---void}
 
 By default a game will end if a player leaves (see [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players)), but by defining the `playerJoined`/`playerLeft` events you can [Support Players Joining Midgame](advanced/joining-leaving.md#supporting-players-joining-midgame).
 
-#### `update({game: object,  allPlayerIds: string[]}) => void` _optional_ {#updategame-object--allplayerids-string--void-_optional_}
+#### `update({game: object,  allPlayerIds: string[]}) => void` _optional_ {#updategame-object--allplayerids-string--void}
 
 Function that is executed every second. See [Using Time in your Game](advanced/real-time-games.md#update-function).
 

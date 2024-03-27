@@ -40,7 +40,7 @@ function setup() {
 }
 ```
 
-To modify the game state that is synced between players, we define actions that get called from game rendering part:
+To modify the `game` state synced between players, we define actions that get called from the client code. Here's the action to mark a cell in Tic Tac Toe:
 
 ```js
 function claimCell(cellIndex, { game, playerId }) {
@@ -56,7 +56,7 @@ function claimCell(cellIndex, { game, playerId }) {
 }
 ```
 
-Finally we provide setup function, actions, and other game information to `Rune.initLogic`:
+Finally, we provide setup function, actions, and other game information to `Rune.initLogic`:
 
 ```js
 Rune.initLogic({
@@ -68,39 +68,35 @@ Rune.initLogic({
   },
 })
 ```
-Other `initLogic` options are described in [API game logic reference](api-reference.md#game-logic).
-
-You can also dig deeper into how t dive with the in-depth explanation in [Syncing Game State](how-it-works/syncing-game-state.md).
+Other `initLogic` options are described in [API game logic reference](api-reference.md#game-logic). You can also read a more in-depth explanation in [Syncing Game State](how-it-works/syncing-game-state.md).
 
 
-## Rendering {#rendering}
+## Rendering & Inputs {#rendering}
 
-You can find your game rendering code in `client.js` file.
-
-Game rendering is responsible for reacting to game state changes:
+You can find your game rendering code in `client.js` file. The client code is responsible for reacting to `game` state changes and updating the rendering accordingly:
 
 ```js
 function onChange({ game, players, yourPlayerId, action }) {
   const { cells, lastMovePlayerId } = game
 
-  // ...Update your game visuals according to latest received game state. Also play sound effects, update styles, etc.
+  // ... update your game visuals according to latest received game state. Also play sound effects, update styles, etc.
 }
 
 Rune.initClient({ onChange })
 ```
 
-Game rendering is also responsible for handling user input by calling actions:
+The client code also calls actions based on user input:
 
 ```js
-const button = //... get the cell
+const button = // ... get the cell
 button.addEventListener("click", () => Rune.actions.claimCell(cellIndex))
 ```
 
 You can find additional information about [rendering here](how-it-works/syncing-game-state.md#rendering).
 
-## What to do next? {#next-steps}
+## What Next? {#next-steps}
 
-- If you want some inspiration for your next game, we really recommend [checking out example games](examples.mdx)!
-- Building games is more fun when you are a part of community, [join Rune Discord server](https://discord.gg/rune-devs).
+- If you want some inspiration for your next game, we really recommend [checking out the example games](examples.mdx)!
+- Building games is more fun when you're part of a community, join the [Rune Discord server](https://discord.gg/rune-devs).
 - If your game is ready to be published for all Rune users, check out [publishing your game](publishing/publishing-your-game.md).
 - Want to know everything that Rune supports? [Explore the API reference](api-reference.md).

@@ -6,98 +6,112 @@ sidebar_position: 0
 
 Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more!
 
-## New game {#new-game}
+## Getting started {#getting-started}
 
-Creating a new game on Rune is really simple and should only take a couple of minutes. You just need to run the following command to get started:
+### New game {#new-game}
+
+Creating a new game on Rune requires only one command!
 
 ```sh
 npx rune-games-cli@latest create
 ```
 
-This command will guide you through setup. It includes:
-1. Choosing a game directory name.
-2. Selecting an initial game template. All templates contain a tic tac toe game example to build from.
-3. Installing dependencies. This should take under a minute. 
+After it finishes, you'll have a running tic tac toe game inside the [dev ui](./publishing/simulating-multiplayer).
 
-Once the installation is done, the CLI will indicate that [dev ui](http://localhost:3000/docs/publishing/simulating-multiplayer) is ready to use. Just follow the link or scan the QR code with your phone to see the game.
-
-# Existing game {#existing-game}
+### Existing game {#existing-game}
 
 Already have a great game that you want to add to Rune? Follow the [guide to port your existing game to Rune](./how-it-works/existing-game.md). 
 
+## Testing the game in the app {#playing-the-game-in-app}
 
-## Uploading your game {#uploading-your-game}
+Now that you have your game running locally, it would be great to see how it looks in the Rune app.
+Run:
 
-To fully experience what Rune allows you to do, you should upload the game.
-Run `npm run upload`. This is it! After doing this you'll be able to test out the game directly inside Rune app and play it with your friends. 
+```sh
+npm run upload
+```
+This is it! After doing this you should see your game in the games list inside the app. Start the room, invite your friends and play together!
 
-## Modifying the game {#modifying-the-game}
+## How it all works {#how-it-all-works}
 
-Playing tic tac toe is fun, but you probably want to build something different.
-To do it you need to know that Rune games are split into two parts: logic & rendering.
-Lets make a game where your score increases when you click a button!
+Rune games are split into two parts: logic & rendering.
+Let's take a look at the generated tic tac toe game and get familiar with it. You can also deep dive into in depth explanation in [syncing game state docs](how-it-works/syncing-game-state.md). 
 
-## Game Logic {#game-logic}
+### Game Logic {#game-logic}
 
-Game logic (`logic.js` file in your game) is responsible for creating an initial game state that is synced across players. It also allows you to define actions that allow you to modify game state.
-For instance, lets give all players a score and have an action that just increments the score:
+You can find the game logic in `logic.js` file.
+
+The `setup` function is responsible for creating an initial game state that is synced across players:
 
 ```js
-// logic.js
+function setup() {
+  return  {
+    cells: new Array(9).fill(null), // 3x3 cell grid
+    lastMovePlayerId: null,
+    //...rest of the state
+  }
+}
+```
 
+To modify the game state that is synced between players, we define actions that get called from game rendering part:
+
+```js
+function claimCell(cellIndex, { game, playerId }) {
+  //Do not allow to claim cell if it is already claimed or if it is not player's turn
+  if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
+    throw Rune.invalidAction()
+  }
+
+  game.cells[cellIndex] = playerId
+  game.lastMovePlayerId = playerId
+  
+  //...Rest of the logic, like checking for win condition
+}
+```
+
+Finally we provide setup function, actions, and other game information to `Rune.initLogic`:
+
+```js
 Rune.initLogic({
-  minPlayers: 1,
-  maxPlayers: 6,
-  setup: (allPlayerIds) => {
-    const game = { scores: {} }
-    for (let playerId of allPlayerIds) {
-      game.scores[playerId] = 0
-    }
-    return game
-  },
+  minPlayers: 2,
+  maxPlayers: 2,
+  setup,
   actions: {
-    incrementScore(playerWhoGotPoints, { game }) {
-      game.scores[playerWhoGotPoints]++
-    },
+    claimCell,
   },
 })
 ```
-You can find deeper explanation for how all of it works in [syncing game state](how-it-works/syncing-game-state.md).
+Other `initLogic` options are described in [API game logic reference](api-reference.md#game-logic).
 
 
-## Rendering {#rendering}
+### Rendering {#rendering}
 
-Game rendering (`client.js` file in your game) is responsible for reacting to game state changes and triggering actions defined in game logic. For instance to handle the logic written above, client would look like this:
+You can find your game rendering code in `client.js` file.
+
+Game rendering is responsible for reacting to game state changes:
 
 ```js
-// client.js
+function onChange({ game, players, yourPlayerId, action }) {
+  const { cells, lastMovePlayerId } = game
 
-const button = document.getElementById("button")
-const score = document.getElementById("score")
-
-let yourPlayerId;
-
-// Trigger an action based on user input
-button.onClick = () => {
-  Rune.actions.incrementScore({
-    playerWhoGotPoints: yourPlayerID,
-  })
+  // ...Update your game visuals according to latest received game state. Also play sound effects, update styles, etc.
 }
 
-Rune.initClient({
-  // Callback you define for when something changes (e.g. someone made an action)
-  onChange: (props) => {
-    yourPlayerId = props.yourPlayerId
-    score.innerText = yourPlayerId ? props.game.scores[yourPlayerId] : "Spectator"
-  }
-})
+Rune.initClient({ onChange })
+```
+
+Game rendering is also responsible for handling user input by calling actions:
+
+```js
+const button = //... get the cell
+button.addEventListener("click", () => Rune.actions.claimCell(cellIndex))
 ```
 
 You can find additional information about [rendering here](how-it-works/syncing-game-state.md#rendering).
 
 ## What to do next? {#next-steps}
 
-- If you want some inspiration, we really recommend [checking out example games](examples.mdx)!
+- If you want some inspiration for your next game, we really recommend [checking out example games](examples.mdx)!
 - Building games is more fun when you are a part of community, [join Rune Discord server](https://discord.gg/rune-devs).
-- If your game is ready to be published, check out [publishing your game](publishing/publishing-your-game.md).
+- If your game is ready to be published for all Rune users, check out [publishing your game](publishing/publishing-your-game.md).
 - Want to know everything that Rune supports? [Explore the API reference](api-reference.md).

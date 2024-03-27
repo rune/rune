@@ -6,21 +6,15 @@ sidebar_position: 0
 
 Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more!
 
-## Getting started {#getting-started}
+## Getting Started {#getting-started}
 
-### New game {#new-game}
-
-Creating a new game on Rune requires only one command!
+Creating a new game on Rune requires only one command. After it finishes, you'll have a running Tic Tac Toe game!
 
 ```sh
 npx rune-games-cli@latest create
 ```
 
-After it finishes, you'll have a running tic tac toe game inside the [dev ui](./publishing/simulating-multiplayer).
-
-### Existing game {#existing-game}
-
-Already have a great game that you want to add to Rune? Follow the [guide to port your existing game to Rune](./how-it-works/existing-game.md). 
+Alternatively, follow the [guide to port your existing game to Rune](./how-it-works/existing-game.md) if you already have a great game. 
 
 ## Testing the game in the app {#playing-the-game-in-app}
 
@@ -35,7 +29,7 @@ This is it! After doing this you should see your game in the games list inside t
 ## How it all works {#how-it-all-works}
 
 Rune games are split into two parts: logic & rendering.
-Let's take a look at the generated tic tac toe game and get familiar with it. You can also deep dive into in depth explanation in [syncing game state docs](how-it-works/syncing-game-state.md). 
+Let's take a look at the generated Tic Tac Toe game and get familiar with it. You can also deep dive into in depth explanation in [syncing game state docs](how-it-works/syncing-game-state.md). 
 
 ### Game Logic {#game-logic}
 

@@ -68,7 +68,7 @@ Rune.initLogic({
   },
 })
 ```
-Other `initLogic()` options are described in [API game logic reference](api-reference.md#game-logic). You can also read a more in-depth explanation in [Syncing Game State](how-it-works/syncing-game-state.md).
+Other `initLogic()` options are described in [API game logic reference](api-reference.md#game-logic). You can also read a more in-depth explanation of how the logic code works in [Syncing Game State](how-it-works/syncing-game-state.md).
 
 
 ## Rendering & Inputs {#rendering}

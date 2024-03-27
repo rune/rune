@@ -31,11 +31,12 @@ You can find the game logic in the `logic.js` file. The `setup` function is resp
 
 ```js
 function setup() {
-  return  {
+  const game = {
     cells: new Array(9).fill(null), // 3x3 cell grid
     lastMovePlayerId: null,
     // ... rest of the game state
   }
+  return game
 }
 ```
 

@@ -6,11 +6,12 @@ sidebar_position: 0
 
 Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
-Create a multiplayer Tic Tac Toe game by running:
+To get started, you only need to run one command:
 
 ```sh
 npx rune-games-cli@latest create
 ```
+After this, you'll have a multiplayer Tic Tac Toe game running.
 
 Alternatively, follow the [guide to port your existing game to Rune](./how-it-works/existing-game.md). 
 

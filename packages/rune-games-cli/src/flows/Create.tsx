@@ -32,7 +32,7 @@ const templatesDirectory = path.resolve(
 const templates = [
   { label: "JavaScript", value: "javascript" },
   { label: "TypeScript", value: "typescript" },
-  { label: "Typescript + React", value: "typescript-react" },
+  { label: "TypeScript + React", value: "typescript-react" },
 ]
 
 const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"

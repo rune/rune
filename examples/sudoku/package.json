@@ -36,8 +36,10 @@
     "typescript": "^4.4.2"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
+    "dev": "npm run dev:client & npm run dev:logic",
+    "dev:client": "react-scripts start",
+    "dev:logic": "rollup -c --watch",
     "deploy": "../../scripts/copy-assets.sh sudoku && yarn build && rune upload build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },

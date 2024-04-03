@@ -39,9 +39,11 @@
   "scripts": {
     "generatePanoramasLogic": "ts-node --transpile-only scripts/generatePanoramasLogic.ts",
     "postinstall": "./copy-tile-creator.sh",
-    "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && yarn build:logic",
     "build:logic": "esbuild src/logic.ts --bundle --outfile=build/logic.js --platform=neutral --tsconfig=tsconfig-logic.json --minify",
+    "dev": "npm run dev:client & npm run dev:logic",
+    "dev:client": "react-scripts start",
+    "dev:logic": "esbuild src/logic.ts --bundle --outfile=public/logic.js --platform=neutral --tsconfig=tsconfig-logic.json --minify --watch",
     "deploy": "../../scripts/copy-assets.sh pinpoint && yarn build && rune upload build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives"
   },

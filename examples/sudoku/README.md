@@ -13,7 +13,7 @@ yarn
 ## Run for development
 
 ```sh
-yarn start
+yarn dev
 ```
 
 ## Build for upload

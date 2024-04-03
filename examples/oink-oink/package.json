@@ -34,7 +34,9 @@
     "typescript": "^4.4.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "npm run dev:client & npm run dev:logic",
+    "dev:client": "react-scripts start",
+    "dev:logic": "rollup -c --watch",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
     "deploy": "../../scripts/copy-assets.sh oink-oink && yarn build && rune upload build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"

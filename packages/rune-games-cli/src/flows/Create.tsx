@@ -29,9 +29,11 @@ const templatesDirectory = path.resolve(
   "../../../templates"
 )
 
-const templates = fs
-  .readdirSync(templatesDirectory)
-  .map((template) => ({ label: template, value: template }))
+const templates = [
+  { label: "JavaScript", value: "javascript" },
+  { label: "TypeScript", value: "typescript" },
+  { label: "Typescript + React", value: "typescript-react" },
+]
 
 const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"
 
@@ -93,7 +95,7 @@ export function Create({ args }: { args: string[] }) {
   const [step, setStep] = React.useState(Steps.Target)
   const [exists, setExists] = React.useState(false)
   const [selectedTemplate, setSelectedTemplate] = React.useState<string | null>(
-    "typescript"
+    "javascript"
   )
   const [overwrite, setOverwrite] = React.useState(false)
   const onSubmitTarget = useCallback(

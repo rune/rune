@@ -1,0 +1,4 @@
+__temp/
+cjs/package.json
+cjs/lib/*
+!cjs/lib/rootPath.js

@@ -84,6 +84,7 @@ const logicConfig: ESLint.ConfigData = {
     globalThis: "readonly",
     global: "readonly",
     Rune: "readonly",
+    Dusk: "readonly",
     console: "readonly",
   },
   rules: {
@@ -135,6 +136,7 @@ export const configs: ESLint.Plugin["configs"] = {
   recommended: {
     globals: {
       Rune: "readonly",
+      Dusk: "readonly",
     },
     overrides: [
       {

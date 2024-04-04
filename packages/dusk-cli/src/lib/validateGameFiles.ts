@@ -50,6 +50,7 @@ export interface ValidationResult {
     updatesPerSecondDefined?: boolean
     inputDelay?: number
   }
+  sdk: "Rune" | "Dusk"
 }
 
 export function parseGameIndexHtml(indexHtmlContent: string) {
@@ -76,7 +77,7 @@ export async function validateGameFiles(
 
   const errors: ValidationError[] = []
 
-  let sdkName = "Rune"
+  let sdkName = "Rune" as "Rune" | "Dusk"
 
   if (files.length > maxFiles) {
     errors.push({ message: `Too many files (>${maxFiles})` })
@@ -120,8 +121,8 @@ export async function validateGameFiles(
       sdkName = scripts.some((script) =>
         script.getAttribute("src")?.startsWith(sdkUrlStartRune)
       )
-        ? "Rune"
-        : "Dusk"
+        ? ("Rune" as const)
+        : ("Dusk" as const)
 
       if (
         scripts.filter(
@@ -131,7 +132,7 @@ export async function validateGameFiles(
         ).length > 1
       ) {
         errors.push({
-          message: `${sdkName} SDK is imported 2+ times in index.html. If using the Rune Vite plugin, then remove your SDK import in index.html.`,
+          message: `${sdkName} SDK is imported 2+ times in index.html. If using the ${sdkName} Vite plugin, then remove your SDK import in index.html.`,
         })
       }
 
@@ -189,6 +190,7 @@ export async function validateGameFiles(
     valid: errors.length === 0,
     errors,
     multiplayer: multiplayerValidationResult,
+    sdk: sdkName,
   }
 }
 

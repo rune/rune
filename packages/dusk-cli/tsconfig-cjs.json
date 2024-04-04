@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "cjs/lib",
+    "declaration": true
+  },
+  "include": [
+    "src/lib/validateGameFiles.ts",
+    "src/lib/extractMultiplayerMetadata.ts",
+    "src/lib/getGameFiles.tsx"
+  ]
+}

@@ -136,6 +136,7 @@ export const configs: ESLint.Plugin["configs"] = {
   recommended: {
     globals: {
       Rune: "readonly",
+      Dusk: "readonly",
     },
     overrides: [
       {

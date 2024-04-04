@@ -1,6 +1,6 @@
 import "./styles.css"
-import { useEffect, useState } from "react"
 import { PlayerId } from "dusk-games-sdk/multiplayer"
+import { useEffect, useState } from "react"
 
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"

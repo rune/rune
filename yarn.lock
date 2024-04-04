@@ -4532,6 +4532,11 @@ compare-func@^2.0.0:
     array-ify "^1.0.0"
     dot-prop "^5.1.0"
 
+compatto@2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/compatto/-/compatto-2.1.5.tgz#2d3b9e6a524081938ec9e2bb53636e95a20def0c"
+  integrity sha512-eo4KtO4xEkmtVt9TcnFGXaWNLFHWO2l4B5ev75NIxu6rLxjJxUm4JP0DMxWSdlwMjENcJVcKyKDHnZeQScW3BQ==
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
@@ -5203,6 +5208,20 @@ duplexer@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
+
+dusk-games-sdk@^4.16.33:
+  version "4.16.38"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.16.38.tgz#aeb8c9ad975aba77179de5f0b669f58214be76ba"
+  integrity sha512-75iqa582g58Hwu+7lozm6Jc1zdpCa4Y3YLbwCZluI9pkpw69RR5YnzYmv9O1S1FBYs1pgRQqrPy0isoB1iRvtw==
+  dependencies:
+    base-64 "1.0.0"
+    compatto "2.1.5"
+    core-js "3.31.1"
+    just-clone "6.2.0"
+    mutative "0.7.1"
+    react-charts "3.0.0-beta.57"
+    rune-msgpack "1.0.0"
+    xstate "4.32.1"
 
 eastasianwidth@^0.2.0:
   version "0.2.0"

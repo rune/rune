@@ -1,7 +1,7 @@
 import path from "node:path"
 import { defineConfig } from "vite"
-import { qrcode } from "vite-plugin-qrcode"
 import dusk from "vite-plugin-dusk"
+import { qrcode } from "vite-plugin-qrcode"
 
 // https://vitejs.dev/config/
 export default defineConfig({

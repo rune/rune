@@ -13,24 +13,6 @@ jest.mock("./rootPath.ts", () => ({
   rootPath: path.resolve(__dirname, "../.."),
 }))
 
-const validLogicFile = {
-  path: "src/logic.js",
-  size: 1 * 1e6,
-  // language=JavaScript
-  content: `
-    Rune.initLogic({
-      minPlayers: 1,
-      maxPlayers: 4,
-      setup: () => {
-        return {}
-      },
-      actions: {},
-      events: {
-        playerJoined: () => {},
-        playerLeft () {},
-      },
-    })`,
-}
 const validLogicMultiplayer = {
   handlesPlayerJoined: true,
   handlesPlayerLeft: true,
@@ -45,7 +27,28 @@ describe("validateGameFiles", () => {
       [
         ["Rune", "rune-games-sdk"],
         ["Dusk", "dusk-games-sdk"],
-      ].map(async ([name, packageName]) => {
+      ].map(async ([n, packageName]) => {
+        const name = n as "Rune" | "Dusk"
+
+        const validLogicFile = {
+          path: "src/logic.js",
+          size: 1 * 1e6,
+          // language=JavaScript
+          content: `
+            ${name}.initLogic({
+              minPlayers: 1,
+              maxPlayers: 4,
+              setup: () => {
+                return {}
+              },
+              actions: {},
+              events: {
+                playerJoined: () => {},
+                playerLeft () {},
+              },
+            })`,
+        }
+
         await check(
           [
             { path: "media/background.png", size: 1 * 1e6 },
@@ -65,7 +68,12 @@ describe("validateGameFiles", () => {
               </html>`,
             },
           ],
-          { valid: true, errors: [], multiplayer: validLogicMultiplayer }
+          {
+            valid: true,
+            errors: [],
+            multiplayer: validLogicMultiplayer,
+            sdk: name,
+          }
         )
 
         await check(
@@ -95,6 +103,7 @@ describe("validateGameFiles", () => {
               },
             ],
             multiplayer: undefined,
+            sdk: name,
           }
         )
 
@@ -125,6 +134,7 @@ describe("validateGameFiles", () => {
                 message: `${name} SDK is below minimum version (included 4.4.5, min 4.8.1)`,
               },
             ],
+            sdk: name,
           }
         )
 
@@ -155,6 +165,7 @@ describe("validateGameFiles", () => {
                 message: `${name} SDK is below minimum version (included 4.4, min 4.8.1)`,
               },
             ],
+            sdk: name,
           }
         )
 
@@ -185,6 +196,7 @@ describe("validateGameFiles", () => {
                 message: `${name} SDK is below minimum version (included 3, min 4.8.1)`,
               },
             ],
+            sdk: name,
           }
         )
 
@@ -211,6 +223,7 @@ describe("validateGameFiles", () => {
             valid: true,
             multiplayer: validLogicMultiplayer,
             errors: [],
+            sdk: name,
           }
         )
 
@@ -247,6 +260,7 @@ describe("validateGameFiles", () => {
             valid: true,
             multiplayer: validLogicMultiplayer,
             errors: [],
+            sdk: name,
           }
         )
 
@@ -273,6 +287,7 @@ describe("validateGameFiles", () => {
             valid: false,
             multiplayer: validLogicMultiplayer,
             errors: [{ message: `${name} SDK must specify a version` }],
+            sdk: name,
           }
         )
 
@@ -302,6 +317,7 @@ describe("validateGameFiles", () => {
               { message: "Game size must be less than 10MB" },
               { message: `${name} SDK must be the first script in index.html` },
             ],
+            sdk: name,
           }
         )
 
@@ -329,6 +345,7 @@ describe("validateGameFiles", () => {
             errors: [
               { message: `Game index.html must include Rune SDK script` },
             ],
+            sdk: "Rune",
           }
         )
 
@@ -346,6 +363,7 @@ describe("validateGameFiles", () => {
                   "index.html content has not been provided for validation",
               },
             ],
+            sdk: "Rune",
           }
         )
 
@@ -354,6 +372,7 @@ describe("validateGameFiles", () => {
           {
             valid: false,
             errors: [{ message: "Game must include index.html" }],
+            sdk: "Rune",
           }
         )
 
@@ -365,6 +384,7 @@ describe("validateGameFiles", () => {
               { message: "Too many files (>1000)" },
               { message: "Game must include index.html" },
             ],
+            sdk: "Rune",
           }
         )
 
@@ -389,6 +409,7 @@ describe("validateGameFiles", () => {
           {
             valid: false,
             errors: [{ message: "index.html is not valid HTML" }],
+            sdk: "Rune",
           }
         )
 
@@ -411,6 +432,7 @@ describe("validateGameFiles", () => {
               { message: `${name} SDK must be the first script in index.html` },
             ],
             multiplayer: {},
+            sdk: name,
           }
         )
 
@@ -439,6 +461,7 @@ describe("validateGameFiles", () => {
               },
             ],
             multiplayer: {},
+            sdk: name,
           }
         )
 
@@ -485,6 +508,7 @@ describe("validateGameFiles", () => {
               maxPlayers: undefined,
               updatesPerSecondDefined: false,
             },
+            sdk: name,
           }
         )
 
@@ -539,6 +563,7 @@ describe("validateGameFiles", () => {
               maxPlayers: 7,
               updatesPerSecondDefined: false,
             },
+            sdk: name,
           }
         )
 
@@ -600,6 +625,7 @@ describe("validateGameFiles", () => {
               maxPlayers: 4,
               updatesPerSecondDefined: false,
             },
+            sdk: name,
           }
         )
 
@@ -644,6 +670,7 @@ describe("validateGameFiles", () => {
               maxPlayers: 4,
               updatesPerSecondDefined: false,
             },
+            sdk: name,
           }
         )
 
@@ -676,6 +703,7 @@ describe("validateGameFiles", () => {
               },
             ],
             multiplayer: {},
+            sdk: name,
           }
         )
 
@@ -724,6 +752,7 @@ describe("validateGameFiles", () => {
               minPlayers: 2,
               updatesPerSecondDefined: false,
             },
+            sdk: name,
           }
         )
 
@@ -776,6 +805,7 @@ describe("validateGameFiles", () => {
               updatesPerSecondDefined: true,
               inputDelay: 50,
             },
+            sdk: name,
           }
         )
 
@@ -828,6 +858,7 @@ describe("validateGameFiles", () => {
               updatesPerSecond: 10,
               updatesPerSecondDefined: true,
             },
+            sdk: name,
           }
         )
 
@@ -873,6 +904,7 @@ describe("validateGameFiles", () => {
               updatesPerSecond: 10,
               updatesPerSecondDefined: true,
             },
+            sdk: name,
           }
         )
 
@@ -927,6 +959,7 @@ describe("validateGameFiles", () => {
               updatesPerSecondDefined: true,
               inputDelay: 50,
             },
+            sdk: name,
           }
         )
 
@@ -975,6 +1008,7 @@ describe("validateGameFiles", () => {
               maxPlayers: 4,
               updatesPerSecondDefined: false,
             },
+            sdk: name,
           }
         )
 
@@ -1002,10 +1036,11 @@ describe("validateGameFiles", () => {
             valid: false,
             errors: [
               {
-                message: `${name} SDK is imported 2+ times in index.html. If using the Rune Vite plugin, then remove your SDK import in index.html.`,
+                message: `${name} SDK is imported 2+ times in index.html. If using the ${name} Vite plugin, then remove your SDK import in index.html.`,
               },
             ],
             multiplayer: validLogicMultiplayer,
+            sdk: name,
           }
         )
       })

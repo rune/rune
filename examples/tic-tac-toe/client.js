@@ -4,7 +4,7 @@ const selectSound = new Audio("select.wav")
 
 let cellButtons, playerContainers
 
-function initUI(cells, playerIds, yourPlayerId) {
+function initUI(cells, allPlayerIds, yourPlayerId) {
   cellButtons = cells.map((_, cellIndex) => {
     const button = document.createElement("button")
     button.addEventListener("click", () => Rune.actions.claimCell(cellIndex))
@@ -12,7 +12,7 @@ function initUI(cells, playerIds, yourPlayerId) {
     return button
   })
 
-  playerContainers = playerIds.map((playerId, index) => {
+  playerContainers = allPlayerIds.map((playerId, index) => {
     const { displayName, avatarUrl } = Rune.getPlayerInfo(playerId)
     const li = document.createElement("li")
     li.setAttribute("player", index)
@@ -24,13 +24,13 @@ function initUI(cells, playerIds, yourPlayerId) {
   })
 }
 
-function onChange({ game, yourPlayerId, action }) {
-  const { cells, playerIds, winCombo, lastMovePlayerId, freeCells } = game
-  if (!cellButtons) initUI(cells, playerIds, yourPlayerId)
+function onChange({ game, yourPlayerId, action, allPlayerIds }) {
+  const { cells, winCombo, lastMovePlayerId, freeCells } = game
+  if (!cellButtons) initUI(cells, allPlayerIds, yourPlayerId)
   if (lastMovePlayerId) board.classList.remove("initial")
 
   cellButtons.forEach((button, i) => {
-    button.setAttribute("player", playerIds.indexOf(cells[i]))
+    button.setAttribute("player", allPlayerIds.indexOf(cells[i]))
     button.setAttribute("dim", (winCombo && !winCombo.includes(i)) || (!freeCells && !winCombo))
     if (!cells[i] && yourPlayerId && lastMovePlayerId !== yourPlayerId && !winCombo)
       button.removeAttribute("disabled")
@@ -39,7 +39,7 @@ function onChange({ game, yourPlayerId, action }) {
   })
 
   playerContainers.forEach((container, i) => {
-    container.setAttribute("your-turn", playerIds[i] !== lastMovePlayerId && !winCombo && freeCells)
+    container.setAttribute("your-turn", allPlayerIds[i] !== lastMovePlayerId && !winCombo && freeCells)
   })
 
   if (action && action.name === "claimCell") selectSound.play()

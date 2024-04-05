@@ -1,14 +1,13 @@
-function setup(allPlayerIds) {
+function setup() {
   const game = {
     cells: new Array(9).fill(null),
-    winCombo: null,
     lastMovePlayerId: null,
-    playerIds: allPlayerIds,
+    winCombo: null,
   }
   return game
 }
 
-function claimCell(cellIndex, { game, playerId }) {
+function claimCell(cellIndex, { game, playerId, allPlayerIds }) {
   if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
     throw Rune.invalidAction()
   }
@@ -21,7 +20,7 @@ function claimCell(cellIndex, { game, playerId }) {
     Rune.gameOver({
       players: {
         [game.lastMovePlayerId]: "WON",
-        [game.playerIds.find((id) => id !== game.lastMovePlayerId)]: "LOST",
+        [allPlayerIds.find((id) => id !== game.lastMovePlayerId)]: "LOST",
       },
     })
   }
@@ -30,8 +29,8 @@ function claimCell(cellIndex, { game, playerId }) {
   if (!game.freeCells) {
     Rune.gameOver({
       players: {
-        [game.playerIds[0]]: "LOST",
-        [game.playerIds[1]]: "LOST",
+        [allPlayerIds[0]]: "LOST",
+        [allPlayerIds[1]]: "LOST",
       },
     })
   }

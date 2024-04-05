@@ -8,6 +8,7 @@ function setup() {
 }
 
 function claimCell(cellIndex, { game, playerId, allPlayerIds }) {
+  // Do not allow to claim cell if it's already claimed or if it's not player's turn
   if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
     throw Rune.invalidAction()
   }

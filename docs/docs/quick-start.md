@@ -45,7 +45,7 @@ To modify the `game` state synced between players, we define actions that get ca
 
 ```js
 function claimCell(cellIndex, { game, playerId }) {
-  // Do not allow to claim cell if it's already claimed or if it is not player's turn
+  // Do not allow to claim cell if it's already claimed or if it's not player's turn
   if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
     throw Rune.invalidAction()
   }

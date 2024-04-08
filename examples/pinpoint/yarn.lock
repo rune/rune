@@ -3571,6 +3571,11 @@ commondir@^1.0.1:
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==
 
+compatto@2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/compatto/-/compatto-2.1.5.tgz#2d3b9e6a524081938ec9e2bb53636e95a20def0c"
+  integrity sha512-eo4KtO4xEkmtVt9TcnFGXaWNLFHWO2l4B5ev75NIxu6rLxjJxUm4JP0DMxWSdlwMjENcJVcKyKDHnZeQScW3BQ==
+
 compressible@~2.0.16:
   version "2.0.18"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.18.tgz#af53cca6b070d4c3c0750fbd77286a6d7cc46fba"
@@ -8582,12 +8587,13 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@4.16.33:
-  version "4.16.33"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.16.33.tgz#afb55fb2b29c19b49f30cad3fee17eda769fa9e1"
-  integrity sha512-+f5UCL2Vv6VDVzdXaTeoEeGyCx+SAepJuUBkzOb3CeTAUg1h+I88pDwelEtjBSxvN5QiW78FQI0E0wcCFp3jUg==
+rune-games-sdk@4.17.0:
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.17.0.tgz#af6ee80c5f8a7ec82e25a3829dabee08f63024a2"
+  integrity sha512-7jArPrmLvOtvZRLBbKzdrURRXbfCD5PojolfCX85ave0Ivi8mS1LmBPzrTCHTgAxdTjHuwo50PPWm0K5qaDKsA==
   dependencies:
     base-64 "1.0.0"
+    compatto "2.1.5"
     core-js "3.31.1"
     just-clone "6.2.0"
     mutative "0.7.1"

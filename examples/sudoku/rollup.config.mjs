@@ -6,10 +6,22 @@ export default [
   {
     input: "src/logic.ts",
     output: { file: "build/logic.js", format: "es" },
+    watch: false,
     plugins: [
       nodeResolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig-logic.json" }),
     ],
   },
+  {
+    input: "src/logic.ts",
+    watch: true,
+    output: { file: "public/logic.js", format: "es" },
+    plugins: [
+      nodeResolve(),
+      commonjs(),
+      typescript({ tsconfig: "./tsconfig-logic.json" }),
+    ],
+  },
+
 ]

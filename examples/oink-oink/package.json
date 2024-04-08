@@ -9,7 +9,7 @@
     "jotai": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rune-games-sdk": "4.16.28",
+    "rune-games-sdk": "4.17.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
@@ -34,7 +34,9 @@
     "typescript": "^4.4.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "npm run dev:client & npm run dev:logic",
+    "dev:client": "react-scripts start",
+    "dev:logic": "rollup -c --watch",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
     "deploy": "../../scripts/copy-assets.sh oink-oink && yarn build && rune upload build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"

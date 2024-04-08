@@ -15,6 +15,16 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
   if (!options?.logicPath) {
     throw new Error("`logicPath` option is required to use the Rune plugin")
   }
+
+  if (
+    !options.logicPath.endsWith("logic.js") &&
+    !options.logicPath.endsWith("logic.ts")
+  ) {
+    throw new Error(
+      "`logicPath` must end with `logic.js` or `logic.ts`. For example: `src/logic.ts`, `src/logic.js`, `logic/logic.ts`, `logic/logic.js`"
+    )
+  }
+
   const logicPath = path.resolve(options.logicPath)
   if (!existsSync(logicPath)) {
     throw new Error(`Rune logic file "${options.logicPath}" not found`)

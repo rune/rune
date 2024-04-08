@@ -26,6 +26,10 @@ Players expect any level information to persist indefinitely, but iOS/Android ma
 
 Rune shows an animation while your game is loading. It's a smoother player experience to only have one progress bar to load your game. Avoid having a loading screen in your game by waiting with calling `Rune.initClient()` until your game has fully completed loading.
 
+## Send control state rather than positions and only when they change {#send-controls-on-change}
+
+To minimize the amount of data on the network send the control state, e.g. whether the user is pressing left or right, in the actions. Only send an action when the control changes to avoid hitting the limit on actions per second.
+
 ### Gameplay Should not be Affected by Screen Size {#gameplay-should-not-be-affected-by-screen-size}
 
 Your game should ideally scale from small narrow phones with resolutions like 280×653 to wide tablets with resolutions like 1280×800. The gameplay area can be even less on small phones, e.g. only 450 pixels high. Gameplay should not be affected by aspect ratio or resolution. Make sure your game scales to cover the entire screen to provide the best experience.

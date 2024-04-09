@@ -4,7 +4,7 @@ sidebar_position: 61
 
 # Real-Time Games
 
-Rune synchronizes clocks across clients + server and provides multiple ways for you to add time-based code in your game logic. You can get the synchronized time using `Rune.gameTime()` and make fast-paced games with an `update()` loop running many times pr. second.
+Rune synchronizes clocks across clients + server to easily add time-based game logic. You can get the synchronized time using `Rune.gameTime()` and make fast-paced games with an `update()` loop running many times pr. second.
 
 ## Game Time {#game-time}
 

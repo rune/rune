@@ -4,7 +4,7 @@ sidebar_position: 61
 
 # Real-Time Games
 
-Many games use time as an essential part of their game logic. Rune makes this easy by synchronizing clocks across clients and the server. We provide multiple ways for you to add time-based code in your game logic based on what's most fitting for your game. You can also make fast-paced games with a synchronized update loop running many times pr. second.
+Rune synchronizes clocks across clients + server to easily add time-based game logic. You can get the synchronized time using `Rune.gameTime()` and make fast-paced games with an `update()` loop running many times pr. second.
 
 ## Game Time {#game-time}
 
@@ -54,7 +54,7 @@ Rune.initLogic({
 
 ## Update Function {#update-function}
 
-You can provide an `update` function inside your `logic.js` file to run game logic every second. When game state is changed inside your `update` function, the `onChange` inside `client.js` is called with `update` event. Here’s a game, where players have to make a move within 30 seconds or else their turn will pass:
+You can provide an `update` function inside your `logic.js` file to run game logic on an interval. When game state is changed inside your `update` function, the `onChange` inside `client.js` is called with `update` event. Here’s a game, where players have to make a move within 30 seconds or else their turn will pass:
 
 ```javascript
 // logic.js

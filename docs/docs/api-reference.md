@@ -62,6 +62,7 @@ Rune.initLogic({
   },
   updatesPerSecond: 10,
   inputDelay: 30,
+  landcape: false,
 })
 ```
 
@@ -96,6 +97,10 @@ How many times `update` function should be executed per second. Allowed values 1
 #### `inputDelay?: number` {#inputdelay-number}
 
 How many milliseconds user action is delayed before run locally. Allowed values 0-250. Default value 25. Higher values will mean that players are more in sync with each other (i.e. fewer rollbacks), but will feel less snappy locally as it takes longer for a player's actions to be reflected on their screen.
+
+### `landscape?: boolean` {#landscape-boolean}
+
+Setting `landscape` to true will make your game appear in landscape orientation. A game can only be in portrait or landscape mode at one time.
 
 ### `Rune.invalidAction()` {#runeinvalidaction}
 

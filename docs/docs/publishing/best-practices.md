@@ -6,10 +6,6 @@ sidebar_position: 3
 
 Here's some advice on making your game a great experience for the players!
 
-### Use Portrait Mode {#use-portrait-mode}
-
-Rune players love be able to play with one hand so your game should use portrait mode 📱
-
 ### Avoid UI Like Menu Screens, Pause Buttons, High Score Screen, etc. {#avoid-ui-like-menu-screens-pause-buttons-high-score-screen-etc}
 
 Rune’s UI provides a simple way to pause/play/restart that works for all games so you don’t need a menu screen or a pause button in your game. This lets players get into the action of your game, thereby making it faster to start playing and more fun for players.

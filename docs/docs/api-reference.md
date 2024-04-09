@@ -100,7 +100,7 @@ How many milliseconds user action is delayed before run locally. Allowed values 
 
 ### `landscape?: boolean` {#landscape-boolean}
 
-Setting `landscape` to true will make your game appear in landscape orientation. A game can only be in portrait or landscape mode at one time.
+Setting `landscape` to true will make your game appear in landscape orientation. A game can only be in portrait or landscape mode.
 
 ### `Rune.invalidAction()` {#runeinvalidaction}
 

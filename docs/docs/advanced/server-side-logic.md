@@ -23,7 +23,7 @@ The [Rune CLI](publishing/cli.md) will also warn you if it detects that your gam
 
 ## Why this approach using deterministic code? {#why-this-approach-using-deterministic-code}
 
-Because it's the future! 😎 All modern multiplayer engines use predict-rollback netcode with deterministic physics. For instance, [Rocket League](https://www.youtube.com/watch?v=ueEmiDM94IE&t=1416s), [Overwatch](https://www.youtube.com/watch?v=zrIY0eIyqmI), and [Mortal Combat](https://www.youtube.com/watch?v=7jb0FOcImdg) all use this approach. It's how you make great multiplayer games that work even in bad network conditions.
+Because it's the future! 😎 All modern multiplayer engines use predict-rollback netcode with deterministic physics. For instance, [Rocket League](https://www.youtube.com/watch?v=ueEmiDM94IE&t=1416s) and [Mortal Combat](https://www.youtube.com/watch?v=7jb0FOcImdg) both use this approach. It's how you make great multiplayer games that work even in bad network conditions.
 
 Rune's predict-rollback approach is extremely bandwidth-efficient as only the action payloads are sent between clients and server, not the entire game state. Clients can also simulate the world ahead of the server, which makes real-time games possible even on bad mobile internet with frequent latency spikes. This is all done by having the exact same deterministic game logic running on both the clients and the server.
 

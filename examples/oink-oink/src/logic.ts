@@ -193,6 +193,7 @@ Rune.initLogic({
                   {}
                 ),
                 delayPopUp: true,
+                minimizePopUp: true,
               })
             }
           } else {

@@ -13,7 +13,7 @@ Many games benefit from storing player data across play sessions such as map pro
 
 ## Storing Player Data {#loading-and-saving-data}
 
-Rune automatically loads and saves player data. You just need to decide what game data should be persisted across play sessions. To persist data for a player, store it in `game.persisted[playerId]`. The `persisted` object will always be available and contain all active players in the game. Each player has an object that you can store data in (incl. deep nested data). Any data you store in `persisted` will be persisted regardless of whether the game ends, is restarted, the player leaves, etc.
+Rune automatically loads and saves player data. You just need to decide what game data should be persisted across play sessions. To persist data for a player, store it in `game.persisted[playerId]`. The `game.persisted` object will always be available and contain all active players in the game. Each player has an object that you can store data in (incl. deep nested data). Any data you store in `game.persisted` will be persisted regardless of whether the game ends, is restarted, the player leaves, etc.
 
 Here's an example of using `game.persisted` for incrementing the number of sessions the player has played your game.
 
@@ -53,7 +53,7 @@ If the player didn't use the health potion, then they'd automatically have it in
 
 ## Backwards Compatibility {#backwards-compatibility}
 
-Rune persists data forever, also across game versions. Your game might see a player in `persisted` with 1-year-old data saved many game versions ago. We recommend using TypeScript, storing types used in old game versions, and assuming in your logic that all persisted keys can be undefined.
+Rune persists data forever, also across game versions. Your game might see a player in `game.persisted` with 1-year-old data saved many game versions ago. We recommend using TypeScript, storing types used in old game versions, and assuming in your logic that all persisted keys can be undefined.
 
 :::caution
 You should be very careful to ensure your game doesn't break if it encounters old data!
@@ -62,7 +62,7 @@ You should be very careful to ensure your game doesn't break if it encounters ol
 
 ## Testing Persistence {#testing-persistence}
 
-The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to input a data payload for `persisted` so you can test that your game works as intended.
+The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to input a data payload for `game.persisted` so you can test that your game works as intended.
 
 In addition, everyone on your team can [playtest your game](../publishing/collaboration.md) while in draft/review inside the Rune app. When playtesting, all players start afresh and any persisted data is only saved for that game version. Players can play that game version multiple times to test the persisted data.
 

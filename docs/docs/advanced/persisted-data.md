@@ -13,35 +13,35 @@ Many games benefit from storing player data across play sessions such as map pro
 
 ## Storing Player Data {#loading-and-saving-data}
 
-Rune automatically loads and saves player data. You just need to decide what game data should be persisted across play sessions. To persist data for a player, store it in `game.persistedPlayers[playerId]`. The `persistedPlayers` object will always be available and contain all active players in the game. Each player has an object that you can store data in (incl. deep nested data). Any data you store in `persistedPlayers` will be persisted regardless of whether the game ends, is restarted, the player leaves, etc.
+Rune automatically loads and saves player data. You just need to decide what game data should be persisted across play sessions. To persist data for a player, store it in `game.persisted[playerId]`. The `persisted` object will always be available and contain all active players in the game. Each player has an object that you can store data in (incl. deep nested data). Any data you store in `persisted` will be persisted regardless of whether the game ends, is restarted, the player leaves, etc.
 
-Here's an example of using `game.persistedPlayers` for incrementing the number of sessions the player has played your game.
+Here's an example of using `game.persisted` for incrementing the number of sessions the player has played your game.
 
 ```js
 Rune.initLogic({
     setup: (allPlayerIds, { game }) => {
         for (const playerId of allPlayerIds) {
-            game.persistedPlayers[playerId].sessionCount = game.persistedPlayers[playerId].sessionCount || 0
+            game.persisted[playerId].sessionCount = game.persisted[playerId].sessionCount || 0
         }
         return game
     },
     playerJoined(playerId, { game }) => {
-        game.persistedPlayers[playerId].sessionCount = game.persistedPlayers[playerId].sessionCount || 0
+        game.persisted[playerId].sessionCount = game.persisted[playerId].sessionCount || 0
     },
     // remaining arguments
 })
 ```
 
-You can also modify `game.persistedPlayers` inside actions and in the `update()` loop. For instance, here's an example of collecting a health potion and using it.
+You can also modify `game.persisted` inside actions and in the `update()` loop. For instance, here's an example of collecting a health potion and using it.
 
 ```js
 Rune.initLogic({
     actions: {
         pickUpItem: (droppedItemId, { game, playerId }) => {
-            game.persistedPlayers[playerId].inventory.push(game.droppedItems[droppedItemId])
+            game.persisted[playerId].inventory.push(game.droppedItems[droppedItemId])
         }
         useItem: (inventoryId, { game, playerId }) => {
-            game.persistedPlayers[playerId].inventory[inventoryId] = undefined
+            game.persisted[playerId].inventory[inventoryId] = undefined
             game.playerHealth[playerId] += 100
         }
     },
@@ -57,7 +57,7 @@ If the player didn't use the health potion, then they'd automatically have it in
 
 ## Backwards Compatibility {#backwards-compatibility}
 
-Rune persists data forever, also across game versions. Your game might see a `persistedPlayer` with 1-year-old data saved many game versions ago. We recommend using TypeScript, storing types used in old game versions, and assuming in your logic that all persisted keys can be undefined.
+Rune persists data forever, also across game versions. Your game might see a player in `persisted` with 1-year-old data saved many game versions ago. We recommend using TypeScript, storing types used in old game versions, and assuming in your logic that all persisted keys can be undefined.
 
 :::caution
 You should be very careful to ensure your game doesn't break if it encounters old data!
@@ -66,9 +66,9 @@ You should be very careful to ensure your game doesn't break if it encounters ol
 
 ## Testing Persistence {#testing-persistence}
 
-The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to input a data payload for `persistedPlayer` so you can test that your game works as intended. It also allows you to see what the outcome of `persistPlayer()` would be at any moment.
+The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to input a data payload for `persisted` so you can test that your game works as intended.
 
-In addition, everyone on your team can [playtest your game](../publishing/collaboration.md) while in draft/review inside the Rune app. When playtesting, all players start afresh and any persisted data is only saved for that game version. Players can play that game version multiple times to test the persisted data. High scores achieved during playtesting will not be saved or shown on the leaderboards.
+In addition, everyone on your team can [playtest your game](../publishing/collaboration.md) while in draft/review inside the Rune app. When playtesting, all players start afresh and any persisted data is only saved for that game version. Players can play that game version multiple times to test the persisted data.
 
 ## Example Games {#example-games}
 

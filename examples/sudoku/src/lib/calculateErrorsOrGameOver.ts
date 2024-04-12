@@ -13,10 +13,7 @@ export function calculateErrorsOrGameOver(game: GameState) {
   if (isBoardFilled(game.sudoku.board) && duplicates.length === 0) {
     game.gameOver = true
     Rune.gameOver({
-      players: Object.keys(game.playerState).reduce<GameOverOptions["players"]>(
-        (acc, playerId) => ({ ...acc, [playerId]: "WON" }),
-        {}
-      ),
+      everyone: "WON",
       delayPopUp: true,
     })
   }

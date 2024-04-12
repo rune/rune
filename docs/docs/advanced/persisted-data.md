@@ -39,7 +39,7 @@ Rune.initLogic({
     actions: {
         pickUpItem: (droppedItemId, { game, playerId }) => {
             game.persisted[playerId].inventory.push(game.droppedItems[droppedItemId])
-        }
+        },
         useItem: (inventoryId, { game, playerId }) => {
             game.persisted[playerId].inventory[inventoryId] = undefined
             game.playerHealth[playerId] += 100
@@ -49,11 +49,7 @@ Rune.initLogic({
 })
 ```
 
-If the player didn't use the health potion, then they'd automatically have it in their persisted data for their next game session. The persisted data can be up to 100 kb of JSON-serializable data per player. 
-
-## Community Packages for Persistence
-
-...
+If the player didn't use the health potion, then they'd automatically have it in their persisted data for their next game session. The persisted data can be up to 100 kb of JSON-serializable data per player.
 
 ## Backwards Compatibility {#backwards-compatibility}
 

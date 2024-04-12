@@ -41,7 +41,9 @@ Rune.initLogic({
       game.currentPlayerStartedAt = Rune.gameTimeInSeconds();
       // Determine if game has ended
       if (isVictoryOrDraw(game)) {
-        Rune.gameOver()
+        Rune.gameOver({
+          everyone: 100,
+        })
       }
     },
   },
@@ -147,9 +149,23 @@ Rune.initLogic({
 })
 ```
 
-#### `players: Record<string, "WON" | "LOST" | number>` {#players-recordstring-won--lost--number}
+:::info
 
-`players` is an object with player IDs as keys and the game result as values. The game result for each player can be either `WON`/`LOST` or an integer score (higher is better) score. Mixing `WON`/`LOST` and scores at the same time is not allowed. All players present in the game at the moment the game ends must be mentioned in the `players` object.
+Only one of `players` and `everyone` can be provided at the same time.
+
+:::
+
+#### `players: Record<string, "WON" | "LOST" | "TIE" | number>` {#players-game-over}
+
+`players` is an object with player IDs as keys and the game result as values. The game result for each player can be `WON`/`LOST`/`TIE` or an integer score (higher is better) score. Mixing `WON`/`LOST`/`TIE` and scores at the same time is not allowed. All players present in the game at the moment the game ends must be mentioned in the `players` object.
+
+####  `everyone: "WON" | "LOST" | "TIE" | number` {#everyone-game-over}
+
+`everyone` allows to assign the same result for every player. Providing a score value shows a team score game over popup.
+
+### `minimizePopUp?: boolean` {#minimizepopup-boolean}
+
+Set to `true` if you want to show the game over popup only as a small bar at the bottom of the screen. This is useful if your game has its own custom end game state.
 
 #### `delayPopUp?: boolean` {#delaypopup-boolean}
 

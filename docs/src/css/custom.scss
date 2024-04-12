@@ -428,3 +428,27 @@ body.aa-Detached {
 .hidden {
   display: none !important;
 }
+
+table thead tr:has(> :last-child:nth-child(1)){
+  th {
+    width: 100%;
+  }
+}
+
+table thead tr:has(> :last-child:nth-child(2)){
+  th {
+    width: 50%;
+  }
+}
+
+table thead tr:has(> :last-child:nth-child(3)){
+  th {
+    width: 33%;
+  }
+}
+
+table thead tr:has(> :last-child:nth-child(4)){
+  th {
+    width: 25%;
+  }
+}

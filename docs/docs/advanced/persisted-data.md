@@ -20,13 +20,15 @@ Here's an example of using `game.persisted` for incrementing the number of sessi
 ```js
 Rune.initLogic({
     setup: (allPlayerIds, { game }) => {
+        // update count for all players there at start of game
         for (const playerId of allPlayerIds) {
-            game.persisted[playerId].sessionCount = game.persisted[playerId].sessionCount || 0
+            game.persisted[playerId].sessionCount = (game.persisted[playerId].sessionCount || 0) + 1
         }
         return game
     },
     playerJoined(playerId, { game }) => {
-        game.persisted[playerId].sessionCount = game.persisted[playerId].sessionCount || 0
+        // update count for any players joining during the game
+        game.persisted[playerId].sessionCount = (game.persisted[playerId].sessionCount || 0) + 1
     },
     // remaining arguments
 })

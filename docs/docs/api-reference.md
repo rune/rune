@@ -165,7 +165,7 @@ Only one of `players` and `everyone` can be provided at the same time.
 
 ### `minimizePopUp?: boolean` {#minimizepopup-boolean}
 
-Set to `true` if you want to show the game over popup only as a small bar at the bottom of the screen. This is useful if your game has its own custom end game state.
+Set to `true` if you want to show the game over popup as a small bar at the bottom of the screen. This is useful if your game has its own custom end game state.
 
 #### `delayPopUp?: boolean` {#delaypopup-boolean}
 

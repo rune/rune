@@ -45,7 +45,6 @@ Rune.initLogic({
             [winner.playerId]: "WON",
             [loser.playerId]: "LOST",
           },
-          delayPopUp: true,
         })
       }
     },
@@ -60,6 +59,28 @@ Rune.initLogic({
 ### Player Scores {#player-scores}
 
 If your game assigns each player with a score, Rune will show a leaderboard in the game over popup, highlighting the current player. The player with with the highest score wins.
+
+
+```js
+// logic.js
+Rune.initLogic({
+  actions: {
+    myAction: (payload, { game, allPlayerIds }) => {
+      if (isGameOver(game)) {
+        Rune.gameOver({
+          players: {
+            [allPlayerIds[0]]: 21981,
+            [allPlayerIds[1]]: 8911,
+            [allPlayerIds[2]]: 20109,
+            [allPlayerIds[3]]: 323,
+          },
+        })
+      }
+    },
+  },
+})
+```
+
 
 <img src="/img/gameOverExamples/ranked.png" alt="ranked" height="100" style={{height: '600px'}}/>
 

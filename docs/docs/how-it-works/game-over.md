@@ -8,22 +8,67 @@ When your game ends, you should call [`Rune.gameOver(options)`](../api-reference
 
 This popup contents will vary depending on the options you pass. The main choice is whether the game has winners/losers or assigns each player a score.
 
-### Delaying Game Over Popup {#delaying-game-over-popup}
 
-If you pass [`delayPopUp: true`](../api-reference.md#delaypopup-boolean--undefined) to `Rune.gameOver()`, Rune will not show the game popup immediately. This is useful if you want to e.g. display some animation or just make sure that the players see the final game state before the game over popup is shown. In this case, you should call [`Rune.showGameOverPopUp()`](../api-reference.md#runeshowgameoverpopup) in your `client.js`. If you don't do it, Rune will still show it automatically after a few seconds.
+### Coop Games {#coop-games}
 
-### Winners and Losers {#winners-and-losers}
+If your game has a common goal for all players, you can use [`everyone`](../api-reference.md#everyone-game-over) to provide a common result for all players.
 
-We support all kinds of combinations of winners and losers and the game over popup will change accordingly. You can have a single winner/loser, many winners/losers or have everyone win or lose. The UI will also look different depending on whether the current player is among the winners, losers or is a spectator.
+```js
+// logic.js
+Rune.initLogic({
+  actions: {
+    myAction: (payload, { game }) => {
+      Rune.gameOver({ everyone: 300 })
+    },
+  },
+})
+```
 
-| Single winner, you won                            | Many winners, you lost                            | Many winners, spectator                             |
-| ------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
-| ![](/img/gameOverExamples/singleWinnerYouWon.png) | ![](/img/gameOverExamples/manyWinnersYouLost.png) | ![](/img/gameOverExamples/manyWinnersSpectator.png) |
+<img src="/img/gameOverExamples/everyone.png" alt="everyone" height="100" style={{height: '600px'}}/>
+
+
+### Winners, Losers And Ties {#winners-losers-ties}
+
+We support all kinds of combinations of winners, losers and ties and the game over popup will change accordingly. You can have a single winner/loser, many winners/losers/ties or have everyone win/lose/tie. The UI will also look different depending on whether the current player is among the winners, losers, ties or is a spectator.
+
+```js
+// logic.js
+Rune.initLogic({
+  actions: {
+    myAction: (payload, { game }) => {
+      if (isGameOver(game)) {
+        const winner = getWinner(game)
+        const loser = getLoser(game)
+
+        Rune.gameOver({
+          players: {
+            [winner.playerId]: "WON",
+            [loser.playerId]: "LOST",
+          },
+          delayPopUp: true,
+        })
+      }
+    },
+  },
+})
+```
+
+| Winner                             | Loser                               | Tie                                | Spectator                                |
+|------------------------------------|-------------------------------------|------------------------------------|------------------------------------------|
+| ![](/img/gameOverExamples/win.png) | ![](/img/gameOverExamples/lose.png) | ![](/img/gameOverExamples/tie.png) | ![](/img/gameOverExamples/spectator.png) |
 
 ### Player Scores {#player-scores}
 
 If your game assigns each player with a score, Rune will show a leaderboard in the game over popup, highlighting the current player. The player with with the highest score wins.
 
-| Ranked, you're 1st                            | Ranked, you're 2nd                             | Ranked, single player                       |
-| --------------------------------------------- | ---------------------------------------------- | ------------------------------------------- |
-| ![](/img/gameOverExamples/rankedYouFirst.png) | ![](/img/gameOverExamples/rankedYouSecond.png) | ![](/img/gameOverExamples/rankedSingle.png) |
+<img src="/img/gameOverExamples/ranked.png" alt="ranked" height="100" style={{height: '600px'}}/>
+
+### Minimizing game over popup {#minimizing-game-over-popup}
+
+If you want to build a custom game over screen, you can pass [`minimizePopUp: true`](../api-reference.md#minimizepopup-boolean) to `Rune.gameOver()`. This will force the popup to initially be minimized.
+
+<img src="/img/gameOverExamples/minimized.png" alt="minimized" height="100" style={{height: '600px'}}/>
+
+### Delaying Game Over Popup {#delaying-game-over-popup}
+
+If you pass [`delayPopUp: true`](../api-reference.md#delaypopup-boolean) to `Rune.gameOver()`, Rune will not show the game popup immediately. This is useful if you want to e.g. display some animation or just make sure that the players see the final game state before the game over popup is shown. In this case, you should call [`Rune.showGameOverPopUp()`](../api-reference.md#runeshowgameoverpopup) in your `client.js`. If you don't do it, Rune will still show it automatically after a few seconds.

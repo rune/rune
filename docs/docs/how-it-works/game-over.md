@@ -84,7 +84,7 @@ Rune.initLogic({
 
 <img src="/img/gameOverExamples/ranked.png" alt="ranked" height="100" style={{height: '600px'}}/>
 
-### Minimizing game over popup {#minimizing-game-over-popup}
+### Minimizing Game Over Popup {#minimizing-game-over-popup}
 
 If you want to build a custom game over screen, you can pass [`minimizePopUp: true`](../api-reference.md#minimizepopup-boolean) to `Rune.gameOver()`. This will force the popup to initially be minimized.
 

@@ -20,17 +20,16 @@ Here's an example of using `game.persisted` for incrementing the number of sessi
 ```js
 Rune.initLogic({
     setup: (allPlayerIds, { game }) => {
-        // update count for all players there at start of game
         for (const playerId of allPlayerIds) {
             game.persisted[playerId].sessionCount = (game.persisted[playerId].sessionCount || 0) + 1
         }
-        return game
+        // ... remaining setup code
     },
     playerJoined(playerId, { game }) => {
         // update count for any players joining during the game
         game.persisted[playerId].sessionCount = (game.persisted[playerId].sessionCount || 0) + 1
     },
-    // remaining arguments
+    // ... remaining arguments
 })
 ```
 
@@ -47,7 +46,7 @@ Rune.initLogic({
             game.playerHealth[playerId] += 100
         }
     },
-    // remaining arguments
+    // ... remaining arguments
 })
 ```
 
@@ -72,5 +71,5 @@ In addition, everyone on your team can [playtest your game](../publishing/collab
 
 Here's some games to get inspired for how to make use of persistence:
 
-- [Cube Rush](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/cube-rush) submits high scores for the leaderboard
+- [Cube Rush](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/cube-rush) stores best time the player has achieved
 - [Sudoku](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/sudoku) stores play sessions to decide whether to show onboarding

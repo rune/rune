@@ -169,7 +169,7 @@ You can also make a pull request to add the dependency to the whitelist at (http
               }
 
               //In case the import is relative, use full import, because transform is called with full path.
-              if (filePath.startsWith(`./`)) {
+              if (filePath.startsWith(`./`) || filePath.startsWith(`../`)) {
                 filePath = path.join(importerDirectory, filePath)
               }
 

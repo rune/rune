@@ -96,4 +96,19 @@ describe("external dependencies", () => {
 
     expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
   })
+
+  it("should allow relative imports", async () => {
+    const logger = createLogger()
+
+    await buildFixture("external-basic", logger, {
+      ignoredDependencies: ["math-sum"],
+    })
+
+    expect(logger.error).not.toHaveBeenCalledWith(
+      expect.stringContaining("inner")
+    )
+    expect(logger.error).not.toHaveBeenCalledWith(
+      expect.stringContaining("outer")
+    )
+  })
 })

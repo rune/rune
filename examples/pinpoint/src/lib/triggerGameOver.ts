@@ -11,6 +11,7 @@ export function triggerGameOver(game: GameState) {
         [playerId: string]: number
       }
     ),
+    minimizePopUp: true,
     delayPopUp: true,
   })
 }

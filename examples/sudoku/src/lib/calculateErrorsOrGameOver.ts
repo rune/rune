@@ -2,7 +2,6 @@ import { GameState } from "./types/GameState"
 import { findDuplicates } from "./findDuplicates"
 import { highlightDuplicates } from "./highlightDuplicates"
 import { isBoardFilled } from "./isBoardFilled"
-import { GameOverOptions } from "rune-games-sdk/multiplayer"
 
 export function calculateErrorsOrGameOver(game: GameState) {
   if (!game.sudoku) throw Rune.invalidAction()
@@ -13,10 +12,7 @@ export function calculateErrorsOrGameOver(game: GameState) {
   if (isBoardFilled(game.sudoku.board) && duplicates.length === 0) {
     game.gameOver = true
     Rune.gameOver({
-      players: Object.keys(game.playerState).reduce<GameOverOptions["players"]>(
-        (acc, playerId) => ({ ...acc, [playerId]: "WON" }),
-        {}
-      ),
+      everyone: "WON",
       delayPopUp: true,
     })
   }

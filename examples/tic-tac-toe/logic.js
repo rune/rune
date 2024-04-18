@@ -29,10 +29,7 @@ function claimCell(cellIndex, { game, playerId, allPlayerIds }) {
   game.freeCells = game.cells.findIndex((cell) => cell === null) !== -1
   if (!game.freeCells) {
     Rune.gameOver({
-      players: {
-        [allPlayerIds[0]]: "LOST",
-        [allPlayerIds[1]]: "LOST",
-      },
+      everyone: "TIE"
     })
   }
 }

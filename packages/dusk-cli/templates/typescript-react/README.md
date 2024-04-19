@@ -4,13 +4,13 @@
 
 ### `npm run dev`
 
-Runs the game in DevUI.\
+Runs the game in DevUI.
 
-The page will reload when you make changes.\
+The page will reload when you make changes.
 
 ### `npm run upload`
 
-Builds the game and starts upload process to Dusk.\
+Builds the game and starts upload process to Dusk.
 
 ### `npm run build`
 

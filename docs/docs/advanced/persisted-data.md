@@ -78,4 +78,4 @@ Here's some games to get inspired for how to make use of persistence:
 
 ## Future Plans
 
-This is just the start. We're also working on adding a way for you to submit scores for leaderboards that'll be shown both inside and outside your game! Similarly, we'll add achievements that players can earn inside your game and show off on their profile externally.  
+This is just the start. We're working on adding ways for you to easily submit scores to automatically generate leaderboards so players can compete to be the best at your game. Similarly, we'll also add achievements that players can earn inside your game and show off on their profile!  

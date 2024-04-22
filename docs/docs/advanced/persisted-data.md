@@ -63,7 +63,7 @@ You should be very careful to ensure your game doesn't break if it encounters ol
 
 ## Testing Persistence {#testing-persistence}
 
-The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to input a data payload for `game.persisted` so you can test that your game works as intended.
+The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to see and manipulate `game.persisted` so you can test that your game works across game sessions as intended. For instance, you can set one of the players' levels to 99 and check that it works fine when another new player joins as level 1.   
 
 In addition, everyone on your team can [playtest your game](../publishing/collaboration.md) while in draft/review inside the Rune app. When playtesting, all players start afresh and any persisted data is only saved for that game version. Players can play that game version multiple times to test the persisted data.
 
@@ -73,3 +73,4 @@ Here's some games to get inspired for how to make use of persistence:
 
 - [Cube Rush](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/cube-rush) stores best time the player has achieved
 - [Sudoku](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/sudoku) stores play sessions to decide whether to show onboarding
+- [Pinpoint](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/pinpoint) stores play sessions to decide whether to show onboarding

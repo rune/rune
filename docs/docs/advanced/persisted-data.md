@@ -74,3 +74,8 @@ Here's some games to get inspired for how to make use of persistence:
 - [Cube Rush](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/cube-rush) stores best time the player has achieved
 - [Sudoku](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/sudoku) stores play sessions to decide whether to show onboarding
 - [Pinpoint](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/pinpoint) stores play sessions to decide whether to show onboarding
+
+
+## Future Plans
+
+This is just the start. We're also working on adding a way for you to submit scores for leaderboards that'll be shown both inside and outside your game! Similarly, we'll add achievements that players can earn inside your game and show off on their profile externally.  

@@ -20,8 +20,8 @@ main {
   width: 90vw;
   max-width: min(90vh, 600px);
   aspect-ratio: 1;
-  column-count: 3;
-  column-gap: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 @keyframes right {
@@ -95,13 +95,13 @@ button[player="1"]:before {
 }
 
 button:nth-child(3n) {
-  border-bottom: 0;
+  border-right: 0;
 }
 
 button:nth-child(7),
 button:nth-child(8),
 button:nth-child(9) {
-  border-right: 0;
+  border-bottom: 0;
 }
 
 button:not([disabled]) {

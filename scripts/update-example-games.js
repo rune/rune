@@ -9,6 +9,10 @@ const templatesDir = path.resolve(
   __dirname,
   "../packages/rune-games-cli/templates"
 )
+const duskTemplatesDir = path.resolve(
+  __dirname,
+  "../packages/dusk-cli/templates"
+)
 
 //These example games also have sdk version inside html
 const gamesWithHtml = {
@@ -41,16 +45,28 @@ const templateGames = fs
     shouldInstall: false,
   }))
 
-const promises = []
-const games = [...exampleGames, ...templateGames]
+const duskTemplateGames = fs
+  .readdirSync(duskTemplatesDir, { withFileTypes: true })
+  .filter((dirent) => dirent.isDirectory())
+  .map((dirent) => ({
+    gameName: dirent.name,
+    gameDir: path.join(duskTemplatesDir, dirent.name),
+    shouldInstall: false,
+    isDusk: true,
+  }))
 
-games.forEach(({ gameName, gameDir, shouldInstall }) => {
+const promises = []
+const games = [...exampleGames, ...templateGames, ...duskTemplateGames]
+
+games.forEach(({ gameName, gameDir, shouldInstall, isDusk }) => {
   const packageJsonPath = path.join(gameDir, "package.json")
 
   if (fs.existsSync(packageJsonPath)) {
     const packageJson = require(packageJsonPath)
 
-    packageJson.dependencies["rune-games-sdk"] = `^${version}`
+    packageJson.dependencies[
+      isDusk ? "dusk-games-sdk" : "rune-games-sdk"
+    ] = `^${version}`
 
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 

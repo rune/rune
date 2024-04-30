@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "rune-games-sdk": "^4.18.6"
+    "rune-games-sdk": "^4.18.7"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.57.1",

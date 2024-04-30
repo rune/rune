@@ -9,7 +9,7 @@
     "jotai": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rune-games-sdk": "^4.18.6",
+    "rune-games-sdk": "^4.18.7",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {

@@ -55,7 +55,6 @@ const duskTemplateGames = fs
     isDusk: true,
   }))
 
-const promises = []
 const games = [...exampleGames, ...templateGames, ...duskTemplateGames]
 
 games.forEach(({ gameName, gameDir, shouldInstall, isDusk }) => {
@@ -68,24 +67,16 @@ games.forEach(({ gameName, gameDir, shouldInstall, isDusk }) => {
       isDusk ? "dusk-games-sdk" : "rune-games-sdk"
     ] = `^${version}`
 
+    console.log(
+      `Updating ${path.relative(path.join(__dirname, ".."), gameDir)}`
+    )
+
+    console.log(` - Updating package.json`)
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
     if (shouldInstall) {
-      promises.push(
-        // eslint-disable-next-line no-undef
-        new Promise((resolve, reject) => {
-          console.log(`Updating ${gameName}`)
-          const child = child_process.spawn("yarn", { cwd: gameDir })
-          child.on("exit", function (code) {
-            if (code === 0) {
-              console.log(`Updated ${gameName}`)
-              resolve()
-            } else {
-              reject()
-            }
-          })
-        })
-      )
+      console.log(` - Updating yarn.lock (running yarn)`)
+      child_process.execSync("yarn", { cwd: gameDir, stdio: "ignore" })
     }
   }
 
@@ -94,6 +85,7 @@ games.forEach(({ gameName, gameDir, shouldInstall, isDusk }) => {
 
     const indexHtml = fs.readFileSync(indexHtmlPath).toString()
 
+    console.log(` - Updating index.html`)
     fs.writeFileSync(
       indexHtmlPath,
       indexHtml.replace(
@@ -104,14 +96,4 @@ games.forEach(({ gameName, gameDir, shouldInstall, isDusk }) => {
   }
 })
 
-// eslint-disable-next-line no-undef
-Promise.all(promises)
-  .then(() => {
-    console.log("Example games updated successfully")
-  })
-  .catch((err) => {
-    console.error(
-      "Something went wrong. Most likely SDK version is not correct",
-      err
-    )
-  })
+console.log("Example games updated successfully")

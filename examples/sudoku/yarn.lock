@@ -8298,10 +8298,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@4.18.1:
-  version "4.18.1"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.18.1.tgz#b84a3d0d5cd957d82eba9b3a9db592827add3be8"
-  integrity sha512-yBDiWBbU60vz4VFhcPS/NGF9dvv0kpfsN5PGOrPOM0Qo7ZhrChOplTeadC8LYWeMoGm8LRyszCi/W6kk9q2tgw==
+rune-games-sdk@^4.18.6:
+  version "4.18.6"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.18.6.tgz#3af3ac3ed6ad18df31ee1d9631e3585f800abcdd"
+  integrity sha512-teIfY1GL8xMymXD9PO6OkAPstmkt0zj3ymOA2IG0nV/eDyberybxk4Yluwb5o7lPPcpcTlKNH3ujtlK65A1wyQ==
   dependencies:
     base-64 "1.0.0"
     compatto "2.1.5"

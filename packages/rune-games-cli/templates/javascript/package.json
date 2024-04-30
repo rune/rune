@@ -10,7 +10,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "rune-games-sdk": "^4.16.33"
+    "rune-games-sdk": "^4.18.6"
   },
   "devDependencies": {
     "eslint": "7.22.0",

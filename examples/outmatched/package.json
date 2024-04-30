@@ -13,7 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "rune-games-sdk": "4.16.15"
+    "rune-games-sdk": "^4.18.6"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.57.1",

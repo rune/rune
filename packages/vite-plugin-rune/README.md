@@ -1,6 +1,6 @@
 # vite-plugin-rune
 
-Plugin to use Rune SDK with Vite. This plugin automatically creates a `logic.js` file for the game to simplify your build setup. See [Syncing Game State](https://developers.rune.ai/docs/how-it-works/syncing-game-state) for more info on how Rune's SDK uses a `logic.js` file to seamlessly sync game state across players.
+Plugin to use Rune SDK with Vite. This plugin adds an SDK script line into your `index.html` file and creates a `logic.js` file for the game to simplify your build setup. See [Syncing Game State](https://developers.rune.ai/docs/how-it-works/syncing-game-state) for more info on how Rune's SDK uses a `logic.js` file to seamlessly sync game state across players.
 
 ## Install
 

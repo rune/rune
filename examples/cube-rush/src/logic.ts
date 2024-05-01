@@ -43,7 +43,10 @@ export interface GameState {
   phase: Phase
   ships: Record<PlayerId, Ship>
   mapIndex: number
-  completedPlayers: Record<PlayerId, { place: number; elapse: number }>
+  completedPlayers: Record<
+    PlayerId,
+    { place: number; elapse: number; showBestTime: boolean }
+  >
 }
 
 type GameActions = {
@@ -76,7 +79,7 @@ Rune.initLogic({
       ships[playerId] = {
         position: {
           x: shipStartPositions[idx % shipStartPositions.length],
-          z: idx === 0 ? 100 : 0,
+          z: 0,
         },
         rotation: {
           z: 0,
@@ -211,7 +214,13 @@ Rune.initLogic({
 
         const place = Object.keys(game.completedPlayers).length + 1
         const elapse = Rune.gameTime() - game.startedAt!
-        game.completedPlayers[playerId] = { place, elapse }
+
+        //Only show best time if user has persisted state from before
+        game.completedPlayers[playerId] = {
+          place,
+          elapse,
+          showBestTime: !!game.persisted[playerId].bestTime,
+        }
 
         game.persisted[playerId] = {
           bestTime: !game.persisted[playerId].bestTime

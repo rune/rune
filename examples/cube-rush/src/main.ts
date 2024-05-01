@@ -65,6 +65,9 @@ const uiStatsPlace = uiStats.getElementsByClassName("place")[0]!
 const uiStatsTopSpeed = uiStats.getElementsByClassName("topSpeed")[0]!
 const uiStatsElapse = uiStats.getElementsByClassName("elapse")[0]!
 const uiStatsBestTime = uiStats.getElementsByClassName("bestTime")[0]!
+const uiStatsBestTimeContainer = uiStats.getElementsByClassName(
+  "bestTimeContainer",
+)[0]! as HTMLElement
 
 const uiControlsPreview = uiScreens.PLAYING.getElementsByClassName(
   "controlsPreview",
@@ -449,8 +452,12 @@ function animate() {
       const elapse = yourCompletedPlayer.elapse
       uiStatsElapse.textContent = renderElapse(elapse)
 
-      const bestTime = game.persisted[yourPlayerId].bestTime
-      uiStatsBestTime.textContent = renderElapse(bestTime)
+      if (yourCompletedPlayer.showBestTime) {
+        const bestTime = game.persisted[yourPlayerId].bestTime
+        uiStatsBestTime.textContent = renderElapse(bestTime)
+
+        uiStatsBestTimeContainer.style.display = "block"
+      }
 
       uiStats.classList.add("visible")
     } else {

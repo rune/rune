@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs"
 import path from "node:path"
 import type { Plugin } from "vite"
 import { createRequire } from "node:module"
+import crypto from "crypto"
 
 const runtimePublicPath = "/@dusk-games-sdk"
 
@@ -43,6 +44,19 @@ export function getInjectSdkPlugins(): Plugin[] {
         return {
           html,
           tags: [
+            //Only add id in dev mode
+            ...(server
+              ? [
+                  {
+                    tag: "script",
+                    children: `window.__SDK_SETTINGS_ID__='${crypto
+                      .createHash("shake256", { outputLength: 8 })
+                      .update(process.cwd())
+                      .digest("hex")}'`,
+                    injectTo: "head-prepend" as const,
+                  },
+                ]
+              : []),
             {
               tag: "script",
               attrs: {

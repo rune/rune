@@ -1,4 +1,9 @@
-import { Interpolator, InterpolatorLatency, Players } from "rune-games-sdk"
+import {
+  GameStateWithPersisted,
+  Interpolator,
+  InterpolatorLatency,
+  Players,
+} from "rune-games-sdk"
 import { PlayerId } from "rune-games-sdk/multiplayer"
 import * as THREE from "three"
 // eslint-disable-next-line
@@ -14,7 +19,7 @@ import {
 import "./index.css"
 import { confirmUpdate, getInstancedMesh, setCube } from "./cube"
 import { createFinishLine, createGroundPlane, createWall } from "./bounders"
-import { GameState, ShipDirection } from "./logic"
+import { GameState, Persisted, ShipDirection } from "./logic"
 import {
   COUNTDOWN_MS,
   TRACK_DISTANCE,
@@ -59,12 +64,16 @@ const uiStats = document.getElementById("stats")!
 const uiStatsPlace = uiStats.getElementsByClassName("place")[0]!
 const uiStatsTopSpeed = uiStats.getElementsByClassName("topSpeed")[0]!
 const uiStatsElapse = uiStats.getElementsByClassName("elapse")[0]!
+const uiStatsBestTime = uiStats.getElementsByClassName("bestTime")[0]!
+const uiStatsBestTimeContainer = uiStats.getElementsByClassName(
+  "bestTimeContainer",
+)[0]! as HTMLElement
 
 const uiControlsPreview = uiScreens.PLAYING.getElementsByClassName(
   "controlsPreview",
 )[0]! as HTMLElement
 
-let game: GameState
+let game: GameStateWithPersisted<GameState, Persisted>
 let players: Players
 let yourPlayerId: PlayerId | undefined
 
@@ -442,6 +451,13 @@ function animate() {
 
       const elapse = yourCompletedPlayer.elapse
       uiStatsElapse.textContent = renderElapse(elapse)
+
+      if (yourCompletedPlayer.showBestTime) {
+        const bestTime = game.persisted[yourPlayerId].bestTime
+        uiStatsBestTime.textContent = renderElapse(bestTime)
+
+        uiStatsBestTimeContainer.style.display = "block"
+      }
 
       uiStats.classList.add("visible")
     } else {

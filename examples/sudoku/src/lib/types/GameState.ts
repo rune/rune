@@ -35,3 +35,7 @@ export interface GameState {
   hints: Coordinate[]
   successes: ({ row: number } | { col: number } | { section: number })[]
 }
+
+export type Persisted = {
+  numberOfFinishedGames: number
+}

@@ -1,9 +1,12 @@
 import { atom } from "jotai"
-import { GameState } from "../lib/types/GameState"
+import { GameState, Persisted } from "../lib/types/GameState"
 import { $myPlayerId } from "./myPlayerId"
 import { hasEveryoneGuessed } from "../lib/hasEveryoneGuessed"
+import { GameStateWithPersisted } from "rune-games-sdk"
 
-export const $game = atom<GameState | undefined>(undefined)
+export const $game = atom<
+  GameStateWithPersisted<GameState, Persisted> | undefined
+>(undefined)
 
 export const $guesses = atom((get) => {
   const game = get($game)

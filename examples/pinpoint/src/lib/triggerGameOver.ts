@@ -1,6 +1,15 @@
-import { GameState } from "./types/GameState"
+import { GameState, Persisted } from "./types/GameState"
+import { GameStateWithPersisted } from "rune-games-sdk"
 
-export function triggerGameOver(game: GameState) {
+export function triggerGameOver(
+  game: GameStateWithPersisted<GameState, Persisted>
+) {
+  game.playerIds.forEach((playerId) => {
+    game.persisted[playerId] = {
+      numberOfSessions: (game.persisted[playerId]?.numberOfSessions || 0) + 1,
+    }
+  })
+
   Rune.gameOver({
     players: game.guesses.reduce(
       (acc, guess) => ({

@@ -19,6 +19,7 @@ import { useLatestGuess } from "./useLatestGuess"
 
 import { panoramasUrl } from "../../lib/panoramasUrl"
 import { panoramasClient } from "../../lib/data/panoramasClient"
+import { GuessHint } from "./GuessHint"
 
 export function PanoramaView({
   onOpenMapClick,
@@ -36,11 +37,19 @@ export function PanoramaView({
   const guesses = useAtomValue($guesses)
   const myGuess = useAtomValue($myGuess)
 
-  const [overlay, setOverlay] = useState<"startOfRound" | "hint" | null>(null)
+  const isNewPlayer = myPlayerId && !game.persisted[myPlayerId].numberOfSessions
+
+  const [overlay, setOverlay] = useState<
+    "startOfRound" | "hint" | "guess" | null
+  >(null)
 
   const shouldShowHint = useMemo(
-    () => round === 0 && !isFlagSet("panoramaHintShown"),
-    [isFlagSet, round]
+    () =>
+      round === 0 &&
+      !isFlagSet("panoramaHintShown") &&
+      myPlayerId &&
+      !game.persisted[myPlayerId].numberOfSessions,
+    [game.persisted, isFlagSet, myPlayerId, round]
   )
 
   useEffect(() => {
@@ -80,6 +89,15 @@ export function PanoramaView({
     setOverlay((overlay) => (overlay === "hint" ? null : overlay))
   }, [])
 
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      if (isNewPlayer && overlay === null && round === 0) {
+        setOverlay("guess")
+      }
+    }, timings.newUserGuess)
+    return () => clearTimeout(handle)
+  }, [isNewPlayer, overlay, round])
+
   return (
     <Root>
       <PhotoSphereViewer
@@ -89,7 +107,7 @@ export function PanoramaView({
       />
       <StartOfRoundOverlay visible={overlay === "startOfRound"} />
       <PanoramaControlsHint visible={overlay === "hint"} />
-      <MapBtnContainer onClick={onOpenMapClick}>
+      <BottomContainer>
         {latestGuess && (
           <SimpleCSSTransition
             visible={latestGuessShown}
@@ -100,13 +118,16 @@ export function PanoramaView({
             </LatestGuess>
           </SimpleCSSTransition>
         )}
-        <MapBtn src={mapBtnImg} />
-        {game.playerIds.length > 1 && (
-          <MapBtnLabel>
-            {guesses.length}/{game.playerIds.length}
-          </MapBtnLabel>
-        )}
-      </MapBtnContainer>
+        <GuessHint visible={overlay === "guess"} />
+        <MapBtnContainer onClick={onOpenMapClick}>
+          {game.playerIds.length > 1 && (
+            <MapBtnLabel>
+              {guesses.length}/{game.playerIds.length}
+            </MapBtnLabel>
+          )}
+          <MapBtn src={mapBtnImg} />
+        </MapBtnContainer>
+      </BottomContainer>
       {isSpectator && (
         <LabelContainer>
           <Label>You are spectating&nbsp;👀</Label>
@@ -128,14 +149,18 @@ const Root = styled.div`
   height: 100%;
   position: relative;
 `
-const MapBtnContainer = styled.div`
+const BottomContainer = styled.div`
   position: absolute;
   bottom: 8px;
   right: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+`
+
+const MapBtnContainer = styled.div`
+  position: relative;
 `
 
 const MapBtn = styled.img`
@@ -146,11 +171,14 @@ const MapBtn = styled.img`
 
 const MapBtnLabel = styled.div`
   font-size: 3vw;
-  line-height: 3vw;
   bottom: 6vw;
+  line-height: 3vw;
   font-weight: 700;
   color: #1e6252;
   position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `
 
 const LatestGuess = styled.div`

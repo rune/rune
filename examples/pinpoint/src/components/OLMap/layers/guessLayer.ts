@@ -48,8 +48,8 @@ export function guessLayer(
                 src: avatarUrl,
                 displacement: [0, avatarSize / 2 + (pinSize / 3) * 2],
                 // size and scale are used instead of width/height to avoid android issue which sometimes ignores width/height for some reason
-                size: [420, 420],
-                scale: (avatarSize - avatarBorder) / 420,
+                size: [300, 300],
+                scale: (avatarSize - avatarBorder) / 300,
               }),
             }),
           ]

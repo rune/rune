@@ -15,3 +15,7 @@ export interface GameState {
     missed?: boolean
   }[]
 }
+
+export type Persisted = {
+  numberOfSessions: number
+}

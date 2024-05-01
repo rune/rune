@@ -43,7 +43,10 @@ export interface GameState {
   phase: Phase
   ships: Record<PlayerId, Ship>
   mapIndex: number
-  completedPlayers: Record<PlayerId, { place: number; elapse: number }>
+  completedPlayers: Record<
+    PlayerId,
+    { place: number; elapse: number; showBestTime: boolean }
+  >
 }
 
 type GameActions = {
@@ -51,8 +54,12 @@ type GameActions = {
   setShipDirection: (direction: ShipDirection) => void
 }
 
+export type Persisted = {
+  bestTime: number
+}
+
 declare global {
-  const Rune: RuneClient<GameState, GameActions>
+  const Rune: RuneClient<GameState, GameActions, Persisted>
 }
 
 Rune.initLogic({
@@ -206,8 +213,20 @@ Rune.initLogic({
         ship.zSpeed = 0
 
         const place = Object.keys(game.completedPlayers).length + 1
-        const elapse = Rune.gameTime()
-        game.completedPlayers[playerId] = { place, elapse }
+        const elapse = Rune.gameTime() - game.startedAt!
+
+        //Only show best time if user has persisted state from before
+        game.completedPlayers[playerId] = {
+          place,
+          elapse,
+          showBestTime: !!game.persisted[playerId].bestTime,
+        }
+
+        game.persisted[playerId] = {
+          bestTime: !game.persisted[playerId].bestTime
+            ? elapse
+            : Math.min(game.persisted[playerId].bestTime, elapse),
+        }
       }
 
       // Game over when all players finish

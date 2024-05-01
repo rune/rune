@@ -1,12 +1,13 @@
-import { GameState, Color } from "../lib/types/GameState"
+import { GameState, Color, Persisted } from "../lib/types/GameState"
 import { atom } from "jotai"
 import { Players, PlayerId } from "rune-games-sdk/multiplayer"
 import { cellPointer } from "../lib/cellPointer"
 import { $onboardingVisible } from "./$onboardingVisible"
+import { GameStateWithPersisted } from "rune-games-sdk"
 
 export const $game = atom<
   | {
-      game: GameState
+      game: GameStateWithPersisted<GameState, Persisted>
       players: Players
       yourPlayerId: PlayerId | undefined
     }

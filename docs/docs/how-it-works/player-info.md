@@ -26,13 +26,13 @@ Every player on Rune has their own personalized avatar. We let you use these ava
 
 Below are some examples of what the avatars look like.
 
-![](/img/avatars.png)
+<img src="/img/avatars.png" alt="Avatars" width="400"/>
 
 ## Avatar Placeholder
 
 Since the avatar is loaded over the network there might be a slight delay. You might want to display a placeholder during loading - we got you covered!
 
-![Avatar placeholder](/img/avatar-placeholder.png)
+<img src="/img/avatar-placeholder.png" alt="Avatar placeholder" width="100"/>
 
 Right-click on the image above and download it to your game (or use [this link](/img/avatar-placeholder.png)).
 

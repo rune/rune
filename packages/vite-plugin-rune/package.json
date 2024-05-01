@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-rune",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "type": "module",
   "description": "Vite plugin for Rune SDK",
   "license": "MIT",

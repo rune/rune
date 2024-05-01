@@ -49,7 +49,7 @@ export function PanoramaView({
       !isFlagSet("panoramaHintShown") &&
       myPlayerId &&
       !game.persisted[myPlayerId].numberOfSessions,
-    [isFlagSet, round]
+    [game.persisted, isFlagSet, myPlayerId, round]
   )
 
   useEffect(() => {

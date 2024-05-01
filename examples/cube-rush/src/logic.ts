@@ -51,8 +51,12 @@ type GameActions = {
   setShipDirection: (direction: ShipDirection) => void
 }
 
+export type Persisted = {
+  bestTime: number
+}
+
 declare global {
-  const Rune: RuneClient<GameState, GameActions>
+  const Rune: RuneClient<GameState, GameActions, Persisted>
 }
 
 Rune.initLogic({
@@ -72,7 +76,7 @@ Rune.initLogic({
       ships[playerId] = {
         position: {
           x: shipStartPositions[idx % shipStartPositions.length],
-          z: 0,
+          z: idx === 0 ? 100 : 0,
         },
         rotation: {
           z: 0,
@@ -206,8 +210,14 @@ Rune.initLogic({
         ship.zSpeed = 0
 
         const place = Object.keys(game.completedPlayers).length + 1
-        const elapse = Rune.gameTime()
+        const elapse = Rune.gameTime() - game.startedAt!
         game.completedPlayers[playerId] = { place, elapse }
+
+        game.persisted[playerId] = {
+          bestTime: !game.persisted[playerId].bestTime
+            ? elapse
+            : Math.min(game.persisted[playerId].bestTime, elapse),
+        }
       }
 
       // Game over when all players finish

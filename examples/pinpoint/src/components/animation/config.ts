@@ -6,6 +6,7 @@ export const timings = {
   scoreIncrement: 1000,
   mapLineDelay: 1000,
   mapDistanceDelay: 2000,
+  newUserGuess: 5000,
 }
 
 export enum ScoreboardAnimationStep {

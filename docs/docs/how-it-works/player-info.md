@@ -18,11 +18,13 @@ Note that you can pass the ID of a player that is no longer in game and get plac
 
 ## Avatars {#avatars}
 
+![](/img/avatars.png)
+
 Using avatars is a great way to personalize the UI to show whose turn it is or in a leaderboard. Since the avatar is loaded over the network there might be a slight delay during which you might want to display a placeholder – and we got you covered!
 
-![Avatar placeholder](/img/avatar-placeholder.svg)
+![Avatar placeholder](/img/avatar-placeholder.png)
 
-Right click the link above and select download either as [SVG](/img/avatar-placeholder.svg) or [PNG](/img/avatar-placeholder.png).
+Right-click on the image above and download it (or use [this link](/img/avatar-placeholder.png)).
 
 ## Your Player ID {#your-player-id}
 

@@ -1,0 +1,14 @@
+name: Update example games
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "SDK Version"
+
+jobs:
+  updateExamples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test step
+        run: echo "Test ${{ github.event.inputs.version }}"

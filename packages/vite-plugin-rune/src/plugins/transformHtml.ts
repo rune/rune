@@ -7,6 +7,7 @@ export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
   return [
     {
       name: "vite:rune-plugin:inject-runtime",
+      apply: "build",
       enforce: "post",
       transformIndexHtml(html) {
         return {

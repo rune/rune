@@ -7,6 +7,7 @@ export function getTransformHtmlForBuildPlugins(duskPkgPath: string): Plugin[] {
   return [
     {
       name: "vite:dusk-plugin:inject-runtime",
+      apply: "build",
       enforce: "post",
       transformIndexHtml(html) {
         return {

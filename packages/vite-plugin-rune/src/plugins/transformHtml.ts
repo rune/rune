@@ -18,7 +18,6 @@ export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
             .replace(/<link.* href="(\.)*\/logic\.js">/, "")
             .replace(/<script.* src="(\.)*\/client\.js"><\/script>/, ""),
           tags: [
-            // Inject the multiplayer script first of all.
             {
               tag: "script",
               attrs: {

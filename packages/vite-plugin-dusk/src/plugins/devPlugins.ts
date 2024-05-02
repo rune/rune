@@ -40,7 +40,6 @@ export function getDevPlugins(duskPkgPath: string): Plugin[] {
                 .digest("hex")}'`,
               injectTo: "head-prepend",
             },
-            // Inject the multiplayer script first of all.
             {
               tag: "script",
               attrs: {

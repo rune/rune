@@ -15,11 +15,14 @@ export function getBuildLogicPlugin(
       outputOptions: (options) => ({
         ...options,
         generatedCode: "es5",
+        //For other file to be called client.js
+        entryFileNames: "client.js",
         // Force logic.js chunk to be named so.
         chunkFileNames: (chunkInfo) => {
           if (chunkInfo.name === "logic") {
             return "logic.js"
           }
+
           return typeof options.chunkFileNames === "function"
             ? options.chunkFileNames(chunkInfo)
             : options.chunkFileNames!

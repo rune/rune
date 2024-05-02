@@ -24,6 +24,15 @@ describe("build output", () => {
     expect(html.source).toMatch(
       /<script src="https:\/\/cdn.jsdelivr.net\/npm\/rune-games-sdk@[^/"]+\/multiplayer\.js"/
     )
+
+    const logicScript = '<script type="module" crossorigin src="./logic.js">'
+    const clientScript = '<script type="module" crossorigin src="./client.js">'
+    expect(html.source).toContain(logicScript)
+    expect(html.source).toContain(clientScript)
+
+    expect((html.source as string).indexOf(logicScript)).toBeLessThan(
+      (html.source as string).indexOf(clientScript)
+    )
   })
 
   it("nested project", async () => {

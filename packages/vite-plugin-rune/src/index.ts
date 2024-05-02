@@ -1,9 +1,13 @@
 import type { Plugin } from "vite"
 import path from "node:path"
 import { existsSync } from "node:fs"
-import { getInjectSdkPlugins } from "./plugins/injectSDK.js"
+import { getTransformHtmlForBuildPlugins } from "./plugins/transformHtml.js"
 import { getBuildLogicPlugin } from "./plugins/buildLogic.js"
 import { getDetectExternalImportsPlugin } from "./plugins/detectExternalImports.js"
+import { getDevPlugins } from "./plugins/devPlugins.js"
+import { createRequire } from "node:module"
+
+const require = createRequire(import.meta.url)
 
 export interface ViteRunePluginOptions {
   logicPath: string
@@ -30,9 +34,19 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
     throw new Error(`Rune logic file "${options.logicPath}" not found`)
   }
 
+  let runePkgPath: string
+  try {
+    runePkgPath = require.resolve("rune-games-sdk/package.json")
+  } catch (e) {
+    throw new Error(
+      "Cannot locate the rune-games-sdk module. Did you install it?"
+    )
+  }
+
   return [
     ...getDetectExternalImportsPlugin(options, logicPath),
-    ...getInjectSdkPlugins(),
+    ...getDevPlugins(runePkgPath),
+    ...getTransformHtmlForBuildPlugins(runePkgPath),
     ...getBuildLogicPlugin(options, logicPath),
   ]
 }

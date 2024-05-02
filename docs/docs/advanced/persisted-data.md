@@ -1,13 +1,8 @@
 ---
 sidebar_position: 65
-sidebar_class_name: hidden
 ---
 
-# Persisted Data (WIP)
-
-:::caution
-This page is written to start a discussion. This API is not yet implemented.
-:::
+# Persisted Data
 
 Many games benefit from storing player data across play sessions such as map progress, items, and various game-specific data. Rune makes it easy to define and store such data.
 
@@ -64,8 +59,6 @@ You should be very careful to ensure your game doesn't break if it encounters ol
 ## Testing Persistence {#testing-persistence}
 
 The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to see and manipulate `game.persisted` so you can test that your game works across game sessions as intended. For instance, you can set one of the players' levels to 99 and check that it works fine when another new player joins as level 1.   
-
-In addition, everyone on your team can [playtest your game](../publishing/collaboration.md) while in draft/review inside the Rune app. When playtesting, all players start afresh and any persisted data is only saved for that game version. Players can play that game version multiple times to test the persisted data.
 
 ## Example Games {#example-games}
 

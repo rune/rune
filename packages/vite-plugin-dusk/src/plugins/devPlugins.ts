@@ -31,6 +31,9 @@ export function getDevPlugins(duskPkgPath: string): Plugin[] {
             // Inject a tag to differentiate between different games when running in dev mode
             {
               tag: "script",
+              attrs: {
+                "data-rune-allow-before-sdk": "1",
+              },
               children: `window.__SDK_SETTINGS_ID__='${crypto
                 .createHash("shake256", { outputLength: 8 })
                 .update(process.cwd())

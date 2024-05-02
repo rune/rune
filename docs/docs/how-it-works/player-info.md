@@ -18,11 +18,23 @@ Note that you can pass the ID of a player that is no longer in game and get plac
 
 ## Avatars {#avatars}
 
-Using avatars is a great way to personalize the UI to show whose turn it is or in a leaderboard. Since the avatar is loaded over the network there might be a slight delay during which you might want to display a placeholder – and we got you covered!
+Every player on Rune has their own personalized avatar. We let you use these avatars in your game, which has many benefits:
 
-![Avatar placeholder](/img/avatar-placeholder.svg)
+- Players can easily see which friend is playing what character in your game
+- Makes it easy to show players in your UI, leaderboards, etc.
+- Consistency between your game and other popular games on Rune
 
-Right click the link above and select download either as [SVG](/img/avatar-placeholder.svg) or [PNG](/img/avatar-placeholder.png).
+Below are some examples of what the avatars look like.
+
+<img src="/img/avatars.png" alt="Avatars" width="400"/>
+
+## Avatar Placeholder
+
+Since the avatar is loaded over the network there might be a slight delay. You might want to display a placeholder during loading - we got you covered!
+
+<img src="/img/avatar-placeholder.png" alt="Avatar placeholder" width="100"/>
+
+Right-click on the image above and download it to your game (or use [this link](/img/avatar-placeholder.png)).
 
 ## Your Player ID {#your-player-id}
 

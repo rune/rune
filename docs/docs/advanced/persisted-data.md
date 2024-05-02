@@ -1,6 +1,5 @@
 ---
 sidebar_position: 65
-sidebar_class_name: hidden
 ---
 
 # Persisted Data

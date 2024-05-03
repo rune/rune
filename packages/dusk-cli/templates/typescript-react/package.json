@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.19.5",
+    "dusk-games-sdk": "^4.19.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

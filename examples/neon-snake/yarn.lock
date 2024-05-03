@@ -3024,10 +3024,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.19.5:
-  version "4.19.5"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.5.tgz#d6ef65286da2a03932a3573ddd86eb5f8fd7a3c6"
-  integrity sha512-Av48xkHyyGlQDD4LGLr46tALFsP5FEZFbVdJZavMGCb78L6yHTZ1bHvxEyHYoEtIbfJ8YNk/tb9DBb+7CgQ0IA==
+rune-games-sdk@^4.19.6:
+  version "4.19.7"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.7.tgz#87995b2d4c0a643370114d87ea2e907e1423d7b0"
+  integrity sha512-uTLqoAoq/4wwZo24iF2ntYdQQSvF0sVs0moXh07GvZuvMZXyLlkDV9tnJZIseuPX4cDNB7P2aeymvL18lx5MQA==
 
 scheduler@^0.23.0:
   version "0.23.0"

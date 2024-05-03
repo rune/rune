@@ -23,5 +23,5 @@ jobs:
       - run: yarn install
       - run: |
           yarn updateExampleGames ${{ github.event.inputs.version }}
-          && git commit -am "Update example games to SDK version ${{ github.event.inputs.version }}"
-          && git push
+          git commit -am "Update example games to SDK version ${{ github.event.inputs.version }}"
+          git push

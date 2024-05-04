@@ -1,10 +1,8 @@
 # Getting Started with Rune
 
-## Available Scripts
-
 ### `npm run dev`
 
-Runs the game in DevUI.
+Runs the game in Dev UI.
 
 The page will reload when you make changes.
 
@@ -18,9 +16,13 @@ Builds the game. You can then upload it to Rune using `npx rune-games-cli@latest
 
 ### `npm run lint`
 
-Runs the validation rules. You can read about them in the [Server-side logic](https://developers.rune.ai/docs/advanced/server-side-logic
+Runs the validation rules. You can read about them in the [docs on server-side logic](https://developers.rune.ai/docs/advanced/server-side-logic).
+
+### `npm run typecheck`
+
+Verifies that TypeScript is valid.
 
 
 ## Learn More
 
-You can learn more in the [Rune docs](https://developers.rune.ai/docs/quick-start).
+See the [Rune docs](https://developers.rune.ai/docs/quick-start) for more info. You can also ask any questions in the [Rune Discord](https://discord.gg/rune-devs), we're happy to help!

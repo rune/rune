@@ -1,10 +1,8 @@
 # Getting Started with Dusk
 
-## Available Scripts
-
 ### `npm run dev`
 
-Runs the game in DevUI.
+Runs the game in Dev UI.
 
 The page will reload when you make changes.
 
@@ -18,13 +16,13 @@ Builds the game. You can then upload it to Dusk using `npx dusk-cli@latest uploa
 
 ### `npm run lint`
 
-Runs the validation rules. You can read about them in the [Server-side logic](https://developers.dusk.gg/docs/advanced/server-side-logic
+Runs the validation rules. You can read about them in the [docs on server-side logic](https://developers.dusk.gg/docs/advanced/server-side-logic).
 
 ### `npm run typecheck`
 
-Verifies that typescript is valid.
+Verifies that TypeScript is valid.
 
 
 ## Learn More
 
-You can learn more in the [Dusk docs](https://developers.dusk.gg/docs/quick-start).
+See the [Dusk docs](https://developers.dusk.gg/docs/quick-start) for more info. You can also ask any questions in the [Dusk Discord](https://discord.gg/rune-devs), we're happy to help!

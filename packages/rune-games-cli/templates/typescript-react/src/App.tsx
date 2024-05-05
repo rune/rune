@@ -4,7 +4,6 @@ import { PlayerId } from "rune-games-sdk/multiplayer"
 
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"
-import "./styles.css"
 
 const selectSound = new Audio(selectSoundAudio)
 

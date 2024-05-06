@@ -1,4 +1,3 @@
-import "./styles.css"
 import { PlayerId } from "dusk-games-sdk/multiplayer"
 import { useEffect, useState } from "react"
 

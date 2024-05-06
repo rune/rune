@@ -10,21 +10,22 @@ jobs:
   updateExamples:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          # Using CI user https://stackoverflow.com/a/72515781
+          token: ${{ secrets.CI_GITHUB_ACTIONS }}
       - name: Configuring git user
         run: |
           git config --global user.name "rune-ci"
           git config --global user.email "ci@rune.ai"
 
-      - uses: actions/checkout@v3
-        with:
-          # Using CI user https://stackoverflow.com/a/72515781
-          token: ${{ secrets.CI_GITHUB_ACTIONS }}
       - uses: actions/setup-node@v3
         with:
           node-version-file: ".node-version"
           cache: "yarn"
       - run: yarn install
-      - run: |
-          yarn updateExampleGames ${{ github.event.inputs.version }}
+      - run: yarn updateExampleGames ${{ github.event.inputs.version }}
+      - name: Commit and push changes
+        run: |
           git commit -am "Update example games to SDK version ${{ github.event.inputs.version }}"
           git push

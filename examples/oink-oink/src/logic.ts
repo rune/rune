@@ -14,7 +14,7 @@ export const displayCorrectGuessFor = 3
 export const hideGuessTurnButtonDuration = 10
 
 Rune.initLogic({
-  minPlayers: 3,
+  minPlayers: 2,
   maxPlayers: 6,
   setup: (playerIds) => ({
     players: playerIds.map((id) => ({

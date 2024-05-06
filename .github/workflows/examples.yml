@@ -32,3 +32,4 @@ jobs:
           branch: build/examples-sdk-${{ github.event.inputs.version }}
           title: 'build: Example games SDK ${{ github.event.inputs.version }}'
           body: Update example games to SDK version ${{ github.event.inputs.version }}
+          reviewers: gongreg kevglass

@@ -6,6 +6,17 @@ sidebar_position: 65
 
 Many games benefit from storing player data across play sessions such as map progress, items, and various game-specific data. Rune makes it easy to define and store such data.
 
+## Enabling Persistence {#enabling-persistence}
+
+To enable persistence, you need to set `persistPlayerData` to `true` in `Rune.initLogic()`:
+
+```js
+Rune.initLogic({
+    persistPlayerData: true,
+    // ... remaining arguments
+})
+```
+
 ## Storing Player Data {#loading-and-saving-data}
 
 Rune automatically loads and saves player data. You just need to decide what game data should be persisted across play sessions. To persist data for a player, store it in `game.persisted[playerId]`. The `game.persisted` object will always be available and contain all active players in the game. Each player has an object that you can store data in (incl. deep nested data). Any data you store in `game.persisted` will be persisted regardless of whether the game ends, is restarted, the player leaves, etc.
@@ -14,6 +25,7 @@ Here's an example of using `game.persisted` for incrementing the number of sessi
 
 ```js
 Rune.initLogic({
+    persistPlayerData: true,
     setup: (allPlayerIds, { game }) => {
         for (const playerId of allPlayerIds) {
             game.persisted[playerId].sessionCount = (game.persisted[playerId].sessionCount || 0) + 1
@@ -32,6 +44,7 @@ You can also modify `game.persisted` inside actions and in the `update()` loop. 
 
 ```js
 Rune.initLogic({
+    persistPlayerData: true,
     actions: {
         pickUpItem: (droppedItemId, { game, playerId }) => {
             game.persisted[playerId].inventory.push(game.droppedItems[droppedItemId])
@@ -55,10 +68,27 @@ Rune persists data forever, also across game versions. Your game might see a pla
 You should be very careful to ensure your game doesn't break if it encounters old data!
 :::
 
-
 ## Testing Persistence {#testing-persistence}
 
 The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to see and manipulate `game.persisted` so you can test that your game works across game sessions as intended. For instance, you can set one of the players' levels to 99 and check that it works fine when another new player joins as level 1.   
+
+## Typescript support {#typescript-support}
+
+You can provide a `Persisted` type to RuneClient to type the `game.persisted` type.
+
+```typescript
+// ... other types
+
+type Persisted = {
+  sessionCount: number
+  inventory: Item[]
+}
+
+declare global {
+  const Rune: RuneClient<GameState, GameActions, Persisted>
+}
+
+```
 
 ## Example Games {#example-games}
 

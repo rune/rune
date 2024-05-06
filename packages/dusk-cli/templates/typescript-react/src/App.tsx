@@ -22,7 +22,8 @@ function App() {
   }, [])
 
   if (!game) {
-    return <div>Loading...</div>
+    // Dusk only shows your game after an onChange() so no need for loading screen
+    return
   }
 
   const { winCombo, cells, lastMovePlayerId, playerIds, freeCells } = game

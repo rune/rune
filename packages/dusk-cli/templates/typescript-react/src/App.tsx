@@ -1,4 +1,3 @@
-import "./styles.css"
 import { PlayerId } from "dusk-games-sdk/multiplayer"
 import { useEffect, useState } from "react"
 
@@ -23,7 +22,8 @@ function App() {
   }, [])
 
   if (!game) {
-    return <div>Loading...</div>
+    // Dusk only shows your game after an onChange() so no need for loading screen
+    return
   }
 
   const { winCombo, cells, lastMovePlayerId, playerIds, freeCells } = game

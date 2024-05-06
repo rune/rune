@@ -1,4 +1,3 @@
-import "./styles.css"
 import { useEffect, useState } from "react"
 import { PlayerId } from "rune-games-sdk/multiplayer"
 
@@ -23,7 +22,8 @@ function App() {
   }, [])
 
   if (!game) {
-    return <div>Loading...</div>
+    // Rune only shows your game after an onChange() so no need for loading screen
+    return
   }
 
   const { winCombo, cells, lastMovePlayerId, playerIds, freeCells } = game

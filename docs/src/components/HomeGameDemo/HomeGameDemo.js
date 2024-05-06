@@ -73,7 +73,7 @@ export function HomeGameDemo() {
 
   const url = `/_examples/tic-tac-toe/?devDemo=${JSON.stringify({
     latency,
-  })}&embedded=1`
+  })}&embedded=1&devuiSettingsKey=homeGameDemo`
 
   return (
     <>

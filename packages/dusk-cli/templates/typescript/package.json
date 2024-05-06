@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.19.6"
+    "dusk-games-sdk": "^4.19.8"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.8.0",

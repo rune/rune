@@ -18,7 +18,7 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rune-games-sdk": "^4.19.6",
+    "rune-games-sdk": "^4.19.8",
     "styled-components": "^6.0.8"
   },
   "devDependencies": {

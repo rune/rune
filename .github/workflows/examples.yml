@@ -28,6 +28,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.CI_GITHUB_ACTIONS }}
           commit-message: SDK version ${{ github.event.inputs.version }}
           branch: build/examples-sdk-${{ github.event.inputs.version }}
           title: 'build: Example games SDK ${{ github.event.inputs.version }}'

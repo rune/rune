@@ -65,6 +65,7 @@ Rune.initLogic({
   updatesPerSecond: 10,
   inputDelay: 30,
   landcape: false,
+  persistPlayerData: false,
 })
 ```
 
@@ -103,6 +104,10 @@ How many milliseconds user action is delayed before run locally. Allowed values 
 ### `landscape?: boolean` {#landscape-boolean}
 
 Setting `landscape` to true will make your game appear in landscape orientation. A game can only be in portrait or landscape mode.
+
+### `persistPlayerData?: boolean` {#persistplayerdata-boolean}
+
+Setting `persistPlayerData` to true will enable storing player data across game sessions. Check out [Persisted Data](advanced/persisted-data.md).
 
 ### `Rune.invalidAction()` {#runeinvalidaction}
 

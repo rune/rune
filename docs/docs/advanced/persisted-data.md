@@ -4,9 +4,7 @@ sidebar_position: 65
 
 # Persisted Data
 
-Many games benefit from storing player data across play sessions such as map progress, items, and various game-specific data. Rune makes it easy to define and store such data.
-
-## Enabling Persistence {#enabling-persistence}
+Many games benefit from storing player data across play sessions such as map progress, items, and various game-specific data. Rune makes it easy to define and store such data. 
 
 To enable persistence, you set `persistPlayerData: true` in `Rune.initLogic()`:
 

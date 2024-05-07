@@ -67,6 +67,7 @@ Rune.initLogic({
   maxPlayers: 6,
   // NB: Use literal number below because of bug with parsing. Sync with UPDATES_PER_SECOND
   updatesPerSecond: 30,
+  persistPlayerData: true,
   setup: (allPlayerIds): GameState => {
     // Setup ships
     const ships: Record<PlayerId, Ship> = {}

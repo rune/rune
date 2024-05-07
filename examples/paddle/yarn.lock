@@ -1153,10 +1153,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.19.8:
-  version "4.19.8"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.8.tgz#e50679f2f0d0b4106cdb21c398963cfcc80e4ff9"
-  integrity sha512-32OQG6xCuAoFOK4q+zL1BTLML2vJzuS4K6OrpejY5koAeWDbEfqjNTMhhIKR+OMdo9EDYgERFUmlaivZYxVRVw==
+rune-games-sdk@^4.19.9:
+  version "4.19.9"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.9.tgz#86b2df0ab60c735fa2e553fc4c2642b35f13d136"
+  integrity sha512-UivXGAlZRTKOHjNA3LiEsJIpeB1boxOnNGVvBMQYLRWKOTtarXYFFOHOc6tFA2FWPtcWg6xco5xh6On6qiVyLA==
 
 semver@^7.2.1, semver@^7.3.7:
   version "7.5.4"

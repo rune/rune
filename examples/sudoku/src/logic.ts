@@ -28,6 +28,7 @@ const cornerCells: Coordinate[] = [
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 6,
+  persistPlayerData: true,
   setup: (playerIds) => ({
     session: randomString(10),
     onboardingBoard: generateSudoku({

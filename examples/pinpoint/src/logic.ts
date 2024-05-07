@@ -19,6 +19,7 @@ const weightedPanoramas = generateWeightedPanoramas(panoramas)
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 6,
+  persistPlayerData: true,
   setup: (playerIds) => {
     const rounds: GameState["rounds"] = []
     const usedPanoramas = new Set<number>()

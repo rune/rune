@@ -8,7 +8,7 @@ Many games benefit from storing player data across play sessions such as map pro
 
 ## Enabling Persistence {#enabling-persistence}
 
-To enable persistence, you need to set `persistPlayerData` to `true` in `Rune.initLogic()`:
+To enable persistence, you set `persistPlayerData: true` in `Rune.initLogic()`:
 
 ```js
 Rune.initLogic({
@@ -72,9 +72,9 @@ You should be very careful to ensure your game doesn't break if it encounters ol
 
 The [Dev UI](../publishing/simulating-multiplayer.md) provides a way to see and manipulate `game.persisted` so you can test that your game works across game sessions as intended. For instance, you can set one of the players' levels to 99 and check that it works fine when another new player joins as level 1.   
 
-## Typescript support {#typescript-support}
+## TypeScript Support {#typescript-support}
 
-You can provide a `Persisted` type to RuneClient to type the `game.persisted` type.
+You can provide a `Persisted` type to `RuneClient` to specify what you're storing in `game.persisted`.
 
 ```typescript
 // ... other types

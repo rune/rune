@@ -6,6 +6,7 @@ import semver from "semver"
 import { extractMultiplayerMetadata } from "./extractMultiplayerMetadata.js"
 import { FileInfo, findShortestPathFileThatEndsWith } from "./getGameFiles.js"
 import { rootPath } from "./rootPath.js"
+
 import LintMessage = Linter.LintMessage
 
 export const MAX_PLAYERS = 6

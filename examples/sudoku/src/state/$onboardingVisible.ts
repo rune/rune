@@ -14,7 +14,7 @@ export const $onboardingVisible = atom(
 
     return (
       get($shouldOnboardingBeVisible) &&
-      numberOfFinishedGames > 0 &&
+      numberOfFinishedGames === 0 &&
       !get($gameOver) &&
       !!game.game.sudoku
     )

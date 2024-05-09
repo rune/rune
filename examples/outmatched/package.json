@@ -21,7 +21,7 @@
     "eslint": "7.22.0",
     "eslint-plugin-rune": "^0.1.9",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2",
+    "vite": "^5.2.11",
     "vite-plugin-rune": "^0.3.5"
   }
 }

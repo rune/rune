@@ -843,6 +843,7 @@ describe("validateGameFiles", () => {
                 minPlayers: 1,
                 maxPlayers: 4,
                 updatesPerSecond: 10,
+                landscape: true,
                 setup: () => {
                   return { cells: Array(25).fill(null) }
                 },
@@ -864,6 +865,7 @@ describe("validateGameFiles", () => {
           maxPlayers: 4,
           updatesPerSecond: 10,
           updatesPerSecondDefined: true,
+          landscape: true,
         },
       }
     )

@@ -33,6 +33,7 @@ const templates = [
   { label: "JavaScript", value: "javascript" },
   { label: "TypeScript", value: "typescript" },
   { label: "TypeScript + React", value: "typescript-react" },
+  { label: "TypeScript + Svelte", value: "typescript-svelte" },
 ]
 
 const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"

@@ -32,7 +32,8 @@ const restrictedGlobals = [
   "constructor",
   {
     name: "Date",
-    message: "Use Rune.gameTime() instead, which keeps time synchronized across players.",
+    message:
+      "Use Rune.gameTime() instead, which keeps time synchronized across players.",
   },
   "decodeURI",
   "decodeURIComponent",

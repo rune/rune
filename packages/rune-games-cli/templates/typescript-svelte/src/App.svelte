@@ -22,7 +22,7 @@
 {#if game}
   <div id="board" class:initial={!game.lastMovePlayerId}>
     {#each game.cells as cell, index}
-      {@const cellValue = game.cells[index]}
+      {@const cellValue = cell}
       <button
         onclick={() => {
           Rune.actions.claimCell(index);

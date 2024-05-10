@@ -7,8 +7,6 @@
   const selectSound = new Audio(selectSoundAudio);
 
   $effect(() => {
-    game;
-    mPlayerId;
     Rune.initClient({
       onChange: ({ game: newGame, action, yourPlayerId }) => {
         game = newGame;

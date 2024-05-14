@@ -1,8 +1,18 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { PlayerId } from "rune-games-sdk/multiplayer"
+import {
+  Container,
+  Graphics,
+  PixiRef,
+  Sprite,
+  Stage,
+  useApp,
+  useTick,
+} from "@pixi/react"
 
 import selectSoundAudio from "./assets/select.wav"
-import { GameState } from "./logic.ts"
+import { Cells, GameState } from "./logic.ts"
+import { Texture } from "pixi.js"
 
 const selectSound = new Audio(selectSoundAudio)
 
@@ -30,30 +40,10 @@ function App() {
 
   return (
     <>
-      <div id="board" className={!lastMovePlayerId ? "initial" : ""}>
-        {cells.map((cell, cellIndex) => {
-          const cellValue = cells[cellIndex]
-
-          return (
-            <button
-              key={cellIndex}
-              onClick={() => Rune.actions.claimCell(cellIndex)}
-              data-player={(cellValue !== null
-                ? playerIds.indexOf(cellValue)
-                : -1
-              ).toString()}
-              data-dim={String(
-                (winCombo && !winCombo.includes(cellIndex)) ||
-                  (!freeCells && !winCombo)
-              )}
-              {...(cells[cellIndex] ||
-              lastMovePlayerId === yourPlayerId ||
-              winCombo
-                ? { "data-disabled": "" }
-                : {})}
-            />
-          )
-        })}
+      <div id="board">
+        <Stage options={{ backgroundAlpha: 0 }}>
+          <Board yourPlayerId={yourPlayerId} game={game} />
+        </Stage>
       </div>
       <ul id="playersSection">
         {playerIds.map((playerId, index) => {
@@ -82,6 +72,156 @@ function App() {
         })}
       </ul>
     </>
+  )
+}
+
+type BoardProps = {
+  yourPlayerId?: PlayerId
+  game?: GameState
+}
+
+export function Board({ yourPlayerId, game }: BoardProps) {
+  const app = useApp()
+  app.resizeTo = document.getElementById("board") as HTMLElement
+
+  if (!game) {
+    return
+  }
+
+  const { cells, lastMovePlayerId, playerIds } = game
+
+  return (
+    <>
+      {cells.map((cell, index) => {
+        const x = index % 3
+        const y = Math.floor(index / 3)
+        if (cell) {
+          return (
+            <OccupiedSpace
+              x={x}
+              y={y}
+              side={playerIds.indexOf(cell) === 0 ? "x" : "o"}
+              key={index}
+            />
+          )
+        } else {
+          return (
+            <EmptySpace
+              x={x}
+              y={y}
+              canClaim={lastMovePlayerId !== yourPlayerId}
+              onpointerdown={() => Rune.actions.claimCell(index)}
+              key={index}
+            />
+          )
+        }
+      })}
+      <Grid />
+    </>
+  )
+}
+
+function Grid() {
+  const app = useApp()
+
+  const width = app.view.width / devicePixelRatio
+  return (
+    <Graphics
+      draw={(g) => {
+        g.lineStyle(4, 0x555555)
+        for (let i = 1; i < 3; i++) {
+          g.moveTo(i * (width / 3), 0)
+          g.lineTo(i * (width / 3), width)
+          g.moveTo(0, i * (width / 3))
+          g.lineTo(width, i * (width / 3))
+        }
+      }}
+    />
+  )
+}
+
+function OccupiedSpace({
+  x,
+  y,
+  side,
+}: {
+  x: number
+  y: number
+  side: "x" | "o"
+}) {
+  const app = useApp()
+  const spriteRef = useRef<PixiRef<typeof Sprite>>(null)
+  const width = app.view.width / devicePixelRatio / 3
+
+  useTick((delta) => {
+    if (spriteRef.current) {
+      if (spriteRef.current.width < width - 20) {
+        spriteRef.current.width += delta * 5
+        spriteRef.current.height += delta * 5
+      }
+    }
+  })
+
+  return (
+    <Sprite
+      ref={spriteRef}
+      image={side + ".svg"}
+      width={0}
+      height={0}
+      x={width * x + width / 2}
+      y={width * y + width / 2}
+      anchor={0.5}
+    />
+  )
+}
+
+function EmptySpace({
+  x,
+  y,
+  canClaim,
+  onpointerdown,
+}: {
+  x: number
+  y: number
+  canClaim: boolean
+  onpointerdown: () => void
+}) {
+  const [hovering, setHovering] = useState(false)
+  const app = useApp()
+  const width = app.view.width / devicePixelRatio / 3
+
+  if (!canClaim) {
+    return
+  }
+
+  return (
+    <Container x={width * x} y={width * y}>
+      {hovering && <Dot />}
+      <Sprite
+        interactive={true}
+        texture={Texture.EMPTY}
+        width={width}
+        height={width}
+        onpointerover={() => setHovering(true)}
+        onpointerout={() => setHovering(false)}
+        onpointerdown={onpointerdown}
+      />
+    </Container>
+  )
+}
+
+function Dot() {
+  const app = useApp()
+  const width = app.view.width / devicePixelRatio / 3
+
+  return (
+    <Graphics
+      anchor={0.5}
+      draw={(g) => {
+        g.beginFill(0xffffff)
+        g.drawCircle(width / 2, width / 2, 10)
+      }}
+    />
   )
 }
 

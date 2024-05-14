@@ -1,5 +1,5 @@
 {
-  "name": "react-typescript",
+  "name": "typescript-pixi-react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@pixi/react": "^7.1.2",
+    "pixi.js": "^7.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rune-games-sdk": "^4.19.10"

@@ -23,6 +23,4 @@ Developers and Admins are shown in the game's team list in the Rune app. Playtes
 
 ## Playtesting in Rune App {#playtesting-in-rune-app}
 
-As member of the team who made the game, you can play your game in the Rune app before it's published to everyone. Just create a room in the app and select your game in the list. You can also invite others who are not on your team to playtest with you. They can't see your game in the list, but can play the game with you once you've selected it.
-
-Once your game has been published, everyone in the Rune community will have access to the latest active version of the game. You're likely continuously improving your game and anyone on your team will have access to the latest uploaded draft / in review version. In this way, you are able to playtest the actual multiplayer game experience of new versions before they're released!
+As member of the team who made the game, you can play your game in the Rune app before it's published to everyone. See [Simulating Multiplayer](/docs/playtesting/testing-in-app) for more info.

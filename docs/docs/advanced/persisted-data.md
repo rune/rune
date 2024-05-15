@@ -68,7 +68,7 @@ You should be very careful to ensure your game doesn't break if it encounters ol
 
 ## Testing Persistence {#testing-persistence}
 
-The [Dev UI](../publishing/simulating-multiplayer) provides a way to see and manipulate `game.persisted` so you can test that your game works across game sessions as intended. For instance, you can set one of the players' levels to 99 and check that it works fine when another new player joins as level 1.   
+The [Dev UI](../playtesting/simulating-multiplayer.md) provides a way to see and manipulate `game.persisted` so you can test that your game works across game sessions as intended. For instance, you can set one of the players' levels to 99 and check that it works fine when another new player joins as level 1.   
 
 ## TypeScript Support {#typescript-support}
 

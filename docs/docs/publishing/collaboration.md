@@ -23,4 +23,4 @@ Developers and Admins are shown in the game's team list in the Rune app. Playtes
 
 ## Playtesting in Rune App {#playtesting-in-rune-app}
 
-As member of the team who made the game, you can play your game in the Rune app before it's published to everyone. See [Simulating Multiplayer](/docs/playtesting/testing-in-app) for more info.
+As a member of the team who made the game, you can play your game in the Rune app before it's published to everyone. See [Testing in Rune App](/docs/playtesting/testing-in-app) for more info.

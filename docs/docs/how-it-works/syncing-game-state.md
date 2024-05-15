@@ -87,7 +87,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 
 ## Restrictions {#restrictions}
 
-- Game logic must be written in a subset of JavaScript, see [Server-Side Logic](advanced/server-side-logic.md). The client rendering the game can use anything.
+- Game logic must be written in a subset of JavaScript, see [Server-Side Logic](how-it-works/server-side-logic.md). The client rendering the game can use anything.
 - Max 10 actions per player per second.
 - Actions must be synchronous, execute in <10 ms and consume <1 MB memory.
 - The `onChange` function must be synchronous. It may trigger async functions if needed, but cannot `await` them.
@@ -95,7 +95,7 @@ Rune does a lot of magic behind the scenes to sync the game state. Here’s a si
 - The `game` state must be JSON-serializable (e.g. no classes/functions) so it can be sent over the network.
 - The logic.js file must be <1 MB as it will be fetched by the server and run inside a VM.
 
-These restrictions are necessary to make great multiplayer games using predict-rollback netcode. Here's more info about [why predict-rollback netcode is the future of multiplayer games](advanced/server-side-logic.md#why-this-approach-using-deterministic-code). It's possible to make all kinds of amazing games using this approach (see the [list of supported games](./supported-games.md) for inspiration).
+These restrictions are necessary to make great multiplayer games using predict-rollback netcode. Here's more info about [why predict-rollback netcode is the future of multiplayer games](how-it-works/server-side-logic.md#why-this-approach-using-deterministic-code). It's possible to make all kinds of amazing games using this approach (see the [list of supported games](./supported-games.md) for inspiration).
 
 ## StateSync Event {#statesync-event}
 

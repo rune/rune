@@ -17,7 +17,7 @@ The Rune SDK will help check your code for unsafe patterns such as:
 - Non-deterministic runtime built-ins such as `Date` and `fetch`
 - Regular expressions because they are stateful
 
-A notable exception to this list is `Math.random()` which Rune makes deterministic (see [Randomness](randomness.md) for more info).
+A notable exception to this list is `Math.random()` which Rune makes deterministic (see [Randomness](../advanced/randomness.md) for more info).
 
 The [Rune CLI](publishing/cli.md) will also warn you if it detects that your game logic seems to be using potentially unsafe code when uploading. Don't worry, we'll also help ensure that your game runs smoothly across devices when testing it before it's released.
 

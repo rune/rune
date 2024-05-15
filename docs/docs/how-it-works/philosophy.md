@@ -15,6 +15,6 @@ We try our best to make an amazing SDK for you and we'd love to get your input o
 ## Read More {#read-more}
 
 - [How the game state syncs across devices](how-it-works/syncing-game-state.md)
-- [How we run your logic code on Rune servers](advanced/server-side-logic.md)
+- [How we run your logic code on Rune servers](how-it-works/server-side-logic.md)
 - [How we make randomness deterministic across clients](advanced/randomness.md)
 - [Explore the API reference](api-reference.md)

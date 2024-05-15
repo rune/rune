@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Testing in the Rune App
+# Testing in Rune App
 
 Rune lets you easily playtest your game in the Rune app before it's published to everyone. This is a great way to test the actual multiplayer experience of your game with friends and [team members](../publishing/collaboration#team-roles) before releasing it to the Rune community.
 

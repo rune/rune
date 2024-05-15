@@ -83,7 +83,7 @@ Of course, anyone uploading their game early will have a huge head start in buil
 
 ### How Do I Make the Best Possible Game on Rune? {#how-do-i-make-the-best-possible-game-on-rune}
 
-We’ve talked with a lot of players in the Rune community and accumulated their feedback in [Best Practices](/docs/publishing/best-practices). Make sure to check it out!
+We’ve talked with a lot of players in the Rune community and accumulated their feedback in [Best Practices](/docs/playtesting/best-practices). Make sure to check it out!
 
 ### How Do You Handle Inappropriate Content? {#how-do-you-handle-inappropriate-content}
 

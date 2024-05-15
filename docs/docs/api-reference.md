@@ -130,7 +130,7 @@ Rune.initLogic({
 
 ### `Rune.gameOver(options)` {#runegameoveroptions}
 
-When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](how-it-works/game-over.md) guide.
+When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](advanced/game-over.md) guide.
 
 ```js
 // logic.js

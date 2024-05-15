@@ -32,7 +32,7 @@ This approach requires you to be careful, especially if you're using TypeScript 
 <script src="./logic.js"></script>
 <script src="./client.js"></script>
 ```
-4. Setup [Rune's ESLint plugin](../advanced/server-side-logic#editor-integration) to detect issues in your game logic
+4. Setup [Rune's ESLint plugin](server-side-logic.md#editor-integration) to detect issues in your game logic
 5. Move all your game logic into `logic.js` and make `client.js` import all your rendering code
 
 You can also look at the [Tic Tac Toe](https://github.com/rune/rune-multiplayer-web-games/tree/staging/examples/tic-tac-toe) example game to understand how to set up a game manually.

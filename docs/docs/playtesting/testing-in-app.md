@@ -19,4 +19,4 @@ Then create a room in the app and select your game in the list. You can also inv
 
 Once your game has been published, everyone in the Rune community will have access to the latest active version of the game.
 
-You're likely continuously improving your game and anyone on your team will have access to the latest uploaded draft / in review version. In this way, you are able to playtest the actual multiplayer game experience of new versions before they're released!
+To support game development after it is released to everyone, your team members will have access to the latest draft / in review version instead of the published one. This way you are able to playtest the latest game changes in the app before they're released to everyone!

@@ -1,3 +1,4 @@
+import { Texture } from "pixi.js"
 import { useEffect, useRef, useState } from "react"
 import { PlayerId } from "rune-games-sdk/multiplayer"
 import {
@@ -11,8 +12,7 @@ import {
 } from "@pixi/react"
 
 import selectSoundAudio from "./assets/select.wav"
-import { Cells, GameState } from "./logic.ts"
-import { Texture } from "pixi.js"
+import { GameState } from "./logic.ts"
 
 const selectSound = new Audio(selectSoundAudio)
 
@@ -36,7 +36,7 @@ function App() {
     return
   }
 
-  const { winCombo, cells, lastMovePlayerId, playerIds, freeCells } = game
+  const { winCombo, lastMovePlayerId, playerIds, freeCells } = game
 
   return (
     <>
@@ -85,7 +85,7 @@ export function Board({ yourPlayerId, game }: BoardProps) {
   app.resizeTo = document.getElementById("board") as HTMLElement
 
   if (!game) {
-    return
+    return null
   }
 
   const { cells, lastMovePlayerId, playerIds } = game
@@ -95,6 +95,7 @@ export function Board({ yourPlayerId, game }: BoardProps) {
       {cells.map((cell, index) => {
         const x = index % 3
         const y = Math.floor(index / 3)
+
         if (cell) {
           return (
             <OccupiedSpace
@@ -104,17 +105,17 @@ export function Board({ yourPlayerId, game }: BoardProps) {
               key={index}
             />
           )
-        } else {
-          return (
-            <EmptySpace
-              x={x}
-              y={y}
-              canClaim={lastMovePlayerId !== yourPlayerId}
-              onpointerdown={() => Rune.actions.claimCell(index)}
-              key={index}
-            />
-          )
         }
+
+        return (
+          <EmptySpace
+            x={x}
+            y={y}
+            canClaim={lastMovePlayerId !== yourPlayerId}
+            onpointerdown={() => Rune.actions.claimCell(index)}
+            key={index}
+          />
+        )
       })}
       <Grid />
     </>
@@ -125,10 +126,12 @@ function Grid() {
   const app = useApp()
 
   const width = app.view.width / devicePixelRatio
+
   return (
     <Graphics
       draw={(g) => {
         g.lineStyle(4, 0x555555)
+
         for (let i = 1; i < 3; i++) {
           g.moveTo(i * (width / 3), 0)
           g.lineTo(i * (width / 3), width)
@@ -165,7 +168,7 @@ function OccupiedSpace({
   return (
     <Sprite
       ref={spriteRef}
-      image={side + ".svg"}
+      image={`${side}.svg`}
       width={0}
       height={0}
       x={width * x + width / 2}
@@ -191,7 +194,7 @@ function EmptySpace({
   const width = app.view.width / devicePixelRatio / 3
 
   if (!canClaim) {
-    return
+    return null
   }
 
   return (

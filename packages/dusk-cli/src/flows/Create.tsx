@@ -33,6 +33,7 @@ const templates = [
   { label: "JavaScript", value: "javascript" },
   { label: "TypeScript", value: "typescript" },
   { label: "TypeScript + React", value: "typescript-react" },
+  { label: "TypeScript + Pixi + React", value: "typescript-pixi-react" },
   { label: "TypeScript + Svelte", value: "typescript-svelte" },
 ]
 

@@ -1,6 +1,6 @@
 import { Texture } from "pixi.js"
 import { useEffect, useRef, useState } from "react"
-import { PlayerId } from "rune-games-sdk/multiplayer"
+import { PlayerId } from "dusk-games-sdk/multiplayer"
 import {
   Container,
   Graphics,
@@ -21,7 +21,7 @@ function App() {
   const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>()
 
   useEffect(() => {
-    Rune.initClient({
+    Dusk.initClient({
       onChange: ({ game, action, yourPlayerId }) => {
         setGame(game)
         setYourPlayerId(yourPlayerId)
@@ -32,7 +32,7 @@ function App() {
   }, [])
 
   if (!game) {
-    // Rune only shows your game after an onChange() so no need for loading screen
+    // Dusk only shows your game after an onChange() so no need for loading screen
     return
   }
 
@@ -47,7 +47,7 @@ function App() {
       </div>
       <ul id="playersSection">
         {playerIds.map((playerId, index) => {
-          const player = Rune.getPlayerInfo(playerId)
+          const player = Dusk.getPlayerInfo(playerId)
 
           return (
             <li
@@ -112,7 +112,7 @@ export function Board({ yourPlayerId, game }: BoardProps) {
             x={x}
             y={y}
             canClaim={lastMovePlayerId !== yourPlayerId}
-            onpointerdown={() => Rune.actions.claimCell(index)}
+            onpointerdown={() => Dusk.actions.claimCell(index)}
             key={index}
           />
         )

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 
 import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
@@ -47,10 +47,13 @@ export function ChooseGameStep({
     if (onlyExisting && items.length && !gameId) setGameId(items[0]!.value)
   }, [gameId, items, onlyExisting])
 
-  const onSubmit = useCallback(() => {
-    setSubmitted(true)
-    onComplete(gameId)
-  }, [gameId, onComplete])
+  //Important! This useEffect has to be separate from onSubmit call, since ink version that we use has an issue when multiple
+  //renders happen at once.
+  useEffect(() => {
+    if (submitted) {
+      onComplete(gameId)
+    }
+  }, [submitted, onComplete, gameId])
 
   const chosenGameLabel = useMemo(() => {
     if (gameId === null) return "New game"
@@ -79,7 +82,7 @@ export function ChooseGameStep({
             items={items}
             value={gameId}
             onChange={setGameId}
-            onSubmit={onSubmit}
+            onSubmit={() => setSubmitted(true)}
           />
         )
       }

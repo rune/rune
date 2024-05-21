@@ -31,6 +31,7 @@ const templatesDirectory = path.resolve(
 
 const templates = [
   { label: "JavaScript", value: "javascript" },
+  { label: "JavaScript + React", value: "javascript-react" },
   { label: "TypeScript", value: "typescript" },
   { label: "TypeScript + React", value: "typescript-react" },
   { label: "TypeScript + Pixi + React", value: "typescript-pixi-react" },

@@ -16,6 +16,8 @@ The bottom 240 pixels of the game preview is where the text and dev info will be
 
 <img src="/img/publishing/game-preview-example.png" width="400" />
 
+If you ever want to update your preview image, then just run `npx rune-games-cli@latest update-info`.
+
 ## Wanna Skip Making One? {#wanna-skip-making-one}
 
 You do not need a game preview to upload an initial version for playtesting. It's only needed before releasing the game to the Rune community. We can also make a game preview for your game if you'd like, just ask us on [Discord](https://discord.gg/rune-devs)!

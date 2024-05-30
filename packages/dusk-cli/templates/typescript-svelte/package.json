@@ -27,6 +27,6 @@
     "eslint-plugin-svelte": "^2.38.0"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.19.11"
+    "dusk-games-sdk": "^4.19.12"
   }
 }

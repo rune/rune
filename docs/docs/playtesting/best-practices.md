@@ -22,7 +22,7 @@ Players expect any level information to persist indefinitely, but iOS/Android ma
 
 Rune shows an animation while your game is loading. It's a smoother player experience to only have one progress bar to load your game. Avoid having a loading screen in your game by waiting with calling `Rune.initClient()` until your game has fully completed loading.
 
-## Send player input rather than player state in actions {#send-player-input}
+### Send Player Input rather than Player State in Actions {#send-player-input}
 
 We recommend sending player input in actions (e.g. "turning left") rather than player state (e.g. the player's position). This minimizes network data and allows other clients to simulate ahead, thereby making your game work better in bad network settings. Similarly, only send an action when the input changes instead of sending the same player input repeatedly.
 

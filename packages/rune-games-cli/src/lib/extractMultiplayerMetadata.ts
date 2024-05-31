@@ -7,6 +7,7 @@ const regexes = {
   updatesPerSecond: /updatesPerSecond\s*:\s*?([0-9]+)/,
   inputDelay: /inputDelay\s*:\s*?([0-9]+)/,
   landscape: /landscape\s*:\s*?(true|false)/,
+  persist: /persistPlayerData\s*:\s*?(true|false)/,
 }
 
 export function extractMultiplayerMetadata(logicJsContent: string) {
@@ -18,6 +19,9 @@ export function extractMultiplayerMetadata(logicJsContent: string) {
 
   const landscapeString = logicJsContent.match(regexes.landscape)?.at(1)
   const landscape = landscapeString ? landscapeString === "true" : undefined
+
+  const persistString = logicJsContent.match(regexes.persist)?.at(1)
+  const persist = persistString ? persistString === "true" : undefined
 
   const updatesPerSecondDefined =
     logicJsContent.match(regexes.updatesPerSecondDefined) !== null
@@ -44,5 +48,6 @@ export function extractMultiplayerMetadata(logicJsContent: string) {
     updatesPerSecondDefined,
     inputDelay,
     landscape,
+    persist,
   }
 }

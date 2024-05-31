@@ -49,6 +49,7 @@ export interface ValidationResult {
     updatesPerSecondDefined?: boolean
     inputDelay?: number
     landscape?: boolean
+    persistPlayerData?: boolean
   }
 }
 

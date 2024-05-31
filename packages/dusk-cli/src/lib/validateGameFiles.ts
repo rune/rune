@@ -49,6 +49,7 @@ export interface ValidationResult {
     updatesPerSecond?: number
     updatesPerSecondDefined?: boolean
     inputDelay?: number
+    persistPlayerData?: boolean
     landscape?: boolean
   }
   sdk: "Rune" | "Dusk"

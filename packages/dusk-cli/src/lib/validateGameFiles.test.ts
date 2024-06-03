@@ -883,6 +883,7 @@ describe("validateGameFiles", () => {
                 maxPlayers: 4,
                 updatesPerSecond: 10,
                 landscape: true,
+                persistPlayerData: true,
                 setup: () => {
                   return { cells: Array(25).fill(null) }
                 },
@@ -904,6 +905,7 @@ describe("validateGameFiles", () => {
               maxPlayers: 4,
               updatesPerSecond: 10,
               updatesPerSecondDefined: true,
+              persistPlayerData: true,
               landscape: true,
             },
             sdk: name,

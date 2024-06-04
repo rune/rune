@@ -10,7 +10,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.19.12"
+    "dusk-games-sdk": "^4.19.13"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

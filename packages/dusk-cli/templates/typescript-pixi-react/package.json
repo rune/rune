@@ -15,7 +15,7 @@
     "pixi.js": "^7.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "dusk-games-sdk": "^4.19.12"
+    "dusk-games-sdk": "^4.19.13"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

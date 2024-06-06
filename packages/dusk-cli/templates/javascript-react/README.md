@@ -1,4 +1,4 @@
-# Getting Started with Rune
+# Getting Started with Dusk
 
 ### `npm run dev`
 
@@ -8,16 +8,16 @@ The page will reload when you make changes.
 
 ### `npm run upload`
 
-Builds the game and starts upload process to Rune.
+Builds the game and starts upload process to Dusk.
 
 ### `npm run build`
 
-Builds the game. You can then upload it to Rune using `npx rune-games-cli@latest upload`.
+Builds the game. You can then upload it to Dusk using `npx dusk-cli@latest upload`.
 
 ### `npm run lint`
 
-Runs the validation rules. You can read about them in the [docs on server-side logic](https://developers.rune.ai/docs/advanced/server-side-logic).
+Runs the validation rules. You can read about them in the [docs on server-side logic](https://developers.dusk.gg/docs/advanced/server-side-logic).
 
 ## Learn More
 
-See the [Rune docs](https://developers.rune.ai/docs/quick-start) for more info. You can also ask any questions in the [Rune Discord](https://discord.gg/rune-devs), we're happy to help!
+See the [Dusk docs](https://developers.dusk.gg/docs/quick-start) for more info. You can also ask any questions in the [Dusk Discord](https://discord.gg/rune-devs), we're happy to help!

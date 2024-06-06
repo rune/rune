@@ -9,7 +9,7 @@ function App() {
   const [yourPlayerId, setYourPlayerId] = useState()
 
   useEffect(() => {
-    Rune.initClient({
+    Dusk.initClient({
       onChange: ({ game, action, yourPlayerId }) => {
         setGame(game)
         setYourPlayerId(yourPlayerId)
@@ -20,7 +20,7 @@ function App() {
   }, [])
 
   if (!game) {
-    // Rune only shows your game after an onChange() so no need for loading screen
+    // Dusk only shows your game after an onChange() so no need for loading screen
     return
   }
 
@@ -35,7 +35,7 @@ function App() {
           return (
             <button
               key={cellIndex}
-              onClick={() => Rune.actions.claimCell(cellIndex)}
+              onClick={() => Dusk.actions.claimCell(cellIndex)}
               data-player={(cellValue !== null
                 ? playerIds.indexOf(cellValue)
                 : -1
@@ -55,7 +55,7 @@ function App() {
       </div>
       <ul id="playersSection">
         {playerIds.map((playerId, index) => {
-          const player = Rune.getPlayerInfo(playerId)
+          const player = Dusk.getPlayerInfo(playerId)
 
           return (
             <li

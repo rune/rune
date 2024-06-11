@@ -22,9 +22,7 @@ These are just some examples to give you an idea. Pretty much any multiplayer ga
 
 ## Roadmap
 
-We have a lot of exciting things in the pipeline to make your game even more awesome and fun to play together. Some highlights of what will be available soon are:
-- Custom game over
-- Landscape mode
-- Persistence
+We have a lot of exciting things in the pipeline to make your game even more awesome and fun to play together. Some highlights of what will be available in the future:
+- Networked 3D physics
 
 We're also continuously optimizing the SDK and expanding our server presence so that your players get a smoother experience with less CPU usage and lower latency! 

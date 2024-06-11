@@ -16,6 +16,7 @@ You can make any game that follows the [overall game guidelines](how-it-works/sy
 - Worms World Party, Bowmasters, and other physics-based games
 - Codenames, Guess Who, Werewolf, and other party games
 - SimCity, Age of Empires, Tetris, Plants vs. Zombies and other strategy games
+- Cookie Clicker, Egg Inc, Tap Titans, and other idle games
 - Snake, Bomberman, Pac-Man, and other fast-paced arcade games
 
 These are just some examples to give you an idea. Pretty much any multiplayer game is possible with Rune!

@@ -70,6 +70,10 @@ You should be very careful to ensure your game doesn't break if it encounters ol
 
 The [Dev UI](../playtesting/simulating-multiplayer.md) provides a way to see and manipulate `game.persisted` so you can test that your game works across game sessions as intended. For instance, you can set one of the players' levels to 99 and check that it works fine when another new player joins as level 1.   
 
+If you decide to test persistence using the app, be aware that in review/draft games behave differently to published games.
+The game will be loaded with persisted data from the last available active game version (if there is any). But no data will be saved.
+This will guarantee that even if in review version has issues, it will not impact your experience in the published version.
+
 ## TypeScript Support {#typescript-support}
 
 You can provide a `Persisted` type to `RuneClient` to specify what you're storing in `game.persisted`.

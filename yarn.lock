@@ -6274,6 +6274,11 @@ duplexer@^0.1.1:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
+dusk-games-sdk@4.19.13-snapshot.421:
+  version "4.19.13-snapshot.421"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.13-snapshot.421.tgz#69dde13b455ebf0c5e797a18c13c6a025569a5b2"
+  integrity sha512-pgqH4sdpRW8Aq7bd7VWVx1MNhz6EQgxwhJUotXNxIeO1a0d/ce8QoJthl1ZV8Z1K1dAdUlmebgQt6+lVeTjlrw==
+
 dusk-games-sdk@^4.16.33:
   version "4.16.38"
   resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.16.38.tgz#aeb8c9ad975aba77179de5f0b669f58214be76ba"

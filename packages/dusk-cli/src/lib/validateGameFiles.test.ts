@@ -587,6 +587,275 @@ describe("validateGameFiles", () => {
             sdk: name,
           }
         )
+
+        await check(
+          [
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
+              ${name}.initLogic({
+                minPlayers: 2,
+                maxPlayers: 4,
+                setup: () => {
+                  console.log("console is allowed")
+                  return { cells: Array(25).fill(null) }
+                },
+                actions: {},
+                events: {
+                  playerJoined: () => {},
+                  playerLeft () {},
+                },
+              })`,
+            },
+          ],
+          {
+            valid: true,
+            errors: [],
+            sdk: name,
+          }
+        )
+
+        await check(
+          [
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
+                <script src="src/logic.js"></script>
+              </html>`,
+            },
+            {
+              path: "src/logic.js",
+              size: 1 * 1e6,
+              content: "",
+            },
+          ],
+          {
+            valid: false,
+            errors: [
+              {
+                message: "logic.js must be in the same directory as index.html",
+              },
+              {
+                message:
+                  "logic.js content has not been provided for validation",
+              },
+            ],
+            sdk: name,
+          }
+        )
+
+        await check(
+          [
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
+                <script type="module" src="client.js"></script>
+              </html>`,
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
+              ${name}.initLogic({
+                minPlayers: 2,
+                maxPlayers: 4,
+                setup: () => {
+                  return { cells: Array(25).fill(null) }
+                },
+                actions: {},
+                events: {
+                  playerJoined: () => {},
+                  playerLeft () {},
+                },
+              })`,
+            },
+            {
+              path: "client.js",
+              size: 1 * 1e6,
+              content: "import 'logic.js';",
+            },
+          ],
+          {
+            valid: true,
+            errors: [],
+            sdk: name,
+          }
+        )
+
+        await check(
+          [
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
+              ${name}.initLogic({
+                minPlayers: 1,
+                maxPlayers: 4,
+                updatesPerSecond: 40,
+                inputDelay: 50,
+                setup: () => {
+                  return { cells: Array(25).fill(null) }
+                },
+                actions: {},
+                events: {
+                  playerJoined: () => {},
+                  playerLeft () {},
+                },
+              })`,
+            },
+          ],
+          {
+            valid: false,
+            errors: [
+              {
+                message:
+                  "logic.js: updatesPerSecond must be undefined or between 1 and 30",
+              },
+            ],
+            sdk: name,
+          }
+        )
+
+        await check(
+          [
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
+              <html>
+                <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
+              ${name}.initLogic({
+                minPlayers: 1,
+                maxPlayers: 4,
+                updatesPerSecond: 10,
+                landscape: true,
+                persistPlayerData: true,
+                setup: () => {
+                  return { cells: Array(25).fill(null) }
+                },
+                actions: {},
+                events: {
+                  playerJoined: () => {},
+                  playerLeft () {},
+                },
+              })`,
+            },
+          ],
+          {
+            valid: true,
+            errors: [],
+            sdk: name,
+          }
+        )
+
+        await check(
+          [
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
+              <html>
+                <!-- multiplayer-dev.js is also detected as multiplayer -->
+                <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer-dev.js"></script>
+                <script src="logic.js"></script>
+              </html>`,
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6 + 1,
+              // language=JavaScript
+              content: `
+            ${name}.initLogic({
+              minPlayers: 1,
+              maxPlayers: 4,
+              setup: () => {
+                return { cells: Array(25).fill(null) }
+              },
+              actions: {},
+              events: {
+                playerJoined: () => {},
+                playerLeft () {} ,
+              },
+            })`,
+            },
+          ],
+          {
+            valid: false,
+            errors: [
+              {
+                message: "logic.js size can't be more than 1MB",
+              },
+            ],
+            sdk: name,
+          }
+        )
+
+        await check(
+          [
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/${packageName}@4/dist/multiplayer-dev.js"></script>
+                  <script src="src/logic.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+            },
+          ],
+          {
+            valid: false,
+            errors: [
+              {
+                message: `${name} SDK is imported 2+ times in index.html. If using the ${name} Vite plugin, then remove your SDK import in index.html.`,
+              },
+            ],
+            sdk: name,
+          }
+        )
       })
     )
 

@@ -24,7 +24,7 @@ jobs:
           node-version-file: ".node-version"
           cache: "yarn"
       - run: yarn install
-      - run: yarn updateExampleGames ${{ github.event.inputs.version }}
+      - run: yarn updateSdkVersion ${{ github.event.inputs.version }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:

@@ -1,4 +1,5 @@
 import { ESLint, Linter } from "eslint"
+import { readFileSync } from "fs"
 import { parse, valid } from "node-html-parser"
 import path from "path"
 import semver from "semver"
@@ -7,7 +8,6 @@ import { FileInfo, findShortestPathFileThatEndsWith } from "./getGameFiles.js"
 import { rootPath } from "./rootPath.js"
 
 import LintMessage = Linter.LintMessage
-import { readFileSync } from "fs"
 
 export const MAX_PLAYERS = 6
 

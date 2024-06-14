@@ -1,9 +1,9 @@
 import { ESLint, Linter } from "eslint"
+import { readFileSync } from "fs"
 import { parse, valid } from "node-html-parser"
 import path from "path"
 import semver from "semver"
 
-import { extractMultiplayerMetadata } from "./extractMultiplayerMetadata.js"
 import { FileInfo, findShortestPathFileThatEndsWith } from "./getGameFiles.js"
 import { rootPath } from "./rootPath.js"
 
@@ -12,8 +12,9 @@ import LintMessage = Linter.LintMessage
 export const MAX_PLAYERS = 6
 
 export const validationOptions = {
-  sdkUrlStart: "https://cdn.jsdelivr.net/npm/rune-games-sdk",
-  sdkVersionRegex: /rune-games-sdk@(\d+(\.\d+(\.\d+)?)?)/,
+  sdkUrlStartRune: "https://cdn.jsdelivr.net/npm/rune-games-sdk",
+  sdkUrlStartDusk: "https://cdn.jsdelivr.net/npm/dusk-games-sdk",
+  sdkVersionRegex: /(?:rune|dusk)-games-sdk@(\d+(\.\d+(\.\d+)?)?)/,
   minSdkVersion: "4.8.1",
   maxFiles: 1000,
   maxSizeMb: 10,
@@ -40,40 +41,67 @@ export interface ValidationError {
 export interface ValidationResult {
   valid: boolean
   errors: ValidationError[]
-  multiplayer?: {
-    minPlayers?: number
-    maxPlayers?: number
-    handlesPlayerJoined?: boolean
-    handlesPlayerLeft?: boolean
-    updatesPerSecond?: number
-    updatesPerSecondDefined?: boolean
-    inputDelay?: number
-    landscape?: boolean
-    persistPlayerData?: boolean
-  }
+  sdk: "Rune" | "Dusk"
 }
 
 export function parseGameIndexHtml(indexHtmlContent: string) {
   if (!valid(indexHtmlContent)) return null
 
-  const { sdkUrlStart } = validationOptions
+  const { sdkUrlStartRune, sdkUrlStartDusk } = validationOptions
 
   const parsedIndexHtml = parse(indexHtmlContent)
   const scripts = parsedIndexHtml.getElementsByTagName("script")
-  const sdkScript = scripts.find((script) =>
-    script.getAttribute("src")?.startsWith(sdkUrlStart)
+  const sdkScript = scripts.find(
+    (script) =>
+      script.getAttribute("src")?.startsWith(sdkUrlStartDusk) ||
+      script.getAttribute("src")?.startsWith(sdkUrlStartRune)
   )
 
   return { parsedIndexHtml, scripts, sdkScript }
 }
 
+export type GameConfig = {
+  landscape: boolean
+  minPlayers: number | undefined
+  maxPlayers: number | undefined
+  updatesPerSecond: number
+  eventCallbacks: {
+    playerLeft: boolean
+    playerJoined: boolean
+  }
+  update: boolean
+  persistPlayerData: boolean
+}
+
+export async function validateGameFilesInCLI(files: FileInfo[]) {
+  const logicJs = findShortestPathFileThatEndsWith(files, "logic.js")
+
+  const logicRunnerPath = require.resolve("dusk-games-sdk/dist/logicRunner")
+  const logicRunner = readFileSync(logicRunnerPath).toString()
+
+  const gameConfig = logicJs
+    ? eval(
+        `
+          ${logicRunner}
+          ${logicJs!.content}
+          Rune.gameConfig
+        `
+      )
+    : {}
+
+  return validateGameFiles(files, gameConfig)
+}
+
 export async function validateGameFiles(
-  files: FileInfo[]
+  files: FileInfo[],
+  gameConfig: GameConfig
 ): Promise<ValidationResult> {
   const { sdkVersionRegex, minSdkVersion, maxFiles, maxSizeMb } =
     validationOptions
 
   const errors: ValidationError[] = []
+
+  let sdkName = "Rune" as "Rune" | "Dusk"
 
   if (files.length > maxFiles) {
     errors.push({ message: `Too many files (>${maxFiles})` })
@@ -92,8 +120,6 @@ export async function validateGameFiles(
     errors.push({ message: `logic.js size can't be more than 1MB` })
   }
 
-  let multiplayerValidationResult: ValidationResult["multiplayer"]
-
   if (!indexHtml) {
     errors.push({ message: "Game must include index.html" })
   } else if (!indexHtml.content) {
@@ -107,21 +133,28 @@ export async function validateGameFiles(
       errors.push({ message: "index.html is not valid HTML" })
     } else if (!gameIndexHtmlElements.sdkScript) {
       errors.push({
-        message: "Game index.html must include Rune SDK script",
+        message: `Game index.html must include ${sdkName} SDK script`,
       })
     } else {
       const { sdkScript, scripts } = gameIndexHtmlElements
 
-      const { sdkUrlStart } = validationOptions
+      const { sdkUrlStartRune, sdkUrlStartDusk } = validationOptions
+
+      sdkName = scripts.some((script) =>
+        script.getAttribute("src")?.startsWith(sdkUrlStartRune)
+      )
+        ? ("Rune" as const)
+        : ("Dusk" as const)
 
       if (
-        scripts.filter((script) =>
-          script.getAttribute("src")?.startsWith(sdkUrlStart)
+        scripts.filter(
+          (script) =>
+            script.getAttribute("src")?.startsWith(sdkUrlStartRune) ||
+            script.getAttribute("src")?.startsWith(sdkUrlStartDusk)
         ).length > 1
       ) {
         errors.push({
-          message:
-            "Rune SDK is imported 2+ times in index.html. If using the Rune Vite plugin, then remove your SDK import in index.html.",
+          message: `${sdkName} SDK is imported 2+ times in index.html. If using the ${sdkName} Vite plugin, then remove your SDK import in index.html.`,
         })
       }
 
@@ -129,16 +162,16 @@ export async function validateGameFiles(
         sdkScript.getAttribute("src")?.endsWith("/multiplayer.js") ||
         sdkScript.getAttribute("src")?.endsWith("/multiplayer-dev.js")
       ) {
-        multiplayerValidationResult =
-          (await validateMultiplayer({
-            errors,
-            logicJs,
-            indexHtml,
-          })) ?? {}
+        await validateMultiplayer({
+          errors,
+          gameConfig,
+          logicJs,
+          indexHtml,
+        })
 
         if (scripts.indexOf(sdkScript) !== 0) {
           errors.push({
-            message: "Rune SDK must be the first script in index.html",
+            message: `${sdkName} SDK must be the first script in index.html`,
           })
         }
 
@@ -147,7 +180,7 @@ export async function validateGameFiles(
           ?.match(sdkVersionRegex)?.[1]
 
         if (!sdkVersion) {
-          errors.push({ message: `Rune SDK must specify a version` })
+          errors.push({ message: `${sdkName} SDK must specify a version` })
         }
 
         const [major, minor, patch] = (sdkVersion ?? "").split(".")
@@ -164,12 +197,12 @@ export async function validateGameFiles(
           semver.lt(sdkVersionCoerced, minSdkVersionCoerced)
         ) {
           errors.push({
-            message: `Rune SDK is below minimum version (included ${sdkVersion}, min ${minSdkVersion})`,
+            message: `${sdkName} SDK is below minimum version (included ${sdkVersion}, min ${minSdkVersion})`,
           })
         }
       } else {
         errors.push({
-          message: `Rune SDK script url must end with /multiplayer.js or /multiplayer-dev.js`,
+          message: `${sdkName} SDK script url must end with /multiplayer.js or /multiplayer-dev.js`,
         })
       }
     }
@@ -178,19 +211,21 @@ export async function validateGameFiles(
   return {
     valid: errors.length === 0,
     errors,
-    multiplayer: multiplayerValidationResult,
+    sdk: sdkName,
   }
 }
 
 async function validateMultiplayer({
   errors,
+  gameConfig,
   logicJs,
   indexHtml,
 }: {
   errors: ValidationError[]
+  gameConfig: GameConfig
   logicJs: FileInfo | undefined
   indexHtml: FileInfo
-}): Promise<ValidationResult["multiplayer"]> {
+}): Promise<void> {
   if (!logicJs) {
     errors.push({
       message: "logic.js must be included in the game files",
@@ -204,6 +239,7 @@ async function validateMultiplayer({
 
     return validateMultiplayerLogicJsContent({
       logicJs,
+      gameConfig,
       errors,
     })
   }
@@ -211,11 +247,13 @@ async function validateMultiplayer({
 
 async function validateMultiplayerLogicJsContent({
   logicJs,
+  gameConfig,
   errors,
 }: {
   logicJs: FileInfo
+  gameConfig: GameConfig
   errors: ValidationError[]
-}): Promise<ValidationResult["multiplayer"]> {
+}): Promise<void> {
   if (!logicJs.content) {
     errors.push({
       message: "logic.js content has not been provided for validation",
@@ -243,30 +281,17 @@ async function validateMultiplayerLogicJsContent({
         errors.push({ message: "failed to lint logic.js" })
       })
 
-    const multiplayerMetadata = extractMultiplayerMetadata(logicJs.content)
-
     if (
-      !multiplayerMetadata.minPlayers ||
-      isNaN(multiplayerMetadata.minPlayers)
+      !gameConfig.minPlayers ||
+      typeof gameConfig.minPlayers !== "number" ||
+      isNaN(gameConfig.minPlayers)
     ) {
       errors.push({
         message: "logic.js: minPlayers not found or is invalid",
       })
-    }
-
-    if (
-      !multiplayerMetadata.maxPlayers ||
-      isNaN(multiplayerMetadata.maxPlayers)
-    ) {
-      errors.push({
-        message: "logic.js: maxPlayers not found or is invalid",
-      })
-    }
-
-    if (
-      multiplayerMetadata.minPlayers &&
-      (multiplayerMetadata.minPlayers < 1 ||
-        multiplayerMetadata.minPlayers > MAX_PLAYERS)
+    } else if (
+      gameConfig.minPlayers &&
+      (gameConfig.minPlayers < 1 || gameConfig.minPlayers > MAX_PLAYERS)
     ) {
       errors.push({
         message: `logic.js: minPlayers must be between 1 and ${MAX_PLAYERS}`,
@@ -274,9 +299,16 @@ async function validateMultiplayerLogicJsContent({
     }
 
     if (
-      multiplayerMetadata.maxPlayers &&
-      (multiplayerMetadata.maxPlayers < 1 ||
-        multiplayerMetadata.maxPlayers > MAX_PLAYERS)
+      !gameConfig.maxPlayers ||
+      typeof gameConfig.maxPlayers !== "number" ||
+      isNaN(gameConfig.maxPlayers)
+    ) {
+      errors.push({
+        message: "logic.js: maxPlayers not found or is invalid",
+      })
+    } else if (
+      gameConfig.maxPlayers &&
+      (gameConfig.maxPlayers < 1 || gameConfig.maxPlayers > MAX_PLAYERS)
     ) {
       errors.push({
         message: `logic.js: maxPlayers must be between 1 and ${MAX_PLAYERS}`,
@@ -284,9 +316,9 @@ async function validateMultiplayerLogicJsContent({
     }
 
     if (
-      multiplayerMetadata.maxPlayers &&
-      multiplayerMetadata.minPlayers &&
-      multiplayerMetadata.maxPlayers < multiplayerMetadata.minPlayers
+      gameConfig.maxPlayers &&
+      gameConfig.minPlayers &&
+      gameConfig.maxPlayers < gameConfig.minPlayers
     ) {
       errors.push({
         message:
@@ -294,34 +326,19 @@ async function validateMultiplayerLogicJsContent({
       })
     }
 
-    if (multiplayerMetadata.updatesPerSecondDefined) {
-      if (multiplayerMetadata.updatesPerSecond === undefined) {
-        errors.push({
-          message:
-            "logic.js: updatesPerSecond must be a constant (updatesPerSecond: 1-30)",
-        })
-      } else if (
-        multiplayerMetadata.updatesPerSecond < 1 ||
-        multiplayerMetadata.updatesPerSecond > 30
-      ) {
-        errors.push({
-          message:
-            "logic.js: updatesPerSecond must be undefined or between 1 and 30",
-        })
-      }
+    if (gameConfig.updatesPerSecond === undefined) {
+      errors.push({
+        message:
+          "logic.js: updatesPerSecond must be a constant (updatesPerSecond: 1-30)",
+      })
+    } else if (
+      gameConfig.updatesPerSecond < 1 ||
+      gameConfig.updatesPerSecond > 30
+    ) {
+      errors.push({
+        message:
+          "logic.js: updatesPerSecond must be undefined or between 1 and 30",
+      })
     }
-
-    if (multiplayerMetadata.inputDelay !== undefined) {
-      if (
-        multiplayerMetadata.inputDelay < 0 ||
-        multiplayerMetadata.inputDelay > 50
-      ) {
-        errors.push({
-          message: "logic.js: inputDelay must be undefined or between 0 and 50",
-        })
-      }
-    }
-
-    return multiplayerMetadata
   }
 }

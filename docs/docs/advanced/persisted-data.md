@@ -72,7 +72,7 @@ The [Dev UI](../playtesting/simulating-multiplayer.md) provides a way to see and
 
 If you decide to test persistence using the app, be aware that in review/draft game versions behave differently to published ones.
 The game will be loaded with persisted data from the last available active game version (if there is any), but no data will be saved.
-This will guarantee that even if in review version has issues, it will not impact your experience in the published version.
+This guarantees that even if in review version has issues, it will not impact your experience in the published version.
 
 ## TypeScript Support {#typescript-support}
 

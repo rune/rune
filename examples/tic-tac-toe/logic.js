@@ -3,6 +3,7 @@ function setup() {
     cells: new Array(9).fill(null),
     lastMovePlayerId: null,
     winCombo: null,
+    freeCells: true
   }
   return game
 }

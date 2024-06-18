@@ -29,7 +29,7 @@
     "lerna": "^6.1.0",
     "lint-staged": "12.4.1",
     "prettier": "2.6.2",
-    "rune-games-cli": "7.5.13",
-    "dusk-cli": "7.5.13"
+    "rune-games-cli": "7.6.0",
+    "dusk-cli": "7.6.0"
   }
 }

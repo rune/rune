@@ -6274,11 +6274,6 @@ duplexer@^0.1.1:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
-dusk-games-sdk@4.19.14:
-  version "4.19.14"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.14.tgz#e49e429b1443cbbe24ec512c2ff730e968ce4497"
-  integrity sha512-MZ/M5Nicc8vkykpG2DBw5opD9ToFppvxVzkexepLV6gR1AwTuG1Y9W0BUz20WdNMflbS2veOzbxwMKH0gNTrCQ==
-
 dusk-games-sdk@^4.16.33:
   version "4.16.38"
   resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.16.38.tgz#aeb8c9ad975aba77179de5f0b669f58214be76ba"
@@ -6292,6 +6287,11 @@ dusk-games-sdk@^4.16.33:
     react-charts "3.0.0-beta.57"
     rune-msgpack "1.0.0"
     xstate "4.32.1"
+
+dusk-games-sdk@^4.19.15:
+  version "4.19.15"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.15.tgz#3ee9f442fe75214137745ed263387e7c437a6dd0"
+  integrity sha512-G4MiIeKlCcHv7MaxSpYZ4Ac/J5g8WmtEMJfUcM4538DKcp4idq0uzAY5EVGTNzICq8aPZ9UW2kwc8ixnJuJkKg==
 
 eastasianwidth@^0.2.0:
   version "0.2.0"
@@ -11327,11 +11327,6 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@4.19.14:
-  version "4.19.14"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.14.tgz#b745cfc7527e5d9354628dec7930b39da5b8e5e6"
-  integrity sha512-ZGY2ypJxPDIrti2NF1ZvjOBAW5yt8Y6xn/raMH0QhHcBpxIPa3SFOJo+dgWG8hSn09bwH72KrrEh8ocg+vI9TQ==
-
 rune-games-sdk@^4.16.33:
   version "4.16.33"
   resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.16.33.tgz#afb55fb2b29c19b49f30cad3fee17eda769fa9e1"
@@ -11344,6 +11339,11 @@ rune-games-sdk@^4.16.33:
     react-charts "3.0.0-beta.57"
     rune-msgpack "1.0.0"
     xstate "4.32.1"
+
+rune-games-sdk@^4.19.15:
+  version "4.19.15"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.15.tgz#e3463f35b8d1c08875a4cb2b6f35ac7fb9b60977"
+  integrity sha512-17fiJMDz7DYCsBKoUfzVjv/gdbN/qiv5wlR7R5ETu06JVAJHrXX7KPpC6a9Sz0yHtCZAuG2AQI2F8lnF8tcH/g==
 
 rune-msgpack@1.0.0:
   version "1.0.0"

@@ -457,7 +457,7 @@
       justify-content: space-evenly;
       align-items: center;
 
-      @media (max-width: 700px) {
+      @media (max-width: 1024px) {
         flex-direction: column;
         gap: 60px;
       }

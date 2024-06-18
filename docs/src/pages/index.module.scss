@@ -332,10 +332,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 237px;
+    margin-bottom: 493px;
 
     @media (max-width: 700px) {
-      margin-bottom: 136px;
+      margin-bottom: 223px;
     }
 
     p {
@@ -411,6 +411,80 @@
             border-color: transparent;
           }
         }
+      }
+    }
+  }
+
+  .makeAnyKindOfGame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+    margin-bottom: 463px;
+
+    @media (max-width: 700px) {
+      margin-bottom: 211px;
+    }
+
+    h2 {
+      max-width: 932px;
+      margin-bottom: 24px;
+      z-index: 1;
+
+      @media (max-width: 700px) {
+        max-width: 322px;
+      }
+    }
+
+    p {
+      margin-bottom: 78px;
+      z-index: 1;
+      max-width: 796px;
+
+      @media (max-width: 700px) {
+        margin-bottom: 36px;
+      }
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+      align-items: center;
+
+      @media (max-width: 700px) {
+        flex-direction: column;
+      }
+    }
+    ul > li {
+      position: relative;
+      width: 268px;
+      height: 371px;
+    }
+    ul > li > .title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      font-size: 44px;
+      font-weight: 400;
+      line-height: 100%;
+      white-space: nowrap;
+      text-align: center;
+
+      background: linear-gradient(242deg, #eeedff 7.25%, #b2adff 92.6%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      @media (max-width: 700px) {
+        font-size: 30px;
       }
     }
   }

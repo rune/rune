@@ -6274,6 +6274,11 @@ duplexer@^0.1.1:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
+dusk-games-sdk@4.19.14:
+  version "4.19.14"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.14.tgz#e49e429b1443cbbe24ec512c2ff730e968ce4497"
+  integrity sha512-MZ/M5Nicc8vkykpG2DBw5opD9ToFppvxVzkexepLV6gR1AwTuG1Y9W0BUz20WdNMflbS2veOzbxwMKH0gNTrCQ==
+
 dusk-games-sdk@^4.16.33:
   version "4.16.38"
   resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.16.38.tgz#aeb8c9ad975aba77179de5f0b669f58214be76ba"
@@ -11321,6 +11326,11 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
+
+rune-games-sdk@4.19.14:
+  version "4.19.14"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.14.tgz#b745cfc7527e5d9354628dec7930b39da5b8e5e6"
+  integrity sha512-ZGY2ypJxPDIrti2NF1ZvjOBAW5yt8Y6xn/raMH0QhHcBpxIPa3SFOJo+dgWG8hSn09bwH72KrrEh8ocg+vI9TQ==
 
 rune-games-sdk@^4.16.33:
   version "4.16.33"

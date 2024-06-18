@@ -13,10 +13,8 @@ import {
   FileInfo,
 } from "../../lib/getGameFiles.js"
 import { isDir } from "../../lib/isDir.js"
-import {
-  validateGameFilesInCLI,
-  ValidationResult,
-} from "../../lib/validateGameFiles.js"
+import { ValidationResult } from "../../lib/validateGameFiles.js"
+import { validateGameFilesInCLI } from "../../lib/validateGameFilesInCli"
 
 // @ts-ignore
 const TextInput = TextInputImport.default as typeof TextInputImport

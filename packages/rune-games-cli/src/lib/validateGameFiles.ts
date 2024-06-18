@@ -76,7 +76,7 @@ export type GameConfig = {
 export async function validateGameFilesInCLI(files: FileInfo[]) {
   const logicJs = findShortestPathFileThatEndsWith(files, "logic.js")
 
-  const logicRunnerPath = require.resolve("dusk-games-sdk/dist/logicRunner")
+  const logicRunnerPath = require.resolve("rune-games-sdk/dist/logicRunner")
   const logicRunner = readFileSync(logicRunnerPath).toString()
 
   const gameConfig = logicJs

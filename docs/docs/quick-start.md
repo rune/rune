@@ -97,7 +97,11 @@ You can find additional information about [rendering here](how-it-works/syncing-
 
 ## What Next? {#next-steps}
 
+You can also make much fancier games than Tic Tac Toe. Rune supports games with real-time multiplayer, complex physics, beautiful graphics and much more!
+
+Here's some good places to start:
+
 - If you want some inspiration for your next game, we really recommend [checking out the example games](examples.mdx)!
 - Building games is more fun when you're part of a community, join the [Rune Discord server](https://discord.gg/rune-devs).
-- If your game is ready to be published for all Rune users, check out [publishing your game](publishing/publishing-your-game.md).
-- Want to know everything that Rune supports? [Explore the API reference](api-reference.md).
+- If your game is ready to be published to the big Rune community, check out [how to publish your game](publishing/publishing-your-game.md).
+- Want to better understand how Rune works underneath? See our explanation of [game state syncing](how-it-works/syncing-game-state.md).

@@ -24,7 +24,7 @@ export default function LayoutWrapper(props) {
                   no-repeat top 40px left calc(50% - 300px) / 2326px 5761px,
                 url(${require("!!url-loader!@site/static/img/layout/background-footer.svg")
                     .default})
-                  no-repeat bottom -765px left calc(50% + 100px) / 2118px 2058px,
+                  no-repeat bottom -765px left calc(50% + 200px) / 2114px 3243px,
                 #1b0329;
 
               @media (max-width: 996px) {
@@ -33,7 +33,7 @@ export default function LayoutWrapper(props) {
                     no-repeat top 70px left calc(50% - 25px) / 1094px 3568px,
                   url(${require("!!url-loader!@site/static/img/layout/background-footer-mobile.svg")
                       .default})
-                    no-repeat bottom -396px left calc(50% + 137px) / 856px 1339px,
+                    no-repeat bottom -396px left calc(50% + 50px) / 856px 3256px,
                   #1b0329;
               }
             }

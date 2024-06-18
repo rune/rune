@@ -1,12 +1,21 @@
 import { describe, test, expect, jest } from "@jest/globals"
+import { readFileSync } from "fs"
 import { range } from "lodash"
 import * as path from "path"
 
-import { MAX_PLAYERS, validateGameFilesInCLI } from "./validateGameFiles"
+import { FileInfo } from "./getGameFiles"
+import { MAX_PLAYERS, validateGameFilesWithEval } from "./validateGameFiles"
 
 jest.mock("./rootPath.ts", () => ({
   rootPath: path.resolve(__dirname, "../.."),
 }))
+
+function validateGameFiles(files: FileInfo[]) {
+  const logicRunnerPath = require.resolve("rune-games-sdk/dist/logicRunner")
+  const logicRunner = readFileSync(logicRunnerPath).toString()
+
+  return validateGameFilesWithEval(logicRunner, files)
+}
 
 describe("validateGameFiles", () => {
   test("should validate game content", async () => {
@@ -37,7 +46,7 @@ describe("validateGameFiles", () => {
         }
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -62,7 +71,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -91,7 +100,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -120,7 +129,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -149,7 +158,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -178,7 +187,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -203,7 +212,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -238,7 +247,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -263,7 +272,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 30 * 1e6 },
             validLogicFile,
             {
@@ -291,7 +300,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
@@ -315,7 +324,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             { path: "src/index.html", size: 1 * 1e6 },
@@ -332,7 +341,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
           ])
@@ -343,7 +352,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI(
+          validateGameFiles(
             range(0, 1001).map(() => ({ path: "path/to/file.png", size: 1 }))
           )
         ).resolves.toEqual({
@@ -356,7 +365,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "src/index.html",
               size: 1 * 1e6,
@@ -380,7 +389,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -401,7 +410,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -427,7 +436,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -466,7 +475,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -513,7 +522,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -567,7 +576,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -604,7 +613,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -634,7 +643,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -675,7 +684,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -718,7 +727,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -757,7 +766,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             {
               path: "index.html",
               size: 1 * 1e6,
@@ -798,7 +807,7 @@ describe("validateGameFiles", () => {
         })
 
         await expect(
-          validateGameFilesInCLI([
+          validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {

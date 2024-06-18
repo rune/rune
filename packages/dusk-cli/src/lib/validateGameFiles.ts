@@ -1,5 +1,4 @@
 import { ESLint, Linter } from "eslint"
-import { readFileSync } from "fs"
 import { parse, valid } from "node-html-parser"
 import path from "path"
 import semver from "semver"
@@ -73,11 +72,11 @@ export type GameConfig = {
   persistPlayerData: boolean
 }
 
-export async function validateGameFilesInCLI(files: FileInfo[]) {
+export async function validateGameFilesWithEval(
+  logicRunner: string,
+  files: FileInfo[]
+) {
   const logicJs = findShortestPathFileThatEndsWith(files, "logic.js")
-
-  const logicRunnerPath = require.resolve("dusk-games-sdk/dist/logicRunner")
-  const logicRunner = readFileSync(logicRunnerPath).toString()
 
   const gameConfig = logicJs
     ? eval(

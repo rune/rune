@@ -459,13 +459,16 @@
 
       @media (max-width: 700px) {
         flex-direction: column;
+        gap: 60px;
       }
     }
+
     ul > li {
       position: relative;
       width: 268px;
       height: 371px;
     }
+
     ul > li > .title {
       position: absolute;
       bottom: 0;
@@ -485,6 +488,29 @@
 
       @media (max-width: 700px) {
         font-size: 30px;
+      }
+    }
+
+    /* Adjust <Phone /> */
+    ul > li > .gameInfo {
+      left: auto;
+      top: 75px;
+      right: -50px;
+
+      @media (max-width: 700px) {
+        left: auto;
+        top: 65px;
+        right: -45px;
+        transform: scale(1);
+      }
+    }
+
+    ul > li > .phoneFrame {
+      @media (max-width: 700px) {
+        width: 268px;
+        height: 546px;
+        background: url("@site/static/img/home/phoneFrame.svg") no-repeat center
+          center/268.54px 546.27px;
       }
     }
   }

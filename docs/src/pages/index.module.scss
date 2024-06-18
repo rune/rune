@@ -129,14 +129,6 @@
     justify-content: flex-start;
     padding-top: 12px;
 
-    @media (max-width: 700px) {
-      width: 159.26px;
-      height: 323.97px;
-      background: url("@site/static/img/home/phoneFrame.svg") no-repeat center
-        center/159.26px 323.97px;
-      padding-top: 9px;
-    }
-
     mask-image: linear-gradient(
       180deg,
       rgba(0, 0, 0, 1) 30%,
@@ -146,10 +138,6 @@
     .containerOuter {
       border-radius: 34px;
 
-      @media (max-width: 700px) {
-        border-radius: 22px;
-      }
-
       overflow: hidden;
     }
 
@@ -158,11 +146,6 @@
     video {
       width: 241px;
       height: 385px;
-
-      @media (max-width: 700px) {
-        width: 143px;
-        height: 229px;
-      }
     }
 
     .container,
@@ -184,12 +167,6 @@
     padding: 14px 36px 14px 23px;
     border-radius: 14.4px;
     box-shadow: 0px 3.596px 35.955px 0px rgba(0, 0, 0, 0.25);
-
-    @media (max-width: 700px) {
-      left: 150px;
-      top: 60px;
-      transform: scale(0.59);
-    }
 
     > :not(:first-child) {
       margin-top: 3.6px;
@@ -292,6 +269,40 @@
 
       @media (max-width: 700px) {
         margin-bottom: 36px;
+      }
+    }
+
+    /* Adjust <Phone />  to show if smaller */
+    .phoneFrame {
+      @media (max-width: 700px) {
+        width: 159.26px;
+        height: 323.97px;
+        background: url("@site/static/img/home/phoneFrame.svg") no-repeat center
+          center/159.26px 323.97px;
+        padding-top: 9px;
+      }
+
+      .containerOuter {
+        @media (max-width: 700px) {
+          border-radius: 22px;
+        }
+      }
+
+      .container,
+      .containerOuter,
+      video {
+        @media (max-width: 700px) {
+          width: 143px;
+          height: 229px;
+        }
+      }
+    }
+
+    .gameInfo {
+      @media (max-width: 700px) {
+        left: 150px;
+        top: 60px;
+        transform: scale(0.59);
       }
     }
   }
@@ -494,7 +505,7 @@
       }
     }
 
-    /* Adjust <Phone /> */
+    /* Adjust <Phone /> to show gameInfo closer to the center */
     ul > li > .gameInfo {
       left: auto;
       top: 75px;
@@ -504,16 +515,6 @@
         left: auto;
         top: 65px;
         right: -45px;
-        transform: scale(1);
-      }
-    }
-
-    ul > li > .phoneFrame {
-      @media (max-width: 700px) {
-        width: 268px;
-        height: 546px;
-        background: url("@site/static/img/home/phoneFrame.svg") no-repeat center
-          center/268.54px 546.27px;
       }
     }
   }

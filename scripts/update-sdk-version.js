@@ -15,6 +15,7 @@ const duskTemplatesDir = path.resolve(
 )
 
 const duskCliDir = path.resolve(__dirname, "../packages/dusk-cli")
+const runeCliDir = path.resolve(__dirname, "../packages/rune-games-cli")
 
 //These example games also have sdk version inside html
 const gamesWithHtml = {
@@ -64,11 +65,19 @@ const duskCli = {
   isDusk: true,
 }
 
+const runeCli = {
+  name: "rune-cli",
+  dir: runeCliDir,
+  shouldInstall: false,
+  isDusk: false,
+}
+
 const locations = [
   ...exampleGames,
   ...templateGames,
   ...duskTemplateGames,
   duskCli,
+  runeCli,
 ]
 
 locations.forEach(({ name, dir, shouldInstall, isDusk }) => {

@@ -37,6 +37,7 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    padding-bottom: 3px; /* fix cut-off font at the bottom */
 
     text-align: center;
   }
@@ -64,6 +65,7 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    padding-bottom: 3px; /* fix cut-off font at the bottom */
 
     text-align: center;
   }
@@ -485,6 +487,7 @@
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      padding-bottom: 3px; /* fix cut-off font at the bottom */
 
       @media (max-width: 700px) {
         font-size: 30px;

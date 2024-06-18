@@ -5,21 +5,13 @@ import * as path from "path"
 import { FileInfo } from "./getGameFiles"
 import {
   MAX_PLAYERS,
-  validateGameFiles,
+  validateGameFilesInCLI,
   ValidationResult,
 } from "./validateGameFiles"
 
 jest.mock("./rootPath.ts", () => ({
   rootPath: path.resolve(__dirname, "../.."),
 }))
-
-const validLogicMultiplayer = {
-  handlesPlayerJoined: true,
-  handlesPlayerLeft: true,
-  minPlayers: 1,
-  maxPlayers: 4,
-  updatesPerSecondDefined: false,
-}
 
 describe("validateGameFiles", () => {
   test("should validate game content", async () => {
@@ -71,7 +63,6 @@ describe("validateGameFiles", () => {
           {
             valid: true,
             errors: [],
-            multiplayer: validLogicMultiplayer,
             sdk: name,
           }
         )
@@ -102,7 +93,6 @@ describe("validateGameFiles", () => {
                 message: `${name} SDK script url must end with /multiplayer.js or /multiplayer-dev.js`,
               },
             ],
-            multiplayer: undefined,
             sdk: name,
           }
         )
@@ -128,7 +118,6 @@ describe("validateGameFiles", () => {
           ],
           {
             valid: false,
-            multiplayer: validLogicMultiplayer,
             errors: [
               {
                 message: `${name} SDK is below minimum version (included 4.4.5, min 4.8.1)`,
@@ -159,7 +148,6 @@ describe("validateGameFiles", () => {
           ],
           {
             valid: false,
-            multiplayer: validLogicMultiplayer,
             errors: [
               {
                 message: `${name} SDK is below minimum version (included 4.4, min 4.8.1)`,
@@ -190,7 +178,6 @@ describe("validateGameFiles", () => {
           ],
           {
             valid: false,
-            multiplayer: validLogicMultiplayer,
             errors: [
               {
                 message: `${name} SDK is below minimum version (included 3, min 4.8.1)`,
@@ -221,7 +208,6 @@ describe("validateGameFiles", () => {
           ],
           {
             valid: true,
-            multiplayer: validLogicMultiplayer,
             errors: [],
             sdk: name,
           }
@@ -258,7 +244,6 @@ describe("validateGameFiles", () => {
           {
             // valid because we should only look at the root index.html
             valid: true,
-            multiplayer: validLogicMultiplayer,
             errors: [],
             sdk: name,
           }
@@ -285,7 +270,6 @@ describe("validateGameFiles", () => {
           ],
           {
             valid: false,
-            multiplayer: validLogicMultiplayer,
             errors: [{ message: `${name} SDK must specify a version` }],
             sdk: name,
           }
@@ -312,7 +296,6 @@ describe("validateGameFiles", () => {
           ],
           {
             valid: false,
-            multiplayer: validLogicMultiplayer,
             errors: [
               { message: "Game size must be less than 10MB" },
               { message: `${name} SDK must be the first script in index.html` },
@@ -341,7 +324,6 @@ describe("validateGameFiles", () => {
           ],
           {
             valid: false,
-            multiplayer: undefined,
             errors: [
               { message: `Game index.html must include Rune SDK script` },
             ],
@@ -431,7 +413,6 @@ describe("validateGameFiles", () => {
               { message: "logic.js must be included in the game files" },
               { message: `${name} SDK must be the first script in index.html` },
             ],
-            multiplayer: {},
             sdk: name,
           }
         )
@@ -460,7 +441,6 @@ describe("validateGameFiles", () => {
                   "logic.js content has not been provided for validation",
               },
             ],
-            multiplayer: {},
             sdk: name,
           }
         )
@@ -501,13 +481,6 @@ describe("validateGameFiles", () => {
               { message: "logic.js: minPlayers not found or is invalid" },
               { message: "logic.js: maxPlayers not found or is invalid" },
             ],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: undefined,
-              maxPlayers: undefined,
-              updatesPerSecondDefined: false,
-            },
             sdk: name,
           }
         )
@@ -556,13 +529,6 @@ describe("validateGameFiles", () => {
                   "logic.js: maxPlayers must be greater than or equal to minPlayers",
               },
             ],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: 8,
-              maxPlayers: 7,
-              updatesPerSecondDefined: false,
-            },
             sdk: name,
           }
         )
@@ -618,13 +584,6 @@ describe("validateGameFiles", () => {
                 ],
               },
             ],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: 2,
-              maxPlayers: 4,
-              updatesPerSecondDefined: false,
-            },
             sdk: name,
           }
         )
@@ -663,13 +622,6 @@ describe("validateGameFiles", () => {
           {
             valid: true,
             errors: [],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: 2,
-              maxPlayers: 4,
-              updatesPerSecondDefined: false,
-            },
             sdk: name,
           }
         )
@@ -702,7 +654,6 @@ describe("validateGameFiles", () => {
                   "logic.js content has not been provided for validation",
               },
             ],
-            multiplayer: {},
             sdk: name,
           }
         )
@@ -745,13 +696,6 @@ describe("validateGameFiles", () => {
           {
             valid: true,
             errors: [],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              maxPlayers: 4,
-              minPlayers: 2,
-              updatesPerSecondDefined: false,
-            },
             sdk: name,
           }
         )
@@ -796,68 +740,6 @@ describe("validateGameFiles", () => {
                   "logic.js: updatesPerSecond must be undefined or between 1 and 30",
               },
             ],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: 1,
-              maxPlayers: 4,
-              updatesPerSecond: 40,
-              updatesPerSecondDefined: true,
-              inputDelay: 50,
-            },
-            sdk: name,
-          }
-        )
-
-        await check(
-          [
-            {
-              path: "index.html",
-              size: 1 * 1e6,
-              content: `
-              <html>
-                <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
-                <script src="logic.js"></script>
-              </html>`,
-            },
-            {
-              path: "logic.js",
-              size: 1 * 1e6,
-              // language=JavaScript
-              content: `
-            ${name}.initLogic({
-              minPlayers: 1,
-              maxPlayers: 4,
-              updatesPerSecond: 10,
-              inputDelay: 60,
-              setup: () => {
-                return { cells: Array(25).fill(null) }
-              },
-              actions: {},
-              events: {
-                playerJoined: () => {},
-                playerLeft () {},
-              },
-            })`,
-            },
-          ],
-          {
-            valid: false,
-            errors: [
-              {
-                message:
-                  "logic.js: inputDelay must be undefined or between 0 and 50",
-              },
-            ],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: 1,
-              maxPlayers: 4,
-              inputDelay: 60,
-              updatesPerSecond: 10,
-              updatesPerSecondDefined: true,
-            },
             sdk: name,
           }
         )
@@ -898,71 +780,6 @@ describe("validateGameFiles", () => {
           {
             valid: true,
             errors: [],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: 1,
-              maxPlayers: 4,
-              updatesPerSecond: 10,
-              updatesPerSecondDefined: true,
-              persistPlayerData: true,
-              landscape: true,
-            },
-            sdk: name,
-          }
-        )
-
-        await check(
-          [
-            {
-              path: "index.html",
-              size: 1 * 1e6,
-              content: `
-              <html>
-                <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
-                <script src="logic.js"></script>
-              </html>`,
-            },
-            {
-              path: "logic.js",
-              size: 1 * 1e6,
-              // language=JavaScript
-              content: `
-            const UPDATES_PER_SECOND = 30;
-            
-            ${name}.initLogic({
-              minPlayers: 1,
-              maxPlayers: 4,
-              updatesPerSecond: UPDATES_PER_SECOND,
-              inputDelay: 50,
-              setup: () => {
-                return { cells: Array(25).fill(null) }
-              },
-              actions: {},
-              events: {
-                playerJoined: () => {},
-                playerLeft () {},
-              },
-            })`,
-            },
-          ],
-          {
-            valid: false,
-            errors: [
-              {
-                message:
-                  "logic.js: updatesPerSecond must be a constant (updatesPerSecond: 1-30)",
-              },
-            ],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: 1,
-              maxPlayers: 4,
-              updatesPerSecond: undefined,
-              updatesPerSecondDefined: true,
-              inputDelay: 50,
-            },
             sdk: name,
           }
         )
@@ -1005,13 +822,6 @@ describe("validateGameFiles", () => {
                 message: "logic.js size can't be more than 1MB",
               },
             ],
-            multiplayer: {
-              handlesPlayerJoined: true,
-              handlesPlayerLeft: true,
-              minPlayers: 1,
-              maxPlayers: 4,
-              updatesPerSecondDefined: false,
-            },
             sdk: name,
           }
         )
@@ -1043,7 +853,6 @@ describe("validateGameFiles", () => {
                 message: `${name} SDK is imported 2+ times in index.html. If using the ${name} Vite plugin, then remove your SDK import in index.html.`,
               },
             ],
-            multiplayer: validLogicMultiplayer,
             sdk: name,
           }
         )
@@ -1051,7 +860,7 @@ describe("validateGameFiles", () => {
     )
 
     function check(files: FileInfo[], expected: ValidationResult) {
-      return expect(validateGameFiles(files)).resolves.toEqual(expected)
+      return expect(validateGameFilesInCLI(files)).resolves.toEqual(expected)
     }
   })
 })

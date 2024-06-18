@@ -14,7 +14,7 @@ import {
 } from "../../lib/getGameFiles.js"
 import { isDir } from "../../lib/isDir.js"
 import {
-  validateGameFiles,
+  validateGameFilesInCLI,
   ValidationResult,
 } from "../../lib/validateGameFiles.js"
 
@@ -50,7 +50,7 @@ export function GameDirInputStep({
       .then((gameFiles) => {
         setLogicJsFile(findShortestPathFileThatEndsWith(gameFiles, "logic.js"))
 
-        return validateGameFiles(gameFiles)
+        return validateGameFilesInCLI(gameFiles)
       })
       .then(setValidateGameResult)
   }, [existsGameDir, gameDir])

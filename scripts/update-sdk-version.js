@@ -14,6 +14,8 @@ const duskTemplatesDir = path.resolve(
   "../packages/dusk-cli/templates"
 )
 
+const duskCliDir = path.resolve(__dirname, "../packages/dusk-cli")
+
 //These example games also have sdk version inside html
 const gamesWithHtml = {
   "oink-oink": "public/index.html",
@@ -31,8 +33,8 @@ const exampleGames = fs
   .readdirSync(examplesDir, { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => ({
-    gameName: dirent.name,
-    gameDir: path.join(examplesDir, dirent.name),
+    name: dirent.name,
+    dir: path.join(examplesDir, dirent.name),
     shouldInstall: true,
   }))
 
@@ -40,8 +42,8 @@ const templateGames = fs
   .readdirSync(templatesDir, { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => ({
-    gameName: dirent.name,
-    gameDir: path.join(templatesDir, dirent.name),
+    name: dirent.name,
+    dir: path.join(templatesDir, dirent.name),
     shouldInstall: false,
   }))
 
@@ -49,16 +51,28 @@ const duskTemplateGames = fs
   .readdirSync(duskTemplatesDir, { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => ({
-    gameName: dirent.name,
-    gameDir: path.join(duskTemplatesDir, dirent.name),
+    name: dirent.name,
+    dir: path.join(duskTemplatesDir, dirent.name),
     shouldInstall: false,
     isDusk: true,
   }))
 
-const games = [...exampleGames, ...templateGames, ...duskTemplateGames]
+const duskCli = {
+  name: "dusk-cli",
+  dir: duskCliDir,
+  shouldInstall: false,
+  isDusk: true,
+}
 
-games.forEach(({ gameName, gameDir, shouldInstall, isDusk }) => {
-  const packageJsonPath = path.join(gameDir, "package.json")
+const locations = [
+  ...exampleGames,
+  ...templateGames,
+  ...duskTemplateGames,
+  duskCli,
+]
+
+locations.forEach(({ name, dir, shouldInstall, isDusk }) => {
+  const packageJsonPath = path.join(dir, "package.json")
 
   if (fs.existsSync(packageJsonPath)) {
     const packageJson = require(packageJsonPath)
@@ -67,21 +81,19 @@ games.forEach(({ gameName, gameDir, shouldInstall, isDusk }) => {
       isDusk ? "dusk-games-sdk" : "rune-games-sdk"
     ] = `^${version}`
 
-    console.log(
-      `Updating ${path.relative(path.join(__dirname, ".."), gameDir)}`
-    )
+    console.log(`Updating ${path.relative(path.join(__dirname, ".."), dir)}`)
 
     console.log(` - Updating package.json`)
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
     if (shouldInstall) {
       console.log(` - Updating yarn.lock (running yarn)`)
-      child_process.execSync("yarn", { cwd: gameDir, stdio: "ignore" })
+      child_process.execSync("yarn", { cwd: dir, stdio: "ignore" })
     }
   }
 
-  if (gamesWithHtml[gameName]) {
-    const indexHtmlPath = path.join(gameDir, gamesWithHtml[gameName])
+  if (gamesWithHtml[name]) {
+    const indexHtmlPath = path.join(dir, gamesWithHtml[name])
 
     const indexHtml = fs.readFileSync(indexHtmlPath).toString()
 
@@ -96,4 +108,4 @@ games.forEach(({ gameName, gameDir, shouldInstall, isDusk }) => {
   }
 })
 
-console.log("Example games updated successfully")
+console.log("Sdk version updated successfully")

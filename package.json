@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "test": "yarn workspaces run test",
     "typecheck": "yarn workspaces run typecheck",
-    "updateExampleGames": "node scripts/update-example-games.js"
+    "updateSdkVersion": "node scripts/update-sdk-version.js"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.57.1",

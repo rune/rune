@@ -14,7 +14,7 @@ import {
 } from "../../lib/getGameFiles.js"
 import { isDir } from "../../lib/isDir.js"
 import { ValidationResult } from "../../lib/validateGameFiles.js"
-import { validateGameFilesInCLI } from "../../lib/validateGameFilesInCli"
+import { validateGameFilesInCLI } from "../../lib/validateGameFilesInCli.js"
 
 // @ts-ignore
 const TextInput = TextInputImport.default as typeof TextInputImport

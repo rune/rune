@@ -81,6 +81,8 @@ export async function validateGameFilesWithEval(
   const gameConfig = logicJs
     ? eval(
         `
+          //Prevent Math precision from being modified
+          globalThis.Math.__SDK_PRECISION_SET__ = true
           ${logicRunner}
           ${logicJs!.content}
           Rune.gameConfig

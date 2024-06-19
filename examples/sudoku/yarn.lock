@@ -8082,10 +8082,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.19.15:
-  version "4.19.15"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.15.tgz#e3463f35b8d1c08875a4cb2b6f35ac7fb9b60977"
-  integrity sha512-17fiJMDz7DYCsBKoUfzVjv/gdbN/qiv5wlR7R5ETu06JVAJHrXX7KPpC6a9Sz0yHtCZAuG2AQI2F8lnF8tcH/g==
+rune-games-sdk@^4.19.16:
+  version "4.19.16"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.16.tgz#911c62491c76ecabecf996e3a5b6f91982d88ca7"
+  integrity sha512-cIRhbu1iM8o6QTzSs69DKDDcryYFYWqQyLpDaa3RGShatOWSRzPZeNEqWAw+ZtTSouDPnBnHsZ1qPfcWxTdIgQ==
 
 safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"

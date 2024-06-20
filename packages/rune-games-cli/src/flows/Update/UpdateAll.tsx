@@ -55,7 +55,7 @@ export function UpdateAll() {
             )
 
             try {
-              const result = await updateGameSdk({ gameId, gameVersionId })
+              const result = await updateGameSdk({ gameId })
 
               if (result?.success) {
                 setSuccesses((prev) => [...prev, { gameId, gameVersionId }])

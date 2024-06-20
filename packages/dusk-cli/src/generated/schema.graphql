@@ -626,7 +626,6 @@ type UpdateGamePayload {
 input UpdateGameSdkInput {
   clientMutationId: String
   gameId: Int!
-  gameVersionId: Int!
 }
 
 type UpdateGameSdkPayload {

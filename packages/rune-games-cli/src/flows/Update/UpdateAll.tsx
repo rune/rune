@@ -12,13 +12,18 @@ export function UpdateAll() {
 
   const { games, gamesLoading } = useGames()
 
-  const gamesWithLatestActiveVersions = useMemo(
+  const gamesWithLatestActiveDraftOrInReviewVersions = useMemo(
     () =>
       games
         ?.map((g) => ({
           gameId: g.id,
           gameVersionId: g.gameVersions.nodes
-            .filter((v) => v.status === "ACTIVE")
+            .filter(
+              (v) =>
+                v.status === "DRAFT" ||
+                v.status === "ACTIVE" ||
+                v.status === "IN_REVIEW"
+            )
             .at(0)?.gameVersionId,
         }))
         .filter(
@@ -39,51 +44,57 @@ export function UpdateAll() {
   const [done, setDone] = useState(false)
 
   useEffect(() => {
-    if (!gamesLoading && gamesWithLatestActiveVersions) {
-      gamesWithLatestActiveVersions.forEach(({ gameId, gameVersionId }, i) => {
-        queue.current = queue.current.then(async () => {
-          setProgressText(
-            `Updating game ${i + 1} of ${gamesWithLatestActiveVersions.length}`
-          )
+    if (!gamesLoading && gamesWithLatestActiveDraftOrInReviewVersions) {
+      gamesWithLatestActiveDraftOrInReviewVersions.forEach(
+        ({ gameId, gameVersionId }, i) => {
+          queue.current = queue.current.then(async () => {
+            setProgressText(
+              `Updating game ${i + 1} of ${
+                gamesWithLatestActiveDraftOrInReviewVersions.length
+              }`
+            )
 
-          try {
-            const result = await updateGameSdk({ gameId, gameVersionId })
+            try {
+              const result = await updateGameSdk({ gameId })
 
-            if (result?.success) {
-              setSuccesses((prev) => [...prev, { gameId, gameVersionId }])
-            } else {
+              if (result?.success) {
+                setSuccesses((prev) => [...prev, { gameId, gameVersionId }])
+              } else {
+                setFailures((prev) => [
+                  ...prev,
+                  {
+                    gameId,
+                    gameVersionId,
+                    error: result?.error ?? "Unknown error",
+                  },
+                ])
+              }
+            } catch (error) {
               setFailures((prev) => [
                 ...prev,
                 {
                   gameId,
                   gameVersionId,
-                  error: result?.error ?? "Unknown error",
+                  error:
+                    error instanceof ApolloError
+                      ? formatApolloError(error, {
+                          default: error.message,
+                        })
+                      : JSON.stringify(error),
                 },
               ])
             }
-          } catch (error) {
-            setFailures((prev) => [
-              ...prev,
-              {
-                gameId,
-                gameVersionId,
-                error:
-                  error instanceof ApolloError
-                    ? formatApolloError(error, {
-                        "[tango][UPDATE_GAME_SDK_FAILED_SOME_GAMES_IN_REVIEW]":
-                          "Cannot update any games while some games are in review",
-                        default: error.message,
-                      })
-                    : JSON.stringify(error),
-              },
-            ])
-          }
-        })
-      })
+          })
+        }
+      )
 
       queue.current.then(() => setDone(true))
     }
-  }, [gamesLoading, gamesWithLatestActiveVersions, updateGameSdk])
+  }, [
+    gamesLoading,
+    gamesWithLatestActiveDraftOrInReviewVersions,
+    updateGameSdk,
+  ])
 
   return (
     <Step

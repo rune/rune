@@ -28,6 +28,6 @@
     "typescript": "5.2.2"
   },
   "peerDependencies": {
-    "rune-games-sdk": "^4.16.0"
+    "dusk-games-sdk": "^4.16.0"
   }
 }

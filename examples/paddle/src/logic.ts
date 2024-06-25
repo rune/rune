@@ -1,4 +1,4 @@
-import { PlayerId } from "dusk-games-sdk"
+import type { PlayerId } from "dusk-games-sdk"
 
 // Use multiplayer so updatesPerSecond can be changed w/o impacting game speed
 const updatesPerSecond = 30

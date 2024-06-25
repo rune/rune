@@ -5,7 +5,7 @@
 </picture>
 
 <p align="center">
-  <a href="https://developers.rune.ai">Docs</a> · <a href="https://discord.gg/rune-devs">Discord</a> · <a href="https://developers.rune.ai/faq">FAQ</a> · <a href="https://developers.rune.ai/blog">Blog</a> · <a href="https://developers.rune.ai/docs/examples">Examples</a> 
+  <a href="https://developers.dusk.gg">Docs</a> · <a href="https://discord.gg/dusk-devs">Discord</a> · <a href="https://developers.dusk.gg/faq">FAQ</a> · <a href="https://developers.dusk.gg/blog">Blog</a> · <a href="https://developers.dusk.gg/docs/examples">Examples</a> 
 </p>
 
 # Rune
@@ -22,35 +22,35 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 
 ## Documentation
 
-- [Quick Start](https://developers.rune.ai/docs/quick-start)
-- [Philosophy](https://developers.rune.ai/docs/how-it-works/philosophy)
-- [Syncing Game State](https://developers.rune.ai/docs/how-it-works/syncing-game-state)
-- [Simulating Multiplayer](https://developers.rune.ai/docs/publishing/simulating-multiplayer)
-- [SDK API Reference](https://developers.rune.ai/docs/api-reference)
+- [Quick Start](https://developers.dusk.gg/docs/quick-start)
+- [Philosophy](https://developers.dusk.gg/docs/how-it-works/philosophy)
+- [Syncing Game State](https://developers.dusk.gg/docs/how-it-works/syncing-game-state)
+- [Simulating Multiplayer](https://developers.dusk.gg/docs/publishing/simulating-multiplayer)
+- [SDK API Reference](https://developers.dusk.gg/docs/api-reference)
 
 ## Examples
 
 | Tic Tac Toe | Outmatched | Sudoku | Pinpoint |
 |---|---|---|---|
-| [<img src="docs/static/img/multiplayer-games/tic-tac-toe.png" width=500>](https://developers.rune.ai/examples/tic-tac-toe/) | [<img src="docs/static/img/multiplayer-games/outmatched.png" width=500>](https://developers.rune.ai/examples/outmatched/) | [<img src="docs/static/img/multiplayer-games/sudoku.png" width=500>](https://developers.rune.ai/examples/sudoku/) | [<img src="docs/static/img/multiplayer-games/pinpoint.png" width=500>](https://developers.rune.ai/examples/pinpoint/) |
-| [Demo](https://developers.rune.ai/examples/tic-tac-toe/), [Source](https://github.com/rune/rune/tree/staging/examples/tic-tac-toe) | [Demo](https://developers.rune.ai/examples/outmatched/), [Source](https://github.com/rune/rune/tree/staging/examples/outmatched) | [Demo](https://developers.rune.ai/examples/sudoku/), [Source](https://github.com/rune/rune/tree/staging/examples/sudoku) | [Demo](https://developers.rune.ai/examples/pinpoint/), [Source](https://github.com/rune/rune/tree/staging/examples/pinpoint) |
+| [<img src="docs/static/img/multiplayer-games/tic-tac-toe.png" width=500>](https://developers.dusk.gg/examples/tic-tac-toe/) | [<img src="docs/static/img/multiplayer-games/outmatched.png" width=500>](https://developers.dusk.gg/examples/outmatched/) | [<img src="docs/static/img/multiplayer-games/sudoku.png" width=500>](https://developers.dusk.gg/examples/sudoku/) | [<img src="docs/static/img/multiplayer-games/pinpoint.png" width=500>](https://developers.dusk.gg/examples/pinpoint/) |
+| [Demo](https://developers.dusk.gg/examples/tic-tac-toe/), [Source](https://github.com/dusk-gg/dusk/tree/staging/examples/tic-tac-toe) | [Demo](https://developers.dusk.gg/examples/outmatched/), [Source](https://github.com/dusk-gg/dusk/tree/staging/examples/outmatched) | [Demo](https://developers.dusk.gg/examples/sudoku/), [Source](https://github.com/dusk-gg/dusk/tree/staging/examples/sudoku) | [Demo](https://developers.dusk.gg/examples/pinpoint/), [Source](https://github.com/dusk-gg/dusk/tree/staging/examples/pinpoint) |
 
 | OinkOink | Paddle | Cube Rush | Neon Snake |
 |---|---|---|---|
-| [<img src="docs/static/img/multiplayer-games/oink-oink.png" width=500>](https://developers.rune.ai/examples/oink-oink/) | [<img src="docs/static/img/multiplayer-games/paddle.png" width=500>](https://developers.rune.ai/examples/paddle/) | [<img src="docs/static/img/multiplayer-games/cube-rush.png" width=500>](https://developers.rune.ai/examples/cube-rush/) | [<img src="docs/static/img/multiplayer-games/neon-snake.png" width=500>](https://developers.rune.ai/examples/neon-snake/) |
-| [Demo](https://developers.rune.ai/examples/oink-oink/), [Source](https://github.com/rune/rune/tree/staging/examples/oink-oink) | [Demo](https://developers.rune.ai/examples/paddle/), [Source](https://github.com/rune/rune/tree/staging/examples/paddle) | [Demo](https://developers.rune.ai/examples/cube-rush/), [Source](https://github.com/rune/rune/tree/staging/examples/cube-rush) | [Demo](https://developers.rune.ai/examples/neon-snake/), [Source](https://github.com/rune/rune/tree/staging/examples/neon-snake) |
+| [<img src="docs/static/img/multiplayer-games/oink-oink.png" width=500>](https://developers.dusk.gg/examples/oink-oink/) | [<img src="docs/static/img/multiplayer-games/paddle.png" width=500>](https://developers.dusk.gg/examples/paddle/) | [<img src="docs/static/img/multiplayer-games/cube-rush.png" width=500>](https://developers.dusk.gg/examples/cube-rush/) | [<img src="docs/static/img/multiplayer-games/neon-snake.png" width=500>](https://developers.dusk.gg/examples/neon-snake/) |
+| [Demo](https://developers.dusk.gg/examples/oink-oink/), [Source](https://github.com/dusk-gg/dusk/tree/staging/examples/oink-oink) | [Demo](https://developers.dusk.gg/examples/paddle/), [Source](https://github.com/dusk-gg/dusk/tree/staging/examples/paddle) | [Demo](https://developers.dusk.gg/examples/cube-rush/), [Source](https://github.com/dusk-gg/dusk/tree/staging/examples/cube-rush) | [Demo](https://developers.dusk.gg/examples/neon-snake/), [Source](https://github.com/dusk-gg/dusk/tree/staging/examples/neon-snake) |
 
 ## Packages
 
-- [eslint-plugin-rune](https://github.com/dusk-gg/dusk/tree/staging/packages/eslint-plugin-rune) – rules and config for writing safe logic code for the Rune SDK
-- [rune-games-cli](https://github.com/dusk-gg/dusk/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
-- [vite-plugin-rune](https://github.com/dusk-gg/dusk/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
+- [eslint-plugin-dusk](https://github.com/dusk-gg/dusk/tree/staging/packages/eslint-plugin-dusk) – rules and config for writing safe logic code for the Rune SDK
+- [dusk-games-cli](https://github.com/dusk-gg/dusk/tree/staging/packages/dusk-games-cli) – command line tool to develop and upload your HTML5 game for Rune
+- [vite-plugin-dusk](https://github.com/dusk-gg/dusk/tree/staging/packages/vite-plugin-dusk) – Vite plugin for writing games for the Rune SDK
 
 ## Community
 
-Have a question or want to discuss with others how to make an amazing multiplayer game? Join our [Discord server](https://discord.gg/rune-devs)!
+Have a question or want to discuss with others how to make an amazing multiplayer game? Join our [Discord server](https://discord.gg/dusk-devs)!
 
-[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-devs)
+[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/dusk-devs)
 
 ## Contributing
 

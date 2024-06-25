@@ -1,13 +1,15 @@
 import { describe, it, expect } from "@jest/globals"
-import transformJSON from "../PackageTransform"
-import path from "path"
 import fs from "fs"
+import path from "path"
+
+import transformJSON from "../PackageTransform"
 
 describe("PackageJSONTransform", () => {
   it("should transform package", () => {
     expect(
       JSON.stringify(
         transformJSON(
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
           require(path.resolve(
             __dirname,
             "../__testfixtures__/testPackage.input.json"

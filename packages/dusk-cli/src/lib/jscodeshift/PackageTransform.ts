@@ -20,6 +20,7 @@ export default function transformJSON(json: any) {
         .sort()
         .reduce((obj, key) => {
           obj[key] = json[dep][key]
+
           return obj
         }, {} as any)
     }

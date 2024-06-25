@@ -1,12 +1,12 @@
 {
-  "name": "rune-interpolators",
+  "name": "dusk-interpolators",
   "private": true,
   "version": "0.0.1",
   "description": "Directory containing Dusk interpolators",
   "license": "MIT",
-  "author": "Dusk AI Inc.",
+  "author": "Dusk.",
   "keywords": [
-    "rune",
+    "dusk",
     "interpolate"
   ],
   "repository": {

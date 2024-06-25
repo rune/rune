@@ -12,6 +12,7 @@ import { packageJson } from "../lib/packageJson.js"
 
 import { LoginGate } from "./LoginGate.js"
 import { VersionCheckGate } from "./VersionCheckGate.js"
+import { RuneToDusk } from "../flows/RuneToDusk.js"
 
 export function App() {
   const { command, args, commandInvalid, flags } = cliCommand()
@@ -28,6 +29,8 @@ export function App() {
         <Text>{cli.help}</Text>
       ) : command === "logout" ? (
         <Logout />
+      ) : command === "rune-to-dusk" ? (
+        <RuneToDusk />
       ) : command === "create" ? (
         <Create args={args} />
       ) : (

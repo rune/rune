@@ -8,6 +8,7 @@
   },
   "include": [
     "src/lib/validateGameFiles.ts",
+    "src/lib/jscodeshift/**/*.ts",
     "src/lib/extractMultiplayerMetadata.ts",
     "src/lib/getGameFiles.tsx"
   ]

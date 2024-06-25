@@ -22,4 +22,4 @@ If you ever want to update your preview image, then just run `npx rune-games-cli
 
 ## Wanna Skip Making One? {#wanna-skip-making-one}
 
-You do not need a game preview to upload an initial version for playtesting. It's only needed before releasing the game to the Rune community. We can also make a game preview for your game if you'd like, just ask us on [Discord](https://discord.gg/rune-devs)!
+You do not need a game preview to upload an initial version for playtesting. It's only needed before releasing the game to the Rune community. We can also make a game preview for your game if you'd like, just ask us on [Discord](https://discord.gg/dusk-devs)!

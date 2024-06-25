@@ -28,16 +28,16 @@ module.exports = {
     },
     {
       files: ["packages/eslint-plugin-dusk/test/samples/*.js"],
-      extends: ["plugin:rune/logic"],
+      extends: ["plugin:dusk/logic"],
     },
     {
       files: ["examples/**/*.js", "examples/**/*.ts"],
-      extends: ["plugin:rune/recommended"],
+      extends: ["plugin:dusk/recommended"],
       env: {
         browser: true,
       },
       globals: {
-        Rune: "readonly", // TODO: this should be part of rune/recommended
+        Rune: "readonly", // TODO: this should be part of dusk/recommended
       },
     },
     {

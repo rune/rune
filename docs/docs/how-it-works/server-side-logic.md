@@ -29,7 +29,7 @@ Dusk's predict-rollback approach is extremely bandwidth-efficient as only the ac
 
 ## External Dependencies {#external-dependencies}
 
-You can import external dependencies in your game logic, e.g. for physics or pathfinding. Many external libraries contain code that have unintended side effects and thus does not comply with constraints listed above. For that reason Dusk has a [list of known supported libraries](https://github.com/dusk-gg/dusk-multiplayer-web-games/blob/staging/packages/vite-plugin-dusk/src/dependency-whitelist.ts).
+You can import external dependencies in your game logic, e.g. for physics or pathfinding. Many external libraries contain code that have unintended side effects and thus does not comply with constraints listed above. For that reason Dusk has a [list of known supported libraries](https://github.com/dusk-gg/dusk/blob/staging/packages/vite-plugin-dusk/src/dependency-whitelist.ts).
 
 In case you use a library that's not on the supported libraries list, you'll receive a warning in CLI during development. If you build the game and successfully upload it to Dusk, we would appreciate if you add the dependencies to the list linked above.
 

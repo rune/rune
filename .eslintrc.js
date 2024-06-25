@@ -16,18 +16,18 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["packages/eslint-plugin-rune/**/*.js"],
+      files: ["packages/eslint-plugin-dusk/**/*.js"],
       extends: ["plugin:eslint-plugin/recommended"],
     },
     {
       files: [
-        "packages/eslint-plugin-rune/**/*.spec.js",
-        "packages/eslint-plugin-rune/test/createConfigTester.js",
+        "packages/eslint-plugin-dusk/**/*.spec.js",
+        "packages/eslint-plugin-dusk/test/createConfigTester.js",
       ],
       env: { mocha: true },
     },
     {
-      files: ["packages/eslint-plugin-rune/test/samples/*.js"],
+      files: ["packages/eslint-plugin-dusk/test/samples/*.js"],
       extends: ["plugin:rune/logic"],
     },
     {

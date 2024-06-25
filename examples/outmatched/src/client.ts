@@ -1,5 +1,5 @@
 /* eslint-disable  @typescript-eslint/no-non-null-assertion */
-import type { OnChange } from "rune-games-sdk/multiplayer"
+import type { OnChange } from "dusk-games-sdk/multiplayer"
 import type { BoardChange, Cells, GameActions, GameState } from "./types"
 import {
   rows,
@@ -120,13 +120,13 @@ let isUpdating = false
 
 shuffleButton.onclick = () => {
   if (yourTurn && !isUpdating) {
-    Rune.actions.shuffle()
+    Dusk.actions.shuffle()
   }
 }
 
 extraMoveButton.onclick = () => {
   if (yourTurn && !isUpdating) {
-    Rune.actions.extraMove()
+    Dusk.actions.extraMove()
   }
 }
 
@@ -152,7 +152,7 @@ const handlePointerMove = (coordinates: Coordinates | null) => {
     const targetIndex = getIndexForCoordinates(coordinates.row, coordinates.col)
     sourceCoordinates = null
     if (isValidMove(cells, sourceIndex, targetIndex)) {
-      Rune.actions.swap({
+      Dusk.actions.swap({
         sourceIndex,
         targetIndex,
       })
@@ -186,7 +186,7 @@ board.onclick = (e) => {
   }
   const index = getIndexForCoordinates(coordinates.row, coordinates.col)
   if (!yourTurn) {
-    Rune.actions.highlight({ index })
+    Dusk.actions.highlight({ index })
   } else if (cells[index] > numberOfTiles) {
     showSpecialTileHint(index)
   }
@@ -893,7 +893,7 @@ const onChange: OnChangeFn = async ({
   ) {
     await showMessage("last-round")
   } else if (gameOver) {
-    Rune.showGameOverPopUp()
+    Dusk.showGameOverPopUp()
   }
   if (yourTurn) {
     scheduleMoveHint(currentPlayerIndex)
@@ -913,4 +913,4 @@ const queueUpdate: OnChangeFn = async (update) => {
   }
 }
 
-Rune.initClient({ onChange: queueUpdate })
+Dusk.initClient({ onChange: queueUpdate })

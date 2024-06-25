@@ -22,7 +22,7 @@ export function App() {
 
   useEffect(() => {
     import("../logic").then(() =>
-      Rune.initClient({
+      Dusk.initClient({
         onChange: ({ game, players, yourPlayerId }) => {
           setGame(game)
           setPlayers(players)

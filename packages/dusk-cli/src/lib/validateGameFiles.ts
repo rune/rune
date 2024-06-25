@@ -25,7 +25,7 @@ const eslint = new ESLint({
   resolvePluginsRelativeTo: rootPath,
   baseConfig: {
     root: true,
-    extends: ["plugin:rune/logic"],
+    extends: ["plugin:dusk/logic"],
     parserOptions: {
       sourceType: "module",
     },

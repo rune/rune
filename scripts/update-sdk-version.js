@@ -65,19 +65,11 @@ const duskCli = {
   isDusk: true,
 }
 
-const runeCli = {
-  name: "rune-cli",
-  dir: runeCliDir,
-  shouldInstall: false,
-  isDusk: false,
-}
-
 const locations = [
   ...exampleGames,
   ...templateGames,
   ...duskTemplateGames,
   duskCli,
-  runeCli,
 ]
 
 locations.forEach(({ name, dir, shouldInstall, isDusk }) => {
@@ -111,7 +103,7 @@ locations.forEach(({ name, dir, shouldInstall, isDusk }) => {
       indexHtmlPath,
       indexHtml.replace(
         /<script src="https:\/\/cdn.jsdelivr.net\/npm\/rune-games-sdk@.+\/multiplayer-dev.js">/,
-        `<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@${version}/multiplayer-dev.js">`
+        `<script src="https://cdn.jsdelivr.net/npm/dusk-games-sdk@${version}/multiplayer-dev.js">`
       )
     )
   }

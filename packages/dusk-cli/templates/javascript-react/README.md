@@ -20,4 +20,4 @@ Runs the validation rules. You can read about them in the [docs on server-side l
 
 ## Learn More
 
-See the [Dusk docs](https://developers.dusk.gg/docs/quick-start) for more info. You can also ask any questions in the [Dusk Discord](https://discord.gg/rune-devs), we're happy to help!
+See the [Dusk docs](https://developers.dusk.gg/docs/quick-start) for more info. You can also ask any questions in the [Dusk Discord](https://discord.gg/dusk-devs), we're happy to help!

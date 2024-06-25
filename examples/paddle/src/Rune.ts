@@ -1,8 +1,8 @@
-import { RuneClient } from "rune-games-sdk"
+import { DuskClient } from "dusk-games-sdk"
 import { GameActions, GameState } from "./logic"
 
-export type RuneTyped = RuneClient<GameState, GameActions>
+export type DuskTyped = DuskClient<GameState, GameActions>
 
 declare global {
-  const Rune: RuneTyped
+  const Dusk: DuskTyped
 }

@@ -25,7 +25,7 @@ export const Start = memo(() => {
       </ReadyLabel>
       <ReadyButton
         style={{ opacity: yourPlayer && !yourPlayer.readyToStart ? 1 : 0 }}
-        onClick={() => Rune.actions.setReadyToStart()}
+        onClick={() => Dusk.actions.setReadyToStart()}
       >
         <div>I'm Ready</div>
       </ReadyButton>

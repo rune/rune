@@ -5,7 +5,7 @@ import Link from "@docusaurus/Link"
 import { Social } from "../../components/Social"
 
 function Footer() {
-  const footerCopyright = <>© {new Date().getFullYear()} Rune</>
+  const footerCopyright = <>© {new Date().getFullYear()} Dusk</>
 
   const footerLinks = (
     <>
@@ -14,15 +14,15 @@ function Footer() {
       </Link>
       <a
         className={styles.link}
-        href="https://rune.ai"
+        href="https://dusk.gg"
         target="_blank"
         rel="noreferrer"
       >
-        Get Rune
+        Get Dusk
       </a>
       <a
         className={styles.link}
-        href="https://rune.ai/team"
+        href="https://rdusk.gg/team"
         target="_blank"
         rel="noreferrer"
       >

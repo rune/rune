@@ -17,10 +17,10 @@
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "eslint": "^8.57.0",
-    "eslint-plugin-rune": "^0.2.0",
+    "eslint-plugin-dusk": "^1.0.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.11",
-    "vite-plugin-qrcode": "^0.2.2",
-    "vite-plugin-dusk": "^0.3.1"
+    "vite-plugin-dusk": "^1.0.0",
+    "vite-plugin-qrcode": "^0.2.2"
   }
 }

@@ -16,28 +16,28 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["packages/eslint-plugin-rune/**/*.js"],
+      files: ["packages/eslint-plugin-dusk/**/*.js"],
       extends: ["plugin:eslint-plugin/recommended"],
     },
     {
       files: [
-        "packages/eslint-plugin-rune/**/*.spec.js",
-        "packages/eslint-plugin-rune/test/createConfigTester.js",
+        "packages/eslint-plugin-dusk/**/*.spec.js",
+        "packages/eslint-plugin-dusk/test/createConfigTester.js",
       ],
       env: { mocha: true },
     },
     {
-      files: ["packages/eslint-plugin-rune/test/samples/*.js"],
-      extends: ["plugin:rune/logic"],
+      files: ["packages/eslint-plugin-dusk/test/samples/*.js"],
+      extends: ["plugin:dusk/logic"],
     },
     {
       files: ["examples/**/*.js", "examples/**/*.ts"],
-      extends: ["plugin:rune/recommended"],
+      extends: ["plugin:dusk/recommended"],
       env: {
         browser: true,
       },
       globals: {
-        Rune: "readonly", // TODO: this should be part of rune/recommended
+        Rune: "readonly", // TODO: this should be part of dusk/recommended
       },
     },
     {

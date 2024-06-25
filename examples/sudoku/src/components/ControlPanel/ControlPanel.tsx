@@ -27,7 +27,7 @@ export function ControlPanel() {
   const hintsDisabled = hintsLeft === 0 || gameOver
 
   const showHint = useCallback(() => {
-    if (!hintsDisabled) Rune.actions.showHint()
+    if (!hintsDisabled) Dusk.actions.showHint()
   }, [hintsDisabled])
 
   useEffect(() => {

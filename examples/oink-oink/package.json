@@ -9,7 +9,7 @@
     "jotai": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rune-games-sdk": "^4.19.17",
+    "dusk-games-sdk": "^4.19.17",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
@@ -27,7 +27,7 @@
     "eslint": "7.22.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "eslint-plugin-rune": "^0.1.9",
+    "eslint-plugin-dusk": "^1.0.0",
     "prettier": "^2.8.7",
     "react-scripts": "5.0.1",
     "rollup": "^3.20.4",
@@ -38,7 +38,7 @@
     "dev:client": "react-scripts start",
     "dev:logic": "rollup -c --watch",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
-    "deploy": "../../scripts/copy-assets.sh oink-oink && yarn build && rune upload build",
+    "deploy": "../../scripts/copy-assets.sh oink-oink && yarn build && dusk upload build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "eslintConfig": {

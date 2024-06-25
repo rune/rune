@@ -2,11 +2,11 @@ dist
 build
 .docusaurus
 examples
-packages/rune-games-cli/__temp/
-packages/rune-games-cli/src/generated/
-packages/rune-games-cli/templates/
+packages/dusk-games-cli/__temp/
+packages/dusk-games-cli/src/generated/
+packages/dusk-games-cli/templates/
 packages/dusk-cli/templates/
-packages/rune-games-cli/cjs/
+packages/dusk-games-cli/cjs/
 node_modules/
 docs/static/_examples
 docs/src/theme

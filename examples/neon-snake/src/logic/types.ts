@@ -1,7 +1,7 @@
-import { PlayerId, RuneClient } from "rune-games-sdk"
+import { PlayerId, DuskClient } from "dusk-games-sdk"
 
 declare global {
-  const Rune: RuneClient<GameState, GameActions>
+  const Dusk: DuskClient<GameState, GameActions>
 }
 
 export type GameStage = "gettingReady" | "countdown" | "playing" | "endOfRound"

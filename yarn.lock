@@ -6537,6 +6537,11 @@ eslint-module-utils@^2.7.3:
   dependencies:
     debug "^3.2.7"
 
+eslint-plugin-dusk@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-dusk/-/eslint-plugin-dusk-1.0.0.tgz#1142bd57dc8c1987322e7207652698219ef0c1ba"
+  integrity sha512-mcvoQNs7xcJrrx/XR72BNl6m+1YtHuZqjuA3AteF1OwZQYT9/Z+rlYW3X7R+5BZ84LhQDMcaA9RsnYrVnPlOew==
+
 eslint-plugin-es@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-es/-/eslint-plugin-es-3.0.1.tgz#75a7cdfdccddc0589934aeeb384175f221c57893"

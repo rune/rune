@@ -19,14 +19,18 @@ function validateGameFiles(files: FileInfo[]) {
 
 describe("validateGameFiles", () => {
   test("should validate game content", async () => {
-    const name = "Dusk" as "Rune" | "Dusk"
-    const packageName = "dusk-games-sdk"
+    await Promise.all(
+      [
+        ["Rune", "rune-games-sdk"],
+        ["Dusk", "dusk-games-sdk"],
+      ].map(async ([n, packageName]) => {
+        const name = n as "Rune" | "Dusk"
 
-    const validLogicFile = {
-      path: "src/logic.js",
-      size: 1 * 1e6,
-      // language=JavaScript
-      content: `
+        const validLogicFile = {
+          path: "src/logic.js",
+          size: 1 * 1e6,
+          // language=JavaScript
+          content: `
             ${name}.initLogic({
               minPlayers: 1,
               maxPlayers: 4,
@@ -39,16 +43,16 @@ describe("validateGameFiles", () => {
                 playerLeft () {},
               },
             })`,
-    }
+        }
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -58,22 +62,22 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: true,
-      errors: [],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: true,
+          errors: [],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -83,26 +87,26 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: `${name} SDK script url must end with /multiplayer.js or /multiplayer-dev.js`,
-        },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: `${name} SDK script url must end with /multiplayer.js or /multiplayer-dev.js`,
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -112,26 +116,26 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: `${name} SDK is below minimum version (included 4.4.5, min 4.8.1)`,
-        },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: `${name} SDK is below minimum version (included 4.4.5, min 4.8.1)`,
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -141,26 +145,26 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: `${name} SDK is below minimum version (included 4.4, min 4.8.1)`,
-        },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: `${name} SDK is below minimum version (included 4.4, min 4.8.1)`,
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -170,26 +174,26 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: `${name} SDK is below minimum version (included 3, min 4.8.1)`,
-        },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: `${name} SDK is below minimum version (included 3, min 4.8.1)`,
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -199,31 +203,31 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: true,
-      errors: [],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: true,
+          errors: [],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/nestedFolder/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/nestedFolder/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 INVALID CONTENT
               </html>`,
-        },
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+            },
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -233,23 +237,23 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      // valid because we should only look at the root index.html
-      valid: true,
-      errors: [],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          // valid because we should only look at the root index.html
+          valid: true,
+          errors: [],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -259,22 +263,22 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [{ message: `${name} SDK must specify a version` }],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [{ message: `${name} SDK must specify a version` }],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 30 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 10 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 30 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 10 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -284,25 +288,25 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        { message: "Game size must be less than 10MB" },
-        { message: `${name} SDK must be the first script in index.html` },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            { message: "Game size must be less than 10MB" },
+            { message: `${name} SDK must be the first script in index.html` },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -311,60 +315,61 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [{ message: `Game index.html must include Rune SDK script` }],
-      sdk: "Rune",
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [{ message: `Game index.html must include Rune SDK script` }],
+          sdk: "Rune",
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        { path: "src/index.html", size: 1 * 1e6 },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: "index.html content has not been provided for validation",
-        },
-      ],
-      sdk: "Rune",
-    })
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            { path: "src/index.html", size: 1 * 1e6 },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message:
+                "index.html content has not been provided for validation",
+            },
+          ],
+          sdk: "Rune",
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [{ message: "Game must include index.html" }],
-      sdk: "Rune",
-    })
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [{ message: "Game must include index.html" }],
+          sdk: "Rune",
+        })
 
-    await expect(
-      validateGameFiles(
-        range(0, 1001).map(() => ({ path: "path/to/file.png", size: 1 }))
-      )
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        { message: "Too many files (>1000)" },
-        { message: "Game must include index.html" },
-      ],
-      sdk: "Rune",
-    })
+        await expect(
+          validateGameFiles(
+            range(0, 1001).map(() => ({ path: "path/to/file.png", size: 1 }))
+          )
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            { message: "Too many files (>1000)" },
+            { message: "Game must include index.html" },
+          ],
+          sdk: "Rune",
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -375,78 +380,78 @@ describe("validateGameFiles", () => {
                   <div>
                 </body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [{ message: "index.html is not valid HTML" }],
-      sdk: "Rune",
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [{ message: "index.html is not valid HTML" }],
+          sdk: "Rune",
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="logic.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        { message: "logic.js must be included in the game files" },
-        { message: `${name} SDK must be the first script in index.html` },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            { message: "logic.js must be included in the game files" },
+            { message: `${name} SDK must be the first script in index.html` },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: "logic.js content has not been provided for validation",
-        },
-      ],
-      sdk: name,
-    })
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: "logic.js content has not been provided for validation",
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <!-- multiplayer-dev.js is also detected as multiplayer -->
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer-dev.js"></script>
                 <script src="logic.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6,
-          // language=JavaScript
-          content: `
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
             ${name}.initLogic({
               minPlayers: "33",
               setup: () => {
@@ -458,33 +463,33 @@ describe("validateGameFiles", () => {
                 playerLeft () {} ,
               },
             })`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        { message: "logic.js: minPlayers not found or is invalid" },
-        { message: "logic.js: maxPlayers not found or is invalid" },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            { message: "logic.js: minPlayers not found or is invalid" },
+            { message: "logic.js: maxPlayers not found or is invalid" },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6,
-          // language=JavaScript
-          content: `
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
               ${name}.initLogic({
                 minPlayers: 8,
                 maxPlayers: 7,
@@ -497,41 +502,41 @@ describe("validateGameFiles", () => {
                   playerLeft () {},
                 },
               })`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: `logic.js: minPlayers must be between 1 and ${MAX_PLAYERS}`,
-        },
-        {
-          message: `logic.js: maxPlayers must be between 1 and ${MAX_PLAYERS}`,
-        },
-        {
-          message:
-            "logic.js: maxPlayers must be greater than or equal to minPlayers",
-        },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: `logic.js: minPlayers must be between 1 and ${MAX_PLAYERS}`,
+            },
+            {
+              message: `logic.js: maxPlayers must be between 1 and ${MAX_PLAYERS}`,
+            },
+            {
+              message:
+                "logic.js: maxPlayers must be greater than or equal to minPlayers",
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6,
-          // language=JavaScript
-          content: `
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
               ${name}.initLogic({
                 minPlayers: 2,
                 maxPlayers: 4,
@@ -545,47 +550,47 @@ describe("validateGameFiles", () => {
                   playerLeft () {},
                 },
               })`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: "logic.js contains invalid code",
-          lintErrors: [
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
             {
-              column: 19,
-              endColumn: 29,
-              endLine: 6,
-              line: 6,
-              message: "'setTimeout' is not defined.",
-              messageId: "undef",
-              nodeType: "Identifier",
-              ruleId: "no-undef",
-              severity: 2,
+              message: "logic.js contains invalid code",
+              lintErrors: [
+                {
+                  column: 19,
+                  endColumn: 29,
+                  endLine: 6,
+                  line: 6,
+                  message: "'setTimeout' is not defined.",
+                  messageId: "undef",
+                  nodeType: "Identifier",
+                  ruleId: "no-undef",
+                  severity: 2,
+                },
+              ],
             },
           ],
-        },
-      ],
-      sdk: name,
-    })
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6,
-          // language=JavaScript
-          content: `
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
               ${name}.initLogic({
                 minPlayers: 2,
                 maxPlayers: 4,
@@ -599,60 +604,60 @@ describe("validateGameFiles", () => {
                   playerLeft () {},
                 },
               })`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: true,
-      errors: [],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: true,
+          errors: [],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
                 <script src="src/logic.js"></script>
               </html>`,
-        },
-        {
-          path: "src/logic.js",
-          size: 1 * 1e6,
-          content: "",
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: "logic.js must be in the same directory as index.html",
-        },
-        {
-          message: "logic.js content has not been provided for validation",
-        },
-      ],
-      sdk: name,
-    })
+            },
+            {
+              path: "src/logic.js",
+              size: 1 * 1e6,
+              content: "",
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: "logic.js must be in the same directory as index.html",
+            },
+            {
+              message: "logic.js content has not been provided for validation",
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
                 <script type="module" src="client.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6,
-          // language=JavaScript
-          content: `
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
               ${name}.initLogic({
                 minPlayers: 2,
                 maxPlayers: 4,
@@ -665,35 +670,35 @@ describe("validateGameFiles", () => {
                   playerLeft () {},
                 },
               })`,
-        },
-        {
-          path: "client.js",
-          size: 1 * 1e6,
-          content: "import 'logic.js';",
-        },
-      ])
-    ).resolves.toEqual({
-      valid: true,
-      errors: [],
-      sdk: name,
-    })
+            },
+            {
+              path: "client.js",
+              size: 1 * 1e6,
+              content: "import 'logic.js';",
+            },
+          ])
+        ).resolves.toEqual({
+          valid: true,
+          errors: [],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6,
-          // language=JavaScript
-          content: `
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
               ${name}.initLogic({
                 minPlayers: 1,
                 maxPlayers: 4,
@@ -708,35 +713,35 @@ describe("validateGameFiles", () => {
                   playerLeft () {},
                 },
               })`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message:
-            "logic.js: updatesPerSecond must be undefined or between 1 and 30",
-        },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message:
+                "logic.js: updatesPerSecond must be undefined or between 1 and 30",
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer.js"></script>
                 <script src="logic.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6,
-          // language=JavaScript
-          content: `
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
               ${name}.initLogic({
                 minPlayers: 1,
                 maxPlayers: 4,
@@ -752,31 +757,31 @@ describe("validateGameFiles", () => {
                   playerLeft () {},
                 },
               })`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: true,
-      errors: [],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: true,
+          errors: [],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        {
-          path: "index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            {
+              path: "index.html",
+              size: 1 * 1e6,
+              content: `
               <html>
                 <!-- multiplayer-dev.js is also detected as multiplayer -->
                 <script src="https://cdn.jsdelivr.net/npm/${packageName}@4.8.1/dist/multiplayer-dev.js"></script>
                 <script src="logic.js"></script>
               </html>`,
-        },
-        {
-          path: "logic.js",
-          size: 1 * 1e6 + 1,
-          // language=JavaScript
-          content: `
+            },
+            {
+              path: "logic.js",
+              size: 1 * 1e6 + 1,
+              // language=JavaScript
+              content: `
             ${name}.initLogic({
               minPlayers: 1,
               maxPlayers: 4,
@@ -789,26 +794,26 @@ describe("validateGameFiles", () => {
                 playerLeft () {} ,
               },
             })`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: "logic.js size can't be more than 1MB",
-        },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: "logic.js size can't be more than 1MB",
+            },
+          ],
+          sdk: name,
+        })
 
-    await expect(
-      validateGameFiles([
-        { path: "media/background.png", size: 1 * 1e6 },
-        validLogicFile,
-        {
-          path: "src/index.html",
-          size: 1 * 1e6,
-          content: `
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
               <!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -819,16 +824,18 @@ describe("validateGameFiles", () => {
                 </head>
                 <body></body>
               </html>`,
-        },
-      ])
-    ).resolves.toEqual({
-      valid: false,
-      errors: [
-        {
-          message: `${name} SDK is imported 2+ times in index.html. If using the ${name} Vite plugin, then remove your SDK import in index.html.`,
-        },
-      ],
-      sdk: name,
-    })
+            },
+          ])
+        ).resolves.toEqual({
+          valid: false,
+          errors: [
+            {
+              message: `${name} SDK is imported 2+ times in index.html. If using the ${name} Vite plugin, then remove your SDK import in index.html.`,
+            },
+          ],
+          sdk: name,
+        })
+      })
+    )
   })
 })

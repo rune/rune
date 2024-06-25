@@ -37,7 +37,7 @@ module.exports = {
         browser: true,
       },
       globals: {
-        Dusk: "readonly", // TODO: this should be part of dusk/recommended
+        Rune: "readonly", // TODO: this should be part of dusk/recommended
       },
     },
     {

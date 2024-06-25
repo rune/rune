@@ -12,7 +12,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rune/rune.git",
+    "url": "git+https://github.com/dusk-gg/dusk.git",
     "directory": "packages/dusk-cli"
   },
   "author": "Rune AI Inc.",
@@ -43,7 +43,7 @@
     "date-fns": "2.29.1",
     "dusk-games-sdk": "^4.19.17",
     "eslint": "7.22.0",
-    "eslint-plugin-rune": "0.2.1",
+    "eslint-plugin-dusk": "^1.0.0",
     "figures": "4.0.1",
     "form-data": "4.0.0",
     "glob": "8.0.3",

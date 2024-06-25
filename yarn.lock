@@ -6622,11 +6622,6 @@ eslint-plugin-react@^7.31.11:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.8"
 
-eslint-plugin-rune@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-rune/-/eslint-plugin-rune-0.2.1.tgz#d72d492825ec2984996a50874174db6bf724369d"
-  integrity sha512-zBIhS+/0H4Le9fG/MndwqW3OGy0pN7MbpritDS491/E3ExTdkaF9xw38f68D+987o3joBgThAg29G7Q5rm/W0g==
-
 eslint-scope@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmjs.org/eslint-scope/-/eslint-scope-5.1.1.tgz"
@@ -11326,24 +11321,6 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
-
-rune-games-sdk@^4.16.33:
-  version "4.16.33"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.16.33.tgz#afb55fb2b29c19b49f30cad3fee17eda769fa9e1"
-  integrity sha512-+f5UCL2Vv6VDVzdXaTeoEeGyCx+SAepJuUBkzOb3CeTAUg1h+I88pDwelEtjBSxvN5QiW78FQI0E0wcCFp3jUg==
-  dependencies:
-    base-64 "1.0.0"
-    core-js "3.31.1"
-    just-clone "6.2.0"
-    mutative "0.7.1"
-    react-charts "3.0.0-beta.57"
-    rune-msgpack "1.0.0"
-    xstate "4.32.1"
-
-rune-games-sdk@^4.19.17:
-  version "4.19.17"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.17.tgz#b7638b5686851f244f8a2d1f65639307a5755d4b"
-  integrity sha512-SKiW/7QBQbpmQMHk/upiJrYLZiTHvjj/5XgIqEOKntVXio0Ic56/oNErmntOzDmIePHCyzgmg7Rea1cosGu1Fg==
 
 rune-msgpack@1.0.0:
   version "1.0.0"

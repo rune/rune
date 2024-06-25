@@ -13,6 +13,8 @@ from Rune to Dusk.
 
 # Manual Conversion
 
+If you've built your game without a Dusk template then follow the next sections to update your project.
+
 ## Module Dependencies
 
 Dusk comes with a set of updated modules. In your `package.json` update the following:

@@ -24,4 +24,4 @@ Provides diagnostics checks for unused CSS & TypeScript compiler errors
 
 ## Learn More
 
-See the [Rune docs](https://developers.rune.ai/docs/quick-start) for more info. You can also ask any questions in the [Rune Discord](https://discord.gg/rune-devs), we're happy to help!
+See the [Rune docs](https://developers.rune.ai/docs/quick-start) for more info. You can also ask any questions in the [Rune Discord](https://discord.gg/dusk-devs), we're happy to help!

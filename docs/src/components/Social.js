@@ -26,7 +26,7 @@ export function Social() {
         />
       </a>
       <a
-        href="https://discord.gg/rune-devs"
+        href="https://discord.gg/dusk-devs"
         target="_blank"
         rel="noreferrer"
         className={styles.socialLink}

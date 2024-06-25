@@ -39,4 +39,4 @@ You can also look at the [Tic Tac Toe](https://github.com/rune/rune-multiplayer-
 
 ### Questions?
 
-We're happy to help! Just write us on the [Rune Discord](https://discord.gg/rune-devs) server.
+We're happy to help! Just write us on the [Rune Discord](https://discord.gg/dusk-devs) server.

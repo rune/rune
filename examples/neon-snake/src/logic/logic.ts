@@ -8,7 +8,7 @@ import { newRound } from "./newRound.ts"
 import { getRandomInitialSection } from "./getRandomInitialSection.ts"
 import { GameState } from "./types.ts"
 
-Rune.initLogic({
+Dusk.initLogic({
   minPlayers: 2,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
@@ -45,7 +45,7 @@ Rune.initLogic({
       game.snakes[playerId].turning = turning
     },
     setReady(_, { game }) {
-      if (game.stage !== "gettingReady") throw Rune.invalidAction()
+      if (game.stage !== "gettingReady") throw Dusk.invalidAction()
       newRound(game)
     },
   },
@@ -72,7 +72,7 @@ Rune.initLogic({
     playerLeft: (playerId, { game }) => {
       const playerIndex = game.players.findIndex((p) => p.playerId === playerId)
 
-      if (!~playerIndex) throw Rune.invalidAction()
+      if (!~playerIndex) throw Dusk.invalidAction()
 
       game.players.splice(playerIndex, 1)
       delete game.snakes[playerId]

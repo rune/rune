@@ -2,16 +2,16 @@
   "name": "rune-interpolators",
   "private": true,
   "version": "0.0.1",
-  "description": "Directory containing Rune interpolators",
+  "description": "Directory containing Dusk interpolators",
   "license": "MIT",
-  "author": "Rune AI Inc.",
+  "author": "Dusk AI Inc.",
   "keywords": [
     "rune",
     "interpolate"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rune/rune.git",
+    "url": "git+https://github.com/dusk-gg/dusk.git",
     "directory": "packages/interpolators"
   },
   "scripts": {

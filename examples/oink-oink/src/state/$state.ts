@@ -1,6 +1,6 @@
 import { GameState } from "../lib/types/GameState"
 import { atom } from "jotai"
-import { Players, PlayerId } from "rune-games-sdk/multiplayer"
+import { Players, PlayerId } from "dusk-games-sdk/multiplayer"
 
 export const $state = atom<{
   ready: boolean

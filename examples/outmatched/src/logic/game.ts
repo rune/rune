@@ -1,5 +1,5 @@
 /* eslint-disable no-constant-condition */
-import type { PlayerId } from "rune-games-sdk/multiplayer"
+import type { PlayerId } from "dusk-games-sdk/multiplayer"
 import {
   areCellsNeighbors,
   getCoordinatesForIndex,

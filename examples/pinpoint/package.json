@@ -44,7 +44,7 @@
     "dev": "npm run dev:client & npm run dev:logic",
     "dev:client": "react-scripts start",
     "dev:logic": "esbuild src/logic.ts --bundle --outfile=public/logic.js --platform=neutral --tsconfig=tsconfig-logic.json --minify --watch",
-    "deploy": "../../scripts/copy-assets.sh pinpoint && yarn build && rune upload build",
+    "deploy": "../../scripts/copy-assets.sh pinpoint && yarn build && dusk upload build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives"
   },
   "eslintConfig": {

@@ -5,7 +5,7 @@ import { Provider } from "jotai"
 import { $state, store } from "./state/state.ts"
 import { playSound } from "./sounds.ts"
 
-Rune.initClient({
+Dusk.initClient({
   onChange: ({ previousGame, game, players, yourPlayerId }) => {
     if (yourPlayerId) {
       const previousPlayer = previousGame.players.find(

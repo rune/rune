@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "deploy": "../../scripts/copy-assets.sh paddle && yarn build && rune upload dist",
+    "deploy": "../../scripts/copy-assets.sh paddle && yarn build && dusk upload dist",
     "preview": "vite preview"
   },
   "dependencies": {

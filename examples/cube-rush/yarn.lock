@@ -907,6 +907,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+dusk-games-sdk@^4.19.17:
+  version "4.19.17"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.17.tgz#a64756d748ef113dca9b4d5acb6981d15cfd86d4"
+  integrity sha512-8hW8OB3KFBnL83atDAoT/yHpSzUZNVf/0pfvx6LbJCS+2SyESPTgV69GVrZ0yf44z7Huw9i+z1e9ANYu4nBUfw==
+
 electron-to-chromium@^1.4.535:
   version "1.4.549"
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.549.tgz"
@@ -1602,11 +1607,6 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
-
-rune-games-sdk@^4.19.17:
-  version "4.19.17"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.17.tgz#b7638b5686851f244f8a2d1f65639307a5755d4b"
-  integrity sha512-SKiW/7QBQbpmQMHk/upiJrYLZiTHvjj/5XgIqEOKntVXio0Ic56/oNErmntOzDmIePHCyzgmg7Rea1cosGu1Fg==
 
 semver@^6.3.1:
   version "6.3.1"

@@ -69,7 +69,7 @@ export function RoundInfo() {
           </Player>
         ))}
         {myPlayer && remainingPlayers.length < 5 && (
-          <Player onClick={() => Rune.showInvitePlayers()}>
+          <Player onClick={() => Dusk.showInvitePlayers()}>
             <AvatarPlaceholder src={invitePlayerImg} />
             <Name>Invite</Name>
           </Player>

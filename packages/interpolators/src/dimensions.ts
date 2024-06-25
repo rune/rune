@@ -19,7 +19,7 @@ export function getPosition<Dimensions extends number | number[]>(
     )
   }
 
-  const delta = Rune.timeSinceLastUpdate() / Rune.msPerUpdate
+  const delta = Dusk.timeSinceLastUpdate() / Dusk.msPerUpdate
 
   if (size !== -1) {
     return (game as number[]).map((curr, index) => {

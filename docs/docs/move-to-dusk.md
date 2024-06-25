@@ -51,3 +51,17 @@ Replace `plugin:rune/recommended` with `plugin:dusk/recommended`
 
 ## Vite Configuration
 
+If you were previously using the Rune Vite plugin then your configuration file will need 
+to be updated to make use of the latest Dusk plugin.
+
+Change the import to the new dependency:
+
+`import dusk from "vite-plugin-dusk"`
+
+and update the plugin list to replace:
+
+`rune({ logicPath: path.resolve("./src/logic.ts") })`
+
+with 
+
+`dusk({ logicPath: path.resolve("./src/logic.ts") })`

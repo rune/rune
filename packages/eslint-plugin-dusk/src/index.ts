@@ -85,6 +85,7 @@ const logicConfig: ESLint.ConfigData = {
     globalThis: "readonly",
     global: "readonly",
     Dusk: "readonly",
+    Rune: "readonly",
     console: "readonly",
   },
   rules: {

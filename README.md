@@ -50,7 +50,7 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 
 Have a question or want to discuss with others how to make an amazing multiplayer game? Join our [Discord server](https://discord.gg/dusk-devs)!
 
-[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/dusk-devs)
+[![Discord Follow](https://dcbadge.vercel.app/api/server/dusk-devs?style=flat)](https://discord.gg/dusk-devs)
 
 ## Contributing
 

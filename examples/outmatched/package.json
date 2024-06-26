@@ -13,7 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.19.17"
+    "dusk-games-sdk": "^4.19.19"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.57.1",

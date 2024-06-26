@@ -597,10 +597,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dusk-games-sdk@^4.19.17:
-  version "4.19.17"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.17.tgz#a64756d748ef113dca9b4d5acb6981d15cfd86d4"
-  integrity sha512-8hW8OB3KFBnL83atDAoT/yHpSzUZNVf/0pfvx6LbJCS+2SyESPTgV69GVrZ0yf44z7Huw9i+z1e9ANYu4nBUfw==
+dusk-games-sdk@^4.19.19:
+  version "4.19.19"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.19.tgz#4a9eb4e59465a565a66d8872fb81c2028c397c9d"
+  integrity sha512-uHY8VD03D6enQWg8aSpTjDTBwk4doGbA2yqNl3QbEHCGRD+KZHwnOpAIAPk9B4M5xfM0ZYFHCr5aGPxbC7sjQA==
 
 emoji-regex@^8.0.0:
   version "8.0.0"

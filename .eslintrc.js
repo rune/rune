@@ -36,9 +36,6 @@ module.exports = {
       env: {
         browser: true,
       },
-      globals: {
-        Rune: "readonly", // TODO: this should be part of dusk/recommended
-      },
     },
     {
       files: ["docs/**/*.js"],

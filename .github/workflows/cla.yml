@@ -31,7 +31,7 @@ jobs:
 
           # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken
           remote-organization-name: dusk-gg
-          remote-repository-name: dusk-games-sdk-cla
+          remote-repository-name: dusk-cla
           lock-pullrequest-aftermerge: false
           branch: main
           path-to-signatures: cla.json

@@ -46,12 +46,29 @@ export function getDetectExternalImportsPlugin(
   function getExternalDeps(skipAllowedDependencies: boolean) {
     const externalDeps: { fileName: string; importedBy: string }[] = []
 
-    logicFileNode.walk((node) => {
+    const nodes: TreeModel.Node<any>[] = []
+
+    //Collect all nodes taking into consideration possible circular dependencies
+    function collectAll(node: TreeModel.Node<any>) {
+      const childCount = node.children.length
+      for (let i = 0; i < childCount; i++) {
+        if (nodes.includes(node.children[i])) {
+          continue
+        }
+        nodes.push(node.children[i])
+
+        collectAll(node.children[i])
+      }
+    }
+
+    collectAll(logicFileNode)
+
+    nodes.forEach((node) => {
       const name = (node.model as Model).fileName
 
       //Not external, ignore it
       if (path.isAbsolute(name)) {
-        return true
+        return
       }
 
       const isInWhitelist =
@@ -59,7 +76,7 @@ export function getDetectExternalImportsPlugin(
         options.ignoredDependencies?.includes(name)
 
       if (skipAllowedDependencies && isInWhitelist) {
-        return true
+        return
       }
 
       externalDeps.push({
@@ -67,7 +84,7 @@ export function getDetectExternalImportsPlugin(
         importedBy: node.parent.model.fileName,
       })
 
-      return true
+      return
     })
 
     return externalDeps

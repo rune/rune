@@ -5,17 +5,9 @@ const child_process = require("child_process")
 const version = process.argv[2]
 
 const examplesDir = path.resolve(__dirname, "../examples")
-const templatesDir = path.resolve(
-  __dirname,
-  "../packages/rune-games-cli/templates"
-)
-const duskTemplatesDir = path.resolve(
-  __dirname,
-  "../packages/dusk-cli/templates"
-)
+const templatesDir = path.resolve(__dirname, "../packages/dusk-cli/templates")
 
-const duskCliDir = path.resolve(__dirname, "../packages/dusk-cli")
-const runeCliDir = path.resolve(__dirname, "../packages/rune-games-cli")
+const cliDir = path.resolve(__dirname, "../packages/dusk-cli")
 
 //These example games also have sdk version inside html
 const gamesWithHtml = {
@@ -46,31 +38,17 @@ const templateGames = fs
     name: dirent.name,
     dir: path.join(templatesDir, dirent.name),
     shouldInstall: false,
-  }))
-
-const duskTemplateGames = fs
-  .readdirSync(duskTemplatesDir, { withFileTypes: true })
-  .filter((dirent) => dirent.isDirectory())
-  .map((dirent) => ({
-    name: dirent.name,
-    dir: path.join(duskTemplatesDir, dirent.name),
-    shouldInstall: false,
     isDusk: true,
   }))
 
-const duskCli = {
+const cli = {
   name: "dusk-cli",
-  dir: duskCliDir,
+  dir: cliDir,
   shouldInstall: false,
   isDusk: true,
 }
 
-const locations = [
-  ...exampleGames,
-  ...templateGames,
-  ...duskTemplateGames,
-  duskCli,
-]
+const locations = [...exampleGames, ...templateGames, cli]
 
 locations.forEach(({ name, dir, shouldInstall, isDusk }) => {
   const packageJsonPath = path.join(dir, "package.json")

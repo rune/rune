@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-dusk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Vite plugin for Dusk SDK",
   "license": "MIT",

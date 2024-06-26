@@ -1,2 +1,2 @@
 export const panoramasUrl =
-  "https://games-production.dusk.gg/pinpoint/panoramas"
+  "https://games-production.rune.ai/pinpoint/panoramas"

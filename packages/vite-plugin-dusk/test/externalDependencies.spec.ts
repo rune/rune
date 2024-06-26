@@ -22,6 +22,22 @@ describe("external dependencies", () => {
     expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
   })
 
+  it("should gracefully handle circular dependencies", async () => {
+    const logger = createLogger()
+
+    const output = await buildFixture("circular", logger)
+
+    expect(logger.error).toHaveBeenCalledWith(
+      expect.stringContaining("math-sum")
+    )
+    const chunks = output.filter(
+      (chunk) => chunk.type === "chunk"
+    ) as OutputChunk[]
+    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
+    expect(logicChunk).toBeTruthy()
+    expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
+  })
+
   it("should detect an deeply nested external dependency", async () => {
     const logger = createLogger()
 

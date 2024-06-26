@@ -2,12 +2,12 @@ import { GameState, Persisted } from "./types/GameState"
 import { findDuplicates } from "./findDuplicates"
 import { highlightDuplicates } from "./highlightDuplicates"
 import { isBoardFilled } from "./isBoardFilled"
-import { GameStateWithPersisted } from "rune-games-sdk"
+import { GameStateWithPersisted } from "dusk-games-sdk"
 
 export function calculateErrorsOrGameOver(
   game: GameStateWithPersisted<GameState, Persisted>
 ) {
-  if (!game.sudoku) throw Rune.invalidAction()
+  if (!game.sudoku) throw Dusk.invalidAction()
 
   const duplicates = findDuplicates(game.sudoku.board)
   highlightDuplicates(game.sudoku.board, duplicates)
@@ -22,7 +22,7 @@ export function calculateErrorsOrGameOver(
       }
     })
 
-    Rune.gameOver({
+    Dusk.gameOver({
       everyone: "WON",
       delayPopUp: true,
     })

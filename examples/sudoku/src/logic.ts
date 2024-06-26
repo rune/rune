@@ -25,7 +25,7 @@ const cornerCells: Coordinate[] = [
   { row: 5, col: 5 },
 ]
 
-Rune.initLogic({
+Dusk.initLogic({
   minPlayers: 1,
   maxPlayers: 6,
   persistPlayerData: true,
@@ -52,7 +52,7 @@ Rune.initLogic({
   }),
   actions: {
     startGame: (difficulty, { game }) => {
-      if (game.sudoku) throw Rune.invalidAction()
+      if (game.sudoku) throw Dusk.invalidAction()
 
       game.sudoku = {
         difficulty,
@@ -60,21 +60,21 @@ Rune.initLogic({
       }
     },
     select: (coordinate, { game, playerId }) => {
-      if (!game.sudoku) throw Rune.invalidAction()
+      if (!game.sudoku) throw Dusk.invalidAction()
       if (!game.sudoku.board.at(cellPointer(coordinate)))
-        throw Rune.invalidAction()
+        throw Dusk.invalidAction()
 
       game.playerState[playerId].selection = coordinate
     },
     setValue: ({ value, clientValueLock }, { game, playerId }) => {
-      if (!game.sudoku) throw Rune.invalidAction()
+      if (!game.sudoku) throw Dusk.invalidAction()
 
       const selection = game.playerState[playerId].selection
       const cell = game.sudoku.board.at(cellPointer(selection))
 
-      if (!cell) throw Rune.invalidAction()
-      if (cell.fixed) throw Rune.invalidAction()
-      if (cell.valueLock !== clientValueLock) throw Rune.invalidAction()
+      if (!cell) throw Dusk.invalidAction()
+      if (cell.fixed) throw Dusk.invalidAction()
+      if (cell.valueLock !== clientValueLock) throw Dusk.invalidAction()
 
       cell.value = value
       cell.valueLock = Math.random()
@@ -85,8 +85,8 @@ Rune.initLogic({
       calculateSuccesses(game, selection)
     },
     showHint: (_, { game }) => {
-      if (!game.sudoku) throw Rune.invalidAction()
-      if (game.hints.length === maxHints) throw Rune.invalidAction()
+      if (!game.sudoku) throw Dusk.invalidAction()
+      if (game.hints.length === maxHints) throw Dusk.invalidAction()
 
       const emptyOrIncorrectCell = getRandomItem(
         game.sudoku.board.filter(
@@ -111,13 +111,13 @@ Rune.initLogic({
       )
     },
     toggleNote: ({ value }, { game, playerId }) => {
-      if (!game.sudoku) throw Rune.invalidAction()
+      if (!game.sudoku) throw Dusk.invalidAction()
 
       const selection = game.playerState[playerId].selection
       const cell = game.sudoku.board.at(cellPointer(selection))
 
-      if (!cell) throw Rune.invalidAction()
-      if (cell.value) throw Rune.invalidAction()
+      if (!cell) throw Dusk.invalidAction()
+      if (cell.value) throw Dusk.invalidAction()
 
       if (value === null) {
         cell.notes = []

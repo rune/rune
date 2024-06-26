@@ -97,7 +97,7 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
   const onConfirmClick = useCallback(() => {
     if (!pendingGuess) return
 
-    Rune.actions.makeGuess(pendingGuess)
+    Dusk.actions.makeGuess(pendingGuess)
 
     setConfetti(mapRef.current?.getPixelFromCoordinate(pendingGuess))
 

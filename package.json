@@ -24,12 +24,11 @@
     "eslint-plugin-prettier": "3.4.1",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-rune": "0.2.2",
+    "eslint-plugin-dusk": "1.0.1",
     "husky": "7.0.2",
     "lerna": "^6.1.0",
     "lint-staged": "12.4.1",
     "prettier": "2.6.2",
-    "rune-games-cli": "7.6.2",
-    "dusk-cli": "7.6.2"
+    "dusk-cli": "7.7.2"
   }
 }

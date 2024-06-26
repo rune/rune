@@ -5,17 +5,9 @@ const child_process = require("child_process")
 const version = process.argv[2]
 
 const examplesDir = path.resolve(__dirname, "../examples")
-const templatesDir = path.resolve(
-  __dirname,
-  "../packages/rune-games-cli/templates"
-)
-const duskTemplatesDir = path.resolve(
-  __dirname,
-  "../packages/dusk-cli/templates"
-)
+const templatesDir = path.resolve(__dirname, "../packages/dusk-cli/templates")
 
-const duskCliDir = path.resolve(__dirname, "../packages/dusk-cli")
-const runeCliDir = path.resolve(__dirname, "../packages/rune-games-cli")
+const cliDir = path.resolve(__dirname, "../packages/dusk-cli")
 
 //These example games also have sdk version inside html
 const gamesWithHtml = {
@@ -48,47 +40,21 @@ const templateGames = fs
     shouldInstall: false,
   }))
 
-const duskTemplateGames = fs
-  .readdirSync(duskTemplatesDir, { withFileTypes: true })
-  .filter((dirent) => dirent.isDirectory())
-  .map((dirent) => ({
-    name: dirent.name,
-    dir: path.join(duskTemplatesDir, dirent.name),
-    shouldInstall: false,
-    isDusk: true,
-  }))
-
-const duskCli = {
+const cli = {
   name: "dusk-cli",
-  dir: duskCliDir,
+  dir: cliDir,
   shouldInstall: false,
-  isDusk: true,
 }
 
-const runeCli = {
-  name: "rune-cli",
-  dir: runeCliDir,
-  shouldInstall: false,
-  isDusk: false,
-}
+const locations = [...exampleGames, ...templateGames, cli]
 
-const locations = [
-  ...exampleGames,
-  ...templateGames,
-  ...duskTemplateGames,
-  duskCli,
-  runeCli,
-]
-
-locations.forEach(({ name, dir, shouldInstall, isDusk }) => {
+locations.forEach(({ name, dir, shouldInstall }) => {
   const packageJsonPath = path.join(dir, "package.json")
 
   if (fs.existsSync(packageJsonPath)) {
     const packageJson = require(packageJsonPath)
 
-    packageJson.dependencies[
-      isDusk ? "dusk-games-sdk" : "rune-games-sdk"
-    ] = `^${version}`
+    packageJson.dependencies["dusk-games-sdk"] = `^${version}`
 
     console.log(`Updating ${path.relative(path.join(__dirname, ".."), dir)}`)
 
@@ -110,8 +76,8 @@ locations.forEach(({ name, dir, shouldInstall, isDusk }) => {
     fs.writeFileSync(
       indexHtmlPath,
       indexHtml.replace(
-        /<script src="https:\/\/cdn.jsdelivr.net\/npm\/rune-games-sdk@.+\/multiplayer-dev.js">/,
-        `<script src="https://cdn.jsdelivr.net/npm/rune-games-sdk@${version}/multiplayer-dev.js">`
+        /<script src="https:\/\/cdn.jsdelivr.net\/npm\/dusk-games-sdk@.+\/multiplayer-dev.js">/,
+        `<script src="https://cdn.jsdelivr.net/npm/dusk-games-sdk@${version}/multiplayer-dev.js">`
       )
     )
   }

@@ -27,7 +27,7 @@ export function DrawLoops({
     g.clear()
 
     const loops =
-      Math.floor((Rune.gameTime() - timerStartedAt) / loopInterval) + 1
+      Math.floor((Dusk.gameTime() - timerStartedAt) / loopInterval) + 1
 
     for (let i = 0; i < loops; i++) {
       const msStart = i * loopInterval
@@ -35,7 +35,7 @@ export function DrawLoops({
       const x = easeOutCubic(
         clamp(
           remap(
-            Rune.gameTime(),
+            Dusk.gameTime(),
             [timerStartedAt + msStart, timerStartedAt + loopDuration + msStart],
             [0, 1],
           ),

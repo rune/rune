@@ -4,7 +4,7 @@ import { interpolatorLatency } from "../src/interpolators/interpolatorLatency"
 
 describe("interpolator", () => {
   it("should not allow to call getPosition before calling update", () => {
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
     } as any
 
@@ -14,7 +14,7 @@ describe("interpolator", () => {
   })
 
   it("should interpolate between the positions when provided with numbers", () => {
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
@@ -51,7 +51,7 @@ describe("interpolator", () => {
   it("should interpolate between the positions when provided with numbers & timeSinceLastUpdate is not 0", () => {
     const instance = interpolatorLatency({ maxSpeed: 5, timeToMaxSpeed: 1000 })
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 50,
       // @ts-ignore
@@ -74,7 +74,7 @@ describe("interpolator", () => {
   it("should interpolate between the positions when provided with arrays", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
@@ -96,7 +96,7 @@ describe("interpolator", () => {
   it("should ignore update calls if _isOnChangeCalledByUpdate is false", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -107,7 +107,7 @@ describe("interpolator", () => {
 
     expect(instance.getPosition()).toEqual(4)
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
       // @ts-ignore
@@ -122,7 +122,7 @@ describe("interpolator", () => {
   it("should not go above maxSpeed", () => {
     const instance = interpolatorLatency({ maxSpeed: 3, timeToMaxSpeed: 200 })
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -159,7 +159,7 @@ describe("interpolator", () => {
       timeToMaxSpeed: 200,
     })
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -186,7 +186,7 @@ describe("interpolator", () => {
   it("should not use acceleration by default", () => {
     const instance = interpolatorLatency({ maxSpeed: 3 })
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,

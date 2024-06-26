@@ -14,7 +14,7 @@ export function useTimerValue({
 
     if (startedAt) {
       const adjustedStartedAt =
-        Date.now() - (Rune.gameTimeInSeconds() - startedAt) * 1000
+        Date.now() - (Dusk.gameTimeInSeconds() - startedAt) * 1000
 
       const tick = () => {
         const newValue =

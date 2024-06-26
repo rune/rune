@@ -23,7 +23,7 @@ jobs:
           cache: "yarn"
       - run: yarn --prefer-offline --frozen-lockfile --non-interactive --ignore-scripts --silent
       - run: yarn build
-      - run: yarn rune --version
+      - run: yarn dusk --version
       - run: yarn test
   test-docs:
     runs-on: ubuntu-latest

@@ -7,74 +7,74 @@ const games = [
     {
         name: "Dungeons of Glee",
         rune: true,
-        links: ["https://app.rune.ai/dev-rRTWDp5D", "https://github.com/kevglass/dungeonsofglee"],
+        links: ["https://app.dusk.gg/dev-rRTWDp5D", "https://github.com/kevglass/dungeonsofglee"],
         description: "Crawl a dungeon with friends!"
     },
     {
         name: "FruitScape",
         rune: true,
-        links: ["https://app.rune.ai/dev-R612gCec", "https://github.com/jallen-dev/fruitscape"],
+        links: ["https://app.dusk.gg/dev-R612gCec", "https://github.com/jallen-dev/fruitscape"],
         description: "They've got fruit you need. Trade to gather the ingredients!"
     },
     {
         name: "Spooky Cookie",
         rune: true,
-        links: ["https://app.rune.ai/dev-5guffVqx", "https://github.com/wialy/react-game-jam-spooky-cookie"],
+        links: ["https://app.dusk.gg/dev-5guffVqx", "https://github.com/wialy/react-game-jam-spooky-cookie"],
         description: "Pac-Man mixed with Bomberman. Outplay your rivals in this race to the treats!"
     },
     {
         name: "Goblin Chess",
         rune: true,
-        links: ["https://app.rune.ai/dev-OVhXwPb9", "https://github.com/kickassCoderz/goblin-chess"],
+        links: ["https://app.dusk.gg/dev-OVhXwPb9", "https://github.com/kickassCoderz/goblin-chess"],
         description: "The ancient game but with a few twists. Destroy your opponent's king to win."
     },
     {
         name: "Tic Tac Toe",
         rune: true,
-        links: ["https://developers.rune.ai/examples/tic-tac-toe/", "https://github.com/rune/rune/tree/staging/examples/tic-tac-toe"],
+        links: ["https://developers.dusk.gg/examples/tic-tac-toe/", "https://github.com/dusk-gg/dusk/tree/staging/examples/tic-tac-toe"],
         description: "The classic three-in-a-row game."
     },
     {
         name: "Paddle",
         rune: true,
-        links: ["https://developers.rune.ai/examples/paddle/",
-            "https://github.com/rune/rune/tree/staging/examples/paddle"],
+        links: ["https://developers.dusk.gg/examples/paddle/",
+            "https://github.com/dusk-gg/dusk/tree/staging/examples/paddle"],
         description: "Serve, rally, score!"
     },
     {
         name: "Sudoku",
         rune: true,
-        links: ["https://developers.rune.ai/examples/sudoku/", "https://github.com/rune/rune/tree/staging/examples/sudoku"],
+        links: ["https://developers.dusk.gg/examples/sudoku/", "https://github.com/dusk-gg/dusk/tree/staging/examples/sudoku"],
         description: "Collaborative version of the classic Sudoku game."
     },
     {
         name: "Neon Snake",
         rune: true,
-        links: ["https://developers.rune.ai/examples/neon-snake/", "https://github.com/rune/rune/tree/staging/examples/neon-snake"],
+        links: ["https://developers.dusk.gg/examples/neon-snake/", "https://github.com/dusk-gg/dusk/tree/staging/examples/neon-snake"],
         description: "A new take on the Zatacka snake game. Plot your path and outlast them all!"
     },
     {
         name: "Cube Rush",
         rune: true,
-        links: ["https://developers.rune.ai/examples/cube-rush/", "https://github.com/rune/rune/tree/staging/examples/cube-rush"],
+        links: ["https://developers.dusk.gg/examples/cube-rush/", "https://github.com/dusk-gg/dusk/tree/staging/examples/cube-rush"],
         description: "Who will race to the finish line first?"
     },
     {
         name: "Outmatched",
         rune: true,
-        links: ["https://developers.rune.ai/examples/outmatched/", "https://github.com/rune/rune/tree/staging/examples/outmatched"],
+        links: ["https://developers.dusk.gg/examples/outmatched/", "https://github.com/dusk-gg/dusk/tree/staging/examples/outmatched"],
         description: "Multiplayer Match-3 game with combos and special moves!"
     },
     {
         name: "Pinpoint",
         rune: true,
-        links: ["https://developers.rune.ai/examples/pinpoint/", "https://github.com/rune/rune/tree/staging/examples/pinpoint"],
+        links: ["https://developers.dusk.gg/examples/pinpoint/", "https://github.com/dusk-gg/dusk/tree/staging/examples/pinpoint"],
         description: "Look around beautiful 360 degree panoramas and guess where you are!"
     },
     {
         name: "OinkOink",
         rune: true,
-        links: ["https://developers.rune.ai/examples/oink-oink/", "https://github.com/rune/rune/tree/staging/examples/oink-oink"],
+        links: ["https://developers.dusk.gg/examples/oink-oink/", "https://github.com/dusk-gg/dusk/tree/staging/examples/oink-oink"],
         description: "Think you know what a sad frog sounds like? Test your impressions!"
     },
     // Beginning of Non-Rune Games

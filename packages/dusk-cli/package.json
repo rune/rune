@@ -1,6 +1,6 @@
 {
   "name": "dusk-cli",
-  "version": "7.6.2",
+  "version": "7.7.2",
   "description": "Easy way to test your HTML5 game before releasing it on Dusk.",
   "license": "MIT",
   "keywords": [
@@ -12,7 +12,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rune/rune.git",
+    "url": "git+https://github.com/dusk-gg/dusk.git",
     "directory": "packages/dusk-cli"
   },
   "author": "Rune AI Inc.",
@@ -29,7 +29,8 @@
     "prepublishOnly": "yarn build && yarn build:cjs",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
-    "test": "jest",
+    "test": "JEST_CHECK_TYPES=1 jest",
+    "test:watch": "jest --watch",
     "gql-gen-local": "SCHEMA_PATH=http://localhost:3000/dev/graphql gql-gen"
   },
   "dependencies": {
@@ -43,7 +44,7 @@
     "date-fns": "2.29.1",
     "dusk-games-sdk": "^4.19.17",
     "eslint": "7.22.0",
-    "eslint-plugin-rune": "0.2.1",
+    "eslint-plugin-dusk": "^1.0.1",
     "figures": "4.0.1",
     "form-data": "4.0.0",
     "glob": "8.0.3",
@@ -51,6 +52,7 @@
     "ink": "3.2.0",
     "ink-spinner": "4.0.3",
     "ink-text-input": "4.0.3",
+    "jscodeshift": "^0.16.0",
     "lodash": "4.17.21",
     "meow": "10.1.2",
     "mime-types": "2.1.35",
@@ -69,6 +71,7 @@
     "@types/apollo-upload-client": "17.0.1",
     "@types/eslint": "^8.4.10",
     "@types/glob": "7.2.0",
+    "@types/jscodeshift": "^0.11.11",
     "@types/lodash": "4.14.191",
     "@types/mime-types": "2.1.1",
     "@types/node": "17.0.25",
@@ -79,5 +82,13 @@
     "ts-jest": "29.0.3",
     "ts-node": "10.9.1",
     "typescript": "4.4.2"
-  }
+  },
+  "files": [
+    "bin",
+    "cjs",
+    "dist",
+    "templates",
+    "LICENSE",
+    "README.md"
+  ]
 }

@@ -133,6 +133,18 @@ Yes! You can upload as many games as you like to Dusk.
 
 Yes, you're always free to remove your game whenever you'd like. It's your game.
 
+### Why did Dusk change name from Rune?
+
+We want to communicate to the world that we'll now focus 100% on building an amazing multiplayer games platform!
+
+### Why the name Dusk?
+
+Our community of players love to come online in the evening to play with their friends. They jump into a voice room on Dusk, talking and sharing laughs as they explore new games together!
+
+Many of the game devs building Dusk games are hobbyists, who love to to pursue their passion and build their dream game after work/school.
+
+Both sides of our platform come alive in the evening, and the name Dusk captures this perfectly.
+
 ### How do I update my game to use the Dusk SDK instead of the Rune SDK? {#how-to-convert-to-dusk}
 
 You can follow [this guide](/docs/move-to-dusk), which has a tool that automatically converts your game to use the Dusk SDK.

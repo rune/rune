@@ -38,27 +38,23 @@ const templateGames = fs
     name: dirent.name,
     dir: path.join(templatesDir, dirent.name),
     shouldInstall: false,
-    isDusk: true,
   }))
 
 const cli = {
   name: "dusk-cli",
   dir: cliDir,
   shouldInstall: false,
-  isDusk: true,
 }
 
 const locations = [...exampleGames, ...templateGames, cli]
 
-locations.forEach(({ name, dir, shouldInstall, isDusk }) => {
+locations.forEach(({ name, dir, shouldInstall }) => {
   const packageJsonPath = path.join(dir, "package.json")
 
   if (fs.existsSync(packageJsonPath)) {
     const packageJson = require(packageJsonPath)
 
-    packageJson.dependencies[
-      isDusk ? "dusk-games-sdk" : "rune-games-sdk"
-    ] = `^${version}`
+    packageJson.dependencies["dusk-games-sdk"] = `^${version}`
 
     console.log(`Updating ${path.relative(path.join(__dirname, ".."), dir)}`)
 
@@ -80,7 +76,7 @@ locations.forEach(({ name, dir, shouldInstall, isDusk }) => {
     fs.writeFileSync(
       indexHtmlPath,
       indexHtml.replace(
-        /<script src="https:\/\/cdn.jsdelivr.net\/npm\/rune-games-sdk@.+\/multiplayer-dev.js">/,
+        /<script src="https:\/\/cdn.jsdelivr.net\/npm\/dusk-games-sdk@.+\/multiplayer-dev.js">/,
         `<script src="https://cdn.jsdelivr.net/npm/dusk-games-sdk@${version}/multiplayer-dev.js">`
       )
     )

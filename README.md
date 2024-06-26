@@ -1,10 +1,8 @@
-<!--
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="docs/static/img/readme-hero-dark.png" >
 <source media="(prefers-color-scheme: light)" srcset="docs/static/img/readme-hero-light.png" >
 <img src="../docs/static/img/open-source-grant-dark.png" alt="An intro image showing Dusk logo with the text 'multiplayer web games'." >
 </picture>
--->
 
 <p align="center">
   <a href="https://developers.dusk.gg">Docs</a> · <a href="https://discord.gg/dusk-devs">Discord</a> · <a href="https://developers.dusk.gg/faq">FAQ</a> · <a href="https://developers.dusk.gg/blog">Blog</a> · <a href="https://developers.dusk.gg/docs/examples">Examples</a> 

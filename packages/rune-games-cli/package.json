@@ -55,7 +55,7 @@
     "mime-types": "2.1.35",
     "node-html-parser": "5.2.0",
     "react": "17.0.2",
-    "rune-games-sdk": "^4.19.17",
+    "rune-games-sdk": "^4.19.18",
     "semver": "7.3.7"
   },
   "devDependencies": {

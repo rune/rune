@@ -6288,10 +6288,10 @@ dusk-games-sdk@^4.16.33:
     rune-msgpack "1.0.0"
     xstate "4.32.1"
 
-dusk-games-sdk@^4.19.15:
-  version "4.19.15"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.15.tgz#3ee9f442fe75214137745ed263387e7c437a6dd0"
-  integrity sha512-G4MiIeKlCcHv7MaxSpYZ4Ac/J5g8WmtEMJfUcM4538DKcp4idq0uzAY5EVGTNzICq8aPZ9UW2kwc8ixnJuJkKg==
+dusk-games-sdk@^4.19.17:
+  version "4.19.17"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.17.tgz#a64756d748ef113dca9b4d5acb6981d15cfd86d4"
+  integrity sha512-8hW8OB3KFBnL83atDAoT/yHpSzUZNVf/0pfvx6LbJCS+2SyESPTgV69GVrZ0yf44z7Huw9i+z1e9ANYu4nBUfw==
 
 eastasianwidth@^0.2.0:
   version "0.2.0"
@@ -11340,10 +11340,10 @@ rune-games-sdk@^4.16.33:
     rune-msgpack "1.0.0"
     xstate "4.32.1"
 
-rune-games-sdk@^4.19.15:
-  version "4.19.15"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.15.tgz#e3463f35b8d1c08875a4cb2b6f35ac7fb9b60977"
-  integrity sha512-17fiJMDz7DYCsBKoUfzVjv/gdbN/qiv5wlR7R5ETu06JVAJHrXX7KPpC6a9Sz0yHtCZAuG2AQI2F8lnF8tcH/g==
+rune-games-sdk@^4.19.17:
+  version "4.19.17"
+  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.17.tgz#b7638b5686851f244f8a2d1f65639307a5755d4b"
+  integrity sha512-SKiW/7QBQbpmQMHk/upiJrYLZiTHvjj/5XgIqEOKntVXio0Ic56/oNErmntOzDmIePHCyzgmg7Rea1cosGu1Fg==
 
 rune-msgpack@1.0.0:
   version "1.0.0"

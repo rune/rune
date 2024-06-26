@@ -16,33 +16,39 @@ import { VersionCheckGate } from "./VersionCheckGate.js"
 export function App() {
   const { command, args, commandInvalid, flags } = cliCommand()
 
+  const text =
+    "🥳 Rune is now Dusk! Please switch to dusk-cli. `npx dusk-cli@latest`."
+
   if (commandInvalid) {
     return <Text color="red">Invalid command `{command}`</Text>
   }
 
   return (
-    <VersionCheckGate>
-      {cli.flags.version ? (
-        <Text>{packageJson.version}</Text>
-      ) : !command || command === "help" ? (
-        <Text>{cli.help}</Text>
-      ) : command === "logout" ? (
-        <Logout />
-      ) : command === "create" ? (
-        <Create args={args} />
-      ) : (
-        <LoginGate>
-          {command === "list" ? (
-            <List />
-          ) : command === "upload" ? (
-            <Upload flags={flags} />
-          ) : command === "update-info" ? (
-            <Update args={args} />
-          ) : command === "update-members" ? (
-            <UpdateMembers />
-          ) : null}
-        </LoginGate>
-      )}
-    </VersionCheckGate>
+    <>
+      <Text color="green">{text}</Text>
+      <VersionCheckGate>
+        {cli.flags.version ? (
+          <Text>{packageJson.version}</Text>
+        ) : !command || command === "help" ? (
+          <Text>{cli.help}</Text>
+        ) : command === "logout" ? (
+          <Logout />
+        ) : command === "create" ? (
+          <Create args={args} />
+        ) : (
+          <LoginGate>
+            {command === "list" ? (
+              <List />
+            ) : command === "upload" ? (
+              <Upload flags={flags} />
+            ) : command === "update-info" ? (
+              <Update args={args} />
+            ) : command === "update-members" ? (
+              <UpdateMembers />
+            ) : null}
+          </LoginGate>
+        )}
+      </VersionCheckGate>
+    </>
   )
 }

@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-dusk",
-  "version": "0.3.6",
+  "version": "1.0.1",
   "type": "module",
   "description": "Vite plugin for Dusk SDK",
   "license": "MIT",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rune/rune.git",
+    "url": "git+https://github.com/dusk-gg/dusk.git",
     "directory": "packages/vite-plugin-dusk"
   },
   "main": "./dist/index.js",

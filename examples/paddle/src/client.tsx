@@ -17,7 +17,7 @@ import {
   SCORE_DURATION,
   setupCanvas,
 } from "./render"
-import { Interpolator, InterpolatorLatency, Players } from "rune-games-sdk"
+import { Interpolator, InterpolatorLatency, Players } from "dusk-games-sdk"
 import { initControls } from "./controls"
 import { playSound } from "./playSound.ts"
 
@@ -26,11 +26,11 @@ import "./roundRectPolyfill.js"
 // Interpolate between updates to support variable FPS
 let playerPaddleInterpolator:
   | Interpolator<number>
-  | InterpolatorLatency<number> = Rune.interpolator<number>()
-const ballInterpolator = Rune.interpolator<[number, number]>()
+  | InterpolatorLatency<number> = Dusk.interpolator<number>()
+const ballInterpolator = Dusk.interpolator<[number, number]>()
 
 // Prevent paddle from teleporting around when receiving action from the past
-const opponentPaddleInterpolator = Rune.interpolatorLatency<number>({
+const opponentPaddleInterpolator = Dusk.interpolatorLatency<number>({
   maxSpeed: PADDLE_SPEED + 1,
   timeToMaxSpeed: 200,
 })
@@ -55,7 +55,7 @@ let hasMoved = false
 window.onload = function () {
   document.body.appendChild(canvas)
 
-  Rune.initClient({
+  Dusk.initClient({
     onChange: (params) => {
       game = params.game
 
@@ -75,7 +75,7 @@ window.onload = function () {
 
         if (!yourPlayerId) {
           // In case client is a spectator, use latency interpolator for both paddles
-          playerPaddleInterpolator = Rune.interpolatorLatency<number>({
+          playerPaddleInterpolator = Dusk.interpolatorLatency<number>({
             maxSpeed: PADDLE_SPEED + 1,
           })
         }

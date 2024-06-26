@@ -5,7 +5,7 @@ export function Social() {
   return (
     <>
       <a
-        href="https://github.com/rune/rune"
+        href="https://github.com/dusk-gg/dusk"
         target="_blank"
         rel="noreferrer"
         className={styles.socialLink}

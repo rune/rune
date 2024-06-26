@@ -1,4 +1,4 @@
-import type { RuneClient, PlayerId } from "rune-games-sdk/multiplayer"
+import type { DuskClient, PlayerId } from "dusk-games-sdk/multiplayer"
 
 export type Tile = number
 export type Cells = Tile[]
@@ -45,5 +45,5 @@ export type GameActions = {
 }
 
 declare global {
-  const Rune: RuneClient<GameState, GameActions>
+  const Dusk: DuskClient<GameState, GameActions>
 }

@@ -4,7 +4,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:svelte/recommended",
-    "plugin:rune/recommended",
+    "plugin:dusk/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {

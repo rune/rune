@@ -4,11 +4,11 @@ sidebar_position: 61
 
 # Real-Time Games
 
-Rune synchronizes clocks across clients + server to easily add time-based game logic. You can get the synchronized time using `Rune.gameTime()` and make fast-paced games with an `update()` loop running many times pr. second.
+Dusk synchronizes clocks across clients + server to easily add time-based game logic. You can get the synchronized time using `Dusk.gameTime()` and make fast-paced games with an `update()` loop running many times pr. second.
 
 ## Game Time {#game-time}
 
-You can use `Rune.gameTime()` inside your game, which returns the milliseconds that have passed since the start of the game. By default, Rune provides time precision of a second, which should work well for most casual game purposes.
+You can use `Dusk.gameTime()` inside your game, which returns the milliseconds that have passed since the start of the game. By default, Dusk provides time precision of a second, which should work well for most casual game purposes.
 
 For instance, this could be used to track how long it took for user to make a guess:
 
@@ -23,7 +23,7 @@ function setNewQuestionAndAnswer(game) {
   // ...
 }
 
-Rune.initLogic({
+Dusk.initLogic({
   setup: (allPlayerIds) => {
     return {
       scores: Object.fromEntries(allPlayerIds.map((id) => [id, 0])),
@@ -36,14 +36,14 @@ Rune.initLogic({
     guess: ({ answer }, { game, playerId }) => {
       if (answer === game.correctAnswer) {
         // Increment score based on time
-        const timeTaken = Rune.gameTime() - roundStartAt
+        const timeTaken = Dusk.gameTime() - roundStartAt
 
         scores[playerId] += max(30 - timeTaken, 0)
       }
 
       // Start a new round once everyone has answered
       if (allPlayersDone(game)) {
-        roundStartAt = Rune.gameTime()
+        roundStartAt = Dusk.gameTime()
         setNewQuestionAndAnswer(game)
       }
     },
@@ -59,12 +59,12 @@ You can provide an `update` function inside your `logic.js` file to run game log
 ```javascript
 // logic.js
 
-Rune.initLogic({
+Dusk.initLogic({
   // ... (code from previous example)
   update: ({ game }) => {
     // Check if 30 seconds has passed, then switch to another question
-    if (Rune.gameTime() - game.roundStartAt > 30) {
-      roundStartAt = Rune.gameTime()
+    if (Dusk.gameTime() - game.roundStartAt > 30) {
+      roundStartAt = Dusk.gameTime()
       setNewQuestionAndAnswer(game)
     }
   }
@@ -72,10 +72,10 @@ Rune.initLogic({
 
 ```
 
-By default, the `update` function runs every second. This works well for most party games and makes your game run smoothly and efficiently on almost any device. However, some game will need to run the update function much more frequently than once pr. second. A game like Paddle needs to update the position of the ball and the players' paddles many times per second. The game can specify this by providing `updatesPerSecond` to `Rune.initLogic()`. In the following example, the `update` function will be called 30 times per second on all clients:
+By default, the `update` function runs every second. This works well for most party games and makes your game run smoothly and efficiently on almost any device. However, some game will need to run the update function much more frequently than once pr. second. A game like Paddle needs to update the position of the ball and the players' paddles many times per second. The game can specify this by providing `updatesPerSecond` to `Dusk.initLogic()`. In the following example, the `update` function will be called 30 times per second on all clients:
 
 ```javascript
-Rune.initLogic({
+Dusk.initLogic({
   update: ({ game }) => {
     game.ballPosition += game.ballSpeed
     // ... (remaining game logic)
@@ -84,7 +84,7 @@ Rune.initLogic({
 })
 ```
 
-The `update` function is run in a synchronized way across all clients and the server. Only actions are sent to the server, which makes Rune real-time games very bandwidth efficient so that they can work even on mobile devices with limited bandwidth. Even with our optimizations, your game might still experience stuttering due to latency between players or varying frame rates across devices. Rune helps you [reduce this stuttering through interpolators](reducing-stutter.md).
+The `update` function is run in a synchronized way across all clients and the server. Only actions are sent to the server, which makes Dusk real-time games very bandwidth efficient so that they can work even on mobile devices with limited bandwidth. Even with our optimizations, your game might still experience stuttering due to latency between players or varying frame rates across devices. Dusk helps you [reduce this stuttering through interpolators](reducing-stutter.md).
 
 ## The `timeSync` Event {#the-timesync-event}
 
@@ -95,7 +95,7 @@ Let's consider a game with the following game logic:
 ```javascript
 // logic.js
 
-Rune.initLogic({
+Dusk.initLogic({
   setup() {
     return {
       clickedAt: 0,
@@ -103,7 +103,7 @@ Rune.initLogic({
   },
   actions: {
     click(_, { game }) {
-      game.clickedAt = Rune.gameTime();
+      game.clickedAt = Dusk.gameTime();
     },
   },
 })
@@ -119,5 +119,5 @@ Player A's `onChange` function will now be called with `timeSync` event to recon
 
 ## Further Reading {#further-reading}
 
-- [See how the Pinpoint example game uses time](https://github.com/rune/rune/blob/staging/examples/pinpoint/src/logic.ts)
+- [See how the Pinpoint example game uses time](https://github.com/dusk-gg/dusk/blob/staging/examples/pinpoint/src/logic.ts)
 - [See how to reduce stutters in fast-paced games](reducing-stutter.md)

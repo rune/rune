@@ -6,10 +6,13 @@ module.exports = {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
   transform: {
-    "^.+\\.[tj]sx?$": [
+    "^.+\\.tsx?$": [
       "ts-jest",
       {
         useESM: true,
+        diagnostics: {
+          warnOnly: !(process.env.JEST_CHECK_TYPES === "1"),
+        }
       },
     ],
   },

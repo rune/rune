@@ -6,8 +6,8 @@ export function newTurn(game: GameState) {
     animal: getRandomItem(game.animals),
     emotion: getRandomItem(game.emotions),
     stage: "countdown",
-    timerStartedAt: Rune.gameTimeInSeconds(),
-    latestActingStartedAt: Rune.gameTimeInSeconds(),
+    timerStartedAt: Dusk.gameTimeInSeconds(),
+    latestActingStartedAt: Dusk.gameTimeInSeconds(),
     showSkipGuessButton: false,
   }
 }

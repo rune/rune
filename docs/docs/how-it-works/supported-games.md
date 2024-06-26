@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Supported Games
 
-You can make any game that follows the [overall game guidelines](how-it-works/syncing-game-state.md#restrictions) and [server-side logic](how-it-works/server-side-logic.md) guidelines. Rune takes care of netcode, servers, voice chat, matchmaking, and much more. You just focus on your game.
+You can make any game that follows the [overall game guidelines](how-it-works/syncing-game-state.md#restrictions) and [server-side logic](how-it-works/server-side-logic.md) guidelines. Dusk takes care of netcode, servers, voice chat, matchmaking, and much more. You just focus on your game.
 
 ## Examples of Supported Games {#examples-of-supported-games}
 
@@ -19,7 +19,7 @@ You can make any game that follows the [overall game guidelines](how-it-works/sy
 - Cookie Clicker, Egg Inc, Tap Titans, and other idle games
 - Snake, Bomberman, Pac-Man, and other fast-paced arcade games
 
-These are just some examples to give you an idea. Pretty much any multiplayer game is possible with Rune!
+These are just some examples to give you an idea. Pretty much any multiplayer game is possible with Dusk!
 
 ## Roadmap
 

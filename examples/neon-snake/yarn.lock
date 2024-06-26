@@ -2146,6 +2146,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+dusk-games-sdk@^4.19.17:
+  version "4.19.17"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.17.tgz#a64756d748ef113dca9b4d5acb6981d15cfd86d4"
+  integrity sha512-8hW8OB3KFBnL83atDAoT/yHpSzUZNVf/0pfvx6LbJCS+2SyESPTgV69GVrZ0yf44z7Huw9i+z1e9ANYu4nBUfw==
+
 earcut@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/earcut/-/earcut-2.2.4.tgz#6d02fd4d68160c114825d06890a92ecaae60343a"
@@ -2213,6 +2218,11 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==
 
+eslint-plugin-dusk@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-dusk/-/eslint-plugin-dusk-1.0.1.tgz#4a48106004ea2140cbd28f2826798b4670fdbffd"
+  integrity sha512-GgOsfosNfv95U+QcpbiehCzyVEfVC/h4mDGuOzy1J6FciryVuWqR5iX/yErxeaAOK0fGtuQn8wUloDaaLg9tTQ==
+
 eslint-plugin-react-hooks@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.6.0.tgz#4c3e697ad95b77e93f8646aaa1630c1ba607edd3"
@@ -2222,11 +2232,6 @@ eslint-plugin-react-refresh@^0.3.4:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-refresh/-/eslint-plugin-react-refresh-0.3.5.tgz#0121e3f05f940250d3544bfaeff52e1c6adf4117"
   integrity sha512-61qNIsc7fo9Pp/mju0J83kzvLm0Bsayu7OQSLEoJxLDCBjIIyb87bkzufoOvdDxLkSlMfkF7UxomC4+eztUBSA==
-
-eslint-plugin-rune@^0.1.9:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-rune/-/eslint-plugin-rune-0.1.11.tgz#63b17a4092b7daf42581889705369c3b729de8db"
-  integrity sha512-JojMb0sgwT+BuduQVPE6/VOMW5qO3tfh3lawgmzNR2BbRyhi+LDIqM1vdKP0IYwEm0WaIAtSLteYpXwLJ08MfQ==
 
 eslint-scope@^5.1.1:
   version "5.1.1"
@@ -3147,11 +3152,6 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.19.17:
-  version "4.19.17"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.17.tgz#b7638b5686851f244f8a2d1f65639307a5755d4b"
-  integrity sha512-SKiW/7QBQbpmQMHk/upiJrYLZiTHvjj/5XgIqEOKntVXio0Ic56/oNErmntOzDmIePHCyzgmg7Rea1cosGu1Fg==
-
 scheduler@^0.23.0:
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
@@ -3460,22 +3460,22 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.4.0.tgz#cdada8bec61e15865f05d097c5f4fd30e94dc128"
   integrity sha512-ocyWc3bAHBB/guyqJQVI5o4BZkPhznPYUG2ea80Gond/BgNWpap8TOmLSeeQG7bnh2KMISxskdADG59j7zruhw==
 
+vite-plugin-dusk@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-dusk/-/vite-plugin-dusk-1.0.0.tgz#3310f6844447583e2c90e1b388a0db71de2484b5"
+  integrity sha512-r2mt5BcmuZ9eWt9C6gTNXjPRSh3EhnglJGF4KD3YkenHuD+Ul9mVSAlTTcEXauiPBieC6DQp1MjlGzFo6yh67w==
+  dependencies:
+    es-module-lexer "^1.4.2"
+    okie "^1.0.1"
+    terser "^5.22.0"
+    tree-model "^1.0.7"
+
 vite-plugin-qrcode@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/vite-plugin-qrcode/-/vite-plugin-qrcode-0.2.2.tgz#4bc3dce9bbe11dcb1ed5d66286a532f2e2041c81"
   integrity sha512-FvFOz+gb4Xv4KU8QJK1daIFmMnwBQjsU0g006nufIpaOdwAZLfY5uOimtlHNrrOTmbev0ZQ8lm68iaz4ZEQFdw==
   dependencies:
     qrcode-terminal "^0.12.0"
-
-vite-plugin-rune@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/vite-plugin-rune/-/vite-plugin-rune-0.3.5.tgz#86e87e31bf54bee68ddda6ba6d2525c0ae8eabf3"
-  integrity sha512-BzxMb9iM2rvAEsmAwi3ZFkkvQc7i559KC8W9oXHxvAg/lWGSyttwtuaA0PkyWNEPKrZRuWyZFlJDdvweOTxG9w==
-  dependencies:
-    es-module-lexer "^1.4.2"
-    okie "^1.0.1"
-    terser "^5.22.0"
-    tree-model "^1.0.7"
 
 vite@^5.2.11:
   version "5.2.11"

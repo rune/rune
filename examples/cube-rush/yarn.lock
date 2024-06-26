@@ -907,6 +907,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+dusk-games-sdk@^4.19.17:
+  version "4.19.17"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.17.tgz#a64756d748ef113dca9b4d5acb6981d15cfd86d4"
+  integrity sha512-8hW8OB3KFBnL83atDAoT/yHpSzUZNVf/0pfvx6LbJCS+2SyESPTgV69GVrZ0yf44z7Huw9i+z1e9ANYu4nBUfw==
+
 electron-to-chromium@^1.4.535:
   version "1.4.549"
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.549.tgz"
@@ -969,10 +974,10 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz"
   integrity sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==
 
-eslint-plugin-rune@^0.1.9:
-  version "0.1.11"
-  resolved "https://registry.npmjs.org/eslint-plugin-rune/-/eslint-plugin-rune-0.1.11.tgz"
-  integrity sha512-JojMb0sgwT+BuduQVPE6/VOMW5qO3tfh3lawgmzNR2BbRyhi+LDIqM1vdKP0IYwEm0WaIAtSLteYpXwLJ08MfQ==
+eslint-plugin-dusk@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-dusk/-/eslint-plugin-dusk-1.0.0.tgz#1142bd57dc8c1987322e7207652698219ef0c1ba"
+  integrity sha512-mcvoQNs7xcJrrx/XR72BNl6m+1YtHuZqjuA3AteF1OwZQYT9/Z+rlYW3X7R+5BZ84LhQDMcaA9RsnYrVnPlOew==
 
 eslint-scope@^5.1.1:
   version "5.1.1"
@@ -1603,11 +1608,6 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-games-sdk@^4.19.17:
-  version "4.19.17"
-  resolved "https://registry.yarnpkg.com/rune-games-sdk/-/rune-games-sdk-4.19.17.tgz#b7638b5686851f244f8a2d1f65639307a5755d4b"
-  integrity sha512-SKiW/7QBQbpmQMHk/upiJrYLZiTHvjj/5XgIqEOKntVXio0Ic56/oNErmntOzDmIePHCyzgmg7Rea1cosGu1Fg==
-
 semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz"
@@ -1824,22 +1824,22 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.npmjs.org/v8-compile-cache/-/v8-compile-cache-2.4.0.tgz"
   integrity sha512-ocyWc3bAHBB/guyqJQVI5o4BZkPhznPYUG2ea80Gond/BgNWpap8TOmLSeeQG7bnh2KMISxskdADG59j7zruhw==
 
+vite-plugin-dusk@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-dusk/-/vite-plugin-dusk-1.0.0.tgz#3310f6844447583e2c90e1b388a0db71de2484b5"
+  integrity sha512-r2mt5BcmuZ9eWt9C6gTNXjPRSh3EhnglJGF4KD3YkenHuD+Ul9mVSAlTTcEXauiPBieC6DQp1MjlGzFo6yh67w==
+  dependencies:
+    es-module-lexer "^1.4.2"
+    okie "^1.0.1"
+    terser "^5.22.0"
+    tree-model "^1.0.7"
+
 vite-plugin-qrcode@^0.2.2:
   version "0.2.2"
   resolved "https://registry.npmjs.org/vite-plugin-qrcode/-/vite-plugin-qrcode-0.2.2.tgz"
   integrity sha512-FvFOz+gb4Xv4KU8QJK1daIFmMnwBQjsU0g006nufIpaOdwAZLfY5uOimtlHNrrOTmbev0ZQ8lm68iaz4ZEQFdw==
   dependencies:
     qrcode-terminal "^0.12.0"
-
-vite-plugin-rune@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/vite-plugin-rune/-/vite-plugin-rune-0.3.5.tgz#86e87e31bf54bee68ddda6ba6d2525c0ae8eabf3"
-  integrity sha512-BzxMb9iM2rvAEsmAwi3ZFkkvQc7i559KC8W9oXHxvAg/lWGSyttwtuaA0PkyWNEPKrZRuWyZFlJDdvweOTxG9w==
-  dependencies:
-    es-module-lexer "^1.4.2"
-    okie "^1.0.1"
-    terser "^5.22.0"
-    tree-model "^1.0.7"
 
 vite@^5.2.11:
   version "5.2.11"

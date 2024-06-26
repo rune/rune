@@ -1,17 +1,17 @@
 {
-  "name": "rune-interpolators",
+  "name": "dusk-interpolators",
   "private": true,
   "version": "0.0.1",
-  "description": "Directory containing Rune interpolators",
+  "description": "Directory containing Dusk interpolators",
   "license": "MIT",
-  "author": "Rune AI Inc.",
+  "author": "Dusk.",
   "keywords": [
-    "rune",
+    "dusk",
     "interpolate"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rune/rune.git",
+    "url": "git+https://github.com/dusk-gg/dusk.git",
     "directory": "packages/interpolators"
   },
   "scripts": {
@@ -28,6 +28,6 @@
     "typescript": "5.2.2"
   },
   "peerDependencies": {
-    "rune-games-sdk": "^4.16.0"
+    "dusk-games-sdk": "^4.16.0"
   }
 }

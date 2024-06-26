@@ -136,6 +136,10 @@ Yes, you're always free to remove your game whenever you'd like. It's your game.
 ### How do I update my game to use the Dusk SDK instead of the Rune SDK? {#how-to-convert-to-dusk}
 
 You can follow [this guide](/docs/move-to-dusk), which has a tool that automatically converts your game to use the Dusk SDK.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4ec89e0 (Update the FAQ questions for moving to dusk based on review)
 <br />
 <br />
 

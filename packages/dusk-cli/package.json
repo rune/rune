@@ -4,10 +4,17 @@
   "description": "Easy way to test your HTML5 game before releasing it on Dusk.",
   "license": "MIT",
   "keywords": [
-    "HTML5",
+    "html5",
     "game",
     "javascript",
-    "typescript"
+    "typescript",
+    "gamedev",
+    "multiplayer",
+    "networking",
+    "react",
+    "threejs",
+    "vue",
+    "svelte"
   ],
   "type": "module",
   "repository": {

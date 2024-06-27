@@ -79,7 +79,7 @@ export async function validateGameFilesWithEval(
   const logicJs = findShortestPathFileThatEndsWith(files, "logic.js")
 
   //Remove export { ... } from logic.js
-  const logicWithoutExports = logicJs?.content?.replace(/export {[^}]*}/, "")
+  const logicWithoutExports = logicJs?.content?.replace(/export {[^}]*}/gm, "")
 
   const gameConfig = logicJs
     ? eval(

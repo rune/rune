@@ -18,7 +18,7 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "dusk-games-sdk": "^4.19.17",
+    "dusk-games-sdk": "^4.20.0",
     "styled-components": "^6.0.8"
   },
   "devDependencies": {

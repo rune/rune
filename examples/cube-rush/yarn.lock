@@ -907,10 +907,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dusk-games-sdk@^4.19.17:
-  version "4.19.17"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.19.17.tgz#a64756d748ef113dca9b4d5acb6981d15cfd86d4"
-  integrity sha512-8hW8OB3KFBnL83atDAoT/yHpSzUZNVf/0pfvx6LbJCS+2SyESPTgV69GVrZ0yf44z7Huw9i+z1e9ANYu4nBUfw==
+dusk-games-sdk@^4.20.0:
+  version "4.20.0"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.20.0.tgz#17c6531294952d89a03fcaf2a6e63a3d43b9e6e6"
+  integrity sha512-8tTCILzqIeWVmQ1eJVzuYE2kJCboI8/OVr0k2+i8nzjA0n+HU3meP1NoZiMf8/LDayIeP+cxBhF+RbAF8OUGzQ==
 
 electron-to-chromium@^1.4.535:
   version "1.4.549"

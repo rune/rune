@@ -78,13 +78,16 @@ export async function validateGameFilesWithEval(
 ) {
   const logicJs = findShortestPathFileThatEndsWith(files, "logic.js")
 
+  //Remove export { ... } from logic.js
+  const logicWithoutExports = logicJs?.content?.replace(/export {[^}]*}/gm, "")
+
   const gameConfig = logicJs
     ? eval(
         `
           //Prevent Math precision from being modified
           globalThis.Math.__SDK_PRECISION_SET__ = true
           ${logicRunner}
-          ${logicJs!.content}
+          ${logicWithoutExports}
           Rune.gameConfig
         `
       )

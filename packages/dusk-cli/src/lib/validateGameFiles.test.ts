@@ -48,6 +48,59 @@ describe("validateGameFiles", () => {
         await expect(
           validateGameFiles([
             { path: "media/background.png", size: 1 * 1e6 },
+            {
+              path: "src/logic.js",
+              size: 1 * 1e6,
+              // language=JavaScript
+              content: `
+            ${name}.initLogic({
+              minPlayers: 1,
+              maxPlayers: 4,
+              setup: () => {
+                return {}
+              },
+              actions: {},
+              events: {
+                playerJoined: () => {},
+                playerLeft () {},
+              },
+            })
+            
+            const a = 1;
+            const b = 2;
+            const c = 3;
+            
+              export {
+                a,
+                b,
+                c
+              }
+              `,
+            },
+            {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.jsdelivr.net/npm/${packageName}@4/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+            },
+          ])
+        ).resolves.toEqual({
+          valid: true,
+          errors: [],
+          sdk: name,
+        })
+
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
               path: "src/index.html",

@@ -8,7 +8,7 @@ Rune is changing name to Dusk communicates to the world that we'll now focus 100
 
 # Approach 1 - Automated Conversion (recommended)
 
-This easiest way is to run `npx dusk-cli@latest rune-to-dusk` to automatically update your game from Rune to Dusk. This definitely works if you used one of the Rune templates when you created your game.
+This easiest way is to run `npx dusk-cli@latest rune-to-dusk` to automatically update your game from Rune to Dusk. This definitely works if you used one of the Rune templates when you created your game and may also work if you haven't. So it's good to try this approach first.
 
 :::tip
 
@@ -18,7 +18,7 @@ This easiest way is to run `npx dusk-cli@latest rune-to-dusk` to automatically u
 
 # Approach 2 - Manual Conversion
 
-If you've built your game without a Dusk template then follow the next sections to update your project.
+If the migration script doesn't work, then follow the next sections to update your project.
 
 ### Module Dependencies
 
@@ -46,7 +46,7 @@ To get the latest CLI you can use the follow to install them globally:
 
 `yarn global add dusk-cli@latest` or `npm install -g dusk-cli@latest`
 
-Remember, the command to use the CLI is now `dusk`
+Remember, the command to use the CLI is now `dusk`.
 
 ### ESLint Configuration
 
@@ -60,3 +60,7 @@ If you were previously using the Rune Vite plugin then your vite configuration f
 
 1. Change the import to the new dependency `import dusk from "vite-plugin-dusk"`
 2. Update the plugin list to replace `rune({ logicPath: path.resolve("./src/logic.ts") })` with `dusk({ logicPath: path.resolve("./src/logic.ts") })`
+
+### Questions?
+
+We're happy to help! Just write us on the [Dusk Discord](https://discord.gg/dusk-devs) server.

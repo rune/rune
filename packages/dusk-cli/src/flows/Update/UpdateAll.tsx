@@ -109,43 +109,35 @@ export function UpdateAll() {
           : progressText
       }
       view={
-        done ? (
-          <Box flexDirection="column">
-            {!!successes.length && (
-              <Box flexDirection="column">
-                <Text color="green">Successfully updated games:</Text>
-                <Box paddingLeft={1}>
-                  <Text color="green">
-                    {successes
-                      .map(
-                        ({ gameId, gameVersionId }) =>
-                          `#${gameId} (v${gameVersionId})`
-                      )
-                      .join(", ")}
+        <Box flexDirection="column">
+          {!!successes.length && (
+            <Box flexDirection="column">
+              <Text color="green">Successfully updated games:</Text>
+              <Box paddingLeft={1}>
+                <Text color="green">
+                  {successes
+                    .map(
+                      ({ gameId, gameVersionId }) =>
+                        `#${gameId} (v${gameVersionId})`
+                    )
+                    .join(", ")}
+                </Text>
+              </Box>
+            </Box>
+          )}
+          {!!failures.length && (
+            <Box flexDirection="column">
+              <Text color="red">Failed to update:</Text>
+              <Box flexDirection="column" paddingLeft={1}>
+                {failures.map(({ gameId, gameVersionId, error }) => (
+                  <Text key={`${gameId}-${gameVersionId}`} color="red">
+                    #{gameId} (v{gameVersionId}): {error}
                   </Text>
-                </Box>
+                ))}
               </Box>
-            )}
-            {!!failures.length && (
-              <Box flexDirection="column">
-                <Text color="red">Failed to update:</Text>
-                <Box flexDirection="column" paddingLeft={1}>
-                  {failures.map(({ gameId, gameVersionId, error }) => (
-                    <Text key={`${gameId}-${gameVersionId}`} color="red">
-                      #{gameId} (v{gameVersionId}): {error}
-                    </Text>
-                  ))}
-                </Box>
-              </Box>
-            )}
-          </Box>
-        ) : (process.env.STAGE ?? "production") === "production" ? (
-          <Text color="yellow">
-            Updating all games increases the load on the server and might
-            trigger alerts. Please notify the team in #tango slack that you are
-            running this script
-          </Text>
-        ) : null
+            </Box>
+          )}
+        </Box>
       }
     />
   )

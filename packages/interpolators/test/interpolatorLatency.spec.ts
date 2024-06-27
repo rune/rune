@@ -94,7 +94,7 @@ describe("interpolator", () => {
   })
 
   it("should not see large jumps in movement", () => {
-    const maxSpeed = 10;
+    const maxSpeed = 10
     const instance = interpolatorLatency({ maxSpeed })
 
     const dusk = {
@@ -130,7 +130,7 @@ describe("interpolator", () => {
     const dx = lastRenderPos[0] - newRenderPos[0]
     const dy = lastRenderPos[1] - newRenderPos[1]
     const changeInDistance = Math.sqrt(dx * dx + dy * dy)
-    
+
     expect(changeInDistance).toBeLessThanOrEqual(maxSpeed)
     expect(instance.getPosition()).toEqual([134, 92])
   })

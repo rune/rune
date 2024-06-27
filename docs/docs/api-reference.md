@@ -109,6 +109,10 @@ Setting `landscape` to true will make your game appear in landscape orientation.
 
 Setting `persistPlayerData` to true will enable storing player data across game sessions. Check out [Persisted Data](advanced/persisted-data.md).
 
+### `reactive?: boolean` ${#reactive-boolean}
+
+Setting `reactive` to false will significantly improve game performance, but disable referential equality in game state.
+
 ### `Dusk.invalidAction()` {#duskinvalidaction}
 
 Whenever a player tries to do an action that is not allowed, the action handler should reject it by calling `throw Dusk.invalidAction()` which will cancel the action and roll back any local optimistic updates.

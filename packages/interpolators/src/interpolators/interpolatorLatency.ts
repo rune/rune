@@ -55,16 +55,23 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
   function calculateSpeedSingleValue(
     interpolated: number,
     target: number,
-    currentSpeed: number
+    currentSpeed: number,
+    componentCoefficient: number
   ) {
     if (!useAcceleration) {
-      return maxSpeed
+      return maxSpeed * componentCoefficient
     }
 
     if (target > interpolated) {
-      return Math.min(Math.max(currentSpeed, 0) + acceleration, maxSpeed)
+      return Math.min(
+        Math.max(currentSpeed, 0) + acceleration * componentCoefficient,
+        maxSpeed * componentCoefficient
+      )
     } else if (target < interpolated) {
-      return Math.max(Math.min(currentSpeed, 0) - acceleration, -maxSpeed)
+      return Math.max(
+        Math.min(currentSpeed, 0) - acceleration * componentCoefficient,
+        -maxSpeed * componentCoefficient
+      )
     } else {
       return 0
     }
@@ -84,14 +91,23 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
       return calculateSpeedSingleValue(
         interpolated as number,
         target as number,
-        speed as number
+        speed as number,
+        1
       ) as Dimensions
     } else {
+      const valueDeltas = (target as number[]).map(
+        (value, index) => value - interpolated[index]
+      )
+      const totalLength = Math.sqrt(
+        valueDeltas.map((d) => d ** 2).reduce((p, v) => p + v, 0)
+      )
+
       return (interpolated as number[]).map((interpolatedValue, index) => {
         return calculateSpeedSingleValue(
           interpolatedValue,
           (target as number[])[index],
-          (speed as number[])[index] ?? 0
+          (speed as number[])[index] ?? 0,
+          Math.abs(valueDeltas[index]) / totalLength
         )
       }) as Dimensions
     }

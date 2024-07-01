@@ -162,9 +162,9 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
         size as number
       )
       futureInterpolated = moveTowards(
-        interpolated,
+        futureInterpolated,
         params.futureGame,
-        speed,
+        calculateSpeed(futureInterpolated, params.futureGame),
         size as number
       )
     },

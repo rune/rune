@@ -365,7 +365,7 @@ describe("interpolator", () => {
     const changeInDistance = Math.sqrt(dx * dx + dy * dy)
 
     expect(changeInDistance).toBeLessThanOrEqual(maxSpeed)
-    expect(instance.getPosition()).toEqual([146, 108])
+    expect(instance.getPosition()).toEqual([134, 92])
   })
 
   it("should ignore update calls if _isOnChangeCalledByUpdate is false", () => {

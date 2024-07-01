@@ -26,26 +26,36 @@ describe("interpolator", () => {
     instance.update({ game: 0, futureGame: 10 })
     expect(instance.getPosition()).toEqual(0)
 
+    // we've accelerated to -0.5 velocity -(1000 / 5)
     instance.update({ game: -3, futureGame: -6 })
     expect(instance.getPosition()).toEqual(-0.5)
 
+    // due to deceleration the change in velocity (speed) is
+    // lerped
+
+    // we've accelerated to -1 velocity -(1000 / 5)
     instance.update({ game: -3, futureGame: -6 })
     expect(instance.getPosition()).toEqual(-1.5)
 
+    // CHANGE DIRECTION! we've decelerated to 0.5 velocity +(1000 / 5)
     instance.update({ game: 10, futureGame: 12 })
-    expect(instance.getPosition()).toEqual(-1)
+    expect(instance.getPosition()).toEqual(-2)
 
+    // we've decelerated to 0 velocity +(1000 / 5)
     instance.update({ game: 10, futureGame: 12 })
-    expect(instance.getPosition()).toEqual(0)
+    expect(instance.getPosition()).toEqual(-2)
 
+    // we've decelerated to 0.5 velocity +(1000 / 5)
     instance.update({ game: 10, futureGame: 12 })
-    expect(instance.getPosition()).toEqual(1.5)
+    expect(instance.getPosition()).toEqual(-1.5)
 
+    // we've decelerated to 1 velocity +(1000 / 5)
     instance.update({ game: 10, futureGame: 12 })
-    expect(instance.getPosition()).toEqual(3.5)
+    expect(instance.getPosition()).toEqual(-0.5)
 
+    // we've decelerated to 1.5 velocity +(1000 / 5)
     instance.update({ game: 10, futureGame: 12 })
-    expect(instance.getPosition()).toEqual(6)
+    expect(instance.getPosition()).toEqual(1)
   })
 
   it("should interpolate between the positions when provided with numbers & timeSinceLastUpdate is not 0", () => {
@@ -93,6 +103,107 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual([3, 100])
   })
 
+  it("should decelerate and move back on change of direction", () => {
+    const maxSpeed = 10
+    const instance = interpolatorLatency({ maxSpeed, timeToMaxSpeed: 1000 })
+
+    const dusk = {
+      msPerUpdate: 100,
+      timeSinceLastUpdate: () => 0,
+      // @ts-ignore
+      _isOnChangeCalledByUpdate: true,
+    }
+
+    global.Dusk = dusk
+
+    instance.update({ game: [100, 100], futureGame: [110, 100] })
+    expect(instance.getPosition()).toEqual([100, 100])
+
+    let x = 100
+
+    // should be at full speed going right now
+    const beforeSpeedUp = instance.getPosition()[0]
+    x += 10
+    instance.update({ game: [x, 100], futureGame: [x + 10, 100] })
+    const speedUp = instance.getPosition()[0] - beforeSpeedUp
+    // we accelerate to speed 10 over 1000ms, we've had 100ms, so we should
+    // be at speed = 1
+    expect(speedUp).toEqual(1)
+
+    // travel to the right for a bit
+    for (let i = 0; i < 20; i++) {
+      x += 10
+      instance.update({ game: [x, 100], futureGame: [x + 10, 100] })
+    }
+
+    // should be at full speed going right now
+    const beforeFullSpeed = instance.getPosition()[0]
+    x += 10
+    instance.update({ game: [x, 100], futureGame: [x + 10, 100] })
+    const fullSpeed = instance.getPosition()[0] - beforeFullSpeed
+    expect(fullSpeed).toEqual(10)
+
+    // start moving back to the left
+    const beforeLeft = instance.getPosition()[0]
+    instance.update({ game: [x, 100], futureGame: [x - 10, 100] })
+    const leftSpeed = instance.getPosition()[0] - beforeLeft
+    expect(leftSpeed).toEqual(10)
+
+    // travel to the right for a bit - bare in mind we'll need
+    for (let i = 0; i < 20; i++) {
+      x -= 10
+      instance.update({ game: [x, 100], futureGame: [x - 10, 100] })
+    }
+
+    // we've been decelerating and should now be just about (1 step off)
+    // the full speed in the other direction
+    const beforeLastStep = instance.getPosition()[0]
+    x -= 10
+    instance.update({ game: [x, 100], futureGame: [x - 10, 100] })
+    const lastStepSpeed = instance.getPosition()[0] - beforeLastStep
+    expect(lastStepSpeed).toEqual(-9)
+
+    // should be at full speed going right now
+    const beforeLeftFullSpeed = instance.getPosition()[0]
+    x -= 10
+    instance.update({ game: [x, 100], futureGame: [x - 10, 100] })
+    const fullLeftSpeed = instance.getPosition()[0] - beforeLeftFullSpeed
+    expect(fullLeftSpeed).toEqual(-10)
+
+    // change direction again to make sure we don't have negative/positive
+    // bugs
+
+    // start moving back to the right
+    const beforeRight = instance.getPosition()[0]
+    instance.update({ game: [x, 100], futureGame: [x + 10, 100] })
+    const rightSpeed = instance.getPosition()[0] - beforeRight
+    expect(rightSpeed).toEqual(-10)
+
+    // travel to the right for a bit - the extra 7 steps here
+    // is to give the target of the interpolator time to catch up
+    // Since we're using max-speed=10 and we're actually moving at
+    // 10 the interpolator will get behind
+    for (let i = 0; i < 27; i++) {
+      x += 10
+      instance.update({ game: [x, 100], futureGame: [x + 10, 100] })
+    }
+
+    // we've been decelerating and should now be just about (1 step off)
+    // the full speed in the other direction
+    const beforeLastRightStep = instance.getPosition()[0]
+    x += 10
+    instance.update({ game: [x, 100], futureGame: [x + 10, 100] })
+    const lastStepRightSpeed = instance.getPosition()[0] - beforeLastRightStep
+    expect(lastStepRightSpeed).toEqual(9)
+
+    // should be at full speed going right now
+    const beforeRightFullSpeed = instance.getPosition()[0]
+    x += 10
+    instance.update({ game: [x, 100], futureGame: [x + 10, 100] })
+    const fullRightSpeed = instance.getPosition()[0] - beforeRightFullSpeed
+    expect(fullRightSpeed).toEqual(10)
+  })
+
   it("should not see large jumps in movement", () => {
     const maxSpeed = 10
     const instance = interpolatorLatency({ maxSpeed })
@@ -132,7 +243,7 @@ describe("interpolator", () => {
     const changeInDistance = Math.sqrt(dx * dx + dy * dy)
 
     expect(changeInDistance).toBeLessThanOrEqual(maxSpeed)
-    expect(instance.getPosition()).toEqual([134, 92])
+    expect(instance.getPosition()).toEqual([146, 108])
   })
 
   it("should ignore update calls if _isOnChangeCalledByUpdate is false", () => {

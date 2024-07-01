@@ -7,6 +7,15 @@ const runValidation = true
 function moveTowardsSingleValue(from: number, to: number, maxSpeed: number) {
   const distance = to - from
 
+  // max speed can be the opposite sign of the direction we want
+  // to travel, this will mean we're in deceleration
+  if (Math.sign(maxSpeed) !== Math.sign(distance)) {
+    // we're decelerating so just move the speed given
+    return from + maxSpeed
+  }
+
+  // otherwise we're speeding in the right direction so pick either
+  // move speed or if we're close enough just move to the target
   const distanceToMove = Math.min(Math.abs(distance), Math.abs(maxSpeed))
 
   return from + distanceToMove * Math.sign(distance)
@@ -64,12 +73,12 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
 
     if (target > interpolated) {
       return Math.min(
-        Math.max(currentSpeed, 0) + acceleration * componentCoefficient,
+        currentSpeed + acceleration * componentCoefficient,
         maxSpeed * componentCoefficient
       )
     } else if (target < interpolated) {
       return Math.max(
-        Math.min(currentSpeed, 0) - acceleration * componentCoefficient,
+        currentSpeed - acceleration * componentCoefficient,
         -maxSpeed * componentCoefficient
       )
     } else {
@@ -146,7 +155,6 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
       }
 
       speed = calculateSpeed(interpolated, params.game)
-
       interpolated = moveTowards(
         interpolated,
         params.game,

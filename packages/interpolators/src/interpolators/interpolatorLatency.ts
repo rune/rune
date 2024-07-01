@@ -105,7 +105,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
       ) as Dimensions
     } else {
       const valueDeltas = (target as number[]).map(
-        (value, index) => value - interpolated[index]
+        (value, index) => value - (interpolated as number[])[index]
       )
       const totalLength = Math.sqrt(
         valueDeltas.map((d) => d ** 2).reduce((p, v) => p + v, 0)

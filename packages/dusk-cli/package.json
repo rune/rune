@@ -1,13 +1,20 @@
 {
   "name": "dusk-cli",
-  "version": "7.7.2",
+  "version": "7.7.3",
   "description": "Easy way to test your HTML5 game before releasing it on Dusk.",
   "license": "MIT",
   "keywords": [
-    "HTML5",
+    "html5",
     "game",
     "javascript",
-    "typescript"
+    "typescript",
+    "gamedev",
+    "multiplayer",
+    "networking",
+    "react",
+    "threejs",
+    "vue",
+    "svelte"
   ],
   "type": "module",
   "repository": {
@@ -42,7 +49,7 @@
     "core-js": "3.25.0",
     "cross-fetch": "3.1.5",
     "date-fns": "2.29.1",
-    "dusk-games-sdk": "^4.19.17",
+    "dusk-games-sdk": "^4.20.0",
     "eslint": "7.22.0",
     "eslint-plugin-dusk": "^1.0.1",
     "figures": "4.0.1",

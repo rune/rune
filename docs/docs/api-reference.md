@@ -111,7 +111,7 @@ Setting `persistPlayerData` to true will enable storing player data across game 
 
 ### `reactive?: boolean` ${#reactive-boolean}
 
-Default `true`. Setting `reactive` to false will improve game logic performance, but disable referential equality in game state.
+Default `true`. Setting `reactive` to false will improve game logic performance, but disable referential equality in game state passed to `onChange` callback (e.g. `game`).
 
 ### `Dusk.invalidAction()` {#duskinvalidaction}
 

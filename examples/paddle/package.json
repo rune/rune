@@ -12,7 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.19.17"
+    "dusk-games-sdk": "^4.20.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

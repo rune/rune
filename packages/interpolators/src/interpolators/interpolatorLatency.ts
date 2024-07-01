@@ -68,7 +68,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
     componentCoefficient: number
   ) {
     if (!useAcceleration) {
-      return maxSpeed * componentCoefficient
+      return Math.sign(target - interpolated) * maxSpeed * componentCoefficient
     }
 
     if (target > interpolated) {
@@ -116,7 +116,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
           interpolatedValue,
           (target as number[])[index],
           (speed as number[])[index] ?? 0,
-          Math.abs(valueDeltas[index]) / totalLength
+          totalLength === 0 ? 0 : Math.abs(valueDeltas[index]) / totalLength
         )
       }) as Dimensions
     }

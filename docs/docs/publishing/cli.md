@@ -9,7 +9,7 @@ For a smooth development experience use the `dusk` CLI in your terminal.
 ## Install {#install}
 
 ```bash
-npm install -g dusk-games-cli
+npm install -g dusk-cli
 ```
 
 Requires [Node.js](https://nodejs.org/en/download/) version 14.17 or above.

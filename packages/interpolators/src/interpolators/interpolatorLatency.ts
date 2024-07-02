@@ -161,12 +161,14 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
         speed,
         size as number
       )
-      futureInterpolated = moveTowards(
-        interpolated,
-        params.futureGame,
-        speed,
-        size as number
-      )
+      if (futureInterpolated) {
+        futureInterpolated = moveTowards(
+          futureInterpolated,
+          params.futureGame,
+          calculateSpeed(futureInterpolated, params.futureGame),
+          size as number
+        )
+      }
     },
 
     getPosition(): Dimensions {

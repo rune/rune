@@ -80,7 +80,7 @@ describe("interpolator", () => {
 
     // we're still moving in the same direction and have accelerated to 1 (future speed = 1.5)
     // we're half way between (0.5+1) and (11 + 1.5) = 5.5 + 1.5 = 7
-    instance.update({ game: 12, futureGame: 15 })
+    instance.update({ game: 12, futureGame: 14 })
     expect(instance.getPosition()).toEqual(7)
 
     // we're still moving in the same direction and have accelerated to 1.5 (future speed = 2)

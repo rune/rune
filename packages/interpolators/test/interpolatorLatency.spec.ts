@@ -58,7 +58,7 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual(1)
   })
 
-  it("should interpolate between the positions when provided with numbers & timeSinceLastUpdate is not 0", () => {
+  it("should interpolate between the positions midway between updates accounting for acceleration", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
     global.Dusk = {
@@ -95,7 +95,7 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual(40)
   })
 
-  it("should interpolate between the positions when provided with arrays", () => {
+  it("should interpolate between the positions when provided with a multi-dimension array (multiple axis)", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
     global.Dusk = {

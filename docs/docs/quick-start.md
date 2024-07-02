@@ -9,7 +9,7 @@ Build a multiplayer game for the [Dusk platform](https://www.dusk.gg) and its mi
 To get started, you only need to run one command:
 
 ```sh
-npx dusk-games-cli@latest create
+npx dusk-cli@latest create
 ```
 After this, you'll have a multiplayer Tic Tac Toe game running.
 

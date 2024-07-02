@@ -2,13 +2,13 @@ dist
 build
 .docusaurus
 examples
-packages/dusk-games-cli/__temp/
-packages/dusk-games-cli/src/generated/
-packages/dusk-games-cli/templates/
+packages/dusk-cli/__temp/
+packages/dusk-cli/src/generated/
+packages/dusk-cli/templates/
 packages/dusk-cli/templates/
 packages/dusk-cli/src/lib/jscodeshift/__testfixtures__
 packages/dusk-cli/cjs/
-packages/dusk-games-cli/cjs/
+packages/dusk-cli/cjs/
 node_modules/
 docs/static/_examples
 docs/src/theme

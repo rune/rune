@@ -43,7 +43,7 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 ## Packages
 
 - [eslint-plugin-dusk](https://github.com/dusk-gg/dusk/tree/staging/packages/eslint-plugin-dusk) – rules and config for writing safe logic code for the Dusk SDK
-- [dusk-games-cli](https://github.com/dusk-gg/dusk/tree/staging/packages/dusk-games-cli) – command line tool to develop and upload your HTML5 game for Dusk
+- [dusk-cli](https://github.com/dusk-gg/dusk/tree/staging/packages/dusk-cli) – command line tool to develop and upload your HTML5 game for Dusk
 - [vite-plugin-dusk](https://github.com/dusk-gg/dusk/tree/staging/packages/vite-plugin-dusk) – Vite plugin for writing games for the Dusk SDK
 
 ## Community

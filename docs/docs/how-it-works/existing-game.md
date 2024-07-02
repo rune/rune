@@ -13,10 +13,10 @@ We recommend you follow **approach 1** below, which will take care of any boiler
 Create a new Dusk game project by running:
 
 ```sh
-npx dusk-games-cli@latest create
+npx dusk-cli@latest create
 ```
 
-You now have a simple example game with game logic and client rendering files. You can then copy your game logic and rendering code into the `logic.ts` and `client.ts` files respectively. Take a look at [Quick Start](../quick-start) for an introduction to these files or [Syncing Game State](./syncing-game-state) for a more in-depth explanation.
+You now have a simple example game with game logic and client rendering files. You can then copy your game logic and rendering code into the `logic.ts` and `client.ts` files respectively. Take a look at [Quick Start](../quick-start.md) for an introduction to these files or [Syncing Game State](./syncing-game-state.md) for a more in-depth explanation.
 
 We recommend that you enable ESLint in your editor to detect issues while developing your game. The template code already has the necessary configuration for ESLint.
 
@@ -24,8 +24,8 @@ We recommend that you enable ESLint in your editor to detect issues while develo
 
 This approach requires you to be careful, especially if you're using TypeScript or a bundler as you will need to update your setup to export a `logic.js` file. If you still like to do the setup manually, here's how you do it:
 
-1. Create a file called `logic.js` that has all [game logic](../quick-start#game-logic) and calls `Dusk.initLogic()`
-2. Create a file called `client.js` that's responsible for [rendering](../quick-start#rendering) and calls `Dusk.initClient()`
+1. Create a file called `logic.js` that has all [game logic](../quick-start.md#game-logic) and calls `Dusk.initLogic()`
+2. Create a file called `client.js` that's responsible for [rendering](../quick-start.md#rendering) and calls `Dusk.initClient()`
 3. Load the SDK before any other script in your `index.html` along with the two files:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/dusk-games-sdk@4/multiplayer-dev.js"></script>

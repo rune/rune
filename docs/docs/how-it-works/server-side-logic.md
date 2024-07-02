@@ -36,7 +36,7 @@ In case you use a library that's not on the supported libraries list, you'll rec
 
 ## Editor Integration {#editor-integration}
 
-Dusk has created an eslint plugin to give warnings for potentially unsafe code directly in your editor! If you're using the Dusk quickstart template created using `npx dusk-games-cli@latest create`, then this eslint plugin is already set up for you. If not, then follow the steps below.
+Dusk has created an eslint plugin to give warnings for potentially unsafe code directly in your editor! If you're using the Dusk quickstart template created using `npx dusk-cli@latest create`, then this eslint plugin is already set up for you. If not, then follow the steps below.
 
 First, install the Dusk eslint plugin:
 

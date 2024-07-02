@@ -9,10 +9,10 @@ sidebar_position: 1
 Use the [Dusk CLI](publishing/cli.md) to upload your game to millions of players:
 
 ```bash
-npx dusk-games-cli@latest upload
+npx dusk-cli@latest upload
 ```
 
-That's it! You can now [playtest](../playtesting/testing-in-app) your game with friends and others in the actual Dusk app. To release your game to the larger Dusk community, your game will need a [Game Preview](publishing/game-preview.md). We can make one for your game if you'd like.
+That's it! You can now [playtest](../playtesting/testing-in-app.md) your game with friends and others in the actual Dusk app. To release your game to the larger Dusk community, your game will need a [Game Preview](publishing/game-preview.md). We can make one for your game if you'd like.
 
 If you want to upload a new version of your game, just run the upload command again.
 

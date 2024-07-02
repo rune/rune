@@ -13,7 +13,7 @@ describe("interpolator", () => {
     )
   })
 
-  it("should interpolate between the positions when provided with numbers", () => {
+  it("should interpolate between position using deceleration/acceleration to ease between changes in direction", () => {
     global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
@@ -58,8 +58,8 @@ describe("interpolator", () => {
     expect(instance.getPosition()).toEqual(1)
   })
 
-  it("should interpolate between the positions when provided with numbers & timeSinceLastUpdate is not 0", () => {
-    const instance = interpolatorLatency({ maxSpeed: 5, timeToMaxSpeed: 1000 })
+  it("should interpolate between the positions midway between updates accounting for acceleration", () => {
+    const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
     global.Dusk = {
       msPerUpdate: 100,
@@ -68,20 +68,34 @@ describe("interpolator", () => {
       _isOnChangeCalledByUpdate: true,
     } as any
 
+    // we've just started and we're 50% between game and future game
+    // we're half way between 0 and 10, so should be a 5
     instance.update({ game: 0, futureGame: 10 })
     expect(instance.getPosition()).toEqual(5)
 
-    instance.update({ game: 10, futureGame: 12 })
-    expect(instance.getPosition()).toEqual(0.75)
+    // we're still moving in the same direction and have accelerated to 1 (future speed = 2)
+    // we're half way between (0+1) and (10+2) = 6
+    instance.update({ game: 10, futureGame: 20 })
+    expect(instance.getPosition()).toEqual(6.5)
 
-    instance.update({ game: 12, futureGame: 15 })
-    expect(instance.getPosition()).toEqual(2)
+    // we're still moving in the same direction and have accelerated to 2 (future speed = 3)
+    // we're half way between (1+2) and (12+3) = 9
+    instance.update({ game: 20, futureGame: 30 })
+    expect(instance.getPosition()).toEqual(9)
 
-    instance.update({ game: 14, futureGame: 14 })
-    expect(instance.getPosition()).toEqual(3.75)
+    // we're still moving in the same direction and have accelerated to 3 (future speed = 4)
+    // we're half way between (3+3) and (15+4) = 12.5
+    instance.update({ game: 30, futureGame: 40 })
+    expect(instance.getPosition()).toEqual(12.5)
+
+    // after running for a few more update we do eventually reach the right position
+    for (let i = 0; i < 10; i++) {
+      instance.update({ game: 40, futureGame: 40 })
+    }
+    expect(instance.getPosition()).toEqual(40)
   })
 
-  it("should interpolate between the positions when provided with arrays", () => {
+  it("should interpolate between the positions when provided with a multi-dimension array (multiple axis)", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
     global.Dusk = {
@@ -496,5 +510,33 @@ describe("interpolator", () => {
 
     instance.update({ game: 20, futureGame: 20 })
     expect(instance.getPosition()).toEqual(3)
+  })
+
+  it("should only move max speed with multiple axis", () => {
+    const instance = interpolatorLatency<number[]>({ maxSpeed: 10 })
+
+    global.Dusk = {
+      msPerUpdate: 100,
+      // @ts-ignore
+      _isOnChangeCalledByUpdate: true,
+      timeSinceLastUpdate: () => 0,
+    }
+
+    instance.update({ game: [0, 0], futureGame: [0, 10] })
+    expect(instance.getPosition()).toEqual([0, 0])
+
+    // should move the full 10 in a straight line
+    instance.update({ game: [0, 10], futureGame: [0, 20] })
+    expect(instance.getPosition()).toEqual([0, 10])
+    // should move the full 10 in a straight line
+    instance.update({ game: [10, 10], futureGame: [20, 10] })
+    expect(instance.getPosition()).toEqual([10, 10])
+    // should move the full 10 in a straight line
+    instance.update({ game: [20, 20], futureGame: [30, 30] })
+    const componentDistance = Math.sqrt((10 * 10) / 2)
+    expect(instance.getPosition()).toEqual([
+      10 + componentDistance,
+      10 + componentDistance,
+    ])
   })
 })

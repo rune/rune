@@ -88,6 +88,12 @@ describe("interpolator", () => {
     // game state of 14. 50% between 3 and 14 = 8.5
     instance.update({ game: 14, futureGame: 14 })
     expect(instance.getPosition()).toEqual(8.5)
+
+    // after running for a few more update we do eventually reach the right position
+    for (let i = 0; i < 10; i++) {
+      instance.update({ game: 14, futureGame: 14 })
+    }
+    expect(instance.getPosition()).toEqual(14)
   })
 
   it("should interpolate between the positions when provided with arrays", () => {

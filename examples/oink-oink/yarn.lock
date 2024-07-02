@@ -3924,10 +3924,10 @@ duplexer@^0.1.2:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
-dusk-games-sdk@^4.20.0:
-  version "4.20.0"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.20.0.tgz#17c6531294952d89a03fcaf2a6e63a3d43b9e6e6"
-  integrity sha512-8tTCILzqIeWVmQ1eJVzuYE2kJCboI8/OVr0k2+i8nzjA0n+HU3meP1NoZiMf8/LDayIeP+cxBhF+RbAF8OUGzQ==
+dusk-games-sdk@^4.20.1:
+  version "4.20.1"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.20.1.tgz#5b4272732fc38418901ffff80da58ed5147166c4"
+  integrity sha512-XMKHj99RCFbI/Ci+C0zYb/258tdgofA7jqFLIPHEd05IOa3rX+8M/YBWqZKtLZyNG613LuAKHVV8b59L31mSEw==
 
 ee-first@1.1.1:
   version "1.1.1"

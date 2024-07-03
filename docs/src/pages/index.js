@@ -32,15 +32,15 @@ const features = [
     title: "It’s free for everyone",
     description: [
       "Dusk is completely free for developers and players alike!",
-      "We cover our costs through a small cut on any money we help developers make.",
+      "We will cover our costs through a small cut on any money we help devs make.",
     ],
   },
   {
     icon: require("@site/static/img/home/features/dollar.png").default,
     title: "We help you make money (coming soon!)",
     description: [
-      "Players can soon spend Dusk gems on your games.",
-      "Earn money by adding skins and power-ups to your game!",
+      "Earn money from your game without dealing with ads or purchases.",
+      "Dusk's creator fund pays you directly based on your game's stats.",
     ],
   },
   {

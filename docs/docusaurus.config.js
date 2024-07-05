@@ -118,11 +118,11 @@ const config = {
               },
               {
                 label: "Twitter",
-                href: "https://twitter.com/joinrune",
+                href: "https://twitter.com/dusk_devs",
               },
               {
                 label: "Instagram",
-                href: "https://instagram.com/joinrune/",
+                href: "https://instagram.com/dusk_gg/",
               },
             ],
           },

@@ -31,7 +31,7 @@ Dusk has millions of players so you’ll get tons of people playing your game an
 
 ### Do You Host Game Jams? {#do-you-host-game-jams}
 
-Yes! We host fun community events for all indie game developers regardless of experience level. Some of these events will also have prizes. See `announcements` channel on [Discord](https://discord.gg/dusk-devs) or [follow us on Twitter](https://twitter.com/joindusk) for the latest game jam.
+Yes! We host fun community events for all indie game developers regardless of experience level. Some of these events will also have prizes. See `announcements` channel on [Discord](https://discord.gg/dusk-devs) or [follow us on Twitter](https://twitter.com/dusk_devs) for the latest game jam.
 
 ### Does Dusk Have Ads? {#does-dusk-have-ads}
 

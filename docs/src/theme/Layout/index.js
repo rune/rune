@@ -7,6 +7,8 @@ const css = (strings, ...expressions) =>
 export default function LayoutWrapper(props) {
   const { homeBackground } = props
 
+  const showBanner = location.hash === "#rune"
+
   useEffect(() => {
     const style = document.createElement("style")
 
@@ -14,6 +16,38 @@ export default function LayoutWrapper(props) {
       html,
       body {
         height: auto !important;
+      }
+
+      .banner {
+        padding: 16px 80px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: linear-gradient(88.45deg, #c887ff -2.7%, #ffa9a9 100%);
+        color: #6d20ab;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      .navbar--fixed-top {
+        top: ${showBanner ? "48px" : "0"};
+      }
+
+      @media screen and (max-width: 700px) {
+        .banner {
+          padding: 12px 24px;
+          font-size: 16px;
+        }
+
+        .banner > .text > span:nth-child(2) {
+          display: none;
+        }
       }
 
       ${homeBackground
@@ -58,7 +92,23 @@ export default function LayoutWrapper(props) {
     document.head.appendChild(style)
 
     return () => document.head.removeChild(style)
-  }, [])
+  }, [showBanner])
 
-  return <Layout {...props} />
+  return (
+    <>
+      {showBanner && <Banner />}
+      <Layout {...props} />
+    </>
+  )
+}
+
+function Banner() {
+  return (
+    <div class="banner">
+      <div class="text">
+        <span>Rune is now Dusk!</span>
+        <span> Our name and logo got an upgrade.</span>
+      </div>
+    </div>
+  )
 }

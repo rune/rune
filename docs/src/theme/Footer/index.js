@@ -22,7 +22,7 @@ function Footer() {
       </a>
       <a
         className={styles.link}
-        href="https://rdusk.gg/team"
+        href="https://dusk.gg/team"
         target="_blank"
         rel="noreferrer"
       >

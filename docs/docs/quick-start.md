@@ -28,13 +28,12 @@ That's it. You'll now see your game inside Dusk and can play it with your friend
 
 Dusk games are split into two parts: logic & rendering. Let's look at the logic for the generated Tic Tac Toe game.
 
-You can find the logic code in the `logic.js` file. The `setup` function is responsible for creating an initial `game` state that's synced across players:
+You can find the logic code in the `logic.js` file. The `setup` function is responsible for creating an initial `game` state that's synced across players. We create the 3x3 grid for Tic Tac Toe:
 
 ```js
 function setup() {
   const game = {
     cells: new Array(9).fill(null), // 3x3 cell grid
-    lastMovePlayerId: null,
     // ... rest of the game state
   }
   return game
@@ -45,14 +44,7 @@ To modify the `game` state synced between players, we define actions that get ca
 
 ```js
 function claimCell(cellIndex, { game, playerId }) {
-  // Do not allow to claim cell if it's already claimed or if it's not player's turn
-  if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
-    throw Dusk.invalidAction()
-  }
-
   game.cells[cellIndex] = playerId
-  game.lastMovePlayerId = playerId
-  
   // ... rest of the logic, like checking for win condition
 }
 ```

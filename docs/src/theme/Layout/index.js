@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import Layout from "@theme-original/Layout"
+import BrowserOnly from "@docusaurus/BrowserOnly"
 
 const css = (strings, ...expressions) =>
   strings.reduce((acc, curr, i) => acc + curr + (expressions[i] || ""), "")
@@ -60,5 +61,66 @@ export default function LayoutWrapper(props) {
     return () => document.head.removeChild(style)
   }, [])
 
-  return <Layout {...props} />
+  return (
+    <>
+      <BrowserOnly>{() => <Banner />}</BrowserOnly>
+      <Layout {...props} />
+    </>
+  )
+}
+
+function Banner() {
+  const showBanner = location.hash === "#rune"
+
+  useEffect(() => {
+    const style = document.createElement("style")
+
+    style.innerHTML = css`
+      .navbar--fixed-top {
+        top: ${showBanner ? "48px" : "0"};
+      }
+
+      .banner {
+        padding: 16px 80px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: linear-gradient(88.45deg, #c887ff -2.7%, #ffa9a9 100%);
+        color: #6d20ab;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      @media screen and (max-width: 700px) {
+        .banner {
+          padding: 12px 24px;
+          font-size: 16px;
+        }
+
+        .banner > .text > span:nth-child(2) {
+          display: none;
+        }
+      }
+    `
+    document.head.appendChild(style)
+
+    return () => document.head.removeChild(style)
+  }, [])
+
+  if (!showBanner) return null
+
+  return (
+    <div class="banner">
+      <div class="text">
+        <span>Rune is now Dusk!</span>
+        <span> Our name and logo got an upgrade.</span>
+      </div>
+    </div>
+  )
 }

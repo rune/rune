@@ -25,6 +25,9 @@ So, yes I work at Dusk now and of course I'm going to be slightly biased, but 5 
 
 The stack is Javascript/Typescript which happens to be where my game development had taken me (via BASIC/ASM/C/C++/Java/Unity) so it felt like a good fit. Having written a few games in the first month I was pleased with the outcome, playing them with my friends on the app was nice and it felt like a smooth process to get things working.
 
+
+![](/img/blog/callouts/magic-q.png)
+
 Did it solve everything for me with a click of its magical fingers? Of course not! You still have to think about your code and data structure, design your game for multi-player and consider the myriad of corner cases that multiplayer throws your way - you simply can't get away from that.
 
 What it did do we was give me a free predict/rollback networking model (something I'll write about later), an infrastructure that meant players weren't always getting huge pings and framework in which I could stop thinking about how the networking was going to work and focus on the bits I enjoy - rendering, feel and game design.

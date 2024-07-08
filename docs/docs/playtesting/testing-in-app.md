@@ -9,7 +9,7 @@ Dusk lets you easily playtest your game in the Dusk app before it's published to
 Upload your game by running: 
 
 ```sh
-npx dusk-cli@latest create
+npx dusk-cli@latest upload
 ```
 After this, you'll see your game in the app even though it's not publicly available yet. Here's [more details on uploading your game](../publishing/publishing-your-game.md) if interested.
 

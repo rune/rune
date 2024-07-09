@@ -4128,10 +4128,10 @@ duplexer@^0.1.2:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
-dusk-games-sdk@^4.20.0:
-  version "4.20.0"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.20.0.tgz#17c6531294952d89a03fcaf2a6e63a3d43b9e6e6"
-  integrity sha512-8tTCILzqIeWVmQ1eJVzuYE2kJCboI8/OVr0k2+i8nzjA0n+HU3meP1NoZiMf8/LDayIeP+cxBhF+RbAF8OUGzQ==
+dusk-games-sdk@^4.20.2:
+  version "4.20.2"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.20.2.tgz#3e0507eeee9f5079330e473eaca3ad0efd3e2b87"
+  integrity sha512-JLj4EeqH8yIp9tdBM5TCztrCmqY04fRSDReV4Ls8lsqSSuxgmyS6vdO3HP4ozZMPQzeYIu2ONB7CTUrcEdpNWw==
 
 earcut@^2.2.3:
   version "2.2.4"

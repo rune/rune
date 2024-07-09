@@ -2,6 +2,7 @@
 title: Announcing Dusk Open-Source Grants
 description: We're stoked to announce that we're launching a $100k grant for open-source web games!
 slug: dusk-open-source-grants
+tags: [Company]
 authors:
 - name: Bjarke Felbo
   title: Cofounder and CTO of Dusk

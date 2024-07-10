@@ -37,7 +37,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
     if (!useAcceleration) {
       return (
         Math.sign(point.target - point.current) *
-        maxSpeed *
+        Math.min(Math.abs(maxSpeed), Math.abs(point.target - point.current)) *
         componentCoefficient
       )
     }

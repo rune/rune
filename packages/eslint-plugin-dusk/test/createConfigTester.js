@@ -61,6 +61,8 @@ const createConfigTester = () => {
           fix: false,
           cache: false,
           baseConfig: {
+            //Assume that users will use env that has browser globals available, so we'll need to disallow a lot of things.
+            env: { browser: true, es2020: true },
             extends:
               sourceType === "module"
                 ? "plugin:dusk/logicModule"

@@ -1,6 +1,6 @@
 {
   "name": "dusk-cli",
-  "version": "7.7.4",
+  "version": "7.7.5",
   "description": "Easy way to test your HTML5 game before releasing it on Dusk.",
   "license": "MIT",
   "keywords": [
@@ -51,7 +51,7 @@
     "date-fns": "2.29.1",
     "dusk-games-sdk": "^4.20.2",
     "eslint": "7.22.0",
-    "eslint-plugin-dusk": "^1.0.1",
+    "eslint-plugin-dusk": "^1.0.2",
     "figures": "4.0.1",
     "form-data": "4.0.0",
     "glob": "8.0.3",

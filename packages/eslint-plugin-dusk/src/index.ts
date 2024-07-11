@@ -72,6 +72,14 @@ const restrictedGlobals = [
   "WeakRef",
   "Performance",
   "Intl",
+  "setTimeout",
+  "clearTimeout",
+  "setInterval",
+  "clearInterval",
+  "alert",
+  "fetch",
+  "performance",
+  "XMLHttpRequest",
 ]
 
 const logicConfig: ESLint.ConfigData = {
@@ -111,6 +119,26 @@ const logicConfig: ESLint.ConfigData = {
         property: "deterministicRandom",
         message: "Dusk.init() is restricted to client-only code.",
       },
+      {
+        property: "toLocaleString",
+        message: "Locale specific operations are not allowed",
+      },
+      {
+        property: "toLocaleLowerCase",
+        message: "Locale specific operations are not allowed",
+      },
+      {
+        property: "toLocaleUpperCase",
+        message: "Locale specific operations are not allowed",
+      },
+      {
+        property: "localeCompare",
+        message: "Locale specific operations are not allowed",
+      },
+      {
+        property: "then",
+        message: "Promises in logic are not allowed.",
+      },
     ],
     "no-restricted-syntax": [
       "error",
@@ -127,6 +155,9 @@ const logicConfig: ESLint.ConfigData = {
 
 const logicModuleConfig: ESLint.ConfigData = {
   ...logicConfig,
+  env: {
+    browser: false,
+  },
   rules: {
     ...logicConfig.rules,
     "no-restricted-syntax": ["error", ...restrictedSyntaxBase],

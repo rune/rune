@@ -1,6 +1,6 @@
 {
   "name": "dusk-cli",
-  "version": "7.7.3",
+  "version": "7.7.4",
   "description": "Easy way to test your HTML5 game before releasing it on Dusk.",
   "license": "MIT",
   "keywords": [

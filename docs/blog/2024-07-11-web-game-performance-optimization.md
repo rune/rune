@@ -114,7 +114,7 @@ Throttling down CPU in particular is a really good way to see how it’s going t
 
 Most of the time any web view in an application, like Dusk, is going to make use of the [Android System WebView](https://play.google.com/store/apps/details?id=com.google.android.webview). On modern versions of Android this is essentially Chrome and performs really well. 
 
-There are many versions of the Android operating system and particular devices where the Android System WebView can’t be upgraded so leaves your game running on something slower and more buggy. 
+There are many versions of the Android operating system and particular devices where the Android System WebView can’t be upgraded so leaves your game running on something slower and more buggy. It's such a severe problem that in the Dusk application we enforce a minimum web view version so developers don't have to worry about it.
 
 If you’re hearing about performance issues on your web game and it’s on Android, get them to check the System WebView version.
 

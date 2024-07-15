@@ -42,7 +42,7 @@
   }
 
   h3 {
-    margin: 0;
+    margin: 0 auto;
     font-size: 56px;
     font-weight: 700;
     line-height: normal;
@@ -60,11 +60,7 @@
       letter-spacing: -0.64px;
     }
 
-    background: linear-gradient(242deg, #eeedff 7.25%, #b2adff 92.6%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
+    color: white;
     text-align: center;
   }
 
@@ -301,8 +297,8 @@
       margin: 136px 0 165px;
     }
 
-    h2 {
-      max-width: 990px;
+    h3 {
+      max-width: 700px;
       margin-bottom: 80px;
 
       @media (max-width: 700px) {

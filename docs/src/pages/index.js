@@ -318,7 +318,7 @@ export default function Home() {
           <div className={styles.hero1}>
             <Phone />
 
-            <h2>Build a multiplayer game played by millions</h2>
+            <h2>build a multiplayer game played by millions</h2>
             <p>
               Your game runs inside the Dusk app with 10 million installs across
               iOS and Android.
@@ -343,7 +343,7 @@ export default function Home() {
           </div>
 
           <div className={styles.hero2}>
-            <h2>You focus on your game, we handle everything&nbsp;else</h2>
+            <h3>you focus on your game, we handle everything&nbsp;else</h3>
             <div className={styles.featuresOuter}>
               <div className={styles.features}>
                 {features.map(({ icon, title, description }, idx) => (
@@ -366,7 +366,7 @@ export default function Home() {
           </div>
 
           <div className={styles.hero3}>
-            <h2>No backend needed</h2>
+            <h3>no backend needed</h3>
             <HomeGameDemo />
             <p className={styles.description}>
               You write your game logic in JavaScript and Dusk runs it on
@@ -377,7 +377,7 @@ export default function Home() {
           </div>
 
           <div className={styles.hero4}>
-            <h2>Multiplayer in 100 lines&nbsp;of&nbsp;JS</h2>
+            <h3>multiplayer in 100 lines&nbsp;of&nbsp;JS</h3>
             <p>
               Here’s the code for the Tic Tac Toe game above. The game has
               built-in voice chat, matchmaking, and spectating. All powered by
@@ -409,7 +409,7 @@ export default function Home() {
           </div>
 
           <div className={styles.cta}>
-            <h3>Use your favorite web framework</h3>
+            <h3>use your favorite web framework</h3>
             <Link className={styles.ctaButton} to="/docs/quick-start">
               Get Started
             </Link>

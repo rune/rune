@@ -64,6 +64,6 @@ cd ../../tech-demos
 cd top-down-sycnhronization
 yarn 
 yarn build
-cp -r dist/. ../../docs/static/_tech-demos/top-down-sycnhronization
+cp -r dist/. ../../docs/static/_tech-demos/top-down-synchronization
 perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_tech-demos/top-down-synchronization/index.html
 cd ..

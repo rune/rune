@@ -9,7 +9,7 @@ function Footer() {
 
   const footerLinks = (
     <>
-      <Link className={styles.link} to="/docs/examples">
+      <Link className={styles.link} to="/docs/examples/games">
         Examples
       </Link>
       <a

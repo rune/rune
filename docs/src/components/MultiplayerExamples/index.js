@@ -2,18 +2,20 @@ import PropTypes from "prop-types"
 import React from "react"
 import styles from "./styles.module.css"
 
-export function MultiplayerExamples({ data }) {
+export function MultiplayerExamples({ data, techDemo }) {
+  const type = techDemo ? "tech-demos" : "examples"
+
   return (
     <ul className={styles.examples}>
       {data.map((example) => (
         <li key={example.slug}>
-          <a href={`/examples/${example.slug}/`}>
+          <a href={`/${type}/${example.slug}/`}>
             <img src={example.src} />
           </a>
           <h2>{example.title}</h2>
-          <a href={`/examples/${example.slug}/`}>Demo</a> |{" "}
+          <a href={`/${type}/${example.slug}/`}>Demo</a> |{" "}
           <a
-            href={`https://github.com/dusk-gg/dusk/tree/staging/examples/${example.slug}`}
+            href={`https://github.com/dusk-gg/dusk/tree/staging/${type}/${example.slug}`}
           >
             Source
           </a>
@@ -33,4 +35,5 @@ MultiplayerExamples.propTypes = {
       src: PropTypes.string.isRequired,
     })
   ).isRequired,
+  techDemo: PropTypes.bool,
 }

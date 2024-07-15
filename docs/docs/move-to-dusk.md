@@ -38,7 +38,7 @@ goes from `rune-games-sdk` to `dusk-games-sdk`.
 If you're including the SDK directly in your index.html file then the URL to the SDK should also be updated from `rune-games-sdk` to 
 `dusk-games-sdk`.
 
-You can also check out the [example games](/docs/examples) which have already been migrated.
+You can also check out the [example games](/docs/examples/games) which have already been migrated.
 
 ### Get the new CLI
 

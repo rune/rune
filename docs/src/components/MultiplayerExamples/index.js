@@ -19,6 +19,12 @@ export function MultiplayerExamples({ data, techDemo }) {
           >
             Source
           </a>
+          {techDemo && (
+            <span>
+              {" "}
+              | <a href={`/blog/${example.slug}/`}>Blog</a>
+            </span>
+          )}
           <p>{example.description}</p>
         </li>
       ))}

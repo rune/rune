@@ -61,7 +61,7 @@ perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/s
 cd ../../tech-demos
 
 # Top Down Synchronization
-cd top-down-sycnhronization
+cd top-down-synchronization
 yarn 
 yarn build
 cp -r dist/. ../../docs/static/_tech-demos/top-down-synchronization

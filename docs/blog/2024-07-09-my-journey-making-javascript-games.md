@@ -30,7 +30,7 @@ The stack is Javascript/Typescript which happens to be where my game development
 
 Did it solve everything for me with a click of its magical fingers? Of course not! You still have to think about your code and data structure, design your game for multi-player and consider the myriad of corner cases that multiplayer throws your way - you simply can't get away from that.
 
-What it did do we was give me a free predict/rollback networking model (something I'll write about later), an infrastructure that meant players weren't always getting huge pings and framework in which I could stop thinking about how the networking was going to work and focus on the bits I enjoy - rendering, feel and game design.
+What it did do, was give me a free predict/rollback networking model (something I'll write about later), an infrastructure that meant players weren't always getting huge pings and framework in which I could stop thinking about how the networking was going to work and focus on the bits I enjoy - rendering, feel and game design.
 
 So how do we actually build the game? You have a two pieces to build:
 

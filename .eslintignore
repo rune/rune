@@ -11,5 +11,6 @@ packages/dusk-cli/cjs/
 packages/dusk-cli/cjs/
 node_modules/
 docs/static/_examples
+docs/static/_tech-demos
 docs/src/theme
 scripts/

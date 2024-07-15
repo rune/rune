@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "npm run lint && tsc && vite build",
+    "build": "tsc && vite build",
     "upload": "npm run build && npx dusk-cli@latest upload",
     "lint": "eslint src --ext ts,tsx",
     "typecheck": "tsc --noEmit"

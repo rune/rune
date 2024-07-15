@@ -1,10 +1,9 @@
-export type Controls = {
-    left: boolean;
-    right: boolean;
-    up: boolean;
-    down: boolean;
-}
+// A simple input system using only browser based APIs. As with 
+// rendering in a real game you can use whatever input framework
+// you choose.
+import { Controls } from "./logic";
 
+// The state of the local player's inputs
 export const gameInputs: Controls = {
     left: false,
     right: false,
@@ -12,11 +11,17 @@ export const gameInputs: Controls = {
     down: false
 }
 
+// Since we want to test this tech demo in the Dusk Dev UI we'll
+// adapt our input controls for touch devices vs desktop
 const touchDevice = ('ontouchstart' in document.documentElement);
 const controls = document.getElementById("controls") as HTMLImageElement;
 let mousePressed = false;
 
-function mouseDown(x: number, y: number) {
+// whichever type of input we're using we're going to abstract
+// it in the same change - i.e. if we're pressing on a screen
+// control or a key on the keyboard we're just going to adjust
+// the local players state
+function press(x: number, y: number) {
     const rect = controls.getBoundingClientRect();
     const tx = -1 + Math.floor((x - rect.left) / (rect.width / 3));
     const ty = -1 + Math.floor((y - rect.top) / (rect.height / 3));
@@ -27,35 +32,40 @@ function mouseDown(x: number, y: number) {
     gameInputs.down = ty == 1;
 }
 
-function mouseUp() {
+function release() {
     gameInputs.left = false;
     gameInputs.right = false;
     gameInputs.up = false;
     gameInputs.down = false;
 }
 
+// if we're testing on a touch device then use touchstart/touchmove/touchend.
+// we're being a bit idealistic here and only considering the first touch.
 if (touchDevice) {
     controls.addEventListener("touchstart", (e: TouchEvent) => {
-        mouseDown(e.touches[0].clientX, e.touches[1].clientY);
+        press(e.touches[0].clientX, e.touches[0].clientY);
     })
     controls.addEventListener("touchmove", (e: TouchEvent) => {
-        mouseDown(e.touches[0].clientX, e.touches[1].clientY);
+        press(e.touches[0].clientX, e.touches[0].clientY);
     })
     window.addEventListener("touchend", (e: TouchEvent) => {
-        mouseUp();
+        release();
     })
 } else {
+// if we're running on desktop we'll use mousedown/mousemove/mouseup along
+// with keyboard controls for testing. You don't have to do
+// this if you're only considering the Dusk mobile app.
     controls.addEventListener("mousedown", (e: MouseEvent) => {
-        mouseDown(e.clientX, e.clientY);
+        press(e.clientX, e.clientY);
         mousePressed = true;
     })
     controls.addEventListener("mousemove", (e: MouseEvent) => {
         if (mousePressed) {
-            mouseDown(e.clientX, e.clientY);
+            press(e.clientX, e.clientY);
         }
     })
     window.addEventListener("mouseup", (e: MouseEvent) => {
-        mouseUp();
+        release();
         mousePressed = false;
     })
 

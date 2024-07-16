@@ -23,7 +23,7 @@ Let’s start by looking at the architecture of a Dusk game and the separation b
 
 It’s often considered good practice to separate your data model and logic from the rendering, i.e. the MVC pattern. However, when it comes to multiplayer this isn’t just best practice, it’s absolutely required to let us run copies of the game logic on both the server and client. 
 
-The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict/rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](../docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
+The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict/rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
 
 The renderer, or client, is the code that actually converts the game state to something that the player can view and interact with. The client can be implemented using any library or framework that can run in the browser. 
 
@@ -161,7 +161,7 @@ So how does this synchronize the clients?
 
 The Dusk platform runs this logic on the server and each of the clients. When a change is made to the game state is first applied locally - so latency in controls is very low - and then sent to the server and subsequently to all other clients. This is all timed so that the local client isn’t applying the changes too early and gives the server time to schedule the change at the right time.
 
-So everyone playing and the server have a copy of the game logic which they’re keeping up to date based on the changes they receive. This relies on the [game logic being fully deterministic](../docs/how-it-works/syncing-game-state) but from a developer point of view means you don’t really have to think about how the sync is happening. As long as you keep your updating code in the game logic, the clients will stay in sync. 
+So everyone playing and the server have a copy of the game logic which they’re keeping up to date based on the changes they receive. This relies on the [game logic being fully deterministic](/docs/how-it-works/syncing-game-state) but from a developer point of view means you don’t really have to think about how the sync is happening. As long as you keep your updating code in the game logic, the clients will stay in sync. 
 
 The final bit of the game logic is how the “changes” to the game state can be indicated by players, what Dusk calls actions. 
 

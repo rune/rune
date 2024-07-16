@@ -1,8 +1,9 @@
 ---
-title: Top Down Synchronization  
+title: Networking a Top Down RPG  
 description: Tech demo for top down games 
 slug: top-down-synchronization 
 tags: [Game Development, Tech Demo] 
+image: /img/blog/social-previews/top-down-synchronization.png
 authors:
 - name: Kevin Glass 
   title: Founding Engineer at Dusk  
@@ -11,9 +12,14 @@ authors:
   hide_table_of_contents: true
 ---
 
-Here at Dusk we provide a multiplayer javascript games SDK and platform for everyone to get their creations out to 1000s of players. We provide technical demos to illustrate how you can use the platform to implement various game types.
+<head>
+  <title>Networking a Top Down RPG</title>
+  <meta property="og:title" content="Networking a Top Down RPG"/>
+</head>
 
-![](/img/blog/callouts/top-down-synchronization.png)
+Here at Dusk we provide a multiplayer Javascript games SDK and platform for everyone to get their creations out to 1000s of players. We provide technical demos to illustrate how you can use the platform to implement various game types.
+
+![](/img/blog/callouts/top-down-synchronization.gif)
 
 I’ve been putting together a new tech demo that shows how to implement the basic synchronization of movement between clients connected in a Dusk room for a top down game. You can try it out [here](../../tech-demos/top-down-synchronization/). Starting here gives us a super simple example of how to wire everything up without worrying about gravity/physics or complex collision detection.
 
@@ -23,7 +29,7 @@ Let’s start by looking at the architecture of a Dusk game and the separation b
 
 It’s often considered good practice to separate your data model and logic from the rendering, i.e. the MVC pattern. However, when it comes to multiplayer this isn’t just best practice, it’s absolutely required to let us run copies of the game logic on both the server and client. 
 
-The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict/rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
+The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict-rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
 
 The renderer, or client, is the code that actually converts the game state to something that the player can view and interact with. The client can be implemented using any library or framework that can run in the browser. 
 

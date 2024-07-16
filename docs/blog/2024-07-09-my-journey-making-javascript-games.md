@@ -3,6 +3,7 @@ title: My Journey Making Javascript Games
 description: How I got to building multiplayer games on Dusk  
 slug: my-journey-making-javascript-games 
 tags: [Game Development] 
+image: /img/blog/social-previews/my-journey-making-javascript-games.png
 authors:
 - name: Kevin Glass 
   title: Founding Engineer at Dusk  
@@ -10,6 +11,11 @@ authors:
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
 ---
+
+<head>
+  <title>My Journey Making Javascript Games</title>
+  <meta property="og:title" content="My Journey Making Javascript Games"/>
+</head>
 
 Here at Dusk we're building a platform to help developers make multiplayer mobile games and get them out to plenty of players. The technology available to make games has made it easier over the last 30 years. When I started, getting sprites on the screen was the hard bit. That was back in (_muffled noises)_. Then it was getting 60fps. Then it was cross platform. Then it was 3D, and then it was mobile cross platform games that were the challenge. At each stage the bar gets raised and we can do more with less.
 

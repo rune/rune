@@ -3,6 +3,7 @@ title: Web Game Performance Optimization
 description: Tips and Tricks for optimizing web games on low end mobile devices 
 slug: web-game-performance-optimization 
 tags: [Game Development, Tip and Tricks] 
+image: /img/blog/social-previews/web-game-performance-optimization.png
 authors:
 - name: Kevin Glass 
   title: Founding Engineer at Dusk  
@@ -10,6 +11,11 @@ authors:
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
 ---
+
+<head>
+  <title>Web Game Performance Optimization</title>
+  <meta property="og:title" content="Web Game Performance Optimization"/>
+</head>
 
 Dusk is a platform for publishing web games to millions of players, and we love every game that a developer builds on it. One of the more difficult parts about distributing web games is the number of types of devices the game will end up running on. If you are building web games for the desktop then performance is often not a factor. Web games tend towards being more simple visually than traditional desktop or console games and as such the super powered machines that most desktop players have don’t struggle with even non-optimized code. This is great for artistic and creative approaches to building games, developers can simply focus on making the game exactly the way they want it, in the easiest way for them. 
 

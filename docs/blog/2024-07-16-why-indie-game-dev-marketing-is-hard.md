@@ -3,13 +3,19 @@ title: Why Indie Game Dev Marketing is Hard
 description: Looking at why game dev marketing is hard and a different approach 
 slug: why-indie-game-dev-marketing-is-hard 
 tags: [Game Development] 
+image: /img/blog/social-previews/indie-game-marketing.png
 authors:
 - name: Kevin Glass 
   title: Founding Engineer at Dusk  
-  url: https://www.linkedin.com/in/kevglass/
+  url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
 ---
+
+<head>
+  <title>Why Indie Game Dev Marketing is Hard</title>
+  <meta property="og:title" content="Why Indie Game Dev Marketing is Hard"/>
+</head>
 
 Dusk is our platform to get your games seen by 1000s of players every day. This is one of things that particularly attracted me to the platform. The most common meme I see on my X/Twitter feed is this:
 

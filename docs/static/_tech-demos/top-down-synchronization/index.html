@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/dusk-games-sdk@4.20.2/multiplayer-dev.js"></script>
+    <script type="module" crossorigin src="./logic.js"></script>
+    <script type="module" crossorigin src="./client.js"></script>
+
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <title>Top Down Example</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        background: #409c9b;
+      }
+
+      #game-canvas {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+      }
+
+      #controls {
+        width: 150px;
+        height: 150px;
+        bottom: 5px;
+        left: 5px;
+        position: absolute;
+      }
+
+      #debug {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 20px;
+        width: 100%;
+        color: white;
+        background: rgba(0,0,0,.5)
+      }
+    </style>
+    
+    
+  </head>
+  <body>
+    <canvas id="game-canvas"></canvas>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAYAAACLz2ctAAAFVUlEQVR42u3dfU7iXhTG8e7EJUz8x5cCgvhe3/EF04SEpEm34xJcgktgKbMElnCnh6Tzu78rKE57bTn3+yRPQpyJeno+U6AjGEWKMhqNtp6enl7H4/FM+vLyYrS0nEnmkzkj0q4kSSL45sWSjPbKnDIvW29RiqW8h4DPQvjO1luUkPCVZestBtjv983e3p6ayjzFWQ+Abc3z87OxqwlfWXdGtg5AABIAEgACEIAAJM1eBzR2NQJ0Z2TrAAQgASABIAABCEDSYB4fH43dnwARx/Hf/xaT276/njsjWw8YoICbTCYmz/NF5bZvhAAE4FJ8P4UQgABcie8nEAIwcIBf4fONEIAtzsPDg7HrA2Capl/isxHW/fXdGdl6YACzLFsboLTusyAAAwfYdAEIQAASAAKwhRmNRsauRoDujGwdgAAkACQABCAAAUgazP39vbGrEaA7I1sHIAAJAAkAAQhAAJIGc3d3Z+xqBOjOyNYBCEACQAJAAAIQgKTB3N7eGrsaAbozsnUAApAAkAAQgAAEIGkwNzc3xq5GgO6MbB2AACQAJAAEIAABuLEZDodb19fXr5eXlzNpcdtsejUC3PSdWL5exdxffFdXV3MN6MqenZ2pBChzadmRmFsgTJLkXRO+4l+Y6XQ6KgHKXDKfll2JvUjbmW9/f18lvrIyn6Yz4QeAvV5P9QJpcxVb7hk8Ku6LjV0OFPVZ1xsAKQApAAFIAUgDBCjPSuxykKjPut4ASAFIAQhACkAaIMAkSYxdDhL1WdcbACkAKQABSAFIAwR4cXFh7HKQqM+63gBIAUgBCEAKQBogwPPzc2O3yieP49iMx2OTpikHW1llp7Jb2XGVz+N6qw2gfGOTycTkeb6o9pdGHh4emuFwuKjcrrqYtrfcq+y4yqxeALr4tAM8Pj42p6en/6t8LASAVRHWDnAZPs0A5bWtLr6yg8EgCIBVENYKcBU+zQCXnf3shgLwXxF+AChv82D3uw9Ml31jmgF+hi80gCXC73we11slgNPpNDiA8oRjFT75s9AAZlnWHEB5zCPfQEgA5S7n5OTkAz75mOZnwqvwffdxb60AP0Oo/bqYXH4p8clt7fPWgc8LwFUIuXirF+C/4lsKsK4H0S5ClqYTYBV8y57ERXU+iysRfveBKW1/y71WvdbpFSClAKQApHRtgHL9yi4Hifqs6w2AFIAUgACkAKQBApSfb7PLQaK+f57SLgApACkAAUgBSAMEeHR0ZOxykKjPut4ASAFIAQhACkAaIMDyDXbKcpCo71cT2gUgbRbgYDD47X5wE9vv983BwcHirdM0L1Dmk1mlm74zsScA3zQAtIZSDVDmU7SrtyiO463ixlwTQjkTasQncynCNxd7kaTb7f4qTukzeXMdLdX6xkgaKtbEXKQpIQKMCAABSABIAAjAwCOXJ+xqvQRjl60DEIAEgASAAAQgAEmDKf+DvqxGgO6MbB2AACQAJAAEIAABSBqM/KycXa0/D2iXrQMQgASABIAABCAASYPp9XrGrkaA7oxsHYAAJAAkAAQgAAFIGky32zV2NQJ0Z2TrAAQgASAJBGCapibP87UqfzeOYwACsL5Op9O1AWZZxhkwpHQ6HWPX14uCBNY6+Hy8MMqdka0HBnAdhL7wARCAXyL0iQ+AAPwUoW98AATgSoQ/gQ+ALY9c8rCr8TqgOyNbByAACQAJAAEIQACSBiO/wsqu1l/TZZetAxCABIAEgAAEIABJgwnxlz+z9RZld3f3d0j4ZF623qLs7Oy8hQRQ5mXr7boQvVUsZR4Ivv9+2TNpT7a3t38Vd00z5Xe9M5lTy87+AJjWFTa0+d5pAAAALXRFWHRTb2Z0d2FyZQBieS5ibG9vZGR5LmNyeXB0by5pbWFnZS5QTkcyNEVuY29kZXKoBn/uAAAAAElFTkSuQmCC" id="controls">
+    <div id="debug"></div>
+  </body>
+</html>

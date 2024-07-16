@@ -13,6 +13,8 @@ authors:
 
 Here at Dusk we provide a multiplayer javascript games SDK and platform for everyone to get their creations out to 1000s of players. We provide technical demos to illustrate how you can use the platform to implement various game types.
 
+![](/img/blog/callouts/top-down-synchronization.png)
+
 I’ve been putting together a new tech demo that shows how to implement the basic synchronization of movement between clients connected in a Dusk room for a top down game. You can try it out [here](../../tech-demos/top-down-synchronization/). Starting here gives us a super simple example of how to wire everything up without worrying about gravity/physics or complex collision detection.
 
 Let’s start by looking at the architecture of a Dusk game and the separation between rendering and logic.

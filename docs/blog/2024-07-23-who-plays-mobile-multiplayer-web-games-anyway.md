@@ -77,4 +77,4 @@ There a few things to remember that might not be obvious when you’re designing
 
 Players of games generally range across many different demographics but with luck using the information in this article, our developers stand a better chance of writing the next great game on Dusk!
 
-If you’d like more information or just to comment on the article just drop into our Discord.
+If you’d like more information or just to comment on the article just drop into our [Discord](https://discord.gg/dusk-devs).

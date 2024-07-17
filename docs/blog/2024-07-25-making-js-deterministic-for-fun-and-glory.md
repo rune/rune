@@ -69,6 +69,9 @@ Again MDN has a little hint:
 
 There’s a decent chance that a developer will accidentally use a comparator that doesn’t quite end up with the same result on different implementations. To remedy this we can patch the `Array.prototype.sort` function with a default comparator.
 
+## Bonus Content!
+
+The other thing we can do is help developers to recognize when their code might produce non-deterministic results. There are many possible causes of this including access to global scope and using locale related functions.
 As you can see determinism in Javascript isn’t straight forward but it is obtainable. We now have games running in perfect synchronization.
 
 If you have comments or want to learn more head over to the [Discord](https://discord.gg/dusk-devs).

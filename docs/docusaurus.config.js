@@ -105,7 +105,7 @@ const config = {
               },
               {
                 label: "Examples",
-                to: "/docs/examples",
+                to: "/docs/examples/games",
               },
             ],
           },

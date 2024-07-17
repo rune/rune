@@ -5,7 +5,7 @@
 </picture>
 
 <p align="center">
-  <a href="https://developers.dusk.gg">Docs</a> · <a href="https://discord.gg/dusk-devs">Discord</a> · <a href="https://developers.dusk.gg/faq">FAQ</a> · <a href="https://developers.dusk.gg/blog">Blog</a> · <a href="https://developers.dusk.gg/docs/examples">Examples</a> 
+  <a href="https://developers.dusk.gg">Docs</a> · <a href="https://discord.gg/dusk-devs">Discord</a> · <a href="https://developers.dusk.gg/faq">FAQ</a> · <a href="https://developers.dusk.gg/blog">Blog</a> · <a href="https://developers.dusk.gg/docs/examples/games">Examples</a> 
 </p>
 
 # Dusk

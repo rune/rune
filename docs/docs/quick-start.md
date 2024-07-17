@@ -93,7 +93,7 @@ You can also make much fancier games than Tic Tac Toe. Dusk supports games with 
 
 Here are some good places to start:
 
-- If you want some inspiration for your next game, we really recommend [checking out the example games](examples.mdx)!
+- If you want some inspiration for your next game, we really recommend [checking out the example games](examples/games)!
 - Building games is more fun when you're part of a community, join the [Dusk Discord server](https://discord.gg/dusk-devs).
 - If your game is ready to be published to the big Dusk community, check out [how to publish your game](publishing/publishing-your-game.md).
 - Want to better understand how Dusk works underneath? See our explanation of [game state syncing](how-it-works/syncing-game-state.md).

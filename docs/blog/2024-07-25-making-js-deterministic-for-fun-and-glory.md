@@ -71,7 +71,8 @@ There’s a decent chance that a developer will accidentally use a comparator th
 
 ## Bonus Content!
 
-The other thing we can do is help developers to recognize when their code might produce non-deterministic results. There are many possible causes of this including access to global scope and using locale related functions.
+The other thing we can do is help developers to recognize when their code might produce non-deterministic results. There are many possible causes of this e.g. access to global scope and using locale related functions. In the Javascript world eslint is a common tool for applying a set of rules to code as the developer is working and at build time. At Dusk we provide an eslint plugin that encapsulates all the common errors we've seen so developers are warned right inside their IDEs when something might cause an issue.
+
 As you can see determinism in Javascript isn’t straight forward but it is obtainable. We now have games running in perfect synchronization.
 
 If you have comments or want to learn more head over to the [Discord](https://discord.gg/dusk-devs).

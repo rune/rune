@@ -6,9 +6,9 @@ sidebar_position: 3
 
 Here's some advice on making your game a great experience for the players!
 
-### Avoid UI Like Menu Screens, Pause Buttons, High Score Screen, etc. {#avoid-ui-like-menu-screens-pause-buttons-high-score-screen-etc}
+### Avoid UI Like Menu Screens, Pause Buttons, Audio Buttons, etc. {#avoid-ui-like-menu-screens-pause-buttons-high-score-screen-etc}
 
-Dusk’s UI provides a simple way to pause/play/restart that works for all games so you don’t need a menu screen or a pause button in your game. This lets players get into the action of your game, thereby making it faster to start playing and more fun for players.
+Dusk’s UI provides a simple way to play/pause/restart that works for all games so you don’t need a menu screen or a pause button in your game. This lets players get into the action of your game, thereby making it faster to start playing and more fun for players! Similarly, there's no need for any audio buttons as Dusk has in-app UI for that, making things simpler for players.
 
 ### Avoid Ads, Branding and Links {#avoid-ads-branding-and-links}
 

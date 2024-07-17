@@ -25,6 +25,8 @@ import { gameInputs } from "./input"
   const warriorRed = await loadTileSet(warriorRedSrc, 192, 192)
   const warriorYellow = await loadTileSet(warriorYellowSrc, 192, 192)
 
+  const startTime = Date.now()
+
   // indexed sprites to let different players have different colored warriors
   const entitySprites = [
     warriorBlue,
@@ -143,12 +145,9 @@ import { gameInputs } from "./input"
     // if the Dusk SDK has given us a game state then
     // render all the entities in the game
     if (gameState) {
-      // simple animation ticker. Here we're using Dusk.gameTime() rather
-      // than Date.now() since it'll be synced across the clients and the
-      // animation should also stay in sync
-      const frame = Math.floor(Dusk.gameTime() / 100) % 6
+      const frame = Math.floor((Date.now() - startTime) / 100) % 6
 
-      // render all the entities based on the curreng game state
+      // render all the entities based on the current game state
       ;[...gameState.entities]
         .sort((a, b) => a.y - b.y)
         .forEach((entity) => {

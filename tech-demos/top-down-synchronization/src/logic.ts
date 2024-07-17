@@ -41,7 +41,7 @@ export enum Animation {
   // eslint-disable-next-line no-unused-vars
   IDLE = 0,
   // eslint-disable-next-line no-unused-vars
-  WALK = 7,
+  WALK = 6,
 }
 
 // an entity is anything that is displayed in the world

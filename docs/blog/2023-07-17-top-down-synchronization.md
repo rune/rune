@@ -35,7 +35,7 @@ The renderer, or client, is the code that actually converts the game state to so
 
 Let’s get to the code, I’m going to assume you already know how to [create a game project](https://developers.dusk.gg/docs/quick-start) and just jump straight into the logic. In this demo we’re going to have a map, players and trees. So first let’s declare some types to describe those:
 
-```Javascript
+```js
 // types of entities we'll display in the world
 export type EntityType = "PLAYER" | "TREE"
 
@@ -74,7 +74,7 @@ export type Controls = {
 
 Next we’ll need to describe the game state we want to synchronize, in Dusk that’s as easy as this:
 
-```Javascript
+```js
 // this is the core of what we're trying to keep
 // in sync across the network. It'll be held on clients
 // and server and the Dusk platform will keep it
@@ -86,7 +86,7 @@ export interface GameState {
 
 We need to setup an initial state for the game which all clients will start from before applying changes they receive from clients:
 
-```Javascript
+```js
 Dusk.initLogic({
   setup: (allPlayerIds) => {
     const initialState: GameState = {
@@ -127,7 +127,7 @@ Dusk.initLogic({
 
 In the game logic we need to declare what the clients can do and how the game should update each frame. In Dusk the game update is defined as part of setting up the Dusk SDK like so:
 
-```Javascript
+```js
 update: ({ game }) => {
     // go through all the players and update them
     for (const entity of game.entities.filter((e) => 
@@ -171,7 +171,7 @@ So everyone playing and the server have a copy of the game logic which they’re
 
 The final bit of the game logic is how the “changes” to the game state can be indicated by players, what Dusk calls actions. 
 
-```Javascript
+```js
 // actions are the way clients can modify game state. Dusk manages
 // how and when these actions are applied to maintain a consistent
 // game state between all clients.
@@ -202,7 +202,7 @@ Now we have the game logic, the players can update controls and they’ll move t
 
 First we need to register a callback with Dusk so that it can tell us about changes to game state:
 
-```Javascript
+```js
 // Start the Dusk SDK on the client rendering side. 
 // This tells the Dusk app that we're ready for players 
 // to see the game. It's also the hook
@@ -224,7 +224,7 @@ onChange: ({ game, yourPlayerId }) => {
 
 The rendering itself is purely taking the game state that it’s been given and drawing entities to the canvas:
 
-```Javascript
+```js
 // if the Dusk SDK has given us a game state then
 // render all the entities in the game
 if (gameState) {
@@ -255,7 +255,7 @@ if (gameState) {
 
 The only other thing the renderer needs to do is convert player inputs into that action we defined in game logic:
 
-```Javascript
+```js
 // we're only allowed to update the controls 10 times a second, so
 // only send if its been 1/10 of a second since we sent the last one
 // and the controls have changed

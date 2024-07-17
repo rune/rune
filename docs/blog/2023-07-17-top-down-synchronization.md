@@ -140,17 +140,6 @@ update: ({ game }) => {
       // attempt to move them in the appropriate direction. 
       // Only move if the player isn't blocked by whatever 
       // is in the tile map.
-      //
-      // The client will run a copy of this logic and 
-      // update() loop so will immediately update is run. 
-      // The server will also run a copy of this logic and
-      // update() loop but slightly behind the client to 
-      // allow for any action conflict resolution, e.g. two 
-      // players try to take the same item. When the server 
-      // has resolved the conflict the client will rollback
-      // its changes if needed and apply the new actions from
-      // the authoritative server putting the client back 
-      // in the correct state.
       if (player.controls.left) {
         if (isValidPosition(game, player.x - MOVE_SPEED, player.y)) {
           player.x -= MOVE_SPEED
@@ -168,6 +157,8 @@ So how does this synchronize the clients?
 The Dusk platform runs this logic on the server and each of the clients. When a change is made to the game state is first applied locally - so latency in controls is very low - and then sent to the server and subsequently to all other clients. This is all timed so that the local client isn’t applying the changes too early and gives the server time to schedule the change at the right time.
 
 So everyone playing and the server have a copy of the game logic which they’re keeping up to date based on the changes they receive. This relies on the [game logic being fully deterministic](/docs/how-it-works/syncing-game-state) but from a developer point of view means you don’t really have to think about how the sync is happening. As long as you keep your updating code in the game logic, the clients will stay in sync. 
+
+The client will run a copy of this logic and `update()` loop so will immediately update is run. The server will also run a copy of this logic and `update()` loop but slightly behind the client to allow for any action conflict resolution, e.g. two players try to take the same item. When the server has resolved the conflict the client will rollback its changes if needed and apply the new actions from the authoritative server putting the client back in the correct state.
 
 The final bit of the game logic is how the “changes” to the game state can be indicated by players, what Dusk calls actions. 
 
@@ -228,14 +219,7 @@ The rendering itself is purely taking the game state that it’s been given and 
 // if the Dusk SDK has given us a game state then
 // render all the entities in the game
 if (gameState) {
-    // simple animation ticker. Here we're using 
-    // Dusk.gameTime() rather
-    // than Date.now() since it'll be synced across 
-    // the clients and the
-    // animation should also stay in sync
-    const frame = Math.floor(Dusk.gameTime() / 100) % 6
-
-    // render all the entities based on the curreng game state
+    // render all the entities based on the current game state
     ;[...gameState.entities]
     .sort((a, b) => a.y - b.y)
     .forEach((entity) => {

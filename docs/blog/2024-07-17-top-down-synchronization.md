@@ -167,17 +167,16 @@ The final bit of the game logic is how the “changes” to the game state can b
 // how and when these actions are applied to maintain a consistent
 // game state between all clients.
 actions: {
-// Action applied from the client to setup the controls the
-// player is currently pressing. We simple record the controls
-// and let the update() loop actually apply the changes
-controls: (controls, { game, playerId }) => {
-    const entity = game.entities.find((p) => p.playerId === playerId)
+  // Action applied from the client to setup the controls the
+  // player is currently pressing. We simple record the controls
+  // and let the update() loop actually apply the changes
+  controls: (controls, { game, playerId }) => {
+      const entity = game.entities.find((p) => p.playerId === playerId)
 
-    if (entity && entity.type === "PLAYER") {
-    // eslint-disable-next-line prettier/prettier
-    (entity as Player).controls = { ...controls }
-    }
-},
+      if (entity && entity.type === "PLAYER") {
+        (entity as Player).controls = { ...controls }
+      }
+  },
 },
 ```
 
@@ -200,8 +199,8 @@ First we need to register a callback with Dusk so that it can tell us about chan
 // that lets the Dusk SDK update us on 
 // changes to game state
 Dusk.initClient({
-// notification from Dusk that there is a new game state
-onChange: ({ game, yourPlayerId }) => {
+  // notification from Dusk that there is a new game state
+  onChange: ({ game, yourPlayerId }) => {
     // record the ID of our local player so we can 
     // center the camera on that player.
     myPlayerId = yourPlayerId
@@ -209,7 +208,7 @@ onChange: ({ game, yourPlayerId }) => {
     // record the current game state for rendering in
     // out core loop
     gameState = game
-},
+  },
 })
 ```
 
@@ -219,22 +218,22 @@ The rendering itself is purely taking the game state that it’s been given and 
 // if the Dusk SDK has given us a game state then
 // render all the entities in the game
 if (gameState) {
-    // render all the entities based on the current game state
-    ;[...gameState.entities]
-    .sort((a, b) => a.y - b.y)
-    .forEach((entity) => {
-        if (entity.type === "PLAYER") {
-        // players need to be rendering using animation 
-        // and flipping
-        const player = entity as Player
-        drawTile(
-            player.x - playerFootPosition[0],
-            player.y - playerFootPosition[1],
-            entitySprites[player.sprite],
-            player.animation + frame,
-            player.flipped
-        )
-        ...
+  // render all the entities based on the current game state
+  ;[...gameState.entities]
+  .sort((a, b) => a.y - b.y)
+  .forEach((entity) => {
+    if (entity.type === "PLAYER") {
+    // players need to be rendering using animation 
+    // and flipping
+    const player = entity as Player
+    drawTile(
+        player.x - playerFootPosition[0],
+        player.y - playerFootPosition[1],
+        entitySprites[player.sprite],
+        player.animation + frame,
+        player.flipped
+    )
+    ...
 ```
 
 The only other thing the renderer needs to do is convert player inputs into that action we defined in game logic:

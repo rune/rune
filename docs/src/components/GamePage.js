@@ -37,11 +37,16 @@ export function GamePage({ title, slug, techDemo }) {
         className="menuLink_src-theme-Navbar-Layout-styles-module"
         style={{
           position: "absolute",
-          padding: "10px",
+          padding: "8px",
+          margin: "10px",
+          background: "white",
+          color: "#1b0329",
+          borderRadius: "8px",
+          lineHeight: "20px",
         }}
         href={`https://github.com/dusk-gg/dusk/tree/staging/${type}/${slug}`}
       >
-        SOURCE
+        Source
       </a>
       <iframe
         src={`/_${

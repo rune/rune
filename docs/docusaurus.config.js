@@ -42,6 +42,9 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
         },
+        blog: {
+          blogSidebarCount: 10,
+        },
         theme: {
           customCss: require.resolve("./src/css/custom.scss"),
         },

@@ -150,7 +150,7 @@ import { gameInputs } from "./input"
       const allEntities = [...gameState.entities, ...gameState.players]
 
       // render all the entities based on the current game state
-      ;allEntities
+      allEntities
         .sort((a, b) => a.y - b.y)
         .forEach((entity) => {
           if (entity.type === "PLAYER") {

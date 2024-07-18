@@ -57,6 +57,8 @@ export type Player = {
   // the network
   controls: Controls
   animation: Animation
+  vx: number
+  vy: number
   // true if the player is facing left instead of right
   // as the sprites are designed
   flipped: boolean
@@ -81,6 +83,7 @@ Next we’ll need to describe the game state we want to synchronize, in Dusk tha
 // in sync by applying deterministic actions
 export interface GameState {
   entities: Entity[]
+  players: Player[]
 }
 ```
 
@@ -90,10 +93,11 @@ We need to setup an initial state for the game which all clients will start from
 Dusk.initLogic({
   setup: (allPlayerIds) => {
     const initialState: GameState = {
+      entities: [],
       // for each of the players Dusk says are in the game
       // create a new player entity. We'll initialize their
       // location to place them in the world
-      entities: allPlayerIds.map((p, index) => {
+      players: allPlayerIds.map((p, index) => {
         return {
           x: (index + 1) * 64,
           y: (index + 1) * 64,
@@ -107,6 +111,9 @@ Dusk.initLogic({
             up: false,
             down: false,
           },
+          flipped: false,
+          vx: 0,
+          vy: 0,
         }
       }),
     }
@@ -136,17 +143,16 @@ update: ({ game }) => {
       // assume the player is doing nothing to start with
       player.animation = Animation.IDLE
 
-      // for each control that the player has pressed
-      // attempt to move them in the appropriate direction. 
-      // Only move if the player isn't blocked by whatever 
-      // is in the tile map.
+      // for each control that the player has pressed attempt to move them
+      // in the appropriate direction. Only move if the player isn't blocked
+      // by whatever is in the tile map.
       if (player.controls.left) {
-        if (isValidPosition(game, player.x - MOVE_SPEED, player.y)) {
-          player.x -= MOVE_SPEED
-          player.animation = Animation.WALK
-          player.flipped = true
-        }
-      }
+        player.vx = Math.max(-MOVE_SPEED, player.vx - MOVE_ACCEL)
+        player.flipped = true
+      } else if (player.controls.right) {
+        player.vx = Math.min(MOVE_SPEED, player.vx + MOVE_ACCEL)
+        player.flipped = false
+      } else {
       ...
 ```
 
@@ -171,7 +177,7 @@ actions: {
   // player is currently pressing. We simple record the controls
   // and let the update() loop actually apply the changes
   controls: (controls, { game, playerId }) => {
-      const entity = game.entities.find((p) => p.playerId === playerId)
+      const entity = game.players.find((p) => p.playerId === playerId)
 
       if (entity && entity.type === "PLAYER") {
         (entity as Player).controls = { ...controls }
@@ -219,7 +225,9 @@ The rendering itself is purely taking the game state that it’s been given and 
 // render all the entities in the game
 if (gameState) {
   // render all the entities based on the current game state
-  ;[...gameState.entities]
+  const allEntities = [...gameState.entities, ...gameState.players]
+
+  ;allEntities
   .sort((a, b) => a.y - b.y)
   .forEach((entity) => {
     if (entity.type === "PLAYER") {

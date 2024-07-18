@@ -111,7 +111,7 @@ import { gameInputs } from "./input"
 
     // center the screen on our player if we have one
     if (myPlayerId) {
-      const myPlayer = gameState.entities.find((p) => p.playerId === myPlayerId)
+      const myPlayer = gameState.players.find((p) => p.playerId === myPlayerId)
       if (myPlayer) {
         graphicsCtx.translate(
           -myPlayer.x + Math.floor(graphicsCtx.canvas.width / 2),
@@ -147,8 +147,10 @@ import { gameInputs } from "./input"
     if (gameState) {
       const frame = Math.floor((Date.now() - startTime) / 100) % 6
 
+      const allEntities = [...gameState.entities, ...gameState.players]
+
       // render all the entities based on the current game state
-      ;[...gameState.entities]
+      ;allEntities
         .sort((a, b) => a.y - b.y)
         .forEach((entity) => {
           if (entity.type === "PLAYER") {

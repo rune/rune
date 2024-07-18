@@ -2,6 +2,7 @@ import type { PlayerId, DuskClient } from "dusk-games-sdk/multiplayer"
 
 // how much the players will move per frame
 export const MOVE_SPEED = 4
+export const MOVE_ACCEL = 1
 
 // a simple tile map specifying the sprite
 // to show at each location (-1 = no sprite)
@@ -62,6 +63,8 @@ export type Player = {
   // the network
   controls: Controls
   animation: Animation
+  vx: number
+  vy: number
   // true if the player is facing left instead of right
   // as the sprites are designed
   flipped: boolean
@@ -82,6 +85,7 @@ export type Controls = {
 // in sync by applying deterministic actions
 export interface GameState {
   entities: Entity[]
+  players: Player[]
 }
 
 // the actions that players can apply to game state. In
@@ -119,10 +123,11 @@ Dusk.initLogic({
   // all players to start the game
   setup: (allPlayerIds) => {
     const initialState: GameState = {
+      entities: [],
       // for each of the players Dusk says are in the game
       // create a new player entity. We'll initialize their
       // location to place them in the world
-      entities: allPlayerIds.map((p, index) => {
+      players: allPlayerIds.map((p, index) => {
         return {
           x: (index + 1) * 64,
           y: (index + 1) * 64,
@@ -140,6 +145,9 @@ Dusk.initLogic({
             up: false,
             down: false,
           },
+          flipped: false,
+          vx: 0,
+          vy: 0,
         }
       }),
     }
@@ -164,8 +172,7 @@ Dusk.initLogic({
   // that have been sent through actions.
   update: ({ game }) => {
     // go through all the players and update them
-    for (const entity of game.entities.filter((e) => e.type === "PLAYER")) {
-      const player = entity as Player
+    for (const player of game.players) {
       // assume the player is doing nothing to start with
       player.animation = Animation.IDLE
 
@@ -181,30 +188,45 @@ Dusk.initLogic({
       // will rollback its changes if needed and apply the new actions from
       // the authoritative server putting the client back in the correct state.
       if (player.controls.left) {
-        if (isValidPosition(game, player.x - MOVE_SPEED, player.y)) {
-          player.x -= MOVE_SPEED
-          player.animation = Animation.WALK
-          player.flipped = true
+        player.vx = Math.max(-MOVE_SPEED, player.vx - MOVE_ACCEL)
+        player.flipped = true
+      } else if (player.controls.right) {
+        player.vx = Math.min(MOVE_SPEED, player.vx + MOVE_ACCEL)
+        player.flipped = false
+      } else {
+        if (player.vx > 0) {
+          player.vx = Math.max(0, player.vx - MOVE_ACCEL)
+        } else if (player.vx < 0) {
+          player.vx = Math.min(0, player.vx + MOVE_ACCEL)
         }
       }
-      if (player.controls.right) {
-        if (isValidPosition(game, player.x + MOVE_SPEED, player.y)) {
-          player.x += MOVE_SPEED
-          player.animation = Animation.WALK
-          player.flipped = false
-        }
-      }
+
       if (player.controls.up) {
-        if (isValidPosition(game, player.x, player.y - MOVE_SPEED)) {
-          player.y -= MOVE_SPEED
-          player.animation = Animation.WALK
+        player.vy = Math.max(-MOVE_SPEED, player.vy - MOVE_ACCEL)
+      } else if (player.controls.down) {
+        player.vy = Math.min(MOVE_SPEED, player.vy + MOVE_ACCEL)
+      } else {
+        if (player.vy > 0) {
+          player.vy = Math.max(0, player.vy - MOVE_ACCEL)
+        } else if (player.vy < 0) {
+          player.vy = Math.min(0, player.vy + MOVE_ACCEL)
         }
       }
-      if (player.controls.down) {
-        if (isValidPosition(game, player.x, player.y + MOVE_SPEED)) {
-          player.y += MOVE_SPEED
-          player.animation = Animation.WALK
-        }
+
+      // update players based on their velocities
+      if (
+        player.vx !== 0 &&
+        isValidPosition(game, player.x + player.vx, player.y)
+      ) {
+        player.x += player.vx
+        player.animation = Animation.WALK
+      }
+      if (
+        player.vy != 0 &&
+        isValidPosition(game, player.x, player.y + player.vy)
+      ) {
+        player.y += player.vy
+        player.animation = Animation.WALK
       }
     }
   },
@@ -216,7 +238,7 @@ Dusk.initLogic({
     // player is currently pressing. We simple record the controls
     // and let the update() loop actually apply the changes
     controls: (controls, { game, playerId }) => {
-      const entity = game.entities.find((p) => p.playerId === playerId)
+      const entity = game.players.find((p) => p.playerId === playerId)
 
       if (entity && entity.type === "PLAYER") {
         // eslint-disable-next-line prettier/prettier

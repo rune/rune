@@ -29,7 +29,7 @@ Let’s start by looking at the architecture of a Dusk game and the separation b
 
 It’s often considered good practice to separate your data model and logic from the rendering, i.e. the MVC pattern. However, when it comes to multiplayer this isn’t just best practice, it’s absolutely required to let us run copies of the game logic on both the server and client. 
 
-The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict-rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
+The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict-rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](/docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
 
 The renderer, or client, is the code that actually converts the game state to something that the player can view and interact with. The client can be implemented using any library or framework that can run in the browser. 
 
@@ -194,7 +194,7 @@ If two players both make actions on their local copy of logic that conflict in s
 
 Now, if we sent explicit positions this conflict resolution would result in significant jumps - where a player’s actions were completely disregarded because they were in complete conflict. If we send the controls then the resolution is much smoother, the player still pressed the controls and had them applied, just the resulting game state is a little different. A lot of the time this can be hidden altogether in the renderer.
 
-Now we have the game logic, the players can update controls and they’ll move thanks to our update loop. The final part is to get something on the screen and let our players play! The tech demo uses a very simple renderer without a library or framework. It just draws images (and parts of images) to a HTML canvas and uses DOM events for input. Check out [graphics.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/graphics.ts) and [input.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/input.ts) if you want to see the details. 
+Now we have the game logic, the players can update controls and they’ll move thanks to our update loop. The final part is to get something on the screen and let our players play! The tech demo uses a very simple renderer without a library or framework. It just draws images (and parts of images) to a HTML canvas and uses DOM events for input. Check out [graphics.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/src/graphics.ts) and [input.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/src/input.ts) if you want to see the details. 
 
 First we need to register a callback with Dusk so that it can tell us about changes to game state:
 

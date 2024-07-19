@@ -107,10 +107,9 @@ function Banner() {
         display: flex;
         flex: 1;
         justify-content: space-between;
-        max-width: 1327px;
       }
 
-      @media screen and (max-width: 700px) {
+      @media screen and (max-width: 996px) {
         .banner {
           padding: 12px 24px;
           font-size: 16px;
@@ -133,7 +132,7 @@ function Banner() {
       <div class="banner-content">
         <div class="text">
           <span>Rune is now Dusk!</span>
-          <span>Our name and logo got an upgrade.</span>
+          <span> Our name and logo got an upgrade.</span>
         </div>
         <a
           href="https://updates.dusk.gg/announcing-dusk-and-our-8m-raise/"

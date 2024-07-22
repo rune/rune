@@ -452,3 +452,13 @@ table thead tr:has(> :last-child:nth-child(4)){
     width: 25%;
   }
 }
+
+.top10img {
+  float: left;
+}
+
+.top10Entry {
+  font-size: 20px;
+  padding-left: 10px;
+  vertical-align: super;
+}

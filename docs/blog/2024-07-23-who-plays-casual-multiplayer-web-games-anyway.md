@@ -1,9 +1,9 @@
 ---
-title: Who plays mobile multiplayer web games anyway?  
+title: Who plays casual multiplayer web games anyway?  
 description: Lets look at who's playing 
-slug: who-plays-mobile-multiplayer-web-games-anyway
+slug: who-plays-casual-multiplayer-web-games-anyway
 tags: [Game Development, Players]
-image: /img/blog/social-previews/who-plays-mobile-multiplayer-web-games-anyway.png
+image: /img/blog/social-previews/who-plays-casual-multiplayer-web-games-anyway.png
 authors:
 - name: Kevin Glass 
   title: Founding Engineer at Dusk  
@@ -13,8 +13,8 @@ authors:
 ---
 
 <head>
-  <title>Who plays mobile multiplayer web games anyway?</title>
-  <meta property="og:title" content="Who plays mobile multiplayer web games anyway?"/>
+  <title>Who plays casual multiplayer web games anyway?</title>
+  <meta property="og:title" content="Who plays casual multiplayer web games anyway?"/>
 </head>
 
 Dusk is a platform to get your games played by 1000s of players a day. When you’re rolling out games for this large of a player base, rather than a small focused target group, it’s really important to understand who you’re writing games for.
@@ -33,11 +33,11 @@ More specifically to the Dusk platform however we know that players are largely 
 
 This means that games need to be fast to get into, fast to understand, fast to win and play again. The enjoyment and reward is in sharing the experience with their friends so any feature targeted at bringing more friends in is a bonus!
 
-## Languages
+## Top Languages (other than English)
 
 ![](/img/blog/callouts/languages.png)
 
-A really interesting factor in the Dusk player landscape is the primary language players speak. As you can see the top 3 primary languages are Russian, Spanish and Portuguese. Now of course many of these players also speak English because they’ve played so many games before, but appealing to these groups can be key to game success.
+A really interesting factor in the Dusk player landscape is the primary language players speak. As you can see the top 3 primary languages (other than English) are Russian, Spanish and Portuguese. Now of course many of these players also speak English because they’ve played so many games before, but appealing to these groups can be key to game success.
 
 But that means internationalization, and that’s a lot of work! Well yes and no. Players on the Dusk platform generally don’t want to read so avoiding text all together is a better design than translating it all. If you absolutely must have text, keep it short and simple so that either the players know enough English to understand or it can be translated very simply. 
 
@@ -59,14 +59,16 @@ On the Dusk platform games are played within a room. The average room length is 
 
 We also see peak loads of players around the end of day, when players have come back from school or work, and they’re catching up with their friends. In fact that’s one of the reasons for the name Dusk, that's when our players are playing! 
 
-## Types of Game That Seem to Work
+## Types of Game That Work
 
 Finally lets talk about what games we’ve already seen working. It’s early days so there’s plenty of room for game developers to push out brand new ideas and have overnight hits. Games that have done well so far:
 
-* Idle Games like [Tap the Button](https://join.dusk.gg/game/pgkTdiF0-HAE) where players get bonuses for being together with friends.
 * Turn based games like [Dungeons of Glee](https://join.dusk.gg/game/VMlQEaBM-3g) where players go on adventure together in a paced chill environment.  
+* Strategy games like [Cathead Defense](https://join.dusk.gg/game/Tn3Vpu5m-CQE) where players build towers and defend the world from invaders together.
 * Physics Games like [Melancia](https://join.dusk.gg/game/bRcvMKaL--) where players have a shared experience dropping, bouncing and matching fruit.
+* Arcade Games like [Please Hold](https://join.dusk.gg/game/R8VAXH2D-FgE) where.. well, I think you'd have to play this one, it defies describing!
 * Traditional Games like [Connect Four](https://join.dusk.gg/game/ROdRL4pb-KQE) where friends play a familiar game in the context of their voice chat.
+* Idle Games like [Tap the Button](https://join.dusk.gg/game/pgkTdiF0-HAE) where players get bonuses for being together with friends.
 
 There a few things to remember that might not be obvious when you’re designing a game to be successful on the platform:
 
@@ -74,6 +76,36 @@ There a few things to remember that might not be obvious when you’re designing
 * Sessions with outcomes should be short, let players play a full game in the short amount of time they have (or are willing to commit to it)
 * Fun comes in lots of sizes, don’t assume that what isn’t fun elsewhere isn’t fantastic when you’re playing together with voice chat. 
 * Assume players will play regularly, so progression and save points are recommended.
+* Super casual games work. The top games on Dusk at the moment are super casual chill experiences.
+* A good place to start is a novel twist on something existing. Adding multiplayer is often a catalyst to new game mechanics.
+* Many players will try the game solo before recommending it to play with friends, try to make the solo experience as endearing as the real thing.
+* Don't forget to check out our [Best Practices](/docs/playtesting/best-practices)
+
+## Getting Your Game Seen
+
+We're working hard to make visibility of games better on the Dusk platform right now. As always though theres a lot of value in getting your game seen externally. Twitch and YouTube are your friends either by making your only videos or finding areas of your game that appeal to streamers.
+
+Things that streamers/social-media likes:
+
+* Parts of games that cause players to scream/laugh/emote with each other. 
+* Funny side effects of game logic - crazy physics is always a win!
+* Big effects for actions in games
+
+## Top 10 Games on Dusk Right Now
+
+At the time of writing the top 10 games on Dusk are:
+<img width="25" class="top10img" src="https://games-production.rune.ai/248/media/preview_img-25c89bb3-e874-4d81-9ddf-46045c559df3.png"/><span class="top10Entry">1. Melancia (jallen)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/243/media/preview_img-7fd2bace-b0c8-4930-b938-77ef48b76d4e.png"/><span class="top10Entry">2. Scorched Turf (cokeandcode)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/284/media/preview_img-726b690e-ee92-424c-aeb0-f09b0b2227df.png"/><span class="top10Entry">3. Tap the Button (jallen)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/84/media/preview_img-dfb96370-dfc1-4a20-a1ae-8537c88e0cd6.png"/><span class="top10Entry">4. Tic Tac Toe (Helios1138, oblador, Shane Helm)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/295/media/preview_img-1f6f341d-f632-4071-a554-f4041545d4c8.png"/><span class="top10Entry">5. Quizcraft (cokeandcode)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/265/media/preview_img-5cefc290-26ef-487b-86f2-d43dacf7369e.png"/><span class="top10Entry">6. Cathead Defense (propcat)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/222/media/preview_img-a40eaf01-120e-46c6-92b3-a56040622a6c.png"/><span class="top10Entry">7. Dungeon of Glee (cokeandcode)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/93/media/preview_img-2ea296b9-eecb-4e3e-972a-58d1c7d088ba.png"/><span class="top10Entry">8. Pinpoint (Helio1138, Lynda)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/249/media/preview_img-0c7ef8ca-51b3-48a5-8210-f7fbc3c181be.png"/><span class="top10Entry">9. Flick Footie (cokeandcode)</span><br/>
+<img width="25" class="top10img" src="https://games-production.rune.ai/280/media/preview_img-5af706d3-c1b6-4178-bc9f-bf7e7c2b010d.png"/><span class="top10Entry">10. Jumper Race (Tonai)</span><br/>
+
+## Summary
 
 Players of games generally range across many different demographics but with luck using the information in this article, our developers stand a better chance of writing the next great game on Dusk!
 

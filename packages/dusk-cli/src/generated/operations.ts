@@ -2,6 +2,7 @@ export const operations = {
   Query: {
     Game: 'Game',
     Games: 'Games',
+    DashboardMagicLink: 'DashboardMagicLink',
     Me: 'Me'
   },
   Mutation: {

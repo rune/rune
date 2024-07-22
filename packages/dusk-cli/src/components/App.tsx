@@ -4,6 +4,8 @@ import React from "react"
 import { Create } from "../flows/Create.js"
 import { List } from "../flows/List/List.js"
 import { Logout } from "../flows/Logout.js"
+import { OpenDashboard } from "../flows/OpenDashboard.js"
+import { RuneToDusk } from "../flows/RuneToDusk.js"
 import { Update } from "../flows/Update/Update.js"
 import { UpdateMembers } from "../flows/UpdateMembers/UpdateMembers.js"
 import { Upload } from "../flows/Upload/Upload.js"
@@ -12,7 +14,6 @@ import { packageJson } from "../lib/packageJson.js"
 
 import { LoginGate } from "./LoginGate.js"
 import { VersionCheckGate } from "./VersionCheckGate.js"
-import { RuneToDusk } from "../flows/RuneToDusk.js"
 
 export function App() {
   const { command, args, commandInvalid, flags } = cliCommand()
@@ -43,6 +44,8 @@ export function App() {
             <Update args={args} />
           ) : command === "update-members" ? (
             <UpdateMembers />
+          ) : command === "dashboard" ? (
+            <OpenDashboard />
           ) : null}
         </LoginGate>
       )}

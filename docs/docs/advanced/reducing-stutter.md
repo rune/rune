@@ -4,7 +4,7 @@ sidebar_position: 62
 
 # Reducing Stutter
 
-This page focuses on reducing stutter for fast-paced multiplayer games running an update loop many times pr. second. However, you can also make really fun [real-time multiplayer games](real-time-games.md) without needing the more complex code described below. If you're new to Dusk or game development, we suggest you start by making a game without an update loop or an update loop only running once pr. second. See the [example games](../examples.mdx) for inspiration.
+This page focuses on reducing stutter for fast-paced multiplayer games running an update loop many times pr. second. However, you can also make really fun [real-time multiplayer games](real-time-games.md) without needing the more complex code described below. If you're new to Dusk or game development, we suggest you start by making a game without an update loop or an update loop only running once pr. second. See the [example games](../examples/games) for inspiration.
 
 :::tip
 

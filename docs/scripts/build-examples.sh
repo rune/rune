@@ -3,6 +3,9 @@ set -e
 rm -rf static/_examples
 mkdir -p static/_examples
 
+rm -rf static/_tech-demos
+mkdir -p static/_tech-demos
+
 # Tic-tac-toe
 cp -r ../examples/tic-tac-toe ./static/_examples/tic-tac-toe
 
@@ -51,3 +54,16 @@ yarn
 ../../scripts/copy-assets.sh neon-snake && yarn build
 cp -r dist/. ../../docs/static/_examples/neon-snake
 perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_examples/neon-snake/index.html
+
+
+### Tech Demos
+
+cd ../../tech-demos
+
+# Top Down Synchronization
+cd top-down-synchronization
+yarn 
+yarn build
+cp -r dist/. ../../docs/static/_tech-demos/top-down-synchronization
+perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_tech-demos/top-down-synchronization/index.html
+cd ..

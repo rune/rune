@@ -43,7 +43,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
     }
 
     // otherwise determine what speed the next steps should be at by applying
-    // acceleration (or deceleration). Don't even let the speed take us past
+    // acceleration (or deceleration). Don't ever let the speed take us past
     // the end point or the maximum speed thats been allowed
     if (point.target > point.current) {
       return Math.min(

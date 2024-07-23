@@ -17,11 +17,11 @@ authors:
   <meta property="og:title" content="Announcing Dusk Jam!"/>
 </head>
 
-Have you ever thought about writing a multiplayer game but the task seems too daunting. What about if networking was already done and you could just focus on a small fun game?
+Have you ever thought about writing a multiplayer game, but the task seems too daunting? What if networking was already done and you could just focus on a small fun game? Dusk makes it easy to build multiplayer games quickly with a huge player based across regional servers.
 
 To celebrate our move to Dusk we're going to run a mini game jam. We've loved what everyone has brought to the table over previous jams and really want more of it!
 
-❓**WHAT:** In this jam you can use any javascript based technology, from React to Pixi to Pure JS and everything in between. Here's how it will run:
+❓**WHAT:** In this jam you can use any JavaScript based technology, from React to Pixi to Pure JS and everything in between. Here's how it will run:
  * Theme will be announced on the first day of the jam
  * Games should be started and submitted in the jam timeframe.
  * Any art or assets can be used - existing or created for the jam.

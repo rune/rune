@@ -47,7 +47,7 @@ But that means internationalization, and that’s a lot of work! Well yes and no
 
 As mentioned above, the average player on Dusk is a teenager and you can see that in their interests. No surprise gaming is #1 in the activities chart but I found it particularly interesting to see the mix after that, Drawing - Football - Math. How about a game where you draw footballs and calculate their volumes?! Ok, maybe not, but it does show quite how wide ranging the games can be.
 
-Looking at the types of games they like we’re seeming pretty mainstream released, so again helpful while you’re thinking about ideas. 
+Looking at the types of games they like we’re seeming pretty mainstream releases, so again helpful while you’re thinking about ideas. 
 
 In terms of theming you can see a heavy cartoon/illustrated style to the TV shows and movies that they like. Visually it doesn’t have to be something AAA game style, it can be that more abstract interesting style that indie game devs do so well!
 
@@ -63,8 +63,8 @@ We also see peak loads of players around the end of day, when players have come 
 
 Finally lets talk about what games we’ve already seen working. It’s early days so there’s plenty of room for game developers to push out brand new ideas and have overnight hits. Games that have done well so far:
 
-* Turn based games like [Dungeons of Glee](https://join.dusk.gg/game/VMlQEaBM-3g) where players go on adventure together in a paced chill environment.  
 * Strategy games like [Cathead Defense](https://join.dusk.gg/game/Tn3Vpu5m-CQE) where players build towers and defend the world from invaders together.
+* Turn based games like [Dungeons of Glee](https://join.dusk.gg/game/VMlQEaBM-3g) where players go on adventure together in a paced chill environment.  
 * Physics Games like [Melancia](https://join.dusk.gg/game/bRcvMKaL--) where players have a shared experience dropping, bouncing and matching fruit.
 * Arcade Games like [Please Hold](https://join.dusk.gg/game/R8VAXH2D-FgE) where.. well, I think you'd have to play this one, it defies describing!
 * Traditional Games like [Connect Four](https://join.dusk.gg/game/ROdRL4pb-KQE) where friends play a familiar game in the context of their voice chat.
@@ -104,6 +104,8 @@ At the time of writing the top 10 games on Dusk are:
 <img width="25" class="top10img" src="https://games-production.rune.ai/93/media/preview_img-2ea296b9-eecb-4e3e-972a-58d1c7d088ba.png"/><span class="top10Entry">8. Pinpoint (Helio1138, Lynda)</span><br/>
 <img width="25" class="top10img" src="https://games-production.rune.ai/249/media/preview_img-0c7ef8ca-51b3-48a5-8210-f7fbc3c181be.png"/><span class="top10Entry">9. Flick Footie (cokeandcode)</span><br/>
 <img width="25" class="top10img" src="https://games-production.rune.ai/280/media/preview_img-5af706d3-c1b6-4178-bc9f-bf7e7c2b010d.png"/><span class="top10Entry">10. Jumper Race (Tonai)</span><br/>
+<br/>
+You can see a wide variety of games work but they all have space for players to chat while playing.
 
 ## Summary
 

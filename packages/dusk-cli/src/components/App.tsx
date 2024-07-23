@@ -44,7 +44,7 @@ export function App() {
             <Update args={args} />
           ) : command === "update-members" ? (
             <UpdateMembers />
-          ) : command === "dashboard" ? (
+          ) : command === "dashboard" || command === "dash" ? (
             <OpenDashboard />
           ) : null}
         </LoginGate>

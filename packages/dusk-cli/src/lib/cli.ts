@@ -67,6 +67,7 @@ export const validCommands = [
   "create",
   "rune-to-dusk",
   "dashboard",
+  "dash",
 ] as const
 
 export function cliCommand() {

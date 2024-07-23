@@ -7,15 +7,13 @@ import { useDashboardMagicLink } from "../gql/useMagicDashboardLink.js"
 import { formatApolloError } from "../lib/formatApolloError.js"
 
 export function OpenDashboard() {
-  const { dashboardMagicLink, loading, error } = useDashboardMagicLink()
-  const [status, setStatus] = useState<
-    "waiting" | "opening" | "opened" | "failedBrowser"
-  >("waiting")
+  const { dashboardMagicLink, error } = useDashboardMagicLink()
+  const [status, setStatus] = useState<"waiting" | "opened" | "failedBrowser">(
+    "waiting"
+  )
 
   useEffect(() => {
     if (dashboardMagicLink) {
-      setStatus("opening")
-
       open(dashboardMagicLink)
         .then(() => {
           setStatus("opened")
@@ -28,7 +26,7 @@ export function OpenDashboard() {
 
   return (
     <Box flexDirection="column">
-      {status === "waiting" && loading && (
+      {!error && status === "waiting" && (
         <Step status="waiting" label="Opening..." />
       )}
       {error && (

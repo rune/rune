@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="Announcing Dusk Jam!"/>
 </head>
 
-Have you ever thought about writing a multiplayer game, but the task seems too daunting? What if networking was already done and you could just focus on a small fun game? Dusk makes it easy to build multiplayer games quickly with a huge player based across regional servers.
+Have you ever thought about writing a multiplayer game, but the task seems too daunting? What if networking was already done and you could just focus on a small fun game? Dusk makes it easy to build multiplayer games quickly with a huge player base across regional servers.
 
 To celebrate our move to Dusk we're going to run a mini game jam. We've loved what everyone has brought to the table over previous jams and really want more of it!
 

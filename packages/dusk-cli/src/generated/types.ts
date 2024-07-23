@@ -73,6 +73,7 @@ export interface CreateGameVersionPayload {
 
 export interface Game {
   __typename: "Game"
+  appId: Maybe<Scalars["Int"]>
   /** @deprecated true */
   blurredImgDataUrl: Maybe<Scalars["String"]>
   /** (Denormalized) Total number of comments . */
@@ -84,9 +85,12 @@ export interface Game {
   /** Reads and enables pagination through a set of `GameVersion`. */
   gameVersions: GameVersionsConnection
   id: Scalars["Int"]
+  /** @deprecated true */
+  isAllowedInsideRoom: Scalars["Boolean"]
   logoUrl: Scalars["String"]
-  /** @deprecated: Not used */
-  playCount: Scalars["Int"]
+  playTime: Scalars["Float"]
+  players: Scalars["Int"]
+  plays: Scalars["Int"]
   previewImgUrl: Maybe<Scalars["String"]>
   title: Scalars["String"]
   type: GameType
@@ -96,11 +100,9 @@ export interface Game {
 export interface GameGameDevsArgs {
   after?: InputMaybe<Scalars["Cursor"]>
   before?: InputMaybe<Scalars["Cursor"]>
-  condition?: InputMaybe<GameDevCondition>
   first?: InputMaybe<Scalars["Int"]>
   last?: InputMaybe<Scalars["Int"]>
   offset?: InputMaybe<Scalars["Int"]>
-  orderBy?: InputMaybe<Array<GameDevsOrderBy>>
 }
 
 export interface GameGameVersionsArgs {
@@ -115,25 +117,23 @@ export interface GameGameVersionsArgs {
 
 /** A condition to be used against `Game` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface GameCondition {
+  /** Checks for equality with the object’s `appId` field. */
+  appId?: InputMaybe<Scalars["Int"]>
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars["Int"]>
 }
 
 export interface GameDev {
   __typename: "GameDev"
-  displayName: Scalars["String"]
+  /** @deprecated: use GameDev.userProfileEditable */
+  displayName: Maybe<Scalars["String"]>
   /** Reads a single `Game` that is related to this `GameDev`. */
   game: Maybe<Game>
   gameId: Scalars["Int"]
   status: GameDevStatus
   type: GameDevType
   userId: Scalars["Int"]
-}
-
-/** A condition to be used against `GameDev` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface GameDevCondition {
-  /** Checks for equality with the object’s `gameId` field. */
-  gameId?: InputMaybe<Scalars["Int"]>
+  userProfileEditable: Maybe<UserProfileEditable>
 }
 
 export enum GameDevStatus {
@@ -170,40 +170,9 @@ export interface GameDevsEdge {
   node: GameDev
 }
 
-/** Methods to use when ordering `GameDev`. */
-export enum GameDevsOrderBy {
-  GAME_ID_ASC = "GAME_ID_ASC",
-  GAME_ID_DESC = "GAME_ID_DESC",
-  NATURAL = "NATURAL",
-  PRIMARY_KEY_ASC = "PRIMARY_KEY_ASC",
-  PRIMARY_KEY_DESC = "PRIMARY_KEY_DESC",
-}
-
-export interface GameFile {
-  content?: InputMaybe<Scalars["String"]>
-  path: Scalars["String"]
-  size: Scalars["Int"]
-}
-
 export enum GameType {
   EXTERNAL = "EXTERNAL",
   MULTIPLAYER = "MULTIPLAYER",
-}
-
-export interface GameValidationError {
-  __typename: "GameValidationError"
-  lintErrors: Maybe<Array<GameValidationLintError>>
-  message: Scalars["String"]
-}
-
-export interface GameValidationLintError {
-  __typename: "GameValidationLintError"
-  column: Scalars["Int"]
-  endColumn: Maybe<Scalars["Int"]>
-  endLine: Maybe<Scalars["Int"]>
-  line: Scalars["Int"]
-  message: Maybe<Scalars["String"]>
-  ruleId: Maybe<Scalars["String"]>
 }
 
 export interface GameVersion {
@@ -214,11 +183,16 @@ export interface GameVersion {
   gameId: Scalars["Int"]
   gameVersionId: Scalars["Int"]
   key: Scalars["String"]
+  landscape: Scalars["Boolean"]
   multiplayerMaxPlayers: Scalars["Int"]
   multiplayerMinPlayers: Scalars["Int"]
   multiplayerSupportsPlayerJoining: Scalars["Boolean"]
   multiplayerSupportsPlayerLeaving: Scalars["Boolean"]
+  persistPlayerData: Scalars["Boolean"]
+  sdkVersion: Scalars["String"]
   status: GameVersionStatus
+  updatesPerSecond: Scalars["Int"]
+  usesUpdates: Scalars["Boolean"]
 }
 
 /**
@@ -297,6 +271,8 @@ export interface GamesEdge {
 
 /** Methods to use when ordering `Game`. */
 export enum GamesOrderBy {
+  APP_ID_ASC = "APP_ID_ASC",
+  APP_ID_DESC = "APP_ID_DESC",
   ID_ASC = "ID_ASC",
   ID_DESC = "ID_DESC",
   NATURAL = "NATURAL",
@@ -331,11 +307,11 @@ export interface Mutation {
   createGame: CreateGamePayload
   createGameVersion: CreateGameVersionPayload
   inviteGameDev: InviteGameDevPayload
+  requestPayout: RequestPayoutPayload
   startVerification: StartVerificationPayload
   updateGame: UpdateGamePayload
   updateGameDev: UpdateGameDevPayload
   updateGameSdk: UpdateGameSdkPayload
-  validateGame: ValidateGamePayload
 }
 
 /** The root mutation type which contains root level fields which mutate data. */
@@ -359,6 +335,11 @@ export interface MutationInviteGameDevArgs {
 }
 
 /** The root mutation type which contains root level fields which mutate data. */
+export interface MutationRequestPayoutArgs {
+  input: RequestPayoutInput
+}
+
+/** The root mutation type which contains root level fields which mutate data. */
 export interface MutationStartVerificationArgs {
   input: StartVerificationInput
 }
@@ -378,11 +359,6 @@ export interface MutationUpdateGameSdkArgs {
   input: UpdateGameSdkInput
 }
 
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationValidateGameArgs {
-  input: ValidateGameInput
-}
-
 /** Information about pagination in a connection. */
 export interface PageInfo {
   __typename: "PageInfo"
@@ -399,10 +375,9 @@ export interface PageInfo {
 /** The root query type which gives access points into the data universe. */
 export interface Query {
   __typename: "Query"
+  dashboardMagicLink: Scalars["String"]
+  gameByAppId: Maybe<Game>
   gameById: Maybe<Game>
-  gameDevByGameIdAndUserId: Maybe<GameDev>
-  /** Reads and enables pagination through a set of `GameDev`. */
-  gameDevs: Maybe<GameDevsConnection>
   gameVersionByGameIdAndGameVersionId: Maybe<GameVersion>
   gameVersionByKey: Maybe<GameVersion>
   /** Reads and enables pagination through a set of `GameVersion`. */
@@ -415,6 +390,9 @@ export interface Query {
    * which can only query top level fields if they are in a particular form.
    */
   query: Query
+  userDevByUserId: Maybe<UserDev>
+  /** Reads and enables pagination through a set of `UserDev`. */
+  userDevs: Maybe<UserDevsConnection>
   /** Reads and enables pagination through a set of `UserPrivateReadonly`. */
   userPrivateReadonlies: Maybe<UserPrivateReadonliesConnection>
   userPrivateReadonlyByEmail: Maybe<UserPrivateReadonly>
@@ -425,25 +403,13 @@ export interface Query {
 }
 
 /** The root query type which gives access points into the data universe. */
+export interface QueryGameByAppIdArgs {
+  appId: Scalars["Int"]
+}
+
+/** The root query type which gives access points into the data universe. */
 export interface QueryGameByIdArgs {
   id: Scalars["Int"]
-}
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryGameDevByGameIdAndUserIdArgs {
-  gameId: Scalars["Int"]
-  userId: Scalars["Int"]
-}
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryGameDevsArgs {
-  after?: InputMaybe<Scalars["Cursor"]>
-  before?: InputMaybe<Scalars["Cursor"]>
-  condition?: InputMaybe<GameDevCondition>
-  first?: InputMaybe<Scalars["Int"]>
-  last?: InputMaybe<Scalars["Int"]>
-  offset?: InputMaybe<Scalars["Int"]>
-  orderBy?: InputMaybe<Array<GameDevsOrderBy>>
 }
 
 /** The root query type which gives access points into the data universe. */
@@ -477,6 +443,22 @@ export interface QueryGamesArgs {
   last?: InputMaybe<Scalars["Int"]>
   offset?: InputMaybe<Scalars["Int"]>
   orderBy?: InputMaybe<Array<GamesOrderBy>>
+}
+
+/** The root query type which gives access points into the data universe. */
+export interface QueryUserDevByUserIdArgs {
+  userId: Scalars["Int"]
+}
+
+/** The root query type which gives access points into the data universe. */
+export interface QueryUserDevsArgs {
+  after?: InputMaybe<Scalars["Cursor"]>
+  before?: InputMaybe<Scalars["Cursor"]>
+  condition?: InputMaybe<UserDevCondition>
+  first?: InputMaybe<Scalars["Int"]>
+  last?: InputMaybe<Scalars["Int"]>
+  offset?: InputMaybe<Scalars["Int"]>
+  orderBy?: InputMaybe<Array<UserDevsOrderBy>>
 }
 
 /** The root query type which gives access points into the data universe. */
@@ -514,6 +496,16 @@ export interface QueryUserProfileEditablesArgs {
   last?: InputMaybe<Scalars["Int"]>
   offset?: InputMaybe<Scalars["Int"]>
   orderBy?: InputMaybe<Array<UserProfileEditablesOrderBy>>
+}
+
+export interface RequestPayoutInput {
+  amount: Scalars["Int"]
+  clientMutationId?: InputMaybe<Scalars["String"]>
+}
+
+export interface RequestPayoutPayload {
+  __typename: "RequestPayoutPayload"
+  clientMutationId: Maybe<Scalars["String"]>
 }
 
 export interface StartVerificationInput {
@@ -565,6 +557,55 @@ export interface UpdateGameSdkPayload {
   clientMutationId: Maybe<Scalars["String"]>
   error: Maybe<Scalars["String"]>
   success: Scalars["Boolean"]
+}
+
+export interface UserDev {
+  __typename: "UserDev"
+  badge: Maybe<UserDevBadge>
+  createdAt: Scalars["Datetime"]
+  updatedAt: Scalars["Datetime"]
+  userId: Scalars["Int"]
+}
+
+export enum UserDevBadge {
+  TOP_DEVELOPER = "TOP_DEVELOPER",
+}
+
+/** A condition to be used against `UserDev` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface UserDevCondition {
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars["Int"]>
+}
+
+/** A connection to a list of `UserDev` values. */
+export interface UserDevsConnection {
+  __typename: "UserDevsConnection"
+  /** A list of edges which contains the `UserDev` and cursor to aid in pagination. */
+  edges: Array<UserDevsEdge>
+  /** A list of `UserDev` objects. */
+  nodes: Array<UserDev>
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo
+  /** The count of *all* `UserDev` you could get from the connection. */
+  totalCount: Scalars["Int"]
+}
+
+/** A `UserDev` edge in the connection. */
+export interface UserDevsEdge {
+  __typename: "UserDevsEdge"
+  /** A cursor for use in pagination. */
+  cursor: Maybe<Scalars["Cursor"]>
+  /** The `UserDev` at the end of the edge. */
+  node: UserDev
+}
+
+/** Methods to use when ordering `UserDev`. */
+export enum UserDevsOrderBy {
+  NATURAL = "NATURAL",
+  PRIMARY_KEY_ASC = "PRIMARY_KEY_ASC",
+  PRIMARY_KEY_DESC = "PRIMARY_KEY_DESC",
+  USER_ID_ASC = "USER_ID_ASC",
+  USER_ID_DESC = "USER_ID_DESC",
 }
 
 /** A connection to a list of `UserPrivateReadonly` values. */
@@ -660,18 +701,6 @@ export enum UserProfileEditablesOrderBy {
   USER_ID_DESC = "USER_ID_DESC",
 }
 
-export interface ValidateGameInput {
-  clientMutationId?: InputMaybe<Scalars["String"]>
-  files: Array<GameFile>
-}
-
-export interface ValidateGamePayload {
-  __typename: "ValidateGamePayload"
-  clientMutationId: Maybe<Scalars["String"]>
-  errors: Array<GameValidationError>
-  valid: Scalars["Boolean"]
-}
-
 export type CheckVerificationMutationVariables = Exact<{
   verificationToken: Scalars["String"]
 }>
@@ -734,7 +763,7 @@ export type GameQuery = {
       nodes: Array<{
         __typename: "GameDev"
         userId: number
-        displayName: string
+        displayName: string | null
         type: GameDevType
       }>
     }
@@ -766,7 +795,7 @@ export type GamesQuery = {
         nodes: Array<{
           __typename: "GameDev"
           userId: number
-          displayName: string
+          displayName: string | null
           type: GameDevType
         }>
       }
@@ -793,6 +822,13 @@ export type InviteGameDevMutation = {
     __typename: "InviteGameDevPayload"
     clientMutationId: string | null
   }
+}
+
+export type DashboardMagicLinkQueryVariables = Exact<{ [key: string]: never }>
+
+export type DashboardMagicLinkQuery = {
+  __typename: "Query"
+  dashboardMagicLink: string
 }
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>
@@ -889,6 +925,7 @@ export type CreateGameVersionPayloadFieldPolicy = {
   previewLink?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type GameKeySpecifier = (
+  | "appId"
   | "blurredImgDataUrl"
   | "commentCount"
   | "createdAt"
@@ -896,8 +933,11 @@ export type GameKeySpecifier = (
   | "gameDevs"
   | "gameVersions"
   | "id"
+  | "isAllowedInsideRoom"
   | "logoUrl"
-  | "playCount"
+  | "playTime"
+  | "players"
+  | "plays"
   | "previewImgUrl"
   | "title"
   | "type"
@@ -905,6 +945,7 @@ export type GameKeySpecifier = (
   | GameKeySpecifier
 )[]
 export type GameFieldPolicy = {
+  appId?: FieldPolicy<any> | FieldReadFunction<any>
   blurredImgDataUrl?: FieldPolicy<any> | FieldReadFunction<any>
   commentCount?: FieldPolicy<any> | FieldReadFunction<any>
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
@@ -912,8 +953,11 @@ export type GameFieldPolicy = {
   gameDevs?: FieldPolicy<any> | FieldReadFunction<any>
   gameVersions?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
+  isAllowedInsideRoom?: FieldPolicy<any> | FieldReadFunction<any>
   logoUrl?: FieldPolicy<any> | FieldReadFunction<any>
-  playCount?: FieldPolicy<any> | FieldReadFunction<any>
+  playTime?: FieldPolicy<any> | FieldReadFunction<any>
+  players?: FieldPolicy<any> | FieldReadFunction<any>
+  plays?: FieldPolicy<any> | FieldReadFunction<any>
   previewImgUrl?: FieldPolicy<any> | FieldReadFunction<any>
   title?: FieldPolicy<any> | FieldReadFunction<any>
   type?: FieldPolicy<any> | FieldReadFunction<any>
@@ -926,6 +970,7 @@ export type GameDevKeySpecifier = (
   | "status"
   | "type"
   | "userId"
+  | "userProfileEditable"
   | GameDevKeySpecifier
 )[]
 export type GameDevFieldPolicy = {
@@ -935,6 +980,7 @@ export type GameDevFieldPolicy = {
   status?: FieldPolicy<any> | FieldReadFunction<any>
   type?: FieldPolicy<any> | FieldReadFunction<any>
   userId?: FieldPolicy<any> | FieldReadFunction<any>
+  userProfileEditable?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type GameDevsConnectionKeySpecifier = (
   | "edges"
@@ -958,43 +1004,22 @@ export type GameDevsEdgeFieldPolicy = {
   cursor?: FieldPolicy<any> | FieldReadFunction<any>
   node?: FieldPolicy<any> | FieldReadFunction<any>
 }
-export type GameValidationErrorKeySpecifier = (
-  | "lintErrors"
-  | "message"
-  | GameValidationErrorKeySpecifier
-)[]
-export type GameValidationErrorFieldPolicy = {
-  lintErrors?: FieldPolicy<any> | FieldReadFunction<any>
-  message?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type GameValidationLintErrorKeySpecifier = (
-  | "column"
-  | "endColumn"
-  | "endLine"
-  | "line"
-  | "message"
-  | "ruleId"
-  | GameValidationLintErrorKeySpecifier
-)[]
-export type GameValidationLintErrorFieldPolicy = {
-  column?: FieldPolicy<any> | FieldReadFunction<any>
-  endColumn?: FieldPolicy<any> | FieldReadFunction<any>
-  endLine?: FieldPolicy<any> | FieldReadFunction<any>
-  line?: FieldPolicy<any> | FieldReadFunction<any>
-  message?: FieldPolicy<any> | FieldReadFunction<any>
-  ruleId?: FieldPolicy<any> | FieldReadFunction<any>
-}
 export type GameVersionKeySpecifier = (
   | "createdByDevId"
   | "game"
   | "gameId"
   | "gameVersionId"
   | "key"
+  | "landscape"
   | "multiplayerMaxPlayers"
   | "multiplayerMinPlayers"
   | "multiplayerSupportsPlayerJoining"
   | "multiplayerSupportsPlayerLeaving"
+  | "persistPlayerData"
+  | "sdkVersion"
   | "status"
+  | "updatesPerSecond"
+  | "usesUpdates"
   | GameVersionKeySpecifier
 )[]
 export type GameVersionFieldPolicy = {
@@ -1003,11 +1028,16 @@ export type GameVersionFieldPolicy = {
   gameId?: FieldPolicy<any> | FieldReadFunction<any>
   gameVersionId?: FieldPolicy<any> | FieldReadFunction<any>
   key?: FieldPolicy<any> | FieldReadFunction<any>
+  landscape?: FieldPolicy<any> | FieldReadFunction<any>
   multiplayerMaxPlayers?: FieldPolicy<any> | FieldReadFunction<any>
   multiplayerMinPlayers?: FieldPolicy<any> | FieldReadFunction<any>
   multiplayerSupportsPlayerJoining?: FieldPolicy<any> | FieldReadFunction<any>
   multiplayerSupportsPlayerLeaving?: FieldPolicy<any> | FieldReadFunction<any>
+  persistPlayerData?: FieldPolicy<any> | FieldReadFunction<any>
+  sdkVersion?: FieldPolicy<any> | FieldReadFunction<any>
   status?: FieldPolicy<any> | FieldReadFunction<any>
+  updatesPerSecond?: FieldPolicy<any> | FieldReadFunction<any>
+  usesUpdates?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type GameVersionsConnectionKeySpecifier = (
   | "edges"
@@ -1078,11 +1108,11 @@ export type MutationKeySpecifier = (
   | "createGame"
   | "createGameVersion"
   | "inviteGameDev"
+  | "requestPayout"
   | "startVerification"
   | "updateGame"
   | "updateGameDev"
   | "updateGameSdk"
-  | "validateGame"
   | MutationKeySpecifier
 )[]
 export type MutationFieldPolicy = {
@@ -1090,11 +1120,11 @@ export type MutationFieldPolicy = {
   createGame?: FieldPolicy<any> | FieldReadFunction<any>
   createGameVersion?: FieldPolicy<any> | FieldReadFunction<any>
   inviteGameDev?: FieldPolicy<any> | FieldReadFunction<any>
+  requestPayout?: FieldPolicy<any> | FieldReadFunction<any>
   startVerification?: FieldPolicy<any> | FieldReadFunction<any>
   updateGame?: FieldPolicy<any> | FieldReadFunction<any>
   updateGameDev?: FieldPolicy<any> | FieldReadFunction<any>
   updateGameSdk?: FieldPolicy<any> | FieldReadFunction<any>
-  validateGame?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type PageInfoKeySpecifier = (
   | "endCursor"
@@ -1110,15 +1140,17 @@ export type PageInfoFieldPolicy = {
   startCursor?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type QueryKeySpecifier = (
+  | "dashboardMagicLink"
+  | "gameByAppId"
   | "gameById"
-  | "gameDevByGameIdAndUserId"
-  | "gameDevs"
   | "gameVersionByGameIdAndGameVersionId"
   | "gameVersionByKey"
   | "gameVersions"
   | "games"
   | "me"
   | "query"
+  | "userDevByUserId"
+  | "userDevs"
   | "userPrivateReadonlies"
   | "userPrivateReadonlyByEmail"
   | "userPrivateReadonlyByUserId"
@@ -1127,9 +1159,9 @@ export type QueryKeySpecifier = (
   | QueryKeySpecifier
 )[]
 export type QueryFieldPolicy = {
+  dashboardMagicLink?: FieldPolicy<any> | FieldReadFunction<any>
+  gameByAppId?: FieldPolicy<any> | FieldReadFunction<any>
   gameById?: FieldPolicy<any> | FieldReadFunction<any>
-  gameDevByGameIdAndUserId?: FieldPolicy<any> | FieldReadFunction<any>
-  gameDevs?: FieldPolicy<any> | FieldReadFunction<any>
   gameVersionByGameIdAndGameVersionId?:
     | FieldPolicy<any>
     | FieldReadFunction<any>
@@ -1138,11 +1170,20 @@ export type QueryFieldPolicy = {
   games?: FieldPolicy<any> | FieldReadFunction<any>
   me?: FieldPolicy<any> | FieldReadFunction<any>
   query?: FieldPolicy<any> | FieldReadFunction<any>
+  userDevByUserId?: FieldPolicy<any> | FieldReadFunction<any>
+  userDevs?: FieldPolicy<any> | FieldReadFunction<any>
   userPrivateReadonlies?: FieldPolicy<any> | FieldReadFunction<any>
   userPrivateReadonlyByEmail?: FieldPolicy<any> | FieldReadFunction<any>
   userPrivateReadonlyByUserId?: FieldPolicy<any> | FieldReadFunction<any>
   userProfileEditableByUserId?: FieldPolicy<any> | FieldReadFunction<any>
   userProfileEditables?: FieldPolicy<any> | FieldReadFunction<any>
+}
+export type RequestPayoutPayloadKeySpecifier = (
+  | "clientMutationId"
+  | RequestPayoutPayloadKeySpecifier
+)[]
+export type RequestPayoutPayloadFieldPolicy = {
+  clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type StartVerificationPayloadKeySpecifier = (
   | "clientMutationId"
@@ -1179,6 +1220,41 @@ export type UpdateGameSdkPayloadFieldPolicy = {
   clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>
   error?: FieldPolicy<any> | FieldReadFunction<any>
   success?: FieldPolicy<any> | FieldReadFunction<any>
+}
+export type UserDevKeySpecifier = (
+  | "badge"
+  | "createdAt"
+  | "updatedAt"
+  | "userId"
+  | UserDevKeySpecifier
+)[]
+export type UserDevFieldPolicy = {
+  badge?: FieldPolicy<any> | FieldReadFunction<any>
+  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
+  updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
+  userId?: FieldPolicy<any> | FieldReadFunction<any>
+}
+export type UserDevsConnectionKeySpecifier = (
+  | "edges"
+  | "nodes"
+  | "pageInfo"
+  | "totalCount"
+  | UserDevsConnectionKeySpecifier
+)[]
+export type UserDevsConnectionFieldPolicy = {
+  edges?: FieldPolicy<any> | FieldReadFunction<any>
+  nodes?: FieldPolicy<any> | FieldReadFunction<any>
+  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
+  totalCount?: FieldPolicy<any> | FieldReadFunction<any>
+}
+export type UserDevsEdgeKeySpecifier = (
+  | "cursor"
+  | "node"
+  | UserDevsEdgeKeySpecifier
+)[]
+export type UserDevsEdgeFieldPolicy = {
+  cursor?: FieldPolicy<any> | FieldReadFunction<any>
+  node?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type UserPrivateReadonliesConnectionKeySpecifier = (
   | "edges"
@@ -1242,17 +1318,6 @@ export type UserProfileEditablesEdgeFieldPolicy = {
   cursor?: FieldPolicy<any> | FieldReadFunction<any>
   node?: FieldPolicy<any> | FieldReadFunction<any>
 }
-export type ValidateGamePayloadKeySpecifier = (
-  | "clientMutationId"
-  | "errors"
-  | "valid"
-  | ValidateGamePayloadKeySpecifier
-)[]
-export type ValidateGamePayloadFieldPolicy = {
-  clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>
-  errors?: FieldPolicy<any> | FieldReadFunction<any>
-  valid?: FieldPolicy<any> | FieldReadFunction<any>
-}
 export type StrictTypedTypePolicies = {
   CheckVerificationPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
@@ -1299,20 +1364,6 @@ export type StrictTypedTypePolicies = {
       | GameDevsEdgeKeySpecifier
       | (() => undefined | GameDevsEdgeKeySpecifier)
     fields?: GameDevsEdgeFieldPolicy
-  }
-  GameValidationError?: Omit<TypePolicy, "fields" | "keyFields"> & {
-    keyFields?:
-      | false
-      | GameValidationErrorKeySpecifier
-      | (() => undefined | GameValidationErrorKeySpecifier)
-    fields?: GameValidationErrorFieldPolicy
-  }
-  GameValidationLintError?: Omit<TypePolicy, "fields" | "keyFields"> & {
-    keyFields?:
-      | false
-      | GameValidationLintErrorKeySpecifier
-      | (() => undefined | GameValidationLintErrorKeySpecifier)
-    fields?: GameValidationLintErrorFieldPolicy
   }
   GameVersion?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
@@ -1381,6 +1432,13 @@ export type StrictTypedTypePolicies = {
       | (() => undefined | QueryKeySpecifier)
     fields?: QueryFieldPolicy
   }
+  RequestPayoutPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | RequestPayoutPayloadKeySpecifier
+      | (() => undefined | RequestPayoutPayloadKeySpecifier)
+    fields?: RequestPayoutPayloadFieldPolicy
+  }
   StartVerificationPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
@@ -1408,6 +1466,27 @@ export type StrictTypedTypePolicies = {
       | UpdateGameSdkPayloadKeySpecifier
       | (() => undefined | UpdateGameSdkPayloadKeySpecifier)
     fields?: UpdateGameSdkPayloadFieldPolicy
+  }
+  UserDev?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | UserDevKeySpecifier
+      | (() => undefined | UserDevKeySpecifier)
+    fields?: UserDevFieldPolicy
+  }
+  UserDevsConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | UserDevsConnectionKeySpecifier
+      | (() => undefined | UserDevsConnectionKeySpecifier)
+    fields?: UserDevsConnectionFieldPolicy
+  }
+  UserDevsEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | UserDevsEdgeKeySpecifier
+      | (() => undefined | UserDevsEdgeKeySpecifier)
+    fields?: UserDevsEdgeFieldPolicy
   }
   UserPrivateReadonliesConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
@@ -1450,13 +1529,6 @@ export type StrictTypedTypePolicies = {
       | UserProfileEditablesEdgeKeySpecifier
       | (() => undefined | UserProfileEditablesEdgeKeySpecifier)
     fields?: UserProfileEditablesEdgeFieldPolicy
-  }
-  ValidateGamePayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
-    keyFields?:
-      | false
-      | ValidateGamePayloadKeySpecifier
-      | (() => undefined | ValidateGamePayloadKeySpecifier)
-    fields?: ValidateGamePayloadFieldPolicy
   }
 }
 export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies
@@ -2024,6 +2096,28 @@ export const InviteGameDevDocument = {
 } as unknown as DocumentNode<
   InviteGameDevMutation,
   InviteGameDevMutationVariables
+>
+export const DashboardMagicLinkDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "DashboardMagicLink" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "dashboardMagicLink" },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DashboardMagicLinkQuery,
+  DashboardMagicLinkQueryVariables
 >
 export const MeDocument = {
   kind: "Document",

@@ -26,7 +26,7 @@ To celebrate our move to Dusk we're going to run a mini game jam. We've loved wh
  * Games should be started and submitted in the jam timeframe.
  * Any art or assets can be used - existing or created for the jam.
 
-📆 **WHEN:** The jam will start at **00:00 UTC on August 1st** and run until **00:00 UTC on August 12th**. You'll have 12 days to build and release a multiplayer game on Dusk.
+📆 **WHEN:** The jam will start at **00:00 UTC on August 1st** and run until **00:00 UTC on August 12th**. You'll have 11 days to build and release a multiplayer game on Dusk.
 
 📩 **SUBMITTING:** To submit simply [release the game to Dusk](/docs/quick-start) by the final date and let us know on Discord that its for the jam.
 

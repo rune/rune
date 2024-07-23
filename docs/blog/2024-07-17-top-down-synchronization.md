@@ -29,7 +29,7 @@ Let’s start by looking at the architecture of a Dusk game and the separation b
 
 It’s often considered good practice to separate your data model and logic from the rendering, i.e. the MVC pattern. However, when it comes to multiplayer this isn’t just best practice, it’s absolutely required to let us run copies of the game logic on both the server and client. 
 
-The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict-rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
+The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict-rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](/docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
 
 The renderer, or client, is the code that actually converts the game state to something that the player can view and interact with. The client can be implemented using any library or framework that can run in the browser. 
 
@@ -57,6 +57,8 @@ export type Player = {
   // the network
   controls: Controls
   animation: Animation
+  vx: number
+  vy: number
   // true if the player is facing left instead of right
   // as the sprites are designed
   flipped: boolean
@@ -81,6 +83,7 @@ Next we’ll need to describe the game state we want to synchronize, in Dusk tha
 // in sync by applying deterministic actions
 export interface GameState {
   entities: Entity[]
+  players: Player[]
 }
 ```
 
@@ -90,10 +93,11 @@ We need to setup an initial state for the game which all clients will start from
 Dusk.initLogic({
   setup: (allPlayerIds) => {
     const initialState: GameState = {
+      entities: [],
       // for each of the players Dusk says are in the game
       // create a new player entity. We'll initialize their
       // location to place them in the world
-      entities: allPlayerIds.map((p, index) => {
+      players: allPlayerIds.map((p, index) => {
         return {
           x: (index + 1) * 64,
           y: (index + 1) * 64,
@@ -107,6 +111,9 @@ Dusk.initLogic({
             up: false,
             down: false,
           },
+          flipped: false,
+          vx: 0,
+          vy: 0,
         }
       }),
     }
@@ -136,17 +143,16 @@ update: ({ game }) => {
       // assume the player is doing nothing to start with
       player.animation = Animation.IDLE
 
-      // for each control that the player has pressed
-      // attempt to move them in the appropriate direction. 
-      // Only move if the player isn't blocked by whatever 
-      // is in the tile map.
+      // for each control that the player has pressed attempt to move them
+      // in the appropriate direction. Only move if the player isn't blocked
+      // by whatever is in the tile map.
       if (player.controls.left) {
-        if (isValidPosition(game, player.x - MOVE_SPEED, player.y)) {
-          player.x -= MOVE_SPEED
-          player.animation = Animation.WALK
-          player.flipped = true
-        }
-      }
+        player.vx = Math.max(-MOVE_SPEED, player.vx - MOVE_ACCEL)
+        player.flipped = true
+      } else if (player.controls.right) {
+        player.vx = Math.min(MOVE_SPEED, player.vx + MOVE_ACCEL)
+        player.flipped = false
+      } else {
       ...
 ```
 
@@ -167,17 +173,16 @@ The final bit of the game logic is how the “changes” to the game state can b
 // how and when these actions are applied to maintain a consistent
 // game state between all clients.
 actions: {
-// Action applied from the client to setup the controls the
-// player is currently pressing. We simple record the controls
-// and let the update() loop actually apply the changes
-controls: (controls, { game, playerId }) => {
-    const entity = game.entities.find((p) => p.playerId === playerId)
+  // Action applied from the client to setup the controls the
+  // player is currently pressing. We simple record the controls
+  // and let the update() loop actually apply the changes
+  controls: (controls, { game, playerId }) => {
+      const entity = game.players.find((p) => p.playerId === playerId)
 
-    if (entity && entity.type === "PLAYER") {
-    // eslint-disable-next-line prettier/prettier
-    (entity as Player).controls = { ...controls }
-    }
-},
+      if (entity && entity.type === "PLAYER") {
+        (entity as Player).controls = { ...controls }
+      }
+  },
 },
 ```
 
@@ -189,7 +194,7 @@ If two players both make actions on their local copy of logic that conflict in s
 
 Now, if we sent explicit positions this conflict resolution would result in significant jumps - where a player’s actions were completely disregarded because they were in complete conflict. If we send the controls then the resolution is much smoother, the player still pressed the controls and had them applied, just the resulting game state is a little different. A lot of the time this can be hidden altogether in the renderer.
 
-Now we have the game logic, the players can update controls and they’ll move thanks to our update loop. The final part is to get something on the screen and let our players play! The tech demo uses a very simple renderer without a library or framework. It just draws images (and parts of images) to a HTML canvas and uses DOM events for input. Check out [graphics.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/graphics.ts) and [input.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/input.ts) if you want to see the details. 
+Now we have the game logic, the players can update controls and they’ll move thanks to our update loop. The final part is to get something on the screen and let our players play! The tech demo uses a very simple renderer without a library or framework. It just draws images (and parts of images) to a HTML canvas and uses DOM events for input. Check out [graphics.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/src/graphics.ts) and [input.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/src/input.ts) if you want to see the details. 
 
 First we need to register a callback with Dusk so that it can tell us about changes to game state:
 
@@ -200,8 +205,8 @@ First we need to register a callback with Dusk so that it can tell us about chan
 // that lets the Dusk SDK update us on 
 // changes to game state
 Dusk.initClient({
-// notification from Dusk that there is a new game state
-onChange: ({ game, yourPlayerId }) => {
+  // notification from Dusk that there is a new game state
+  onChange: ({ game, yourPlayerId }) => {
     // record the ID of our local player so we can 
     // center the camera on that player.
     myPlayerId = yourPlayerId
@@ -209,7 +214,7 @@ onChange: ({ game, yourPlayerId }) => {
     // record the current game state for rendering in
     // out core loop
     gameState = game
-},
+  },
 })
 ```
 
@@ -219,22 +224,24 @@ The rendering itself is purely taking the game state that it’s been given and 
 // if the Dusk SDK has given us a game state then
 // render all the entities in the game
 if (gameState) {
-    // render all the entities based on the current game state
-    ;[...gameState.entities]
-    .sort((a, b) => a.y - b.y)
-    .forEach((entity) => {
-        if (entity.type === "PLAYER") {
-        // players need to be rendering using animation 
-        // and flipping
-        const player = entity as Player
-        drawTile(
-            player.x - playerFootPosition[0],
-            player.y - playerFootPosition[1],
-            entitySprites[player.sprite],
-            player.animation + frame,
-            player.flipped
-        )
-        ...
+  // render all the entities based on the current game state
+  const allEntities = [...gameState.entities, ...gameState.players]
+
+  ;allEntities
+  .sort((a, b) => a.y - b.y)
+  .forEach((entity) => {
+    if (entity.type === "PLAYER") {
+    // players need to be rendering using animation 
+    // and flipping
+    const player = entity as Player
+    drawTile(
+        player.x - playerFootPosition[0],
+        player.y - playerFootPosition[1],
+        entitySprites[player.sprite],
+        player.animation + frame,
+        player.flipped
+    )
+    ...
 ```
 
 The only other thing the renderer needs to do is convert player inputs into that action we defined in game logic:

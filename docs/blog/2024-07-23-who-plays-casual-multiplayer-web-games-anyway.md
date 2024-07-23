@@ -1,5 +1,5 @@
 ---
-title: Who plays casual multiplayer web games anyway?  
+title: Who plays casual multiplayer games anyway?  
 description: Lets look at who's playing 
 slug: who-plays-casual-multiplayer-web-games-anyway
 tags: [Game Development, Players]
@@ -13,13 +13,13 @@ authors:
 ---
 
 <head>
-  <title>Who plays casual multiplayer web games anyway?</title>
-  <meta property="og:title" content="Who plays casual multiplayer web games anyway?"/>
+  <title>Who plays casual multiplayer games anyway?</title>
+  <meta property="og:title" content="Who plays casual multiplayer games anyway?"/>
 </head>
 
 Dusk is a platform to get your games played by 1000s of players a day. When you’re rolling out games for this large of a player base, rather than a small focused target group, it’s really important to understand who you’re writing games for.
 
-The community of developers around Dusk are already getting a handle on what works for the players. Going with your gut is always a good start but more data is better, right? Let’s look at some of the statistics from the player base who are actively playing multiplayer web games.
+The community of developers around Dusk are already getting a handle on what works for the players. Going with your gut is always a good start but more data is better, right? Let’s look at some of the statistics from the player base who are actively playing multiplayer games.
 
 We should remember the data below is specific to the Dusk platform but is also representative of a large number of players (millions in fact) in the real world.
 

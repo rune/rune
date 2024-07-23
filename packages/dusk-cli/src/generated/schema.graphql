@@ -42,6 +42,15 @@ type CreateGameVersionPayload {
 """A location in a connection that can be used for resuming pagination."""
 scalar Cursor
 
+input DashboardMagicLinkInput {
+  clientMutationId: String
+}
+
+type DashboardMagicLinkPayload {
+  clientMutationId: String
+  dashboardMagicLink: String!
+}
+
 """
 A point in time as described by the [ISO
 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
@@ -339,6 +348,12 @@ type Mutation {
     """
     input: CreateGameVersionInput!
   ): CreateGameVersionPayload!
+  dashboardMagicLink(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DashboardMagicLinkInput!
+  ): DashboardMagicLinkPayload!
   inviteGameDev(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -394,7 +409,6 @@ type PageInfo {
 
 """The root query type which gives access points into the data universe."""
 type Query {
-  dashboardMagicLink: String!
   gameByAppId(appId: Int!): Game
   gameById(id: Int!): Game
   gameVersionByGameIdAndGameVersionId(gameId: Int!, gameVersionId: Int!): GameVersion

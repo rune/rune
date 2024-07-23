@@ -7,10 +7,23 @@ import { useDashboardMagicLink } from "../gql/useMagicDashboardLink.js"
 import { formatApolloError } from "../lib/formatApolloError.js"
 
 export function OpenDashboard() {
-  const { dashboardMagicLink, error } = useDashboardMagicLink()
+  const { getDashboardMagicLink, dashboardMagicLink, error } =
+    useDashboardMagicLink()
   const [status, setStatus] = useState<"waiting" | "opened" | "failedBrowser">(
     "waiting"
   )
+
+  //TODO - remove it
+  const dashboardAllowed =
+    process.env.STAGE === "local" || process.env.STAGE === "launchpad"
+
+  useEffect(() => {
+    if (!dashboardAllowed) {
+      return
+    }
+
+    getDashboardMagicLink({})
+  }, [getDashboardMagicLink, dashboardAllowed])
 
   useEffect(() => {
     if (dashboardMagicLink) {
@@ -23,6 +36,14 @@ export function OpenDashboard() {
         })
     }
   }, [dashboardMagicLink])
+
+  if (!dashboardAllowed) {
+    return (
+      <Box flexDirection="column">
+        <Text color="yellow">Dashboard is not available yet. Stay tuned!</Text>
+      </Box>
+    )
+  }
 
   return (
     <Box flexDirection="column">

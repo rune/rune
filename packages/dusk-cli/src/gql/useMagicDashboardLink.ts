@@ -2,15 +2,15 @@ import { gql, useMutation } from "@apollo/client/index.js"
 import { useCallback } from "react"
 
 import {
-  DashboardMagicLinkDocument,
   DashboardMagicLinkInput,
+  CreateDashboardMagicLinkDocument,
 } from "../generated/types.js"
 
 export function useDashboardMagicLink() {
-  const [mutate, result] = useMutation(DashboardMagicLinkDocument)
+  const [mutate, result] = useMutation(CreateDashboardMagicLinkDocument)
 
   return {
-    getDashboardMagicLink: useCallback(
+    createDashboardMagicLink: useCallback(
       (input: DashboardMagicLinkInput) => {
         mutate({ variables: { input } }).catch(() => {})
       },
@@ -18,13 +18,14 @@ export function useDashboardMagicLink() {
     ),
     loading: result.loading,
     error: result.error,
-    dashboardMagicLink: result.data?.dashboardMagicLink.dashboardMagicLink,
+    dashboardMagicLink:
+      result.data?.createDashboardMagicLink.dashboardMagicLink,
   }
 }
 
 gql`
-  mutation DashboardMagicLink($input: DashboardMagicLinkInput!) {
-    dashboardMagicLink(input: $input) {
+  mutation createDashboardMagicLink($input: DashboardMagicLinkInput!) {
+    createDashboardMagicLink(input: $input) {
       clientMutationId
       dashboardMagicLink
     }

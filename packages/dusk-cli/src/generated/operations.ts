@@ -9,7 +9,7 @@ export const operations = {
     CreateGame: 'CreateGame',
     CreateGameVersion: 'CreateGameVersion',
     InviteGameDev: 'InviteGameDev',
-    DashboardMagicLink: 'DashboardMagicLink',
+    createDashboardMagicLink: 'createDashboardMagicLink',
     StartVerification: 'StartVerification',
     UpdateGame: 'UpdateGame',
     UpdateGameDev: 'UpdateGameDev',

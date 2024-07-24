@@ -336,6 +336,12 @@ type Mutation {
     """
     input: CheckVerificationInput!
   ): CheckVerificationPayload!
+  createDashboardMagicLink(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DashboardMagicLinkInput!
+  ): DashboardMagicLinkPayload!
   createGame(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -348,12 +354,6 @@ type Mutation {
     """
     input: CreateGameVersionInput!
   ): CreateGameVersionPayload!
-  dashboardMagicLink(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: DashboardMagicLinkInput!
-  ): DashboardMagicLinkPayload!
   inviteGameDev(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.

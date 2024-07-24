@@ -82,7 +82,6 @@ export function Login() {
         status="error"
         label={formatApolloError(meError, {
           "[tango][AUTH_FAILED]": "Authentication failed. Please try again.",
-          default: "Something went wrong",
         })}
       />
     )
@@ -115,7 +114,6 @@ export function Login() {
                       {formatApolloError(startVerificationError, {
                         "[tango][VERIFICATION_RATE_LIMIT]":
                           "It looks like you’ve already tried to verify this email recently, please wait a bit before trying again",
-                        default: `Something went wrong`,
                       })}
                     </Text>
                   )}
@@ -148,7 +146,6 @@ export function Login() {
                   ? formatApolloError(checkVerificationError, {
                       "[tango][JWT_EXPIRED]":
                         "It looks like the email link has expired, please try again",
-                      default: `Something went wrong. Please try again`,
                     })
                   : `An email was sent to \`${sanitizedEmail}\`, please open it and click the link inside to proceed`
               }

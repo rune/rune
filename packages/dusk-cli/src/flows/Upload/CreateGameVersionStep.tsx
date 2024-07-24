@@ -67,7 +67,6 @@ export function CreateGameVersionStep({
             formatApolloError(createGameVersionError, {
               "[tango][GAME_VALIDATION_FAILED]":
                 "Game validation failed. Make sure you are using latest CLI version. If the validation still fails after updating, then please write us in the Dusk Discord server: https://discord.gg/dusk-devs",
-              default: "Something went wrong",
             })
           ) : (
             <>

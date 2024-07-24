@@ -59,7 +59,6 @@ export function InviteMemberStep({
                 "Invitee's email is blocked",
               "[tango][INVITE_GAME_DEV_FAILED_ALREADY_INVITED]":
                 "Member was already invited",
-              default: `Something went wrong`,
             })
           : isGameDevInvited
           ? "New member invited"

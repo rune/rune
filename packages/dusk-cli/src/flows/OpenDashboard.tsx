@@ -50,13 +50,7 @@ export function OpenDashboard() {
       {!error && status === "waiting" && (
         <Step status="waiting" label="Opening..." />
       )}
-      {error && (
-        <Text color="red">
-          {formatApolloError(error, {
-            default: `Something went wrong`,
-          })}
-        </Text>
-      )}
+      {error && <Text color="red">{formatApolloError(error, {})}</Text>}
       {status === "failedBrowser" && (
         <Text color="yellow">
           Failed to open your browser. Please open this link manually:{" "}

@@ -1,21 +1,33 @@
-import { useQuery, gql } from "@apollo/client/index.js"
+import { gql, useMutation } from "@apollo/client/index.js"
+import { useCallback } from "react"
 
-import { DashboardMagicLinkDocument } from "../generated/types.js"
+import {
+  DashboardMagicLinkInput,
+  CreateDashboardMagicLinkDocument,
+} from "../generated/types.js"
 
-export function useDashboardMagicLink({ skip }: { skip?: boolean } = {}) {
-  const { data, loading, error } = useQuery(DashboardMagicLinkDocument, {
-    skip,
-  })
+export function useDashboardMagicLink() {
+  const [mutate, result] = useMutation(CreateDashboardMagicLinkDocument)
 
   return {
-    dashboardMagicLink: data?.dashboardMagicLink,
-    loading,
-    error,
+    createDashboardMagicLink: useCallback(
+      (input: DashboardMagicLinkInput) => {
+        mutate({ variables: { input } }).catch(() => {})
+      },
+      [mutate]
+    ),
+    loading: result.loading,
+    error: result.error,
+    dashboardMagicLink:
+      result.data?.createDashboardMagicLink.dashboardMagicLink,
   }
 }
 
 gql`
-  query DashboardMagicLink {
-    dashboardMagicLink
+  mutation createDashboardMagicLink($input: DashboardMagicLinkInput!) {
+    createDashboardMagicLink(input: $input) {
+      clientMutationId
+      dashboardMagicLink
+    }
   }
 `

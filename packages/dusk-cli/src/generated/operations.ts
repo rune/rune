@@ -2,7 +2,6 @@ export const operations = {
   Query: {
     Game: 'Game',
     Games: 'Games',
-    DashboardMagicLink: 'DashboardMagicLink',
     Me: 'Me'
   },
   Mutation: {
@@ -10,6 +9,7 @@ export const operations = {
     CreateGame: 'CreateGame',
     CreateGameVersion: 'CreateGameVersion',
     InviteGameDev: 'InviteGameDev',
+    createDashboardMagicLink: 'createDashboardMagicLink',
     StartVerification: 'StartVerification',
     UpdateGame: 'UpdateGame',
     UpdateGameDev: 'UpdateGameDev',

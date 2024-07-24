@@ -71,6 +71,16 @@ export interface CreateGameVersionPayload {
   previewLink: Scalars["String"]
 }
 
+export interface DashboardMagicLinkInput {
+  clientMutationId?: InputMaybe<Scalars["String"]>
+}
+
+export interface DashboardMagicLinkPayload {
+  __typename: "DashboardMagicLinkPayload"
+  clientMutationId: Maybe<Scalars["String"]>
+  dashboardMagicLink: Scalars["String"]
+}
+
 export interface Game {
   __typename: "Game"
   appId: Maybe<Scalars["Int"]>
@@ -304,6 +314,7 @@ export interface Me {
 export interface Mutation {
   __typename: "Mutation"
   checkVerification: CheckVerificationPayload
+  createDashboardMagicLink: DashboardMagicLinkPayload
   createGame: CreateGamePayload
   createGameVersion: CreateGameVersionPayload
   inviteGameDev: InviteGameDevPayload
@@ -317,6 +328,11 @@ export interface Mutation {
 /** The root mutation type which contains root level fields which mutate data. */
 export interface MutationCheckVerificationArgs {
   input: CheckVerificationInput
+}
+
+/** The root mutation type which contains root level fields which mutate data. */
+export interface MutationCreateDashboardMagicLinkArgs {
+  input: DashboardMagicLinkInput
 }
 
 /** The root mutation type which contains root level fields which mutate data. */
@@ -375,7 +391,6 @@ export interface PageInfo {
 /** The root query type which gives access points into the data universe. */
 export interface Query {
   __typename: "Query"
-  dashboardMagicLink: Scalars["String"]
   gameByAppId: Maybe<Game>
   gameById: Maybe<Game>
   gameVersionByGameIdAndGameVersionId: Maybe<GameVersion>
@@ -824,11 +839,17 @@ export type InviteGameDevMutation = {
   }
 }
 
-export type DashboardMagicLinkQueryVariables = Exact<{ [key: string]: never }>
+export type CreateDashboardMagicLinkMutationVariables = Exact<{
+  input: DashboardMagicLinkInput
+}>
 
-export type DashboardMagicLinkQuery = {
-  __typename: "Query"
-  dashboardMagicLink: string
+export type CreateDashboardMagicLinkMutation = {
+  __typename: "Mutation"
+  createDashboardMagicLink: {
+    __typename: "DashboardMagicLinkPayload"
+    clientMutationId: string | null
+    dashboardMagicLink: string
+  }
 }
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>
@@ -923,6 +944,15 @@ export type CreateGameVersionPayloadFieldPolicy = {
   congratulationMsg?: FieldPolicy<any> | FieldReadFunction<any>
   gameVersion?: FieldPolicy<any> | FieldReadFunction<any>
   previewLink?: FieldPolicy<any> | FieldReadFunction<any>
+}
+export type DashboardMagicLinkPayloadKeySpecifier = (
+  | "clientMutationId"
+  | "dashboardMagicLink"
+  | DashboardMagicLinkPayloadKeySpecifier
+)[]
+export type DashboardMagicLinkPayloadFieldPolicy = {
+  clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>
+  dashboardMagicLink?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type GameKeySpecifier = (
   | "appId"
@@ -1105,6 +1135,7 @@ export type MeFieldPolicy = {
 }
 export type MutationKeySpecifier = (
   | "checkVerification"
+  | "createDashboardMagicLink"
   | "createGame"
   | "createGameVersion"
   | "inviteGameDev"
@@ -1117,6 +1148,7 @@ export type MutationKeySpecifier = (
 )[]
 export type MutationFieldPolicy = {
   checkVerification?: FieldPolicy<any> | FieldReadFunction<any>
+  createDashboardMagicLink?: FieldPolicy<any> | FieldReadFunction<any>
   createGame?: FieldPolicy<any> | FieldReadFunction<any>
   createGameVersion?: FieldPolicy<any> | FieldReadFunction<any>
   inviteGameDev?: FieldPolicy<any> | FieldReadFunction<any>
@@ -1140,7 +1172,6 @@ export type PageInfoFieldPolicy = {
   startCursor?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type QueryKeySpecifier = (
-  | "dashboardMagicLink"
   | "gameByAppId"
   | "gameById"
   | "gameVersionByGameIdAndGameVersionId"
@@ -1159,7 +1190,6 @@ export type QueryKeySpecifier = (
   | QueryKeySpecifier
 )[]
 export type QueryFieldPolicy = {
-  dashboardMagicLink?: FieldPolicy<any> | FieldReadFunction<any>
   gameByAppId?: FieldPolicy<any> | FieldReadFunction<any>
   gameById?: FieldPolicy<any> | FieldReadFunction<any>
   gameVersionByGameIdAndGameVersionId?:
@@ -1339,6 +1369,13 @@ export type StrictTypedTypePolicies = {
       | CreateGameVersionPayloadKeySpecifier
       | (() => undefined | CreateGameVersionPayloadKeySpecifier)
     fields?: CreateGameVersionPayloadFieldPolicy
+  }
+  DashboardMagicLinkPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | DashboardMagicLinkPayloadKeySpecifier
+      | (() => undefined | DashboardMagicLinkPayloadKeySpecifier)
+    fields?: DashboardMagicLinkPayloadFieldPolicy
   }
   Game?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?: false | GameKeySpecifier | (() => undefined | GameKeySpecifier)
@@ -2097,27 +2134,66 @@ export const InviteGameDevDocument = {
   InviteGameDevMutation,
   InviteGameDevMutationVariables
 >
-export const DashboardMagicLinkDocument = {
+export const CreateDashboardMagicLinkDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "DashboardMagicLink" },
+      operation: "mutation",
+      name: { kind: "Name", value: "createDashboardMagicLink" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "DashboardMagicLinkInput" },
+            },
+          },
+        },
+      ],
       selectionSet: {
         kind: "SelectionSet",
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "dashboardMagicLink" },
+            name: { kind: "Name", value: "createDashboardMagicLink" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "clientMutationId" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "dashboardMagicLink" },
+                },
+              ],
+            },
           },
         ],
       },
     },
   ],
 } as unknown as DocumentNode<
-  DashboardMagicLinkQuery,
-  DashboardMagicLinkQueryVariables
+  CreateDashboardMagicLinkMutation,
+  CreateDashboardMagicLinkMutationVariables
 >
 export const MeDocument = {
   kind: "Document",

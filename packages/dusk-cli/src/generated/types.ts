@@ -1568,7 +1568,8 @@ export type StrictTypedTypePolicies = {
     fields?: UserProfileEditablesEdgeFieldPolicy
   }
 }
-export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicie
+export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies
+
 export const CheckVerificationDocument = {
   kind: "Document",
   definitions: [

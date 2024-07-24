@@ -7,7 +7,7 @@ import { useDashboardMagicLink } from "../gql/useMagicDashboardLink.js"
 import { formatApolloError } from "../lib/formatApolloError.js"
 
 export function OpenDashboard() {
-  const { getDashboardMagicLink, dashboardMagicLink, error } =
+  const { createDashboardMagicLink, dashboardMagicLink, error } =
     useDashboardMagicLink()
   const [status, setStatus] = useState<"waiting" | "opened" | "failedBrowser">(
     "waiting"
@@ -22,8 +22,8 @@ export function OpenDashboard() {
       return
     }
 
-    getDashboardMagicLink({})
-  }, [getDashboardMagicLink, dashboardAllowed])
+    createDashboardMagicLink({})
+  }, [createDashboardMagicLink, dashboardAllowed])
 
   useEffect(() => {
     if (dashboardMagicLink) {

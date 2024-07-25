@@ -51,17 +51,17 @@ So, does this break anything? No, not really. Results are still accurate enough 
 
 The second piece of the puzzle is random numbers. One of the things that most developers know is there’s no such thing as random numbers in computers, only pseudo random numbers. So you’d think it’d be perfect for determinism - unfortunately not. 
 
-The `Math.random()` specification is Javascript is deliberately vague to allow runtime implementers to have freedom to build appropriately. Worse than that the specification doesn’t support passing in a seed so there is no way to start the random number generation in a predictable manner.
+The `Math.random()` specification is JavaScript is deliberately vague to allow runtime implementers to have freedom to build appropriately. Worse than that the specification doesn’t support passing in a seed so there is no way to start the random number generation in a predictable manner.
 
 First stop, we’ll patch `Math.random()` with a custom seeded random number generator function. There are many well documented out there in the public domain. Brilliant, that gets us deterministic! 
 
 In Dusk however we use the predict-rollback networking model, which requires us to be able to rollback time and reapply events to our game state. But what if we generated random numbers? A pure seed isn’t enough anymore because we want to generate the same random numbers we generated back when we first ran that time step of logic. 
 
-To solve this problem we have to keep track of the seed independently and allow for rolling back to previous seeds. With that approach we now have a fully deterministic random numbers event with rollbacks!
+To solve this problem we have to keep track of the seed independently and allow for rolling back to previous seeds. With that approach we now have a fully deterministic random numbers even with rollbacks!
 
 ## Sorting and Shuffling
 
-A very common action in games programming is to sort an array. Whether that’s for z-sorting in 2D or line of sight checking. What’s more than shuffling an array for game logic is often done using a combination of `Math.random()` and sorting. Javascript of course has array sorting built in but unfortunately the exact details of that array sort vary between implementations - especially in regard to strings.
+A very common action in games programming is to sort an array. Whether that’s for z-sorting in 2D or line of sight checking. What’s more, shuffling an array for game logic is often done using a combination of `Math.random()` and sorting. JavaScript of course has array sorting built in but unfortunately the exact details of that array sort vary between implementations - especially in regard to strings.
 
 Again MDN has a little hint:
 
@@ -71,8 +71,8 @@ There’s a decent chance that a developer will accidentally use a comparator th
 
 ## Bonus Content!
 
-The other thing we can do is help developers to recognize when their code might produce non-deterministic results. There are many possible causes of this e.g. access to global scope and using locale related functions. In the Javascript world eslint is a common tool for applying a set of rules to code as the developer is working and at build time. At Dusk we provide an eslint plugin that encapsulates all the common errors we've seen so developers are warned right inside their IDEs when something might cause an issue.
+The other thing we can do is help developers to recognize when their code might produce non-deterministic results. There are many possible causes of this e.g. access to global scope and using locale related functions. In the JavaScript world `eslint` is a common tool for applying a set of rules to code as the developer is working and at build time. At Dusk we provide an eslint plugin that encapsulates all the common errors we've seen so developers are warned right inside their IDEs when something might cause an issue.
 
-As you can see determinism in Javascript isn’t straight forward but it is obtainable. We now have games running in perfect synchronization.
+As you can see determinism in JavaScript isn’t straight forward but it is obtainable. We now have games running in perfect synchronization.
 
 If you have comments or want to learn more head over to the [Discord](https://discord.gg/dusk-devs).

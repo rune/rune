@@ -1,4 +1,3 @@
-/* eslint-disable  @typescript-eslint/no-non-null-assertion */
 import type { OnChange } from "dusk-games-sdk/multiplayer"
 import type { BoardChange, Cells, GameActions, GameState } from "./types"
 import {
@@ -330,7 +329,12 @@ const animateScore = (indices: number[], playerIndex: number, scoreDelta = 0) =>
   new Promise((resolve) => {
     const [avatarRect] = (
       playerItems[playerIndex]?.firstChild as HTMLElement
-    )?.getClientRects()
+    )?.getClientRects() || []
+
+    if (!avatarRect) {
+      throw new Error("AvatarRect not found")
+    }
+
     const target = {
       left: Math.round(avatarRect.left + avatarRect.width) - 5,
       top: Math.round(avatarRect.top) + 10,

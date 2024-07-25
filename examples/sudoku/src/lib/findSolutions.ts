@@ -19,7 +19,6 @@ function solveCell(
   const cell = cellsToFill[cellIdx]
 
   if (!cell) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     solutions.push(board.map((cell) => cell.value!))
     return false
   }

@@ -185,7 +185,7 @@ function initControls() {
     Dusk.actions.switchPhase("COUNTDOWN")
   })
 
-  window.addEventListener("resize", (event) => {
+  window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight)
     composer.setSize(window.innerWidth, window.innerHeight)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

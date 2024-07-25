@@ -1,4 +1,3 @@
-/* eslint-disable no-constant-condition */
 import type { PlayerId } from "dusk-games-sdk/multiplayer"
 import {
   areCellsNeighbors,

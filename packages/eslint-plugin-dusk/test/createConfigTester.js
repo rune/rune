@@ -79,9 +79,9 @@ const createConfigTester = () => {
                     : undefined,
               },
             },
-            ...(sourceType === "module"
+            sourceType === "module"
               ? duskPlugin.configs.logicModule
-              : duskPlugin.configs.logic),
+              : duskPlugin.configs.logic,
           ],
         })
 

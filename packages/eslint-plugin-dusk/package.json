@@ -25,7 +25,7 @@
   "scripts": {
     "prepare": "tsc",
     "build": "tsc",
-    "test": "mocha --parallel --recursive --extension spec.cjs",
+    "test": "mocha --parallel --recursive --extension spec.js",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

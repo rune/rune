@@ -5,7 +5,7 @@ const child_process = require("child_process")
 const version = process.argv[2]
 
 const examplesDir = path.resolve(__dirname, "../examples")
-const techDemoDir = path.resolve(__dirname, "../text-demos")
+const techDemosDir = path.resolve(__dirname, "../tech-demos")
 const templatesDir = path.resolve(__dirname, "../packages/dusk-cli/templates")
 
 const cliDir = path.resolve(__dirname, "../packages/dusk-cli")
@@ -42,12 +42,12 @@ const templateGames = fs
   }))
 
 const techDemos = fs
-  .readdirSync(techDemoDir, { withFileTypes: true })
+  .readdirSync(techDemosDir, { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => ({
     name: dirent.name,
-    dir: path.join(templatesDir, dirent.name),
-    shouldInstall: false,
+    dir: path.join(techDemosDir, dirent.name),
+    shouldInstall: true
   }))
 
 const cli = {
@@ -59,6 +59,10 @@ const cli = {
 const locations = [...exampleGames, ...templateGames, ...techDemos, cli]
 
 locations.forEach(({ name, dir, shouldInstall }) => {
+  if (!fs.existsSync(dir)) {
+    throw new Error("Path not found!", dir)
+  }
+
   const packageJsonPath = path.join(dir, "package.json")
 
   if (fs.existsSync(packageJsonPath)) {

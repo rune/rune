@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "build": "npm run lint && tsc && vite build",
     "upload": "npm run build && npx dusk-cli@latest upload",
-    "lint": "eslint src --ext ts,tsx,svelte",
+    "lint": "eslint src",
     "typecheck": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {

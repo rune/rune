@@ -239,7 +239,6 @@ Dusk.initLogic({
       const entity = game.players.find((p) => p.playerId === playerId)
 
       if (entity && entity.type === "PLAYER") {
-        // eslint-disable-next-line prettier/prettier
         (entity as Player).controls = { ...controls }
       }
     },

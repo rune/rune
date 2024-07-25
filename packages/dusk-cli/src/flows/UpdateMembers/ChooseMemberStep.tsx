@@ -65,8 +65,8 @@ export function ChooseMemberStep({
         gameLoading
           ? "Loading a list of members"
           : submitted
-          ? chosenMemberLabel
-          : "Select a member"
+            ? chosenMemberLabel
+            : "Select a member"
       }
       view={
         !gameLoading &&

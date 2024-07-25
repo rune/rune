@@ -6,8 +6,8 @@ import { Step } from "../../components/Step.js"
 import { useGame } from "../../gql/useGame.js"
 import { useMe } from "../../gql/useMe.js"
 import { useUpdateGame } from "../../gql/useUpdateGame.js"
-import { prepareFileUpload } from "../../lib/prepareFileUpload.js"
 import { gameDescriptionErrors } from "../../lib/gameDescriptionErrors.js"
+import { prepareFileUpload } from "../../lib/prepareFileUpload.js"
 
 // @ts-ignore
 const TextInput = TextInputImport.default as typeof TextInputImport

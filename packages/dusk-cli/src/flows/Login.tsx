@@ -96,15 +96,15 @@ export function Login() {
               verificationToken
                 ? "success"
                 : startVerificationLoading
-                ? "waiting"
-                : "userInput"
+                  ? "waiting"
+                  : "userInput"
             }
             label={(status) =>
               status === "success"
                 ? "Email sent"
                 : status === "waiting"
-                ? "Sending verification email"
-                : "Login to your Dusk account to continue. If you don't have a Dusk account, install the app and create an email-verified account"
+                  ? "Sending verification email"
+                  : "Login to your Dusk account to continue. If you don't have a Dusk account, install the app and create an email-verified account"
             }
             view={(status) =>
               status === "userInput" && (
@@ -136,18 +136,18 @@ export function Login() {
                 authToken
                   ? "success"
                   : checkVerificationError
-                  ? "error"
-                  : "waiting"
+                    ? "error"
+                    : "waiting"
               }
               label={(status) =>
                 status === "success"
                   ? "Email confirmed"
                   : checkVerificationError
-                  ? formatApolloError(checkVerificationError, {
-                      "[tango][JWT_EXPIRED]":
-                        "It looks like the email link has expired, please try again",
-                    })
-                  : `An email was sent to \`${sanitizedEmail}\`, please open it and click the link inside to proceed`
+                    ? formatApolloError(checkVerificationError, {
+                        "[tango][JWT_EXPIRED]":
+                          "It looks like the email link has expired, please try again",
+                      })
+                    : `An email was sent to \`${sanitizedEmail}\`, please open it and click the link inside to proceed`
               }
             />
           )}

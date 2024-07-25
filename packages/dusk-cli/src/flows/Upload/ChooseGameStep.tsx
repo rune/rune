@@ -72,8 +72,8 @@ export function ChooseGameStep({
         gamesLoading
           ? "Loading a list of games"
           : submitted
-          ? chosenGameLabel
-          : "Select a game"
+            ? chosenGameLabel
+            : "Select a game"
       }
       view={
         !gamesLoading &&

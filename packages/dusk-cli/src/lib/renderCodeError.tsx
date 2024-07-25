@@ -20,7 +20,7 @@ export function renderErrorCodeLine({
 
   if (!content) return null
 
-  endColumn = endLine === line ? endColumn ?? column : content?.length
+  endColumn = endLine === line ? (endColumn ?? column) : content?.length
 
   const spacesAtTheStart = content.match(spaceRegex)?.[0]?.length ?? 0
   content = content.slice(spacesAtTheStart)

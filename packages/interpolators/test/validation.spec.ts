@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { validateUpdateParams } from "../src/validation"
 
 describe("validation", () => {

@@ -10,10 +10,12 @@ describe("PackageJSONTransform", () => {
       JSON.stringify(
         transformJSON(
           // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require(path.resolve(
-            __dirname,
-            "../__testfixtures__/testPackage.input.json"
-          ))
+          require(
+            path.resolve(
+              __dirname,
+              "../__testfixtures__/testPackage.input.json"
+            )
+          )
         ),
         null,
         2

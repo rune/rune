@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { interpolatorLatency } from "../src/interpolators/interpolatorLatency"
 
 describe("interpolator", () => {

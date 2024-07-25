@@ -39,9 +39,8 @@ export type EntityType = "PLAYER" | "TREE"
 // the animation any player is showing - controlled
 // from the server so everything is synced
 export enum Animation {
-  // eslint-disable-next-line no-unused-vars
   IDLE = 0,
-  // eslint-disable-next-line no-unused-vars
+
   WALK = 6,
 }
 
@@ -92,7 +91,6 @@ export interface GameState {
 // this case we're only sending the state of the inputs
 // the player has - up/down/left/right/movement
 type GameActions = {
-  // eslint-disable-next-line no-unused-vars
   controls: (controls: Controls) => void
 }
 

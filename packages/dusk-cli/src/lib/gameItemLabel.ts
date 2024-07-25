@@ -16,8 +16,8 @@ export function gameItemLabel({
     gameDevs.length === 0
       ? "UNKNOWN"
       : gameDevs.length === 1
-      ? gameDevAdmin?.displayName
-      : `${gameDevAdmin?.displayName} + ${gameDevs.length - 1} others`
+        ? gameDevAdmin?.displayName
+        : `${gameDevAdmin?.displayName} + ${gameDevs.length - 1} others`
 
   const gameTitle = game.title
   const tag = showGameDevs ? ` [by ${gameDevsLabel}]` : ""

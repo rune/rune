@@ -71,7 +71,7 @@ export const validCommands = [
 ] as const
 
 export function cliCommand() {
-  const command = cli.input[0] as typeof validCommands[number] | undefined
+  const command = cli.input[0] as (typeof validCommands)[number] | undefined
 
   return {
     command,

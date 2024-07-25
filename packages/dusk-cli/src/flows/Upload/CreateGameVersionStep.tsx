@@ -57,8 +57,8 @@ export function CreateGameVersionStep({
           createGameVersionLoading
             ? "waiting"
             : createGameVersionError
-            ? "error"
-            : "success"
+              ? "error"
+              : "success"
         }
         label={
           createGameVersionLoading ? (

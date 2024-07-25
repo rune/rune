@@ -48,7 +48,6 @@ export function validateUpdateParams<Dimensions extends number | number[]>(
   )
 
   if (gameSize > 0) {
-    // eslint-disable-next-line @typescript-eslint/no-extra-semi
     ;(params.game as number[]).forEach((gamePosition, index) => {
       const futureGamePosition = (params.futureGame as number[])[index]
 

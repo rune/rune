@@ -15,6 +15,8 @@ export const meta: Rule.RuleModule["meta"] = {
 }
 
 export const create: Rule.RuleModule["create"] = (context) => {
+  const sourceCode = context.sourceCode
+
   const findVariable = (
     name: string,
     scope: Scope.Scope
@@ -57,25 +59,28 @@ export const create: Rule.RuleModule["create"] = (context) => {
     throw new Error("Unexpected scope")
   }
 
-  const isRuntimeGlobalVariable = (variable: Scope.Variable | null): boolean =>
+  const isRuntimeGlobalVariable = (
+    reportNode: Node,
+    variable: Scope.Variable | null
+  ): boolean =>
     variable
       ? (variable.scope.type === "global" ||
           variable.scope.type === "module") &&
         (variable.identifiers.length === 0 ||
           findFunctionScope(variable.scope) !==
-            findFunctionScope(context.getScope()))
+            findFunctionScope(sourceCode.getScope(reportNode)))
       : false
 
   const checkLocalVariableMutation = (
     reportNode: Node,
     variableName: string
   ) => {
-    const scope = context.getScope()
+    const scope = sourceCode.getScope(reportNode)
     const variable = resolveVariable(findVariable(variableName, scope))
 
     if (
       variable && // undefined variables are handled by builtin rule
-      isRuntimeGlobalVariable(variable)
+      isRuntimeGlobalVariable(reportNode, variable)
     ) {
       context.report({
         node: reportNode,

@@ -63,7 +63,6 @@
 
     color: white;
     text-align: center;
-    padding-bottom: 3px; /* fix cut-off font at the bottom */
   }
 
   h5 {
@@ -268,7 +267,7 @@
       }
     }
 
-    /* Adjust <Phone />  to show if smaller */
+    /* Adjust <Phone /> to show it smaller */
     .phoneFrame {
       @media (max-width: 700px) {
         width: 159.26px;
@@ -341,7 +340,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 493px;
+    margin-bottom: 300px;
 
     @media (max-width: 700px) {
       margin-bottom: 223px;
@@ -431,18 +430,19 @@
     position: relative;
     width: 100%;
 
-    margin-bottom: 463px;
+    margin-bottom: 300px;
 
     @media (max-width: 700px) {
       margin-bottom: 211px;
     }
 
-    h2 {
+    h3 {
       max-width: 932px;
-      margin-bottom: 24px;
+      margin-bottom: 43px;
       z-index: 1;
 
       @media (max-width: 700px) {
+        margin-bottom: 21px;
         max-width: 322px;
       }
     }
@@ -484,7 +484,7 @@
       left: 0;
       right: 0;
 
-      font-size: 44px;
+      font-size: 40px;
       font-weight: 400;
       line-height: normal;
       white-space: nowrap;

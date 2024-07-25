@@ -409,7 +409,7 @@ export default function Home() {
           </div>
 
           <div className={styles.makeAnyKindOfGame}>
-            <h2>Make any kind of game</h2>
+            <h3>make any kind of game</h3>
             <p>
               Rune has built-in real-time multiplayer and lets you use the
               flexibility of JS + WASM. You can make games with fun physics,

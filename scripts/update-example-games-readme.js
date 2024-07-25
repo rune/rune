@@ -2,42 +2,42 @@ const games = [
     {
         name: "Tic Tac Toe",
         image: "docs/static/img/multiplayer-games/tic-tac-toe.png",
-        links: ["https://developers.rune.ai/examples/tic-tac-toe/", "https://github.com/rune/rune/tree/staging/examples/tic-tac-toe"],
+        links: ["https://developers.dusk.gg/examples/tic-tac-toe/", "https://github.com/dusk-gg/dusk/tree/staging/examples/tic-tac-toe"],
     },
     {
         name: "Outmatched",
         image: "docs/static/img/multiplayer-games/outmatched.png",
-        links: ["https://developers.rune.ai/examples/outmatched/", "https://github.com/rune/rune/tree/staging/examples/outmatched"],
+        links: ["https://developers.dusk.gg/examples/outmatched/", "https://github.com/dusk-gg/dusk/tree/staging/examples/outmatched"],
     },
     {
         name: "Sudoku",
         image: "docs/static/img/multiplayer-games/sudoku.png",
-        links: ["https://developers.rune.ai/examples/sudoku/", "https://github.com/rune/rune/tree/staging/examples/sudoku"],
+        links: ["https://developers.dusk.gg/examples/sudoku/", "https://github.com/dusk-gg/dusk/tree/staging/examples/sudoku"],
     },
     {
         name: "Pinpoint",
         image: "docs/static/img/multiplayer-games/pinpoint.png",
-        links: ["https://developers.rune.ai/examples/pinpoint/", "https://github.com/rune/rune/tree/staging/examples/pinpoint"],
+        links: ["https://developers.dusk.gg/examples/pinpoint/", "https://github.com/dusk-gg/dusk/tree/staging/examples/pinpoint"],
     },
     {
         name: "OinkOink",
         image: `docs/static/img/multiplayer-games/oink-oink.png`,
-        links: [`https://developers.rune.ai/examples/oink-oink/`, `https://github.com/rune/rune/tree/staging/examples/oink-oink`],
+        links: [`https://developers.dusk.gg/examples/oink-oink/`, `https://github.com/dusk-gg/dusk/tree/staging/examples/oink-oink`],
     },
     {
         name: "Paddle",
         image: `docs/static/img/multiplayer-games/paddle.png`,
-        links: [`https://developers.rune.ai/examples/paddle/`, `https://github.com/rune/rune/tree/staging/examples/paddle`],
+        links: [`https://developers.dusk.gg/examples/paddle/`, `https://github.com/dusk-gg/dusk/tree/staging/examples/paddle`],
     },
     {
         name: "Cube Rush",
         image: `docs/static/img/multiplayer-games/cube-rush.png`,
-        links: [`https://developers.rune.ai/examples/cube-rush/`, `https://github.com/rune/rune/tree/staging/examples/cube-rush`],
+        links: [`https://developers.dusk.gg/examples/cube-rush/`, `https://github.com/dusk-gg/dusk/tree/staging/examples/cube-rush`],
     },
     {
         name: "Neon Snake",
         image: `docs/static/img/multiplayer-games/neon-snake.png`,
-        links: [`https://developers.rune.ai/examples/neon-snake/`, `https://github.com/rune/rune/tree/staging/examples/neon-snake`],
+        links: [`https://developers.dusk.gg/examples/neon-snake/`, `https://github.com/dusk-gg/dusk/tree/staging/examples/neon-snake`],
     },
 ]
 

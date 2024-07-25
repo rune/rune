@@ -6,13 +6,13 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula")
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Rune - multiplayer web games",
+  title: "Dusk - multiplayer web games",
   tagline: "Make multiplayer games that reach a community of millions.",
-  url: "http://developers.rune.ai/",
+  url: "http://developers.dusk.gg/",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "https://www.rune.ai/favicon.ico",
+  favicon: "https://www.dusk.gg/favicon.ico",
 
   scripts: [
     {
@@ -23,8 +23,8 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "rune", // Usually your GitHub org/user name.
-  projectName: "rune-games-sdk", // Usually your repo name.
+  organizationName: "dusk", // Usually your GitHub org/user name.
+  projectName: "dusk-games-sdk", // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -41,6 +41,9 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
+        },
+        blog: {
+          blogSidebarCount: 10,
         },
         theme: {
           customCss: require.resolve("./src/css/custom.scss"),
@@ -64,14 +67,14 @@ const config = {
         respectPrefersColorScheme: false,
       },
       navbar: {
-        title: "Rune",
+        title: "Dusk",
         logo: {
-          alt: "Rune Logo",
+          alt: "Dusk Logo",
           src: "/img/logo.svg",
         },
         items: [
           {
-            to: "https://rune.ai",
+            to: "https://dusk.gg",
             position: "left",
             label: "App",
           },
@@ -105,7 +108,7 @@ const config = {
               },
               {
                 label: "Examples",
-                to: "/docs/examples",
+                to: "/docs/examples/games",
               },
             ],
           },
@@ -114,15 +117,15 @@ const config = {
             items: [
               {
                 label: "Discord",
-                href: "https://discord.gg/rune-devs",
+                href: "https://discord.gg/dusk-devs",
               },
               {
                 label: "Twitter",
-                href: "https://twitter.com/joinrune",
+                href: "https://twitter.com/dusk_devs",
               },
               {
                 label: "Instagram",
-                href: "https://instagram.com/joinrune/",
+                href: "https://instagram.com/dusk_gg/",
               },
             ],
           },
@@ -130,21 +133,21 @@ const config = {
             title: "More",
             items: [
               {
-                label: "Rune on App Store",
+                label: "Dusk on App Store",
                 href: "https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364",
               },
               {
-                label: "Rune on Google Play",
+                label: "Dusk on Google Play",
                 href: "https://play.google.com/store/apps/details?id=ai.rune.tincan",
               },
               {
                 label: "GitHub",
-                href: "https://github.com/rune/rune",
+                href: "https://github.com/dusk-gg/dusk",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Rune AI, Inc.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Dusk, Inc.`,
       },
       prism: {
         theme: lightCodeTheme,

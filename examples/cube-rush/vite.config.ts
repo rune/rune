@@ -1,7 +1,7 @@
 import { defineConfig } from "vite"
 import { qrcode } from "vite-plugin-qrcode"
 import react from "@vitejs/plugin-react"
-import rune from "vite-plugin-rune"
+import dusk from "vite-plugin-dusk"
 import path from "node:path"
 
 // https://vitejs.dev/config/
@@ -10,6 +10,6 @@ export default defineConfig({
   plugins: [
     qrcode(), // only applies in dev mode
     react(),
-    rune({ logicPath: path.resolve("./src/logic.ts") }),
+    dusk({ logicPath: path.resolve("./src/logic.ts") }),
   ],
 })

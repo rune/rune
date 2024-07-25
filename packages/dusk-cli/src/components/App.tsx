@@ -4,6 +4,8 @@ import React from "react"
 import { Create } from "../flows/Create.js"
 import { List } from "../flows/List/List.js"
 import { Logout } from "../flows/Logout.js"
+import { OpenDashboard } from "../flows/OpenDashboard.js"
+import { RuneToDusk } from "../flows/RuneToDusk.js"
 import { Update } from "../flows/Update/Update.js"
 import { UpdateMembers } from "../flows/UpdateMembers/UpdateMembers.js"
 import { Upload } from "../flows/Upload/Upload.js"
@@ -28,6 +30,8 @@ export function App() {
         <Text>{cli.help}</Text>
       ) : command === "logout" ? (
         <Logout />
+      ) : command === "rune-to-dusk" ? (
+        <RuneToDusk />
       ) : command === "create" ? (
         <Create args={args} />
       ) : (
@@ -40,6 +44,8 @@ export function App() {
             <Update args={args} />
           ) : command === "update-members" ? (
             <UpdateMembers />
+          ) : command === "dashboard" || command === "dash" ? (
+            <OpenDashboard />
           ) : null}
         </LoginGate>
       )}

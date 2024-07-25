@@ -12,13 +12,18 @@ export function UpdateAll() {
 
   const { games, gamesLoading } = useGames()
 
-  const gamesWithLatestActiveVersions = useMemo(
+  const gamesWithLatestActiveDraftOrInReviewVersions = useMemo(
     () =>
       games
         ?.map((g) => ({
           gameId: g.id,
           gameVersionId: g.gameVersions.nodes
-            .filter((v) => v.status === "ACTIVE")
+            .filter(
+              (v) =>
+                v.status === "DRAFT" ||
+                v.status === "ACTIVE" ||
+                v.status === "IN_REVIEW"
+            )
             .at(0)?.gameVersionId,
         }))
         .filter(
@@ -39,51 +44,57 @@ export function UpdateAll() {
   const [done, setDone] = useState(false)
 
   useEffect(() => {
-    if (!gamesLoading && gamesWithLatestActiveVersions) {
-      gamesWithLatestActiveVersions.forEach(({ gameId, gameVersionId }, i) => {
-        queue.current = queue.current.then(async () => {
-          setProgressText(
-            `Updating game ${i + 1} of ${gamesWithLatestActiveVersions.length}`
-          )
+    if (!gamesLoading && gamesWithLatestActiveDraftOrInReviewVersions) {
+      gamesWithLatestActiveDraftOrInReviewVersions.forEach(
+        ({ gameId, gameVersionId }, i) => {
+          queue.current = queue.current.then(async () => {
+            setProgressText(
+              `Updating game ${i + 1} of ${
+                gamesWithLatestActiveDraftOrInReviewVersions.length
+              }`
+            )
 
-          try {
-            const result = await updateGameSdk({ gameId, gameVersionId })
+            try {
+              const result = await updateGameSdk({ gameId })
 
-            if (result?.success) {
-              setSuccesses((prev) => [...prev, { gameId, gameVersionId }])
-            } else {
+              if (result?.success) {
+                setSuccesses((prev) => [...prev, { gameId, gameVersionId }])
+              } else {
+                setFailures((prev) => [
+                  ...prev,
+                  {
+                    gameId,
+                    gameVersionId,
+                    error: result?.error ?? "Unknown error",
+                  },
+                ])
+              }
+            } catch (error) {
               setFailures((prev) => [
                 ...prev,
                 {
                   gameId,
                   gameVersionId,
-                  error: result?.error ?? "Unknown error",
+                  error:
+                    error instanceof ApolloError
+                      ? formatApolloError(error, {
+                          default: error.message,
+                        })
+                      : JSON.stringify(error),
                 },
               ])
             }
-          } catch (error) {
-            setFailures((prev) => [
-              ...prev,
-              {
-                gameId,
-                gameVersionId,
-                error:
-                  error instanceof ApolloError
-                    ? formatApolloError(error, {
-                        "[tango][UPDATE_GAME_SDK_FAILED_SOME_GAMES_IN_REVIEW]":
-                          "Cannot update any games while some games are in review",
-                        default: error.message,
-                      })
-                    : JSON.stringify(error),
-              },
-            ])
-          }
-        })
-      })
+          })
+        }
+      )
 
       queue.current.then(() => setDone(true))
     }
-  }, [gamesLoading, gamesWithLatestActiveVersions, updateGameSdk])
+  }, [
+    gamesLoading,
+    gamesWithLatestActiveDraftOrInReviewVersions,
+    updateGameSdk,
+  ])
 
   return (
     <Step
@@ -98,43 +109,35 @@ export function UpdateAll() {
           : progressText
       }
       view={
-        done ? (
-          <Box flexDirection="column">
-            {!!successes.length && (
-              <Box flexDirection="column">
-                <Text color="green">Successfully updated games:</Text>
-                <Box paddingLeft={1}>
-                  <Text color="green">
-                    {successes
-                      .map(
-                        ({ gameId, gameVersionId }) =>
-                          `#${gameId} (v${gameVersionId})`
-                      )
-                      .join(", ")}
+        <Box flexDirection="column">
+          {!!successes.length && (
+            <Box flexDirection="column">
+              <Text color="green">Successfully updated games:</Text>
+              <Box paddingLeft={1}>
+                <Text color="green">
+                  {successes
+                    .map(
+                      ({ gameId, gameVersionId }) =>
+                        `#${gameId} (v${gameVersionId})`
+                    )
+                    .join(", ")}
+                </Text>
+              </Box>
+            </Box>
+          )}
+          {!!failures.length && (
+            <Box flexDirection="column">
+              <Text color="red">Failed to update:</Text>
+              <Box flexDirection="column" paddingLeft={1}>
+                {failures.map(({ gameId, gameVersionId, error }) => (
+                  <Text key={`${gameId}-${gameVersionId}`} color="red">
+                    #{gameId} (v{gameVersionId}): {error}
                   </Text>
-                </Box>
+                ))}
               </Box>
-            )}
-            {!!failures.length && (
-              <Box flexDirection="column">
-                <Text color="red">Failed to update:</Text>
-                <Box flexDirection="column" paddingLeft={1}>
-                  {failures.map(({ gameId, gameVersionId, error }) => (
-                    <Text key={`${gameId}-${gameVersionId}`} color="red">
-                      #{gameId} (v{gameVersionId}): {error}
-                    </Text>
-                  ))}
-                </Box>
-              </Box>
-            )}
-          </Box>
-        ) : (process.env.STAGE ?? "production") === "production" ? (
-          <Text color="yellow">
-            Updating all games increases the load on the server and might
-            trigger alerts. Please notify the team in #tango slack that you are
-            running this script
-          </Text>
-        ) : null
+            </Box>
+          )}
+        </Box>
       }
     />
   )

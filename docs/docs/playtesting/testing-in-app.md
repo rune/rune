@@ -2,14 +2,14 @@
 sidebar_position: 1
 ---
 
-# Testing in Rune App
+# Testing in Dusk App
 
-Rune lets you easily playtest your game in the Rune app before it's published to everyone. This is a great way to test the actual multiplayer experience of your game with friends and [team members](../publishing/collaboration#team-roles) before releasing it to the Rune community.
+Dusk lets you easily playtest your game in the Dusk app before it's published to everyone. This is a great way to test the actual multiplayer experience of your game with friends and [team members](../publishing/collaboration#team-roles) before releasing it to the Dusk community.
 
 Upload your game by running: 
 
 ```sh
-npx rune-games-cli@latest create
+npx dusk-cli@latest upload
 ```
 After this, you'll see your game in the app even though it's not publicly available yet. Here's [more details on uploading your game](../publishing/publishing-your-game.md) if interested.
 
@@ -17,6 +17,6 @@ Then create a room in the app and select your game in the list. You can also inv
 
 ## Playing New Versions before Release
 
-Once your game has been published, everyone in the Rune community will have access to the latest active version of the game.
+Once your game has been published, everyone in the Dusk community will have access to the latest active version of the game.
 
 To support game development after it is released to everyone, your team members will have access to the latest draft / in review version instead of the published one. This way you are able to playtest the latest game changes in the app before they're released to everyone!

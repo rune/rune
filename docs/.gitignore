@@ -4,6 +4,7 @@
 # Production
 /build
 /static/_examples
+/static/_tech-demos
 /src/pages/demoCode.json
 
 # Generated files

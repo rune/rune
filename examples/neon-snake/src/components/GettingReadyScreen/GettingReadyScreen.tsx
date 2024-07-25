@@ -7,7 +7,7 @@ export function GettingReadyScreen() {
   return (
     <Root>
       <Logo src={logo} />
-      <StartButton onClick={() => Rune.actions.setReady()}>Start</StartButton>
+      <StartButton onClick={() => Dusk.actions.setReady()}>Start</StartButton>
       <Instructions />
     </Root>
   )

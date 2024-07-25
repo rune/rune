@@ -70,7 +70,7 @@ export function checkLatestSectionForCollisions(
       !isCollisionPointRecentlyVisitedBySnake(snake, currentCollisionPoint))
   ) {
     player.state = "dead"
-    player.diedAt = Rune.gameTime()
+    player.diedAt = Dusk.gameTime()
     checkWinnersAndGameOver(game)
   } else if (!latestSection.gap) {
     const prevGlobalPoint = collisionToGlobalPoint(prevCollisionPoint)

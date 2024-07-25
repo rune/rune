@@ -1,0 +1,23 @@
+---
+sidebar_position: 1
+---
+
+# Tech Demos
+Simple examples that show a particular feature or style of game built on Dusk.
+
+import { MultiplayerExamples } from "@site/src/components/MultiplayerExamples"
+
+<MultiplayerExamples
+  techDemo={true}
+  data={[
+    {
+      title: "Top Down Synchronization",
+      slug: "top-down-synchronization",
+      description: "Top down RPG style game synchronization",
+      src: require("@site/static/img/tech-demos/top-down-synchronization.png")
+        .default,
+    },
+  ]}
+/>
+
+See all multiplayer tech demos in our [GitHub repository](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/) and see all the types of [games supported on Dusk](how-it-works/supported-games.md).

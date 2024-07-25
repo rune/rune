@@ -5,7 +5,7 @@ export function Social() {
   return (
     <>
       <a
-        href="https://github.com/rune/rune"
+        href="https://github.com/dusk-gg/dusk"
         target="_blank"
         rel="noreferrer"
         className={styles.socialLink}
@@ -26,7 +26,7 @@ export function Social() {
         />
       </a>
       <a
-        href="https://discord.gg/rune-devs"
+        href="https://discord.gg/dusk-devs"
         target="_blank"
         rel="noreferrer"
         className={styles.socialLink}
@@ -47,7 +47,7 @@ export function Social() {
         />
       </a>
       <a
-        href="https://twitter.com/joinrune"
+        href="https://twitter.com/dusk_devs"
         target="_blank"
         rel="noreferrer"
         className={styles.socialLink}

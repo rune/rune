@@ -13,9 +13,9 @@ import demoCode from "./demoCode.json"
 const features = [
   {
     icon: require("@site/static/img/home/features/players.png").default,
-    title: "Millions playing your game on Rune",
+    title: "Millions playing your game on Dusk",
     description: [
-      "The Rune app has more than 10 million installs across iOS and Android.",
+      "The Dusk app has more than 10 million installs across iOS and Android.",
       "No need for you to deal with marketing or pay for ads!",
     ],
   },
@@ -24,31 +24,31 @@ const features = [
     title: "Use your favorite web framework",
     description: [
       "Your game can use any web framework such as React, Svelte, Vue, r3f, PixiJS.",
-      "It runs smoothly inside the Rune app using a highly-optimized WebView.",
+      "It runs smoothly inside the Dusk app using a highly-optimized WebView.",
     ],
   },
   {
     icon: require("@site/static/img/home/features/heart.png").default,
     title: "It’s free for everyone",
     description: [
-      "Rune is completely free for developers and players alike!",
-      "We cover our costs through a small cut on any money we help developers make.",
+      "Dusk is completely free for developers and players alike!",
+      "We will cover our costs through a small cut on any money we help devs make.",
     ],
   },
   {
     icon: require("@site/static/img/home/features/dollar.png").default,
     title: "We help you make money (coming soon!)",
     description: [
-      "Players can soon spend Rune gems on your games.",
-      "Earn money by adding skins and power-ups to your game!",
+      "Earn money from your game without dealing with ads or purchases.",
+      "Dusk's creator fund pays you directly based on your game's stats.",
     ],
   },
   {
     icon: require("@site/static/img/home/features/headset.png").default,
-    title: "Voice chat and social built into Rune",
+    title: "Voice chat and social built into Dusk",
     description: [
-      "The Rune app has friends, messaging, spectating and voice chat.",
-      "Rune turns your game into an incredible multiplayer experience!",
+      "The Dusk app has friends, messaging, spectating and voice chat.",
+      "Dusk turns your game into an incredible multiplayer experience!",
     ],
   },
 ]
@@ -61,7 +61,7 @@ const videos = [
         {
           name: "alexwoods",
           avatar:
-            "https://app.rune.ai/avatar?base=2&hair=29&tilt=1&headgear=55&accessory=64&background=72&expression=18&size=90&isCropped=1&isBackgroundTransparent=0",
+            "https://app.dusk.gg/avatar?base=2&hair=29&tilt=1&headgear=55&accessory=64&background=72&expression=18&size=90&isCropped=1&isBackgroundTransparent=0",
         },
       ],
       minPlayers: 1,
@@ -90,7 +90,7 @@ const videos = [
         {
           name: "KIO Studios",
           avatar:
-            "https://app.rune.ai/avatar?base=12&hair=24&tilt=1&headgear=60&accessory=62&background=75&expression=17&size=90&isCropped=1&isBackgroundTransparent=0",
+            "https://app.dusk.gg/avatar?base=12&hair=24&tilt=1&headgear=60&accessory=62&background=75&expression=17&size=90&isCropped=1&isBackgroundTransparent=0",
         },
       ],
       minPlayers: 2,
@@ -119,7 +119,7 @@ const videos = [
         {
           name: "wawasensei",
           avatar:
-            "https://app.rune.ai/avatar?base=10&hair=20&tilt=1&headgear=61&accessory=67&background=71&expression=16&size=90&isCropped=1&isBackgroundTransparent=0",
+            "https://app.dusk.gg/avatar?base=10&hair=20&tilt=1&headgear=61&accessory=67&background=71&expression=16&size=90&isCropped=1&isBackgroundTransparent=0",
         },
       ],
       minPlayers: 1,
@@ -147,12 +147,12 @@ const videos = [
         {
           name: "json",
           avatar:
-            "https://app.rune.ai/avatar?base=5&hair=43&tilt=1&headgear=59&accessory=67&background=95&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
+            "https://app.dusk.gg/avatar?base=5&hair=43&tilt=1&headgear=59&accessory=67&background=95&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
         },
         {
           name: "viturowski",
           avatar:
-            "https://app.rune.ai/avatar?base=12&hair=30&tilt=0&headgear=55&accessory=67&background=73&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
+            "https://app.dusk.gg/avatar?base=12&hair=30&tilt=0&headgear=55&accessory=67&background=73&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
         },
       ],
       minPlayers: 1,
@@ -181,12 +181,12 @@ const videos = [
         {
           name: "Helios1138",
           avatar:
-            "https://app.rune.ai/avatar?base=2&hair=44&tilt=0&headgear=56&accessory=66&background=72&expression=14&size=90&isCropped=1&isBackgroundTransparent=0",
+            "https://app.dusk.gg/avatar?base=2&hair=44&tilt=0&headgear=56&accessory=66&background=72&expression=14&size=90&isCropped=1&isBackgroundTransparent=0",
         },
         {
           name: "shanehelm",
           avatar:
-            "https://app.rune.ai/avatar?base=9&hair=49&tilt=1&headgear=76&accessory=66&background=97&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
+            "https://app.dusk.gg/avatar?base=9&hair=49&tilt=1&headgear=76&accessory=66&background=97&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
         },
       ],
       minPlayers: 1,
@@ -318,9 +318,9 @@ export default function Home() {
           <div className={styles.hero1}>
             <Phone />
 
-            <h2>Build a multiplayer game played by millions</h2>
+            <h2>build a multiplayer game played by millions</h2>
             <p>
-              Your game runs inside the Rune app with 10 million installs across
+              Your game runs inside the Dusk app with 10 million installs across
               iOS and Android.
             </p>
             <div className={styles.ctaButtons}>
@@ -329,7 +329,7 @@ export default function Home() {
               </Link>
               <a
                 className={clsx(styles.ctaButton, styles.blue)}
-                href="https://discord.gg/rune-devs"
+                href="https://discord.gg/dusk-devs"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -343,7 +343,7 @@ export default function Home() {
           </div>
 
           <div className={styles.hero2}>
-            <h2>You focus on your game, we handle everything&nbsp;else</h2>
+            <h3>you focus on your game, we handle everything&nbsp;else</h3>
             <div className={styles.featuresOuter}>
               <div className={styles.features}>
                 {features.map(({ icon, title, description }, idx) => (
@@ -366,10 +366,10 @@ export default function Home() {
           </div>
 
           <div className={styles.hero3}>
-            <h2>No backend needed</h2>
+            <h3>no backend needed</h3>
             <HomeGameDemo />
             <p className={styles.description}>
-              You write your game logic in JavaScript and Rune runs it on
+              You write your game logic in JavaScript and Dusk runs it on
               servers all over the world for low latency. Our predict-rollback
               approach removes the need for any game networking code and ensures
               that players have an amazing experience even on bad internet.
@@ -377,11 +377,11 @@ export default function Home() {
           </div>
 
           <div className={styles.hero4}>
-            <h2>Multiplayer in 100 lines&nbsp;of&nbsp;JS</h2>
+            <h3>multiplayer in 100 lines&nbsp;of&nbsp;JS</h3>
             <p>
               Here’s the code for the Tic Tac Toe game above. The game has
               built-in voice chat, matchmaking, and spectating. All powered by
-              Rune!
+              Dusk!
             </p>
             <div className={styles.codeContainer}>
               <div className={styles.buttons}>
@@ -434,7 +434,7 @@ export default function Home() {
           </div>
 
           <div className={styles.cta}>
-            <h3>Use your favorite web framework</h3>
+            <h3>use your favorite web framework</h3>
             <Link className={styles.ctaButton} to="/docs/quick-start">
               Get Started
             </Link>

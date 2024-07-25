@@ -15,18 +15,18 @@
     "@typescript-eslint/parser": "^7.8.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "@tsconfig/svelte": "^5.0.2",
-    "eslint-plugin-rune": "^0.2.1",
+    "eslint-plugin-dusk": "^1.0.0",
     "svelte": "^5.0.0-next.0",
     "svelte-check": "^3.6.7",
     "tslib": "^2.6.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.0",
-    "vite-plugin-qrcode": "^0.2.3",
-    "vite-plugin-dusk": "^0.3.5",
+    "vite-plugin-dusk": "^1.0.0",
+    "vite-plugin-qrcode": "^0.2.2",
     "eslint": "^8.57.0",
     "eslint-plugin-svelte": "^2.38.0"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.19.14"
+    "dusk-games-sdk": "^4.20.2"
   }
 }

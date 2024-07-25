@@ -12,7 +12,7 @@ describe("interpolator", () => {
   it("should interpolate between the positions when provided with numbers", () => {
     const instance = interpolator()
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
     } as any
@@ -21,7 +21,7 @@ describe("interpolator", () => {
 
     expect(instance.getPosition()).toEqual(0)
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
     } as any
@@ -32,7 +32,7 @@ describe("interpolator", () => {
   it("should interpolate between the positions when provided with arrays", () => {
     const instance = interpolator()
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
     } as any
@@ -41,7 +41,7 @@ describe("interpolator", () => {
 
     expect(instance.getPosition()).toEqual([0, 100])
 
-    global.Rune = {
+    global.Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
     } as any

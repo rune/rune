@@ -1,7 +1,7 @@
-import { RuneClient } from "rune-games-sdk"
+import { DuskClient } from "dusk-games-sdk"
 import { GameState, Persisted } from "./GameState"
 import { GameActions } from "./GameActions"
 
 declare global {
-  const Rune: RuneClient<GameState, GameActions, Persisted>
+  const Dusk: DuskClient<GameState, GameActions, Persisted>
 }

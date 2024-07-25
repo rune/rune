@@ -1,4 +1,4 @@
-import { PlayerId } from "rune-games-sdk/multiplayer"
+import { PlayerId } from "dusk-games-sdk/multiplayer"
 
 export const animals = [
   "dog",

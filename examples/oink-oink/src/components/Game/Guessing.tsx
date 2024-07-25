@@ -34,7 +34,7 @@ export const Guessing = memo(() => {
   useEffect(() => {
     if (pendingAnimal && pendingEmotion) {
       const handle = setTimeout(() => {
-        Rune.actions.makeGuess({
+        Dusk.actions.makeGuess({
           animal: pendingAnimal,
           emotion: pendingEmotion,
           round,

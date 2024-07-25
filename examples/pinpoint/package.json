@@ -14,7 +14,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-transition-group": "^4.4.5",
-    "rune-games-sdk": "^4.19.14",
+    "dusk-games-sdk": "^4.20.2",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
@@ -29,7 +29,7 @@
     "eslint": "7.22.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "eslint-plugin-rune": "^0.1.9",
+    "eslint-plugin-dusk": "^1.0.0",
     "prettier": "^2.8.7",
     "react-scripts": "5.0.1",
     "sass": "^1.60.0",
@@ -44,7 +44,7 @@
     "dev": "npm run dev:client & npm run dev:logic",
     "dev:client": "react-scripts start",
     "dev:logic": "esbuild src/logic.ts --bundle --outfile=public/logic.js --platform=neutral --tsconfig=tsconfig-logic.json --minify --watch",
-    "deploy": "../../scripts/copy-assets.sh pinpoint && yarn build && rune upload build",
+    "deploy": "../../scripts/copy-assets.sh pinpoint && yarn build && dusk upload build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives"
   },
   "eslintConfig": {

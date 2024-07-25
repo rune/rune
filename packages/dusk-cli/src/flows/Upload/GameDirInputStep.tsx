@@ -13,10 +13,8 @@ import {
   FileInfo,
 } from "../../lib/getGameFiles.js"
 import { isDir } from "../../lib/isDir.js"
-import {
-  validateGameFiles,
-  ValidationResult,
-} from "../../lib/validateGameFiles.js"
+import { ValidationResult } from "../../lib/validateGameFiles.js"
+import { validateGameFilesInCLI } from "../../lib/validateGameFilesInCli.js"
 
 // @ts-ignore
 const TextInput = TextInputImport.default as typeof TextInputImport
@@ -50,7 +48,7 @@ export function GameDirInputStep({
       .then((gameFiles) => {
         setLogicJsFile(findShortestPathFileThatEndsWith(gameFiles, "logic.js"))
 
-        return validateGameFiles(gameFiles)
+        return validateGameFilesInCLI(gameFiles)
       })
       .then(setValidateGameResult)
   }, [existsGameDir, gameDir])

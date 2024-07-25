@@ -4,8 +4,9 @@
   "private": true,
   "workspaces": [
     "packages/eslint-plugin-dusk",
+    "packages/vite-plugin-dusk",
     "packages/dusk-cli",
-    "packages/*"
+    "packages/interpolators"
   ],
   "scripts": {
     "prepare": "husky install && yarn build && rm node_modules/vite/index.d.cts",

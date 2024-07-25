@@ -239,7 +239,7 @@ Dusk.initLogic({
       const entity = game.players.find((p) => p.playerId === playerId)
 
       if (entity && entity.type === "PLAYER") {
-        (entity as Player).controls = { ...controls }
+        ;(entity as Player).controls = { ...controls }
       }
     },
   },

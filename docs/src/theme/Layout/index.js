@@ -96,14 +96,26 @@ function Banner() {
         top: 0;
         z-index: 2;
       }
+      .banner a {
+        color: #6d20ab;
+      }
+      .banner a:hover {
+        text-decoration: none;
+      }
 
-      @media screen and (max-width: 700px) {
+      .banner > .banner-content {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+      }
+
+      @media screen and (max-width: 996px) {
         .banner {
           padding: 12px 24px;
           font-size: 16px;
         }
 
-        .banner > .text > span:nth-child(2) {
+        .banner .text > span:nth-child(2) {
           display: none;
         }
       }
@@ -117,9 +129,17 @@ function Banner() {
 
   return (
     <div class="banner">
-      <div class="text">
-        <span>Rune is now Dusk!</span>
-        <span> Our name and logo got an upgrade.</span>
+      <div class="banner-content">
+        <div class="text">
+          <span>Rune is now Dusk!</span>
+          <span> Our name and logo got an upgrade.</span>
+        </div>
+        <a
+          href="https://updates.dusk.gg/announcing-dusk-and-our-8m-raise/"
+          target="_blank"
+        >
+          Learn more →
+        </a>
       </div>
     </div>
   )

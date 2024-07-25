@@ -14,5 +14,5 @@ export default [
     },
   },
   js.configs.recommended,
-  duskPlugin.configs.recommended,
+  ...duskPlugin.configs.recommended,
 ]

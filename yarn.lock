@@ -6611,10 +6611,18 @@ dusk-games-sdk@^4.16.33:
     rune-msgpack "1.0.0"
     xstate "4.32.1"
 
-dusk-games-sdk@^4.20.2:
-  version "4.20.2"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.20.2.tgz#3e0507eeee9f5079330e473eaca3ad0efd3e2b87"
-  integrity sha512-JLj4EeqH8yIp9tdBM5TCztrCmqY04fRSDReV4Ls8lsqSSuxgmyS6vdO3HP4ozZMPQzeYIu2ONB7CTUrcEdpNWw==
+dusk-games-sdk@^4.21.0:
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.21.0.tgz#de12f4e5943f4d4e9699a5572f5bd783bac7b8e9"
+  integrity sha512-6uDoerZhXmoGmf4XJHDtNdsyse0TVV9Js5bHoBzacKhhiibreSjztgRbGfQ/53Ut28vv1yR0SBlmST2AfCiUGw==
+  dependencies:
+    "@eslint/eslintrc" "^3.1.0"
+    "@eslint/js" "^9.7.0"
+    es-module-lexer "^1.4.2"
+    globals "^15.8.0"
+    okie "^1.0.1"
+    terser "^5.22.0"
+    tree-model "^1.0.7"
 
 eastasianwidth@^0.2.0:
   version "0.2.0"

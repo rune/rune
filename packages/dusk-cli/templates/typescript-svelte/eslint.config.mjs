@@ -16,7 +16,7 @@ export default [
     },
   },
   js.configs.recommended,
-  duskPlugin.configs.recommended,
+  ...duskPlugin.configs.recommended,
   ...tseslint.configs.recommended,
   {
     languageOptions: {

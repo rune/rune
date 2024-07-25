@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-dusk",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "ESlint rules for Dusk Games SDK",
   "license": "MIT",
   "author": "Dusk",

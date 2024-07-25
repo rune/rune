@@ -72,16 +72,7 @@ export default [
     files: ["packages/eslint-plugin-dusk/test/samples/*.js"],
     ...duskPlugin.configs.logic,
   },
-
-  {
-    files: ["examples/**/*.js", "examples/**/*.ts"],
-    ...duskPlugin.configs.recommended,
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-      },
-    },
-  },
+  ...duskPlugin.configs.recommended,
   {
     files: ["docs/**/*.js"],
     ...reactPlugin.configs.flat.recommended,
@@ -100,11 +91,6 @@ export default [
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/ban-ts-comment": "off",
     },
-  },
-
-  {
-    files: ["tech-demos/**"],
-    ...duskPlugin.configs.recommended,
   },
 
   {

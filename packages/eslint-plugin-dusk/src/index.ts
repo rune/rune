@@ -86,7 +86,7 @@ const restrictedGlobals = [
 const plugin = {
   meta: {
     name: "eslint-plugin-dusk",
-    version: "2.0.0",
+    version: "2.0.1",
   },
   configs: {
     recommended: {},
@@ -181,10 +181,19 @@ const logicModuleConfig: Linter.Config = {
 
 Object.assign(plugin.configs as any, {
   //Only validates logic files
-  recommended: {
-    files: ["**/logic.ts", "**/logic.js"],
-    ...logicModuleConfig,
-  },
+  recommended: [
+    {
+      languageOptions: {
+        globals: {
+          Dusk: "readonly",
+        },
+      },
+    },
+    {
+      files: ["**/logic.ts", "**/logic.js"],
+      ...logicModuleConfig,
+    },
+  ],
   logic: logicConfig,
   logicModule: logicModuleConfig,
 })

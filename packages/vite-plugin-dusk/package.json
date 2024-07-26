@@ -44,7 +44,7 @@
     "@types/terser": "^3.12.0",
     "array-flatten": "^3.0.0",
     "babel-jest": "^29.7.0",
-    "dusk-games-sdk": "^4.16.33",
+    "dusk-games-sdk": "^4.21.1",
     "jest": "29.3.1",
     "math-sum": "^2.0.0",
     "sudoku-gen": "^1.0.2",
@@ -60,6 +60,7 @@
     "es-module-lexer": "^1.4.2",
     "okie": "^1.0.1",
     "terser": "^5.22.0",
-    "tree-model": "^1.0.7"
+    "tree-model": "^1.0.7",
+    "dusk-games-sdk": "^4.21.1"
   }
 }

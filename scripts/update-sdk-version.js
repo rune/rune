@@ -9,6 +9,10 @@ const techDemosDir = path.resolve(__dirname, "../tech-demos")
 const templatesDir = path.resolve(__dirname, "../packages/dusk-cli/templates")
 
 const cliDir = path.resolve(__dirname, "../packages/dusk-cli")
+const vitePluginDuskDir = path.resolve(
+  __dirname,
+  "../packages/vite-plugin-dusk"
+)
 
 //These example games also have sdk version inside html
 const gamesWithHtml = {
@@ -53,10 +57,22 @@ const techDemos = fs
 const cli = {
   name: "dusk-cli",
   dir: cliDir,
-  shouldInstall: false,
+  shouldInstall: true,
 }
 
-const locations = [...exampleGames, ...templateGames, ...techDemos, cli]
+const vitePluginDusk = {
+  name: "vite-plugin-dusk",
+  dir: vitePluginDuskDir,
+  shouldInstall: true,
+}
+
+const locations = [
+  ...exampleGames,
+  ...templateGames,
+  ...techDemos,
+  cli,
+  vitePluginDusk,
+]
 
 locations.forEach(({ name, dir, shouldInstall }) => {
   if (!fs.existsSync(dir)) {

@@ -205,7 +205,7 @@ You can also make a pull request to add the dependency to the whitelist at (http
           if (command === "serve") {
             onTransformDone()
           }
-        } catch (e) {
+        } catch {
           //Do nothing for now
         }
       },

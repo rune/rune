@@ -9,7 +9,7 @@ describe("PackageJSONTransform", () => {
     expect(
       JSON.stringify(
         transformJSON(
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
           require(
             path.resolve(
               __dirname,

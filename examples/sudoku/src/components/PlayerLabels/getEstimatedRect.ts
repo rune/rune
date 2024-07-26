@@ -1,5 +1,5 @@
 import { LabelDefinition, Rect } from "./types"
-import { getCornerPositionAndDirection } from "./getCornerPositionAndDirection"
+import type { getCornerPositionAndDirection } from "./getCornerPositionAndDirection"
 
 export function getEstimatedRect(
   label: LabelDefinition,

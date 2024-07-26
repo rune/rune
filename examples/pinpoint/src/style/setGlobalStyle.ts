@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 const style = document.createElement("style")
 
 // language=CSS

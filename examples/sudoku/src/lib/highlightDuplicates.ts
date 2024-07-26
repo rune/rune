@@ -1,5 +1,5 @@
 import { Cell } from "./types/GameState"
-import { findDuplicates } from "./findDuplicates"
+import type { findDuplicates } from "./findDuplicates"
 import { cellPointer } from "./cellPointer"
 
 export function highlightDuplicates(

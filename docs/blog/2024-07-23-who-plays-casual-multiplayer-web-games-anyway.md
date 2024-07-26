@@ -79,7 +79,7 @@ There a few things to remember that might not be obvious when you’re designing
 * Super casual games work. The top games on Dusk at the moment are super casual chill experiences.
 * A good place to start is a novel twist on something existing. Adding multiplayer is often a catalyst to new game mechanics.
 * Many players will try the game solo before recommending it to play with friends, try to make the solo experience as endearing as the real thing.
-* Don't forget to check out our [Best Practices](/docs/playtesting/best-practices)
+* Don't forget to check out our [Best Practices](/docs/playtesting/best-practices-gameplay)
 
 ## Getting Your Game Seen
 

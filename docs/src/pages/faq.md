@@ -83,7 +83,7 @@ Of course, anyone uploading their game early will have a huge head start in buil
 
 ### How Do I Make the Best Possible Game on Dusk? {#how-do-i-make-the-best-possible-game-on-dusk}
 
-We’ve talked with a lot of players in the Dusk community and accumulated their feedback in [Best Practices](/docs/playtesting/best-practices). Make sure to check it out!
+We’ve talked with a lot of players in the Dusk community and accumulated their feedback in [Best Practices](/docs/playtesting/best-practices-gameplay). Make sure to check it out!
 
 ### How Do You Handle Inappropriate Content? {#how-do-you-handle-inappropriate-content}
 

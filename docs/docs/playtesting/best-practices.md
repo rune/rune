@@ -2,21 +2,13 @@
 sidebar_position: 3
 ---
 
-# Best Practices
+# Gameplay Best Practices
 
 Here's some advice on making your game a great experience for the players!
 
-### Gameplay Should Start Easy and Simple {#gameplay-should-start-easy-and-simple}
+### Ease Players Into Your Game {#gameplay-should-start-easy-and-simple}
 
-As a game dev, it's easy to think that your game is very simple to understand. That's because you made it 😅 Players will need to understand how your game works and what everything means. For that reason, we highly recommend you start your gameplay simple and easy.
-
-### Use Icons Instead of Text {#use-icons-instead-of-text}
-
-Most players prefer visual explanations instead of reading so it's ideal if your game can be understood without reading.
-
-### Translate Text For Non-English Players {#translate-text}
-
-There's many non-English players on Dusk so you increase your game's chances of success if you internationalize it by translating all text. The biggest non-English audiences on Dusk speak Spanish, Russian and Portuguese so translate your game into those languages.
+As a game dev, it's easy to think that your game is very simple to understand. That's because you made it 😅 Players will need to understand how your game works and what everything means. For that reason, we highly recommend you start your game with extremely simple gameplay that's very intuitive.
 
 ### Support Solo Play {#support-solo-play}
 
@@ -34,25 +26,17 @@ Players on Dusk can spectate your game 👀 This can happen in many ways, e.g. i
 
 Dusk’s UI provides a simple way to play/pause/restart that works for all games so you don’t need a menu screen or a pause button in your game. This lets players get into the action of your game, thereby making it faster to start playing and more fun for players! Similarly, there's no need for any audio buttons as Dusk has in-app UI for that, making things simpler for players.
 
-### Avoid Ads, Branding and Links {#avoid-ads-branding-and-links}
+### Use Icons Instead of Text {#use-icons-instead-of-text}
 
-One of the amazing things about Dusk is that there’s no ads. Leave out any ads, branding and links from your game to keep the focus on the gameplay experience 🧘
+Most players prefer visual explanations over reading. It's ideal if your game can be understood without reading any text.
 
-### Persist Player Progress Across Game Sessions {#avoid-using-cookies-localstorage-or-indexeddb}
+### Translate Text For Non-English Players {#translate-text}
 
-Players enjoy when they make progress in your game across sessions such as unlocking new content or achieving high scores. Use Dusk's built-in [persistence API](../advanced/persisted-data.md) to save data in a reliable way that automatically syncs it across a user's devices. Avoid using cookies, local stage or IndexedDB as iOS/Android may clear those. 
+There's many non-English players on Dusk so you increase your game's chances of success if you internationalize it by translating all text. The biggest non-English audiences on Dusk speak Spanish, Russian and Portuguese so translate your game into those languages.
 
-### Avoid Loading Bars and Calling `Dusk.initClient()` Prematurely {#avoid-progress-bars-and-calling-duskinitclient-prematurely}
+### Persist Player Progress Across Game Sessions {#persist-player-progress}
 
-Dusk shows an animation while your game is loading. It's a smoother player experience to only have one progress bar to load your game. Avoid having a loading screen in your game by waiting with calling `Dusk.initClient()` until your game has fully completed loading.
-
-### Send Player Input rather than Player State in Actions {#send-player-input}
-
-We recommend sending player input in actions (e.g. "turning left") rather than player state (e.g. the player's position). This minimizes network data and allows other clients to simulate ahead, thereby making your game work better in bad network settings. Similarly, only send an action when the input changes instead of sending the same player input repeatedly.
-
-### Gameplay Should not be Affected by Screen Size {#gameplay-should-not-be-affected-by-screen-size}
-
-Your game should ideally scale from small narrow phones with resolutions like 280×653 to wide tablets with resolutions like 1280×800. The gameplay area can be even less on small phones, e.g. only 450 pixels high. Gameplay should not be affected by aspect ratio or resolution. Make sure your game scales to cover the entire screen to provide the best experience.
+Players enjoy when they make progress in your game across sessions such as unlocking new content or achieving high scores. Use Dusk's built-in [persistence API](../advanced/persisted-data.md) to save data in a reliable way that automatically syncs it across a user's devices. Avoid using cookies, local stage or IndexedDB as the OS may reset those.
 
 ### Polish Your Dusk Profile {#polish-your-dusk-profile}
 

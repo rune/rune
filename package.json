@@ -30,7 +30,6 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "beta",
-    "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.8.0",
     "husky": "7.0.2",
     "lerna": "^6.1.0",

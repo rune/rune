@@ -3,7 +3,6 @@ import globals from "globals"
 import duskPlugin from "dusk-games-sdk/eslint.js"
 import tseslint from "typescript-eslint"
 import pluginReactHooks from "eslint-plugin-react-hooks"
-import pluginReactRefresh from "eslint-plugin-react-refresh"
 import { fixupPluginRules } from "@eslint/compat"
 import prettier from "eslint-plugin-prettier/recommended"
 
@@ -17,9 +16,6 @@ export default [
       ecmaVersion: "latest",
       sourceType: "module",
     },
-    plugins: {
-      "react-refresh": pluginReactRefresh,
-    },
   },
   js.configs.recommended,
   ...duskPlugin.configs.recommended,
@@ -32,7 +28,6 @@ export default [
   },
   {
     rules: {
-      "react-refresh/only-export-components": "warn",
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-explicit-any": "off",
     },

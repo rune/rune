@@ -18,7 +18,12 @@ export default [
     },
     plugins: {
       "react-refresh": pluginReactRefresh
-    }
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
   },
   js.configs.recommended,
   ...duskPlugin.configs.recommended,

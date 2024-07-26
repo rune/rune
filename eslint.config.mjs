@@ -12,21 +12,21 @@ import nodePlugin from "eslint-plugin-n"
 
 import fs from "fs"
 
-async function exampleGameConfigs() {
-  const examples = fs
-    .readdirSync("examples")
+async function getConfigs(dirName) {
+  const entries = fs
+    .readdirSync(dirName)
     //check if dir
-    .filter((file) => fs.statSync(`examples/${file}`).isDirectory())
+    .filter((file) => fs.statSync(`${dirName}/${file}`).isDirectory())
     //has eslint.config.mjs
-    .filter((file) => fs.existsSync(`examples/${file}/eslint.config.mjs`))
+    .filter((file) => fs.existsSync(`${dirName}/${file}/eslint.config.mjs`))
 
   return (
     await Promise.all(
-      examples.map(async (example) => {
-        const configs = await import(`./examples/${example}/eslint.config.mjs`)
+      entries.map(async (entry) => {
+        const configs = await import(`./${dirName}/${entry}/eslint.config.mjs`)
 
         return configs.default.map((config) => ({
-          files: [`examples/${example}/**`],
+          files: [`${dirName}/${entry}/**`],
           ...config,
         }))
       })
@@ -227,7 +227,8 @@ export default [
     },
   },
 
-  ...(await exampleGameConfigs()),
+  ...(await getConfigs("examples")),
+  ...(await getConfigs("tech-demos")),
 
   //Eslint only allows to define plugin once, and because each example game installs its own dependencies,
   //We need to point their plugins to root monorepo installs

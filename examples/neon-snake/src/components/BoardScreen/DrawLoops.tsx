@@ -37,10 +37,10 @@ export function DrawLoops({
           remap(
             Dusk.gameTime(),
             [timerStartedAt + msStart, timerStartedAt + loopDuration + msStart],
-            [0, 1],
+            [0, 1]
           ),
-          [0, 1],
-        ),
+          [0, 1]
+        )
       )
 
       g.lineStyle(scale, color, 1 - x)

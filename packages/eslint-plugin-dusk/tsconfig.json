@@ -7,13 +7,13 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": false,
     "noFallthroughCasesInSwitch": true,
     "rootDir": "src",
     "outDir": "dist",
-    "checkJs": true
+    "checkJs": true,
+    "declaration": true
   },
   "include": ["src"]
 }

@@ -148,8 +148,8 @@ export function RuneToDusk() {
           step > Steps.IncorrectDir
             ? "success"
             : step === Steps.IncorrectDir
-            ? "error"
-            : "userInput"
+              ? "error"
+              : "userInput"
         }
         label={"Game directory"}
         view={
@@ -198,15 +198,15 @@ export function RuneToDusk() {
             step > Steps.InstallError
               ? "success"
               : step === Steps.InstallError
-              ? "error"
-              : "waiting"
+                ? "error"
+                : "waiting"
           }
           label={
             step > Steps.InstallError
               ? `Dependencies installed successfully!`
               : step === Steps.InstallError
-              ? `Failed to install dependencies`
-              : `Installing dependencies...`
+                ? `Failed to install dependencies`
+                : `Installing dependencies...`
           }
         />
       )}

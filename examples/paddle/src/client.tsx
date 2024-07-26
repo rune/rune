@@ -59,7 +59,6 @@ window.onload = function () {
     onChange: (params) => {
       game = params.game
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       futureGame = params.futureGame!
       players = params.players
       yourPlayerId = params.yourPlayerId
@@ -119,7 +118,6 @@ window.onload = function () {
         }
 
         if (!yourPlayerId) {
-          // eslint-disable-next-line @typescript-eslint/no-extra-semi
           ;(playerPaddleInterpolator as InterpolatorLatency<number>).jump(
             game.paddles[opponentIndex].position
           )

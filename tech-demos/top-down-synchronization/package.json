@@ -7,19 +7,19 @@
     "dev": "vite --host",
     "build": "tsc && vite build",
     "upload": "npm run build && npx dusk-cli@latest upload",
-    "lint": "eslint src --ext ts,tsx",
+    "lint": "eslint src",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.20.1",
-    "prettier": "3.0.3"
+    "dusk-games-sdk": "^4.21.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.8.0",
-    "@typescript-eslint/parser": "^7.8.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-dusk": "^1.0.0",
+    "eslint": "^9.7.0",
+    "eslint-plugin-dusk": "^2.0.0",
+    "globals": "^15.8.0",
+    "prettier": "^3.3.3",
     "typescript": "^5.4.5",
+    "typescript-eslint": "^7.17.0",
     "vite": "^5.2.11",
     "vite-plugin-dusk": "^1.0.0",
     "vite-plugin-qrcode": "^0.2.2"

@@ -1,5 +1,5 @@
 export type InterpolatorFactory = <
-  Dimensions extends number | number[]
+  Dimensions extends number | number[],
 >() => Interpolator<Dimensions>
 
 export type Interpolator<Dimensions extends number | number[]> = {
@@ -8,7 +8,7 @@ export type Interpolator<Dimensions extends number | number[]> = {
 }
 
 export type InterpolatorLatencyFactory = <
-  Dimensions extends number | number[]
+  Dimensions extends number | number[],
 >(config: {
   maxSpeed: number
   timeToMaxSpeed?: number

@@ -24,14 +24,14 @@ export function Header() {
       Object.keys(players).length < 4
         ? { color: pickFreeColor(playerInfos) }
         : null,
-    [playerInfos, players],
+    [playerInfos, players]
   )
 
   const playerInfosCombined = useMemo(
     () =>
       playerInfos.map(({ playerId, color, score, state }) => {
         const playerInfoDelayed = playerInfosDelayed.find(
-          (p) => p.playerId === playerId,
+          (p) => p.playerId === playerId
         )
 
         return {
@@ -42,7 +42,7 @@ export function Header() {
             : { score, state }),
         }
       }),
-    [playerInfos, playerInfosDelayed],
+    [playerInfos, playerInfosDelayed]
   )
 
   return (

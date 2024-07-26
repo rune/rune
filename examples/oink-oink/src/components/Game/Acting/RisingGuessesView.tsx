@@ -47,7 +47,9 @@ export const RisingGuessesView = memo(() => {
 const Root = styled.div``
 
 const PositionAndRocking = styled.div<{ position: number }>`
-  animation: rocking 800ms ease-in-out infinite, rising 1s linear forwards;
+  animation:
+    rocking 800ms ease-in-out infinite,
+    rising 1s linear forwards;
   position: absolute;
   left: ${({ position }) => `${remap(position, [0, 1], [15, 85])}vw`};
   bottom: 0;

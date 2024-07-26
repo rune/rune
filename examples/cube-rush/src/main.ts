@@ -52,12 +52,12 @@ const uiSpeed = uiInfo.getElementsByClassName("speed")[0]!
 
 const uiTrackProgress = uiInfo.getElementsByClassName("trackProgressTrack")[0]!
 const uiSpectating = uiInfo.getElementsByClassName(
-  "spectating",
+  "spectating"
 )[0]! as HTMLElement
 const uiSpectatingDisplayName =
   uiSpectating.getElementsByClassName("displayName")[0]!
 const uiSpectatingAvatar = uiSpectating.getElementsByClassName(
-  "avatar",
+  "avatar"
 )[0]! as HTMLImageElement
 
 const uiStats = document.getElementById("stats")!
@@ -66,11 +66,11 @@ const uiStatsTopSpeed = uiStats.getElementsByClassName("topSpeed")[0]!
 const uiStatsElapse = uiStats.getElementsByClassName("elapse")[0]!
 const uiStatsBestTime = uiStats.getElementsByClassName("bestTime")[0]!
 const uiStatsBestTimeContainer = uiStats.getElementsByClassName(
-  "bestTimeContainer",
+  "bestTimeContainer"
 )[0]! as HTMLElement
 
 const uiControlsPreview = uiScreens.PLAYING.getElementsByClassName(
-  "controlsPreview",
+  "controlsPreview"
 )[0]! as HTMLElement
 
 let game: GameStateWithPersisted<GameState, Persisted>
@@ -185,7 +185,7 @@ function initControls() {
     Dusk.actions.switchPhase("COUNTDOWN")
   })
 
-  window.addEventListener("resize", (event) => {
+  window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight)
     composer.setSize(window.innerWidth, window.innerHeight)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -232,7 +232,7 @@ function initControls() {
   }
 
   window.addEventListener("pointerdown", (event) =>
-    pressStart(event.clientX / window.innerWidth < 0.5),
+    pressStart(event.clientX / window.innerWidth < 0.5)
   )
 
   window.addEventListener("pointerup", pressEnd)
@@ -334,7 +334,7 @@ function initPlayers() {
     const { displayNameObj, avatarObj } = createShipLabel(
       scene,
       players[playerId].displayName,
-      players[playerId].avatarUrl,
+      players[playerId].avatarUrl
     )
     playerThreeObjs[playerId] = {
       ship,
@@ -416,7 +416,7 @@ function animate() {
     // Countdown
     if (game.startedAt) {
       const leftSeconds = Math.ceil(
-        (COUNTDOWN_MS - (Dusk.gameTime() - game.startedAt)) / 1000,
+        (COUNTDOWN_MS - (Dusk.gameTime() - game.startedAt)) / 1000
       )
       uiCountdown.textContent = leftSeconds.toFixed(0)
     }
@@ -498,7 +498,7 @@ function animate() {
 
       if (shouldChangeColor) {
         material.color.setHex(
-          playerThreeObjs[playerId].blinking ? color : 0xffffff,
+          playerThreeObjs[playerId].blinking ? color : 0xffffff
         )
         playerThreeObjs[playerId].blinking = !playerThreeObjs[playerId].blinking
         playerThreeObjs[playerId].colorChangedAt = performance.now()

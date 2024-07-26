@@ -37,7 +37,7 @@ function DrawOptimistic({
 
       g.endFill()
     },
-    [color, scale],
+    [color, scale]
   )
 
   return (
@@ -122,7 +122,7 @@ export function DrawPlayer({
                 scale={scale}
                 isOpponent={isOpponent}
               />
-            ),
+            )
           )}
           {!latestSection ? null : player.state === "alive" ? (
             <DrawArrow

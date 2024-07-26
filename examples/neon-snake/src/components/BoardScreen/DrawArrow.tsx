@@ -28,7 +28,7 @@ export function DrawArrow({
 
       g.endFill()
     },
-    [color],
+    [color]
   )
 
   return (

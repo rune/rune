@@ -10,7 +10,7 @@ import { allowedCollisionPoints } from "../logicConfig.ts"
 function markCollisionGrid(
   collisionGrid: CollisionGrid,
   collisionPoint: Point,
-  snake: Snake,
+  snake: Snake
 ) {
   //Initialize collision grid if it does not exist yet
 
@@ -34,19 +34,19 @@ function markCollisionGrid(
 // To avoid self collisions, we ignore the collision if the cell is recently visited.
 function isCollisionPointRecentlyVisitedBySnake(
   snake: Snake,
-  currentCollisionPoint: Point,
+  currentCollisionPoint: Point
 ) {
   return snake.lastCollisionGridPoints.some(
     (recentPoint) =>
       recentPoint.x === currentCollisionPoint.x &&
-      recentPoint.y === currentCollisionPoint.y,
+      recentPoint.y === currentCollisionPoint.y
   )
 }
 
 export function checkLatestSectionForCollisions(
   previousEnd: Point,
   player: PlayerInfo,
-  game: GameState,
+  game: GameState
 ) {
   const snake = game.snakes[player.playerId]
   const latestSection = snake.sections[snake.sections.length - 1]
@@ -88,20 +88,20 @@ export function checkLatestSectionForCollisions(
               ...currentGlobalPoint,
             }
           : currentGlobalPoint.x < prevGlobalPoint.y &&
-            currentGlobalPoint.y < prevGlobalPoint.y
-          ? {
-              ...prevGlobalPoint,
-            }
-          : currentGlobalPoint.x > prevGlobalPoint.y &&
-            currentGlobalPoint.y < prevGlobalPoint.y
-          ? {
-              x: currentGlobalPoint.x,
-              y: prevGlobalPoint.y,
-            }
-          : {
-              x: prevGlobalPoint.x,
-              y: currentGlobalPoint.y,
-            }
+              currentGlobalPoint.y < prevGlobalPoint.y
+            ? {
+                ...prevGlobalPoint,
+              }
+            : currentGlobalPoint.x > prevGlobalPoint.y &&
+                currentGlobalPoint.y < prevGlobalPoint.y
+              ? {
+                  x: currentGlobalPoint.x,
+                  y: prevGlobalPoint.y,
+                }
+              : {
+                  x: prevGlobalPoint.x,
+                  y: currentGlobalPoint.y,
+                }
 
       const latestSectionLineEquation = {
         a:
@@ -136,7 +136,7 @@ export function checkLatestSectionForCollisions(
             x: prevGlobalPoint.x,
             y: currentGlobalPoint.y,
           }),
-          snake,
+          snake
         )
       } else {
         markCollisionGrid(
@@ -145,7 +145,7 @@ export function checkLatestSectionForCollisions(
             x: currentGlobalPoint.x,
             y: prevGlobalPoint.y,
           }),
-          snake,
+          snake
         )
       }
     }

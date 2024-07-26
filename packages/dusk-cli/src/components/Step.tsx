@@ -25,8 +25,8 @@ export function Step({
             status === "success"
               ? "green"
               : status === "error"
-              ? "red"
-              : "yellow"
+                ? "red"
+                : "yellow"
           }
         >
           {status === "waiting" ? (
@@ -39,8 +39,8 @@ export function Step({
               {status === "success"
                 ? figures.tick
                 : status === "error"
-                ? figures.cross
-                : figures.bullet}
+                  ? figures.cross
+                  : figures.bullet}
               &nbsp;
             </Text>
           )}

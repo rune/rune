@@ -12,7 +12,7 @@ module.exports = {
         useESM: true,
         diagnostics: {
           warnOnly: !(process.env.JEST_CHECK_TYPES === "1"),
-        }
+        },
       },
     ],
   },

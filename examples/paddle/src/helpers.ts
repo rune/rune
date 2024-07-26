@@ -32,13 +32,16 @@ export const throttle = (fn: (...args: any[]) => void, wait = 300) => {
       inThrottle = true
     } else {
       clearTimeout(lastFn)
-      lastFn = setTimeout(() => {
-        if (Date.now() - lastTime >= wait) {
-          // eslint-disable-next-line prefer-spread
-          fn.apply(null, args)
-          lastTime = Date.now()
-        }
-      }, Math.max(wait - (Date.now() - lastTime), 0))
+      lastFn = setTimeout(
+        () => {
+          if (Date.now() - lastTime >= wait) {
+            // eslint-disable-next-line prefer-spread
+            fn.apply(null, args)
+            lastTime = Date.now()
+          }
+        },
+        Math.max(wait - (Date.now() - lastTime), 0)
+      )
     }
   }
 }

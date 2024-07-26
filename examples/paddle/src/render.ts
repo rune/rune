@@ -23,7 +23,6 @@ export function setupCanvas(): {
 
   canvas.style.height = "100vh"
   canvas.style.width = "100vw"
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const context = canvas.getContext("2d")!
 
   context.scale(scaleX, scaleY)

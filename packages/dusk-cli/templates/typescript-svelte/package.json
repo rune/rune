@@ -27,6 +27,6 @@
     "vite-plugin-qrcode": "^0.2.2"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.21.0"
+    "dusk-games-sdk": "^4.21.1"
   }
 }

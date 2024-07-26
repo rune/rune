@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@pixi/react": "^7.1.1",
-    "dusk-games-sdk": "^4.21.0",
+    "dusk-games-sdk": "^4.21.1",
     "jotai": "^2.4.3",
     "pixi.js": "^7.3.2",
     "prettier": "^3.0.3",

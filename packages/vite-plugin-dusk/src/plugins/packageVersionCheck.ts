@@ -9,8 +9,8 @@ function getLatestNpmVersion(npmPackage: string) {
 }
 
 const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"
-const installYarn = "`yarn add dusk-games-sdk@`"
-const installNpm = "`npm install --save dusk-games-sdk@`"
+const installYarn = "yarn add dusk-games-sdk@"
+const installNpm = "npm install --save dusk-games-sdk@"
 
 export function packageVersionCheck(duskPkgPath: string) {
   getLatestNpmVersion("dusk-games-sdk")
@@ -18,7 +18,7 @@ export function packageVersionCheck(duskPkgPath: string) {
       if (latestVersion !== require(duskPkgPath).version) {
         console.log(`dusk-games-sdk version ${latestVersion} available.`)
         console.log(
-          `Please install it using ${pkgManager === "npm" ? installNpm : installYarn}${latestVersion}`
+          `Please install it using "${pkgManager === "npm" ? installNpm : installYarn}${latestVersion}"`
         )
       }
     })

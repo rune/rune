@@ -5,6 +5,7 @@ import tseslint from "typescript-eslint";
 import pluginReactHooks from 'eslint-plugin-react-hooks'
 import pluginReactRefresh from 'eslint-plugin-react-refresh'
 import { fixupPluginRules } from "@eslint/compat";
+import prettier from "eslint-plugin-prettier/recommended";
 
 export default [
   {
@@ -36,5 +37,5 @@ export default [
       "@typescript-eslint/no-explicit-any": "off",
     },
   },
-
+  prettier,
 ]

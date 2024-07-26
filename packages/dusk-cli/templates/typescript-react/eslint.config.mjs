@@ -6,6 +6,7 @@ import pluginReactRefresh from 'eslint-plugin-react-refresh'
 import { fixupPluginRules } from "@eslint/compat";
 import pluginReact from "eslint-plugin-react";
 import tseslint from "typescript-eslint";
+import prettier from "eslint-plugin-prettier/recommended";
 
 export default [
   {
@@ -41,5 +42,6 @@ export default [
     rules: {
       "react-refresh/only-export-components": "warn",
     },
-  }
+  },
+  prettier,
 ]

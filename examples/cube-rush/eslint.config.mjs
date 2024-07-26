@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import globals from "globals";
 import duskPlugin from "dusk-games-sdk/eslint.js";
 import tseslint from "typescript-eslint";
+import prettier from "eslint-plugin-prettier/recommended";
 
 export default [
   {
@@ -16,5 +17,6 @@ export default [
   },
   js.configs.recommended,
   ...duskPlugin.configs.recommended,
-  ...tseslint.configs.recommended
+  ...tseslint.configs.recommended,
+  prettier,
 ]

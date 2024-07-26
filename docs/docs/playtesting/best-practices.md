@@ -16,7 +16,7 @@ One of the amazing things about Dusk is that there’s no ads. Leave out any ads
 
 ### Avoid Using Cookies, `localStorage` or `IndexedDB` {#avoid-using-cookies-localstorage-or-indexeddb}
 
-Players expect any level information to persist indefinitely, but iOS/Android may reset the cache and clear this information. We're working on a way to make saving data more robust and sync it across devices, but until then please avoid saving data.
+Players expect any saved progress to persist indefinitely, but iOS/Android may clear cookies and local storage. Instead, use the built-in [persistence API](../advanced/persisted-data.md) to save data in a reliable way that automatically syncs it across a user's devices.
 
 ### Avoid Loading Bars and Calling `Dusk.initClient()` Prematurely {#avoid-progress-bars-and-calling-duskinitclient-prematurely}
 

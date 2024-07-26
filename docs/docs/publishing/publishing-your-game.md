@@ -18,4 +18,4 @@ If you want to upload a new version of your game, just run the upload command ag
 
 ## Sit Back, Relax {#sit-back-relax}
 
-If you mark your game as ready for release during upload, the Dusk team will review your game to ensure it follows the best practices and works properly. We'll try to do our best to review your game quickly and it should normally take less than 2-3 weekdays. To have the quickest review experience, make sure your game follow the [Best Practices](playtesting/gameplay-best-practices.md).
+If you mark your game as ready for release during upload, the Dusk team will review your game to ensure it follows the best practices and works properly. We'll try to do our best to review your game quickly and it should normally take less than 2-3 weekdays. To have the quickest review experience, make sure your game follow the [Best Practices](playtesting/best-practices-gameplay.md).

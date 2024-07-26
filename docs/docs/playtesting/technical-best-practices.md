@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Technical Best Practices
+# Best Practices (Tech)
 
 How to code your game to perform the best on Dusk!
 

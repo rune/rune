@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Gameplay Best Practices
+# Best Practices (Gameplay)
 
 Here's some advice on making your game a great experience for the players!
 

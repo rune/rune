@@ -6,6 +6,22 @@ sidebar_position: 3
 
 Here's some advice on making your game a great experience for the players!
 
+### Gameplay Should Start Easy and Simple {#gameplay-should-start-easy-and-simple}
+
+As a game dev, it's easy to think that your game is very simple to understand. That's because you made it 😅 Players will need to understand how your game works and what everything means. For that reason, we highly recommend you start your gameplay simple and easy.
+
+### Use Icons Instead of Text {#use-icons-instead-of-text}
+
+Many players speak little to no English so it's ideal if your game can be understood without understanding English.
+
+### Support Solo Play {#support-solo-play}
+
+Many players like to try out your game alone before showing it to their friends. Your game is therefore more likely be picked up by the community if players can play it alone.
+
+### Support Two Players {#support-two-players}
+
+The majority of rooms on Dusk have exactly two players. For your game to be most successful, we recommend that it supports playing and is fun when played with one other person.
+
 ### Avoid UI Like Menu Screens, Pause Buttons, Audio Buttons, etc. {#avoid-ui-like-menu-screens-pause-buttons-high-score-screen-etc}
 
 Dusk’s UI provides a simple way to play/pause/restart that works for all games so you don’t need a menu screen or a pause button in your game. This lets players get into the action of your game, thereby making it faster to start playing and more fun for players! Similarly, there's no need for any audio buttons as Dusk has in-app UI for that, making things simpler for players.
@@ -29,18 +45,6 @@ We recommend sending player input in actions (e.g. "turning left") rather than p
 ### Gameplay Should not be Affected by Screen Size {#gameplay-should-not-be-affected-by-screen-size}
 
 Your game should ideally scale from small narrow phones with resolutions like 280×653 to wide tablets with resolutions like 1280×800. The gameplay area can be even less on small phones, e.g. only 450 pixels high. Gameplay should not be affected by aspect ratio or resolution. Make sure your game scales to cover the entire screen to provide the best experience.
-
-### Gameplay Should Start Easy and Simple {#gameplay-should-start-easy-and-simple}
-
-As a game dev, it's easy to think that your game is very simple to understand. That's because you made it 😅 Players will need to understand how your game works and what everything means. For that reason, we highly recommend you start your gameplay simple and easy.
-
-### Use Icons Instead of Text {#use-icons-instead-of-text}
-
-Many players speak little to no English so it's ideal if your game can be understood without understanding English.
-
-### Support Two Players {#support-two-players}
-
-The majority of rooms on Dusk have exactly two players. For your game to be most successful, we recommend that it supports playing and is fun when played with one other person.
 
 ### Support Spectators {#support-spectators}
 

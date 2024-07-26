@@ -1,11 +1,11 @@
-import js from "@eslint/js";
-import globals from "globals";
-import duskPlugin from "dusk-games-sdk/eslint.js";
-import pluginReactHooks from 'eslint-plugin-react-hooks'
-import pluginReactRefresh from 'eslint-plugin-react-refresh'
-import { fixupPluginRules } from "@eslint/compat";
-import pluginReact from "eslint-plugin-react";
-import prettier from "eslint-plugin-prettier/recommended";
+import { fixupPluginRules } from "@eslint/compat"
+import js from "@eslint/js"
+import duskPlugin from "dusk-games-sdk/eslint.js"
+import prettier from "eslint-plugin-prettier/recommended"
+import pluginReact from "eslint-plugin-react"
+import pluginReactHooks from "eslint-plugin-react-hooks"
+import pluginReactRefresh from "eslint-plugin-react-refresh"
+import globals from "globals"
 
 export default [
   {
@@ -18,7 +18,7 @@ export default [
       sourceType: "module",
     },
     plugins: {
-      "react-refresh": pluginReactRefresh
+      "react-refresh": pluginReactRefresh,
     },
     settings: {
       react: {

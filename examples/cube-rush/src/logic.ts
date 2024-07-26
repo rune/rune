@@ -149,7 +149,7 @@ Dusk.initLogic({
       ship.position.x += ship.xSpeed * SHIP_X_SPEED_RATE * -10
       ship.position.x = Math.min(
         Math.max(ship.position.x, LEFT_WALL_POSITION + HALF_SHIP_WIDTH),
-        RIGHT_WALL_POSITION - HALF_SHIP_WIDTH,
+        RIGHT_WALL_POSITION - HALF_SHIP_WIDTH
       )
 
       ship.isColliding = false
@@ -239,8 +239,8 @@ Dusk.initLogic({
               ([playerId, { place }]) => [
                 playerId,
                 place === 1 ? "WON" : "LOST",
-              ],
-            ),
+              ]
+            )
           ),
         })
       }

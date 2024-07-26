@@ -1,6 +1,5 @@
 import { defineConfig } from "vite"
 
-// eslint-disable-next-line
 // @ts-ignore
 import dusk from "../src"
 import path from "node:path"

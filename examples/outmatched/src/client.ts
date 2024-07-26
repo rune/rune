@@ -327,9 +327,9 @@ const drawParticles = function () {
 
 const animateScore = (indices: number[], playerIndex: number, scoreDelta = 0) =>
   new Promise((resolve) => {
-    const [avatarRect] = (
-      playerItems[playerIndex]?.firstChild as HTMLElement
-    )?.getClientRects() || []
+    const [avatarRect] =
+      (playerItems[playerIndex]?.firstChild as HTMLElement)?.getClientRects() ||
+      []
 
     if (!avatarRect) {
       throw new Error("AvatarRect not found")
@@ -548,8 +548,8 @@ const setFilled = (
       i < filledCount
         ? "filled"
         : i === filledCount && useCurrent
-        ? "current"
-        : ""
+          ? "current"
+          : ""
   })
 
 const setMovesPlayed = (

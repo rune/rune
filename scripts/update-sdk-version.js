@@ -47,7 +47,7 @@ const techDemos = fs
   .map((dirent) => ({
     name: dirent.name,
     dir: path.join(techDemosDir, dirent.name),
-    shouldInstall: true
+    shouldInstall: true,
   }))
 
 const cli = {

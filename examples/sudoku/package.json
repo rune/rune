@@ -7,7 +7,6 @@
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "howler": "^2.2.3",
     "jotai": "^2.0.3",
-    "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-transition-group": "^4.4.5",

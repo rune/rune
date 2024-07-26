@@ -19,7 +19,7 @@ export function updatePlaying(game: GameState) {
       wasPlacingGap !== isPlacingGap
     ) {
       snake.sections.push(
-        getNextSection(latestSection, snake.turning, isPlacingGap),
+        getNextSection(latestSection, snake.turning, isPlacingGap)
       )
       latestSection = snake.sections[snake.sections.length - 1]
     }

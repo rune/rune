@@ -329,9 +329,9 @@
     return Object(instance) === instance && instance instanceof Path2D
       ? "Path2D"
       : instance instanceof globalThis.CanvasRenderingContext2D
-      ? "CanvasRenderingContext2D"
-      : instance instanceof globalThis.OffscreenCanvasRenderingContext2D
-      ? "OffscreenCanvasRenderingContext2D"
-      : instance?.constructor.name || instance
+        ? "CanvasRenderingContext2D"
+        : instance instanceof globalThis.OffscreenCanvasRenderingContext2D
+          ? "OffscreenCanvasRenderingContext2D"
+          : instance?.constructor.name || instance
   }
 })()

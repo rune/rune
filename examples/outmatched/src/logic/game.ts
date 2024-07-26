@@ -245,10 +245,10 @@ export const swapAndMatch = (
       const mergedIndex = isVertical
         ? arr[arr.length - 1]
         : firstPass && arr.includes(sourceIndex)
-        ? sourceIndex
-        : firstPass && arr.includes(targetIndex)
-        ? targetIndex
-        : arr[Math.floor(arr.length / 2)]
+          ? sourceIndex
+          : firstPass && arr.includes(targetIndex)
+            ? targetIndex
+            : arr[Math.floor(arr.length / 2)]
       cells[mergedIndex] =
         ((cells[mergedIndex] - 1) % numberOfTiles) +
         1 +
@@ -324,10 +324,13 @@ export const getScoreForChanges = (changes: BoardChange[]) =>
   changes.map((change) => getScoreForChange(change)).reduce((a, b) => a + b, 0)
 
 export const getScores = (players: PlayersState) =>
-  Object.entries(players).reduce((acc, [id, player]) => {
-    acc[id] = player.score
-    return acc
-  }, {} as Record<PlayerId, number>)
+  Object.entries(players).reduce(
+    (acc, [id, player]) => {
+      acc[id] = player.score
+      return acc
+    },
+    {} as Record<PlayerId, number>
+  )
 
 export const isGameOver = (game: GameState) =>
   game.roundsPlayed >= numberOfRounds

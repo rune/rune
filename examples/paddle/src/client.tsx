@@ -118,7 +118,6 @@ window.onload = function () {
         }
 
         if (!yourPlayerId) {
-           
           ;(playerPaddleInterpolator as InterpolatorLatency<number>).jump(
             game.paddles[opponentIndex].position
           )

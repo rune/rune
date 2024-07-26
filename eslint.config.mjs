@@ -1,4 +1,5 @@
-import prettier from "eslint-plugin-prettier/recommended"
+import prettierConfig from "eslint-plugin-prettier/recommended"
+import prettierPlugin from "eslint-plugin-prettier"
 import globals from "globals"
 import js from "@eslint/js"
 import tseslint from "typescript-eslint"
@@ -8,48 +9,76 @@ import importPlugin from "eslint-plugin-import"
 import react from "eslint-plugin-react"
 import reactHooks from "eslint-plugin-react-hooks"
 import nodePlugin from "eslint-plugin-n"
+
+import fs from "fs"
+
+async function exampleGameConfigs() {
+  const examples = fs
+    .readdirSync("examples")
+    //check if dir
+    .filter((file) => fs.statSync(`examples/${file}`).isDirectory())
+    //has eslint.config.mjs
+    .filter((file) => fs.existsSync(`examples/${file}/eslint.config.mjs`))
+
+  return (
+    await Promise.all(
+      examples.map(async (example) => {
+        const configs = await import(`./examples/${example}/eslint.config.mjs`)
+
+        return configs.default.map((config) => ({
+          files: [`examples/${example}/**`],
+          ...config,
+        }))
+      })
+    )
+  ).flat()
+}
+
 export default [
   {
     ignores: [
       "**/dist",
       "**/build",
-      "**/.docusaurus",
-      "**/examples",
+      "**/node_modules/",
+      "**/generated/",
+      "**/public/logic.js", //These are generated files
       "packages/dusk-cli/__temp/",
-      "packages/dusk-cli/src/generated/",
-      "packages/dusk-cli/templates/",
-      "packages/dusk-cli/templates/",
       "packages/dusk-cli/src/lib/jscodeshift/__testfixtures__",
       "packages/vite-plugin-dusk/test/fixtures/",
-      "packages/vite-plugin-dusk/playground/",
       "packages/dusk-cli/cjs/",
-      "packages/dusk-cli/cjs/",
-      "**/node_modules/",
+      "**/.docusaurus",
       "docs/static/_examples",
       "docs/static/_tech-demos",
       "docs/src/theme",
-      "**/scripts/",
     ],
   },
   js.configs.recommended,
-  prettier,
-
+  prettierConfig,
+  ...duskPlugin.configs.recommended,
   //Only run it on ts files
   ...tseslint.configs.recommended.map((config) => ({
     files: ["**/*.tsx", "**/*.ts"],
     ...config,
   })),
   {
+    plugins: {
+      "@typescript-eslint": tseslint.plugin,
+    },
     languageOptions: {
       globals: {
         ...globals.node,
         ...globals.browser,
       },
 
-      ecmaVersion: 2021,
+      ecmaVersion: "latest",
       sourceType: "module",
       parserOptions: {
         jsx: true,
+      },
+    },
+    settings: {
+      react: {
+        version: "detect",
       },
     },
     rules: {
@@ -72,17 +101,11 @@ export default [
     files: ["packages/eslint-plugin-dusk/test/samples/*.js"],
     ...duskPlugin.configs.logic,
   },
-  ...duskPlugin.configs.recommended,
   {
     files: ["docs/**/*.js"],
     ...reactPlugin.configs.flat.recommended,
     languageOptions: {
       ...reactPlugin.configs.flat.recommended.languageOptions,
-    },
-    settings: {
-      react: {
-        version: "detect",
-      },
     },
   },
 
@@ -97,7 +120,7 @@ export default [
     files: ["packages/dusk-cli/**"],
     plugins: {
       n: nodePlugin,
-      "@typescript-eslint": tseslint.plugin,
+
       import: importPlugin,
       react,
       "react-hooks": reactHooks,
@@ -203,4 +226,23 @@ export default [
       ],
     },
   },
-]
+
+  ...(await exampleGameConfigs()),
+
+  //Eslint only allows to define plugin once, and because each example game installs its own dependencies,
+  //We need to point their plugins to root monorepo installs
+].map((entry) => {
+  if (entry.plugins?.dusk) {
+    entry.plugins.dusk = duskPlugin
+  }
+
+  if (entry.plugins?.prettier) {
+    entry.plugins.prettier = prettierPlugin
+  }
+
+  if (entry.plugins?.["@typescript-eslint"]) {
+    entry.plugins["@typescript-eslint"] = tseslint.plugin
+  }
+
+  return entry
+})

@@ -58,10 +58,10 @@ export function Cell({
       isInOnboardingRange({ row, col }, ranges[0])
         ? 0
         : isInOnboardingRange({ row, col }, ranges[1])
-        ? frameDuration
-        : isInOnboardingRange({ row, col }, ranges[2])
-        ? 2 * frameDuration
-        : undefined,
+          ? frameDuration
+          : isInOnboardingRange({ row, col }, ranges[2])
+            ? 2 * frameDuration
+            : undefined,
     [col, row]
   )
 
@@ -74,10 +74,10 @@ export function Cell({
       ? colors[cell.lastModifiedByPlayerId]
       : null
     : selections
-    ? selections.length === 1
-      ? colors[selections[0]]
-      : [150, 150, 150]
-    : null
+      ? selections.length === 1
+        ? colors[selections[0]]
+        : [150, 150, 150]
+      : null
 
   return (
     <Root

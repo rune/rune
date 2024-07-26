@@ -9,7 +9,7 @@ export function updateSectionEnd(section: Section) {
     section.endAngle += turnDegreesPerTick * turningModifier
 
     section.arc.endAngle = degreesToRad(
-      section.endAngle + (-90 + turnDegreesPerTick / 2) * turningModifier,
+      section.endAngle + (-90 + turnDegreesPerTick / 2) * turningModifier
     )
   }
 

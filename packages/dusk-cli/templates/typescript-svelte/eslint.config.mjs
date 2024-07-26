@@ -1,9 +1,9 @@
-import js from "@eslint/js";
-import globals from "globals";
-import duskPlugin from "dusk-games-sdk/eslint.js";
-import tseslint from "typescript-eslint";
-import svelteParser from "svelte-eslint-parser";
-import prettier from "eslint-plugin-prettier/recommended";
+import js from "@eslint/js"
+import duskPlugin from "dusk-games-sdk/eslint.js"
+import prettier from "eslint-plugin-prettier/recommended"
+import globals from "globals"
+import svelteParser from "svelte-eslint-parser"
+import tseslint from "typescript-eslint"
 
 export default [
   {

@@ -1,6 +1,3 @@
-import { Texture } from "pixi.js"
-import { useEffect, useRef, useState } from "react"
-import { PlayerId } from "dusk-games-sdk/multiplayer"
 import {
   Container,
   Graphics,
@@ -10,6 +7,9 @@ import {
   useApp,
   useTick,
 } from "@pixi/react"
+import { PlayerId } from "dusk-games-sdk/multiplayer"
+import { Texture } from "pixi.js"
+import { useEffect, useRef, useState } from "react"
 
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"

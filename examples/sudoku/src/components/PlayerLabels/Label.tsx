@@ -63,8 +63,8 @@ export function Label({
     return direction === "right" && x + nameWidth >= window.innerWidth
       ? "left"
       : direction === "left" && x - nameWidth <= 0
-      ? "right"
-      : direction
+        ? "right"
+        : direction
   }, [direction, nameWidth, x])
 
   if (!displayName || !avatarUrl) return null

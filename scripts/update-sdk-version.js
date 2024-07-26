@@ -60,19 +60,7 @@ const cli = {
   shouldInstall: true,
 }
 
-const vitePluginDusk = {
-  name: "vite-plugin-dusk",
-  dir: vitePluginDuskDir,
-  shouldInstall: true,
-}
-
-const locations = [
-  ...exampleGames,
-  ...templateGames,
-  ...techDemos,
-  cli,
-  vitePluginDusk,
-]
+const locations = [...exampleGames, ...templateGames, ...techDemos, cli]
 
 locations.forEach(({ name, dir, shouldInstall }) => {
   if (!fs.existsSync(dir)) {

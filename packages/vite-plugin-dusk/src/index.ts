@@ -37,7 +37,7 @@ export default function duskPlugin(options: ViteDuskPluginOptions): Plugin[] {
   let duskPkgPath: string
   try {
     duskPkgPath = require.resolve("dusk-games-sdk/package.json")
-  } catch (e) {
+  } catch {
     throw new Error(
       "Cannot locate the dusk-games-sdk module. Did you install it?"
     )

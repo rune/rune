@@ -41,7 +41,6 @@ export function UpdateMemberStep({
           ? formatApolloError(updateGameDevError, {
               "[tango][GAME_DEV_NO_ACTIVE_ADMIN]":
                 "Failed to update because there would be no active admin for this game",
-              default: "Something went wrong",
             })
           : memberType === null
           ? "Member removed"

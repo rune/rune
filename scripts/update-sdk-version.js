@@ -9,10 +9,6 @@ const techDemosDir = path.resolve(__dirname, "../tech-demos")
 const templatesDir = path.resolve(__dirname, "../packages/dusk-cli/templates")
 
 const cliDir = path.resolve(__dirname, "../packages/dusk-cli")
-const vitePluginDuskDir = path.resolve(
-  __dirname,
-  "../packages/vite-plugin-dusk"
-)
 
 //These example games also have sdk version inside html
 const gamesWithHtml = {

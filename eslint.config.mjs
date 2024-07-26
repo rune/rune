@@ -43,7 +43,7 @@ export default [
       "**/generated/",
       "**/public/logic.js", //These are generated files
       "packages/dusk-cli/__temp/",
-      "packages/dusk-cli/src/lib/jscodeshift/__testfixtures__",
+      "packages/dusk-cli/src/lib/jscodeshift/**/__testfixtures__",
       "packages/vite-plugin-dusk/test/fixtures/",
       "packages/dusk-cli/cjs/",
       "**/.docusaurus",

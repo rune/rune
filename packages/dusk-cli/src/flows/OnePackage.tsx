@@ -7,16 +7,17 @@ import path from "node:path"
 import React, { useCallback, useState } from "react"
 import * as url from "url"
 
+import { Select } from "../components/Select.js"
 import { Step } from "../components/Step.js"
-import transformJSON from "../lib/jscodeshift/runeToDusk/PackageTransform.js"
+import transformJSON from "../lib/jscodeshift/onePackage/PackageTransform.js"
 
 enum Steps {
   Target,
   IncorrectDir,
+  Type,
   PackageJSON,
   Vite,
   Eslint,
-  Source,
   Install,
   InstallError,
   Finish,
@@ -24,36 +25,12 @@ enum Steps {
 
 const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"
 
-const files: string[] = []
-
-const getFilesRecursively = (directory: string) => {
-  const filesInDirectory = fs.readdirSync(directory)
-
-  for (const file of filesInDirectory) {
-    if (file === "node_modules") {
-      continue
-    }
-
-    const extension = file.split(".").at(-1)
-
-    const absolute = path.join(directory, file)
-
-    if (fs.statSync(absolute).isDirectory()) {
-      getFilesRecursively(absolute)
-    } else {
-      if (
-        extension !== "js" &&
-        extension !== "ts" &&
-        extension !== "jsx" &&
-        extension !== "tsx"
-      ) {
-        continue
-      }
-
-      files.push(absolute)
-    }
-  }
-}
+const templates = [
+  { label: "JavaScript", value: "javascript" },
+  { label: "JavaScript + React", value: "javascript-react" },
+  { label: "TypeScript", value: "typescript" },
+  { label: "TypeScript + React", value: "typescript-react" },
+]
 
 function formatTargetDir(targetDir: string) {
   return targetDir.trim().replace(/\/+$/g, "")
@@ -63,22 +40,29 @@ const PLACEHOLDER = process.cwd()
 
 const require = createRequire(import.meta.url)
 
-export function RuneToDusk() {
+export function OnePackage() {
   const [step, setStep] = useState(Steps.Target)
+  const [selectedTemplate, setSelectedTemplate] = React.useState<string | null>(
+    "javascript"
+  )
+
   const [enteredTargetDir, setTargetDir] = useState(PLACEHOLDER)
 
   const onSubmitTarget = useCallback(async (value: string) => {
-    setStep(Steps.PackageJSON)
     const targetDir = formatTargetDir(value || PLACEHOLDER)
     setTargetDir(targetDir)
+    setStep(Steps.Type)
+  }, [])
 
-    const packageJsonPath = path.join(targetDir, "package.json")
+  const onSubmitType = useCallback(async () => {
+    const type = selectedTemplate
+    const packageJsonPath = path.join(enteredTargetDir, "package.json")
 
     if (!fs.existsSync(packageJsonPath)) {
       setStep(Steps.IncorrectDir)
     }
 
-    const packageJson = transformJSON(require(packageJsonPath))
+    const packageJson = transformJSON(require(packageJsonPath), type as any)
 
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
@@ -93,7 +77,7 @@ export function RuneToDusk() {
 
       const transformPath = path.resolve(
         __dirname,
-        `../../cjs/lib/jscodeshift/runeToDusk/${transformName}.js`
+        `../../cjs/lib/jscodeshift/onePackage/${transformName}.js`
       )
 
       const process = exec(
@@ -110,24 +94,40 @@ export function RuneToDusk() {
     }
 
     await transform(Steps.Vite, "ViteTransform", [
-      path.join(targetDir, "vite.config.ts"),
-      path.join(targetDir, "vite.config.js"),
+      path.join(enteredTargetDir, "vite.config.ts"),
+      path.join(enteredTargetDir, "vite.config.js"),
     ])
 
-    await transform(Steps.Eslint, "EslintTransform", [
-      path.join(targetDir, ".eslintrc.js"),
-      path.join(targetDir, ".eslintrc.cjs"),
-      path.join(targetDir, ".eslintrc.ts"),
-    ])
+    setStep(Steps.Eslint)
 
-    getFilesRecursively(targetDir)
+    const prettierConfig = fs.readFileSync(
+      path.resolve(__dirname, `../../templates/${type}/.prettierrc.cjs`)
+    )
 
-    await transform(Steps.Source, "RuneToDuskTransform", files)
+    fs.writeFileSync(
+      path.join(enteredTargetDir, ".prettierrc.cjs"),
+      prettierConfig
+    )
+    ;[".eslintignore", ".eslintrc.js", ".eslintrc.cjs"].forEach((file) => {
+      const fullPath = path.join(enteredTargetDir, file)
+      if (fs.existsSync(fullPath)) {
+        fs.rmSync(fullPath)
+      }
+    })
+
+    const eslintConfig = fs.readFileSync(
+      path.resolve(__dirname, `../../templates/${type}/eslint.config.mjs`)
+    )
+
+    fs.writeFileSync(
+      path.join(enteredTargetDir, "eslint.config.mjs"),
+      eslintConfig
+    )
 
     setStep(Steps.Install)
 
     const child = spawn(pkgManager, ["install"], {
-      cwd: targetDir,
+      cwd: enteredTargetDir,
       //Fixes issue when running on windows https://stackoverflow.com/a/54515183
       shell: process.platform === "win32",
     })
@@ -139,7 +139,7 @@ export function RuneToDusk() {
     child.on("close", (code) => {
       setStep(code === 0 ? Steps.Finish : Steps.InstallError)
     })
-  }, [])
+  }, [enteredTargetDir, selectedTemplate])
 
   return (
     <Box flexDirection="column">
@@ -168,6 +168,27 @@ export function RuneToDusk() {
         />
       )}
 
+      {step >= Steps.Type && (
+        <Step
+          status={step > Steps.Type ? "success" : "userInput"}
+          label={
+            step > Steps.Type
+              ? `Selected project type ${selectedTemplate}`
+              : "Select your project type"
+          }
+          view={
+            step === Steps.Type && (
+              <Select
+                items={templates}
+                value={selectedTemplate}
+                onChange={setSelectedTemplate}
+                onSubmit={() => onSubmitType()}
+              />
+            )
+          }
+        />
+      )}
+
       {step >= Steps.PackageJSON && (
         <Step
           status={step === Steps.PackageJSON ? "waiting" : "success"}
@@ -184,12 +205,6 @@ export function RuneToDusk() {
         <Step
           status={step === Steps.Eslint ? "waiting" : "success"}
           label="eslint config"
-        />
-      )}
-      {step >= Steps.Source && (
-        <Step
-          status={step === Steps.Source ? "waiting" : "success"}
-          label="source code"
         />
       )}
       {step >= Steps.Install && (
@@ -211,7 +226,7 @@ export function RuneToDusk() {
         />
       )}
       {step === Steps.Finish && (
-        <Step status={"success"} label={"Migration to Dusk done"} />
+        <Step status={"success"} label={"Migration to single package done"} />
       )}
     </Box>
   )

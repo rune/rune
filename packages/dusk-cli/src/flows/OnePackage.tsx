@@ -15,6 +15,7 @@ enum Steps {
   Target,
   IncorrectDir,
   Type,
+  Prettier,
   PackageJSON,
   Vite,
   Eslint,
@@ -47,6 +48,8 @@ export function OnePackage() {
     "javascript"
   )
 
+  const [prettier, setPrettier] = React.useState<string | null>("no")
+
   const [enteredTargetDir, setTargetDir] = useState(PLACEHOLDER)
 
   const onSubmitTarget = useCallback(async (value: string) => {
@@ -55,7 +58,7 @@ export function OnePackage() {
     setStep(Steps.Type)
   }, [])
 
-  const onSubmitType = useCallback(async () => {
+  const onSubmitPrettier = useCallback(async () => {
     const type = selectedTemplate
     const packageJsonPath = path.join(enteredTargetDir, "package.json")
 
@@ -63,7 +66,11 @@ export function OnePackage() {
       setStep(Steps.IncorrectDir)
     }
 
-    const packageJson = transformJSON(require(packageJsonPath), type as any)
+    const packageJson = transformJSON(
+      require(packageJsonPath),
+      type as any,
+      prettier === "yes"
+    )
 
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
@@ -101,14 +108,17 @@ export function OnePackage() {
 
     setStep(Steps.Eslint)
 
-    const prettierConfig = fs.readFileSync(
-      path.resolve(__dirname, `../../templates/${type}/.prettierrc.cjs`)
-    )
+    if (prettier === "yes") {
+      const prettierConfig = fs.readFileSync(
+        path.resolve(__dirname, `../../templates/${type}/.prettierrc.cjs`)
+      )
 
-    fs.writeFileSync(
-      path.join(enteredTargetDir, ".prettierrc.cjs"),
-      prettierConfig
-    )
+      fs.writeFileSync(
+        path.join(enteredTargetDir, ".prettierrc.cjs"),
+        prettierConfig
+      )
+    }
+
     ;[".eslintignore", ".eslintrc.js", ".eslintrc.cjs"].forEach((file) => {
       const fullPath = path.join(enteredTargetDir, file)
       if (fs.existsSync(fullPath)) {
@@ -116,9 +126,28 @@ export function OnePackage() {
       }
     })
 
-    const eslintConfig = fs.readFileSync(
-      path.resolve(__dirname, `../../templates/${type}/eslint.config.mjs`)
-    )
+    let eslintConfig = fs
+      .readFileSync(
+        path.resolve(__dirname, `../../templates/${type}/eslint.config.mjs`)
+      )
+      .toString()
+
+    if (prettier !== "yes") {
+      eslintConfig = eslintConfig
+        .replace(
+          'import prettier from "eslint-plugin-prettier/recommended"\n',
+          ""
+        )
+        .replace("prettier,\n", "")
+        .replace(
+          " {\n" +
+            "    rules: {\n" +
+            '      "prettier/prettier": "warn",\n' +
+            "    },\n" +
+            "  },",
+          ""
+        )
+    }
 
     fs.writeFileSync(
       path.join(enteredTargetDir, "eslint.config.mjs"),
@@ -140,7 +169,7 @@ export function OnePackage() {
     child.on("close", (code) => {
       setStep(code === 0 ? Steps.Finish : Steps.InstallError)
     })
-  }, [enteredTargetDir, selectedTemplate])
+  }, [enteredTargetDir, selectedTemplate, prettier])
 
   return (
     <Box flexDirection="column">
@@ -183,7 +212,31 @@ export function OnePackage() {
                 items={templates}
                 value={selectedTemplate}
                 onChange={setSelectedTemplate}
-                onSubmit={() => onSubmitType()}
+                onSubmit={() => setStep(Steps.Prettier)}
+              />
+            )
+          }
+        />
+      )}
+
+      {step >= Steps.Prettier && (
+        <Step
+          status={step > Steps.Prettier ? "success" : "userInput"}
+          label={
+            step > Steps.Prettier
+              ? `prettier: ${prettier}`
+              : "Do you want to add prettier code formatter? You can find more about it here: https://prettier.io/"
+          }
+          view={
+            step === Steps.Prettier && (
+              <Select
+                items={[
+                  { label: "No", value: "no" },
+                  { label: "Yes", value: "yes" },
+                ]}
+                value={prettier}
+                onChange={(value) => setPrettier(value)}
+                onSubmit={() => onSubmitPrettier()}
               />
             )
           }
@@ -227,7 +280,10 @@ export function OnePackage() {
         />
       )}
       {step === Steps.Finish && (
-        <Step status={"success"} label={"Migration to single package done"} />
+        <Step
+          status={"success"}
+          label={`Migration to single package done. ${prettier === "yes" ? `You might have some prettier related warnings when you run lint. You can fix them by running "${pkgManager === "yarn" ? "yarn lint --fix" : "npm run lint -- --fix"}"` : ""}`}
+        />
       )}
     </Box>
   )

@@ -19,4 +19,9 @@ export default [
   ...duskPlugin.configs.recommended,
   ...tseslint.configs.recommended,
   prettier,
+  {
+    rules: {
+      "prettier/prettier": "warn",
+    },
+  },
 ]

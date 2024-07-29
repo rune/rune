@@ -35,4 +35,9 @@ export default [
     rules: pluginReactHooks.configs.recommended.rules,
   },
   prettier,
+  {
+    rules: {
+      "prettier/prettier": "warn",
+    },
+  },
 ]

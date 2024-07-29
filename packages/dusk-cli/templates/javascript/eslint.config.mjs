@@ -17,4 +17,9 @@ export default [
   js.configs.recommended,
   ...duskPlugin.configs.recommended,
   prettier,
+  {
+    rules: {
+      "prettier/prettier": "warn",
+    },
+  },
 ]

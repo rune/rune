@@ -5,7 +5,8 @@ export default function transformJSON(
     | "typescript"
     | "javascript-react"
     | "typescript-react"
-    | "typescript-svelte"
+    | "typescript-svelte",
+  prettier: boolean
 ) {
   ;["dependencies", "devDependencies", "peerDependencies"].forEach((dep) => {
     if (json[dep]) {
@@ -33,10 +34,13 @@ export default function transformJSON(
 
   json["devDependencies"]["eslint"] = "^9.7.0"
   json["devDependencies"]["@eslint/js"] = "^9.7.0"
-  json["devDependencies"]["eslint-config-prettier"] = "^9.1.0"
-  json["devDependencies"]["eslint-plugin-prettier"] = "^5.2.1"
-  json["devDependencies"]["prettier"] = "^3.3.3"
   json["devDependencies"]["globals"] = "^15.8.0"
+
+  if (prettier) {
+    json["devDependencies"]["eslint-config-prettier"] = "^9.1.0"
+    json["devDependencies"]["eslint-plugin-prettier"] = "^5.2.1"
+    json["devDependencies"]["prettier"] = "^3.3.3"
+  }
 
   if (
     type === "typescript" ||

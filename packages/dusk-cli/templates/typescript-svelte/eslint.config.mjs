@@ -39,4 +39,9 @@ export default [
     },
   },
   prettier,
+  {
+    rules: {
+      "prettier/prettier": "warn"
+    }
+  }
 ]

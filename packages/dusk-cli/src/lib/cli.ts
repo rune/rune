@@ -9,6 +9,7 @@ export const cli = meow(
     $ dusk list           [Lists all your games]
     $ dusk update-members [Sets up team for your game]
     $ dusk rune-to-dusk <[optional] path> [Migrates your game from Rune to Dusk]
+    $ dusk one-package <[optional] path> [Migrates your game from separate vite/eslint dependencies into one]
 
   Options
     --version, -v   Show CLI version 
@@ -66,6 +67,7 @@ export const validCommands = [
   "update-members",
   "create",
   "rune-to-dusk",
+  "one-package",
   "dashboard",
   "dash",
 ] as const

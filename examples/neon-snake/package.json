@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@pixi/react": "^7.1.1",
-    "dusk-games-sdk": "^4.21.1",
+    "dusk-games-sdk": "^4.21.2",
     "jotai": "^2.4.3",
     "pixi.js": "^7.3.2",
     "react": "^18.2.0",
@@ -30,11 +30,10 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-hooks": "beta",
-    "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.8.0",
     "prettier": "^3.3.3",
     "typescript": "^5.0.2",
-    "typescript-eslint": "^7.17.0",
+    "typescript-eslint": "^8.0.0-alpha.54",
     "vite": "^5.2.11",
     "vite-plugin-qrcode": "^0.2.2"
   }

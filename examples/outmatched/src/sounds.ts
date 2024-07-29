@@ -16,7 +16,7 @@ export const playSound = (name: keyof typeof sounds) => {
   const sound = sounds[name]
   try {
     sound.play()
-  } catch (_e) {
+  } catch {
     // Sounds may be blocked by browser
   }
 }

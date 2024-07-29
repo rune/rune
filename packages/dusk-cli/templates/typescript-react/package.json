@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.21.1",
+    "dusk-games-sdk": "^4.21.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -26,11 +26,10 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "beta",
-    "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.8.0",
     "prettier": "^3.3.3",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.17.0",
+    "typescript-eslint": "^8.0.0-alpha.54",
     "vite": "^5.2.11",
     "vite-plugin-qrcode": "^0.2.2"
   }

@@ -4,6 +4,7 @@ import React from "react"
 import { Create } from "../flows/Create.js"
 import { List } from "../flows/List/List.js"
 import { Logout } from "../flows/Logout.js"
+import { OnePackage } from "../flows/OnePackage.js"
 import { OpenDashboard } from "../flows/OpenDashboard.js"
 import { RuneToDusk } from "../flows/RuneToDusk.js"
 import { Update } from "../flows/Update/Update.js"
@@ -32,6 +33,8 @@ export function App() {
         <Logout />
       ) : command === "rune-to-dusk" ? (
         <RuneToDusk />
+      ) : command === "one-package" ? (
+        <OnePackage />
       ) : command === "create" ? (
         <Create args={args} />
       ) : (

@@ -40,7 +40,9 @@ export function terserPlugin(minifyLogic: boolean): Plugin {
       }
     },
     async generateBundle(outputOptions, bundle) {
-      worker || (worker = makeWorker())
+      if (!worker) {
+        worker = makeWorker()
+      }
 
       await Promise.all(
         Object.keys(bundle).map(async (name) => {

@@ -43,7 +43,7 @@ export default [
       "**/generated/",
       "**/public/logic.js", //These are generated files
       "packages/dusk-cli/__temp/",
-      "packages/dusk-cli/src/lib/jscodeshift/__testfixtures__",
+      "packages/dusk-cli/src/lib/jscodeshift/**/__testfixtures__",
       "packages/vite-plugin-dusk/test/fixtures/",
       "packages/dusk-cli/cjs/",
       "**/.docusaurus",
@@ -128,8 +128,14 @@ export default [
     rules: {
       "max-lines": ["warn", 2000],
       "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
       "@typescript-eslint/no-empty-function": "off",
-      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          caughtErrors: "none",
+        },
+      ],
       eqeqeq: ["error"],
       "no-extra-semi": ["off"],
       "n/no-unsupported-features/es-builtins": ["error"],
@@ -156,39 +162,6 @@ export default [
         },
       ],
       "prefer-template": "error",
-      "@typescript-eslint/padding-line-between-statements": [
-        "error",
-        {
-          blankLine: "always",
-          prev: ["const", "let"],
-          next: ["block-like", "if", "multiline-expression", "export"],
-        },
-        {
-          blankLine: "always",
-          prev: ["block-like", "if", "multiline-expression", "export"],
-          next: ["const", "let"],
-        },
-        {
-          blankLine: "always",
-          prev: "*",
-          next: ["return", "block-like", "interface"],
-        },
-        {
-          blankLine: "always",
-          prev: ["block-like", "interface"],
-          next: "*",
-        },
-        {
-          blankLine: "never",
-          prev: "case",
-          next: "multiline-block-like",
-        },
-        {
-          blankLine: "always",
-          prev: "multiline-block-like",
-          next: "case",
-        },
-      ],
       "import/order": [
         "error",
         {

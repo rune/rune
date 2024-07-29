@@ -41,7 +41,7 @@ export default [
   prettier,
   {
     rules: {
-      "prettier/prettier": "warn"
-    }
-  }
+      "prettier/prettier": "warn",
+    },
+  },
 ]

@@ -30,6 +30,7 @@ const templates = [
   { label: "JavaScript + React", value: "javascript-react" },
   { label: "TypeScript", value: "typescript" },
   { label: "TypeScript + React", value: "typescript-react" },
+  { label: "TypeScript + Svelte", value: "typescript-svelte" },
 ]
 
 function formatTargetDir(targetDir: string) {

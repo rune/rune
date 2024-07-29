@@ -1,6 +1,11 @@
 export default function transformJSON(
   json: any,
-  type: "javascript" | "typescript" | "javascript-react" | "typescript-react"
+  type:
+    | "javascript"
+    | "typescript"
+    | "javascript-react"
+    | "typescript-react"
+    | "typescript-svelte"
 ) {
   ;["dependencies", "devDependencies", "peerDependencies"].forEach((dep) => {
     if (json[dep]) {
@@ -33,7 +38,11 @@ export default function transformJSON(
   json["devDependencies"]["prettier"] = "^3.3.3"
   json["devDependencies"]["globals"] = "^15.8.0"
 
-  if (type === "typescript" || type === "typescript-react") {
+  if (
+    type === "typescript" ||
+    type === "typescript-react" ||
+    type === "typescript-svelte"
+  ) {
     json["devDependencies"]["typescript-eslint"] = "^8.0.0-alpha.54"
   }
 

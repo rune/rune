@@ -27,7 +27,7 @@ Most network strategies only send the inputs from the client across the network,
 
 Games make sure everyone starts from the same point. Then we apply the same changes to all the game states and expect them to stay in synchronization. This is called determinism - if we’re at state X and we apply change Y then we end up at state Z. 
 
-This sounds like the sort of thing a computer would be really good at, but unfortunately most programming languages and computer specifications are written in English. This means that often things are left open for interpretation. This happens because either a) the author(s) didn’t consider it, or b) the specification wanted to let implementers have flexibility.  
+This sounds like the sort of thing a computer would be really good at, but unfortunately the JavaScript specification leaves some things open to interpretation. This means that different implementations of the JavaScript runtime have slightly different behaviors. These slight differences can result in significant changes to the output.
 
 When it comes to determinism, details count, especially when you’re dealing with a wide variety of devices and runtimes. If the result of math operation on device A is 0.001 different to device B then the resulting direction and final game state can be massively different. Consider if that value is the angle that you’re flying in a game, and then you go on to fly 10^6 units forward. Your positions are now significantly different.
 
@@ -45,6 +45,16 @@ The first place to start is all of those functions on the `Math` object, and the
 
 Outside of the constants nearly all the functions need patching to ensure that everyone in a game returns the same result. This simply means that all the results need to be rounded to a common precision, namely Single-precision floating-point format. Luckily there is a `Math` function that does exactly that.
 
+The functions that needed patching for our use case are:
+
+```
+abs, acos, acosh, asin, asinh, atan, atan2, 
+atanh, cbrt, ceil, clz32, cos, cosh, exp, expm1, 
+floor, hypot, log, log10, log1p, log2, max, 
+min, pow, round, sign, sin, sinh, sqrt, tan, tanh, 
+trunc 
+```
+
 So, does this break anything? No, not really. Results are still accurate enough for games to function normally. There is one exception to all of this that we’ll see next.
 
 ## Random Numbers
@@ -53,11 +63,37 @@ The second piece of the puzzle is random numbers. One of the things that most de
 
 The `Math.random()` specification is JavaScript is deliberately vague to allow runtime implementers to have freedom to build appropriately. Worse than that the specification doesn’t support passing in a seed so there is no way to start the random number generation in a predictable manner.
 
-First stop, we’ll patch `Math.random()` with a custom seeded random number generator function. There are many well documented out there in the public domain. Brilliant, that gets us deterministic! 
+First stop, we’ll patch `Math.random()` with a custom seeded random number generator function. There are many well documented out there in the public domain. Brilliant, that gets us deterministic! I've used `mulberry32` many times in the past so it was a pleasant surprise when I joined Dusk to find us using the same algorithm.
+
+```javascript
+function randomNumberGeneratorFromHash(hash: number) {
+  return function () {
+    let t = (hash += 0x6d2b79f5)
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+```
 
 In Dusk however we use the predict-rollback networking model, which requires us to be able to rollback time and reapply events to our game state. But what if we generated random numbers? A pure seed isn’t enough anymore because we want to generate the same random numbers we generated back when we first ran that time step of logic. 
 
-To solve this problem we have to keep track of the seed independently and allow for rolling back to previous seeds. With that approach we now have a fully deterministic random numbers even with rollbacks!
+To solve this problem we have to keep track of the seed independently and allow for rolling back to previous seeds. With that approach we now have a fully deterministic random numbers even with rollbacks! We use the hash of each named update loop and `xmur3` to generate the seed:
+
+```javascript
+function hashFromString(str: string) {
+  for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353)
+    h = (h << 13) | (h >>> 19)
+  }
+  const seed = () => {
+    h = Math.imul(h ^ (h >>> 16), 2246822507)
+    h = Math.imul(h ^ (h >>> 13), 3266489909)
+    return (h ^= h >>> 16) >>> 0
+  }
+  return seed()
+}
+```
 
 ## Sorting and Shuffling
 
@@ -68,6 +104,57 @@ Again MDN has a little hint:
 > Due to this implementation inconsistency, you are always advised to make your comparator well-formed by following the five constraints.
 
 There’s a decent chance that a developer will accidentally use a comparator that doesn’t quite end up with the same result on different implementations. To remedy this we can patch the `Array.prototype.sort` function with a default comparator.
+
+Reading around on the topic, this [Stack Overflow](https://stackoverflow.com/questions/47334234/how-to-implement-array-prototype-sort-default-compare-function/47349064#47349064) was the implementation that seemed most appropriate for us, which ended up looking like this:
+
+```javascript
+const defaultCmp = (x: any, y: any) => {
+  // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+  // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-sortcompare
+
+  if (x === undefined && y === undefined) return 0
+
+  if (x === undefined) return 1
+
+  if (y === undefined) return -1
+
+  const xString = toString(x)
+  const yString = toString(y)
+
+  if (xString < yString) return -1
+
+  if (xString > yString) return 1
+
+  return 0
+}
+```
+
+For details on how this applied see the next section.
+
+## How to Patch
+
+Just a quick note on patching the functions above, in case you haven't done it before. JavaScript is flexible, so much so you can override default functions of the core libraries it self. Since functions are properties of objects they can (in most cases) be overridden using [Monkey Patching](https://www.audero.it/blog/2016/12/05/monkey-patching-javascript/). So in our example of sorting above we do:
+
+```javascript
+// override the sorting operation on Array 
+// to use our deterministic function
+globalThis.Array.prototype.sort = arraySort
+```
+
+Where `arraySort` is a sorting function that makes use of a default comparator. 
+
+Since we don't want to change the functionality outside of the game logic, we can also take a copy of the original function and reset it after our code has executed:
+
+```javascript
+const originalSort = globalThis.Array.prototype.sort
+globalThis.Array.prototype.sort = arraySort
+
+try {
+  return gameLogic()
+} finally {
+  globalThis.Array.prototype.sort = originalSort
+}
+```
 
 ## Bonus Content!
 

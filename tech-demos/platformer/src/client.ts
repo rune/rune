@@ -6,6 +6,18 @@ import pinkIdleSrc from "./assets/Pink Man/Idle (32x32).png"
 import pinkRunSrc from "./assets/Pink Man/Run (32x32).png"
 import pinkJumpSrc from "./assets/Pink Man/Jump (32x32).png"
 
+import frogIdleSrc from "./assets/Ninja Frog/Idle (32x32).png"
+import frogRunSrc from "./assets/Ninja Frog/Run (32x32).png"
+import frogJumpSrc from "./assets/Ninja Frog/Jump (32x32).png"
+
+import dudeIdleSrc from "./assets/Mask Dude/Idle (32x32).png"
+import dudeRunSrc from "./assets/Mask Dude/Run (32x32).png"
+import dudeJumpSrc from "./assets/Mask Dude/Jump (32x32).png"
+
+import guyIdleSrc from "./assets/Virtual Guy/Idle (32x32).png"
+import guyRunSrc from "./assets/Virtual Guy/Run (32x32).png"
+import guyJumpSrc from "./assets/Virtual Guy/Jump (32x32).png"
+
 import { Controls, GameState, tileMap, Animation } from "./logic"
 // import { PlayerId } from "dusk-games-sdk"
 import { gameInputs } from "./input"
@@ -38,6 +50,21 @@ const SCALE = 2;
         idle: await loadTileSet(pinkIdleSrc, 32, 32),
         run: await loadTileSet(pinkRunSrc, 32, 32),
         jump: await loadTileSet(pinkJumpSrc, 32, 32)
+      },
+      "mask-dude": {
+        idle: await loadTileSet(dudeIdleSrc, 32, 32),
+        run: await loadTileSet(dudeRunSrc, 32, 32),
+        jump: await loadTileSet(dudeJumpSrc, 32, 32)
+      },
+      "ninja-frog": {
+        idle: await loadTileSet(frogIdleSrc, 32, 32),
+        run: await loadTileSet(frogRunSrc, 32, 32),
+        jump: await loadTileSet(frogJumpSrc, 32, 32)
+      },
+      "virtual-guy": {
+        idle: await loadTileSet(guyIdleSrc, 32, 32),
+        run: await loadTileSet(guyRunSrc, 32, 32),
+        jump: await loadTileSet(guyJumpSrc, 32, 32)
       }
     }
     // const startTime = Date.now()
@@ -130,13 +157,14 @@ const SCALE = 2;
       if (gameState) {
         // render the game state
         for (const player of gameState.players) {
-
           const frames = player.animation === Animation.JUMP ? playerArt[player.sprite].jump : (player.animation === Animation.WALK ? playerArt[player.sprite].run : playerArt[player.sprite].idle);
 
           drawTile(player.x-16, player.y-16, frames, Math.floor(Date.now() / 50) % frames.tilesAcross, player.flipped);
         }
       }
-      graphicsCtx.restore()
+      graphicsCtx.restore();
+
+
     }
 
     // Start the Dusk SDK on the client rendering side. This tells the Dusk

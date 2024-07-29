@@ -16,7 +16,8 @@ describe("PackageJSONTransform", () => {
               "../__testfixtures__/testPackage.input.json"
             )
           ),
-          "typescript"
+          "typescript",
+          true
         ),
         null,
         2

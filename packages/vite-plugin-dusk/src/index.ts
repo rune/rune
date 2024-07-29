@@ -44,9 +44,8 @@ export default function duskPlugin(options: ViteDuskPluginOptions): Plugin[] {
     )
   }
 
-  packageVersionCheck(duskPkgPath)
-
   return [
+    ...packageVersionCheck(duskPkgPath),
     ...getDetectExternalImportsPlugin(options, logicPath),
     ...getDevPlugins(duskPkgPath),
     ...getTransformHtmlForBuildPlugins(duskPkgPath),

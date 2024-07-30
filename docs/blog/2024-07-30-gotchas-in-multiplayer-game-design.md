@@ -1,7 +1,7 @@
 ---
 title: Gotchas in Multiplayer Game Design  
 description: Common themes in problems faced during multiplayer game design 
-slug: gotchas-in-multiplayer-game_design 
+slug: gotchas-in-multiplayer-game-design 
 tags: [Game Development, Networking]
 image: /img/blog/social-previews/gotchas-in-multiplayer-game-design.png
 authors:

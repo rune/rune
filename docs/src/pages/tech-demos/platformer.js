@@ -5,13 +5,7 @@ import BrowserOnly from "@docusaurus/BrowserOnly"
 export default function Platformer() {
   return (
     <BrowserOnly>
-      {() => (
-        <GamePage
-          title="Platformer"
-          slug="platformer"
-          techDemo={true}
-        />
-      )}
+      {() => <GamePage title="Platformer" slug="platformer" techDemo={true} />}
     </BrowserOnly>
   )
 }

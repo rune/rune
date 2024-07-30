@@ -172,7 +172,6 @@ function isValidPosition(
       const ty = Math.floor((y + playerY + yoffset) / 16)
 
       if (!tileMap[ty] || tileMap[ty][tx] !== 0) {
-
         // if we're colliding with the tiles at our feet
         // then reset the player position to align with the
         // tile

@@ -20,38 +20,23 @@ const jump = document.getElementById("jump") as HTMLImageElement
 // if we're testing on a touch device then use touchstart/touchmove/touchend.
 // we're being a bit idealistic here and only considering the first touch.
 if (touchDevice) {
-  let leftTouch = 0;
-  let rightTouch = 0;
-  let jumpTouch = 0;
-
-  function touchEnd(id: number) {
-    if (leftTouch === id) {
-      gameInputs.left = false;
-      leftTouch = 0;
-    }
-    if (rightTouch === id) {
-      gameInputs.right = false;
-      rightTouch = 0;
-    }
-    if (jumpTouch === id) {
-      gameInputs.jump = false;
-      jumpTouch = 0;
-    }
-  }
-  left.addEventListener("touchstart", (e) => {
-    leftTouch = e.touches[0].identifier;
+  left.addEventListener("touchstart", () => {
     gameInputs.left = true;
   })
-  right.addEventListener("touchstart", (e) => {
-    rightTouch = e.touches[0].identifier;
+  right.addEventListener("touchstart", () => {
     gameInputs.right = true;
   })
-  jump.addEventListener("touchstart", (e) => {
-    jumpTouch = e.touches[0].identifier;
+  left.addEventListener("touchend", () => {
+    gameInputs.left = false;
+  })
+  right.addEventListener("touchend", () => {
+    gameInputs.right = false;
+  })
+  jump.addEventListener("touchstart", () => {
     gameInputs.jump = true;
   })
-  window.addEventListener("touchend", (e) => {
-    touchEnd(e.touches[0].identifier);
+  jump.addEventListener("touchend", () => {
+    gameInputs.jump = false;
   })
 } else {
   left.addEventListener("mousedown", () => {

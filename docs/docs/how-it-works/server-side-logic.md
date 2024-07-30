@@ -14,6 +14,7 @@ The Dusk SDK will help check your code for unsafe patterns such as:
 - `async`/`await` syntax as logic must be synchronous
 - `try`/`catch` syntax as this can interfere with  (throwing is still allowed)
 - `eval` because it's potentially harmful and can be used to bypass other rules
+- `this` keyword as it allows classes to have hidden side effects
 - Non-deterministic runtime built-ins such as `Date` and `fetch`
 - Regular expressions because they are stateful
 

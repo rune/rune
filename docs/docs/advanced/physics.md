@@ -12,7 +12,7 @@ The ideal case is that the physics model itself runs in the game logic. This let
 
 ### Physics Engines
 
-The Dusk system prevents you from using [unsafe patterns](../server-side-logic.md) when developing your game logic. This is to ensure that everything remains deterministic. These 
+The Dusk system prevents you from using [unsafe patterns](../how-it-works/server-side-logic.md) when developing your game logic. This is to ensure that everything remains deterministic. These 
 limitations can prevent storing traditional physics engine's data in the game state. There are two approaches that can be used to put physics in game state:
 
 1. Use a physics engine that maintains its state as serializable objects, such as [Propel.js](https://github.com/kevglass/propel-js/)

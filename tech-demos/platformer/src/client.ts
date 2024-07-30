@@ -72,8 +72,7 @@ const SCALE = 2
       jump: await loadTileSet(guyJumpSrc, 32, 32),
     },
   }
-  // const startTime = Date.now()
-
+  
   // the current game state as provided by the Dusk SDK. The client
   // should be rendering whatever the current state is. The Dusk SDK
   // will manage the updates and resolution of conflict to the state, so

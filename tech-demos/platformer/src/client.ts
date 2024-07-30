@@ -19,24 +19,29 @@ import guyRunSrc from "./assets/Virtual Guy/Run (32x32).png"
 import guyJumpSrc from "./assets/Virtual Guy/Jump (32x32).png"
 
 import { Controls, GameState, tileMap, Animation } from "./logic"
-// import { PlayerId } from "dusk-games-sdk"
 import { gameInputs } from "./input"
 import { PlayerId } from "dusk-games-sdk"
 
+// map the tiles in our map array to a visual tile in the
+// pixel frog assets
 const TILE_MAPPING: Record<number, number> = {
   1: 122,
 }
 
+// The sprite sheets we'll use for the different characters 
+// and their actions
 interface AnimFrames {
   idle: TileSet
   run: TileSet
   jump: TileSet
 }
 
+// we'll scale the graphics up by 2 to give that pixelated feel
 const SCALE = 2
+
 ;(async () => {
   // load all our resources at startup. In this case it's a set of tile sets
-  // that are provided by https://pixelfrog-assets.itch.io/tiny-swords
+  // that are provided by https://pixelfrog-assets.itch.io/pixel-adventure-1
   //
   // It's important we wait for all resources to load before calling
   // Dusk.initClient since Dusk will show an in-app loading screen

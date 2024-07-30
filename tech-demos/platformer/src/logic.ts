@@ -91,6 +91,8 @@ export const tileMap = [
   ],
 ]
 
+// The sprite names for each of the players so we have
+// some variety in the demo
 const PLAYER_TYPES: string[] = [
   "pink-man",
   "ninja-frog",
@@ -142,7 +144,7 @@ export interface GameState {
 
 // the actions that players can apply to game state. In
 // this case we're only sending the state of the inputs
-// the player has - up/down/left/right/movement
+// the player has - left/right/jump
 type GameActions = {
   controls: (controls: Controls) => void
 }
@@ -154,7 +156,8 @@ declare global {
 
 // Check if the player is in a valid location. For the purposes
 // of this tech demo this is very simple - just check if the player
-// is standing on a valid tile
+// is standing on a valid tile or if they're intersecting
+// with another player
 function isValidPosition(
   state: GameState,
   player: Player,
@@ -169,6 +172,10 @@ function isValidPosition(
       const ty = Math.floor((y + playerY + yoffset) / 16)
 
       if (!tileMap[ty] || tileMap[ty][tx] !== 0) {
+
+        // if we're colliding with the tiles at our feet
+        // then reset the player position to align with the
+        // tile
         if (player.vy > 0 && y === 16 && yoffset === 0) {
           player.y = Math.ceil(player.y / 16) * 16
         }
@@ -180,10 +187,15 @@ function isValidPosition(
   // search for colliding players
   for (const other of state.players) {
     if (other.playerId !== player.playerId) {
+      // simple axis oriented rectangle bounds check. Players
+      // are 32x32 sprites but actually take up about 24x24
+      // pixels
       if (
         Math.abs(other.x - playerX) < 24 &&
         Math.abs(other.y - playerY) < 24
       ) {
+        // if we're standing on a player then reset our position
+        // so we align with their head
         if (player.vy > 0 && yoffset === 0) {
           player.y = other.y - 24
         }

@@ -8,7 +8,7 @@ export const graphicsCtx = canvas.getContext("2d") as CanvasRenderingContext2D
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
-graphicsCtx.imageSmoothingEnabled = false;
+graphicsCtx.imageSmoothingEnabled = false
 // A tile set is an image that can be cut into pieces to be displayed
 // on the screen efficiently. We number each tile from the top left
 // sequentially so the client can render them

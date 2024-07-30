@@ -6,24 +6,24 @@ sidebar_position: 63
 
 This page focuses on making use of physics in multiplayer games. [Real-time multiplayer games](real-time-games.md) often use physic systems to control players and environment which can lead to fun experiences. Physics can be performance intensive on mobile so it's worth considering carefully which approach you take. 
 
-## Physics in the Game Logic
+Your options are:
 
-The ideal case is that the physics model itself runs in the game logic. This lets you take advantage of Dusk's predict-rollback mechanism in resolving conflicts between player actions. It's also easier to build your game this way.
+1. Dusk-compatible physics engines like [Propel.js](https://github.com/kevglass/propel-js/) (recommended)
+1. Custom physics code built specifically for the game
+1. Client-side physics
 
-### Physics Engines
+## Dusk Compatible Physics Engines
 
-The Dusk system prevents you from using [unsafe patterns](../how-it-works/server-side-logic.md) when developing your game logic. This is to ensure that everything remains deterministic. These 
-limitations can prevent storing traditional physics engine's data in the game state. There are two approaches that can be used to put physics in game state:
+The Dusk system prevents you from using [unsafe patterns](../how-it-works/server-side-logic.md) when developing your game logic. This is to ensure that everything remains deterministic. For a physics engine to be Dusk compatible its world/body state must be serializable and it must be safe in the server side logic, for instance [Propel.js](https://github.com/kevglass/propel-js/).
 
-1. Use a physics engine that maintains its state as serializable objects, such as [Propel.js](https://github.com/kevglass/propel-js/)
-1. If the physics engine supports serializing its state efficiently, that can be stored in game state and deserialized each frame.
+## Custom Physics
 
-### Custom Physics
-
-Making real-time games mobile performant is difficult when you rely on a complete physics engine. Another options is to build a simple physics system custom to your game. Along with performance this can allow you to add non-physically correct features! 
+Many successful releases use custom physics/collision built for the specific game. Custom code can be simple since it can be built specifically to handle the scenarios in the game and no others. It can also allow features that aren't physically correct - but end up being a lot of fun.
 
 For an example of building a custom physics system for a platform check out our [tech demos](../examples/tech-demos)
 
-## Running Physics Client Side Only
+## Client-side Physics
 
-Most physics engines are deterministic in that given the same inputs they'll generate the same result. It is possible to use physics on each client, in the renderer only, and synchronize only the inputs to the physical system. We don't recommend this approach since its complicated and prone to error causing state de-syncs between clients. 
+It is possible to use physics on each client, in the renderer only, and synchronize only the inputs to the physical system. This relies on the physics engine being deterministic across different JavaScript engines and platforms. 
+
+We don't recommend this approach since its complicated and prone to error causing state de-syncs between clients. 

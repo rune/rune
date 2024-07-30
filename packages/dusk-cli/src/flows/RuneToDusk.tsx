@@ -8,7 +8,7 @@ import React, { useCallback, useState } from "react"
 import * as url from "url"
 
 import { Step } from "../components/Step.js"
-import transformJSON from "../lib/jscodeshift/PackageTransform.js"
+import transformJSON from "../lib/jscodeshift/runeToDusk/PackageTransform.js"
 
 enum Steps {
   Target,
@@ -93,7 +93,7 @@ export function RuneToDusk() {
 
       const transformPath = path.resolve(
         __dirname,
-        `../../cjs/lib/jscodeshift/${transformName}.js`
+        `../../cjs/lib/jscodeshift/runeToDusk/${transformName}.js`
       )
 
       const process = exec(
@@ -148,8 +148,8 @@ export function RuneToDusk() {
           step > Steps.IncorrectDir
             ? "success"
             : step === Steps.IncorrectDir
-            ? "error"
-            : "userInput"
+              ? "error"
+              : "userInput"
         }
         label={"Game directory"}
         view={
@@ -198,15 +198,15 @@ export function RuneToDusk() {
             step > Steps.InstallError
               ? "success"
               : step === Steps.InstallError
-              ? "error"
-              : "waiting"
+                ? "error"
+                : "waiting"
           }
           label={
             step > Steps.InstallError
               ? `Dependencies installed successfully!`
               : step === Steps.InstallError
-              ? `Failed to install dependencies`
-              : `Installing dependencies...`
+                ? `Failed to install dependencies`
+                : `Installing dependencies...`
           }
         />
       )}

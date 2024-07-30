@@ -14,7 +14,7 @@ export function checkWinnersAndGameOver(game: GameState) {
       Dusk.gameOver({
         players: game.players.reduce(
           (acc, p) => ({ ...acc, [p.playerId]: p.score }),
-          {},
+          {}
         ),
       })
     } else {

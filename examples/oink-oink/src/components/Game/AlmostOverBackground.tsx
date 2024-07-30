@@ -43,5 +43,7 @@ const Root = styled.div`
     #57112b 81.77%,
     #310414 100%
   );
-  animation: fadeIn 600ms ease-out forwards, pulsing 750ms ease-in-out infinite;
+  animation:
+    fadeIn 600ms ease-out forwards,
+    pulsing 750ms ease-in-out infinite;
 `

@@ -32,7 +32,7 @@ export function createFinishLine(scene: THREE.Scene) {
   const geometry = new THREE.BoxGeometry(
     FINISH_LINE_WIDTH,
     FINISH_LINE_HEIGHT,
-    FINISH_LINE_DEPTH,
+    FINISH_LINE_DEPTH
   )
 
   const texture = new THREE.TextureLoader().load(finishLine)

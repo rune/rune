@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { interpolatorLatency } from "../src/interpolators/interpolatorLatency"
 
 describe("interpolator", () => {
   it("should not allow to call getPosition before calling update", () => {
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
-    } as any
+    }
 
     expect(() => interpolatorLatency({ maxSpeed: 10 }).getPosition()).toThrow(
       "getPosition can't be called before calling update at least once"
@@ -14,7 +12,7 @@ describe("interpolator", () => {
   })
 
   it("should interpolate between position using deceleration/acceleration to ease between changes in direction", () => {
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
@@ -61,7 +59,7 @@ describe("interpolator", () => {
   it("should interpolate between the positions midway between updates accounting for acceleration", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 50,
       // @ts-ignore
@@ -118,7 +116,7 @@ describe("interpolator", () => {
   it("should interpolate between the positions when provided with a multi-dimension array (multiple axis)", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
@@ -151,7 +149,7 @@ describe("interpolator", () => {
       _isOnChangeCalledByUpdate: true,
     }
 
-    global.Dusk = dusk
+    ;(globalThis as any).Dusk = dusk
 
     instance.update({ game: 100, futureGame: 110 })
     expect(instance.getPosition()).toEqual(100)
@@ -244,7 +242,7 @@ describe("interpolator", () => {
       _isOnChangeCalledByUpdate: true,
     }
 
-    global.Dusk = dusk
+    ;(globalThis as any).Dusk = dusk
 
     instance.update({ game: [100, 100], futureGame: [110, 90] })
     expect(instance.getPosition()).toEqual([100, 100])
@@ -342,7 +340,7 @@ describe("interpolator", () => {
       _isOnChangeCalledByUpdate: true,
     }
 
-    global.Dusk = dusk
+    ;(globalThis as any).Dusk = dusk
 
     instance.update({ game: [100, 100], futureGame: [110, 100] })
     expect(instance.getPosition()).toEqual([100, 100])
@@ -376,7 +374,7 @@ describe("interpolator", () => {
   it("should ignore update calls if _isOnChangeCalledByUpdate is false", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -386,8 +384,7 @@ describe("interpolator", () => {
     instance.update({ game: 0, futureGame: 10 })
 
     expect(instance.getPosition()).toEqual(4)
-
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
       // @ts-ignore
@@ -402,7 +399,7 @@ describe("interpolator", () => {
   it("should not go above maxSpeed", () => {
     const instance = interpolatorLatency({ maxSpeed: 3, timeToMaxSpeed: 200 })
 
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -435,7 +432,7 @@ describe("interpolator", () => {
       timeToMaxSpeed: 200,
     })
 
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -462,7 +459,7 @@ describe("interpolator", () => {
       timeToMaxSpeed: 200,
     })
 
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -489,7 +486,7 @@ describe("interpolator", () => {
   it("should not use acceleration by default", () => {
     const instance = interpolatorLatency({ maxSpeed: 3 })
 
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -506,7 +503,7 @@ describe("interpolator", () => {
   it("should only move max speed with multiple axis", () => {
     const instance = interpolatorLatency<number[]>({ maxSpeed: 10 })
 
-    global.Dusk = {
+    ;(globalThis as any).Dusk = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,

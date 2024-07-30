@@ -46,27 +46,26 @@ export function simpleCSSTransitionStyles(
   easing = "ease-out"
 ) {
   return css<{ animationDuration?: number }>`
-    ${({ animationDuration }) =>
-      css`
+    ${({ animationDuration }) => css`
+      ${to};
+
+      &.enter {
+        ${from};
+      }
+
+      &.enter-active {
         ${to};
+        transition: all ${animationDuration}ms ${easing};
+      }
 
-        &.enter {
-          ${from};
-        }
+      &.exit {
+        ${to};
+      }
 
-        &.enter-active {
-          ${to};
-          transition: all ${animationDuration}ms ${easing};
-        }
-
-        &.exit {
-          ${to};
-        }
-
-        &.exit-active {
-          ${from};
-          transition: all ${animationDuration}ms ${easing};
-        }
-      `}
+      &.exit-active {
+        ${from};
+        transition: all ${animationDuration}ms ${easing};
+      }
+    `}
   `
 }

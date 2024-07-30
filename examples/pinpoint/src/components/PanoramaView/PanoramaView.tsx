@@ -215,7 +215,11 @@ const Label = styled.div`
   font-size: 13px;
   font-weight: 700;
   color: white;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  text-shadow:
+    -1px 0 black,
+    0 1px black,
+    1px 0 black,
+    0 -1px black;
   background-color: #1e6252;
   border-radius: 65px;
   padding: 5px 40px;

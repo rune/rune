@@ -100,14 +100,14 @@ const Root = styled.div<{ disabled: boolean; notesMode: boolean }>`
           opacity: ${disabled ? 0.2 : 1};
         `
       : disabled
-      ? css`
-          background: linear-gradient(180deg, #965a1c 0%, #9f4a09 100%);
-          opacity: 0.2;
-        `
-      : css`
-          background: linear-gradient(180deg, #965a1c 0%, #9f4a09 100%);
-          box-shadow: 0 ${rel(4)} ${rel(5)} #1e2832;
-        `};
+        ? css`
+            background: linear-gradient(180deg, #965a1c 0%, #9f4a09 100%);
+            opacity: 0.2;
+          `
+        : css`
+            background: linear-gradient(180deg, #965a1c 0%, #9f4a09 100%);
+            box-shadow: 0 ${rel(4)} ${rel(5)} #1e2832;
+          `};
 `
 
 const Label = styled.div`

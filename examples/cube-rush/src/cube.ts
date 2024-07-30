@@ -13,7 +13,7 @@ const colors = CUBE_COLORS.map((color) => new THREE.Color(color))
 const mesh = new THREE.InstancedMesh(
   new THREE.BoxGeometry(CUBE_WIDTH, CUBE_HEIGHT, CUBE_DEPTH),
   new THREE.MeshBasicMaterial({ color: 0xffffff }),
-  NUMBER_OF_CUBES,
+  NUMBER_OF_CUBES
 )
 
 //Used to generate matrix necessary to set the position of cubes

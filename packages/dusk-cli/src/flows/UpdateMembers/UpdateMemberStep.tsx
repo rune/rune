@@ -31,21 +31,20 @@ export function UpdateMemberStep({
         updateGameDevLoading
           ? "waiting"
           : updateGameDevError
-          ? "error"
-          : "success"
+            ? "error"
+            : "success"
       }
       label={
         updateGameDevLoading
           ? "Updating the member"
           : updateGameDevError
-          ? formatApolloError(updateGameDevError, {
-              "[tango][GAME_DEV_NO_ACTIVE_ADMIN]":
-                "Failed to update because there would be no active admin for this game",
-              default: "Something went wrong",
-            })
-          : memberType === null
-          ? "Member removed"
-          : "Member updated"
+            ? formatApolloError(updateGameDevError, {
+                "[tango][GAME_DEV_NO_ACTIVE_ADMIN]":
+                  "Failed to update because there would be no active admin for this game",
+              })
+            : memberType === null
+              ? "Member removed"
+              : "Member updated"
       }
     />
   )

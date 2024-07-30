@@ -154,7 +154,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
       }
 
       // This value is set to true when `onChange` is called by `update` event.
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
       // @ts-ignore
       if (!Dusk._isOnChangeCalledByUpdate) {
         return

@@ -34,7 +34,7 @@ export function DrawDeadEnd({
 
       g.endFill()
     },
-    [color, scale],
+    [color, scale]
   )
 
   useTick(() => {
@@ -51,11 +51,11 @@ export function DrawDeadEnd({
               diedAt + deathRevealDelayMs,
               diedAt + deathRevealDelayMs + defaultTransitionMs,
             ],
-            [0, 1],
+            [0, 1]
           ),
-          [0, 1],
-        ),
-      ),
+          [0, 1]
+        )
+      )
     )
   })
 

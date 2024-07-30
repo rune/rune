@@ -5,7 +5,7 @@ import React, { useState, useCallback, useEffect } from "react"
 import { Step } from "../../components/Step.js"
 import { GameType } from "../../generated/types.js"
 import { useCreateGame } from "../../gql/useCreateGame.js"
-import { formatApolloError } from "../../lib/formatApolloError.js"
+import { gameDescriptionErrors } from "../../lib/gameDescriptionErrors.js"
 import { prepareFileUpload } from "../../lib/prepareFileUpload.js"
 
 // @ts-ignore
@@ -73,20 +73,7 @@ export function CreateGameStep({
   return (
     <Box flexDirection="column">
       {createGameError && !createGameLoading && (
-        <Step
-          status="error"
-          label={formatApolloError(createGameError, {
-            "[tango][CREATE_GAME_FAILED_TITLE_TAKEN]":
-              "This game title is already taken, try something else",
-            "[tango][CREATE_GAME_FAILED_TITLE_INVALID]":
-              "This game title is invalid, it has to be between 5 and 25 characters, and only letters, numbers, and spaces are allowed",
-            "Input buffer contains unsupported image format":
-              "Not an image file",
-            "[tango][UNEXPECTED_TRANSPARENCY]":
-              "Image should not contain transparency",
-            default: `Something went wrong`,
-          })}
-        />
+        <Step status="error" label={gameDescriptionErrors(createGameError)} />
       )}
       <Step
         status={titleSubmitted ? "success" : "userInput"}

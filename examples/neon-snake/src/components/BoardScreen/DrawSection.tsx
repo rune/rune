@@ -31,11 +31,11 @@ export function DrawSection({
           arcRadius * scale,
           section.arc.startAngle,
           section.arc.endAngle,
-          section.turning === "left",
+          section.turning === "left"
         )
       }
     },
-    [color, isOpponent, scale, section],
+    [color, isOpponent, scale, section]
   )
 
   return <Graphics draw={draw} />

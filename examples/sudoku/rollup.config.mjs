@@ -23,5 +23,4 @@ export default [
       typescript({ tsconfig: "./tsconfig-logic.json" }),
     ],
   },
-
 ]

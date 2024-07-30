@@ -30,7 +30,7 @@ Dusk.initLogic({
             lastCollisionGridPoints: [],
           },
         }),
-        {},
+        {}
       ),
       collisionGrid: {},
       countdownTimer: countdownDurationSeconds,

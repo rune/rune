@@ -54,8 +54,6 @@
 
     const corners = [upperLeft, upperRight, lowerRight, lowerLeft]
     const negativeCorner = corners.find(({ x, y }) => x < 0 || y < 0)
-    const negativeValue =
-      negativeCorner?.x < 0 ? negativeCorner.x : negativeCorner?.y
 
     if (
       corners.some(({ x, y }) => !Number.isFinite(x) || !Number.isFinite(y))
@@ -330,10 +328,10 @@
   function getConstructorName(instance) {
     return Object(instance) === instance && instance instanceof Path2D
       ? "Path2D"
-      : instance instanceof globalThis?.CanvasRenderingContext2D
-      ? "CanvasRenderingContext2D"
-      : instance instanceof globalThis?.OffscreenCanvasRenderingContext2D
-      ? "OffscreenCanvasRenderingContext2D"
-      : instance?.constructor.name || instance
+      : instance instanceof globalThis.CanvasRenderingContext2D
+        ? "CanvasRenderingContext2D"
+        : instance instanceof globalThis.OffscreenCanvasRenderingContext2D
+          ? "OffscreenCanvasRenderingContext2D"
+          : instance?.constructor.name || instance
   }
 })()

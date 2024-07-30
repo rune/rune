@@ -1,5 +1,5 @@
 import { LabelDefinition, Direction } from "./types"
-import { corners } from "./corners"
+import type { corners } from "./corners"
 
 export function getCornerPositionAndDirection(
   label: LabelDefinition,

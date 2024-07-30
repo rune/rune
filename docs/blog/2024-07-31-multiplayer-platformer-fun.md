@@ -204,23 +204,23 @@ The rendering itself is purely taking the game state that it’s been given and 
 // if the Dusk SDK has given us a game state then
 // render all the entities in the game
 if (gameState) {
-  // render all the entities based on the current game state
-  const allEntities = [...gameState.entities, ...gameState.players]
+  // render the game state
+  for (const player of gameState.players) {
+    const frames =
+      player.animation === Animation.JUMP
+        ? playerArt[player.sprite].jump
+        : player.animation === Animation.WALK
+          ? playerArt[player.sprite].run
+          : playerArt[player.sprite].idle
 
-  ;allEntities
-  .sort((a, b) => a.y - b.y)
-  .forEach((entity) => {
-    if (entity.type === "PLAYER") {
-    // players need to be rendering using animation 
-    // and flipping
-    const player = entity as Player
     drawTile(
-        player.x - playerFootPosition[0],
-        player.y - playerFootPosition[1],
-        entitySprites[player.sprite],
-        player.animation + frame,
-        player.flipped
+      player.x - 16,
+      player.y - 16,
+      frames,
+      Math.floor(Date.now() / 50) % frames.tilesAcross,
+      player.flipped
     )
+  }
     ...
 ```
 
@@ -242,9 +242,9 @@ if (
 }
 ```
 
-There’s a couple of gates put on sending actions. We don’t want to send unchanged controls into the game logic, it won’t change anything and wastes bandwidth. The Dusk SDK also limits us to 10 actions per second from any client so we make sure we’re not breaking that.
+There’s a couple of conditions put on sending actions. We don’t want to send unchanged controls into the game logic, it won’t change anything and wastes bandwidth. The Dusk SDK also limits us to 10 actions per second from any client so we make sure we’re not breaking that.
 
-That’s pretty much it, we have a game logic that will keep the client’s game state in sync and a renderer that will let our players play. Of course this is a simple tech demo but with a little more work, collision between players, fighting and item collection could easily be added.
+That’s pretty much it, we have a game logic that will keep the client’s game state in sync and a renderer that will let our players play. 
 
 If you have any questions or comments on the tech demo or Dusk in general, be sure to join our [Discord](https://discord.gg/dusk-devs).
 

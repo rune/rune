@@ -8,7 +8,7 @@ import React, { useCallback, useState } from "react"
 import * as url from "url"
 
 import { Step } from "../components/Step.js"
-import transformJSON from "../lib/jscodeshift/PackageTransform.js"
+import transformJSON from "../lib/jscodeshift/runeToDusk/PackageTransform.js"
 
 enum Steps {
   Target,
@@ -93,7 +93,7 @@ export function RuneToDusk() {
 
       const transformPath = path.resolve(
         __dirname,
-        `../../cjs/lib/jscodeshift/${transformName}.js`
+        `../../cjs/lib/jscodeshift/runeToDusk/${transformName}.js`
       )
 
       const process = exec(

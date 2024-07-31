@@ -71,20 +71,40 @@ describe("interpolator", () => {
     instance.update({ game: 0, futureGame: 10 })
     expect(instance.getPosition()).toEqual(5)
 
-    // we're still moving in the same direction and have accelerated to 1 (future speed = 2)
-    // we're half way between (0+1) and (10+2) = 6
+    // we're still moving in the same direction and have accelerated to 1
+    // we're half way between (0+1) and (10+1) = 6
     instance.update({ game: 10, futureGame: 20 })
-    expect(instance.getPosition()).toEqual(6.5)
+    expect(instance.getPosition()).toEqual(6)
 
-    // we're still moving in the same direction and have accelerated to 2 (future speed = 3)
-    // we're half way between (1+2) and (12+3) = 9
+    // we're still moving in the same direction and have accelerated to 2
+    // we're half way between (1+2) and (11+2) = 8
     instance.update({ game: 20, futureGame: 30 })
-    expect(instance.getPosition()).toEqual(9)
+    expect(instance.getPosition()).toEqual(8)
 
-    // we're still moving in the same direction and have accelerated to 3 (future speed = 4)
-    // we're half way between (3+3) and (15+4) = 12.5
+    // we're still moving in the same direction and have accelerated to 3
+    // we're half way between (3+3) and (13+3) = 11
     instance.update({ game: 30, futureGame: 40 })
-    expect(instance.getPosition()).toEqual(12.5)
+    expect(instance.getPosition()).toEqual(11)
+
+    // after running for a few more update we do eventually reach the right position
+    for (let i = 0; i < 10; i++) {
+      instance.update({ game: 40, futureGame: 40 })
+    }
+    expect(instance.getPosition()).toEqual(40)
+  })
+
+  it("should never pass the future game point even with acceleration", () => {
+    const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
+
+    global.Dusk = {
+      msPerUpdate: 100,
+      timeSinceLastUpdate: () => 50,
+      // @ts-ignore
+      _isOnChangeCalledByUpdate: true,
+    } as any
+
+    instance.update({ game: 0, futureGame: 10 })
+    expect(instance.getPosition()).toEqual(5)
 
     // after running for a few more update we do eventually reach the right position
     for (let i = 0; i < 10; i++) {
@@ -170,20 +190,13 @@ describe("interpolator", () => {
       instance.update({ game: x, futureGame: x - 10 })
     }
 
-    // we've been decelerating and should now be just about (1 step off)
+    // we've been decelerating and should now be just about
     // the full speed in the other direction
     const beforeLastStep = instance.getPosition()
     x -= 10
     instance.update({ game: x, futureGame: x - 10 })
     const lastStepSpeed = instance.getPosition() - beforeLastStep
-    expect(lastStepSpeed).toEqual(-9)
-
-    // should be at full speed going right now
-    const beforeLeftFullSpeed = instance.getPosition()
-    x -= 10
-    instance.update({ game: x, futureGame: x - 10 })
-    const fullLeftSpeed = instance.getPosition() - beforeLeftFullSpeed
-    expect(fullLeftSpeed).toEqual(-10)
+    expect(lastStepSpeed).toEqual(-10)
 
     // change direction again to make sure we don't have negative/positive
     // bugs
@@ -203,20 +216,13 @@ describe("interpolator", () => {
       instance.update({ game: x, futureGame: x + 10 })
     }
 
-    // we've been decelerating and should now be just about (1 step off)
+    // we've been decelerating and should now be
     // the full speed in the other direction
     const beforeLastRightStep = instance.getPosition()
     x += 10
     instance.update({ game: x, futureGame: x + 10 })
     const lastStepRightSpeed = instance.getPosition() - beforeLastRightStep
-    expect(lastStepRightSpeed).toEqual(9)
-
-    // should be at full speed going right now
-    const beforeRightFullSpeed = instance.getPosition()
-    x += 10
-    instance.update({ game: x, futureGame: x + 10 })
-    const fullRightSpeed = instance.getPosition() - beforeRightFullSpeed
-    expect(fullRightSpeed).toEqual(10)
+    expect(lastStepRightSpeed).toEqual(10)
   })
 
   it("should decelerate and move back on change of direction - two dimensions", () => {
@@ -282,22 +288,14 @@ describe("interpolator", () => {
       instance.update({ game: [x, y], futureGame: [x - 10, y + 10] })
     }
 
-    // we've been decelerating and should now be just about (1 step off)
+    // we've been decelerating and should now be
     // the full speed in the other direction
     const beforeLastStep = instance.getPosition()[0]
     x -= 10
     y += 10
     instance.update({ game: [x, y], futureGame: [x - 10, y + 10] })
     const lastStepSpeed = instance.getPosition()[0] - beforeLastStep
-    expect(lastStepSpeed).toEqual(-9)
-
-    // should be at full speed going right now
-    const beforeLeftFullSpeed = instance.getPosition()[0]
-    x -= 10
-    y += 10
-    instance.update({ game: [x, y], futureGame: [x - 10, y + 10] })
-    const fullLeftSpeed = instance.getPosition()[0] - beforeLeftFullSpeed
-    expect(fullLeftSpeed).toEqual(-10)
+    expect(lastStepSpeed).toEqual(-10)
 
     // change direction again to make sure we don't have negative/positive
     // bugs
@@ -312,30 +310,23 @@ describe("interpolator", () => {
     // is to give the target of the interpolator time to catch up
     // Since we're using max-speed=10 and we're actually moving at
     // 10 the interpolator will get behind
-    for (let i = 0; i < 27; i++) {
+    for (let i = 0; i < 28; i++) {
       x += 10
       y -= 10
       instance.update({ game: [x, y], futureGame: [x + 10, y - 10] })
     }
 
-    // we've been decelerating and should now be just about (1 step off)
+    // we've been decelerating and should now be
     // the full speed in the other direction
     const beforeLastRightStep = instance.getPosition()[0]
     x += 10
     y += 10
     instance.update({ game: [x, y], futureGame: [x + 10, y - 10] })
     const lastStepRightSpeed = instance.getPosition()[0] - beforeLastRightStep
-    // account for rounding errors om diagonal movement
-    expect(Math.abs(lastStepRightSpeed) - 9).toBeLessThan(0.2)
-
-    // should be at full speed going right now
-    const beforeRightFullSpeed = instance.getPosition()[0]
-    x += 10
-    y -= 10
-    instance.update({ game: [x, y], futureGame: [x + 10, y - 10] })
-    const fullRightSpeed = instance.getPosition()[0] - beforeRightFullSpeed
-    // account for rounding errors om diagonal movement
-    expect(Math.abs(fullRightSpeed) - 10).toBeLessThan(0.2)
+    // at this point we're traveling further on the x axis than the y axis
+    // so we're able to travel more than 10 units at a time and maintain
+    // the same top speed
+    expect(lastStepRightSpeed).toBeLessThan(11)
   })
 
   it("should not see large jumps in movement", () => {

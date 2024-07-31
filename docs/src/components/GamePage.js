@@ -33,21 +33,23 @@ export function GamePage({ title, slug, techDemo }) {
       description={siteConfig.description}
       noFooter={isMobile}
     >
-      <a
-        className="menuLink_src-theme-Navbar-Layout-styles-module"
-        style={{
-          position: "absolute",
-          padding: "8px",
-          margin: "10px",
-          background: "white",
-          color: "#1b0329",
-          borderRadius: "8px",
-          lineHeight: "20px",
-        }}
-        href={`https://github.com/dusk-gg/dusk/tree/staging/${type}/${slug}`}
-      >
-        Source
-      </a>
+      {!isMobile && (
+        <a
+          className="menuLink_src-theme-Navbar-Layout-styles-module"
+          style={{
+            position: "absolute",
+            padding: "8px",
+            margin: "10px",
+            background: "white",
+            color: "#1b0329",
+            borderRadius: "8px",
+            lineHeight: "20px",
+          }}
+          href={`https://github.com/dusk-gg/dusk/tree/staging/${type}/${slug}`}
+        >
+          Source
+        </a>
+      )}
       <iframe
         src={`/_${
           techDemo ? "tech-demos" : "examples"

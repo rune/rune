@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.21.3"
+    "dusk-games-sdk": "^4.21.7"
   },
   "devDependencies": {
     "eslint": "^9.7.0",
@@ -21,7 +21,6 @@
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.0.0-alpha.54",
     "vite": "^5.2.11",
-    "vite-plugin-dusk": "^1.0.0",
     "vite-plugin-qrcode": "^0.2.2"
   }
 }

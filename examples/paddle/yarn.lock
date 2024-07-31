@@ -585,10 +585,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-dusk-games-sdk@^4.21.7:
-  version "4.21.7"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.21.7.tgz#c1943193bc04de00c77213b321c3b293b631e19d"
-  integrity sha512-EebIje0KElnZORlMhIC5DePGX+UapclUz2OfJ3DfbTOXiFhMwfdRx3pCb5YLkjaHRTboXqjemjgljr2aXVcTEg==
+dusk-games-sdk@^4.21.8:
+  version "4.21.8"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.21.8.tgz#f19e50fb045980cc02affb6a542c2bdcef7dc5d1"
+  integrity sha512-2Beh3H+sAro3cR4AzpmnNpx4psiam0DJplX+fSrbUrdtS3TRl0fzcizBsvRVIXwIaQoDnD17rw1IDqUTbFl1Iw==
   dependencies:
     "@eslint/eslintrc" "^3.1.0"
     "@eslint/js" "^9.7.0"

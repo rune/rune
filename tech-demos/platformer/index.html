@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <title>Top Down Example</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        background: #409c9b;
+      }
+
+      #game-canvas {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+      }
+
+      #left {
+        width: 75px;
+        height: 75px;
+        bottom: 15px;
+        left: 15px;
+        position: absolute;
+      }
+      #right {
+        width: 75px;
+        height: 75px;
+        bottom: 15px;
+        left: 110px;
+        position: absolute;
+      }
+      #jump {
+        width: 75px;
+        height: 75px;
+        bottom: 15px;
+        right: 15px;
+        position: absolute;
+      }
+
+      #debug {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 20px;
+        width: 100%;
+        color: white;
+        background: rgba(0,0,0,.5)
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game-canvas"></canvas>
+    <img src="/src/assets/Controls/left.png" id="left">
+    <img src="/src/assets/Controls/right.png" id="right">
+    <img src="/src/assets/Controls/jump.png" id="jump">
+    <div id="debug"></div>
+    <script type="module" src="/src/logic.ts"></script>
+    <script type="module" src="/src/client.ts"></script>
+  </body>
+</html>

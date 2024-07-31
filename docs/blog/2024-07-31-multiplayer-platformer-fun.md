@@ -21,7 +21,7 @@ In the second tech-demo, we look at making a platform game multiplayer using the
 
 ![](/img/blog/callouts/platformer.gif)
 
-You can give it a go on the [tech demos page](/docs/tech-demos/platformer/). 
+You can give it a go on the [tech demos page](/tech-demos/platformer/). 
 
 First a re-cap of the architecture of a Dusk game. We separate the rendering and logic like so:
 

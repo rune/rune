@@ -4,7 +4,7 @@ sidebar_position: 63
 
 # Physics
 
-This page focuses on making use of physics in multiplayer games. [Real-time multiplayer games](real-time-games.md) often use physic systems to control players and environment which can lead to fun experiences. Physics can be performance intensive on mobile so it's worth considering carefully which approach you take. 
+Physics in multiplayer games can be difficult to implement, though [Real-time multiplayer games](real-time-games.md) can be a lot of fun with a shared physics experience. Networking physics is hard because you need fully cross platform deterministic code and to synchronize the inputs to that engine, along with supporting rollback.
 
 Your options are:
 
@@ -14,7 +14,7 @@ Your options are:
 
 ## Dusk Compatible Physics Engines
 
-The Dusk system prevents you from using [unsafe patterns](../how-it-works/server-side-logic.md) when developing your game logic. This is to ensure that everything remains deterministic. For a physics engine to be Dusk compatible its world/body state must be serializable and it must be safe in the server side logic, for instance [Propel.js](https://github.com/kevglass/propel-js/).
+The Dusk system ensure the logic code is cross platform deterministic by using a [set of rules](../how-it-works/server-side-logic.md) and by patching [non-deterministic functions](https://developers.dusk.gg/blog/making-js-deterministic-for-fun-and-glory/). By using a compatible physics engine, for instance [Propel.js](https://github.com/kevglass/propel-js/), Dusk will ensure that it remains deterministic and synchronized between clients and server.
 
 ## Custom Physics
 

@@ -29,7 +29,7 @@ First a re-cap of the architecture of a Dusk game. We separate the rendering and
 
 It’s good practice to separate your data model and logic from the rendering, i.e. the MVC patter. With multiplayer this isn’t just best practice, it’s absolutely required to let us run copies of the game logic on both the server and client. 
 
-The logic should contain the data that is required update the game and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it fast since in the predict-rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic is [implemented to maintain determinism](/docs/how-it-works/syncing-game-state) and to allow it to be executed both on the browser and server.
+The logic should contain the data that is required to update the game and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it fast since in the predict-rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic is [implemented to maintain determinism](/docs/how-it-works/syncing-game-state) and to allow it to be executed both on the browser and server.
 
 The renderer, or client, is the code the renders to the game for the player and accept their input. The client can be implemented using any library or framework that can run in the browser. 
 

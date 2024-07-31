@@ -13,7 +13,7 @@ authors:
 ---
 
 <head>
-  <title>MBuilding a Multiplayer Platformer </title>
+  <title>Building a Multiplayer Platformer </title>
   <meta property="og:title" content="Building a Multiplayer Platformer"/>
 </head>
 

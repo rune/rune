@@ -11,12 +11,12 @@ async function subscribe(email) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email,
-      domain: "duskgg.substack.com"
+      domain: "duskgg.substack.com",
     }),
   })
-  const json = await response.json();
+  const json = await response.json()
   if (json.errors?.length > 0) {
-    return json.errors[0].msg;
+    return json.errors[0].msg
   }
 }
 
@@ -59,58 +59,63 @@ export default function BlogPostItemContent({ children, className }) {
               Thanks for subscribing!
             </div>
             <div className={styles.thankyouBody}>
-              Keep an eye out for our next Dusk developer update from Substack
-              in your inbox.
+              Keep an eye out for our next <b>Dusk Developer Update</b> from
+              Substack in your inbox.
             </div>
           </div>
         )}
         {(status === READY || status === ERROR) && (
-          <div className={styles.sideBarWrap}>
-            <div className={styles.emailWrapper}>
-              <input
-                type="email"
-                name="email"
-                placeholder="Type your email..."
-                onChange={(e) => {
-                  setEmail(e.target.value)
-                }}
-                className={styles.emailInput}
-              />
-            </div>
-            <button
-              type="submit"
-              className={styles.subscribeButton}
-              tabindex="0"
-            >
-              <span
-                onClick={async () => {
-                  setStatus(WORKING)
-                  setError(undefined)
-                  const error = await subscribe(email)
-                  if (error) {
-                    setStatus(ERROR)
-                    setError(error);
-                  } else {
-                    setStatus(DONE)
-                  }
-                }}
+          <div>
+            <div className={styles.sideBarWrap}>
+              <div className={styles.emailWrapper}>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Type your email..."
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                  }}
+                  className={styles.emailInput}
+                />
+              </div>
+              <button
+                type="submit"
+                className={styles.subscribeButton}
+                tabindex="0"
               >
-                Subscribe
-              </span>
-            </button>
+                <span
+                  onClick={async () => {
+                    setStatus(WORKING)
+                    setError(undefined)
+                    const error = await subscribe(email)
+                    if (error) {
+                      setStatus(ERROR)
+                      setError(error)
+                    } else {
+                      setStatus(DONE)
+                    }
+                  }}
+                >
+                  Subscribe
+                </span>
+              </button>
+            </div>
+            <div className={styles.subtext}>
+              <div className={styles.substack}>
+                We'll share your email with Substack
+                <div className={styles.tooltip}>
+                  &#9432;
+                  <span className={styles.tooltiptext}>
+                    Substack's embed form isn't very pretty, so we made our own.
+                    But we need to let you know we'll subscribe you on your
+                    behalf. Thanks in advance!
+                  </span>
+                </div>
+                {error && <div className={styles.error}>{error}</div>}
+              </div>
+            </div>
           </div>
         )}
-        <div className={styles.subtext}>
-          <div className={styles.tooltip}>
-            We'll share your email with Substack
-            <span className={styles.tooltiptext}>
-              Substack's embed form isn't very pretty, so we made our own. But
-              we need to let you know we'll subscribe you on your behalf. Thanks
-              in advance!
-            </span>
-          </div>
-          {error && <div className={styles.error}>{error}</div>}
-        </div>
       </div>
     </div>
   )

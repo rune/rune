@@ -32,6 +32,10 @@
   outline: none;
 }
 
+.substack {
+    text-align: center;
+}
+
 .subscribeButton {
   flex-shrink: 0;
   margin-top: 0 !important;
@@ -67,8 +71,9 @@
   border-radius: 10px;
 }
 
+
 .tooltip {
-  margin: auto;
+  margin-left: 5px;
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black; /* If you want dots under the hoverable text */

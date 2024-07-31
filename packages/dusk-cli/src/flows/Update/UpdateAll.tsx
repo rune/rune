@@ -7,7 +7,9 @@ import { useGames } from "../../gql/useGames.js"
 import { useUpdateGameSdk } from "../../gql/useUpdateGameSdk.js"
 import { formatApolloError } from "../../lib/formatApolloError.js"
 
-export function UpdateAll() {
+export function UpdateAll({ args }: { args: string[] }) {
+  const filteredGameIds = useMemo(() => args.slice(1), [args])
+
   const { updateGameSdk } = useUpdateGameSdk()
 
   const { games, gamesLoading } = useGames()
@@ -15,6 +17,11 @@ export function UpdateAll() {
   const gamesWithLatestActiveDraftOrInReviewVersions = useMemo(
     () =>
       games
+        ?.filter(
+          (g) =>
+            filteredGameIds.length === 0 ||
+            filteredGameIds.includes(g.id.toString())
+        )
         ?.map((g) => ({
           gameId: g.id,
           gameVersionId: g.gameVersions.nodes
@@ -30,7 +37,7 @@ export function UpdateAll() {
           (g): g is { gameId: number; gameVersionId: number } =>
             !!g.gameVersionId
         ),
-    [games]
+    [games, filteredGameIds]
   )
 
   const queue = useRef(Promise.resolve())

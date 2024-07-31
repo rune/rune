@@ -61,7 +61,10 @@ if (touchDevice) {
       e.key === "ArrowLeft" || e.key === "a" ? true : gameInputs.left
     gameInputs.right =
       e.key === "ArrowRight" || e.key == "d" ? true : gameInputs.right
-    gameInputs.jump = e.key === " " || e.key == "w" || e.key == "ArrowUp" ? true : gameInputs.jump
+    gameInputs.jump =
+      e.key === " " || e.key == "w" || e.key == "ArrowUp"
+        ? true
+        : gameInputs.jump
   })
 
   window.addEventListener("keyup", (e: KeyboardEvent) => {
@@ -69,6 +72,9 @@ if (touchDevice) {
       e.key === "ArrowLeft" || e.key === "a" ? false : gameInputs.left
     gameInputs.right =
       e.key === "ArrowRight" || e.key == "d" ? false : gameInputs.right
-    gameInputs.jump = e.key === " " || e.key == "w" || e.key == "ArrowUp" ? false : gameInputs.jump
+    gameInputs.jump =
+      e.key === " " || e.key == "w" || e.key == "ArrowUp"
+        ? false
+        : gameInputs.jump
   })
 }

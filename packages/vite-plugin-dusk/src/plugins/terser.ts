@@ -10,7 +10,9 @@ const require = createRequire(import.meta.url)
 //Implemented using https://github.com/vitejs/vite/blob/main/packages/vite/src/node/plugins/terser.ts as inspiration
 //And adapted according to https://rollupjs.org/plugin-development/#output-generation-hooks chart, so that this plugin runs after esbuild is done.
 export function terserPlugin(minifyLogic: boolean): Plugin {
-  const terserPath = require.resolve("terser")
+  //Make sure the path is treated as absolute file import to fix windows issue:
+  //https://github.com/nodejs/node/issues/31710
+  const terserPath = "file:" + require.resolve("terser")
 
   const makeWorker = () =>
     new Worker(

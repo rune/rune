@@ -4,44 +4,16 @@ import { InterpolatorLatency } from "../types"
 
 const runValidation = true
 
-function moveTowardsSingleValue(from: number, to: number, maxSpeed: number) {
-  const distance = to - from
-
-  // max speed can be the opposite sign of the direction we want
-  // to travel, this will mean we're in deceleration
-  if (Math.sign(maxSpeed) !== Math.sign(distance)) {
-    // we're decelerating so just move the speed given
-    return from + maxSpeed
-  }
-
-  // otherwise we're speeding in the right direction so pick either
-  // move speed or if we're close enough just move to the target
-  const distanceToMove = Math.min(Math.abs(distance), Math.abs(maxSpeed))
-
-  return from + distanceToMove * Math.sign(distance)
-}
-
-function moveTowards<Dimensions extends number | number[]>(
-  from: Dimensions,
-  to: Dimensions,
-  speed: Dimensions,
-  size: number
-): Dimensions {
-  if (size > 0) {
-    return (from as number[]).map((fromElement, index) =>
-      moveTowardsSingleValue(
-        fromElement,
-        (to as number[])[index],
-        (speed as number[])[index]
-      )
-    ) as Dimensions
-  }
-
-  return moveTowardsSingleValue(
-    from as number,
-    to as number,
-    speed as number
-  ) as Dimensions
+// one fo the points we're interpolating
+type InterpolatedPoint = {
+  // the current value for the point
+  current: number
+  // the speed the point is currently moving
+  speed: number
+  // the value the point is moving from
+  from: number
+  // the value the point is moving towards
+  target: number
 }
 
 export function interpolatorLatency<Dimensions extends number | number[]>({
@@ -51,89 +23,127 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
   maxSpeed: number
   timeToMaxSpeed?: number
 }): InterpolatorLatency<Dimensions> {
-  let interpolated: Dimensions | undefined = undefined
-  let futureInterpolated: Dimensions | undefined = undefined
-
-  let speed: Dimensions | undefined
+  let interpolated: InterpolatedPoint[] | undefined = undefined
+  let futureInterpolated: InterpolatedPoint[] | undefined = undefined
 
   let size: number | null = null
 
   let acceleration = 0
   let useAcceleration = false
 
-  function calculateSpeedSingleValue(
-    interpolated: number,
-    target: number,
-    currentSpeed: number,
-    componentCoefficient: number
-  ) {
+  function updateSpeed(point: InterpolatedPoint, componentCoefficient: number) {
+    // if we're not using acceleration then we transition to max speed
+    // all the time
     if (!useAcceleration) {
-      return Math.sign(target - interpolated) * maxSpeed * componentCoefficient
+      return (
+        Math.sign(point.target - point.current) *
+        Math.min(Math.abs(maxSpeed), Math.abs(point.target - point.current)) *
+        componentCoefficient
+      )
     }
 
-    if (target > interpolated) {
+    // otherwise determine what speed the next steps should be at by applying
+    // acceleration (or deceleration). Don't ever let the speed take us past
+    // the end point or the maximum speed thats been allowed
+    if (point.target > point.current) {
       return Math.min(
-        currentSpeed + acceleration * componentCoefficient,
-        maxSpeed * componentCoefficient
+        point.speed + acceleration * componentCoefficient,
+        maxSpeed * componentCoefficient,
+        point.target - point.current
       )
-    } else if (target < interpolated) {
+    } else if (point.target < point.current) {
       return Math.max(
-        currentSpeed - acceleration * componentCoefficient,
-        -maxSpeed * componentCoefficient
+        point.speed - acceleration * componentCoefficient,
+        -maxSpeed * componentCoefficient,
+        point.target - point.current
       )
     } else {
       return 0
     }
   }
 
-  function getDefaultSpeed(): Dimensions {
-    return (
-      size === -1 ? 0 : (interpolated as number[]).map(() => 0)
-    ) as Dimensions
+  function updatePoints(
+    points: InterpolatedPoint[],
+    target: Dimensions,
+    size: number
+  ): void {
+    // work out the amount of change to apply on each axis. The max speed
+    // is specified on the vector of movement so we need to only
+    // move each axis/component the appropriate amount
+    const valueDeltas =
+      size === -1
+        ? [(target as number) - points[0].current]
+        : (target as number[]).map(
+            (value, index) => value - points[index].current
+          )
+    const totalLength = Math.sqrt(
+      valueDeltas.map((d) => d ** 2).reduce((p, v) => p + v, 0)
+    )
+
+    // update each point based on its acceleration and then its
+    // speed
+    points.forEach((point, index) => {
+      point.from = point.current
+      point.target =
+        size == -1 ? (target as number) : (target as number[])[index]
+
+      point.speed = updateSpeed(
+        point,
+        totalLength === 0 ? 0 : Math.abs(valueDeltas[index]) / totalLength
+      )
+      point.current = point.current + point.speed
+    })
   }
 
-  function calculateSpeed(
-    interpolated: Dimensions,
-    target: Dimensions
-  ): Dimensions {
-    if (size === -1) {
-      return calculateSpeedSingleValue(
-        interpolated as number,
-        target as number,
-        speed as number,
-        1
-      ) as Dimensions
-    } else {
-      const valueDeltas = (target as number[]).map(
-        (value, index) => value - (interpolated as number[])[index]
-      )
-      const totalLength = Math.sqrt(
-        valueDeltas.map((d) => d ** 2).reduce((p, v) => p + v, 0)
-      )
+  function asDimensions(
+    points: InterpolatedPoint[] | undefined,
+    size: number | null
+  ): Dimensions | undefined {
+    if (!points) {
+      return undefined
+    }
 
-      return (interpolated as number[]).map((interpolatedValue, index) => {
-        return calculateSpeedSingleValue(
-          interpolatedValue,
-          (target as number[])[index],
-          (speed as number[])[index] ?? 0,
-          totalLength === 0 ? 0 : Math.abs(valueDeltas[index]) / totalLength
-        )
-      }) as Dimensions
+    if (size == -1) {
+      return points[0].current as Dimensions
+    } else {
+      return points.map((p) => p.current) as Dimensions
+    }
+  }
+
+  function createInterpolatedPoint(initialValue: number): InterpolatedPoint {
+    return {
+      current: initialValue,
+      speed: 0,
+      from: initialValue,
+      target: initialValue,
     }
   }
 
   return {
     update(params: { game: Dimensions; futureGame: Dimensions }) {
-      if (interpolated === undefined) {
+      if (interpolated === undefined || futureInterpolated === undefined) {
         if (runValidation) {
           validateUpdateParams(params, size)
         }
 
-        interpolated = params.game
-        futureInterpolated = params.futureGame
-
         size = getDimensions(params.game)
-        speed = getDefaultSpeed()
+        if (size == -1) {
+          interpolated = [createInterpolatedPoint(params.game as number)]
+          futureInterpolated = [
+            createInterpolatedPoint(params.futureGame as number),
+          ]
+        } else {
+          interpolated = []
+          futureInterpolated = []
+          for (let i = 0; i < size; i++) {
+            interpolated.push(
+              createInterpolatedPoint((params.game as number[])[i])
+            )
+            futureInterpolated.push(
+              createInterpolatedPoint((params.futureGame as number[])[i])
+            )
+          }
+        }
 
         if (timeToMaxSpeed > 0) {
           acceleration = maxSpeed / (timeToMaxSpeed / Dusk.msPerUpdate)
@@ -154,31 +164,36 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
         validateUpdateParams(params, size)
       }
 
-      speed = calculateSpeed(interpolated, params.game)
-      interpolated = moveTowards(
-        interpolated,
-        params.game,
-        speed,
-        size as number
-      )
-      if (futureInterpolated) {
-        futureInterpolated = moveTowards(
-          futureInterpolated,
-          params.futureGame,
-          calculateSpeed(futureInterpolated, params.futureGame),
-          size as number
-        )
+      if (size) {
+        updatePoints(interpolated, params.game, size)
+        updatePoints(futureInterpolated, params.futureGame, size)
       }
     },
 
     getPosition(): Dimensions {
-      return getPosition<Dimensions>(interpolated, futureInterpolated, size)
+      return getPosition<Dimensions>(
+        asDimensions(interpolated, size),
+        asDimensions(futureInterpolated, size),
+        size
+      )
     },
 
     jump(jumpToGame: Dimensions) {
-      interpolated = jumpToGame
-      futureInterpolated = jumpToGame
-      speed = getDefaultSpeed()
+      if (size == -1) {
+        interpolated = [createInterpolatedPoint(jumpToGame as number)]
+        futureInterpolated = [createInterpolatedPoint(jumpToGame as number)]
+      } else if (size) {
+        interpolated = []
+        futureInterpolated = []
+        for (let i = 0; i < size; i++) {
+          interpolated.push(
+            createInterpolatedPoint((jumpToGame as number[])[0])
+          )
+          futureInterpolated.push(
+            createInterpolatedPoint((jumpToGame as number[])[0])
+          )
+        }
+      }
     },
   }
 }

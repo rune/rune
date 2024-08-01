@@ -77,14 +77,6 @@ In short, if you’re wanting to do real-time communications, you need UDP, and 
 
 Is it worth the work? Yes.
 
-## The Results
-
-We’re still in progress making Data Channel the default for all our players but the results look promising.
-
-![](/img/blog/callouts/transport-graph.png)
-
-The important thing to notice in the graph is the peaks. When head of line blocking hits, you get large latency spikes which lead to the pauses in games and poor player experience. With our early prototype code, you can already see the trend for data channels is much flatter. The above graph is taken with a 200ms delay simulated in both directions - hence the large pings.
-
 ## The Future
 
 Of course, with all things web, there’s a new standard coming that might shake things up again, [WebTransport](https://developer.mozilla.org/en-US/docs/Web/API/WebTransport). This new standard looks like it’s going to give us game developers everything we might want. 

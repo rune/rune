@@ -1,9 +1,5 @@
-import type { DuskClient } from "dusk-games-sdk/multiplayer"
-import { helpers } from "./shared/helpers"
-import data from "./data.json"
-//@ts-ignore
-import sum from "math-sum"
-
+import type { DuskClient } from "dusk-games-sdk/multiplayer.js"
+import { helpers } from "./shared/helpers.js"
 
 export interface GameState {
   count: number
@@ -25,7 +21,7 @@ Dusk.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (): GameState => {
-    return { count: sum([data.x, 2, 3]) }
+    return { count: 0 }
   },
   actions: {
     increment: ({ amount }, { game }) => {

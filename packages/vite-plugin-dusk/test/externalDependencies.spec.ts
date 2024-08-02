@@ -1,4 +1,4 @@
-import { describe, expect, it } from "@jest/globals"
+import { describe, expect, it, jest } from "@jest/globals"
 
 import { buildFixture, createLogger } from "./buildFixture.js"
 import type { OutputChunk } from "rollup"
@@ -125,6 +125,28 @@ describe("external dependencies", () => {
     )
     expect(logger.error).not.toHaveBeenCalledWith(
       expect.stringContaining("outer")
+    )
+  })
+
+  it("should not allow to include assets in logic file", async () => {
+    const logger = createLogger()
+
+    const mockExit = jest
+      .spyOn(process, "exit")
+      .mockImplementation((() => {}) as any)
+
+    await buildFixture("nested-assets", logger, {
+      ignoredDependencies: ["math-sum"],
+    })
+
+    expect(mockExit).toHaveBeenCalledWith(1)
+
+    expect(logger.error).toHaveBeenCalledWith(
+      expect.stringContaining(`Assets are not allowed in Dusk logic file.
+File: ./logo.svg was imported by:
+./nested
+./shared/deep
+./shared/helpers.js`)
     )
   })
 })

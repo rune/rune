@@ -10,11 +10,54 @@ import { normalizeId } from "../lib/normalizeId.js"
 
 type Model = {
   fileName: string
+  withExtension: string
 }
 
 function withoutExtension(str: string) {
   return str.replace(/\.\w+$/, "")
 }
+
+//Files that are treated as assets by vite, which leads to them being not included in the logic chunk.
+//https://github.com/vitejs/vite/blob/main/packages/vite/src/node/constants.ts
+export const KNOWN_ASSET_TYPES = [
+  // images
+  "apng",
+  "bmp",
+  "png",
+  "jpe?g",
+  "jfif",
+  "pjpeg",
+  "pjp",
+  "gif",
+  "svg",
+  "ico",
+  "webp",
+  "avif",
+
+  // media
+  "mp4",
+  "webm",
+  "ogg",
+  "mp3",
+  "wav",
+  "flac",
+  "aac",
+  "opus",
+  "mov",
+  "m4a",
+  "vtt",
+
+  // fonts
+  "woff2?",
+  "eot",
+  "ttf",
+  "otf",
+
+  // other
+  "webmanifest",
+  "pdf",
+  "txt",
+]
 
 export function getDetectExternalImportsPlugin(
   options: ViteDuskPluginOptions,
@@ -35,8 +78,9 @@ export function getDetectExternalImportsPlugin(
 
   const normalizedLogicPath = normalizePath(withoutExtension(logicPath))
 
-  const logicFileNode = logicImportTree.parse<{ fileName: string }>({
+  const logicFileNode = logicImportTree.parse<Model>({
     fileName: normalizedLogicPath,
+    withExtension: logicPath,
     children: [],
   })
 
@@ -64,7 +108,33 @@ export function getDetectExternalImportsPlugin(
     collectAll(logicFileNode)
 
     nodes.forEach((node) => {
-      const name = (node.model as Model).fileName
+      const { fileName: name, withExtension } = node.model as Model
+
+      const extension = withExtension.split(".").at(-1)
+
+      if (extension && KNOWN_ASSET_TYPES.includes(extension)) {
+        const importPath = []
+
+        let tmpNode = node.parent
+
+        while (tmpNode) {
+          importPath.push(tmpNode.model.withExtension)
+
+          tmpNode = tmpNode.parent
+        }
+
+        logger.clearScreen("info")
+        logger.error(
+          `\t\x1b[31m\nAssets are not allowed in Dusk logic file.
+File: ${withExtension} was imported by:\n${importPath.join("\n")}
+          \x1b[0m`
+        )
+
+        //Do not allow to build logic file if assets are imported
+        if (command === "build") {
+          process.exit(1)
+        }
+      }
 
       //Not external, ignore it
       if (path.isAbsolute(name)) {
@@ -164,7 +234,11 @@ You can also make a pull request to add the dependency to the whitelist at (http
           const [imports] = parseImports(code)
 
           const transformedFileNode =
-            treeNodesByFile[id] || logicImportTree.parse({ fileName: id })
+            treeNodesByFile[id] ||
+            logicImportTree.parse({
+              fileName: id,
+              withExtension: idWithExtension,
+            })
 
           //Remove it's children, because we are going to re-add them.
           //This will make sure to remove any files that are not imported anymore.
@@ -194,7 +268,10 @@ You can also make a pull request to add the dependency to the whitelist at (http
 
               const node =
                 treeNodesByFile[filePath] ||
-                logicImportTree.parse({ fileName: filePath })
+                logicImportTree.parse({
+                  fileName: filePath,
+                  withExtension: imp.n,
+                })
 
               treeNodesByFile[filePath] = node
 

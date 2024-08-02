@@ -4,7 +4,6 @@ import data from "./data.json"
 //@ts-ignore
 import sum from "math-sum"
 
-
 export interface GameState {
   count: number
 }

@@ -172,8 +172,6 @@ File: ${withOptionalExtension} was imported by:\n${importPath.join("\n")}
 
 These dependencies might contain code that is not supported by Dusk game logic (https://developers.dusk.gg/docs/advanced/server-side-logic).
 You can disable this message by adding the dependency to ignoredDependencies array in Dusk plugin options.
-
-You can also make a pull request to add the dependency to the whitelist at (https://github.com/dusk-gg/dusk/blob/staging/packages/vite-plugin-dusk/src/dependency-whitelist.ts)
 `
       let error = previousError
       if (previousError?.message !== message) {

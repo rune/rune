@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import { GameState } from "./logic.ts"
 
-
-import logo from './shared/logo.svg'
+import logo from "./shared/logo.svg"
 
 export const image = new Image()
 image.src = logo

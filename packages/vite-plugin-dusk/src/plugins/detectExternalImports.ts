@@ -10,7 +10,7 @@ import { normalizeId } from "../lib/normalizeId.js"
 
 type Model = {
   fileName: string
-  withExtension: string
+  withOptionalExtension: string
 }
 
 function withoutExtension(str: string) {
@@ -80,7 +80,7 @@ export function getDetectExternalImportsPlugin(
 
   const logicFileNode = logicImportTree.parse<Model>({
     fileName: normalizedLogicPath,
-    withExtension: logicPath,
+    withOptionalExtension: logicPath,
     children: [],
   })
 
@@ -108,9 +108,9 @@ export function getDetectExternalImportsPlugin(
     collectAll(logicFileNode)
 
     nodes.forEach((node) => {
-      const { fileName: name, withExtension } = node.model as Model
+      const { fileName: name, withOptionalExtension } = node.model as Model
 
-      const extension = withExtension.split(".").at(-1)
+      const extension = withOptionalExtension.split(".").at(-1)
 
       if (extension && KNOWN_ASSET_TYPES.includes(extension)) {
         const importPath = []
@@ -118,7 +118,7 @@ export function getDetectExternalImportsPlugin(
         let tmpNode = node.parent
 
         while (tmpNode) {
-          importPath.push(tmpNode.model.withExtension)
+          importPath.push(tmpNode.model.withOptionalExtension)
 
           tmpNode = tmpNode.parent
         }
@@ -126,7 +126,7 @@ export function getDetectExternalImportsPlugin(
         logger.clearScreen("info")
         logger.error(
           `\t\x1b[31m\nAssets are not allowed in Dusk logic file.
-File: ${withExtension} was imported by:\n${importPath.join("\n")}
+File: ${withOptionalExtension} was imported by:\n${importPath.join("\n")}
           \x1b[0m`
         )
 
@@ -223,9 +223,9 @@ You can also make a pull request to add the dependency to the whitelist at (http
       closeBundle: () => {
         listExternalDeps()
       },
-      transform: async (code, idWithExtension) => {
+      transform: async (code, idWithOptionalExtension) => {
         try {
-          const id = normalizeId(withoutExtension(idWithExtension))
+          const id = normalizeId(withoutExtension(idWithOptionalExtension))
 
           const importerDirectory = id.split("/").slice(0, -1).join("/")
 
@@ -237,7 +237,7 @@ You can also make a pull request to add the dependency to the whitelist at (http
             treeNodesByFile[id] ||
             logicImportTree.parse({
               fileName: id,
-              withExtension: idWithExtension,
+              withOptionalExtension: idWithOptionalExtension,
             })
 
           //Remove it's children, because we are going to re-add them.
@@ -270,7 +270,7 @@ You can also make a pull request to add the dependency to the whitelist at (http
                 treeNodesByFile[filePath] ||
                 logicImportTree.parse({
                   fileName: filePath,
-                  withExtension: imp.n,
+                  withOptionalExtension: imp.n,
                 })
 
               treeNodesByFile[filePath] = node

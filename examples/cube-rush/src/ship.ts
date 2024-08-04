@@ -44,7 +44,7 @@ export function createShip(scene: THREE.Scene, color: number) {
 export function createShipLabel(
   scene: THREE.Scene,
   displayName: string,
-  avatarUrl: string,
+  avatarUrl: string
 ) {
   // Display Name
   const displayNameObj = new Text()

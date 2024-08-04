@@ -1,0 +1,174 @@
+.emailWidget {
+  width: 100%;
+  padding-top: 10px;
+}
+
+.sideBarWrap {
+  margin: auto;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  max-width: 380px;
+}
+
+.emailWrapper {
+  flex-grow: 1;
+}
+
+.emailInput,
+.emailInput:focus {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 12px;
+  height: 40px;
+  background-color: rgb(42, 21, 55);
+  border: 1px solid rgb(130, 43, 255);
+  border-right-width: 0;
+  border-radius: 10px 0 0 10px;
+  font-size: 15px;
+  line-height: 20px;
+  width: 100%;
+  color: rgb(233, 228, 236);
+  outline: none;
+}
+
+.substack {
+    text-align: center;
+}
+
+.subscribeButton {
+  flex-shrink: 0;
+  margin-top: 0 !important;
+  height: 40px;
+  padding: 0 20px;
+  background: rgb(130, 43, 255);
+  border: 1px solid rgb(130, 43, 255);
+  border-radius: 0 10px 10px 0;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.subtext {
+  cursor: pointer;
+  padding-top: 10px;
+  max-width: 380px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+}
+
+.error {
+  margin: auto;
+  position: relative;
+  display: inline-block;
+  background: darkred;
+  color: white;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+}
+
+
+.tooltip {
+  margin-left: 5px;
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  padding: 5px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  left: -280px;
+  top: 20px;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.thankyou {
+  max-width: 380px;
+  margin: auto;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid white;
+}
+
+.thankyouHeading {
+  font-weight: bold;
+  display: inline-block;
+}
+
+.thankyouBody {
+  display: inline-block;
+  line-height: 16px;
+  font-size: 14px;
+}
+
+
+.progressHolder {
+    text-align: center;
+}
+
+.progress {
+  /* change color here */
+  color: white;
+}
+.progress,
+.progress div {
+  box-sizing: border-box;
+}
+.progress {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 30px;
+}
+.progress div {
+  display: inline-block;
+  position: absolute;
+  left: 0px;
+  width: 16px;
+  background: currentColor;
+  animation: progress 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.progress div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.progress div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.progress div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0s;
+}
+@keyframes progress {
+  0% {
+    top: 8px;
+    height: 40px;
+  }
+  50%,
+  100% {
+    top: 24px;
+    height: 20px;
+  }
+}

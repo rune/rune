@@ -28,23 +28,32 @@ export function useSuccessBlip({ row, col }: Coordinate) {
 
       for (const success of successes.slice(processedSuccessesLength.current)) {
         if ("row" in success && success.row === row) {
-          timeout(() => {
-            setSuccessBlip(true)
-            timeout(() => setSuccessBlip(false), blipDuration)
-          }, blipDelay + col * (blipDuration / 2))
+          timeout(
+            () => {
+              setSuccessBlip(true)
+              timeout(() => setSuccessBlip(false), blipDuration)
+            },
+            blipDelay + col * (blipDuration / 2)
+          )
         } else if ("col" in success && success.col === col) {
-          timeout(() => {
-            setSuccessBlip(true)
-            timeout(() => setSuccessBlip(false), blipDuration)
-          }, blipDelay + row * (blipDuration / 2))
+          timeout(
+            () => {
+              setSuccessBlip(true)
+              timeout(() => setSuccessBlip(false), blipDuration)
+            },
+            blipDelay + row * (blipDuration / 2)
+          )
         } else if (
           "section" in success &&
           success.section === Math.floor(row / 3) * 3 + Math.floor(col / 3)
         ) {
-          timeout(() => {
-            setSuccessBlip(true)
-            timeout(() => setSuccessBlip(false), blipDuration)
-          }, blipDelay + ((row % 3) * 3 + (col % 3)) * (blipDuration / 2))
+          timeout(
+            () => {
+              setSuccessBlip(true)
+              timeout(() => setSuccessBlip(false), blipDuration)
+            },
+            blipDelay + ((row % 3) * 3 + (col % 3)) * (blipDuration / 2)
+          )
         }
       }
 

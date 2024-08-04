@@ -28,10 +28,10 @@ export function ConfirmationStep({
         !game && gameId !== null
           ? "waiting"
           : confirmed === undefined
-          ? "userInput"
-          : confirmed
-          ? "success"
-          : "error"
+            ? "userInput"
+            : confirmed
+              ? "success"
+              : "error"
       }
       label={
         game || gameId === null

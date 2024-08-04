@@ -1,6 +1,7 @@
-import type { ESLint } from "eslint"
+import { Linter } from "eslint"
+import * as globals from "globals"
 
-export { rules } from "./rules"
+import { rules } from "./rules/index.js"
 
 const restrictedSyntaxBase = [
   {
@@ -82,19 +83,23 @@ const restrictedGlobals = [
   "XMLHttpRequest",
 ]
 
-const logicConfig: ESLint.ConfigData = {
-  // https://github.com/eslint/eslint/issues/7984#issuecomment-275409556
-  env: { es6: true },
-  plugins: ["dusk"],
-  parserOptions: {
-    ecmaVersion: 2021,
+const plugin = {
+  meta: {
+    name: "eslint-plugin-dusk",
+    version: "2.0.1",
   },
-  globals: {
-    globalThis: "readonly",
-    global: "readonly",
-    Dusk: "readonly",
-    Rune: "readonly",
-    console: "readonly",
+  configs: {
+    recommended: {},
+    logic: {},
+    logicModule: {},
+  },
+  rules,
+}
+
+// Each validated file yb logicConfig is treated as logic file
+const logicConfig: Linter.Config = {
+  plugins: {
+    dusk: plugin,
   },
   rules: {
     "no-restricted-globals": ["error", ...restrictedGlobals],
@@ -151,31 +156,46 @@ const logicConfig: ESLint.ConfigData = {
     ],
     "dusk/no-global-scope-mutation": 2,
   },
+  languageOptions: {
+    ecmaVersion: 2021,
+    globals: {
+      ...globals.es2016,
+      globalThis: "readonly",
+      global: "readonly",
+      Dusk: "readonly",
+      Rune: "readonly",
+      console: "readonly",
+    },
+  },
 }
 
-const logicModuleConfig: ESLint.ConfigData = {
+//Same as config, except it allows multiple logic files (each validated file is treated as logic file)
+const logicModuleConfig: Linter.Config = {
   ...logicConfig,
-  env: {
-    browser: false,
-  },
   rules: {
     ...logicConfig.rules,
+    //Ignore the rule that logic has to be in one file
     "no-restricted-syntax": ["error", ...restrictedSyntaxBase],
   },
 }
 
-export const configs: ESLint.Plugin["configs"] = {
-  recommended: {
-    globals: {
-      Dusk: "readonly",
-    },
-    overrides: [
-      {
-        files: ["**/logic.ts", "**/logic.js"],
-        ...logicModuleConfig,
+Object.assign(plugin.configs as any, {
+  //Only validates logic files
+  recommended: [
+    {
+      languageOptions: {
+        globals: {
+          Dusk: "readonly",
+        },
       },
-    ],
-  },
+    },
+    {
+      files: ["**/logic.ts", "**/logic.js"],
+      ...logicModuleConfig,
+    },
+  ],
   logic: logicConfig,
   logicModule: logicModuleConfig,
-}
+})
+
+module.exports = plugin

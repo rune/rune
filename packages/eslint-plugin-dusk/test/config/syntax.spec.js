@@ -1,5 +1,5 @@
 // @ts-check
-const { createConfigTester } = require("../createConfigTester")
+const { createConfigTester } = require("../createConfigTester.js")
 
 const test = createConfigTester()
 

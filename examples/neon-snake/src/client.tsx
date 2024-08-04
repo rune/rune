@@ -9,10 +9,10 @@ Dusk.initClient({
   onChange: ({ previousGame, game, players, yourPlayerId }) => {
     if (yourPlayerId) {
       const previousPlayer = previousGame.players.find(
-        (p) => p.playerId === yourPlayerId,
+        (p) => p.playerId === yourPlayerId
       )
       const currentPlayer = game.players.find(
-        (p) => p.playerId === yourPlayerId,
+        (p) => p.playerId === yourPlayerId
       )
 
       //Player collided
@@ -43,5 +43,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )

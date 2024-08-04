@@ -15,8 +15,8 @@ const helpText = `Run ${
   getInstaller() === "yarn"
     ? installYarn
     : getInstaller() === "npm"
-    ? installNpm
-    : `${installNpm} or ${installYarn}`
+      ? installNpm
+      : `${installNpm} or ${installYarn}`
 } to install the latest version`
 
 export function VersionCheckGate({ children }: { children: ReactNode }) {

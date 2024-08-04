@@ -98,8 +98,8 @@ export function GameDirInputStep({
           validateGameResult?.valid
             ? `Using game files from ${gameDirFormatted}`
             : validateGameResult?.valid === false
-            ? "Update your game to fix these issues 😄"
-            : "Enter the game directory"
+              ? "Update your game to fix these issues 😄"
+              : "Enter the game directory"
         }
         view={(status) => (
           <Box flexDirection="column">

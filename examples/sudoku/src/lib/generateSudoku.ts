@@ -16,8 +16,8 @@ export function generateSudoku({
     value: solved
       ? parseInt(sudoku.solution[index])
       : value === "-"
-      ? null
-      : parseInt(value),
+        ? null
+        : parseInt(value),
     valueLock: Math.random(),
     fixed: value !== "-",
     correctValue: parseInt(sudoku.solution[index]),
@@ -36,10 +36,10 @@ function adjustLevel(difficulty: Difficulty): Difficulty {
   return difficulty === "easy" || difficulty === "medium"
     ? "easy"
     : difficulty === "hard"
-    ? "medium"
-    : Math.random() > 0.5
-    ? "hard"
-    : "expert"
+      ? "medium"
+      : Math.random() > 0.5
+        ? "hard"
+        : "expert"
 }
 
 function addMoreFixedCells(board: Cell[], cellsToAdd: number) {

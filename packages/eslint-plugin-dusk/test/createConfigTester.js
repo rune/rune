@@ -1,6 +1,10 @@
 // @ts-check
 const assert = require("assert")
 const { ESLint } = require("eslint")
+const globals = require("globals")
+const typescriptEslintParser = require("@typescript-eslint/parser")
+
+const duskPlugin = require("../dist/index")
 
 /**
  * @typedef InvalidCodeAssertion
@@ -54,25 +58,31 @@ const createConfigTester = () => {
    */
   return (testName, testGetter) => {
     ;["typescript", "javascript"].forEach((language) => {
-      ;["module", "script"].forEach((sourceType) => {
+      ;["script", "module"].forEach((sourceType) => {
         const eslint = new ESLint({
-          useEslintrc: false,
+          overrideConfigFile: true,
           allowInlineConfig: false,
           fix: false,
           cache: false,
-          baseConfig: {
+          baseConfig: [
             //Assume that users will use env that has browser globals available, so we'll need to disallow a lot of things.
-            env: { browser: true, es2020: true },
-            extends:
-              sourceType === "module"
-                ? "plugin:dusk/logicModule"
-                : "plugin:dusk/logic",
-            parserOptions: { sourceType },
-            parser:
-              language === "typescript"
-                ? "@typescript-eslint/parser"
-                : undefined,
-          },
+            {
+              languageOptions: {
+                globals: {
+                  ...globals.browser,
+                  ...globals.es2020,
+                },
+                sourceType,
+                parser:
+                  language === "typescript"
+                    ? typescriptEslintParser
+                    : undefined,
+              },
+            },
+            sourceType === "module"
+              ? duskPlugin.configs.logicModule
+              : duskPlugin.configs.logic,
+          ],
         })
 
         const { valid, invalid } = testGetter({ language, sourceType })

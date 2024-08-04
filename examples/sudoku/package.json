@@ -7,15 +7,16 @@
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "howler": "^2.2.3",
     "jotai": "^2.0.3",
-    "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-transition-group": "^4.4.5",
-    "dusk-games-sdk": "^4.20.2",
+    "dusk-games-sdk": "^4.21.9",
     "styled-components": "^5.3.6",
     "sudoku-gen": "^1.0.0"
   },
   "devDependencies": {
+    "@eslint/compat": "^1.1.1",
+    "@eslint/js": "^9.7.0",
     "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-typescript": "^11.1.0",
@@ -25,23 +26,24 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-transition-group": "^4.4.5",
     "@types/styled-components": "^5.1.26",
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
-    "eslint": "7.22.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.3.4",
-    "eslint-plugin-dusk": "^1.0.0",
+    "eslint": "^9.7.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react-hooks": "beta",
+    "prettier": "^3.3.3",
+    "globals": "^15.8.0",
     "react-scripts": "5.0.1",
     "rollup": "^3.20.4",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "typescript-eslint": "^8.0.0-alpha.54"
   },
   "scripts": {
-    "build": "GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
+    "build": "npm run lint && DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
     "dev": "npm run dev:client & npm run dev:logic",
     "dev:client": "react-scripts start",
     "dev:logic": "rollup -c --watch",
     "deploy": "../../scripts/copy-assets.sh sudoku && yarn build && dusk upload build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint src"
   },
   "eslintConfig": {
     "extends": [

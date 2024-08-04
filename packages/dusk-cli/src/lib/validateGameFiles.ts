@@ -1,10 +1,10 @@
 import { ESLint, Linter } from "eslint"
+import duskPlugin from "eslint-plugin-dusk"
 import { parse, valid } from "node-html-parser"
 import path from "path"
 import semver from "semver"
 
 import { FileInfo, findShortestPathFileThatEndsWith } from "./getGameFiles.js"
-import { rootPath } from "./rootPath.js"
 
 import LintMessage = Linter.LintMessage
 
@@ -20,16 +20,17 @@ export const validationOptions = {
 }
 
 const eslint = new ESLint({
-  useEslintrc: false,
+  overrideConfigFile: true,
   allowInlineConfig: false,
-  resolvePluginsRelativeTo: rootPath,
-  baseConfig: {
-    root: true,
-    extends: ["plugin:dusk/logic"],
-    parserOptions: {
-      sourceType: "module",
+  baseConfig: [
+    {
+      languageOptions: {
+        sourceType: "module",
+      },
     },
-  },
+    //@ts-expect-error - For some reason types not working here
+    duskPlugin.configs.logic,
+  ],
 })
 
 export interface ValidationError {

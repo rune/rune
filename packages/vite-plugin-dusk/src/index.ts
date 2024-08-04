@@ -6,6 +6,7 @@ import { getBuildLogicPlugin } from "./plugins/buildLogic.js"
 import { getDetectExternalImportsPlugin } from "./plugins/detectExternalImports.js"
 import { getDevPlugins } from "./plugins/devPlugins.js"
 import { createRequire } from "node:module"
+import { packageVersionCheck } from "./plugins/packageVersionCheck.js"
 
 const require = createRequire(import.meta.url)
 
@@ -37,13 +38,14 @@ export default function duskPlugin(options: ViteDuskPluginOptions): Plugin[] {
   let duskPkgPath: string
   try {
     duskPkgPath = require.resolve("dusk-games-sdk/package.json")
-  } catch (e) {
+  } catch {
     throw new Error(
       "Cannot locate the dusk-games-sdk module. Did you install it?"
     )
   }
 
   return [
+    ...packageVersionCheck(duskPkgPath),
     ...getDetectExternalImportsPlugin(options, logicPath),
     ...getDevPlugins(duskPkgPath),
     ...getTransformHtmlForBuildPlugins(duskPkgPath),

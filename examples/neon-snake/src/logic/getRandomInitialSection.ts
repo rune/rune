@@ -27,10 +27,10 @@ function getAngleLimits(startPoint: Point): [number, number] {
   return startPoint.x < boardCenterX && startPoint.y < boardCenterY
     ? [0, 90]
     : startPoint.x > boardCenterX && startPoint.y < boardCenterY
-    ? [90, 180]
-    : startPoint.x < boardCenterX && startPoint.y > boardCenterY
-    ? [270, 360]
-    : startPoint.x > boardCenterX && startPoint.y > boardCenterY
-    ? [180, 270]
-    : [0, 360]
+      ? [90, 180]
+      : startPoint.x < boardCenterX && startPoint.y > boardCenterY
+        ? [270, 360]
+        : startPoint.x > boardCenterX && startPoint.y > boardCenterY
+          ? [180, 270]
+          : [0, 360]
 }

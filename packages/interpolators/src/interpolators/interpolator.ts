@@ -5,7 +5,7 @@ import { Interpolator } from "../types"
 const runValidation = true
 
 export function interpolator<
-  Dimensions extends number | number[]
+  Dimensions extends number | number[],
 >(): Interpolator<Dimensions> {
   let game: Dimensions | undefined = undefined
   let futureGame: Dimensions | undefined = undefined

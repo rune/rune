@@ -99,8 +99,8 @@ const Img = styled.img<{ big: boolean; selected: boolean }>`
         ? sizes.big.selectedSize
         : sizes.big.normalSize
       : selected
-      ? sizes.small.selectedSize
-      : sizes.small.normalSize
+        ? sizes.small.selectedSize
+        : sizes.small.normalSize
 
     const margin = big ? sizes.big.margin : sizes.small.margin
 

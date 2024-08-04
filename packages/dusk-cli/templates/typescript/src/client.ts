@@ -5,10 +5,7 @@ import { PlayerId } from "dusk-games-sdk/multiplayer"
 import selectSoundAudio from "./assets/select.wav"
 import { Cells } from "./logic.ts"
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const board = document.getElementById("board")!
-
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const playersSection = document.getElementById("playersSection")!
 
 const selectSound = new Audio(selectSoundAudio)

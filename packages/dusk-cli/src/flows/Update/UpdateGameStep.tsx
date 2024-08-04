@@ -6,7 +6,7 @@ import { Step } from "../../components/Step.js"
 import { useGame } from "../../gql/useGame.js"
 import { useMe } from "../../gql/useMe.js"
 import { useUpdateGame } from "../../gql/useUpdateGame.js"
-import { formatApolloError } from "../../lib/formatApolloError.js"
+import { gameDescriptionErrors } from "../../lib/gameDescriptionErrors.js"
 import { prepareFileUpload } from "../../lib/prepareFileUpload.js"
 
 // @ts-ignore
@@ -192,15 +192,7 @@ export function UpdateGameStep({ gameId }: { gameId: number }) {
           status={updateGameLoading ? "waiting" : "error"}
           label={
             updateGameError
-              ? formatApolloError(updateGameError, {
-                  "Input buffer contains unsupported image format":
-                    "Not an image file",
-                  "[tango][UNEXPECTED_TRANSPARENCY]":
-                    "Image should not contain transparency",
-                  'value violates unique constraint "game_title_key"':
-                    "Game with this title already exists",
-                  default: `Something went wrong`,
-                })
+              ? gameDescriptionErrors(updateGameError)
               : "Updating the game"
           }
         />

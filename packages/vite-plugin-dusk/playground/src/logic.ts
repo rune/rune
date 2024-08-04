@@ -1,7 +1,6 @@
 import type { DuskClient } from "dusk-games-sdk/multiplayer"
 import { helpers } from "./shared/helpers"
 import data from "./data.json"
-// eslint-disable-next-line
 //@ts-ignore
 import sum from "math-sum"
 

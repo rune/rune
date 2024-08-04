@@ -1,8 +1,8 @@
 import react from "@vitejs/plugin-react"
+import dusk from "dusk-games-sdk/vite"
 import path from "node:path"
 import { defineConfig } from "vite"
 import { qrcode } from "vite-plugin-qrcode"
-import dusk from "vite-plugin-dusk"
 
 // https://vitejs.dev/config/
 export default defineConfig({

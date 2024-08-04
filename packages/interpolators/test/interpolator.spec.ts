@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { interpolator } from "../src/interpolators/interpolator"
 
 describe("interpolator", () => {

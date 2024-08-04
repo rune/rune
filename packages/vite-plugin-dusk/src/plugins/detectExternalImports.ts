@@ -10,11 +10,54 @@ import { normalizeId } from "../lib/normalizeId.js"
 
 type Model = {
   fileName: string
+  withOptionalExtension: string
 }
 
 function withoutExtension(str: string) {
   return str.replace(/\.\w+$/, "")
 }
+
+//Files that are treated as assets by vite, which leads to them being not included in the logic chunk.
+//https://github.com/vitejs/vite/blob/main/packages/vite/src/node/constants.ts
+export const KNOWN_ASSET_TYPES = [
+  // images
+  "apng",
+  "bmp",
+  "png",
+  "jpe?g",
+  "jfif",
+  "pjpeg",
+  "pjp",
+  "gif",
+  "svg",
+  "ico",
+  "webp",
+  "avif",
+
+  // media
+  "mp4",
+  "webm",
+  "ogg",
+  "mp3",
+  "wav",
+  "flac",
+  "aac",
+  "opus",
+  "mov",
+  "m4a",
+  "vtt",
+
+  // fonts
+  "woff2?",
+  "eot",
+  "ttf",
+  "otf",
+
+  // other
+  "webmanifest",
+  "pdf",
+  "txt",
+]
 
 export function getDetectExternalImportsPlugin(
   options: ViteDuskPluginOptions,
@@ -35,8 +78,9 @@ export function getDetectExternalImportsPlugin(
 
   const normalizedLogicPath = normalizePath(withoutExtension(logicPath))
 
-  const logicFileNode = logicImportTree.parse<{ fileName: string }>({
+  const logicFileNode = logicImportTree.parse<Model>({
     fileName: normalizedLogicPath,
+    withOptionalExtension: logicPath,
     children: [],
   })
 
@@ -64,7 +108,33 @@ export function getDetectExternalImportsPlugin(
     collectAll(logicFileNode)
 
     nodes.forEach((node) => {
-      const name = (node.model as Model).fileName
+      const { fileName: name, withOptionalExtension } = node.model as Model
+
+      const extension = withOptionalExtension.split(".").at(-1)
+
+      if (extension && KNOWN_ASSET_TYPES.includes(extension)) {
+        const importPath = []
+
+        let tmpNode = node.parent
+
+        while (tmpNode) {
+          importPath.push(tmpNode.model.withOptionalExtension)
+
+          tmpNode = tmpNode.parent
+        }
+
+        logger.clearScreen("info")
+        logger.error(
+          `\t\x1b[31m\nAssets are not allowed in Dusk logic file.
+File: ${withOptionalExtension} was imported by:\n${importPath.join("\n")}
+          \x1b[0m`
+        )
+
+        //Do not allow to build logic file if assets are imported
+        if (command === "build") {
+          process.exit(1)
+        }
+      }
 
       //Not external, ignore it
       if (path.isAbsolute(name)) {
@@ -102,8 +172,6 @@ export function getDetectExternalImportsPlugin(
 
 These dependencies might contain code that is not supported by Dusk game logic (https://developers.dusk.gg/docs/advanced/server-side-logic).
 You can disable this message by adding the dependency to ignoredDependencies array in Dusk plugin options.
-
-You can also make a pull request to add the dependency to the whitelist at (https://github.com/dusk-gg/dusk/blob/staging/packages/vite-plugin-dusk/src/dependency-whitelist.ts)
 `
       let error = previousError
       if (previousError?.message !== message) {
@@ -153,9 +221,9 @@ You can also make a pull request to add the dependency to the whitelist at (http
       closeBundle: () => {
         listExternalDeps()
       },
-      transform: async (code, idWithExtension) => {
+      transform: async (code, idWithOptionalExtension) => {
         try {
-          const id = normalizeId(withoutExtension(idWithExtension))
+          const id = normalizeId(withoutExtension(idWithOptionalExtension))
 
           const importerDirectory = id.split("/").slice(0, -1).join("/")
 
@@ -164,7 +232,11 @@ You can also make a pull request to add the dependency to the whitelist at (http
           const [imports] = parseImports(code)
 
           const transformedFileNode =
-            treeNodesByFile[id] || logicImportTree.parse({ fileName: id })
+            treeNodesByFile[id] ||
+            logicImportTree.parse({
+              fileName: id,
+              withOptionalExtension: idWithOptionalExtension,
+            })
 
           //Remove it's children, because we are going to re-add them.
           //This will make sure to remove any files that are not imported anymore.
@@ -194,7 +266,10 @@ You can also make a pull request to add the dependency to the whitelist at (http
 
               const node =
                 treeNodesByFile[filePath] ||
-                logicImportTree.parse({ fileName: filePath })
+                logicImportTree.parse({
+                  fileName: filePath,
+                  withOptionalExtension: imp.n,
+                })
 
               treeNodesByFile[filePath] = node
 
@@ -205,7 +280,7 @@ You can also make a pull request to add the dependency to the whitelist at (http
           if (command === "serve") {
             onTransformDone()
           }
-        } catch (e) {
+        } catch {
           //Do nothing for now
         }
       },

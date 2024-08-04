@@ -41,29 +41,28 @@ export function InviteMemberStep({
         inviteGameDevLoading
           ? "waiting"
           : inviteGameDevError
-          ? "error"
-          : isGameDevInvited
-          ? "success"
-          : "userInput"
+            ? "error"
+            : isGameDevInvited
+              ? "success"
+              : "userInput"
       }
       label={
         inviteGameDevLoading
           ? "Inviting new member"
           : inviteGameDevError
-          ? formatApolloError(inviteGameDevError, {
-              "[tango][INVITE_GAME_DEV_FAILED_INVALID_USER_TAG]":
-                "Dusk Tag is invalid. Verify Dusk Tag and try again",
-              "[tango][INVITE_GAME_DEV_FAILED_NO_EMAIL]":
-                "Invitee does not have an email",
-              "[tango][INVITE_GAME_DEV_FAILED_BLOCKED_EMAIL]":
-                "Invitee's email is blocked",
-              "[tango][INVITE_GAME_DEV_FAILED_ALREADY_INVITED]":
-                "Member was already invited",
-              default: `Something went wrong`,
-            })
-          : isGameDevInvited
-          ? "New member invited"
-          : "Enter Dusk Tag (it's on their profile)"
+            ? formatApolloError(inviteGameDevError, {
+                "[tango][INVITE_GAME_DEV_FAILED_INVALID_USER_TAG]":
+                  "Dusk Tag is invalid. Verify Dusk Tag and try again",
+                "[tango][INVITE_GAME_DEV_FAILED_NO_EMAIL]":
+                  "Invitee does not have an email",
+                "[tango][INVITE_GAME_DEV_FAILED_BLOCKED_EMAIL]":
+                  "Invitee's email is blocked",
+                "[tango][INVITE_GAME_DEV_FAILED_ALREADY_INVITED]":
+                  "Member was already invited",
+              })
+            : isGameDevInvited
+              ? "New member invited"
+              : "Enter Dusk Tag (it's on their profile)"
       }
       view={(status) => (
         <Box flexDirection="column">

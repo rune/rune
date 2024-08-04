@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react"
 import { GameState } from "./logic.ts"
 
+import logo from "./shared/logo.svg"
+
+export const image = new Image()
+image.src = logo
+
 function App() {
   const [game, setGame] = useState<GameState>()
   useEffect(() => {

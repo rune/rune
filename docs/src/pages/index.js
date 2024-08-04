@@ -266,15 +266,15 @@ export default function Home() {
 
             <ul>
               <li>
-                <Phone videos={gameVideos.main} />
+                <Phone videos={gameVideos.realTime} />
                 <span className={styles.title}>Real-Time</span>
               </li>
               <li>
-                <Phone videos={gameVideos.main} />
+                <Phone videos={gameVideos.physics} />
                 <span className={styles.title}>Physics</span>
               </li>
               <li>
-                <Phone videos={gameVideos.main} />
+                <Phone videos={gameVideos.graphics} />
                 <span className={styles.title}>Graphics</span>
               </li>
             </ul>

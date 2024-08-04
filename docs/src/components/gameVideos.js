@@ -1,158 +1,340 @@
-export const gameVideos = {
-  main: [
-    {
-      game: {
-        title: "Spooky Cookie",
-        developers: [
-          {
-            name: "alexwoods",
-            avatar:
-              "https://app.dusk.gg/avatar?base=2&hair=29&tilt=1&headgear=55&accessory=64&background=72&expression=18&size=90&isCropped=1&isBackgroundTransparent=0",
-          },
-        ],
-        minPlayers: 1,
-        maxPlayers: 2,
+const CookingFrenzy = {
+  game: {
+    title: "Cooking Frenzy",
+    developers: [
+      {
+        name: "propcat",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/336-333-570-567-110-297-273-348-340-360-357.png?v=3",
       },
-      poster:
-        require("@site/static/img/home/games/thumbnails/SpookyCookie.mp4.png")
-          .default,
-      sources: [
-        {
-          src: require("@site/static/img/home/games/SpookyCookie.mp4.mp4")
-            .default,
-          type: "video/mp4",
-        },
-        {
-          src: require("@site/static/img/home/games/SpookyCookie.webmhd.webm")
-            .default,
-          type: "video/webm",
-        },
-      ],
+    ],
+    maxPlayers: 6,
+    minPlayers: 1,
+  },
+  poster:
+    require("@site/static/img/home/games/thumbnails/CookingFrenzy.mp4.png")
+      .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/CookingFrenzy.mp4.mp4").default,
+      type: "video/mp4",
     },
     {
-      game: {
-        title: "Rock Paper Shoot",
-        developers: [
-          {
-            name: "KIO Studios",
-            avatar:
-              "https://app.dusk.gg/avatar?base=12&hair=24&tilt=1&headgear=60&accessory=62&background=75&expression=17&size=90&isCropped=1&isBackgroundTransparent=0",
-          },
-        ],
-        minPlayers: 2,
-        maxPlayers: 2,
-      },
-      poster:
-        require("@site/static/img/home/games/thumbnails/RockPaperShoot.mp4.png")
-          .default,
-      sources: [
-        {
-          src: require("@site/static/img/home/games/RockPaperShoot.mp4.mp4")
-            .default,
-          type: "video/mp4",
-        },
-        {
-          src: require("@site/static/img/home/games/RockPaperShoot.webmhd.webm")
-            .default,
-          type: "video/webm",
-        },
-      ],
-    },
-    {
-      game: {
-        title: "Tavern Party",
-        developers: [
-          {
-            name: "wawasensei",
-            avatar:
-              "https://app.dusk.gg/avatar?base=10&hair=20&tilt=1&headgear=61&accessory=67&background=71&expression=16&size=90&isCropped=1&isBackgroundTransparent=0",
-          },
-        ],
-        minPlayers: 1,
-        maxPlayers: 4,
-      },
-      poster:
-        require("@site/static/img/home/games/thumbnails/TavernParty.mp4.png")
-          .default,
-      sources: [
-        {
-          src: require("@site/static/img/home/games/TavernParty.mp4.mp4")
-            .default,
-          type: "video/mp4",
-        },
-        {
-          src: require("@site/static/img/home/games/TavernParty.webmhd.webm")
-            .default,
-          type: "video/webm",
-        },
-      ],
-    },
-    {
-      game: {
-        title: "Pipeline Panic",
-        developers: [
-          {
-            name: "json",
-            avatar:
-              "https://app.dusk.gg/avatar?base=5&hair=43&tilt=1&headgear=59&accessory=67&background=95&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
-          },
-          {
-            name: "viturowski",
-            avatar:
-              "https://app.dusk.gg/avatar?base=12&hair=30&tilt=0&headgear=55&accessory=67&background=73&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
-          },
-        ],
-        minPlayers: 1,
-        maxPlayers: 4,
-      },
-      poster:
-        require("@site/static/img/home/games/thumbnails/PipelinePanic.mp4.png")
-          .default,
-      sources: [
-        {
-          src: require("@site/static/img/home/games/PipelinePanic.mp4.mp4")
-            .default,
-          type: "video/mp4",
-        },
-        {
-          src: require("@site/static/img/home/games/PipelinePanic.webmhd.webm")
-            .default,
-          type: "video/webm",
-        },
-      ],
-    },
-    {
-      game: {
-        title: "Neon Snake",
-        developers: [
-          {
-            name: "Helios1138",
-            avatar:
-              "https://app.dusk.gg/avatar?base=2&hair=44&tilt=0&headgear=56&accessory=66&background=72&expression=14&size=90&isCropped=1&isBackgroundTransparent=0",
-          },
-          {
-            name: "shanehelm",
-            avatar:
-              "https://app.dusk.gg/avatar?base=9&hair=49&tilt=1&headgear=76&accessory=66&background=97&expression=15&size=90&isCropped=1&isBackgroundTransparent=0",
-          },
-        ],
-        minPlayers: 1,
-        maxPlayers: 4,
-      },
-      poster:
-        require("@site/static/img/home/games/thumbnails/NeonSnake.mp4.png")
-          .default,
-      sources: [
-        {
-          src: require("@site/static/img/home/games/NeonSnake.mp4.mp4").default,
-          type: "video/mp4",
-        },
-        {
-          src: require("@site/static/img/home/games/NeonSnake.webmhd.webm")
-            .default,
-          type: "video/webm",
-        },
-      ],
+      src: require("@site/static/img/home/games/CookingFrenzy.webmhd.webm")
+        .default,
+      type: "video/webm",
     },
   ],
+}
+const CubeRush = {
+  game: {
+    title: "Cube Rush",
+    developers: [
+      {
+        name: "Gytis",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/107-336-333-351-345-361-357-272-284-580-565.png?v=3",
+      },
+      {
+        name: "milosz",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/108-364-358-351-345-573-564-279-284-336-334.png?v=3",
+      },
+    ],
+    maxPlayers: 6,
+    minPlayers: 1,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/CubeRush.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/CubeRush.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/CubeRush.webmhd.webm").default,
+      type: "video/webm",
+    },
+  ],
+}
+const DinoDash = {
+  game: {
+    title: "Dino Dash",
+    developers: [
+      {
+        name: "cokeandcode",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/106-361-356-272-347-343-336-333-308-570-565-485-477.png?v=3",
+      },
+    ],
+    maxPlayers: 4,
+    minPlayers: 1,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/DinoDash.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/DinoDash.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/DinoDash.webmhd.webm").default,
+      type: "video/webm",
+    },
+  ],
+}
+const FlickFootie = {
+  game: {
+    title: "Flick Footie",
+    developers: [
+      {
+        name: "cokeandcode",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/106-361-356-272-347-343-336-333-308-570-565-485-477.png?v=3",
+      },
+    ],
+    maxPlayers: 2,
+    minPlayers: 1,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/FlickFootie.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/FlickFootie.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/FlickFootie.webmhd.webm")
+        .default,
+      type: "video/webm",
+    },
+  ],
+}
+const MelanciaGame = {
+  game: {
+    title: "Melancia Game",
+    developers: [
+      {
+        name: "jallen",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/336-333-270-579-565-349-346-310-107-361-357.png?v=3",
+      },
+    ],
+    maxPlayers: 4,
+    minPlayers: 1,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/MelanciaGame.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/MelanciaGame.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/MelanciaGame.webmhd.webm")
+        .default,
+      type: "video/webm",
+    },
+  ],
+}
+const NeonSnake = {
+  game: {
+    title: "Neon Snake",
+    developers: [
+      {
+        name: "Gytis",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/107-336-333-351-345-361-357-272-284-580-565.png?v=3",
+      },
+    ],
+    maxPlayers: 4,
+    minPlayers: 2,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/NeonSnake.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/NeonSnake.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/NeonSnake.webmhd.webm").default,
+      type: "video/webm",
+    },
+  ],
+}
+const Pinpoint = {
+  game: {
+    title: "Pinpoint",
+    developers: [
+      {
+        name: "Helios1138",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/107-272-355-344-336-333-360-356-580-564-313.png?v=3",
+      },
+    ],
+    maxPlayers: 6,
+    minPlayers: 1,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/Pinpoint.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/Pinpoint.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/Pinpoint.webmhd.webm").default,
+      type: "video/webm",
+    },
+  ],
+}
+const PipelinePanic = {
+  game: {
+    title: "Pipeline Panic",
+    developers: [
+      {
+        name: "GustavoVituri",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/107-272-311-336-334-352-339-360-356-575-564.png?v=3",
+      },
+      {
+        name: "json",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/107-336-333-365-357-272-575-565-485-477-313-350-346.png?v=3",
+      },
+    ],
+    maxPlayers: 4,
+    minPlayers: 1,
+  },
+  poster:
+    require("@site/static/img/home/games/thumbnails/PipelinePanic.mp4.png")
+      .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/PipelinePanic.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/PipelinePanic.webmhd.webm")
+        .default,
+      type: "video/webm",
+    },
+  ],
+}
+const RockPaperShoot = {
+  game: {
+    title: "Rock Paper Shoot",
+    developers: [
+      {
+        name: "KIO Studios",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/103-336-335-359-356-350-339-272-302.png?v=3",
+      },
+    ],
+    maxPlayers: 2,
+    minPlayers: 2,
+  },
+  poster:
+    require("@site/static/img/home/games/thumbnails/RockPaperShoot.mp4.png")
+      .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/RockPaperShoot.mp4.mp4")
+        .default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/RockPaperShoot.webmhd.webm")
+        .default,
+      type: "video/webm",
+    },
+  ],
+}
+const ScorchedTurf = {
+  game: {
+    title: "Scorched Turf",
+    developers: [
+      {
+        name: "cokeandcode",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/106-361-356-272-347-343-336-333-308-570-565-485-477.png?v=3",
+      },
+    ],
+    maxPlayers: 6,
+    minPlayers: 1,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/ScorchedTurf.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/ScorchedTurf.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/ScorchedTurf.webmhd.webm")
+        .default,
+      type: "video/webm",
+    },
+  ],
+}
+const SpookyCookie = {
+  game: {
+    title: "Spooky Cookie",
+    developers: [
+      {
+        name: "alexwoods",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/106-336-335-359-356-350-339-272-303.png?v=3",
+      },
+    ],
+    maxPlayers: 2,
+    minPlayers: 1,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/SpookyCookie.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/SpookyCookie.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/SpookyCookie.webmhd.webm")
+        .default,
+      type: "video/webm",
+    },
+  ],
+}
+const TavernParty = {
+  game: {
+    title: "Tavern Party",
+    developers: [
+      {
+        name: "wawasensei",
+        avatar:
+          "https://jiffy-production.rune.ai/avatar/103-336-334-359-356-350-339-272-297.png?v=3",
+      },
+    ],
+    maxPlayers: 4,
+    minPlayers: 1,
+  },
+  poster: require("@site/static/img/home/games/thumbnails/TavernParty.mp4.png")
+    .default,
+  sources: [
+    {
+      src: require("@site/static/img/home/games/TavernParty.mp4.mp4").default,
+      type: "video/mp4",
+    },
+    {
+      src: require("@site/static/img/home/games/TavernParty.webmhd.webm")
+        .default,
+      type: "video/webm",
+    },
+  ],
+}
+export const gameVideos = {
+  main: [SpookyCookie, RockPaperShoot, TavernParty, PipelinePanic, NeonSnake],
+  realTime: [NeonSnake, DinoDash, CubeRush],
+  physics: [ScorchedTurf, MelanciaGame, FlickFootie],
+  graphics: [CookingFrenzy, Pinpoint, TavernParty],
 }

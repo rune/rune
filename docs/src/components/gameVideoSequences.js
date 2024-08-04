@@ -332,7 +332,7 @@ const TavernParty = {
     },
   ],
 }
-export const gameVideos = {
+export const gameVideoSequences = {
   main: [SpookyCookie, RockPaperShoot, TavernParty, PipelinePanic, NeonSnake],
   realTime: [NeonSnake, DinoDash, CubeRush],
   physics: [ScorchedTurf, MelanciaGame, FlickFootie],

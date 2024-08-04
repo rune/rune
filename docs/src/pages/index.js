@@ -10,7 +10,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 import Layout from "@theme/Layout"
 import { HomeGameDemo } from "../components/HomeGameDemo/HomeGameDemo"
 import demoCode from "./demoCode.json"
-import { gameVideos } from "../components/gameVideos"
+import { gameVideoSequences } from "../components/gameVideoSequences"
 
 const features = [
   {
@@ -57,14 +57,14 @@ const features = [
 
 const scrollDuration = 600
 
-function Phone({ videos }) {
+function Phone({ videoSequence }) {
   const [cursor, setCursor] = useState(0)
 
-  const currentVideoIndex = cursor % videos.length
-  const nextVideoIndex = (cursor + 1) % videos.length
+  const currentVideoIndex = cursor % videoSequence.length
+  const nextVideoIndex = (cursor + 1) % videoSequence.length
 
-  const currentVideo = videos[currentVideoIndex]
-  const nextVideo = videos[nextVideoIndex]
+  const currentVideo = videoSequence[currentVideoIndex]
+  const nextVideo = videoSequence[nextVideoIndex]
 
   const currentVideoRef = useRef()
   const nextVideoRef = useRef()
@@ -163,7 +163,7 @@ export default function Home() {
       <div className={styles.home}>
         <div className={styles.content}>
           <div className={styles.hero1}>
-            <Phone videos={gameVideos.main} />
+            <Phone videoSequence={gameVideoSequences.main} />
 
             <h2>build a multiplayer game played by millions</h2>
             <p>
@@ -266,15 +266,15 @@ export default function Home() {
 
             <ul>
               <li>
-                <Phone videos={gameVideos.realTime} />
+                <Phone videoSequence={gameVideoSequences.realTime} />
                 <span className={styles.title}>Real-Time</span>
               </li>
               <li>
-                <Phone videos={gameVideos.physics} />
+                <Phone videoSequence={gameVideoSequences.physics} />
                 <span className={styles.title}>Physics</span>
               </li>
               <li>
-                <Phone videos={gameVideos.graphics} />
+                <Phone videoSequence={gameVideoSequences.graphics} />
                 <span className={styles.title}>Graphics</span>
               </li>
             </ul>
@@ -302,5 +302,5 @@ export default function Home() {
 }
 
 Phone.propTypes = {
-  videos: PropTypes.array.isRequired,
+  videoSequence: PropTypes.array.isRequired,
 }

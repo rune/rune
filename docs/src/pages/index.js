@@ -258,10 +258,10 @@ export default function Home() {
           <div className={styles.makeAnyKindOfGame}>
             <h3>make any kind of game</h3>
             <p>
-              Rune has built-in real-time multiplayer and lets you use the
+              Dusk has built-in real-time multiplayer and lets you use the
               flexibility of JS + WASM. You can make games with fun physics,
               stunning graphics, and complex game logic. Here’s a few of the
-              many games live on Rune.
+              many games live on Dusk.
             </p>
 
             <ul>

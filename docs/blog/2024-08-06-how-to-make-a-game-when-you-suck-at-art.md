@@ -94,7 +94,7 @@ Some of my favorites from itch are Minifantasy (built an MMORPG from this one), 
 
 ## CraftPix
 
-[CraftPix](https://craftpix.net/)) is a great collection of free and low cost art. The real wins here is the licensing is very clear and the assets are grouped together into consistent art styles. Well worth a look.
+[CraftPix](https://craftpix.net/) is a great collection of free and low cost art. The real wins here is the licensing is very clear and the assets are grouped together into consistent art styles. Well worth a look.
 
 ![](/img/blog/callouts/assets/craftpix.png)
 

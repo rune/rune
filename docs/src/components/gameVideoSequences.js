@@ -301,7 +301,7 @@ const TavernParty = {
       {
         name: "wawasensei",
         avatar:
-          "https://jiffy-production.rune.ai/avatar/103-336-334-359-356-350-339-272-297.png?v=3",
+          "https://jiffy-production.rune.ai/avatar/112-270-283-336-333-662-345-364-357-578-565.png?v=3",
       },
     ],
     maxPlayers: 4,

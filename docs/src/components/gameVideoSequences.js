@@ -11,17 +11,15 @@ const CookingFrenzy = {
     maxPlayers: 6,
     minPlayers: 1,
   },
-  poster:
-    require("@site/static/img/home/games/thumbnails/CookingFrenzy.mp4.png")
-      .default,
+  poster: require("@site/static/img/home/games/thumbnails/CookingFrenzy.png")
+    .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/CookingFrenzy.mp4.mp4").default,
+      src: require("@site/static/img/home/games/CookingFrenzy.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/CookingFrenzy.webmhd.webm")
-        .default,
+      src: require("@site/static/img/home/games/CookingFrenzy.webm").default,
       type: "video/webm",
     },
   ],
@@ -44,15 +42,15 @@ const CubeRush = {
     maxPlayers: 6,
     minPlayers: 1,
   },
-  poster: require("@site/static/img/home/games/thumbnails/CubeRush.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/CubeRush.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/CubeRush.mp4.mp4").default,
+      src: require("@site/static/img/home/games/CubeRush.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/CubeRush.webmhd.webm").default,
+      src: require("@site/static/img/home/games/CubeRush.webm").default,
       type: "video/webm",
     },
   ],
@@ -70,15 +68,15 @@ const DinoDash = {
     maxPlayers: 4,
     minPlayers: 1,
   },
-  poster: require("@site/static/img/home/games/thumbnails/DinoDash.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/DinoDash.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/DinoDash.mp4.mp4").default,
+      src: require("@site/static/img/home/games/DinoDash.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/DinoDash.webmhd.webm").default,
+      src: require("@site/static/img/home/games/DinoDash.webm").default,
       type: "video/webm",
     },
   ],
@@ -96,16 +94,15 @@ const FlickFootie = {
     maxPlayers: 2,
     minPlayers: 1,
   },
-  poster: require("@site/static/img/home/games/thumbnails/FlickFootie.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/FlickFootie.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/FlickFootie.mp4.mp4").default,
+      src: require("@site/static/img/home/games/FlickFootie.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/FlickFootie.webmhd.webm")
-        .default,
+      src: require("@site/static/img/home/games/FlickFootie.webm").default,
       type: "video/webm",
     },
   ],
@@ -123,16 +120,15 @@ const MelanciaGame = {
     maxPlayers: 4,
     minPlayers: 1,
   },
-  poster: require("@site/static/img/home/games/thumbnails/MelanciaGame.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/MelanciaGame.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/MelanciaGame.mp4.mp4").default,
+      src: require("@site/static/img/home/games/MelanciaGame.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/MelanciaGame.webmhd.webm")
-        .default,
+      src: require("@site/static/img/home/games/MelanciaGame.webm").default,
       type: "video/webm",
     },
   ],
@@ -150,15 +146,15 @@ const NeonSnake = {
     maxPlayers: 4,
     minPlayers: 2,
   },
-  poster: require("@site/static/img/home/games/thumbnails/NeonSnake.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/NeonSnake.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/NeonSnake.mp4.mp4").default,
+      src: require("@site/static/img/home/games/NeonSnake.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/NeonSnake.webmhd.webm").default,
+      src: require("@site/static/img/home/games/NeonSnake.webm").default,
       type: "video/webm",
     },
   ],
@@ -176,15 +172,15 @@ const Pinpoint = {
     maxPlayers: 6,
     minPlayers: 1,
   },
-  poster: require("@site/static/img/home/games/thumbnails/Pinpoint.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/Pinpoint.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/Pinpoint.mp4.mp4").default,
+      src: require("@site/static/img/home/games/Pinpoint.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/Pinpoint.webmhd.webm").default,
+      src: require("@site/static/img/home/games/Pinpoint.webm").default,
       type: "video/webm",
     },
   ],
@@ -207,17 +203,15 @@ const PipelinePanic = {
     maxPlayers: 4,
     minPlayers: 1,
   },
-  poster:
-    require("@site/static/img/home/games/thumbnails/PipelinePanic.mp4.png")
-      .default,
+  poster: require("@site/static/img/home/games/thumbnails/PipelinePanic.png")
+    .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/PipelinePanic.mp4.mp4").default,
+      src: require("@site/static/img/home/games/PipelinePanic.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/PipelinePanic.webmhd.webm")
-        .default,
+      src: require("@site/static/img/home/games/PipelinePanic.webm").default,
       type: "video/webm",
     },
   ],
@@ -235,18 +229,15 @@ const RockPaperShoot = {
     maxPlayers: 2,
     minPlayers: 2,
   },
-  poster:
-    require("@site/static/img/home/games/thumbnails/RockPaperShoot.mp4.png")
-      .default,
+  poster: require("@site/static/img/home/games/thumbnails/RockPaperShoot.png")
+    .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/RockPaperShoot.mp4.mp4")
-        .default,
+      src: require("@site/static/img/home/games/RockPaperShoot.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/RockPaperShoot.webmhd.webm")
-        .default,
+      src: require("@site/static/img/home/games/RockPaperShoot.webm").default,
       type: "video/webm",
     },
   ],
@@ -264,16 +255,15 @@ const ScorchedTurf = {
     maxPlayers: 6,
     minPlayers: 1,
   },
-  poster: require("@site/static/img/home/games/thumbnails/ScorchedTurf.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/ScorchedTurf.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/ScorchedTurf.mp4.mp4").default,
+      src: require("@site/static/img/home/games/ScorchedTurf.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/ScorchedTurf.webmhd.webm")
-        .default,
+      src: require("@site/static/img/home/games/ScorchedTurf.webm").default,
       type: "video/webm",
     },
   ],
@@ -291,16 +281,15 @@ const SpookyCookie = {
     maxPlayers: 2,
     minPlayers: 1,
   },
-  poster: require("@site/static/img/home/games/thumbnails/SpookyCookie.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/SpookyCookie.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/SpookyCookie.mp4.mp4").default,
+      src: require("@site/static/img/home/games/SpookyCookie.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/SpookyCookie.webmhd.webm")
-        .default,
+      src: require("@site/static/img/home/games/SpookyCookie.webm").default,
       type: "video/webm",
     },
   ],
@@ -318,20 +307,20 @@ const TavernParty = {
     maxPlayers: 4,
     minPlayers: 1,
   },
-  poster: require("@site/static/img/home/games/thumbnails/TavernParty.mp4.png")
+  poster: require("@site/static/img/home/games/thumbnails/TavernParty.png")
     .default,
   sources: [
     {
-      src: require("@site/static/img/home/games/TavernParty.mp4.mp4").default,
+      src: require("@site/static/img/home/games/TavernParty.mp4").default,
       type: "video/mp4",
     },
     {
-      src: require("@site/static/img/home/games/TavernParty.webmhd.webm")
-        .default,
+      src: require("@site/static/img/home/games/TavernParty.webm").default,
       type: "video/webm",
     },
   ],
 }
+
 export const gameVideoSequences = {
   main: [SpookyCookie, RockPaperShoot, TavernParty, PipelinePanic, NeonSnake],
   realTime: [NeonSnake, DinoDash, CubeRush],

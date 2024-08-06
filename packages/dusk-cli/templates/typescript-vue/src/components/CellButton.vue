@@ -11,5 +11,8 @@ function claimCell() {
 </script>
 
 <template>
-  <button :class="[`player${playerIndex}`, dim ? 'dimmed' : '']" @click="claimCell"></button>
+  <button
+    :class="[`player${playerIndex}`, dim ? 'dimmed' : '']"
+    @click="claimCell"
+  />
 </template>

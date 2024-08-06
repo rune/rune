@@ -1,4 +1,4 @@
-import type { PlayerId, DuskClient } from 'dusk-games-sdk/multiplayer'
+import type { PlayerId, DuskClient } from "dusk-games-sdk/multiplayer"
 
 export type Cells = (PlayerId | null)[]
 export interface GameState {
@@ -27,8 +27,10 @@ function findWinningCombo(cells: Cells) {
       [1, 4, 7],
       [2, 5, 8],
       [0, 4, 8],
-      [2, 4, 6]
-    ].find((combo) => combo.every((i) => cells[i] && cells[i] === cells[combo[0]])) || null
+      [2, 4, 6],
+    ].find((combo) =>
+      combo.every((i) => cells[i] && cells[i] === cells[combo[0]])
+    ) || null
   )
 }
 
@@ -39,11 +41,14 @@ Dusk.initLogic({
     cells: new Array(9).fill(null),
     winCombo: null,
     lastMovePlayerId: null,
-    playerIds: allPlayerIds
+    playerIds: allPlayerIds,
   }),
   actions: {
     claimCell: (cellIndex, { game, playerId, allPlayerIds }) => {
-      if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
+      if (
+        game.cells[cellIndex] !== null ||
+        playerId === game.lastMovePlayerId
+      ) {
         throw Dusk.invalidAction()
       }
 
@@ -56,9 +61,9 @@ Dusk.initLogic({
 
         Dusk.gameOver({
           players: {
-            [player1]: game.lastMovePlayerId === player1 ? 'WON' : 'LOST',
-            [player2]: game.lastMovePlayerId === player2 ? 'WON' : 'LOST'
-          }
+            [player1]: game.lastMovePlayerId === player1 ? "WON" : "LOST",
+            [player2]: game.lastMovePlayerId === player2 ? "WON" : "LOST",
+          },
         })
       }
 
@@ -67,11 +72,11 @@ Dusk.initLogic({
       if (!game.freeCells) {
         Dusk.gameOver({
           players: {
-            [game.playerIds[0]]: 'LOST',
-            [game.playerIds[1]]: 'LOST'
-          }
+            [game.playerIds[0]]: "LOST",
+            [game.playerIds[1]]: "LOST",
+          },
         })
       }
-    }
-  }
+    },
+  },
 })

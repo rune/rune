@@ -9,6 +9,7 @@ import importPlugin from "eslint-plugin-import"
 import react from "eslint-plugin-react"
 import reactHooks from "eslint-plugin-react-hooks"
 import nodePlugin from "eslint-plugin-n"
+import pluginVue from "eslint-plugin-vue"
 
 import fs from "fs"
 
@@ -53,7 +54,6 @@ export default [
     ],
   },
   js.configs.recommended,
-  prettierConfig,
   ...duskPlugin.configs.recommended,
   //Only run it on ts files
   ...tseslint.configs.recommended.map((config) => ({
@@ -199,6 +199,17 @@ export default [
       ],
     },
   },
+  ...pluginVue.configs["flat/recommended"],
+  {
+    files: ["*.vue", "**/*.vue"],
+    languageOptions: {
+      parserOptions: {
+        parser: tseslint.parser,
+      },
+    },
+  },
+
+  prettierConfig,
 
   ...(await getConfigs("examples")),
   ...(await getConfigs("tech-demos")),

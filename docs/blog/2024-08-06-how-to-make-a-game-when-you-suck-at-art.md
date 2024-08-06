@@ -68,7 +68,7 @@ https://kaylousberg.com/game-assets/
 
 ## Quaternius
 
-[Quaternius](https://quaternius.com/) was a new find for me thanks to the Dusk game Cooking Frenzy. Really great low-poly 3D art and game ready.
+[Quaternius](https://quaternius.com/) was a new find for me thanks to the Dusk game [Cooking Frenzy](https://join.dusk.gg/game/s9szCEsD-1Q). Really great low-poly 3D art and game ready.
 
 ![](/img/blog/callouts/assets/quat.png)
 

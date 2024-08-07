@@ -21,6 +21,8 @@ At the core of Dusk, we have games being enjoyed by millions of players. I’m g
 
 ![](/img/blog/callouts/melancia.png)
 
+[Play Melancia Now](https://join.dusk.gg/game/bRcvMKaL--)
+
 ## What’s the Game?
 
 Deceptively simple, the game features a Tetris-style well in which the player drops brightly colored fruits. When two fruits of the same type collide, they combine to make the next bigger fruit. The aim, as the name of the game may give away, is to make melons by combining all the other fruits. Other players are also playing in their own wells, trying to get to the melons before you.

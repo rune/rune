@@ -1,5 +1,5 @@
 ---
-title: Game Spotlight Melancia
+title: 'Game Spotlight: Melancia'
 description: Spotlight on the Dusk based game, Melancia
 slug: game-spotlight-melancia
 tags: [Release Notes]
@@ -13,8 +13,8 @@ authors:
 ---
 
 <head>
-  <title>Game Spotlight Melancia</title>
-  <meta property="og:title" content="Game Spotlight Melancia"/>
+  <title>Game Spotlight: Melancia</title>
+  <meta property="og:title" content="Game Spotlight: Melancia"/>
 </head>
 
 At the core of Dusk, we have games being enjoyed by millions of players. I’m glad to take the time to celebrate one of them, Melancia, that has been doing very well on the platform. This wonderful game was made by [jallen](https://x.com/jallen_dev).

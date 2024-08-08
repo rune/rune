@@ -5,10 +5,10 @@ slug: release-notes-july-16
 tags: [Release Notes]
 image: /img/blog/social-previews/dusk.png
 authors:
-- name: Kevin Glass 
-  title: Founding Engineer at Dusk  
-  url: https://x.com/cokeandcode
-  image_url: /img/blog/people/kevin-glass.jpg
+- name: Amani Albrecht
+  title: Chief of Staff at Dusk  
+  url: https://www.linkedin.com/in/amanialbrecht
+  image_url: /img/blog/people/amani-albrecht.png
   hide_table_of_contents: true
 ---
 

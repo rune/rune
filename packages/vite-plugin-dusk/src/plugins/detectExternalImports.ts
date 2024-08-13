@@ -143,7 +143,7 @@ File: ${withOptionalExtension} was imported by:\n${importPath.join("\n")}
 
       const isInWhitelist =
         DEPENDENCY_WHITELIST.includes(name) ||
-        options.ignoredDependencies?.includes(name)
+        options.ignoredDependencies?.some(ignoredDependency => name.startsWith(ignoredDependency))
 
       if (skipAllowedDependencies && isInWhitelist) {
         return

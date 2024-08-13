@@ -113,6 +113,25 @@ describe("external dependencies", () => {
     expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
   })
 
+  it("should ignore dependencies passed in plugin options, matching only the start of the import", async () => {
+    const logger = createLogger()
+
+    const output = await buildFixture("external-basic", logger, {
+      ignoredDependencies: ["math-"],
+    })
+
+    expect(logger.error).not.toHaveBeenCalledWith(
+      expect.stringContaining("math-sum")
+    )
+    const chunks = output.filter(
+      (chunk) => chunk.type === "chunk"
+    ) as OutputChunk[]
+    const logicChunk = chunks.find((chunk) => chunk.fileName === "logic.js")
+    expect(logicChunk).toBeTruthy()
+
+    expect(logicChunk?.code).toContain("/*! Imported dependencies: math-sum*/")
+  })
+
   it("should allow relative imports", async () => {
     const logger = createLogger()
 

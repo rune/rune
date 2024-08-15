@@ -90,7 +90,7 @@ describe("external dependencies", () => {
     expect(logicChunk).toBeTruthy()
 
     expect(logicChunk?.code).toContain(
-      "/*! Imported dependencies: sudoku-gen*/"
+      "/*! Imported dependencies: sudoku-gen, sudoku-gen/dist/index*/"
     )
   })
 

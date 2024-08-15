@@ -141,9 +141,15 @@ File: ${withOptionalExtension} was imported by:\n${importPath.join("\n")}
         return
       }
 
-      const isInWhitelist =
-        DEPENDENCY_WHITELIST.includes(name) ||
-        options.ignoredDependencies?.includes(name)
+      const ignoredDependencies = [
+        ...DEPENDENCY_WHITELIST,
+        ...(options.ignoredDependencies || []),
+      ]
+
+      const isInWhitelist = ignoredDependencies.some(
+        (ignoredDependency) =>
+          name === ignoredDependency || name.startsWith(ignoredDependency + "/")
+      )
 
       if (skipAllowedDependencies && isInWhitelist) {
         return

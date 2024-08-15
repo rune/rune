@@ -19,7 +19,7 @@ You will earn money based on:
 - players who share your game externally
 - time players spent actively playing your game
 
-The specific amount of money earned for each of these metrics depends on the player regions (see the next section below). With payouts based on these three metrics, the creator fund supports great games that players love to keep coming back to and want to share with their friends!
+The specific amount of money earned for each of these metrics depends on the player regions (see the next section below). With payouts based on these three metrics, the creator fund supports great games that players love coming back to and want to share with their friends!
 
 ## Player Regions
 

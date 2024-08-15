@@ -11,7 +11,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.21.13",
+    "dusk-games-sdk": "^4.21.15",
     "vue": "^3.4.29"
   },
   "devDependencies": {

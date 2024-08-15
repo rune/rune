@@ -33,7 +33,7 @@ Of course, to make the most money you should translate your games into the most 
 
 In September, we will release our new game developer dashboard, where you can see stats for all your games. The dashboard also has detailed info on how much each of your games has earned and the calculations behind those earnings.
 
-When you want to cash out your earnings, you submit a request on the dashboard. We review requests within 10 business days and send a payment to your PayPal account.
+When you want to cash out your earnings, you submit a request on the dashboard. We review requests within 5 business days and send a payment to your PayPal account.
 
 ## Actively Playing
 

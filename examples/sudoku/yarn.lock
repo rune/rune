@@ -3989,10 +3989,10 @@ duplexer@^0.1.2:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
-dusk-games-sdk@^4.21.13:
-  version "4.21.13"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.21.13.tgz#e977427165ea2a103137762e52453b0c712d4683"
-  integrity sha512-w5ZVi8+NlVCCp/co+IjTbBwX8Hjfj2hLbhzDjJkMmjBmEs0zCVdn0n21jnCiDVeLW40XjL1NaMD6GY9S2Yz+Qg==
+dusk-games-sdk@^4.21.15:
+  version "4.21.15"
+  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.21.15.tgz#5024edccd206b47f72fe60d4dac4e9cd3ad0ae09"
+  integrity sha512-RL57QWhv90UaxLMBdbNulbKa888MZxtyQkGeF6yCC+qV5AeP08zjC1uf+Auseqduz8rLhkvOAfyQbNn4rJYNOA==
   dependencies:
     "@eslint/eslintrc" "^3.1.0"
     "@eslint/js" "^9.7.0"

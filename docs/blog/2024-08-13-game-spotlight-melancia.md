@@ -2,7 +2,7 @@
 title: 'Game Spotlight: Melancia'
 description: Spotlight on the Dusk based game, Melancia
 slug: game-spotlight-melancia
-tags: [Release Notes]
+tags: [Game Spotlight]
 image: /img/blog/social-previews/game-spotlight-melancia.png
 authors:
 - name: Kevin Glass 

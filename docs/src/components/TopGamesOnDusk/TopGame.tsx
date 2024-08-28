@@ -6,14 +6,14 @@ type Props = {
   title: string
   weeklyPlayTimePct: number
   previewImgUrl: string
-  authors: string[]
+  developers: { name: string }[]
   place: 1 | 2 | 3
 }
 export function TopGame({
   title,
   weeklyPlayTimePct,
   previewImgUrl,
-  authors,
+  developers,
   place,
 }: Props) {
   return (
@@ -25,8 +25,8 @@ export function TopGame({
       <p className={styles.stat}>
         {Math.round(weeklyPlayTimePct * 100)}% playtime
       </p>
-      <div className={styles.authors}>
-        {authors.map((author) => `@${author}`).join(", ")}
+      <div className={styles.developers}>
+        {developers.map((d) => `@${d.name}`).join(", ")}
       </div>
     </li>
   )

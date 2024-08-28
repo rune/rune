@@ -4,12 +4,12 @@ import styles from "./styles.module.scss"
 import { OtherGame } from "./OtherGame"
 
 export function TopGamesOnDusk() {
-  const [games, setGames] = useState<Game[] | undefined>()
+  const [gameRes, setGameRes] = useState<GameRes | undefined>()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     getGames()
-      .then(setGames)
+      .then(setGameRes)
       .finally(() => setLoading(false))
   }, [])
 
@@ -17,22 +17,22 @@ export function TopGamesOnDusk() {
     return null
   }
 
-  if (!games) {
+  if (!gameRes) {
     return <p>Failed to fetch games. Try again!</p>
   }
 
   return (
     <div className={styles.container}>
       <ol className={styles.topGames}>
-        <TopGame {...games[0]} place={1} />
-        <TopGame {...games[1]} place={2} />
-        <TopGame {...games[2]} place={3} />
+        <TopGame {...gameRes.games[0]} place={1} />
+        <TopGame {...gameRes.games[1]} place={2} />
+        <TopGame {...gameRes.games[2]} place={3} />
       </ol>
       <p className={styles.info}>
         Based on the percentage of the last week's playtime.
       </p>
       <ol className={styles.otherGames} start={3}>
-        {games.slice(3).map((game, idx) => {
+        {gameRes.games.slice(3).map((game, idx) => {
           return <OtherGame key={game.title} {...game} />
         })}
       </ol>
@@ -43,8 +43,13 @@ export function TopGamesOnDusk() {
 type Game = {
   title: string
   previewImgUrl: string
-  authors: string[]
+  developers: { name: string }[]
   weeklyPlayTimePct: number
+}
+
+type GameRes = {
+  dateStart: Date
+  games: Game[]
 }
 
 async function getGames() {
@@ -57,5 +62,8 @@ async function getGames() {
     throw new Error("Failed to fetch top games")
   }
 
-  return json.games as Game[]
+  return {
+    ...json,
+    dateStart: new Date(json.dateStart),
+  } as GameRes
 }

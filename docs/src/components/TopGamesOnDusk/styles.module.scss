@@ -1,0 +1,197 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.topGames {
+  /* Reset */
+  > li + li {
+    margin: 0;
+  }
+  margin: 0;
+  list-style: none;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 23px;
+  margin-top: 200px;
+}
+
+.topGame {
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(
+    185.35deg,
+    #2a0057 10.53%,
+    rgba(88, 0, 154, 0) 89.41%
+  );
+  padding: 24px 8px 40px 8px;
+
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -33px;
+    left: 0;
+    right: 0;
+    height: 33px;
+    background: url("@site/static/img/home/topGameTopBar.svg");
+    background-size: 100% 100%;
+  }
+
+  .title {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    text-align: center;
+
+    margin: 0;
+  }
+
+  .previewImg {
+    margin: 0 auto;
+
+    position: absolute;
+    top: -145px;
+    width: 127px;
+    height: 127px;
+    left: 0;
+    right: 0;
+
+    border-radius: 15.32px;
+    transform: rotate(-3.4deg);
+    object-fit: cover;
+    object-position: center 20%;
+  }
+
+  .stat {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+    text-align: center;
+
+    background: linear-gradient(180deg, #35f3fa 0%, #0085ff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.info {
+  margin: 0;
+
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 22.1px;
+
+  color: #9263ff;
+  background: #2e0159;
+  border-radius: 8px;
+
+  padding: 12px 24px;
+  margin-top: 8px;
+  display: inline-block;
+  align-self: center;
+}
+
+.otherGames {
+  /* Reset */
+  > li + li {
+    margin: 0;
+  }
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 40px;
+  counter-reset: other-games 3;
+}
+
+.otherGame {
+  margin: 0;
+
+  display: grid;
+  grid-template-columns: 2fr 3fr 12fr 8fr 2fr;
+  gap: 32px;
+  align-items: center;
+
+  position: relative;
+  padding: 0 42px;
+  height: 88px;
+
+  background: linear-gradient(178deg, #2a0057 2.86%, #58009a 71.35%);
+  border-radius: 8px;
+
+  counter-increment: other-games;
+
+  &::before {
+    order: 1;
+    content: counter(other-games) ".";
+    position: relative;
+    justify-self: self-start;
+
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  .title {
+    margin: 0;
+
+    order: 3;
+    margin-left: 10px;
+
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+
+    color: #eac6ff;
+  }
+
+  .previewImg {
+    order: 2;
+
+    // Devide dimensions by 4 and then scale it up by 4
+    width: 26px;
+    height: 26px;
+
+    border-radius: 4px;
+    transform: rotate(-3.4deg) scale(4);
+    object-fit: cover;
+    object-position: center 20%;
+    position: relative;
+    justify-self: center;
+  }
+
+  .authors {
+    order: 4;
+  }
+
+  .stat {
+    margin: 0;
+
+    order: 5;
+
+    justify-self: self-end;
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+
+    background: linear-gradient(180deg, #35f3fa 0%, #0085ff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

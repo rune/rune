@@ -1,6 +1,13 @@
 .container {
+  /* Remove effect of h1 */
+  margin-top: -14px;
+
   display: flex;
   flex-direction: column;
+
+  > h2 {
+    margin: 0;
+  }
 }
 
 .topGames {
@@ -15,7 +22,7 @@
   flex-direction: row;
   align-items: flex-end;
   gap: 23px;
-  margin-top: 200px;
+  margin-top: 215px;
 }
 
 .topGame {

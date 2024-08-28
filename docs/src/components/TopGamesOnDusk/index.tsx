@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { TopGame } from "./TopGame"
 import styles from "./styles.module.scss"
 import { OtherGame } from "./OtherGame"
@@ -13,6 +13,21 @@ export function TopGamesOnDusk() {
       .finally(() => setLoading(false))
   }, [])
 
+  const dateStartFormatted = useMemo(() => {
+    if (!gameRes?.dateStart) return null
+
+    const locale = "en"
+    const day = gameRes.dateStart.toLocaleDateString(locale, { day: "numeric" })
+    const month = gameRes.dateStart.toLocaleDateString(locale, {
+      month: "long",
+    })
+    const year = gameRes.dateStart.toLocaleDateString(locale, {
+      year: "numeric",
+    })
+
+    return `${month} ${day}, ${year}`
+  }, [gameRes?.dateStart])
+
   if (loading) {
     return null
   }
@@ -23,6 +38,7 @@ export function TopGamesOnDusk() {
 
   return (
     <div className={styles.container}>
+      <h2>Week of {dateStartFormatted}</h2>
       <ol className={styles.topGames}>
         <TopGame {...gameRes.games[0]} place={1} />
         <TopGame {...gameRes.games[1]} place={2} />

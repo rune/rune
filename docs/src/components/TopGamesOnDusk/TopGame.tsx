@@ -23,9 +23,7 @@ export function TopGame({
       <div className={styles.previewImg}>
         <img src={previewImgUrl} alt={title} />
       </div>
-      <p className={styles.stat}>
-        {Math.round(weeklyPlayTimePct * 100)}% playtime
-      </p>
+      <p className={styles.stat}>{Math.round(weeklyPlayTimePct * 100)}%</p>
       <Developers developers={developers} inlined={false} />
     </li>
   )

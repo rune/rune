@@ -7,7 +7,12 @@ type Props = {
   previewImgUrl: string
   authors: string[]
 }
-export function OtherGame({ title, weeklyPlayTimePct, previewImgUrl }: Props) {
+export function OtherGame({
+  title,
+  weeklyPlayTimePct,
+  previewImgUrl,
+  authors,
+}: Props) {
   return (
     <li className={styles.otherGame}>
       <h3 className={styles.title}>{title}</h3>
@@ -17,7 +22,9 @@ export function OtherGame({ title, weeklyPlayTimePct, previewImgUrl }: Props) {
         alt={`Preview of ${title}`}
       />
       <p className={styles.stat}>{Math.round(weeklyPlayTimePct * 100 * 2)}%</p>
-      <div className={styles.authors}>TODO: Avatars</div>
+      <div className={styles.authors}>
+        {authors.map((author) => `@${author}`).join(", ")}
+      </div>
     </li>
   )
 }

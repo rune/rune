@@ -13,6 +13,7 @@ export function TopGame({
   title,
   weeklyPlayTimePct,
   previewImgUrl,
+  authors,
   place,
 }: Props) {
   return (
@@ -26,7 +27,9 @@ export function TopGame({
       <p className={styles.stat}>
         {Math.round(weeklyPlayTimePct * 100)}% playtime
       </p>
-      <div className={styles.authors}>TODO: Avatars</div>
+      <div className={styles.authors}>
+        {authors.map((author) => `@${author}`).join(", ")}
+      </div>
     </li>
   )
 }

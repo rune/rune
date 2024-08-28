@@ -8,7 +8,7 @@ export function TopGamesOnDusk() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getGames()
+    getGameRes()
       .then(setGameRes)
       .finally(() => setLoading(false))
   }, [])
@@ -59,8 +59,8 @@ export function TopGamesOnDusk() {
 type Game = {
   title: string
   previewImgUrl: string
-  developers: { name: string; avatarUrl: string }[]
   weeklyPlayTimePct: number
+  developers: { name: string; avatarUrl: string }[]
 }
 
 type GameRes = {
@@ -68,7 +68,7 @@ type GameRes = {
   games: Game[]
 }
 
-async function getGames() {
+async function getGameRes() {
   const res = await fetch(
     "https://tango-production.rune.ai/v1/public/games-top-10"
   )

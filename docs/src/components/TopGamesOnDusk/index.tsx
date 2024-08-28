@@ -24,9 +24,9 @@ export function TopGamesOnDusk() {
   return (
     <div className={styles.container}>
       <ol className={styles.topGames}>
-        <TopGame {...games[1]} scale={0.66} />
-        <TopGame {...games[0]} scale={1} />
-        <TopGame {...games[2]} scale={0.5} />
+        <TopGame {...games[0]} place={1} />
+        <TopGame {...games[1]} place={2} />
+        <TopGame {...games[2]} place={3} />
       </ol>
       <p className={styles.info}>
         Based on the percentage of the last week's playtime.

@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import styles from "./styles.module.scss"
+import clsx from "clsx"
 
 type Props = {
   title: string
   weeklyPlayTimePct: number
   previewImgUrl: string
   authors: string[]
-  scale: number
+  place: 1 | 2 | 3
 }
 export function TopGame({
   title,
   weeklyPlayTimePct,
   previewImgUrl,
-  scale,
+  place,
 }: Props) {
   return (
-    <li className={styles.topGame} style={{ height: scale * 400 }}>
+    <li className={clsx(styles.topGame, `place-${place}`)}>
       <h3 className={styles.title}>{title}</h3>
       <img
         className={styles.previewImg}

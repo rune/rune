@@ -232,14 +232,13 @@
     width: 26px;
     height: 26px;
     border-radius: 3px;
+    box-shadow: 3.5px 3.5px 2px 0px #20022566;
     transform: rotate(-3.4deg) scale(4);
 
     object-fit: cover;
     object-position: center 20%;
     position: relative;
     justify-self: center;
-
-    box-shadow: 14px 14px 8px 0px #20022566;
   }
 
   .developers {
@@ -399,6 +398,7 @@
       width: 61px;
       height: 61px;
       border-radius: 12px;
+      box-shadow: 14px 14px 8px 0px #20022566;
       transform: rotate(-3.4deg) scale(1);
 
       position: relative;

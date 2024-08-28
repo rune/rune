@@ -340,3 +340,112 @@
     }
   }
 }
+
+@media screen and (max-width: 1250px) {
+  .topGames {
+    flex-direction: column;
+    align-items: center;
+    gap: 190px;
+
+    margin-top: 190px;
+  }
+
+  .topGame {
+    max-width: 300px;
+    padding-bottom: 20px;
+
+    &:global(.place-1) {
+      order: 1;
+      height: 223px;
+    }
+    &:global(.place-2) {
+      order: 2;
+      height: 223px;
+    }
+    &:global(.place-3) {
+      order: 3;
+      height: 223px;
+    }
+  }
+
+  .info {
+    font-size: 11px;
+  }
+
+  .otherGames {
+    align-items: center;
+    gap: 48px;
+    margin-top: 56px;
+  }
+
+  .otherGame {
+    max-width: 300px;
+    min-height: 200px;
+    width: 100%;
+    height: auto;
+    padding-bottom: 25px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    &::before {
+      display: none;
+    }
+
+    .previewImg {
+      order: 1;
+
+      width: 61px;
+      height: 61px;
+      border-radius: 12px;
+      transform: rotate(-3.4deg) scale(1);
+
+      position: relative;
+      top: -25px;
+      margin-bottom: -25px;
+    }
+
+    .title {
+      order: 3;
+
+      margin: 0;
+      margin-top: 15px;
+
+      font-size: 24px;
+      line-height: 24px;
+      text-align: center;
+
+      &::before {
+        content: counter(other-games) ".";
+        margin-right: 8px;
+
+        font-size: 24px;
+
+        color: #ffffff;
+      }
+    }
+
+    .stat {
+      order: 4;
+
+      margin-top: 8px;
+      font-size: 16px;
+      line-height: 18px;
+
+      &::after {
+        content: " playtime";
+      }
+    }
+
+    .developers {
+      order: 5;
+
+      margin-top: 15px;
+      /* not inlined*/
+      display: block;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+  }
+}

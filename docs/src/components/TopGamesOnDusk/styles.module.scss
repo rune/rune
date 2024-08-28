@@ -134,13 +134,6 @@
     padding: 0 30px;
     height: 72px;
     margin-top: auto; /* Push to bottom */
-
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 15.6px;
-    text-align: center;
-
-    color: #ffffff;
   }
 }
 
@@ -236,12 +229,6 @@
 
   .developers {
     order: 4;
-
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 15.6px;
-
-    color: #ffffff;
   }
 
   .stat {
@@ -260,5 +247,81 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+}
+
+.developers {
+  &.inlined {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  > .avatars {
+    /* Reset */
+    > li + li {
+      margin: 0;
+    }
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0; /* Use margin-right because of negative number */
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+
+    > li,
+    > li + li {
+      margin-right: -8px;
+    }
+    > li:last-child {
+      margin-right: 0;
+    }
+
+    > li > img {
+      width: 33px;
+      height: 33px;
+    }
+  }
+
+  > .names {
+    /* Reset */
+    > li + li {
+      margin: 0;
+    }
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 15.6px;
+    text-align: center;
+
+    color: #ffffff;
+
+    > li::before {
+      content: "@";
+    }
+
+    > li::after {
+      content: ",";
+    }
+
+    > li:last-child::after {
+      content: "";
+    }
   }
 }

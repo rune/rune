@@ -1,12 +1,13 @@
 import React from "react"
 import styles from "./styles.module.scss"
 import clsx from "clsx"
+import { Developers } from "./Developers"
 
 type Props = {
   title: string
   weeklyPlayTimePct: number
   previewImgUrl: string
-  developers: { name: string }[]
+  developers: { name: string; avatarUrl: string }[]
   place: 1 | 2 | 3
 }
 export function TopGame({
@@ -25,9 +26,7 @@ export function TopGame({
       <p className={styles.stat}>
         {Math.round(weeklyPlayTimePct * 100)}% playtime
       </p>
-      <div className={styles.developers}>
-        {developers.map((d) => `@${d.name}`).join(", ")}
-      </div>
+      <Developers developers={developers} inlined={false} />
     </li>
   )
 }

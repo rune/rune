@@ -1,11 +1,12 @@
 import React from "react"
 import styles from "./styles.module.scss"
+import { Developers } from "./Developers"
 
 type Props = {
   title: string
   weeklyPlayTimePct: number
   previewImgUrl: string
-  developers: { name: string }[]
+  developers: { name: string; avatarUrl: string }[]
 }
 export function OtherGame({
   title,
@@ -18,9 +19,7 @@ export function OtherGame({
       <h3 className={styles.title}>{title}</h3>
       <img className={styles.previewImg} src={previewImgUrl} alt={title} />
       <p className={styles.stat}>{Math.round(weeklyPlayTimePct * 100 * 2)}%</p>
-      <div className={styles.developers}>
-        {developers.map((d) => `@${d.name}`).join(", ")}
-      </div>
+      <Developers developers={developers} inlined={true} />
     </li>
   )
 }

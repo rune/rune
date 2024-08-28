@@ -47,16 +47,31 @@
     order: 2;
     height: 437px;
     padding-top: 36px;
+
+    > .previewImg::after {
+      background: url("@site/static/img/home/topGamePlace1Badge.svg");
+      background-size: 100% 100%;
+    }
   }
   &:global(.place-2) {
     order: 1;
     height: 288px;
     padding-top: 24px;
+
+    > .previewImg::after {
+      background: url("@site/static/img/home/topGamePlace2Badge.svg");
+      background-size: 100% 100%;
+    }
   }
   &:global(.place-3) {
     order: 3;
     height: 250px;
     padding-top: 23px;
+
+    > .previewImg::after {
+      background: url("@site/static/img/home/topGamePlace3Badge.svg");
+      background-size: 100% 100%;
+    }
   }
 
   .title {
@@ -79,10 +94,25 @@
     left: 0;
     right: 0;
 
-    border-radius: 15.32px;
-    transform: rotate(-3.4deg);
-    object-fit: cover;
-    object-position: center 20%;
+    > img {
+      width: 100%;
+      height: 100%;
+      border-radius: 15.32px;
+      transform: rotate(-3.4deg);
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    &::after {
+      width: 100px;
+      height: 100px;
+
+      display: block;
+      position: absolute;
+      top: -30px;
+      left: -50px;
+      content: "";
+    }
   }
 
   .stat {

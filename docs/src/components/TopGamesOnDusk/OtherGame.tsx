@@ -16,11 +16,7 @@ export function OtherGame({
   return (
     <li className={styles.otherGame}>
       <h3 className={styles.title}>{title}</h3>
-      <img
-        className={styles.previewImg}
-        src={previewImgUrl}
-        alt={`Preview of ${title}`}
-      />
+      <img className={styles.previewImg} src={previewImgUrl} alt={title} />
       <p className={styles.stat}>{Math.round(weeklyPlayTimePct * 100 * 2)}%</p>
       <div className={styles.authors}>
         {authors.map((author) => `@${author}`).join(", ")}

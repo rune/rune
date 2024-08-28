@@ -19,11 +19,9 @@ export function TopGame({
   return (
     <li className={clsx(styles.topGame, `place-${place}`)}>
       <h3 className={styles.title}>{title}</h3>
-      <img
-        className={styles.previewImg}
-        src={previewImgUrl}
-        alt={`Preview of ${title}`}
-      />
+      <div className={styles.previewImg}>
+        <img src={previewImgUrl} alt={title} />
+      </div>
       <p className={styles.stat}>
         {Math.round(weeklyPlayTimePct * 100)}% playtime
       </p>

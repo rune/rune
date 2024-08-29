@@ -9,7 +9,8 @@ type Props = {
   place: 1 | 2 | 3
 }
 export function TopGame({ game, place }: Props) {
-  if (!game) return <li className={clsx(styles.topGame, `place-${place}`)}></li>
+  if (!game)
+    return <li className={clsx(styles.topGame, styles[`place-${place}`])}></li>
 
   const { title, weeklyPlayTimePct, previewImgUrl, developers } = game
 

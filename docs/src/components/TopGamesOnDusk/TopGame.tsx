@@ -19,7 +19,9 @@ export function TopGame({ game, place }: Props) {
       <div className={styles.previewImg}>
         <img src={previewImgUrl} alt={title} />
       </div>
-      <p className={styles.stat}>{Math.round(weeklyPlayTimePct * 100)}%</p>
+      <p className={styles.stat} title={(weeklyPlayTimePct * 100).toFixed(2)}>
+        {Math.round(weeklyPlayTimePct * 100)}%
+      </p>
       <Developers developers={developers} inlined={false} />
     </li>
   )

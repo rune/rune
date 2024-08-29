@@ -14,7 +14,7 @@ export function OtherGame({ game }: Props) {
     <li className={styles.otherGame}>
       <h3 className={styles.title}>{title}</h3>
       <img className={styles.previewImg} src={previewImgUrl} alt={title} />
-      <p className={styles.stat}>{Math.round(weeklyPlayTimePct * 100 * 2)}%</p>
+      <p className={styles.stat}>{Math.round(weeklyPlayTimePct * 100)}%</p>
       <Developers developers={developers} inlined={true} />
     </li>
   )

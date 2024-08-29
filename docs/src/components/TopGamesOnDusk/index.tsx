@@ -4,13 +4,13 @@ import styles from "./styles.module.scss"
 import { OtherGame } from "./OtherGame"
 
 export function TopGamesOnDusk() {
-  const [gameRes, setGameRes] = useState<GameRes | undefined>()
-  const [loading, setLoading] = useState(true)
+  const [gameRes, setGameRes] = useState<GameRes>(initialGameRes)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     getGameRes()
       .then(setGameRes)
-      .finally(() => setLoading(false))
+      .catch(() => setError(true))
   }, [])
 
   const dateStartFormatted = useMemo(() => {
@@ -28,11 +28,7 @@ export function TopGamesOnDusk() {
     return `${month} ${day}, ${year}`
   }, [gameRes?.dateStart])
 
-  if (loading) {
-    return null
-  }
-
-  if (!gameRes) {
+  if (error) {
     return <p>Failed to fetch games. Try again!</p>
   }
 
@@ -40,23 +36,23 @@ export function TopGamesOnDusk() {
     <div className={styles.container}>
       <h2>Week of {dateStartFormatted}</h2>
       <ol className={styles.topGames}>
-        <TopGame {...gameRes.games[0]} place={1} />
-        <TopGame {...gameRes.games[1]} place={2} />
-        <TopGame {...gameRes.games[2]} place={3} />
+        <TopGame game={gameRes.games[0]} place={1} />
+        <TopGame game={gameRes.games[1]} place={2} />
+        <TopGame game={gameRes.games[2]} place={3} />
       </ol>
       <p className={styles.info}>
         Based on the percentage of the last week's playtime.
       </p>
       <ol className={styles.otherGames} start={3}>
-        {gameRes.games.slice(3).map((game) => {
-          return <OtherGame key={game.title} {...game} />
+        {gameRes.games.slice(3).map((game, idx) => {
+          return <OtherGame key={idx} game={game} />
         })}
       </ol>
     </div>
   )
 }
 
-type Game = {
+export type Game = {
   title: string
   previewImgUrl: string
   weeklyPlayTimePct: number
@@ -64,8 +60,13 @@ type Game = {
 }
 
 type GameRes = {
-  dateStart: Date
-  games: Game[]
+  dateStart: Date | null
+  games: (Game | null)[]
+}
+
+const initialGameRes: GameRes = {
+  dateStart: null,
+  games: new Array(10).fill(null),
 }
 
 async function getGameRes() {

@@ -2,21 +2,17 @@ import React from "react"
 import styles from "./styles.module.scss"
 import clsx from "clsx"
 import { Developers } from "./Developers"
+import { Game } from "."
 
 type Props = {
-  title: string
-  weeklyPlayTimePct: number
-  previewImgUrl: string
-  developers: { name: string; avatarUrl: string }[]
+  game: Game | null
   place: 1 | 2 | 3
 }
-export function TopGame({
-  title,
-  weeklyPlayTimePct,
-  previewImgUrl,
-  developers,
-  place,
-}: Props) {
+export function TopGame({ game, place }: Props) {
+  if (!game) return <li className={clsx(styles.topGame, `place-${place}`)}></li>
+
+  const { title, weeklyPlayTimePct, previewImgUrl, developers } = game
+
   return (
     <li className={clsx(styles.topGame, `place-${place}`)}>
       <h3 className={styles.title}>{title}</h3>

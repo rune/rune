@@ -14,7 +14,7 @@ export function TopGame({ game, place }: Props) {
   const { title, weeklyPlayTimePct, previewImgUrl, developers } = game
 
   return (
-    <li className={clsx(styles.topGame, `place-${place}`)}>
+    <li className={clsx(styles.topGame, styles[`place-${place}`])}>
       <h3 className={styles.title}>{title}</h3>
       <div className={styles.previewImg}>
         <img src={previewImgUrl} alt={title} />

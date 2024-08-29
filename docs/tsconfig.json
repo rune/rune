@@ -1,0 +1,7 @@
+{
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "types": ["docusaurus-plugin-sass"],
+    "baseUrl": "."
+  }
+}

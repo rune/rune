@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "dusk-games-sdk": "^4.21.17"
+    "dusk-games-sdk": "^4.21.18"
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.1",

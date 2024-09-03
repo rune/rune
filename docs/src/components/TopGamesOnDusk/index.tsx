@@ -41,7 +41,7 @@ export function TopGamesOnDusk() {
         <TopGame game={gameRes.games[2]} place={3} />
       </ol>
       <p className={styles.info}>
-        Based on the percentage of the last week's playtime.
+        Each game's percentage of last week's total playtime.
       </p>
       <ol className={styles.otherGames} start={3}>
         {gameRes.games.slice(3).map((game, idx) => {
@@ -54,6 +54,7 @@ export function TopGamesOnDusk() {
 
 export type Game = {
   title: string
+  shareLink: string
   previewImgUrl: string
   weeklyPlayTimePct: number
   developers: { name: string; avatarUrl: string }[]

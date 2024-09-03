@@ -54,6 +54,7 @@ export function TopGamesOnDusk() {
 
 export type Game = {
   title: string
+  shareLink: string
   previewImgUrl: string
   weeklyPlayTimePct: number
   developers: { name: string; avatarUrl: string }[]

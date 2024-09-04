@@ -32,12 +32,13 @@ Dusk.initLogic({
             controls: {}
         }
 
-        // phasers setup world
+        // phasers setup world but in propel-js physics
         physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0 * PHYSICS_WIDTH, y: 0.2 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
         physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.75 * PHYSICS_WIDTH, y: 0.4 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
         physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.6 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
         physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.9 * PHYSICS_HEIGHT }, 1 * PHYSICS_WIDTH, 0.3 * PHYSICS_HEIGHT, 0, 1, 0))
 
+        // create a player body for each player in the game
         for (const playerId of allPlayerIds) {
             const rect = physics.createRectangleShape(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.5 * PHYSICS_HEIGHT }, 0.1 * PHYSICS_WIDTH, 0.1 * PHYSICS_HEIGHT)
             const footSensor = physics.createRectangleShape(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.55 * PHYSICS_HEIGHT }, 0.05 * PHYSICS_WIDTH, 0.005 * PHYSICS_HEIGHT, 0, true)
@@ -53,6 +54,7 @@ Dusk.initLogic({
             }
         }
 
+        // create a few stars to play with
         for (let i=0;i<5;i++) {
             const rect = physics.createCircleShape(initialState.world, { x: i * 0.2 * PHYSICS_WIDTH, y: 0.15 * PHYSICS_HEIGHT }, 0.04 * PHYSICS_WIDTH)
             const star = physics.createRigidBody(initialState.world, { x:i * 0.2 * PHYSICS_WIDTH, y: 0.15 * PHYSICS_HEIGHT }, 1, 1, 0, [rect], { star: true }) as physics.DynamicRigidBody
@@ -65,6 +67,7 @@ Dusk.initLogic({
     updatesPerSecond: 30,
     reactive: false,
     update: ({ game, allPlayerIds }) => {
+        // each loop process the player inputs and adjust velocities of bodies accordingly
         for (const playerId of allPlayerIds) {
             const body = game.world.dynamicBodies.find(b => b.data?.playerId === playerId);
             if (body) {
@@ -87,6 +90,8 @@ Dusk.initLogic({
             }
         }
 
+        // propel-js likes a 60fps game loop since it keeps the iterations high so run it
+        // twice since the game logic is configured to run at 30fps
         physics.worldStep(60, game.world)
         physics.worldStep(60, game.world)
 

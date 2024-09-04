@@ -33,15 +33,15 @@ Dusk.initLogic({
         }
 
         // phasers setup world
-        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0 * PHYSICS_WIDTH, y: 0.2 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 0.5, 0.5))
-        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.75 * PHYSICS_WIDTH, y: 0.4 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 0.5, 0.5))
-        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.6 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 0.5, 0.5))
-        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.9 * PHYSICS_HEIGHT }, 1 * PHYSICS_WIDTH, 0.3 * PHYSICS_HEIGHT, 0, 0.5, 0.5))
+        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0 * PHYSICS_WIDTH, y: 0.2 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
+        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.75 * PHYSICS_WIDTH, y: 0.4 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
+        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.6 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
+        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.9 * PHYSICS_HEIGHT }, 1 * PHYSICS_WIDTH, 0.3 * PHYSICS_HEIGHT, 0, 1, 0))
 
         for (const playerId of allPlayerIds) {
             const rect = physics.createRectangleShape(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.5 * PHYSICS_HEIGHT }, 0.1 * PHYSICS_WIDTH, 0.1 * PHYSICS_HEIGHT)
             const footSensor = physics.createRectangleShape(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.55 * PHYSICS_HEIGHT }, 0.05 * PHYSICS_WIDTH, 0.005 * PHYSICS_HEIGHT, 0, true)
-            const player = physics.createRigidBody(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.5 * PHYSICS_HEIGHT }, 10, 0, 0, [rect, footSensor]) as physics.DynamicRigidBody
+            const player = physics.createRigidBody(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.5 * PHYSICS_HEIGHT }, 1, 0, 0, [rect, footSensor]) as physics.DynamicRigidBody
             player.fixedRotation = true
             player.data = { player: true, playerId }
             physics.addBody(initialState.world, player)
@@ -54,7 +54,7 @@ Dusk.initLogic({
         }
 
         for (let i=0;i<5;i++) {
-            const rect = physics.createRectangleShape(initialState.world, { x: i * 0.2 * PHYSICS_WIDTH, y: 0.15 * PHYSICS_HEIGHT }, 0.05 * PHYSICS_WIDTH, 0.025 * PHYSICS_HEIGHT)
+            const rect = physics.createCircleShape(initialState.world, { x: i * 0.2 * PHYSICS_WIDTH, y: 0.15 * PHYSICS_HEIGHT }, 0.04 * PHYSICS_WIDTH)
             const star = physics.createRigidBody(initialState.world, { x:i * 0.2 * PHYSICS_WIDTH, y: 0.15 * PHYSICS_HEIGHT }, 1, 1, 0, [rect], { star: true }) as physics.DynamicRigidBody
             physics.addBody(initialState.world, star)
 
@@ -82,9 +82,13 @@ Dusk.initLogic({
                         body.velocity.y = -600
                     }
                 }
+            } else {
+                console.log("Body not found")
             }
         }
-        physics.worldStep(30, game.world)
+
+        physics.worldStep(60, game.world)
+        physics.worldStep(60, game.world)
 
     },
     actions: {

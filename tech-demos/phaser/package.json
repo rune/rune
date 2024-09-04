@@ -14,7 +14,7 @@
   "dependencies": {
     "dusk-games-sdk": "^4.21.18",
     "phaser": "3.80.1",
-    "propel-js": "1.0.20"
+    "propel-js": "1.0.21"
   },
   "devDependencies": {
     "eslint": "^9.7.0",

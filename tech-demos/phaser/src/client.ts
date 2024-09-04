@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { physics } from "propel-js";
+import { physics } from "propel-js"
 import { Controls, PHYSICS_HEIGHT, PHYSICS_WIDTH } from "./logic";
 
 export default class TutorialGame extends Phaser.Scene {
@@ -39,8 +39,9 @@ export default class TutorialGame extends Phaser.Scene {
                     let sprite = this.physicsToPhaser[body.id];
                     if (!sprite) {
                         if (body.data && body.data.star) {
+                            const size = Math.ceil(rect.bounds / PHYSICS_WIDTH * window.innerWidth)
                             sprite = this.physicsToPhaser[body.id] =
-                            this.add.sprite(x, y, "star").setDisplaySize(width, height)
+                            this.add.sprite(x, y, "star").setDisplaySize(size * 2, size * 2)
                         } else if (body.data && body.data.player) {
                             sprite = this.physicsToPhaser[body.id] =
                                 this.add.sprite(x, y, "dude").setDisplaySize(width, height)

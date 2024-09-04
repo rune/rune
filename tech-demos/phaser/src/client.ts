@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import { physics } from "propel-js"
 import { Controls, PHYSICS_HEIGHT, PHYSICS_WIDTH } from "./logic";
 
+// Based off: https://phaser.io/tutorials/making-your-first-phaser-3-game/part1
+
 const gameInputs: Controls = {
     left: false,
     right: false,

@@ -34,7 +34,7 @@ export default class TutorialGame extends Phaser.Scene {
                     const x = Math.ceil(body.center.x / PHYSICS_WIDTH * window.innerWidth)
                     const y = Math.ceil(body.center.y / PHYSICS_HEIGHT * window.innerHeight)
                     const width = Math.ceil(rect.width / PHYSICS_WIDTH * window.innerWidth)
-                    const height = Math.round(rect.height / PHYSICS_HEIGHT * window.innerHeight)
+                    const height = Math.ceil(rect.height / PHYSICS_HEIGHT * window.innerHeight)
 
                     let sprite = this.physicsToPhaser[body.id];
                     if (!sprite) {

@@ -33,10 +33,10 @@ Dusk.initLogic({
         }
 
         // phasers setup world but in propel-js physics
-        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0 * PHYSICS_WIDTH, y: 0.2 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
-        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.75 * PHYSICS_WIDTH, y: 0.4 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
-        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.6 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 0))
-        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.9 * PHYSICS_HEIGHT }, 1 * PHYSICS_WIDTH, 0.3 * PHYSICS_HEIGHT, 0, 1, 0))
+        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0 * PHYSICS_WIDTH, y: 0.2 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 1))
+        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.75 * PHYSICS_WIDTH, y: 0.4 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 1))
+        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.6 * PHYSICS_HEIGHT }, 0.5 * PHYSICS_WIDTH, 0.05 * PHYSICS_HEIGHT, 0, 1, 1))
+        physics.addBody(initialState.world, physics.createRectangle(initialState.world, { x: 0.5 * PHYSICS_WIDTH, y: 0.9 * PHYSICS_HEIGHT }, 1 * PHYSICS_WIDTH, 0.3 * PHYSICS_HEIGHT, 0, 1, 1))
 
         // create a player body for each player in the game
         for (const playerId of allPlayerIds) {
@@ -57,7 +57,7 @@ Dusk.initLogic({
         // create a few stars to play with
         for (let i=0;i<5;i++) {
             const rect = physics.createCircleShape(initialState.world, { x: i * 0.2 * PHYSICS_WIDTH, y: 0.15 * PHYSICS_HEIGHT }, 0.04 * PHYSICS_WIDTH)
-            const star = physics.createRigidBody(initialState.world, { x:i * 0.2 * PHYSICS_WIDTH, y: 0.15 * PHYSICS_HEIGHT }, 1, 1, 0, [rect], { star: true }) as physics.DynamicRigidBody
+            const star = physics.createRigidBody(initialState.world, { x:i * 0.2 * PHYSICS_WIDTH, y: 0.15 * PHYSICS_HEIGHT }, 10, 1, 1, [rect], { star: true }) as physics.DynamicRigidBody
             physics.addBody(initialState.world, star)
 
         }

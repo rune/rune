@@ -2,6 +2,55 @@ import Phaser from "phaser";
 import { physics } from "propel-js"
 import { Controls, PHYSICS_HEIGHT, PHYSICS_WIDTH } from "./logic";
 
+const gameInputs: Controls = {
+    left: false,
+    right: false,
+    up: false
+}
+
+const touchDevice = "ontouchstart" in document.documentElement
+const left = document.getElementById("left") as HTMLImageElement
+const right = document.getElementById("right") as HTMLImageElement
+const jump = document.getElementById("jump") as HTMLImageElement
+
+// if we're testing on a touch device then use touchstart/touchmove/touchend.
+// we're being a bit idealistic here and only considering the first touch.
+if (touchDevice) {
+  left.addEventListener("touchstart", () => {
+    gameInputs.left = true
+  })
+  right.addEventListener("touchstart", () => {
+    gameInputs.right = true
+  })
+  left.addEventListener("touchend", () => {
+    gameInputs.left = false
+  })
+  right.addEventListener("touchend", () => {
+    gameInputs.right = false
+  })
+  jump.addEventListener("touchstart", () => {
+    gameInputs.up = true
+  })
+  jump.addEventListener("touchend", () => {
+    gameInputs.up = false
+  })
+} else {
+    left.addEventListener("mousedown", () => {
+      gameInputs.left = true
+    })
+    right.addEventListener("mousedown", () => {
+      gameInputs.right = true
+    })
+    jump.addEventListener("mousedown", () => {
+      gameInputs.up = true
+    })
+    window.addEventListener("mouseup", () => {
+      gameInputs.left = false
+      gameInputs.right = false
+      gameInputs.up = false
+    })
+}
+
 export default class TutorialGame extends Phaser.Scene {
     physicsToPhaser: Record<number, Phaser.GameObjects.Sprite> = {};
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -118,13 +167,17 @@ export default class TutorialGame extends Phaser.Scene {
         // want to send the action too often so we don't block the network - we'll only
         // send an action when the controls actually change
         if (this.cursors) {
-            if (this.lastSentControls.left !== (this.cursors?.left.isDown ?? false) ||
-                this.lastSentControls.right !== (this.cursors?.right.isDown ?? false) ||
-                this.lastSentControls.up !== (this.cursors?.up.isDown ?? false)) {
+            const stateLeft = (this.cursors?.left.isDown ?? false) || gameInputs.left;
+            const stateRight = (this.cursors?.right.isDown ?? false) || gameInputs.right;
+            const stateUp = (this.cursors?.up.isDown ?? false) || gameInputs.up;
+
+            if (this.lastSentControls.left !== stateLeft ||
+                this.lastSentControls.right !== stateRight ||
+                this.lastSentControls.up !== stateUp) {
                     this.lastSentControls = { 
-                        left: this.cursors?.left.isDown ?? false,
-                        right: this.cursors?.right.isDown ?? false,
-                        up: this.cursors?.up.isDown ?? false,
+                        left: stateLeft,
+                        right: stateRight,
+                        up: stateUp,
                     }
                     Dusk.actions.controls(this.lastSentControls)
             }

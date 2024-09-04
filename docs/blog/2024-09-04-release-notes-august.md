@@ -37,3 +37,7 @@ authors:
 ## 💻 SDK Improvements
 
 * Built out our behind-the-scenes game tracking to prep for some exciting new developer features coming soon! 🌟     
+* Fixed the dev UI mobile layout to account for bottom toolbars on some devices & adjusted the minimum dimensions on landscape 📱
+* Added Vue game template built by oats 🚀
+* Updated example user avatars to ensure you’re inspired by the newest content!
+* Vite plugin now includes logic that allows importing not only external package but also files from external package (somePackage vs somePackage/innerFile). This was done by Pixel Pincher! 🥳

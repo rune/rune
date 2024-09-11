@@ -75,3 +75,11 @@ yarn build
 cp -r dist/. ../../docs/static/_tech-demos/platformer
 perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_tech-demos/platformer/index.html
 cd ..
+
+# Phaser
+cd phaser
+yarn 
+yarn build
+cp -r dist/. ../../docs/static/_tech-demos/phaser
+perl -pe 's/multiplayer\.js/multiplayer-dev\.js/' dist/index.html > ../../docs/static/_tech-demos/phaser/index.html
+cd ..

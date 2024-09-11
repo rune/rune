@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <title>Phaser Sample</title>
+    <style>
+      body {
+        overflow: hidden;
+      }
+      #left {
+        width: 75px;
+        height: 75px;
+        bottom: 15px;
+        left: 15px;
+        position: absolute;
+      }
+      #right {
+        width: 75px;
+        height: 75px;
+        bottom: 15px;
+        left: 110px;
+        position: absolute;
+      }
+      #jump {
+        width: 75px;
+        height: 75px;
+        bottom: 15px;
+        right: 15px;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="/src/assets/Controls/left.png" id="left">
+    <img src="/src/assets/Controls/right.png" id="right">
+    <img src="/src/assets/Controls/jump.png" id="jump">
+    
+    <script type="module" src="/src/logic.ts"></script>
+    <script type="module" src="/src/client.ts"></script>
+  </body>
+</html>

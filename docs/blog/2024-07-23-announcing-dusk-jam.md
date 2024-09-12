@@ -1,9 +1,9 @@
 ---
 title: Announcing Rune Jam!
 description: A jam for javascript developers who have always wanted to build a multiplayer game 
-slug: announcing-dusk-jam
+slug: announcing-rune-jam
 tags: [Game Development, Rune Jam]
-image: /img/blog/social-previews/announcing-dusk-jam.png
+image: /img/blog/social-previews/announcing-rune-jam.png
 authors:
 - name: Kevin Glass 
   title: Founding Engineer at Rune  
@@ -20,7 +20,7 @@ authors:
 Have you ever thought about writing a multiplayer game, but the task seems too daunting? What if networking was already done and you could just focus on a small fun game? Rune makes it easy to build multiplayer games quickly with a huge player base across regional servers.
 
 
-![](/img/blog/social-previews/announcing-dusk-jam.png)
+![](/img/blog/social-previews/announcing-rune-jam.png)
 
 To celebrate our move to Rune we're going to run a mini game jam. We've loved what everyone has brought to the table over previous jams and really want more of it!
 
@@ -39,4 +39,4 @@ Remember this is all about creating something from end to end in the time period
 
 As always we can't wait to see what you build and if we're here to help! More information on how to build and publish a game is [available in the documentation](/docs/quick-start). 
 
-Come join us on the [Discord](https://discord.gg/dusk-devs) to get involved!
+Come join us on the [Discord](https://discord.gg/rune-devs) to get involved!

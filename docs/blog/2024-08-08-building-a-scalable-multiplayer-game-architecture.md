@@ -83,4 +83,4 @@ Applying metrics after the fact is actually pretty hard, trying to instrument or
 
 When building a scalable system design and add the metrics to the features as they’re implemented. Having well-thought-out and intentional metrics is the only way to really tune and improve an architecture.
 
-If you found this article interesting or have questions, drop by the [Discord](https://discord.gg/dusk-devs).
+If you found this article interesting or have questions, drop by the [Discord](https://discord.gg/rune-devs).

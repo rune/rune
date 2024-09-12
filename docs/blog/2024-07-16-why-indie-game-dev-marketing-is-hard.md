@@ -53,4 +53,4 @@ As I mentioned above the viewing audience is getting less and less willing to ta
 
 The newer generation of players have a lower attention span, they just want it all right now. Platforms that give these players the games in the context of their social media are where we should be looking. Lets bypass traditional marketing altogether and just put the games in front of the players in a familiar social wrapper. 
 
-If you’re interested in this topic or want to hear more about how Rune is doing this by all means [hit me up on Discord](https://discord.gg/dusk-devs). 
+If you’re interested in this topic or want to hear more about how Rune is doing this by all means [hit me up on Discord](https://discord.gg/rune-devs). 

@@ -10,7 +10,7 @@ Our multiplayer SDK lets you write your game logic in JavaScript/TypeScript and 
 
 Rune synchronizes your game state using our custom predict-rollback framework. Simulating the game in parallel on all clients and server ensures that the game is always snappy for local inputs, which is crucial when playing on mobile internet with high latency. Our server-authoritative predict-rollback approach also allow us to handle conflict resolution through rollbacks. For instance, if two players shoot each other in a game, the server will decide which one shot first, and rollback the action for the player who got shot. That player will receive the information that their action was rolled back so the game can show it to the player.
 
-We try our best to make an amazing SDK for you and we'd love to get your input on how we can improve! Please write us on [Discord](https://discord.gg/dusk-devs) if you have any questions or suggestions. 
+We try our best to make an amazing SDK for you and we'd love to get your input on how we can improve! Please write us on [Discord](https://discord.gg/rune-devs) if you have any questions or suggestions. 
 
 ## Read More {#read-more}
 

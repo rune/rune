@@ -128,4 +128,4 @@ If you’re hearing about performance issues on your web game and it’s on Andr
 
 Final note. There is nothing like real device testing. The emulator gets you so far but if you can acquire an old device to test on its really worth experiencing how very different it can be. Ebay is a great place to start. I use a Samsung J2 which is definitely the worst device I’ve ever seen but it’s been invaluable in testing performance tuning.
 
-Hopefully this blog is helpful to some web game developers out there. If you’d like to discuss more don’t hesitate to [hit me up on Discord](https://discord.gg/dusk-devs).
+Hopefully this blog is helpful to some web game developers out there. If you’d like to discuss more don’t hesitate to [hit me up on Discord](https://discord.gg/rune-devs).

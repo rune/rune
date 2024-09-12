@@ -160,4 +160,4 @@ The voices available are platform dependent and there's normally only a couple t
 
 https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
 
-Do you know more sources or have experience with finding great art/sounds? Let us know on [Discord](https://discord.gg/dusk-devs).
+Do you know more sources or have experience with finding great art/sounds? Let us know on [Discord](https://discord.gg/rune-devs).

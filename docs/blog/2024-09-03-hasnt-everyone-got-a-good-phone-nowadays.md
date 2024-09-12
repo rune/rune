@@ -60,6 +60,6 @@ This explains the other data: the majority of devices in the top 30 are 4–5 ye
 
 Hopefully, the data here will help focus and tailor your game development efforts to get the maximum playtime from our player base.
 
-Does this align with what you’ve seen? Want to know more? Why not drop by the [Discord](https://discord.gg/dusk-devs) and have a chat?
+Does this align with what you’ve seen? Want to know more? Why not drop by the [Discord](https://discord.gg/rune-devs) and have a chat?
 
 

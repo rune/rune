@@ -1,7 +1,7 @@
 ---
 title: Announcing Rune Open-Source Grants
 description: We're stoked to announce that we're launching a $100k grant for open-source web games!
-slug: dusk-open-source-grants
+slug: rune-open-source-grants
 tags: [Company]
 authors:
 - name: Bjarke Felbo

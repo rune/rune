@@ -7,7 +7,7 @@
     "dev": "vite --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "build": "tsc && vite build",
-    "deploy": "../../scripts/copy-assets.sh outmatched && yarn build && dusk upload build",
+    "deploy": "../../scripts/copy-assets.sh outmatched && yarn build && rune upload build",
     "lint": "eslint src",
     "test": "exit 0",
     "preview": "vite preview"

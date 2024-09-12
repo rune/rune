@@ -12,7 +12,7 @@ Games are deemed open-source if you can use their code to make your own game. Mo
 
 ## Games
 
-Here's all the open-source multiplayer web games we've found that match the criteria above. Many of them are made multiplayer using [Rune](https://developers.rune.ai) and played on [iOS](https://apps.apple.com/us/app/dusk-games-and-voice-chat/id1450358364) / [Android](https://play.google.com/store/apps/details?id=ai.dusk.tincan). The Rune demo links below simulate multiplayer in your browser.
+Here's all the open-source multiplayer web games we've found that match the criteria above. Many of them are made multiplayer using [Rune](https://developers.rune.ai) and played on [iOS](https://apps.apple.com/us/app/rune-games-and-voice-chat/id1450358364) / [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan). The Rune demo links below simulate multiplayer in your browser.
 
 <table>
   <tr>

@@ -26,7 +26,7 @@ export function Social() {
         />
       </a>
       <a
-        href="https://discord.gg/dusk-devs"
+        href="https://discord.gg/rune-devs"
         target="_blank"
         rel="noreferrer"
         className={styles.socialLink}
@@ -47,7 +47,7 @@ export function Social() {
         />
       </a>
       <a
-        href="https://twitter.com/dusk_devs"
+        href="https://twitter.com/rune_devs"
         target="_blank"
         rel="noreferrer"
         className={styles.socialLink}

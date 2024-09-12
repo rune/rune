@@ -85,4 +85,4 @@ Unfortunately, at the time of writing, the standard is still changing, browsers 
 
 I’m still holding out hope that WebTransport is the answer, but what do you think? 
 
-If you’re interested in this topic or the Rune platform, drop by our [Discord](https://discord.gg/dusk-devs) and let us know.
+If you’re interested in this topic or the Rune platform, drop by our [Discord](https://discord.gg/rune-devs) and let us know.

@@ -23,9 +23,7 @@ function useShowAnnouncementBar() {
   return isActive && showAnnouncementBar
 }
 export default function DocSidebarDesktopContent({ path, sidebar, className }) {
-  const excludedFromSideBar = [
-    "move-to-dusk"
-  ]
+  const excludedFromSideBar = []
 
   sidebar = sidebar.filter(d => !excludedFromSideBar.includes(d.docId))
 

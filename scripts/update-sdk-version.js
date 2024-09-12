@@ -6,9 +6,9 @@ const version = process.argv[2]
 
 const examplesDir = path.resolve(__dirname, "../examples")
 const techDemosDir = path.resolve(__dirname, "../tech-demos")
-const templatesDir = path.resolve(__dirname, "../packages/dusk-cli/templates")
+const templatesDir = path.resolve(__dirname, "../packages/rune-games-cli/templates")
 
-const cliDir = path.resolve(__dirname, "../packages/dusk-cli")
+const cliDir = path.resolve(__dirname, "../packages/rune-games-cli")
 
 //These example games also have sdk version inside html
 const gamesWithHtml = {

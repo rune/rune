@@ -111,4 +111,4 @@ You can see a wide variety of games work but they all have space for players to 
 
 Players of games generally range across many different demographics but with luck using the information in this article, our developers stand a better chance of writing the next great game on Rune!
 
-If you’d like more information or just to comment on the article just drop into our [Discord](https://discord.gg/dusk-devs).
+If you’d like more information or just to comment on the article just drop into our [Discord](https://discord.gg/rune-devs).

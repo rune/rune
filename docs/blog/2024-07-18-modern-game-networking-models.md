@@ -122,4 +122,4 @@ All that being said, the pros of quick input response time, low bandwidth and co
 
 As you can see there are different ways to make game networking work, and as you can tell from the games mentioned people have been trying to solve it for decades. 
 
-At Rune we implement predict-rollback, it’s complicated to implement but the bright side is you don’t have to, it’s just part of the platform. If you want to learn more about how to implement a multiplayer game on Rune, [check out our examples](/docs/examples/games), [tech demos](/docs/examples/tech-demos) and [documentation](/docs/quick-start) - or [join our Discord](https://discord.gg/dusk-devs).
+At Rune we implement predict-rollback, it’s complicated to implement but the bright side is you don’t have to, it’s just part of the platform. If you want to learn more about how to implement a multiplayer game on Rune, [check out our examples](/docs/examples/games), [tech demos](/docs/examples/tech-demos) and [documentation](/docs/quick-start) - or [join our Discord](https://discord.gg/rune-devs).

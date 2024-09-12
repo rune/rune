@@ -47,6 +47,6 @@ Of course, if you’re building a network model for a specific game, there are m
 
 If, however, you're building a library/framework that supports many types of games in many different environments and on different devices, predict-rollback is the right choice for now and the future.
 
-Want to learn more about our approach or simply want to discuss the content of this article? Stop by our [Discord](https://discord.gg/dusk-devs) and let’s chat!
+Want to learn more about our approach or simply want to discuss the content of this article? Stop by our [Discord](https://discord.gg/rune-devs) and let’s chat!
 
 

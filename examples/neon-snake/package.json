@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
-    "deploy": "../../scripts/copy-assets.sh neon-snake && yarn build && dusk upload dist",
+    "deploy": "../../scripts/copy-assets.sh neon-snake && yarn build && rune upload dist",
     "lint": "eslint src",
     "preview": "vite preview"
   },

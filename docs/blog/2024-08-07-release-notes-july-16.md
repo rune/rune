@@ -3,7 +3,7 @@ title: Release Notes July 16th - 31st 2024
 description: Release notes for the Rune platform 
 slug: release-notes-july-16
 tags: [Release Notes]
-image: /img/blog/social-previews/dusk.png
+image: /img/blog/social-previews/rune.png
 authors:
 - name: Amani Albrecht
   title: Chief of Staff at Rune  

@@ -42,7 +42,7 @@
     "dev": "npm run dev:client & npm run dev:logic",
     "dev:client": "react-scripts start",
     "dev:logic": "rollup -c --watch",
-    "deploy": "../../scripts/copy-assets.sh sudoku && yarn build && dusk upload build",
+    "deploy": "../../scripts/copy-assets.sh sudoku && yarn build && rune upload build",
     "lint": "eslint src"
   },
   "eslintConfig": {

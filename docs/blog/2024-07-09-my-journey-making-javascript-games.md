@@ -57,4 +57,4 @@ In this environment I'd missed the mark considerably but I was lucky enough to g
 
 I liked the platform so much when I got the opportunity to join the company it really was a no-brainer for me, and here we are.
 
-Am I still building games? Of course I am! Hopefully this was an interesting read, if you want to discuss anything here or otherwise just [hit me up on Discord](https://discord.gg/dusk-devs)
+Am I still building games? Of course I am! Hopefully this was an interesting read, if you want to discuss anything here or otherwise just [hit me up on Discord](https://discord.gg/rune-devs)

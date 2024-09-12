@@ -4,7 +4,7 @@ sidebar_position: 20
 
 # Game Over
 
-When your game ends, you should call [`Rune.gameOver(options)`](../api-reference.md#duskgameoveroptions) to inform Rune that the game ended. As a result, Rune will overlay a standardized game over popup to the user.
+When your game ends, you should call [`Rune.gameOver(options)`](../api-reference.md#runegameoveroptions) to inform Rune that the game ended. As a result, Rune will overlay a standardized game over popup to the user.
 
 This popup contents will vary depending on the options you pass. The main choice is whether the game has winners/losers or assigns each player a score.
 
@@ -92,4 +92,4 @@ If you want to build a custom game over screen, you can pass [`minimizePopUp: tr
 
 ### Delaying Game Over Popup {#delaying-game-over-popup}
 
-If you pass [`delayPopUp: true`](../api-reference.md#delaypopup-boolean) to `Rune.gameOver()`, Rune will not show the game popup immediately. This is useful if you want to e.g. display some animation or just make sure that the players see the final game state before the game over popup is shown. In this case, you should call [`Rune.showGameOverPopUp()`](../api-reference.md#duskshowgameoverpopup) in your `client.js`. If you don't do it, Rune will still show it automatically after a few seconds.
+If you pass [`delayPopUp: true`](../api-reference.md#delaypopup-boolean) to `Rune.gameOver()`, Rune will not show the game popup immediately. This is useful if you want to e.g. display some animation or just make sure that the players see the final game state before the game over popup is shown. In this case, you should call [`Rune.showGameOverPopUp()`](../api-reference.md#runeshowgameoverpopup) in your `client.js`. If you don't do it, Rune will still show it automatically after a few seconds.

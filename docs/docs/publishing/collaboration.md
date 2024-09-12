@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Collaboration
 
-When you create a game, you become an admin. As an admin, you can add other Rune users as team members with different roles: Playtester, Developer or Admin. Use `npx dusk-cli@latest update-members` in your terminal to update the team for your game:
+When you create a game, you become an admin. As an admin, you can add other Rune users as team members with different roles: Playtester, Developer or Admin. Use `npx rune-games-cli@latest update-members` in your terminal to update the team for your game:
 
 - List existing members
 - Invite new members using their Rune tag
@@ -21,6 +21,6 @@ All game members can playtest game versions in draft / in review in the Rune app
 
 Developers and Admins are shown in the game's team list in the Rune app. Playtesters are not shown in the team list.
 
-## Playtesting in Rune App {#playtesting-in-dusk-app}
+## Playtesting in Rune App {#playtesting-in-rune-app}
 
 As a member of the team who made the game, you can play your game in the Rune app before it's published to everyone. See [Testing in Rune App](/docs/playtesting/testing-in-app) for more info.

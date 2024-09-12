@@ -9,7 +9,7 @@ Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its mi
 To get started, you only need to run one command:
 
 ```sh
-npx dusk-cli@latest create
+npx rune-games-cli@latest create
 ```
 After this, you'll have a multiplayer Tic Tac Toe game running.
 
@@ -94,6 +94,6 @@ You can also make much fancier games than Tic Tac Toe. Rune supports games with 
 Here are some good places to start:
 
 - If you want some inspiration for your next game, we really recommend [checking out the example games](/docs/examples/games)!
-- Building games is more fun when you're part of a community, join the [Rune Discord server](https://discord.gg/dusk-devs).
+- Building games is more fun when you're part of a community, join the [Rune Discord server](https://discord.gg/rune-devs).
 - If your game is ready to be published to the big Rune community, check out [how to publish your game](publishing/publishing-your-game.md).
 - Want to better understand how Rune works underneath? See our explanation of [game state syncing](how-it-works/syncing-game-state.md).

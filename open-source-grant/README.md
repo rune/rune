@@ -53,7 +53,7 @@ All the game code will be MIT-licensed and serve as inspiration for developers b
 4. **Upload:** Submit your completed game to Rune, fix any major issues, and release it to the world
 5. **Launch:** You receive the grant money through GitHub Sponsors and get promoted across the internet
 
-The deadline for applying for an open-source grant was February 7th. We will open again for another round of grant applications again sometime later in 2024. Stay tuned by giving this repo a star and joining the [Rune Discord](https://discord.gg/dusk-devs).
+The deadline for applying for an open-source grant was February 7th. We will open again for another round of grant applications again sometime later in 2024. Stay tuned by giving this repo a star and joining the [Rune Discord](https://discord.gg/rune-devs).
 
 <div align="center">
 <picture>
@@ -99,7 +99,7 @@ We think anyone can be an awesome game dev and so the only restrictions are thos
 ### Rune
 
 #### What is Rune?
-Rune is a [multiplayer gaming platform](https://rune.ai) with 10m+ installs across [iOS](https://apps.apple.com/us/app/dusk-games-and-voice-chat/id1450358364) and [Android](https://play.google.com/store/apps/details?id=ai.dusk.tincan). Our mission is to help indie game developers make awesome multiplayer games that get into the hands of millions of players.
+Rune is a [multiplayer gaming platform](https://rune.ai) with 10m+ installs across [iOS](https://apps.apple.com/us/app/rune-games-and-voice-chat/id1450358364) and [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan). Our mission is to help indie game developers make awesome multiplayer games that get into the hands of millions of players.
 
 #### Can I upload my game to other platforms besides Rune?
 Absolutely! You have complete freedom to publish your game on other platforms with no restrictions.
@@ -135,6 +135,6 @@ We require that all games adhere to basic content guidelines such as avoiding ha
 
 #### I have questions about the grants initiative, where do I ask?
 
-We'd love to answer any questions. Please write your question in the **#general** channel in our [Discord server](https://discord.gg/dusk-devs).
+We'd love to answer any questions. Please write your question in the **#general** channel in our [Discord server](https://discord.gg/rune-devs).
 
-[![Discord Follow](https://dcbadge.vercel.app/api/server/dusk-devs?style=flat)](https://discord.gg/dusk-devs)
+[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-devs)

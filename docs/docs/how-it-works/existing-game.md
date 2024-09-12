@@ -13,7 +13,7 @@ We recommend you follow **approach 1** below, which will take care of any boiler
 Create a new Rune game project by running:
 
 ```sh
-npx dusk-cli@latest create
+npx rune-games-cli@latest create
 ```
 
 You now have a simple example game with game logic and client rendering files. You can then copy your game logic and rendering code into the `logic.ts` and `client.ts` files respectively. Take a look at [Quick Start](../quick-start.md) for an introduction to these files or [Syncing Game State](./syncing-game-state.md) for a more in-depth explanation.
@@ -39,4 +39,4 @@ You can also look at the [Tic Tac Toe](https://github.com/rune/rune/tree/staging
 
 ### Questions?
 
-We're happy to help! Just write us on the [Rune Discord](https://discord.gg/dusk-devs) server.
+We're happy to help! Just write us on the [Rune Discord](https://discord.gg/rune-devs) server.

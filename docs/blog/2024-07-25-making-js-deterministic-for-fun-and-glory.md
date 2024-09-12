@@ -162,4 +162,4 @@ The other thing we can do is help developers to recognize when their code might 
 
 As you can see determinism in JavaScript isn’t straight forward but it is obtainable. We now have games running in perfect synchronization.
 
-If you have comments or want to learn more head over to the [Discord](https://discord.gg/dusk-devs).
+If you have comments or want to learn more head over to the [Discord](https://discord.gg/rune-devs).

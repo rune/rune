@@ -4,11 +4,11 @@ title: Frequently Asked Questions
 
 # About Rune
 
-### What Is Rune? {#what-is-dusk}
+### What Is Rune? {#what-is-rune}
 
 Rune is a social gaming app with millions of people playing games together across iOS and Android. Players can enjoy a variety of amazing multiplayer HTML5 games on Rune's voice chat, creating lasting memories and sharing laughs! Our mission is to make mobile gaming more social and enable indie game developers to get their games in the hands of millions of players.
 
-### What Are Rune’s Features? {#what-are-dusks-features}
+### What Are Rune’s Features? {#what-are-runes-features}
 
 With Rune, you can build a multiplayer game that reaches millions, while letting us handle the complexity! Here’s some things you don't have to worry about if you use Rune:
 
@@ -25,19 +25,19 @@ With Rune, you can build a multiplayer game that reaches millions, while letting
 
 We’re a small passionate team who love making and playing games together. Rune was founded by Bjarke and Sanjay, who were doing their PhDs together at MIT, but thought it would be more fun to drop out and build something together instead. They decided to start Rune one night at Sanjay’s apartment while playing board games (we were playing Codenames if you’re curious).
 
-### What Is the Benefit of Submitting My Game to Rune? {#what-is-the-benefit-of-submitting-my-game-to-dusk}
+### What Is the Benefit of Submitting My Game to Rune? {#what-is-the-benefit-of-submitting-my-game-to-rune}
 
 Rune has millions of players so you’ll get tons of people playing your game and giving you feedback. Building a game is fun, but having tons of people actually playing your game makes it 10x more fun. We promote your game for free on our social channels and also provide valuable analytics and use feedback on your game. And don’t forget the bragging rights — Rune shows that you created the game and displays your stats. Next time you meet your friends, you can show them how you built a game with millions of plays.
 
 ### Do You Host Game Jams? {#do-you-host-game-jams}
 
-Yes! We host fun community events for all indie game developers regardless of experience level. Some of these events will also have prizes. See `announcements` channel on [Discord](https://discord.gg/dusk-devs) or [follow us on Twitter](https://twitter.com/dusk_devs) for the latest game jam.
+Yes! We host fun community events for all indie game developers regardless of experience level. Some of these events will also have prizes. See `announcements` channel on [Discord](https://discord.gg/rune-devs) or [follow us on Twitter](https://twitter.com/rune_devs) for the latest game jam.
 
-### Does Rune Have Ads? {#does-dusk-have-ads}
+### Does Rune Have Ads? {#does-rune-have-ads}
 
 We don't show any ads and don't have any upcoming plans to add ads.
 
-### How Does Rune Make Money / Stay Alive? {#how-does-dusk-make-money--stay-alive}
+### How Does Rune Make Money / Stay Alive? {#how-does-rune-make-money--stay-alive}
 
 We'll soon provide ways for you as a game developer to earn money on your game on Rune. When you start making revenue, we will take a small piece of it to cover server and development costs.
 
@@ -50,11 +50,11 @@ We don't integrate with blockchain or NFTs and have no upcoming plans to do so.
 
 # Getting Started
 
-### Which Game Engines Does Rune Support? {#which-game-engines-does-dusk-support}
+### Which Game Engines Does Rune Support? {#which-game-engines-does-rune-support}
 
 Your game logic must be written in JavaScript/TypeScript, but your rendering code can use any engine that exports to HTML5. This includes all JavaScript-based engines, Unity, Godot, Defold, and many others. If you don’t know how to use Rune with your favorite engine, just ask us!
 
-### Does Rune Host the Games? {#does-dusk-host-the-games}
+### Does Rune Host the Games? {#does-rune-host-the-games}
 
 Yes, we host the games for free. The games are hosted and cached all over the world to ensure the games load super fast!
 
@@ -62,15 +62,15 @@ Yes, we host the games for free. The games are hosted and cached all over the wo
 
 You don’t have to worry about desktop input. Anyone opening a link to your game on desktop will be directed to play the mobile version.
 
-### Is There a Benefit to Uploading a Game to Rune Right Away? {#is-there-a-benefit-to-uploading-a-game-to-dusk-right-away}
+### Is There a Benefit to Uploading a Game to Rune Right Away? {#is-there-a-benefit-to-uploading-a-game-to-rune-right-away}
 
 Yes, like other social apps, it’s a massive benefit to be early. If you upload your game early, it’ll be much easier for you to make an awesome game that goes viral! We will be promoting your game for free, both inside the app and on our social media channels.
 
-### How Much Does Rune Cost to Use? {#how-much-does-dusk-cost-to-use}
+### How Much Does Rune Cost to Use? {#how-much-does-rune-cost-to-use}
 
 Rune is free for all players and game developers.
 
-### Is There Any Way to Monetize My Game Through Rune? {#is-there-any-way-to-monetize-my-game-through-dusk}
+### Is There Any Way to Monetize My Game Through Rune? {#is-there-any-way-to-monetize-my-game-through-rune}
 
 We're working on ways to help indie game devs monetize, but want to make sure we do it right. For now, you can win cash prizes in our game jams. Later on there’ll be more opportunities to monetize your games on Rune.
 
@@ -81,7 +81,7 @@ Of course, anyone uploading their game early will have a huge head start in buil
 
 # Game Content
 
-### How Do I Make the Best Possible Game on Rune? {#how-do-i-make-the-best-possible-game-on-dusk}
+### How Do I Make the Best Possible Game on Rune? {#how-do-i-make-the-best-possible-game-on-rune}
 
 We’ve talked with a lot of players in the Rune community and accumulated their feedback in [Best Practices](/docs/playtesting/best-practices-gameplay). Make sure to check it out!
 
@@ -121,15 +121,15 @@ We'll try to do our best to review your game quickly and it should normally take
 
 In case you want other devs to help you playtest your game, you can [upload your game](/docs/publishing/publishing-your-game) to get a playtest link that you can share with them. This link will work even before the game has been reviewed.
 
-### Can I Upload My Game to Other Platforms Than Rune? {#can-i-upload-my-game-to-other-platforms-than-dusk}
+### Can I Upload My Game to Other Platforms Than Rune? {#can-i-upload-my-game-to-other-platforms-than-rune}
 
 Definitely. It's your game and you can do whatever you like with it.
 
-### Can I Upload More Than One Game to Rune? {#can-i-upload-more-than-one-game-to-dusk}
+### Can I Upload More Than One Game to Rune? {#can-i-upload-more-than-one-game-to-rune}
 
 Yes! You can upload as many games as you like to Rune.
 
-### Can I Remove My Game From Rune? {#can-i-remove-my-game-from-dusk}
+### Can I Remove My Game From Rune? {#can-i-remove-my-game-from-rune}
 
 Yes, you're always free to remove your game whenever you'd like. It's your game.
 
@@ -137,6 +137,6 @@ Yes, you're always free to remove your game whenever you'd like. It's your game.
 
 ### I Have a Question / Have Suggestions for a New Feature. How Do I Reach You? {#i-have-a-question--have-suggestions-for-a-new-feature-how-do-i-reach-you}
 
-We’d love to hear from you! Let us know what you think in the `feedback-for-dusk` channel on our [Discord](https://discord.gg/dusk-devs).
+We’d love to hear from you! Let us know what you think in the `feedback-for-rune` channel on our [Discord](https://discord.gg/rune-devs).
 
 You can also always contact us at [devs@rune.ai](mailto:devs@rune.ai).

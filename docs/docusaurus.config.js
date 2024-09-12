@@ -23,7 +23,7 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "dusk", // Usually your GitHub org/user name.
+  organizationName: "rune", // Usually your GitHub org/user name.
   projectName: "rune-sdk", // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -117,15 +117,15 @@ const config = {
             items: [
               {
                 label: "Discord",
-                href: "https://discord.gg/dusk-devs",
+                href: "https://discord.gg/rune-devs",
               },
               {
                 label: "Twitter",
-                href: "https://twitter.com/dusk_devs",
+                href: "https://twitter.com/rune_devs",
               },
               {
                 label: "Instagram",
-                href: "https://instagram.com/dusk_gg/",
+                href: "https://instagram.com/rune_gg/",
               },
             ],
           },

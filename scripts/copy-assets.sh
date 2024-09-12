@@ -1,6 +1,6 @@
 # This script copies game assets for the examples that cannot be provided in
 # this repo due to their licensing restrictions. If you've based your game on
-# an example game, you can ignore this file and run 'dusk upload' directly.
+# an example game, you can ignore this file and run 'rune upload' directly.
 set -e
 
 ASSETS_DIR="$HOME/.rune/game-asset-import"

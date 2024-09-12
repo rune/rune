@@ -30,26 +30,26 @@ Rune's predict-rollback approach is extremely bandwidth-efficient as only the ac
 
 ## External Dependencies {#external-dependencies}
 
-You can import external dependencies in your game logic, e.g. for physics or pathfinding. Many external libraries contain code that have unintended side effects and thus does not comply with constraints listed above. For that reason Rune has a [list of known supported libraries](https://github.com/rune/rune/blob/staging/packages/vite-plugin-dusk/src/dependency-whitelist.ts).
+You can import external dependencies in your game logic, e.g. for physics or pathfinding. Many external libraries contain code that have unintended side effects and thus does not comply with constraints listed above. For that reason Rune has a [list of known supported libraries](https://github.com/rune/rune/blob/staging/packages/vite-plugin-rune/src/dependency-whitelist.ts).
 
 In case you use a library that's not on the supported libraries list, you'll receive a warning in CLI during development. If you build the game and successfully upload it to Rune, we would appreciate if you add the dependencies to the list linked above.
 
 
 ## Editor Integration {#editor-integration}
 
-Rune has created an eslint plugin to give warnings for potentially unsafe code directly in your editor! If you're using the Rune quickstart template created using `npx dusk-cli@latest create`, then this eslint plugin is already set up for you. If not, then follow the steps below.
+Rune has created an eslint plugin to give warnings for potentially unsafe code directly in your editor! If you're using the Rune quickstart template created using `npx rune-games-cli@latest create`, then this eslint plugin is already set up for you. If not, then follow the steps below.
 
 First, install the Rune eslint plugin:
 
 ```bash
-npm install eslint-plugin-dusk --save-dev
+npm install eslint-plugin-rune --save-dev
 ```
 
 Next, add the plugin to the extends section of your `.eslintrc` configuration file:
 
 ```json
 {
-  "extends": ["plugin:dusk/recommended"]
+  "extends": ["plugin:rune/recommended"]
 }
 ```
 
@@ -62,10 +62,10 @@ By default, the plugin will check files named `logic.js`/`logic.ts` or files in 
   "overrides": [
     {
       "files": ["lib/*.ts"],
-      "extends": ["plugin:dusk/logicModule"]
+      "extends": ["plugin:rune/logicModule"]
     }
   ]
 }
 ```
 
-You can also check out the [eslint plugin code](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-dusk).
+You can also check out the [eslint plugin code](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-rune).

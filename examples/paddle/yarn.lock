@@ -1296,9 +1296,9 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-vite-plugin-dusk@^1.0.0:
+vite-plugin-rune@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-dusk/-/vite-plugin-dusk-1.0.0.tgz#3310f6844447583e2c90e1b388a0db71de2484b5"
+  resolved "https://registry.yarnpkg.com/vite-plugin-rune/-/vite-plugin-rune-1.0.0.tgz#3310f6844447583e2c90e1b388a0db71de2484b5"
   integrity sha512-r2mt5BcmuZ9eWt9C6gTNXjPRSh3EhnglJGF4KD3YkenHuD+Ul9mVSAlTTcEXauiPBieC6DQp1MjlGzFo6yh67w==
   dependencies:
     es-module-lexer "^1.4.2"

@@ -3,7 +3,7 @@ title: Release Notes July 1st - 15th 2024
 description: Release notes for the Rune platform 
 slug: release-notes-july-1
 tags: [Release Notes]
-image: /img/blog/social-previews/dusk.png
+image: /img/blog/social-previews/rune.png
 authors:
 - name: Amani Albrecht
   title: Chief of Staff at Rune  
@@ -21,7 +21,7 @@ authors:
 
 * Brought the settings and profile screens into the redesign, they now match the app’s beautiful new aesthetic 🎨 Also added your most played games onto your profile.
 * Unveiled the Rune drop to our playerbase with a beautiful explainer banner, screen and video 📹
-* 🌒 Updated both our app icon and share room links to dusk!
+* 🌒 Updated both our app icon and share room links to rune!
 * 🧹 Cleaned up code in preparation for v2 avatars—get ready for more customization options soon!
 * Final Rune Transition items, including replacing the llama icon with a friends icon for the number of allowed players badge in games 👥 and updated the “Install Rune” image that pops up inside browser rooms!
 * Added our updated Rune socials and emails to the app 🔗

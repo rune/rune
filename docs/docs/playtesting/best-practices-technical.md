@@ -6,7 +6,7 @@ sidebar_position: 4
 
 How to code your game to perform the best on Rune!
 
-### Use Rune Loading Animation {#use-dusk-loading-animation}
+### Use Rune Loading Animation {#use-rune-loading-animation}
 
 Rune shows an animation while your game is loading. It's a smoother player experience to only have one progress bar to load your game. Avoid having a loading screen in your game by waiting with calling `Rune.initClient()` until your game has fully completed loading.
 

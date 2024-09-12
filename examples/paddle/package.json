@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
     "lint": "eslint src",
-    "deploy": "../../scripts/copy-assets.sh paddle && yarn build && dusk upload dist",
+    "deploy": "../../scripts/copy-assets.sh paddle && yarn build && rune upload dist",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -27,6 +27,6 @@
     "typescript-eslint": "^8.0.0-alpha.54",
     "vite": "^5.2.11",
     "vite-plugin-qrcode": "^0.2.2",
-    "vite-plugin-dusk": "^1.0.0"
+    "vite-plugin-rune": "^1.0.0"
   }
 }

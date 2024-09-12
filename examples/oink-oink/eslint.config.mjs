@@ -1,6 +1,6 @@
 import js from "@eslint/js"
 import globals from "globals"
-import duskPlugin from "rune-sdk/eslint.js"
+import runePlugin from "rune-sdk/eslint.js"
 import tseslint from "typescript-eslint"
 import pluginReactHooks from "eslint-plugin-react-hooks"
 import { fixupPluginRules } from "@eslint/compat"
@@ -18,7 +18,7 @@ export default [
     },
   },
   js.configs.recommended,
-  ...duskPlugin.configs.recommended,
+  ...runePlugin.configs.recommended,
   ...tseslint.configs.recommended,
   {
     plugins: {

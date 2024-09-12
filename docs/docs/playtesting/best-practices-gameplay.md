@@ -38,6 +38,6 @@ There's many non-English players on Rune so you increase your game's chances of 
 
 Players enjoy when they make progress in your game across sessions such as unlocking new content or achieving high scores. Use Rune's built-in [persistence API](../advanced/persisted-data.md) to save data in a reliable way that automatically syncs it across a user's devices. Avoid using cookies, local stage or IndexedDB as the OS may reset those.
 
-### Polish Your Rune Profile {#polish-your-dusk-profile}
+### Polish Your Rune Profile {#polish-your-rune-profile}
 
 Adjust your name, avatar, and description in Rune app Profile tab. Your profile will be publicly visible in Rune app for games that you have created or contributed to.

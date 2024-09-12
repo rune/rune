@@ -5,7 +5,7 @@
 </picture>
 
 <p align="center">
-  <a href="https://developers.rune.ai">Docs</a> · <a href="https://discord.gg/dusk-devs">Discord</a> · <a href="https://developers.rune.ai/faq">FAQ</a> · <a href="https://developers.rune.ai/blog">Blog</a> · <a href="https://developers.rune.ai/docs/examples/games">Examples</a> 
+  <a href="https://developers.rune.ai">Docs</a> · <a href="https://discord.gg/rune-devs">Discord</a> · <a href="https://developers.rune.ai/faq">FAQ</a> · <a href="https://developers.rune.ai/blog">Blog</a> · <a href="https://developers.rune.ai/docs/examples/games">Examples</a> 
 </p>
 
 # Rune
@@ -42,15 +42,15 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 
 ## Packages
 
-- [eslint-plugin-dusk](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-dusk) – rules and config for writing safe logic code for the Rune SDK
-- [dusk-cli](https://github.com/rune/rune/tree/staging/packages/dusk-cli) – command line tool to develop and upload your HTML5 game for Rune
-- [vite-plugin-dusk](https://github.com/rune/rune/tree/staging/packages/vite-plugin-dusk) – Vite plugin for writing games for the Rune SDK
+- [eslint-plugin-rune](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-rune) – rules and config for writing safe logic code for the Rune SDK
+- [rune-games-cli](https://github.com/rune/rune/tree/staging/packages/rune-games-cli) – command line tool to develop and upload your HTML5 game for Rune
+- [vite-plugin-rune](https://github.com/rune/rune/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
 
 ## Community
 
-Have a question or want to discuss with others how to make an amazing multiplayer game? Join our [Discord server](https://discord.gg/dusk-devs)!
+Have a question or want to discuss with others how to make an amazing multiplayer game? Join our [Discord server](https://discord.gg/rune-devs)!
 
-[![Discord Follow](https://dcbadge.vercel.app/api/server/dusk-devs?style=flat)](https://discord.gg/dusk-devs)
+[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-devs)
 
 ## Contributing
 

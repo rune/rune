@@ -1,9 +1,9 @@
 ---
 title: Rune Jam Winners!
 description: The first Rune Jam is over!
-slug: dusk-jam-winners
+slug: rune-jam-winners
 tags: [Game Development, Rune Jam]
-image: /img/blog/social-previews/dusk.png
+image: /img/blog/social-previews/rune.png
 authors:
 - name: Amani Albrecht
   title: Chief of Staff at Rune  
@@ -41,6 +41,6 @@ While we celebrate the winning games, we truly believe that the Rune gamers were
 
 Stay tuned for more events like this, and keep pushing the boundaries of creativity! Happy developing, everyone! 🌟
 
-Want to find out more? Why not stop by our [Discord](https://discord.gg/dusk-devs) and let’s chat!
+Want to find out more? Why not stop by our [Discord](https://discord.gg/rune-devs) and let’s chat!
 
 

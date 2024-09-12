@@ -70,4 +70,4 @@ As mentioned in [game networking models](https://developers.rune.ai/blog/modern-
 
 I’ve seen a couple of games out there that have a lag bonus - if your connection was poor or unstable you get an easier ride in the game. With the right tuning this feels like it could be a good solution.
 
-There are probably many other gotchas and areas to think about when designing multiplayer games, these are just a few that have come up for me. If you have other areas you think should be mentioned or want to discuss any of the above be sure to visit our [Discord](https://discord.gg/dusk-devs). 
+There are probably many other gotchas and areas to think about when designing multiplayer games, these are just a few that have come up for me. If you have other areas you think should be mentioned or want to discuss any of the above be sure to visit our [Discord](https://discord.gg/rune-devs). 

@@ -1,0 +1,47 @@
+{
+  "name": "eslint-plugin-rune",
+  "version": "2.0.1",
+  "description": "ESlint rules for Rune SDK",
+  "license": "MIT",
+  "author": "Rune AI Inc.",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rune-ai/rune.git",
+    "directory": "packages/eslint-plugin-rune"
+  },
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": "^14.17.0 || ^16.0.0 || >= 18.0.0"
+  },
+  "scripts": {
+    "prepare": "tsc",
+    "build": "tsc",
+    "test": "mocha --parallel --recursive --extension spec.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/eslint": "^9.6.0",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^20.14.12",
+    "eslint": "^9.7.0",
+    "mocha": "^10.7.0",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "eslint": ">=9"
+  },
+  "dependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.7.0",
+    "globals": "^15.8.0"
+  }
+}

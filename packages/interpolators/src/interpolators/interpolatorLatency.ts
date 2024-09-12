@@ -146,7 +146,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
         }
 
         if (timeToMaxSpeed > 0) {
-          acceleration = maxSpeed / (timeToMaxSpeed / Dusk.msPerUpdate)
+          acceleration = maxSpeed / (timeToMaxSpeed / Rune.msPerUpdate)
           useAcceleration = true
         }
 
@@ -156,7 +156,7 @@ export function interpolatorLatency<Dimensions extends number | number[]>({
       // This value is set to true when `onChange` is called by `update` event.
 
       // @ts-ignore
-      if (!Dusk._isOnChangeCalledByUpdate) {
+      if (!Rune._isOnChangeCalledByUpdate) {
         return
       }
 

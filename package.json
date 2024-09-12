@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "packages/eslint-plugin-dusk",
-    "packages/vite-plugin-dusk",
-    "packages/dusk-cli",
+    "packages/eslint-plugin-rune",
+    "packages/vite-plugin-rune",
+    "packages/rune-cli",
     "packages/interpolators"
   ],
   "scripts": {
@@ -20,10 +20,10 @@
     "@eslint/compat": "^1.1.1",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.7.0",
-    "dusk-cli": "7.8.6",
+    "rune-games-cli": "7.8.6",
     "eslint": "^9.7.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-dusk": "2.0.1",
+    "eslint-plugin-rune": "2.0.1",
     "eslint-plugin-eslint-plugin": "^6.2.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^17.9.0",

@@ -2,7 +2,7 @@ import { interpolatorLatency } from "../src/interpolators/interpolatorLatency"
 
 describe("interpolator", () => {
   it("should not allow to call getPosition before calling update", () => {
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
     }
 
@@ -12,7 +12,7 @@ describe("interpolator", () => {
   })
 
   it("should interpolate between position using deceleration/acceleration to ease between changes in direction", () => {
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
@@ -59,7 +59,7 @@ describe("interpolator", () => {
   it("should interpolate between the positions midway between updates accounting for acceleration", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 50,
       // @ts-ignore
@@ -96,7 +96,7 @@ describe("interpolator", () => {
   it("should never pass the future game point even with acceleration", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    global.Dusk = {
+    global.Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 50,
       // @ts-ignore
@@ -116,7 +116,7 @@ describe("interpolator", () => {
   it("should interpolate between the positions when provided with a multi-dimension array (multiple axis)", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
@@ -142,14 +142,14 @@ describe("interpolator", () => {
       timeToMaxSpeed: 1000,
     })
 
-    const dusk = {
+    const rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
     }
 
-    ;(globalThis as any).Dusk = dusk
+    ;(globalThis as any).Rune = rune
 
     instance.update({ game: 100, futureGame: 110 })
     expect(instance.getPosition()).toEqual(100)
@@ -235,14 +235,14 @@ describe("interpolator", () => {
       timeToMaxSpeed: 1000,
     })
 
-    const dusk = {
+    const rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
     }
 
-    ;(globalThis as any).Dusk = dusk
+    ;(globalThis as any).Rune = rune
 
     instance.update({ game: [100, 100], futureGame: [110, 90] })
     expect(instance.getPosition()).toEqual([100, 100])
@@ -333,14 +333,14 @@ describe("interpolator", () => {
     const maxSpeed = 10
     const instance = interpolatorLatency({ maxSpeed })
 
-    const dusk = {
+    const rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 0,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
     }
 
-    ;(globalThis as any).Dusk = dusk
+    ;(globalThis as any).Rune = rune
 
     instance.update({ game: [100, 100], futureGame: [110, 100] })
     expect(instance.getPosition()).toEqual([100, 100])
@@ -357,10 +357,10 @@ describe("interpolator", () => {
     // now we get an action that we can use to calculate the player
     // is in a very different place (they moved up the screen at the point
     // the delay happened for 300ms)
-    dusk._isOnChangeCalledByUpdate = false
+    rune._isOnChangeCalledByUpdate = false
     instance.update({ game: [110, 70], futureGame: [110, 60] })
     const lastRenderPos = instance.getPosition()
-    dusk._isOnChangeCalledByUpdate = true
+    rune._isOnChangeCalledByUpdate = true
     instance.update({ game: [110, 60], futureGame: [110, 50] })
     const newRenderPos = instance.getPosition()
     const dx = lastRenderPos[0] - newRenderPos[0]
@@ -374,7 +374,7 @@ describe("interpolator", () => {
   it("should ignore update calls if _isOnChangeCalledByUpdate is false", () => {
     const instance = interpolatorLatency({ maxSpeed: 10, timeToMaxSpeed: 1000 })
 
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -384,7 +384,7 @@ describe("interpolator", () => {
     instance.update({ game: 0, futureGame: 10 })
 
     expect(instance.getPosition()).toEqual(4)
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       timeSinceLastUpdate: () => 40,
       // @ts-ignore
@@ -399,7 +399,7 @@ describe("interpolator", () => {
   it("should not go above maxSpeed", () => {
     const instance = interpolatorLatency({ maxSpeed: 3, timeToMaxSpeed: 200 })
 
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -432,7 +432,7 @@ describe("interpolator", () => {
       timeToMaxSpeed: 200,
     })
 
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -459,7 +459,7 @@ describe("interpolator", () => {
       timeToMaxSpeed: 200,
     })
 
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -486,7 +486,7 @@ describe("interpolator", () => {
   it("should not use acceleration by default", () => {
     const instance = interpolatorLatency({ maxSpeed: 3 })
 
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,
@@ -503,7 +503,7 @@ describe("interpolator", () => {
   it("should only move max speed with multiple axis", () => {
     const instance = interpolatorLatency<number[]>({ maxSpeed: 10 })
 
-    ;(globalThis as any).Dusk = {
+    ;(globalThis as any).Rune = {
       msPerUpdate: 100,
       // @ts-ignore
       _isOnChangeCalledByUpdate: true,

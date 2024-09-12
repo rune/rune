@@ -1,7 +1,7 @@
 {
   "include": [
     "src/**/*.ts",
-    "Dusk.d.ts"
+    "Rune.d.ts"
   ],
   "compilerOptions": {
     "skipLibCheck": true

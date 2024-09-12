@@ -9,7 +9,7 @@ export function getInstaller() {
     const installer = (() => {
       try {
         if (
-          execSync(`npm list -g rune-games-cli`).toString().includes(`rune-cli`)
+          execSync(`npm list -g rune-games-cli`).toString().includes(`rune-games-cli`)
         ) {
           return "npm"
         }

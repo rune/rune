@@ -35,7 +35,7 @@ Since there are two different sets of requirements, it’s good practice to spli
 
 ## Regional Servers
 
-As mentioned in [Modern Game Networking Models](https://developers.dusk.gg/blog/modern-game-networking-models), one of the first things to think about in any networked game is making sure that the connection between client and server is the best it can be. 
+As mentioned in [Modern Game Networking Models](https://developers.rune.ai/blog/modern-game-networking-models), one of the first things to think about in any networked game is making sure that the connection between client and server is the best it can be. 
 
 Even if you assume everyone is on a great connection (something that isn’t true!), in the best case, network packets travel at the speed of light. If players are connecting from anywhere in the world, then the distances between a central server and the clients add up to significant latency.
 
@@ -56,7 +56,7 @@ On the central server, the load balancing can act largely like a web application
 
 However, on the real-time server, there will be several pieces of state:
 
-* The connections from the players themselves. As mentioned in [WebRTC vs WebSocket](https://developers.dusk.gg/blog/webrtc-vs-websockets-for-multiplayer-games), for high performance we want to establish and maintain a connection between clients and the real-time server. The connection must not be dropped between interactions with the server.
+* The connections from the players themselves. As mentioned in [WebRTC vs WebSocket](https://developers.rune.ai/blog/webrtc-vs-websockets-for-multiplayer-games), for high performance we want to establish and maintain a connection between clients and the real-time server. The connection must not be dropped between interactions with the server.
 * The server is running the authoritative part of the game, making sure that the players see the same state and don’t cheat. The server may also be running part of the game logic such as computer-controlled actors and in-game events. This needs to continue to run whether players are taking actions or not.
 
 Since the real-time server is stateful, the load balancing needs to connect to the same server for all players in the same session. In an MMORPG this means the zones the players are allocated to a server and all players in those zones connect to that server. In Dusk, this means that the room/game combination is allocated to a server in the same way.

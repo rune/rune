@@ -14,7 +14,7 @@ Your options are:
 
 ## Dusk-Compatible Physics Engines
 
-Dusk ensures that any JS game logic code is cross-platform deterministic by using a [set of rules](../how-it-works/server-side-logic.md) and by patching [non-deterministic functions](https://developers.dusk.gg/blog/making-js-deterministic-for-fun-and-glory/). By using a compatible physics engine, for instance [Propel.js](https://github.com/kevglass/propel-js/), Dusk ensures that it's deterministic and synchronized across clients and server.
+Dusk ensures that any JS game logic code is cross-platform deterministic by using a [set of rules](../how-it-works/server-side-logic.md) and by patching [non-deterministic functions](https://developers.rune.ai/blog/making-js-deterministic-for-fun-and-glory/). By using a compatible physics engine, for instance [Propel.js](https://github.com/kevglass/propel-js/), Dusk ensures that it's deterministic and synchronized across clients and server.
 
 ## Custom Physics
 

@@ -35,7 +35,7 @@ This approach requires you to be careful, especially if you're using TypeScript 
 4. Setup [Dusk's ESLint plugin](server-side-logic.md#editor-integration) to detect issues in your game logic
 5. Move all your game logic into `logic.js` and make `client.js` import all your rendering code
 
-You can also look at the [Tic Tac Toe](https://github.com/dusk-gg/dusk/tree/staging/examples/tic-tac-toe) example game to understand how to set up a game manually.
+You can also look at the [Tic Tac Toe](https://github.com/rune/rune/tree/staging/examples/tic-tac-toe) example game to understand how to set up a game manually.
 
 ### Questions?
 

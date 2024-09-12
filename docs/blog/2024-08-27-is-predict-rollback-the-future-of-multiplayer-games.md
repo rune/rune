@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="Is predict-rollback the future of multiplayer games?"/>
 </head>
 
-At Dusk, the majority of the games on the platform are multiplayer. This is largely because we provide an SDK that enables JavaScript developers to build multiplayer experiences very easily, and our player base has come to expect it. Of course, as mentioned in [Modern Game Networking Models](https://developers.dusk.gg/blog/modern-game-networking-models), this means we focus on making the backend networking something special.
+At Dusk, the majority of the games on the platform are multiplayer. This is largely because we provide an SDK that enables JavaScript developers to build multiplayer experiences very easily, and our player base has come to expect it. Of course, as mentioned in [Modern Game Networking Models](https://developers.rune.ai/blog/modern-game-networking-models), this means we focus on making the backend networking something special.
 
 There are a lot of ways of making games multiplayer, from hot seat to shared screen and of course networking itself. Even in networking, there are multiple models to choose from each of which is suitable for a different type of game or programming complexity. 
 
@@ -27,7 +27,7 @@ However, at Dusk, we’re pretty opinionated about a single model that works for
 
 ## Predict-Rollback
 	
-In [Modern Game Networking Models](https://developers.dusk.gg/blog/modern-game-networking-models) we talked in a bit of detail about how predict-rollback works. In summary, we essentially let all clients continue moving forward *predicting* the current game state based on the inputs they know about. If another client provides a new input (via the authoritative server) that occurs before the game time the current client is at, we roll-back the game state, apply the input, and then re-predict the current state. 
+In [Modern Game Networking Models](https://developers.rune.ai/blog/modern-game-networking-models) we talked in a bit of detail about how predict-rollback works. In summary, we essentially let all clients continue moving forward *predicting* the current game state based on the inputs they know about. If another client provides a new input (via the authoritative server) that occurs before the game time the current client is at, we roll-back the game state, apply the input, and then re-predict the current state. 
 
 So why do we think predict-rollback is the future of networking games and the best fit for a generic networking framework?
 
@@ -39,7 +39,7 @@ What’s so great about the model then?
 
 * Low bandwidth—you only need to send the initial state and changes to that state. That’s pretty powerful right there. The variance in networks especially with the emerging nations becoming a huge consumer of games means this is super important.
 * Best player experience—in many cases, it means that clients can run forward without latency between player input and response. Of course, you need to deal with conflicts when they occur, but this seems to be much easier than the alternatives.
-* Most consistent implementation—once you’ve got [determinism](https://developers.dusk.gg/blog/making-js-deterministic-for-fun-and-glory) handled, it’s the most consistent approach across platforms and devices.. Every device acts the same and gets the same results.
+* Most consistent implementation—once you’ve got [determinism](https://developers.rune.ai/blog/making-js-deterministic-for-fun-and-glory) handled, it’s the most consistent approach across platforms and devices.. Every device acts the same and gets the same results.
 
 What are the downsides? The process of rolling back and re-calculating the game state can be CPU heavy. Depending on your approach you may have to calculate many frames of change quickly based on the new input. However, this is why it’s now the right choice. Devices have reached a point where CPUs are extremely overpowered for what they’re trying to achieve in games - so there’s room to have a smart and utility based network model.
 

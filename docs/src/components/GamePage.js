@@ -45,7 +45,7 @@ export function GamePage({ title, slug, techDemo }) {
             borderRadius: "8px",
             lineHeight: "20px",
           }}
-          href={`https://github.com/dusk-gg/dusk/tree/staging/${type}/${slug}`}
+          href={`https://github.com/rune/rune/tree/staging/${type}/${slug}`}
         >
           Source
         </a>

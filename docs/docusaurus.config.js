@@ -8,11 +8,11 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula")
 const config = {
   title: "Dusk - multiplayer web games",
   tagline: "Make multiplayer games that reach a community of millions.",
-  url: "http://developers.dusk.gg/",
+  url: "http://developers.rune.ai/",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "https://www.dusk.gg/favicon.ico",
+  favicon: "https://www.rune.ai/favicon.ico",
 
   scripts: [
     {
@@ -74,7 +74,7 @@ const config = {
         },
         items: [
           {
-            to: "https://dusk.gg",
+            to: "https://rune.ai",
             position: "left",
             label: "App",
           },
@@ -142,7 +142,7 @@ const config = {
               },
               {
                 label: "GitHub",
-                href: "https://github.com/dusk-gg/dusk",
+                href: "https://github.com/rune/rune",
               },
             ],
           },

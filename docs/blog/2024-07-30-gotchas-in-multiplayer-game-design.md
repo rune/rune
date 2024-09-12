@@ -35,7 +35,7 @@ What happens if a player leaves and then re-joins quickly? This might mean they 
  
 ## Determinism
 
-As described [last week](https://developers.dusk.gg/blog/making-js-deterministic-for-fun-and-glory), determinism in multiplayer games is often key to the network model. It’s quite easy to make a deterministic data model that ends up being non-deterministic on the rendering side. Pay special attention to how the renderer converts the inputs given from the network data model - a common issue is running animations independently from the synchronized data model resulting in different player interpretations of whats happened.
+As described [last week](https://developers.rune.ai/blog/making-js-deterministic-for-fun-and-glory), determinism in multiplayer games is often key to the network model. It’s quite easy to make a deterministic data model that ends up being non-deterministic on the rendering side. Pay special attention to how the renderer converts the inputs given from the network data model - a common issue is running animations independently from the synchronized data model resulting in different player interpretations of whats happened.
 
 Be intentional when making effects take place on the client side that aren’t driven by shared data.
 
@@ -66,7 +66,7 @@ Equally knowing the upper end of the players supported by your design is importa
 
 ## Real Life Internet
 
-As mentioned in [game networking models](https://developers.dusk.gg/blog/modern-game-networking-models), the real internet isn’t always smooth sailing. High latency is pretty common as is varying latency on a single connection. Try to think about how the game will feel with players on significantly different network connections. Accessibility-wise you want to get as many players on board as possible, so this may well mean that not all connections are equal.
+As mentioned in [game networking models](https://developers.rune.ai/blog/modern-game-networking-models), the real internet isn’t always smooth sailing. High latency is pretty common as is varying latency on a single connection. Try to think about how the game will feel with players on significantly different network connections. Accessibility-wise you want to get as many players on board as possible, so this may well mean that not all connections are equal.
 
 I’ve seen a couple of games out there that have a lag bonus - if your connection was poor or unstable you get an easier ride in the game. With the right tuning this feels like it could be a good solution.
 

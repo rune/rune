@@ -6,7 +6,7 @@
 
 # Dusk Open-Source Grants
 
-We at [Dusk](https://dusk.gg) believe that tons of amazing multiplayer games are just waiting to be made by talented indie devs. We've created this $100k grants initiative to help such indie devs and grow the open-source web game community. Based on us searching GitHub, we've found only [25 open-source multiplayer JS games](./games.md). We hope that these grants will dramatically boost the ecosystem! 
+We at [Dusk](https://rune.ai) believe that tons of amazing multiplayer games are just waiting to be made by talented indie devs. We've created this $100k grants initiative to help such indie devs and grow the open-source web game community. Based on us searching GitHub, we've found only [25 open-source multiplayer JS games](./games.md). We hope that these grants will dramatically boost the ecosystem! 
 
 Dusk will award two kinds of grants to indie devs who make an open-source multiplayer web game:
 
@@ -28,7 +28,7 @@ Additionally, you can list that you won a highly-competitive grant on your Linke
 ### 🚀 Applying with a Game
 
 Devs can apply for this grant with either an existing game or a new game idea. To be eligible, the final game must be:
-- Multiplayer using [Dusk](https://developers.dusk.gg)
+- Multiplayer using [Dusk](https://developers.rune.ai)
 - Open-source code with MIT license
 - Written using JavaScript / TypeScript
 
@@ -39,7 +39,7 @@ Your game remains yours completely. **You retain full rights to your game** and 
 ### 🌱 Why is Dusk doing this?
 
 We want to support the open-source community and showcase how Dusk can help make awesome multiplayer gaming experiences. We think it's a win-win for everyone:
-- New exciting multiplayer games on [Dusk](https://dusk.gg)
+- New exciting multiplayer games on [Dusk](https://rune.ai)
 - Interesting open-source code that others can learn from
 - Free money and recognition for talented indie devs
 
@@ -47,7 +47,7 @@ All the game code will be MIT-licensed and serve as inspiration for developers b
 
 ### ⚡️ Application Process
 
-1. **Apply:** Fill out the [application form](https://www.dusk.gg/applygrant) before the deadline with a new game idea or an existing game
+1. **Apply:** Fill out the [application form](https://www.rune.ai/applygrant) before the deadline with a new game idea or an existing game
 2. **Review:** A panel of experts reviews your application and you hear back from us within 2 weeks after the deadline
 3. **Build:** Once approved, you can take all the time you'd like to make your amazing multiplayer game
 4. **Upload:** Submit your completed game to Dusk, fix any major issues, and release it to the world
@@ -99,7 +99,7 @@ We think anyone can be an awesome game dev and so the only restrictions are thos
 ### Dusk
 
 #### What is Dusk?
-Dusk is a [multiplayer gaming platform](https://dusk.gg) with 10m+ installs across [iOS](https://apps.apple.com/us/app/dusk-games-and-voice-chat/id1450358364) and [Android](https://play.google.com/store/apps/details?id=ai.dusk.tincan). Our mission is to help indie game developers make awesome multiplayer games that get into the hands of millions of players.
+Dusk is a [multiplayer gaming platform](https://rune.ai) with 10m+ installs across [iOS](https://apps.apple.com/us/app/dusk-games-and-voice-chat/id1450358364) and [Android](https://play.google.com/store/apps/details?id=ai.dusk.tincan). Our mission is to help indie game developers make awesome multiplayer games that get into the hands of millions of players.
 
 #### Can I upload my game to other platforms besides Dusk?
 Absolutely! You have complete freedom to publish your game on other platforms with no restrictions.

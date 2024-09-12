@@ -63,12 +63,12 @@ We also see peak loads of players around the end of day, when players have come 
 
 Finally lets talk about what games we’ve already seen working. It’s early days so there’s plenty of room for game developers to push out brand new ideas and have overnight hits. Games that have done well so far:
 
-* Strategy games like [Cathead Defense](https://join.dusk.gg/game/Tn3Vpu5m-CQE) where players build towers and defend the world from invaders together.
-* Turn based games like [Dungeons of Glee](https://join.dusk.gg/game/VMlQEaBM-3g) where players go on adventure together in a paced chill environment.  
-* Physics Games like [Melancia](https://join.dusk.gg/game/bRcvMKaL--) where players have a shared experience dropping, bouncing and matching fruit.
-* Arcade Games like [Please Hold](https://join.dusk.gg/game/R8VAXH2D-FgE) where.. well, I think you'd have to play this one, it defies describing!
-* Traditional Games like [Connect Four](https://join.dusk.gg/game/ROdRL4pb-KQE) where friends play a familiar game in the context of their voice chat.
-* Idle Games like [Tap the Button](https://join.dusk.gg/game/pgkTdiF0-HAE) where players get bonuses for being together with friends.
+* Strategy games like [Cathead Defense](https://join.rune.ai/game/Tn3Vpu5m-CQE) where players build towers and defend the world from invaders together.
+* Turn based games like [Dungeons of Glee](https://join.rune.ai/game/VMlQEaBM-3g) where players go on adventure together in a paced chill environment.  
+* Physics Games like [Melancia](https://join.rune.ai/game/bRcvMKaL--) where players have a shared experience dropping, bouncing and matching fruit.
+* Arcade Games like [Please Hold](https://join.rune.ai/game/R8VAXH2D-FgE) where.. well, I think you'd have to play this one, it defies describing!
+* Traditional Games like [Connect Four](https://join.rune.ai/game/ROdRL4pb-KQE) where friends play a familiar game in the context of their voice chat.
+* Idle Games like [Tap the Button](https://join.rune.ai/game/pgkTdiF0-HAE) where players get bonuses for being together with friends.
 
 There a few things to remember that might not be obvious when you’re designing a game to be successful on the platform:
 

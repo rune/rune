@@ -33,7 +33,7 @@ The logic should only contain the data that is required to make the decisions ab
 
 The renderer, or client, is the code that actually converts the game state to something that the player can view and interact with. The client can be implemented using any library or framework that can run in the browser. 
 
-Let’s get to the code, I’m going to assume you already know how to [create a game project](https://developers.dusk.gg/docs/quick-start) and just jump straight into the logic. In this demo we’re going to have a map, players and trees. So first let’s declare some types to describe those:
+Let’s get to the code, I’m going to assume you already know how to [create a game project](https://developers.rune.ai/docs/quick-start) and just jump straight into the logic. In this demo we’re going to have a map, players and trees. So first let’s declare some types to describe those:
 
 ```js
 // types of entities we'll display in the world
@@ -194,7 +194,7 @@ If two players both make actions on their local copy of logic that conflict in s
 
 Now, if we sent explicit positions this conflict resolution would result in significant jumps - where a player’s actions were completely disregarded because they were in complete conflict. If we send the controls then the resolution is much smoother, the player still pressed the controls and had them applied, just the resulting game state is a little different. A lot of the time this can be hidden altogether in the renderer.
 
-Now we have the game logic, the players can update controls and they’ll move thanks to our update loop. The final part is to get something on the screen and let our players play! The tech demo uses a very simple renderer without a library or framework. It just draws images (and parts of images) to a HTML canvas and uses DOM events for input. Check out [graphics.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/src/graphics.ts) and [input.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/src/input.ts) if you want to see the details. 
+Now we have the game logic, the players can update controls and they’ll move thanks to our update loop. The final part is to get something on the screen and let our players play! The tech demo uses a very simple renderer without a library or framework. It just draws images (and parts of images) to a HTML canvas and uses DOM events for input. Check out [graphics.ts](https://github.com/rune/rune/tree/staging/tech-demos/top-down-synchronization/src/graphics.ts) and [input.ts](https://github.com/rune/rune/tree/staging/tech-demos/top-down-synchronization/src/input.ts) if you want to see the details. 
 
 First we need to register a callback with Dusk so that it can tell us about changes to game state:
 

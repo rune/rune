@@ -135,7 +135,7 @@ function Banner() {
           <span> Our name and logo got an upgrade.</span>
         </div>
         <a
-          href="https://updates.dusk.gg/announcing-dusk-and-our-8m-raise/"
+          href="https://updates.rune.ai/announcing-dusk-and-our-8m-raise/"
           target="_blank"
         >
           Learn more →

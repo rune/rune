@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="WebRTC vs. WebSockets for multiplayer games"/>
 </head>
 
-At Dusk, we’ve got a platform where millions of users are now playing casual multiplayer games. As I [blogged about previously](https://developers.dusk.gg/blog/modern-game-networking-models), we care a lot about making the multiplayer networking excellent. No matter which model you’re using, making the best use of the available internet transport is key.
+At Dusk, we’ve got a platform where millions of users are now playing casual multiplayer games. As I [blogged about previously](https://developers.rune.ai/blog/modern-game-networking-models), we care a lot about making the multiplayer networking excellent. No matter which model you’re using, making the best use of the available internet transport is key.
 
 ![](/img/blog/social-previews/webrtc-vs-websockets-for-multiplayer-games.png)
 

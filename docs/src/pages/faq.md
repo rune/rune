@@ -157,4 +157,4 @@ You can follow [this guide](/docs/move-to-dusk), which has a tool that automatic
 
 We’d love to hear from you! Let us know what you think in the `feedback-for-dusk` channel on our [Discord](https://discord.gg/dusk-devs).
 
-You can also always contact us at [devs@dusk.gg](mailto:devs@dusk.gg).
+You can also always contact us at [devs@rune.ai](mailto:devs@rune.ai).

@@ -21,7 +21,7 @@ At the core of Dusk, we have games being enjoyed by millions of players. I’m g
 
 ![](/img/blog/callouts/melancia.png)
 
-[Play Melancia Now](https://join.dusk.gg/game/bRcvMKaL--)
+[Play Melancia Now](https://join.rune.ai/game/bRcvMKaL--)
 
 ## What’s the Game?
 

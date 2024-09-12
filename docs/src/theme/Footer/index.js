@@ -14,7 +14,7 @@ function Footer() {
       </Link>
       <a
         className={styles.link}
-        href="https://dusk.gg"
+        href="https://rune.ai"
         target="_blank"
         rel="noreferrer"
       >
@@ -22,7 +22,7 @@ function Footer() {
       </a>
       <a
         className={styles.link}
-        href="https://dusk.gg/team"
+        href="https://rune.ai/team"
         target="_blank"
         rel="noreferrer"
       >

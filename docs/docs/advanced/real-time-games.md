@@ -119,5 +119,5 @@ Player A's `onChange` function will now be called with `timeSync` event to recon
 
 ## Further Reading {#further-reading}
 
-- [See how the Pinpoint example game uses time](https://github.com/dusk-gg/dusk/blob/staging/examples/pinpoint/src/logic.ts)
+- [See how the Pinpoint example game uses time](https://github.com/rune/rune/blob/staging/examples/pinpoint/src/logic.ts)
 - [See how to reduce stutters in fast-paced games](reducing-stutter.md)

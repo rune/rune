@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # Quick Start
 
-Build a multiplayer game for the [Dusk platform](https://www.dusk.gg) and its millions of players. Dusk handles netcode, servers, voice chat, matchmaking, spectating, and much more.
+Build a multiplayer game for the [Dusk platform](https://www.rune.ai) and its millions of players. Dusk handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
 To get started, you only need to run one command:
 

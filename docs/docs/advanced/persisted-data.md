@@ -96,9 +96,9 @@ declare global {
 
 Here's some games to get inspired for how to make use of persistence:
 
-- [Cube Rush](https://github.com/dusk-gg/dusk/tree/staging/examples/cube-rush) stores best time the player has achieved
-- [Sudoku](https://github.com/dusk-gg/dusk/tree/staging/examples/sudoku) stores play sessions to decide whether to show onboarding
-- [Pinpoint](https://github.com/dusk-gg/dusk/tree/staging/examples/pinpoint) stores play sessions to decide whether to show onboarding
+- [Cube Rush](https://github.com/rune/rune/tree/staging/examples/cube-rush) stores best time the player has achieved
+- [Sudoku](https://github.com/rune/rune/tree/staging/examples/sudoku) stores play sessions to decide whether to show onboarding
+- [Pinpoint](https://github.com/rune/rune/tree/staging/examples/pinpoint) stores play sessions to decide whether to show onboarding
 
 
 ## Future Plans

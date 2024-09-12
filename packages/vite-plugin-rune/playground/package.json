@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "rune-sdk": "4.21.1",
+    "rune-sdk": "4.22.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

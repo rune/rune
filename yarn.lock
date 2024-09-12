@@ -6445,32 +6445,6 @@ duplexer@^0.1.1:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
-rune-sdk@^4.21.1:
-  version "4.21.1"
-  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.21.1.tgz#b466525070ae1ee20c67eadd5d4b775ea2d46f97"
-  integrity sha512-BwzT0nUZvDJJkyQ9kTiBeUlu7JxFCdKFFbl7lvtZTaHcyfDhQPLIqRVOVggldGcziITvaoddmGmd2JSA4CLWAw==
-  dependencies:
-    "@eslint/eslintrc" "^3.1.0"
-    "@eslint/js" "^9.7.0"
-    es-module-lexer "^1.4.2"
-    globals "^15.8.0"
-    okie "^1.0.1"
-    terser "^5.22.0"
-    tree-model "^1.0.7"
-
-rune-sdk@^4.21.18:
-  version "4.21.18"
-  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.21.18.tgz#e7ec956e1ac5708f23eda22d250d21edcedd648d"
-  integrity sha512-VqE2HuHdEh/9AGD6cJ4bcdAlx/nSaYCfB/zE1B3obQvst3ndRuoJZ1YGlZFvVt8CQPpqDnaQqC3L8iQu4w28ZA==
-  dependencies:
-    "@eslint/eslintrc" "^3.1.0"
-    "@eslint/js" "^9.7.0"
-    es-module-lexer "^1.4.2"
-    globals "^15.8.0"
-    okie "^1.0.1"
-    terser "^5.22.0"
-    tree-model "^1.0.7"
-
 eastasianwidth@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/eastasianwidth/-/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"
@@ -12500,6 +12474,19 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
+rune-sdk@^4.22.0:
+  version "4.22.0"
+  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.22.0.tgz#83dc6f83258aec32a7e745255241b23f3402faeb"
+  integrity sha512-zfqPSCosYifSL/CHHCyx03zoKGHU3N7+Q/ax2DyvpBfGGumaHN+wTZrnhepyyhK4Mh2SJXcwwrFmtyoG7F3faw==
+  dependencies:
+    "@eslint/eslintrc" "^3.1.0"
+    "@eslint/js" "^9.7.0"
+    es-module-lexer "^1.4.2"
+    globals "^15.8.0"
+    okie "^1.0.1"
+    terser "^5.22.0"
+    tree-model "^1.0.7"
+
 rxjs@^6.3.3, rxjs@^6.6.0:
   version "6.6.7"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
@@ -14178,7 +14165,7 @@ workerpool@^6.5.1:
   resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.5.1.tgz#060f73b39d0caf97c6db64da004cd01b4c099544"
   integrity sha512-Fs4dNYcsdpYSAfVxhnl1L5zTksjvOJxtC5hzMNl+1t9B8hTJTdKDyZ5ju7ztgPy+ft9tBFXoOlDNiOT9WUXZlA==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -14199,15 +14186,6 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
-  dependencies:
-    ansi-styles "^4.0.0"
-    string-width "^4.1.0"
-    strip-ansi "^6.0.0"
-
-wrap-ansi@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
-  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"

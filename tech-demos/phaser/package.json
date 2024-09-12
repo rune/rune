@@ -12,13 +12,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "rune-sdk": "^4.21.18",
+    "rune-sdk": "^4.22.0",
     "phaser": "3.80.1",
     "propel-js": "1.0.21"
   },
   "devDependencies": {
     "eslint": "^9.7.0",
-    "eslint-plugin-rune": "^2.0.0",
     "globals": "^15.8.0",
     "prettier": "^3.3.3",
     "typescript": "^5.4.5",

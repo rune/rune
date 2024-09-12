@@ -11,7 +11,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "rune-sdk": "^4.21.18",
+    "rune-sdk": "^4.22.0",
     "vue": "^3.4.29"
   },
   "devDependencies": {

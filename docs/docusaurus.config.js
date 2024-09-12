@@ -6,7 +6,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula")
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Dusk - multiplayer web games",
+  title: "Rune - multiplayer web games",
   tagline: "Make multiplayer games that reach a community of millions.",
   url: "http://developers.rune.ai/",
   baseUrl: "/",
@@ -67,9 +67,9 @@ const config = {
         respectPrefersColorScheme: false,
       },
       navbar: {
-        title: "Dusk",
+        title: "Rune",
         logo: {
-          alt: "Dusk Logo",
+          alt: "Rune Logo",
           src: "/img/logo.svg",
         },
         items: [
@@ -133,11 +133,11 @@ const config = {
             title: "More",
             items: [
               {
-                label: "Dusk on App Store",
+                label: "Rune on App Store",
                 href: "https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364",
               },
               {
-                label: "Dusk on Google Play",
+                label: "Rune on Google Play",
                 href: "https://play.google.com/store/apps/details?id=ai.rune.tincan",
               },
               {
@@ -147,7 +147,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Dusk, Inc.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Rune AI Inc.`,
       },
       prism: {
         theme: lightCodeTheme,

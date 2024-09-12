@@ -70,7 +70,7 @@ export default function LayoutWrapper(props) {
 }
 
 function Banner() {
-  const showBanner = location.hash === "#rune"
+  const showBanner = location.hash === "#dusk"
 
   useEffect(() => {
     const style = document.createElement("style")
@@ -131,15 +131,9 @@ function Banner() {
     <div class="banner">
       <div class="banner-content">
         <div class="text">
-          <span>Rune is now Dusk!</span>
-          <span> Our name and logo got an upgrade.</span>
+          <span>Dusk is now Rune!</span>
+          <span> Our name got an upgrade.</span>
         </div>
-        <a
-          href="https://updates.rune.ai/announcing-dusk-and-our-8m-raise/"
-          target="_blank"
-        >
-          Learn more →
-        </a>
       </div>
     </div>
   )

@@ -1,39 +1,39 @@
 ---
-title: Announcing Dusk Jam!
+title: Announcing Rune Jam!
 description: A jam for javascript developers who have always wanted to build a multiplayer game 
 slug: announcing-dusk-jam
-tags: [Game Development, Dusk Jam]
+tags: [Game Development, Rune Jam]
 image: /img/blog/social-previews/announcing-dusk-jam.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
 ---
 
 <head>
-  <title>Announcing Dusk Jam!</title>
-  <meta property="og:title" content="Announcing Dusk Jam!"/>
+  <title>Announcing Rune Jam!</title>
+  <meta property="og:title" content="Announcing Rune Jam!"/>
 </head>
 
-Have you ever thought about writing a multiplayer game, but the task seems too daunting? What if networking was already done and you could just focus on a small fun game? Dusk makes it easy to build multiplayer games quickly with a huge player base across regional servers.
+Have you ever thought about writing a multiplayer game, but the task seems too daunting? What if networking was already done and you could just focus on a small fun game? Rune makes it easy to build multiplayer games quickly with a huge player base across regional servers.
 
 
 ![](/img/blog/social-previews/announcing-dusk-jam.png)
 
-To celebrate our move to Dusk we're going to run a mini game jam. We've loved what everyone has brought to the table over previous jams and really want more of it!
+To celebrate our move to Rune we're going to run a mini game jam. We've loved what everyone has brought to the table over previous jams and really want more of it!
 
 ❓**WHAT:** In this jam you can use any JavaScript based technology, from React to Pixi to Pure JS and everything in between. Here's how it will run:
  * Theme will be announced on the first day of the jam
  * Games should be started and submitted in the jam timeframe.
  * Any art or assets can be used - existing or created for the jam.
 
-📆 **WHEN:** The jam will start at **00:01 UTC on August 1st** and run until **23:59 UTC on August 11th**. You'll have 11 days to build and release a multiplayer game on Dusk.
+📆 **WHEN:** The jam will start at **00:01 UTC on August 1st** and run until **23:59 UTC on August 11th**. You'll have 11 days to build and release a multiplayer game on Rune.
 
-📩 **SUBMITTING:** To submit simply [release the game to Dusk](/docs/quick-start) by the final date and let us know on Discord that its for the jam.
+📩 **SUBMITTING:** To submit simply [release the game to Rune](/docs/quick-start) by the final date and let us know on Discord that its for the jam.
 
-🎖️ **WINNERS:** Three winners will be selected based on play time of the game in the week starting 18th August. These lucky folks will be receiving a selection of sick Dusk merch.
+🎖️ **WINNERS:** Three winners will be selected based on play time of the game in the week starting 18th August. These lucky folks will be receiving a selection of sick Rune merch.
 
 Remember this is all about creating something from end to end in the time period. Scope carefully and focus on the fun!
 

@@ -10,7 +10,7 @@ export function triggerGameOver(
     }
   })
 
-  Dusk.gameOver({
+  Rune.gameOver({
     players: game.guesses.reduce(
       (acc, guess) => ({
         ...acc,

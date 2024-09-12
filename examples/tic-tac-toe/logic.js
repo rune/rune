@@ -11,7 +11,7 @@ function setup() {
 function claimCell(cellIndex, { game, playerId, allPlayerIds }) {
   // Do not allow to claim cell if it's already claimed or if it's not player's turn
   if (game.cells[cellIndex] !== null || playerId === game.lastMovePlayerId) {
-    throw Dusk.invalidAction()
+    throw Rune.invalidAction()
   }
 
   game.cells[cellIndex] = playerId
@@ -19,7 +19,7 @@ function claimCell(cellIndex, { game, playerId, allPlayerIds }) {
   game.winCombo = findWinningCombo(game.cells)
 
   if (game.winCombo) {
-    Dusk.gameOver({
+    Rune.gameOver({
       players: {
         [game.lastMovePlayerId]: "WON",
         [allPlayerIds.find((id) => id !== game.lastMovePlayerId)]: "LOST",
@@ -29,7 +29,7 @@ function claimCell(cellIndex, { game, playerId, allPlayerIds }) {
 
   game.freeCells = game.cells.findIndex((cell) => cell === null) !== -1
   if (!game.freeCells) {
-    Dusk.gameOver({
+    Rune.gameOver({
       everyone: "TIE"
     })
   }
@@ -40,7 +40,7 @@ function findWinningCombo (cells) {
       .find(combo => combo.every(i => cells[i] && cells[i] === cells[combo[0]])) || null;
 }
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   setup,

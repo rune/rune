@@ -6,7 +6,7 @@ tags: [Game Development]
 image: /img/blog/social-previews/what-to-consider-when-building-cross-platform-games.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="What to consider when building cross-platform games"/>
 </head>
 
-At Dusk, we’ve got a platform that lets developers get their games out to millions of players on mobile devices across the world. With that number of players, you can imagine the device range is also wide. While Dusk abstracts a lot of this complexity away, there are still a few things developers need to consider.
+At Rune, we’ve got a platform that lets developers get their games out to millions of players on mobile devices across the world. With that number of players, you can imagine the device range is also wide. While Rune abstracts a lot of this complexity away, there are still a few things developers need to consider.
 
 ## Cross-Platform Design
 
@@ -48,7 +48,7 @@ This gives us fixed targets for the custom code to work against. Pick the lowest
 
 ## Performance Characteristics
 
-Here are some of the top devices and their specifications taken from over 10 million recorded devices on the Dusk platform.
+Here are some of the top devices and their specifications taken from over 10 million recorded devices on the Rune platform.
 
 | Vendor | Model | CPU | GPU |
 | ----- | --------- | ------------------- | -------- |
@@ -67,7 +67,7 @@ Even just looking at the top 10 or so, we can see a reasonably wide range of ava
 
 ### CPU
 
-Mobile CPUs are getting faster all the time, but there are still plenty of low-specification devices out there. You also have to consider that the device will be running other applications at the same time as your game and if you’re using Dusk, it’ll be used for a voice call as well. 
+Mobile CPUs are getting faster all the time, but there are still plenty of low-specification devices out there. You also have to consider that the device will be running other applications at the same time as your game and if you’re using Rune, it’ll be used for a voice call as well. 
 
 It’s best to avoid CPU intensive loops making, sure your code does this in small sections over multiple rendering frames rather than attempting to process a lot of data in one go.
 
@@ -89,7 +89,7 @@ First, we have the physical size of the design, especially when you’re thinkin
 
 Second, “notches” – oh, how we hate them! Ever since the iPhone introduced the camera notch, web and game designers have despaired. Different devices now have different notches and notch sizes, meaning developers need to consider what’s called the “safe area.” As a game designer, of course, you want to fill the screen with the assets, so you both have to account for the notches but also avoid putting anything important there.
 
-Luckily, if you’re writing games on Dusk, it handles the safe area/notches for you leaving you with a clean rectangular area in which to put your game!
+Luckily, if you’re writing games on Rune, it handles the safe area/notches for you leaving you with a clean rectangular area in which to put your game!
 
 Making your game work well cross-platform and cross-device increases the number of potential players you have access to. In multiplayer games, it’s also key to make sure the experience is as similar as possible across devices to keep the game feeling “fair”.
 

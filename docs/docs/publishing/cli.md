@@ -26,11 +26,11 @@ dusk create
 dusk create my-game
 ```
 
-Follow the instructions on the terminal to run the game in mock Dusk app. The interface is identical to the one described in [Simulating Multiplayer](../playtesting/simulating-multiplayer.md).
+Follow the instructions on the terminal to run the game in mock Rune app. The interface is identical to the one described in [Simulating Multiplayer](../playtesting/simulating-multiplayer.md).
 
 ### `dusk upload` {#dusk-upload}
 
-Uploads your game to Dusk for publishing, see [Publishing Your Game](publishing-your-game.md) for more info.
+Uploads your game to Rune for publishing, see [Publishing Your Game](publishing-your-game.md) for more info.
 
 ```bash
 cd my-game && dusk upload
@@ -42,7 +42,7 @@ This command will log you in using your email (if it's the first time) and then 
 
 ### `dusk list` {#dusk-list}
 
-Displays a list of your games on Dusk.
+Displays a list of your games on Rune.
 
 ### `dusk update-info` {#dusk-update-info}
 

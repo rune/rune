@@ -1,4 +1,4 @@
-import type { PlayerId, DuskClient } from "rune-sdk/multiplayer"
+import type { PlayerId, RuneClient } from "rune-sdk/multiplayer"
 
 // how much the players will move per frame
 export const MOVE_SPEED = 4
@@ -136,7 +136,7 @@ export type Controls = {
 
 // this is the core of what we're trying to keep
 // in sync across the network. It'll be held on clients
-// and server and the Dusk platform will keep it
+// and server and the Rune platform will keep it
 // in sync by applying deterministic actions
 export interface GameState {
   players: Player[]
@@ -149,9 +149,9 @@ type GameActions = {
   controls: (controls: Controls) => void
 }
 
-// define access to the Dusk platform APIs
+// define access to the Rune platform APIs
 declare global {
-  const Dusk: DuskClient<GameState, GameActions>
+  const Rune: RuneClient<GameState, GameActions>
 }
 
 // Check if the player is in a valid location. For the purposes
@@ -206,9 +206,9 @@ function isValidPosition(
   return true
 }
 
-// Initialize the logic side of the Dusk platform. This is your main
-// hook into the Dusk platform for game state synchronization
-Dusk.initLogic({
+// Initialize the logic side of the Rune platform. This is your main
+// hook into the Rune platform for game state synchronization
+Rune.initLogic({
   landscape: true,
   // number of players to allow in the game
   minPlayers: 1,
@@ -219,7 +219,7 @@ Dusk.initLogic({
   // all players to start the game
   setup: (allPlayerIds) => {
     const initialState: GameState = {
-      // for each of the players Dusk says are in the game
+      // for each of the players Rune says are in the game
       // create a new player entity. We'll initialize their
       // location to place them in the world
       players: allPlayerIds.map((p, index) => {
@@ -312,7 +312,7 @@ Dusk.initLogic({
       }
     }
   },
-  // actions are the way clients can modify game state. Dusk manages
+  // actions are the way clients can modify game state. Rune manages
   // how and when these actions are applied to maintain a consistent
   // game state between all clients.
   actions: {

@@ -13,7 +13,7 @@ export const endOfTurnDuration = 3
 export const displayCorrectGuessFor = 3
 export const hideGuessTurnButtonDuration = 10
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 6,
   setup: (playerIds) => ({
@@ -44,18 +44,18 @@ Dusk.initLogic({
   }),
   actions: {
     setReadyToStart: (_, { game, playerId }) => {
-      if (game.gameStarted) throw Dusk.invalidAction()
+      if (game.gameStarted) throw Rune.invalidAction()
 
       const player = game.players.find((player) => player.id === playerId)
 
-      if (!player) throw Dusk.invalidAction()
+      if (!player) throw Rune.invalidAction()
       player.readyToStart = true
 
       startGameCheck(game)
     },
     makeGuess: ({ animal, emotion, round }, { game, playerId }) => {
-      if (!game.currentTurn) throw Dusk.invalidAction()
-      if (game.round !== round) throw Dusk.invalidAction()
+      if (!game.currentTurn) throw Rune.invalidAction()
+      if (game.round !== round) throw Rune.invalidAction()
 
       const guess = {
         playerId,
@@ -72,7 +72,7 @@ Dusk.initLogic({
         const player = game.players.find((player) => player.id === playerId)
         const actor = game.players.find((player) => player.actor)
 
-        if (!player || !actor) throw Dusk.invalidAction()
+        if (!player || !actor) throw Rune.invalidAction()
 
         player.score.guessing += 1
         player.latestTurnScore.guessing += 1
@@ -87,21 +87,21 @@ Dusk.initLogic({
 
         game.currentTurn.timerStartedAt += displayCorrectGuessFor
         game.currentTurn.latestActingStartedAt =
-          Dusk.gameTimeInSeconds() + displayCorrectGuessFor
+          Rune.gameTimeInSeconds() + displayCorrectGuessFor
         game.currentTurn.showSkipGuessButton = false
       }
     },
     skipGuess: (_, { game }) => {
-      if (!game.currentTurn) throw Dusk.invalidAction()
+      if (!game.currentTurn) throw Rune.invalidAction()
 
       game.currentTurn.animal = getRandomItem(game.animals)
       game.currentTurn.emotion = getRandomItem(game.emotions)
-      game.currentTurn.latestActingStartedAt = Dusk.gameTimeInSeconds()
+      game.currentTurn.latestActingStartedAt = Rune.gameTimeInSeconds()
       game.currentTurn.showSkipGuessButton = false
     },
     nextRound: (_, { game }) => {
-      if (game.round + 1 === numRounds) throw Dusk.invalidAction()
-      if (game.currentTurn?.stage !== "result") throw Dusk.invalidAction()
+      if (game.round + 1 === numRounds) throw Rune.invalidAction()
+      if (game.currentTurn?.stage !== "result") throw Rune.invalidAction()
 
       for (const player of game.players) {
         player.latestRoundScore.guessing = 0
@@ -142,28 +142,28 @@ Dusk.initLogic({
     switch (game.currentTurn.stage) {
       case "countdown":
         if (
-          Dusk.gameTimeInSeconds() >=
+          Rune.gameTimeInSeconds() >=
           game.currentTurn.timerStartedAt + turnCountdown
         ) {
           game.currentTurn.stage = "acting"
-          game.currentTurn.timerStartedAt = Dusk.gameTimeInSeconds()
-          game.currentTurn.latestActingStartedAt = Dusk.gameTimeInSeconds()
+          game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+          game.currentTurn.latestActingStartedAt = Rune.gameTimeInSeconds()
           game.currentTurn.showSkipGuessButton = false
         }
         break
       case "acting":
         if (
-          Dusk.gameTimeInSeconds() >=
+          Rune.gameTimeInSeconds() >=
           game.currentTurn.timerStartedAt + turnDuration
         ) {
           game.currentTurn.stage = "endOfTurn"
-          game.currentTurn.timerStartedAt = Dusk.gameTimeInSeconds()
-          game.currentTurn.latestActingStartedAt = Dusk.gameTimeInSeconds()
+          game.currentTurn.timerStartedAt = Rune.gameTimeInSeconds()
+          game.currentTurn.latestActingStartedAt = Rune.gameTimeInSeconds()
           game.currentTurn.showSkipGuessButton = false
         }
 
         if (
-          Dusk.gameTimeInSeconds() >=
+          Rune.gameTimeInSeconds() >=
           game.currentTurn.latestActingStartedAt + hideGuessTurnButtonDuration
         ) {
           game.currentTurn.showSkipGuessButton = true
@@ -171,7 +171,7 @@ Dusk.initLogic({
         break
       case "endOfTurn":
         if (
-          Dusk.gameTimeInSeconds() >=
+          Rune.gameTimeInSeconds() >=
           game.currentTurn.timerStartedAt + endOfTurnDuration
         ) {
           for (const player of game.players) {
@@ -184,7 +184,7 @@ Dusk.initLogic({
 
             if (game.round + 1 === numRounds) {
               game.gameOver = true
-              Dusk.gameOver({
+              Rune.gameOver({
                 players: game.players.reduce(
                   (acc, player) => ({
                     ...acc,

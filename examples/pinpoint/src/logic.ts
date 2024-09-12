@@ -16,7 +16,7 @@ export const roundDuration = 25
 // The chance of picking panorama with higher weight increases because it appears more times in weightedPanoramas array
 const weightedPanoramas = generateWeightedPanoramas(panoramas)
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 6,
   persistPlayerData: true,
@@ -57,7 +57,7 @@ Dusk.initLogic({
         (guess) => guess.playerId === playerId && guess.round === currentRound
       )
 
-      if (existingGuess) throw Dusk.invalidAction()
+      if (existingGuess) throw Rune.invalidAction()
 
       const distance =
         Math.round(
@@ -74,7 +74,7 @@ Dusk.initLogic({
       })
 
       if (game.playerIds.length > 1 && !game.roundTimerStartedAt) {
-        game.roundTimerStartedAt = Dusk.gameTimeInSeconds()
+        game.roundTimerStartedAt = Rune.gameTimeInSeconds()
       }
 
       if (
@@ -87,14 +87,14 @@ Dusk.initLogic({
       if (shouldTriggerGameOver(game)) triggerGameOver(game)
     },
     nextRound: (_, { game }) => {
-      if (game.currentRound === numRounds - 1) throw Dusk.invalidAction()
+      if (game.currentRound === numRounds - 1) throw Rune.invalidAction()
 
       const currentRound = game.currentRound
       const guesses = game.guesses.filter(
         (guess) => guess.round === currentRound
       )
 
-      if (guesses.length !== game.playerIds.length) throw Dusk.invalidAction()
+      if (guesses.length !== game.playerIds.length) throw Rune.invalidAction()
 
       game.currentRound++
     },
@@ -119,7 +119,7 @@ Dusk.initLogic({
   update: ({ game }) => {
     if (
       game.roundTimerStartedAt &&
-      Dusk.gameTimeInSeconds() >= game.roundTimerStartedAt + roundDuration
+      Rune.gameTimeInSeconds() >= game.roundTimerStartedAt + roundDuration
     ) {
       const playersWhoGuessed = game.guesses
         .filter((guess) => guess.round === game.currentRound)

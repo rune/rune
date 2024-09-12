@@ -88,7 +88,7 @@ export default class TutorialGame extends Phaser.Scene {
     //
     // Unfortunately Phaser's physics system isn't something that can be easily
     // serialized so we'll use propel-js instead to manage physics
-    Dusk.initClient({
+    Rune.initClient({
       onChange: ({ game }) => {
         // for all the bodies in the game, make sure the visual representation
         // exists and is synchornized with the physics running in the game logic
@@ -203,7 +203,7 @@ export default class TutorialGame extends Phaser.Scene {
           right: stateRight,
           up: stateUp,
         }
-        Dusk.actions.controls(this.lastSentControls)
+        Rune.actions.controls(this.lastSentControls)
       }
     }
   }

@@ -6,7 +6,7 @@ tags: [Game Development, Networking]
 image: /img/blog/social-previews/modern-game-networking-models.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="Modern Game Networking Models"/>
 </head>
 
-At Dusk we’re building a place where developers can share their multiplayer web games with the world. This of course means we care a lot about game networking code and how it performs in the real internet at scale. 
+At Rune we’re building a place where developers can share their multiplayer web games with the world. This of course means we care a lot about game networking code and how it performs in the real internet at scale. 
 
 Networking in games isn’t easy, you’re dealing with a conflict between the speed of light, the distances between people playing on the internet and player’s expectations. Worse still a player’s emotional state, i.e. whether they win or lose, can often be dependent on the networking model that’s been used and whether it seems “fair”.
 
@@ -36,7 +36,7 @@ The internet has constraints that make it hard to predict what it’ll look like
 
 * **Packet Size** - We’re all very used to being able to download large files. Libraries often abstract developers from the underlying transport and allow them to send whatever they want. However, the actual packets that run across the network have a fixed size (about 1500 bytes - MTU) so if you care about latency you need to be thinking in the packet model.
 * **Physical Constraints** - The internet is fast, but its not *that* fast. Let’s assume there was one fiber line around the world. A packet, even at light speed through fiber would still take ~200ms to travel around the world. Now add in routers and switches on that path, and remember that most of the internet isn’t fiber. Don’t forget the last hop to the end user device. This tells us it’s important to think about regional servers (outside of any network model). 
-* **End User Devices** - There are a great variety of devices on the internet. Mobile games (where Dusk targets) can have a wide spectrum of device power and connection availability especially in emerging markets. The game of course still needs to feel fair.
+* **End User Devices** - There are a great variety of devices on the internet. Mobile games (where Rune targets) can have a wide spectrum of device power and connection availability especially in emerging markets. The game of course still needs to feel fair.
 * **Congestion and Loss** - The internet is a shared resource. Most of the time this doesn’t matter, most routes and backbones are hugely under subscribed. When congestion does become an issue the internet has one solution - drop low priority packets (that means yours). 
 
 It’s pretty clear it’s a hard nut to crack but of course we do see many successful internet playable games. Clearly there are network models that work. Let’s look at a (non-exhaustive) list.
@@ -122,4 +122,4 @@ All that being said, the pros of quick input response time, low bandwidth and co
 
 As you can see there are different ways to make game networking work, and as you can tell from the games mentioned people have been trying to solve it for decades. 
 
-At Dusk we implement predict-rollback, it’s complicated to implement but the bright side is you don’t have to, it’s just part of the platform. If you want to learn more about how to implement a multiplayer game on Dusk, [check out our examples](/docs/examples/games), [tech demos](/docs/examples/tech-demos) and [documentation](/docs/quick-start) - or [join our Discord](https://discord.gg/dusk-devs).
+At Rune we implement predict-rollback, it’s complicated to implement but the bright side is you don’t have to, it’s just part of the platform. If you want to learn more about how to implement a multiplayer game on Rune, [check out our examples](/docs/examples/games), [tech demos](/docs/examples/tech-demos) and [documentation](/docs/quick-start) - or [join our Discord](https://discord.gg/dusk-devs).

@@ -28,7 +28,7 @@ const advanceToNextPlayer = (game: GameState) => {
   if (game.currentPlayerIndex === game.playerIds.length - 1) {
     game.roundsPlayed++
     if (isGameOver(game)) {
-      return Dusk.gameOver({
+      return Rune.gameOver({
         players: getScores(game.players),
         delayPopUp: true,
       })
@@ -49,7 +49,7 @@ const advanceToNextPlayer = (game: GameState) => {
   return game
 }
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (playerIds) => {
@@ -85,10 +85,10 @@ Dusk.initLogic({
     swap: ({ sourceIndex, targetIndex }, { game, playerId }) => {
       // Cannot play during someone else's turn
       if (playerId !== game.playerIds[game.currentPlayerIndex]) {
-        throw Dusk.invalidAction()
+        throw Rune.invalidAction()
       }
       if (!isValidMove(game.cells, sourceIndex, targetIndex)) {
-        throw Dusk.invalidAction()
+        throw Rune.invalidAction()
       }
 
       const changes = swapAndMatch(game.cells, sourceIndex, targetIndex)
@@ -121,7 +121,7 @@ Dusk.initLogic({
         playerId !== game.playerIds[game.currentPlayerIndex] ||
         game.players[playerId].shufflesRemaining <= 0
       ) {
-        throw Dusk.invalidAction()
+        throw Rune.invalidAction()
       }
 
       const { moved, cells } = shuffle(game.cells)
@@ -138,7 +138,7 @@ Dusk.initLogic({
         playerId !== game.playerIds[game.currentPlayerIndex] ||
         game.players[playerId].extraMovesRemaining <= 0
       ) {
-        throw Dusk.invalidAction()
+        throw Rune.invalidAction()
       }
       game.movesPerRound++
       game.players[playerId].extraMovesRemaining--
@@ -150,7 +150,7 @@ Dusk.initLogic({
         index < 0 ||
         index >= game.cells.length
       ) {
-        throw Dusk.invalidAction()
+        throw Rune.invalidAction()
       }
       if (game.highlightedCells[index] === playerId) {
         delete game.highlightedCells[index]

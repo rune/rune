@@ -66,7 +66,7 @@ export const Results = memo(() => {
 
   useEffect(() => {
     if (gameOver && animationStepIdx >= animationStepKeyIndexMap.cta) {
-      Dusk.showGameOverPopUp()
+      Rune.showGameOverPopUp()
     }
   }, [animationStepIdx, gameOver])
 
@@ -204,7 +204,7 @@ export const Results = memo(() => {
               ? 1
               : 0,
         }}
-        onClick={() => Dusk.actions.nextRound()}
+        onClick={() => Rune.actions.nextRound()}
       >
         <div>Continue</div>
       </ReadyButton>

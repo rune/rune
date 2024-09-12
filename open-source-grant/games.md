@@ -12,12 +12,12 @@ Games are deemed open-source if you can use their code to make your own game. Mo
 
 ## Games
 
-Here's all the open-source multiplayer web games we've found that match the criteria above. Many of them are made multiplayer using [Dusk](https://developers.rune.ai) and played on [iOS](https://apps.apple.com/us/app/dusk-games-and-voice-chat/id1450358364) / [Android](https://play.google.com/store/apps/details?id=ai.dusk.tincan). The Dusk demo links below simulate multiplayer in your browser.
+Here's all the open-source multiplayer web games we've found that match the criteria above. Many of them are made multiplayer using [Rune](https://developers.rune.ai) and played on [iOS](https://apps.apple.com/us/app/dusk-games-and-voice-chat/id1450358364) / [Android](https://play.google.com/store/apps/details?id=ai.dusk.tincan). The Rune demo links below simulate multiplayer in your browser.
 
 <table>
   <tr>
     <th>Game</th>
-    <th>Dusk</th>
+    <th>Rune</th>
     <th>Links</th>
     <th>Description</th>
   </tr>
@@ -158,7 +158,7 @@ Here's all the open-source multiplayer web games we've found that match the crit
 
 ## Supporting Future Games 
 
-Dusk wants to help bring more games like these to life. If you're interested in making an open-source multiplayer web game, then apply for an [open-source grant](./README.md). Also consider giving the repo a star and sharing it to inspire more devs to make games like these!
+Rune wants to help bring more games like these to life. If you're interested in making an open-source multiplayer web game, then apply for an [open-source grant](./README.md). Also consider giving the repo a star and sharing it to inspire more devs to make games like these!
 
 <div align="center">
 <picture>

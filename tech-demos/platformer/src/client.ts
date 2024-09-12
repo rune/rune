@@ -44,8 +44,8 @@ const SCALE = 2
   // that are provided by https://pixelfrog-assets.itch.io/pixel-adventure-1
   //
   // It's important we wait for all resources to load before calling
-  // Dusk.initClient since Dusk will show an in-app loading screen
-  // until we call initClient. Best practice is to let Dusk handle
+  // Rune.initClient since Rune will show an in-app loading screen
+  // until we call initClient. Best practice is to let Rune handle
   // the loading screen.
   const background = await loadTileSet(backgroundSrc, 64, 64)
   const terrain = await loadTileSet(terrainSrc, 16, 16)
@@ -73,8 +73,8 @@ const SCALE = 2
     },
   }
 
-  // the current game state as provided by the Dusk SDK. The client
-  // should be rendering whatever the current state is. The Dusk SDK
+  // the current game state as provided by the Rune SDK. The client
+  // should be rendering whatever the current state is. The Rune SDK
   // will manage the updates and resolution of conflict to the state, so
   // we can simply render what it provides.
   let gameState: GameState
@@ -93,7 +93,7 @@ const SCALE = 2
     jump: false,
   }
   // The last time that we sent an action to update the local
-  // client's controls. Dusk allows us to send actions at
+  // client's controls. Rune allows us to send actions at
   // up to 10 a second so we don't send a new action if it's
   // not been 1/10th of a second. In a real game you might manage
   // this more carefully and track how many you've sent a second
@@ -122,7 +122,7 @@ const SCALE = 2
     ) {
       lastSentControls = { ...gameInputs }
       lastActionTime = Date.now()
-      Dusk.actions.controls(lastSentControls)
+      Rune.actions.controls(lastSentControls)
     }
 
     // schedule the next game loop
@@ -156,7 +156,7 @@ const SCALE = 2
       }
     }
 
-    // if the Dusk SDK has given us a game state then
+    // if the Rune SDK has given us a game state then
     // render all the entities in the game
     if (gameState) {
       // render the game state
@@ -180,11 +180,11 @@ const SCALE = 2
     graphicsCtx.restore()
   }
 
-  // Start the Dusk SDK on the client rendering side. This tells the Dusk
+  // Start the Rune SDK on the client rendering side. This tells the Rune
   // app that we're ready for players to see the game. It's also the hook
-  // that lets the Dusk SDK update us on changes to game state
-  Dusk.initClient({
-    // notification from Dusk that there is a new game state
+  // that lets the Rune SDK update us on changes to game state
+  Rune.initClient({
+    // notification from Rune that there is a new game state
     onChange: ({ game, yourPlayerId }) => {
       // record the ID of our local player so we can center the camera
       // on that player.

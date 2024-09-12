@@ -6,7 +6,7 @@ tags: [Game Development, Networking]
 image: /img/blog/social-previews/gotchas-in-multiplayer-game-design.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="Gotchas in Multiplayer Game Design"/>
 </head>
 
-I’ve written a few multiplayer games and seen patterns in the things I got wrong across projects. As part of my work here at Dusk I’m getting to see more and more developers making network games and there’s definitely some common themes in the problems they face.
+I’ve written a few multiplayer games and seen patterns in the things I got wrong across projects. As part of my work here at Rune I’m getting to see more and more developers making network games and there’s definitely some common themes in the problems they face.
 
 When you write a lot of single player games it’s easy to get into habits that make game development faster. For instance, knowing that your data model is as fast to update and as your rendering is a real bonus when trying to move quickly from concept to MVP. Some of these habits can make multiplayer game development harder, so here’s a few things to think about when you’re building your next hit game.
 

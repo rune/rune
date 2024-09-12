@@ -8,7 +8,7 @@ You'll often want to show each player’s name and avatar inside your game. Here
 
 ## Getting Player Info {#getting-player-info}
 
-Your game receives `allPlayerIds` array in the `onChange` callback, which contains the IDs of all players currently playing. Then use `Dusk.getPlayerInfo(playerId)` with a playerId to get info about that player:
+Your game receives `allPlayerIds` array in the `onChange` callback, which contains the IDs of all players currently playing. Then use `Rune.getPlayerInfo(playerId)` with a playerId to get info about that player:
 
 - `displayName: string`
 - `avatarUrl: string`
@@ -18,11 +18,11 @@ Note that you can pass the ID of a player that is no longer in game and get plac
 
 ## Avatars {#avatars}
 
-Every player on Dusk has their own personalized avatar. We let you use these avatars in your game, which has many benefits:
+Every player on Rune has their own personalized avatar. We let you use these avatars in your game, which has many benefits:
 
 - Players can easily see which friend is playing what character in your game
 - Makes it easy to show players in your UI, leaderboards, etc.
-- Consistency between your game and other popular games on Dusk
+- Consistency between your game and other popular games on Rune
 
 Below are some examples of what the avatars look like.
 

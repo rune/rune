@@ -26,7 +26,7 @@ export function StartGame() {
 
   useEffect(() => {
     if (difficulty) {
-      const handle = setTimeout(() => Dusk.actions.startGame(difficulty), 500)
+      const handle = setTimeout(() => Rune.actions.startGame(difficulty), 500)
       return () => clearTimeout(handle)
     }
   }, [difficulty])

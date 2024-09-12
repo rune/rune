@@ -6,7 +6,7 @@ tags: [Game Development]
 image: /img/blog/social-previews/how-to-make-a-game-when-you-suck-at-art.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="How to make a game when you suck at art"/>
 </head>
 
-When building games as a coder, there’s one issue that prevents us from being motivated for a game more than anything else - art. Whether it’s conscious or not, if you're working on a project that you have to look at hundreds of times a day, it’s very hard to stay excited when it has programmer art. At Dusk, I’m still building lots of games and tech demos, and each one is far easier to absorb and understand when the art is “good enough”.
+When building games as a coder, there’s one issue that prevents us from being motivated for a game more than anything else - art. Whether it’s conscious or not, if you're working on a project that you have to look at hundreds of times a day, it’s very hard to stay excited when it has programmer art. At Rune, I’m still building lots of games and tech demos, and each one is far easier to absorb and understand when the art is “good enough”.
 
 The ideal case is finding an artist to work with who’s just as enamored with the game concept as you are. However, often artists have many options and the game needs to get to a certain level before they’ll engage. 
 
@@ -68,7 +68,7 @@ https://kaylousberg.com/game-assets/
 
 ## Quaternius
 
-[Quaternius](https://quaternius.com/) was a new find for me thanks to the Dusk game [Cooking Frenzy](https://join.rune.ai/game/s9szCEsD-1Q). Really great low-poly 3D art and game ready.
+[Quaternius](https://quaternius.com/) was a new find for me thanks to the Rune game [Cooking Frenzy](https://join.rune.ai/game/s9szCEsD-1Q). Really great low-poly 3D art and game ready.
 
 ![](/img/blog/callouts/assets/quat.png)
 

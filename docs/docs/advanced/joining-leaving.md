@@ -4,11 +4,11 @@ sidebar_position: 10
 
 # Joining and Leaving
 
-One complexity of multiplayer games is that there may be different number of players, people joining/leaving, etc. Dusk handles this complexity by default by automatically making additional people in the room spectators and so on. If you want and your game supports it, you can opt-in to handling more of this complexity.
+One complexity of multiplayer games is that there may be different number of players, people joining/leaving, etc. Rune handles this complexity by default by automatically making additional people in the room spectators and so on. If you want and your game supports it, you can opt-in to handling more of this complexity.
 
 # Events
 
-Dusk has `events`, which are always triggered based on room changes (e.g. a player joining). This is opposed to `actions` , which are always called by game. Currently available events are: `playerJoined`, `playerLeft`, `stateSync`, `update`, `timeSync`. You can read more about `update` and `timeSync` events in the documentation on [real-time games](real-time-games.md).
+Rune has `events`, which are always triggered based on room changes (e.g. a player joining). This is opposed to `actions` , which are always called by game. Currently available events are: `playerJoined`, `playerLeft`, `stateSync`, `update`, `timeSync`. You can read more about `update` and `timeSync` events in the documentation on [real-time games](real-time-games.md).
 
 Whenever an event happens, `onChange` is called with `event` as a parameter to let the game visually change its appearance based on the changes. The game can provide an optional callback for `playerJoined` and `playerLeft` in `logic.js`, which allows the game to change game state when they happen.
 
@@ -16,7 +16,7 @@ Below is an overview comparing actions & events.
 
 |                       | Actions    | Events                     |
 | --------------------- | ---------- |----------------------------|
-| Defined and called by | Game Dev   | Dusk                       |
+| Defined and called by | Game Dev   | Rune                       |
 | Quantity              | Any number | Predefined (currently 5)   |
 | Update game state?    | Yes        | If using optional callback |
 | Might be rolled back? | Yes        | No                         |
@@ -38,7 +38,7 @@ This means that the number of players that the game SDK sees may not equal the n
 
 As an argument to `initLogic()` , the game provides `minPlayers`, which is an int from 1 to 4. For instance, chess would specify `minPlayers: 2`. The game cannot be started with fewer players.
 
-If a player leaves and the game drops below `minPlayers`, the game will end. If the game provides a `playerLeft` callback, it may specify a winner among the remaining players using `Dusk.gameOver()`. Note that the `playerLeft` callback must be provided to [support players leaving midgame](joining-leaving.md) anyway.
+If a player leaves and the game drops below `minPlayers`, the game will end. If the game provides a `playerLeft` callback, it may specify a winner among the remaining players using `Rune.gameOver()`. Note that the `playerLeft` callback must be provided to [support players leaving midgame](joining-leaving.md) anyway.
 
 Similar to `minPlayers`, the game provides `maxPlayers`. When anyone joins the room beyond two players, they automatically become a spectator.
 
@@ -51,7 +51,7 @@ The game can provide a `playerJoined` callback in `initLogic()` to make it clear
 For instance, the game may want to initialize a player’s score as part of handling dynamic joins:
 
 ```jsx
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
@@ -72,7 +72,7 @@ Dusk.initLogic({
 
 ## Supporting Players Leaving Midgame {#supporting-players-leaving-midgame}
 
-Continuing the example of the card-game Hearts, it’s quite complex to decide what should happen if a player leaves. By default, Dusk will end the game. Players can then restart or choose an new one from the game selection.
+Continuing the example of the card-game Hearts, it’s quite complex to decide what should happen if a player leaves. By default, Rune will end the game. Players can then restart or choose an new one from the game selection.
 
 The game can provide a `playerLeft` callback in `initLogic()` to make it clear that they support players dynamically leaving. The callback will “clean up” the game state and let the game continue for the remaining players. For games with turns, the game should skip the turn if it’s the turn of the player who left.
 

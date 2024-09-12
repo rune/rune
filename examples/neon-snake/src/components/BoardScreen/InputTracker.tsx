@@ -70,9 +70,9 @@ export function InputTracker() {
   useEffect(() => {
     if (!ready) return
 
-    if (leftPressed && !rightPressed) Dusk.actions.setTurning("left")
-    else if (rightPressed && !leftPressed) Dusk.actions.setTurning("right")
-    else Dusk.actions.setTurning("none")
+    if (leftPressed && !rightPressed) Rune.actions.setTurning("left")
+    else if (rightPressed && !leftPressed) Rune.actions.setTurning("right")
+    else Rune.actions.setTurning("none")
   }, [ready, leftPressed, rightPressed])
 
   return null

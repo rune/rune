@@ -2,7 +2,7 @@
 
 ## Overview
 
-This tech demo shows how to synchronize top down game worlds found in 2D RPG using the Dusk platform.
+This tech demo shows how to synchronize top down game worlds found in 2D RPG using the Rune platform.
 
 ## Assets
 

@@ -6,7 +6,7 @@ tags: [Game Development, Networking]
 image: /img/blog/social-previews/webrtc-vs-websockets-for-multiplayer-games.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="WebRTC vs. WebSockets for multiplayer games"/>
 </head>
 
-At Dusk, we’ve got a platform where millions of users are now playing casual multiplayer games. As I [blogged about previously](https://developers.rune.ai/blog/modern-game-networking-models), we care a lot about making the multiplayer networking excellent. No matter which model you’re using, making the best use of the available internet transport is key.
+At Rune, we’ve got a platform where millions of users are now playing casual multiplayer games. As I [blogged about previously](https://developers.rune.ai/blog/modern-game-networking-models), we care a lot about making the multiplayer networking excellent. No matter which model you’re using, making the best use of the available internet transport is key.
 
 ![](/img/blog/social-previews/webrtc-vs-websockets-for-multiplayer-games.png)
 
@@ -85,4 +85,4 @@ Unfortunately, at the time of writing, the standard is still changing, browsers 
 
 I’m still holding out hope that WebTransport is the answer, but what do you think? 
 
-If you’re interested in this topic or the Dusk platform, drop by our [Discord](https://discord.gg/dusk-devs) and let us know.
+If you’re interested in this topic or the Rune platform, drop by our [Discord](https://discord.gg/dusk-devs) and let us know.

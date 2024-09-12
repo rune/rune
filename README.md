@@ -1,24 +1,24 @@
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="docs/static/img/readme-hero-dark.png" >
 <source media="(prefers-color-scheme: light)" srcset="docs/static/img/readme-hero-light.png" >
-<img src="../docs/static/img/open-source-grant-dark.png" alt="An intro image showing Dusk logo with the text 'multiplayer web games'." >
+<img src="../docs/static/img/open-source-grant-dark.png" alt="An intro image showing Rune logo with the text 'multiplayer web games'." >
 </picture>
 
 <p align="center">
   <a href="https://developers.rune.ai">Docs</a> · <a href="https://discord.gg/dusk-devs">Discord</a> · <a href="https://developers.rune.ai/faq">FAQ</a> · <a href="https://developers.rune.ai/blog">Blog</a> · <a href="https://developers.rune.ai/docs/examples/games">Examples</a> 
 </p>
 
-# Dusk
+# Rune
 
-Build a multiplayer game played by millions! Your game runs inside the Dusk app with 10 million installs across [iOS](https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364) and [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan). You focus on your game, Dusk handles everything else, incl. servers and networking.
+Build a multiplayer game played by millions! Your game runs inside the Rune app with 10 million installs across [iOS](https://apps.apple.com/app/rune-games-and-voice-chat/id1450358364) and [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan). You focus on your game, Rune handles everything else, incl. servers and networking.
 
-You can make your game using JavaScript / TypeScript and your favorite web framework such as React, Svelte, Vue, Threejs, PixiJS, Phaser. The Dusk app has friends, messaging, spectating and voice chat built-in to turn your game into an incredible multiplayer experience.
+You can make your game using JavaScript / TypeScript and your favorite web framework such as React, Svelte, Vue, Threejs, PixiJS, Phaser. The Rune app has friends, messaging, spectating and voice chat built-in to turn your game into an incredible multiplayer experience.
 
 ## Features
 
-- **Social**: Dusk has messaging and voice chat so players can hang out together and talk about your game.
+- **Social**: Rune has messaging and voice chat so players can hang out together and talk about your game.
 - **Fast & Reliable**: Our predict-rollback netcode updates clients immediately and the server resolves conflicts.
-- **Free**: We pay for servers, voice chat, and everything else. It's 100% free to launch your game on Dusk.
+- **Free**: We pay for servers, voice chat, and everything else. It's 100% free to launch your game on Rune.
 
 ## Documentation
 
@@ -42,9 +42,9 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 
 ## Packages
 
-- [eslint-plugin-dusk](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-dusk) – rules and config for writing safe logic code for the Dusk SDK
-- [dusk-cli](https://github.com/rune/rune/tree/staging/packages/dusk-cli) – command line tool to develop and upload your HTML5 game for Dusk
-- [vite-plugin-dusk](https://github.com/rune/rune/tree/staging/packages/vite-plugin-dusk) – Vite plugin for writing games for the Dusk SDK
+- [eslint-plugin-dusk](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-dusk) – rules and config for writing safe logic code for the Rune SDK
+- [dusk-cli](https://github.com/rune/rune/tree/staging/packages/dusk-cli) – command line tool to develop and upload your HTML5 game for Rune
+- [vite-plugin-dusk](https://github.com/rune/rune/tree/staging/packages/vite-plugin-dusk) – Vite plugin for writing games for the Rune SDK
 
 ## Community
 
@@ -54,7 +54,7 @@ Have a question or want to discuss with others how to make an amazing multiplaye
 
 ## Contributing
 
-We'd really appreciate your help in making Dusk as useful as possible for everyone wanting to make a multiplayer game. Don't hesitate to open an issue or PR. If you find Dusk interesting, then please star and share the repo. 
+We'd really appreciate your help in making Rune as useful as possible for everyone wanting to make a multiplayer game. Don't hesitate to open an issue or PR. If you find Rune interesting, then please star and share the repo. 
 
 <div align="center">
 <picture>

@@ -8,8 +8,6 @@
   },
   "include": [
     "src/lib/validateGameFiles.ts",
-    "src/lib/jscodeshift/onePackage/*.ts",
-    "src/lib/jscodeshift/runeToDusk/*.ts",
     "src/lib/extractMultiplayerMetadata.ts",
     "src/lib/getGameFiles.tsx"
   ]

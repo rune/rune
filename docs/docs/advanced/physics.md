@@ -8,13 +8,13 @@ Physics in multiplayer games can be difficult to implement, though [real-time mu
 
 Your options are:
 
-1. Dusk-compatible physics engines like [Propel.js](https://github.com/kevglass/propel-js/) (recommended)
+1. Rune-compatible physics engines like [Propel.js](https://github.com/kevglass/propel-js/) (recommended)
 1. Custom physics code built specifically for the game
 1. Client-side physics
 
-## Dusk-Compatible Physics Engines
+## Rune-Compatible Physics Engines
 
-Dusk ensures that any JS game logic code is cross-platform deterministic by using a [set of rules](../how-it-works/server-side-logic.md) and by patching [non-deterministic functions](https://developers.rune.ai/blog/making-js-deterministic-for-fun-and-glory/). By using a compatible physics engine, for instance [Propel.js](https://github.com/kevglass/propel-js/), Dusk ensures that it's deterministic and synchronized across clients and server.
+Rune ensures that any JS game logic code is cross-platform deterministic by using a [set of rules](../how-it-works/server-side-logic.md) and by patching [non-deterministic functions](https://developers.rune.ai/blog/making-js-deterministic-for-fun-and-glory/). By using a compatible physics engine, for instance [Propel.js](https://github.com/kevglass/propel-js/), Rune ensures that it's deterministic and synchronized across clients and server.
 
 ## Custom Physics
 

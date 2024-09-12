@@ -1,1 +1,1 @@
-<!--- Thank You for contributing to Dusk Games SDK :) -->
+<!--- Thank You for contributing to Rune Games SDK :) -->

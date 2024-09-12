@@ -37,18 +37,18 @@ When you want to cash out your earnings, you submit a request on the dashboard. 
 
 ## Actively Playing
 
-To make the creator fund payouts fair for everyone, we calculate the **active playtime** for all metrics. If someone doesn't interact with a game, then they don’t count as actively playing. More specifically, we don’t count minutes while having the Dusk app minimized or after the player hasn’t interacted with the game for over 5 minutes.
+To make the creator fund payouts fair for everyone, we calculate the **active playtime** for all metrics. If someone doesn't interact with a game, then they don’t count as actively playing. More specifically, we don’t count minutes while having the Rune app minimized or after the player hasn’t interacted with the game for over 5 minutes.
 
-We also want to avoid the creator fund from being gamed by scammers and bots. To combat this, we only count in-app playtime and we use advanced device tracking to prevent banned users from creating new accounts. The latter has been used for multiple years to help ensure the Dusk community is nice and positive. To further combat anyone trying to game the system, we have a per-day 1 minute minimum playtime and 120 minute maximum playtime for each player. I.e. someone leaving their phone open for 24 hours with an auto-clicker will get much lower returns than they hoped for. And of course, we reserve the right to take action against cheating, scamming, etc.
+We also want to avoid the creator fund from being gamed by scammers and bots. To combat this, we only count in-app playtime and we use advanced device tracking to prevent banned users from creating new accounts. The latter has been used for multiple years to help ensure the Rune community is nice and positive. To further combat anyone trying to game the system, we have a per-day 1 minute minimum playtime and 120 minute maximum playtime for each player. I.e. someone leaving their phone open for 24 hours with an auto-clicker will get much lower returns than they hoped for. And of course, we reserve the right to take action against cheating, scamming, etc.
 
 ## It’s Your Game
 
-Dusk is a gaming platform with 10m+ installs and an easy way to build multiplayer games. We’re not a publisher, i.e. you retain full control over your game and you're free to do what you want with your game regarding its development and distribution.
+Rune is a gaming platform with 10m+ installs and an easy way to build multiplayer games. We’re not a publisher, i.e. you retain full control over your game and you're free to do what you want with your game regarding its development and distribution.
 
-It’s also fine if you want to make a Dusk multiplayer version of an existing singleplayer game that you’ve already made. Our community loves all kinds of games!
+It’s also fine if you want to make a Rune multiplayer version of an existing singleplayer game that you’ve already made. Our community loves all kinds of games!
 
 ## Future Plans
 
-Dusk is a young platform and we don’t make revenue yet. While you should not expect to earn a full salary building games on Dusk, we hope that earning a bit of money will help motivate you in your game dev journey. We've heard from many game devs that earning their first $ from their game was magical and that every $ they earn via itch.io and Ko-fi donations feels great. We hope that Dusk can do the same for lots of indie game devs!
+Rune is a young platform and we don’t make revenue yet. While you should not expect to earn a full salary building games on Rune, we hope that earning a bit of money will help motivate you in your game dev journey. We've heard from many game devs that earning their first $ from their game was magical and that every $ they earn via itch.io and Ko-fi donations feels great. We hope that Rune can do the same for lots of indie game devs!
 
-As Dusk grows, we will add more ways for you to earn money. For instance, we're planning to build out support for you to add in-game purchases that can be bought with a shared currency across Dusk. When your game starts making revenue using in-game purchases, we will take a small piece of it to cover our platform costs. In this way, we can grow together and build the best possible platform for multiplayer indie games!
+As Rune grows, we will add more ways for you to earn money. For instance, we're planning to build out support for you to add in-game purchases that can be bought with a shared currency across Rune. When your game starts making revenue using in-game purchases, we will take a small piece of it to cover our platform costs. In this way, we can grow together and build the best possible platform for multiplayer indie games!

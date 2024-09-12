@@ -1,4 +1,4 @@
-import type { PlayerId, DuskClient } from "rune-sdk/multiplayer"
+import type { PlayerId, RuneClient } from "rune-sdk/multiplayer"
 import {
   COUNTDOWN_MS,
   CUBE_DEPTH,
@@ -59,10 +59,10 @@ export type Persisted = {
 }
 
 declare global {
-  const Dusk: DuskClient<GameState, GameActions, Persisted>
+  const Rune: RuneClient<GameState, GameActions, Persisted>
 }
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 6,
   // NB: Use literal number below because of bug with parsing. Sync with UPDATES_PER_SECOND
@@ -109,7 +109,7 @@ Dusk.initLogic({
 
       game.phase = phase
       if (game.phase === "COUNTDOWN") {
-        game.startedAt = Dusk.gameTime()
+        game.startedAt = Rune.gameTime()
       }
     },
     setShipDirection: (direction, { game, playerId }) => {
@@ -123,7 +123,7 @@ Dusk.initLogic({
     }
 
     if (game.phase === "COUNTDOWN" && game.startedAt) {
-      if (Dusk.gameTime() - game.startedAt > COUNTDOWN_MS) {
+      if (Rune.gameTime() - game.startedAt > COUNTDOWN_MS) {
         game.phase = "PLAYING"
       }
 
@@ -215,7 +215,7 @@ Dusk.initLogic({
         ship.zSpeed = 0
 
         const place = Object.keys(game.completedPlayers).length + 1
-        const elapse = Dusk.gameTime() - game.startedAt!
+        const elapse = Rune.gameTime() - game.startedAt!
 
         //Only show best time if user has persisted state from before
         game.completedPlayers[playerId] = {
@@ -233,7 +233,7 @@ Dusk.initLogic({
 
       // Game over when all players finish
       if (Object.keys(game.completedPlayers).length === allPlayerIds.length) {
-        Dusk.gameOver({
+        Rune.gameOver({
           players: Object.fromEntries(
             Object.entries(game.completedPlayers).map(
               ([playerId, { place }]) => [

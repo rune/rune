@@ -4,20 +4,20 @@ sidebar_position: 99
 
 # API Reference
 
-Dusk methods for writing multiplayer games. The SDK is split into two parts:
+Rune methods for writing multiplayer games. The SDK is split into two parts:
 
 - **Game logic**, this code needs to be located in a file called `logic.js`
 - **UI integration**, that can live anywhere, but the docs will refer to `client.js`
 
 ## Game logic {#game-logic}
 
-### `Dusk.initLogic(options)` {#duskinitlogicoptions}
+### `Rune.initLogic(options)` {#duskinitlogicoptions}
 
 The `initLogic` function should be called directly at the top level of your `logic.js` file. This should contain all logic required to control your game state and handle player life cycle events. All options except `events` are required. Example:
 
 ```js
 // logic.js
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (allPlayerIds) => {
@@ -31,17 +31,17 @@ Dusk.initLogic({
     myAction: (payload, { game, playerId, allPlayerIds }) => {
       // Check it's not the other player's turn
       if (game.currentPlayer !== allPlayerIds[game.currentPlayerIndex]) {
-        throw Dusk.invalidAction()
+        throw Rune.invalidAction()
       }
 
       // Increase score and switch turn
       game.scores[playerId]++
       //Switch turn
       game.currentPlayerIndex = (game.currentPlayerIndex + 1) % allPlayerIds.length;
-      game.currentPlayerStartedAt = Dusk.gameTimeInSeconds();
+      game.currentPlayerStartedAt = Rune.gameTimeInSeconds();
       // Determine if game has ended
       if (isVictoryOrDraw(game)) {
-        Dusk.gameOver({
+        Rune.gameOver({
           everyone: 100,
         })
       }
@@ -57,9 +57,9 @@ Dusk.initLogic({
   },
   update: ({ game, allPlayerIds }) => {
     //If 30 seconds have passed since last player scored, switch player
-    if (Dusk.gameTimeInSeconds() - game.lastPlayerScoredAt > 30) {
+    if (Rune.gameTimeInSeconds() - game.lastPlayerScoredAt > 30) {
       game.currentPlayerIndex = (game.currentPlayerIndex + 1) % allPlayerIds.length;
-      game.currentPlayerStartedAt = Dusk.gameTimeInSeconds();
+      game.currentPlayerStartedAt = Rune.gameTimeInSeconds();
     }
   },
   updatesPerSecond: 10,
@@ -83,7 +83,7 @@ The `setup` function returns the initial values for the game state, which is the
 
 #### `actions: { [string]: (payload, { game: object, playerId: string, allPlayerIds: string[] }) => void}` {#actions--string-payload--game-object-playerid-string-allplayerids-string---void}
 
-The `actions` option is an object with actions functions exposed to the UI integration layer, called with [`Dusk.actions.myAction(payload)`](#duskactionspayload). The functions are responsible for [validating the action](#duskinvalidaction), mutating the `game` state and [end the game](#duskgameover) when appropriate.
+The `actions` option is an object with actions functions exposed to the UI integration layer, called with [`Rune.actions.myAction(payload)`](#duskactionspayload). The functions are responsible for [validating the action](#duskinvalidaction), mutating the `game` state and [end the game](#duskgameover) when appropriate.
 
 #### `events: { playerJoined? | playerLeft?: (playerId: string, { game: any, allPlayerIds: string[] }) => void }` _optional_ {#events--playerjoined--playerleft-playerid-string--game-any-allplayerids-string---void}
 
@@ -113,39 +113,39 @@ Setting `persistPlayerData` to true will enable storing player data across game 
 
 Default `true`. Setting `reactive` to false will improve game logic performance, but disable referential equality in game state passed to `onChange` callback (e.g. `game`).
 
-### `Dusk.invalidAction()` {#duskinvalidaction}
+### `Rune.invalidAction()` {#duskinvalidaction}
 
-Whenever a player tries to do an action that is not allowed, the action handler should reject it by calling `throw Dusk.invalidAction()` which will cancel the action and roll back any local optimistic updates.
+Whenever a player tries to do an action that is not allowed, the action handler should reject it by calling `throw Rune.invalidAction()` which will cancel the action and roll back any local optimistic updates.
 
 This is completely safe to do and can be used throughout your game. For instance, it is used in the [Tic Tac Toe example](https://github.com/rune/rune/blob/staging/examples/tic-tac-toe/logic.js) to ensure that players only can make a move when it is their turn.
 
 ```js
 // logic.js
-Dusk.initLogic({
+Rune.initLogic({
   actions: {
     myAction: (payload, { game, playerId }) => {
       if (!isValidAction(payload)) {
-        throw Dusk.invalidAction()
+        throw Rune.invalidAction()
       }
     },
   },
 })
 ```
 
-### `Dusk.gameOver(options)` {#duskgameoveroptions}
+### `Rune.gameOver(options)` {#duskgameoveroptions}
 
-When the game has ended, the action handler should call `Dusk.gameOver`. Your game doesn't need to show a "game over" screen. Dusk overlays a standardized game over popup to the user. See more in the [Game Over](advanced/game-over.md) guide.
+When the game has ended, the action handler should call `Rune.gameOver`. Your game doesn't need to show a "game over" screen. Rune overlays a standardized game over popup to the user. See more in the [Game Over](advanced/game-over.md) guide.
 
 ```js
 // logic.js
-Dusk.initLogic({
+Rune.initLogic({
   actions: {
     myAction: (payload, { game }) => {
       if (isGameOver(game)) {
         const winner = getWinner(game)
         const loser = getLoser(game)
 
-        Dusk.gameOver({
+        Rune.gameOver({
           players: {
             [winner.playerId]: "WON",
             [loser.playerId]: "LOST",
@@ -178,21 +178,21 @@ Set to `true` if you want to show the game over popup as a small bar at the bott
 
 #### `delayPopUp?: boolean` {#delaypopup-boolean}
 
-Optional. Set to `true` if you want to instruct Dusk to delay showing of the game over popup until you call `Dusk.showGameOverPopUp()`.
+Optional. Set to `true` if you want to instruct Rune to delay showing of the game over popup until you call `Rune.showGameOverPopUp()`.
 
-### `Dusk.gameTime()` {#duskgametime}
+### `Rune.gameTime()` {#duskgametime}
 
 Returns the amount of milliseconds that have passed since the start of the game. See [Using Time in your Game](advanced/real-time-games.md#game-time).
 
 ## Client {#client}
 
-### `Dusk.initClient(options)` {#duskinitclientoptions}
+### `Rune.initClient(options)` {#duskinitclientoptions}
 
 The `initClient` function should be called after your game is fully ready, but should not start the actual gameplay until `onChange` is called.
 
 ```js
 // client.js
-Dusk.initClient({
+Rune.initClient({
   onChange: ({
     game,
     previousGame,
@@ -229,7 +229,7 @@ Your player id, if the current user is a spectator this argument is undefined.
 
 ##### `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>` {#players-recordstring--playerid-string-displayname-string-avatarurl-string-}
 
-*Deprecated:* Use [allPlayerIds](#all-player-ids) and [Dusk.getPlayerInfo](#dusk-get-player-info)
+*Deprecated:* Use [allPlayerIds](#all-player-ids) and [Rune.getPlayerInfo](#dusk-get-player-info)
 
 The `players` argument is an object of the current players, useful to display their names and avatars in the game.
 
@@ -239,53 +239,53 @@ The player IDs of all current players in the game.
 
 ##### `action?: { name: string, playerId: string, params: any }` {#action--name-string-playerid-string-params-any-}
 
-If the update was triggered from a `Dusk.actions.*` call, this argument will contain info about it, such as the payload and who initiated. Usually this should be ignored and rely on `game` instead.
+If the update was triggered from a `Rune.actions.*` call, this argument will contain info about it, such as the payload and who initiated. Usually this should be ignored and rely on `game` instead.
 
 ##### `event?: { name: string, params: any }` {#event--name-string-params-any-}
 
 Possible events: `playerJoined`, `playerLeft`, `stateSync`, `update`, `timeSync`.
 
-### `Dusk.actions.*(payload)` {#duskactionspayload}
+### `Rune.actions.*(payload)` {#duskactionspayload}
 
-All functions passed in the `actions` object in `Dusk.initLogic()` will be exposed to the client via `Dusk.actions.myActionName`. This is the only way game state may be updated to make sure it's propagated to every player. You may call it with one argument of any type, but usually an object is recommended.
+All functions passed in the `actions` object in `Rune.initLogic()` will be exposed to the client via `Rune.actions.myActionName`. This is the only way game state may be updated to make sure it's propagated to every player. You may call it with one argument of any type, but usually an object is recommended.
 
 ```js
 // client.js
 button.onClick = () => {
-  Dusk.actions.markCell({
+  Rune.actions.markCell({
     myId: "button",
   })
 }
 ```
 
-### `Dusk.showGameOverPopUp()` {#duskshowgameoverpopup}
+### `Rune.showGameOverPopUp()` {#duskshowgameoverpopup}
 
-If you set `delayPopUp` to `true` in `Dusk.gameOver()`, you should call this function in your `client.js` to show the game over popup.
+If you set `delayPopUp` to `true` in `Rune.gameOver()`, you should call this function in your `client.js` to show the game over popup.
 
-### `Dusk.showInvitePlayers()` {#duskshowinviteplayers}
+### `Rune.showInvitePlayers()` {#duskshowinviteplayers}
 
-Opens invite modal inside the Dusk app. Useful if you want to incentivize players to invite their friends.
+Opens invite modal inside the Rune app. Useful if you want to incentivize players to invite their friends.
 
-### `Dusk.gameTime()` {#duskgametime-1}
+### `Rune.gameTime()` {#duskgametime-1}
 
 Returns the amount of milliseconds that have passed since the start of the game. See [Using Time in your Game](advanced/real-time-games.md#game-time).
 
-### `Dusk.getPlayerInfo(playerId)` {#dusk-get-player-info}
+### `Rune.getPlayerInfo(playerId)` {#dusk-get-player-info}
 
 Returns name, avatar, etc. for the player. Note that you can pass the ID of a player that is no longer in game and get placeholder information.
 
-### `Dusk.timeSinceLastUpdate()` {#dusktimesincelastupdate}
+### `Rune.timeSinceLastUpdate()` {#dusktimesincelastupdate}
 
 Returns the amount of milliseconds that have passed since the last `update` call. Can be used to smoothly render timers or interpolate between two positions.
 
-### `Dusk.msPerUpdate` {#duskmsperupdate}
+### `Rune.msPerUpdate` {#duskmsperupdate}
 
 Number of milliseconds indicating how often `update` function is called. Only available if game uses updates.
 
-### `Dusk.interpolator()` {#duskinterpolator}
+### `Rune.interpolator()` {#duskinterpolator}
 
 Returns an instance of interpolator. See [Reducing Stutter](advanced/reducing-stutter.md).
 
-### `Dusk.interpolatorLatency()` {#duskinterpolatorlatency}
+### `Rune.interpolatorLatency()` {#duskinterpolatorlatency}
 
 Returns an instance of interpolator. See [Reducing Stutter](advanced/reducing-stutter.md).

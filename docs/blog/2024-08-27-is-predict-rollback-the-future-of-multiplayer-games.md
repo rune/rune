@@ -1,12 +1,12 @@
 ---
 title: Is predict-rollback the future of multiplayer games?
-description: Why we chose predict-rollback for Dusk
+description: Why we chose predict-rollback for Rune
 slug: is-predict-rollback-the-future-of-multiplayer-games
 tags: [Game Development, Networking]
 image: /img/blog/social-previews/is-predict-rollback-the-future-of-multiplayer-games.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,13 +17,13 @@ authors:
   <meta property="og:title" content="Is predict-rollback the future of multiplayer games?"/>
 </head>
 
-At Dusk, the majority of the games on the platform are multiplayer. This is largely because we provide an SDK that enables JavaScript developers to build multiplayer experiences very easily, and our player base has come to expect it. Of course, as mentioned in [Modern Game Networking Models](https://developers.rune.ai/blog/modern-game-networking-models), this means we focus on making the backend networking something special.
+At Rune, the majority of the games on the platform are multiplayer. This is largely because we provide an SDK that enables JavaScript developers to build multiplayer experiences very easily, and our player base has come to expect it. Of course, as mentioned in [Modern Game Networking Models](https://developers.rune.ai/blog/modern-game-networking-models), this means we focus on making the backend networking something special.
 
 There are a lot of ways of making games multiplayer, from hot seat to shared screen and of course networking itself. Even in networking, there are multiple models to choose from each of which is suitable for a different type of game or programming complexity. 
 
 If you’re building a network layer for a single game or a bunch of very similar games then choosing the network model that’s the easiest and satisfies those game constraints is the best move.
 
-However, at Dusk, we’re pretty opinionated about a single model that works for all cases, predict-rollback. We need to provide a single common framework for all the games on Dusk and so we focus on one networking model that supports the massive variety of games on the platform.
+However, at Rune, we’re pretty opinionated about a single model that works for all cases, predict-rollback. We need to provide a single common framework for all the games on Rune and so we focus on one networking model that supports the massive variety of games on the platform.
 
 ## Predict-Rollback
 	

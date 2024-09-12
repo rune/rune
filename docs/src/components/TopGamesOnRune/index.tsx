@@ -3,7 +3,7 @@ import { TopGame } from "./TopGame"
 import styles from "./styles.module.scss"
 import { OtherGame } from "./OtherGame"
 
-export function TopGamesOnDusk() {
+export function TopGamesOnRune() {
   const [gameRes, setGameRes] = useState<GameRes>(initialGameRes)
   const [error, setError] = useState(false)
 

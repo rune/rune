@@ -6,7 +6,7 @@ import { getRandomInitialSection } from "./getRandomInitialSection.ts"
 export function newRound(game: GameState) {
   game.stage = "countdown"
   game.countdownTimer = countdownDurationSeconds
-  game.timerStartedAt = Dusk.gameTime()
+  game.timerStartedAt = Rune.gameTime()
   game.collisionGrid = {}
 
   for (const player of game.players) {

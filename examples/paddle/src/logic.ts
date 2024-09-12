@@ -138,7 +138,7 @@ function ballUpdate(
       game.players[0].score >= POINTS_TO_WIN ||
       game.players[1].score >= POINTS_TO_WIN
     ) {
-      Dusk.gameOver({
+      Rune.gameOver({
         players: {
           [game.players[0].id]:
             game.players[0].score >= POINTS_TO_WIN ? "WON" : "LOST",
@@ -158,7 +158,7 @@ function ballUpdate(
   }
 }
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   inputDelay: 30,

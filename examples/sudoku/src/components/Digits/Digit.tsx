@@ -52,9 +52,9 @@ export function Digit({ value }: { value: number | null }) {
     if (!cell?.valueLock || disabled) return
 
     if (inputMode === "note") {
-      Dusk.actions.toggleNote({ value })
+      Rune.actions.toggleNote({ value })
     } else {
-      Dusk.actions.setValue({ value, clientValueLock: cell.valueLock })
+      Rune.actions.setValue({ value, clientValueLock: cell.valueLock })
     }
   }, [cell?.valueLock, disabled, inputMode, value])
 

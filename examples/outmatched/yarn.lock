@@ -554,9 +554,9 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-dusk-games-sdk@^4.21.18:
+rune-sdk@^4.21.18:
   version "4.21.18"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.21.18.tgz#e7ec956e1ac5708f23eda22d250d21edcedd648d"
+  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.21.18.tgz#e7ec956e1ac5708f23eda22d250d21edcedd648d"
   integrity sha512-VqE2HuHdEh/9AGD6cJ4bcdAlx/nSaYCfB/zE1B3obQvst3ndRuoJZ1YGlZFvVt8CQPpqDnaQqC3L8iQu4w28ZA==
   dependencies:
     "@eslint/eslintrc" "^3.1.0"

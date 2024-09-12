@@ -1,4 +1,4 @@
-import { DuskClient, PlayerId } from "dusk-games-sdk"
+import { DuskClient, PlayerId } from "rune-sdk"
 import { physics } from "propel-js"
 
 export const PHYSICS_WIDTH = 480

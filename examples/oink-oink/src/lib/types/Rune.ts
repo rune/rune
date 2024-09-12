@@ -1,4 +1,4 @@
-import { DuskClient } from "dusk-games-sdk/multiplayer"
+import { DuskClient } from "rune-sdk/multiplayer"
 import { GameState } from "./GameState"
 import { GameActions } from "./GameActions"
 

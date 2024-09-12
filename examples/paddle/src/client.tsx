@@ -17,7 +17,7 @@ import {
   SCORE_DURATION,
   setupCanvas,
 } from "./render"
-import { Interpolator, InterpolatorLatency, Players } from "dusk-games-sdk"
+import { Interpolator, InterpolatorLatency, Players } from "rune-sdk"
 import { initControls } from "./controls"
 import { playSound } from "./playSound.ts"
 

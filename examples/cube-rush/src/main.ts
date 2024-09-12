@@ -3,8 +3,8 @@ import {
   Interpolator,
   InterpolatorLatency,
   Players,
-} from "dusk-games-sdk"
-import { PlayerId } from "dusk-games-sdk/multiplayer"
+} from "rune-sdk"
+import { PlayerId } from "rune-sdk/multiplayer"
 import * as THREE from "three"
 // eslint-disable-next-line
 // @ts-ignore

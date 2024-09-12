@@ -1,4 +1,4 @@
-import type { OnChange } from "dusk-games-sdk/multiplayer"
+import type { OnChange } from "rune-sdk/multiplayer"
 import type { BoardChange, Cells, GameActions, GameState } from "./types"
 import {
   rows,

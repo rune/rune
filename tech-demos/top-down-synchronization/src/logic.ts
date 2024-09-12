@@ -1,4 +1,4 @@
-import type { PlayerId, DuskClient } from "dusk-games-sdk/multiplayer"
+import type { PlayerId, DuskClient } from "rune-sdk/multiplayer"
 
 // how much the players will move per frame
 export const MOVE_SPEED = 4

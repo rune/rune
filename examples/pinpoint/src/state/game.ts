@@ -2,7 +2,7 @@ import { atom } from "jotai"
 import { GameState, Persisted } from "../lib/types/GameState"
 import { $myPlayerId } from "./myPlayerId"
 import { hasEveryoneGuessed } from "../lib/hasEveryoneGuessed"
-import { GameStateWithPersisted } from "dusk-games-sdk"
+import { GameStateWithPersisted } from "rune-sdk"
 
 export const $game = atom<
   GameStateWithPersisted<GameState, Persisted> | undefined

@@ -1,4 +1,4 @@
-import type { PlayerId, DuskClient } from "dusk-games-sdk/multiplayer"
+import type { PlayerId, DuskClient } from "rune-sdk/multiplayer"
 import {
   COUNTDOWN_MS,
   CUBE_DEPTH,

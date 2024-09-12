@@ -20,7 +20,7 @@ import guyJumpSrc from "./assets/Virtual Guy/Jump (32x32).png"
 
 import { Controls, GameState, tileMap, Animation } from "./logic"
 import { gameInputs } from "./input"
-import { PlayerId } from "dusk-games-sdk"
+import { PlayerId } from "rune-sdk"
 
 // map the tiles in our map array to a visual tile in the
 // pixel frog assets

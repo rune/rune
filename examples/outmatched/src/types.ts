@@ -1,4 +1,4 @@
-import type { DuskClient, PlayerId } from "dusk-games-sdk/multiplayer"
+import type { DuskClient, PlayerId } from "rune-sdk/multiplayer"
 
 export type Tile = number
 export type Cells = Tile[]

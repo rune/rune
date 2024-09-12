@@ -7,7 +7,7 @@ import warriorPurpleSrc from "./assets/Warrior_Purple.png"
 import warriorRedSrc from "./assets/Warrior_Red.png"
 import warriorYellowSrc from "./assets/Warrior_Yellow.png"
 import { Controls, GameState, Player, tileMap as gameMap } from "./logic"
-import { PlayerId } from "dusk-games-sdk"
+import { PlayerId } from "rune-sdk"
 import { gameInputs } from "./input"
 ;(async () => {
   // load all our resources at startup. In this case it's a set of tile sets

@@ -2,7 +2,7 @@ import { GameState, Persisted } from "./types/GameState"
 import { findDuplicates } from "./findDuplicates"
 import { highlightDuplicates } from "./highlightDuplicates"
 import { isBoardFilled } from "./isBoardFilled"
-import { GameStateWithPersisted } from "dusk-games-sdk"
+import { GameStateWithPersisted } from "rune-sdk"
 
 export function calculateErrorsOrGameOver(
   game: GameStateWithPersisted<GameState, Persisted>

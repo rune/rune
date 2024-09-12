@@ -1,6 +1,6 @@
 import path from "node:path"
 import { defineConfig } from "vite"
-import dusk from "dusk-games-sdk/vite"
+import dusk from "rune-sdk/vite"
 import { qrcode } from "vite-plugin-qrcode"
 
 // https://vitejs.dev/config/

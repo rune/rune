@@ -1,4 +1,4 @@
-import { PlayerId, DuskClient } from "dusk-games-sdk"
+import { PlayerId, DuskClient } from "rune-sdk"
 
 declare global {
   const Dusk: DuskClient<GameState, GameActions>

@@ -28,7 +28,7 @@ This approach requires you to be careful, especially if you're using TypeScript 
 2. Create a file called `client.js` that's responsible for [rendering](../quick-start.md#rendering) and calls `Dusk.initClient()`
 3. Load the SDK before any other script in your `index.html` along with the two files:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/dusk-games-sdk@4/multiplayer-dev.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rune-sdk@4/multiplayer-dev.js"></script>
 <script src="./logic.js"></script>
 <script src="./client.js"></script>
 ```

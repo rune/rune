@@ -47,7 +47,7 @@ export function Social() {
         />
       </a>
       <a
-        href="https://twitter.com/rune_devs"
+        href="https://x.com/joinrune"
         target="_blank"
         rel="noreferrer"
         className={styles.socialLink}

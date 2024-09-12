@@ -121,11 +121,11 @@ const config = {
               },
               {
                 label: "Twitter",
-                href: "https://twitter.com/rune_devs",
+                href: "https://x.com/joinrune",
               },
               {
                 label: "Instagram",
-                href: "https://instagram.com/rune_gg/",
+                href: "https://instagram.com/joinrune",
               },
             ],
           },

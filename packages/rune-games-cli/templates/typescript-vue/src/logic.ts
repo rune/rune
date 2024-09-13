@@ -1,4 +1,4 @@
-import type { PlayerId, RuneClient } from "rune-sdk/multiplayer"
+import type { PlayerId, RuneClient } from "rune-sdk"
 
 export type Cells = (PlayerId | null)[]
 export interface GameState {

@@ -1,6 +1,6 @@
 import "./styles.css"
 
-import { PlayerId } from "rune-sdk/multiplayer"
+import { PlayerId } from "rune-sdk"
 
 import selectSoundAudio from "./assets/select.wav"
 import { Cells } from "./logic.ts"

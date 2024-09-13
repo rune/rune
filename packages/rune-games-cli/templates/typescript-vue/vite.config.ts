@@ -1,6 +1,6 @@
 import vue from "@vitejs/plugin-vue"
-import rune from "rune-sdk/vite"
 import path from "node:path"
+import rune from "rune-sdk/vite"
 import { defineConfig } from "vite"
 import { qrcode } from "vite-plugin-qrcode"
 

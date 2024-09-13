@@ -1,5 +1,5 @@
-import { PlayerId } from "rune-sdk/multiplayer"
 import { useEffect, useState } from "react"
+import { PlayerId } from "rune-sdk/multiplayer"
 
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"

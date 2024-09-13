@@ -185,7 +185,7 @@ Object.assign(plugin.configs as any, {
     {
       languageOptions: {
         globals: {
-          Dusk: "readonly",
+          Rune: "readonly",
         },
       },
     },

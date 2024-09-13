@@ -7,9 +7,9 @@ import {
   useApp,
   useTick,
 } from "@pixi/react"
-import { PlayerId } from "rune-sdk/multiplayer"
 import { Texture } from "pixi.js"
 import { useEffect, useRef, useState } from "react"
+import { PlayerId } from "rune-sdk/multiplayer"
 
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"

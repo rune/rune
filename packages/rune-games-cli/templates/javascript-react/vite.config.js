@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react"
-import rune from "rune-sdk/vite"
 import path from "node:path"
+import rune from "rune-sdk/vite"
 import { defineConfig } from "vite"
 import { qrcode } from "vite-plugin-qrcode"
 

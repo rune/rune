@@ -48,7 +48,8 @@ export interface ValidationResult {
 export function parseGameIndexHtml(indexHtmlContent: string) {
   if (!valid(indexHtmlContent)) return null
 
-  const { sdkUrlStartRune, sdkUrlStartOldRune, sdkUrlStartDusk } = validationOptions
+  const { sdkUrlStartRune, sdkUrlStartOldRune, sdkUrlStartDusk } =
+    validationOptions
 
   const parsedIndexHtml = parse(indexHtmlContent)
   const scripts = parsedIndexHtml.getElementsByTagName("script")
@@ -145,7 +146,8 @@ export async function validateGameFiles(
     } else {
       const { sdkScript, scripts } = gameIndexHtmlElements
 
-      const { sdkUrlStartDusk, sdkUrlStartRune, sdkUrlStartOldRune } = validationOptions
+      const { sdkUrlStartDusk, sdkUrlStartRune, sdkUrlStartOldRune } =
+        validationOptions
 
       sdkName = scripts.some((script) =>
         script.getAttribute("src")?.startsWith(sdkUrlStartDusk)

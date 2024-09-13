@@ -1,8 +1,8 @@
 import js from "@eslint/js"
-import runePlugin from "rune-sdk/eslint.js"
 import prettier from "eslint-plugin-prettier/recommended"
 import pluginVue from "eslint-plugin-vue"
 import globals from "globals"
+import runePlugin from "rune-sdk/eslint.js"
 import tseslint from "typescript-eslint"
 
 export default [

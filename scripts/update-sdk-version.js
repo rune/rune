@@ -6,7 +6,10 @@ const version = process.argv[2]
 
 const examplesDir = path.resolve(__dirname, "../examples")
 const techDemosDir = path.resolve(__dirname, "../tech-demos")
-const templatesDir = path.resolve(__dirname, "../packages/rune-games-cli/templates")
+const templatesDir = path.resolve(
+  __dirname,
+  "../packages/rune-games-cli/templates"
+)
 
 const cliDir = path.resolve(__dirname, "../packages/rune-games-cli")
 

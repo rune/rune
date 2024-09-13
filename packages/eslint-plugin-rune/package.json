@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-rune",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "ESlint rules for Rune SDK",
   "license": "MIT",
   "author": "Rune AI Inc.",
@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rune-ai/rune.git",
+    "url": "git+https://github.com/rune/rune.git",
     "directory": "packages/eslint-plugin-rune"
   },
   "main": "./dist/index.js",

@@ -11,9 +11,10 @@ import LintMessage = Linter.LintMessage
 export const MAX_PLAYERS = 6
 
 export const validationOptions = {
+  sdkUrlStartOldRune: "https://cdn.jsdelivr.net/npm/rune-games-sdk",
   sdkUrlStartRune: "https://cdn.jsdelivr.net/npm/rune-sdk",
   sdkUrlStartDusk: "https://cdn.jsdelivr.net/npm/dusk-games-sdk",
-  sdkVersionRegex: /(?:rune|dusk-games)-sdk@(\d+(\.\d+(\.\d+)?)?)/,
+  sdkVersionRegex: /(?:rune|rune-games|dusk-games)-sdk@(\d+(\.\d+(\.\d+)?)?)/,
   minSdkVersion: "4.8.1",
   maxFiles: 1000,
   maxSizeMb: 10,
@@ -47,14 +48,15 @@ export interface ValidationResult {
 export function parseGameIndexHtml(indexHtmlContent: string) {
   if (!valid(indexHtmlContent)) return null
 
-  const { sdkUrlStartRune, sdkUrlStartDusk } = validationOptions
+  const { sdkUrlStartRune, sdkUrlStartOldRune, sdkUrlStartDusk } = validationOptions
 
   const parsedIndexHtml = parse(indexHtmlContent)
   const scripts = parsedIndexHtml.getElementsByTagName("script")
   const sdkScript = scripts.find(
     (script) =>
       script.getAttribute("src")?.startsWith(sdkUrlStartDusk) ||
-      script.getAttribute("src")?.startsWith(sdkUrlStartRune)
+      script.getAttribute("src")?.startsWith(sdkUrlStartRune) ||
+      script.getAttribute("src")?.startsWith(sdkUrlStartOldRune)
   )
 
   return { parsedIndexHtml, scripts, sdkScript }
@@ -143,18 +145,19 @@ export async function validateGameFiles(
     } else {
       const { sdkScript, scripts } = gameIndexHtmlElements
 
-      const { sdkUrlStartRune, sdkUrlStartDusk } = validationOptions
+      const { sdkUrlStartDusk, sdkUrlStartRune, sdkUrlStartOldRune } = validationOptions
 
       sdkName = scripts.some((script) =>
-        script.getAttribute("src")?.startsWith(sdkUrlStartRune)
+        script.getAttribute("src")?.startsWith(sdkUrlStartDusk)
       )
-        ? ("Rune" as const)
-        : ("Dusk" as const)
+        ? ("Dusk" as const)
+        : ("Rune" as const)
 
       if (
         scripts.filter(
           (script) =>
             script.getAttribute("src")?.startsWith(sdkUrlStartRune) ||
+            script.getAttribute("src")?.startsWith(sdkUrlStartOldRune) ||
             script.getAttribute("src")?.startsWith(sdkUrlStartDusk)
         ).length > 1
       ) {

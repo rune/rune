@@ -22,6 +22,8 @@ describe("validateGameFiles", () => {
     await Promise.all(
       [
         ["Rune", "rune-sdk"],
+        //These two are deprecated but still used by existing games
+        ["Rune", "rune-games-sdk"],
         ["Dusk", "dusk-games-sdk"],
       ].map(async ([n, packageName]) => {
         const name = n as "Rune" | "Dusk"

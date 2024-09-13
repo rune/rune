@@ -86,7 +86,7 @@ const restrictedGlobals = [
 const plugin = {
   meta: {
     name: "eslint-plugin-rune",
-    version: "2.0.1",
+    version: "2.0.2",
   },
   configs: {
     recommended: {},

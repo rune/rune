@@ -132,7 +132,6 @@ function Banner() {
       <div class="banner-content">
         <div class="text">
           <span>Dusk is now Rune!</span>
-          <span> Our name got an upgrade.</span>
         </div>
       </div>
     </div>

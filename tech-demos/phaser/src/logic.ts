@@ -1,4 +1,4 @@
-import { DuskClient, PlayerId } from "dusk-games-sdk"
+import { RuneClient, PlayerId } from "rune-sdk"
 import { physics } from "propel-js"
 
 export const PHYSICS_WIDTH = 480
@@ -20,10 +20,10 @@ type GameActions = {
 }
 
 declare global {
-  const Dusk: DuskClient<GameState, GameActions>
+  const Rune: RuneClient<GameState, GameActions>
 }
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 4,
   setup: (allPlayerIds) => {

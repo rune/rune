@@ -31,7 +31,7 @@ export default function NavbarMobileSidebarHeader() {
     <div className="navbar-sidebar__brand">
       <Link to="/">
         <img
-          alt="Dusk Logo"
+          alt="Rune Logo"
           className={styles.logo}
           src={require("@site/static/img/home/logo.png").default}
         />

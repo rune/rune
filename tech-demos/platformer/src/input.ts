@@ -10,7 +10,7 @@ export const gameInputs: Controls = {
   jump: false,
 }
 
-// Since we want to test this tech demo in the Dusk Dev UI we'll
+// Since we want to test this tech demo in the Rune Dev UI we'll
 // adapt our input controls for touch devices vs desktop
 const touchDevice = "ontouchstart" in document.documentElement
 const left = document.getElementById("left") as HTMLImageElement

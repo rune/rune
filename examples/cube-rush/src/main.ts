@@ -3,8 +3,8 @@ import {
   Interpolator,
   InterpolatorLatency,
   Players,
-} from "dusk-games-sdk"
-import { PlayerId } from "dusk-games-sdk/multiplayer"
+} from "rune-sdk"
+import { PlayerId } from "rune-sdk/multiplayer"
 import * as THREE from "three"
 // eslint-disable-next-line
 // @ts-ignore
@@ -79,7 +79,7 @@ let yourPlayerId: PlayerId | undefined
 
 let isSetup = false
 
-const playerInterpolator = Dusk.interpolator<[number, number, number]>()
+const playerInterpolator = Rune.interpolator<[number, number, number]>()
 let opponentInterpolators: Record<
   PlayerId,
   {
@@ -89,7 +89,7 @@ let opponentInterpolators: Record<
   }
 > = {}
 
-Dusk.initClient({
+Rune.initClient({
   onChange: (params) => {
     game = params.game
     players = params.players
@@ -112,12 +112,12 @@ Dusk.initClient({
       Object.keys(players).forEach((playerId) => {
         if (playerId !== yourPlayerId) {
           opponentInterpolators[playerId] = {
-            x: Dusk.interpolatorLatency<number>({
+            x: Rune.interpolatorLatency<number>({
               maxSpeed: 0.06,
               timeToMaxSpeed: 1500,
             }),
-            z: Dusk.interpolator<number>(),
-            r: Dusk.interpolator<number>(),
+            z: Rune.interpolator<number>(),
+            r: Rune.interpolator<number>(),
           }
         }
       })
@@ -182,7 +182,7 @@ let spectatingPlayerId: PlayerId | undefined
 // INIT HELPERS
 function initControls() {
   uiStartBtn.addEventListener("click", () => {
-    Dusk.actions.switchPhase("COUNTDOWN")
+    Rune.actions.switchPhase("COUNTDOWN")
   })
 
   window.addEventListener("resize", () => {
@@ -213,7 +213,7 @@ function initControls() {
     if (newShipDirection === shipDirection) return
 
     shipDirection = newShipDirection
-    Dusk.actions.setShipDirection(newShipDirection)
+    Rune.actions.setShipDirection(newShipDirection)
   }
 
   const pressEnd = () => {
@@ -228,7 +228,7 @@ function initControls() {
     if (newShipDirection === shipDirection) return
 
     shipDirection = newShipDirection
-    Dusk.actions.setShipDirection(newShipDirection)
+    Rune.actions.setShipDirection(newShipDirection)
   }
 
   window.addEventListener("pointerdown", (event) =>
@@ -389,7 +389,7 @@ function animate() {
   let attachedToPlayerId: PlayerId
   if (
     yourPlayerId &&
-    (Dusk.gameTime() >
+    (Rune.gameTime() >
       game.completedPlayers[yourPlayerId]?.elapse +
         COMPLETED_PLAYER_START_SPECTATING_MS ||
       isGameOver)
@@ -416,7 +416,7 @@ function animate() {
     // Countdown
     if (game.startedAt) {
       const leftSeconds = Math.ceil(
-        (COUNTDOWN_MS - (Dusk.gameTime() - game.startedAt)) / 1000
+        (COUNTDOWN_MS - (Rune.gameTime() - game.startedAt)) / 1000
       )
       uiCountdown.textContent = leftSeconds.toFixed(0)
     }

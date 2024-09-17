@@ -11,7 +11,7 @@ export function checkWinnersAndGameOver(game: GameState) {
     playersAlive[0].score++
 
     if (playersAlive[0].score === maxScoreBeforeGameOver) {
-      Dusk.gameOver({
+      Rune.gameOver({
         players: game.players.reduce(
           (acc, p) => ({ ...acc, [p.playerId]: p.score }),
           {}
@@ -20,7 +20,7 @@ export function checkWinnersAndGameOver(game: GameState) {
     } else {
       game.stage = "endOfRound"
       game.lastRoundWinnerId = playersAlive[0].playerId
-      game.timerStartedAt = Dusk.gameTime()
+      game.timerStartedAt = Rune.gameTime()
     }
   }
 }

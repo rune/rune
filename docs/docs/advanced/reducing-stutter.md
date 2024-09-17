@@ -4,7 +4,7 @@ sidebar_position: 62
 
 # Reducing Stutter
 
-This page focuses on reducing stutter for fast-paced multiplayer games running an update loop many times pr. second. However, you can also make really fun [real-time multiplayer games](real-time-games.md) without needing the more complex code described below. If you're new to Dusk or game development, we suggest you start by making a game without an update loop or an update loop only running once pr. second. See the [example games](../examples/games) for inspiration.
+This page focuses on reducing stutter for fast-paced multiplayer games running an update loop many times pr. second. However, you can also make really fun [real-time multiplayer games](real-time-games.md) without needing the more complex code described below. If you're new to Rune or game development, we suggest you start by making a game without an update loop or an update loop only running once pr. second. See the [example games](../examples/games) for inspiration.
 
 :::tip
 
@@ -14,10 +14,10 @@ Most games don't need the interpolators described here to have a smooth playing 
 
 ## Rendering At Variable Frame Rate {#rendering-at-variable-frame-rate}
 
-We will use the example of [Paddle](/examples/paddle) to explain how Dusk makes it simple to make fast-paced multiplayer games. A game like Paddle is updating the position of the ball and the players' paddles many times per second. We can code this in the `logic.js` file by specifying an `update` function and the `updatesPerSecond` value. In the following example, the `update` function will be called 30 times per second on all clients.
+We will use the example of [Paddle](/examples/paddle) to explain how Rune makes it simple to make fast-paced multiplayer games. A game like Paddle is updating the position of the ball and the players' paddles many times per second. We can code this in the `logic.js` file by specifying an `update` function and the `updatesPerSecond` value. In the following example, the `update` function will be called 30 times per second on all clients.
 
 ```javascript
-Dusk.initLogic({
+Rune.initLogic({
   update: ({ game }) => {
     game.ballPosition += game.ballSpeed
     // ... (remaining game logic)
@@ -30,10 +30,10 @@ The update loop will always run at a fixed tick rate, but mobile phones will ren
 
 Consider a Paddle game with `updatesPerSecond: 10`, i.e. the game state updates every 100 ms. The ball is at position 0 in `game` at 0 ms and will be at position 10 in after 100 ms. When the phone wants to render the game at 60 ms, it should render at position 6 as the ball should be 60% towards the new position.
 
-Dusk provides `futureGame`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. The game can interpolate between the current game state and the future game state by using `Dusk.interpolator()`. The interpolator allows the game to compute the ball's position at any time and will make the game look more fluid for fast-moving objects. Here's how this would be used for rendering the ball in Paddle at a variable frame rate: 
+Rune provides `futureGame`, which contains the game state after another run of the `update` function, thereby providing a glimpse into the future. The game can interpolate between the current game state and the future game state by using `Rune.interpolator()`. The interpolator allows the game to compute the ball's position at any time and will make the game look more fluid for fast-moving objects. Here's how this would be used for rendering the ball in Paddle at a variable frame rate: 
 
 ```javascript
-const ballInterpolator = Dusk.interpolator()
+const ballInterpolator = Rune.interpolator()
 
 function onChange({ game, futureGame }) {
   ballInterpolator.update({
@@ -50,7 +50,7 @@ function render() {
 }
 
 // Initialize the game with the callback function
-Dusk.initClient({ onChange })
+Rune.initClient({ onChange })
 ```
 
 There might be game-specific scenarios, where the game should not interpolate into the future. For instance, when a point is scored in Paddle, the ball position will reset in `logic.js` and the game should not interpolate the position between `game` and `futureGame`. The game can do this by not calling `update()` on the interpolator in that scenario, i.e. updating the code above with an if condition checking the current score vs. the future score:
@@ -81,7 +81,7 @@ First implement your game without interpolation for simplicity. Then you can tes
 In Paddle, the players control the paddles, and the game must therefore interpolate the other players' paddles to get smooth movements. The core game state and update loop in paddle could be defined as this:
 
 ```javascript
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   updatesPerSecond: 30,
@@ -119,7 +119,7 @@ Dusk.initLogic({
 })
 ```
 
-The `game` state is provided to the `onChange` callback as `game` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `game` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth despite the latency, the game can create an interpolator using `Dusk.interpolatorLatency`.
+The `game` state is provided to the `onChange` callback as `game` as described in [Syncing Game State](../how-it-works/syncing-game-state.md). Because of network latency, the position in `game` may suddenly change dramatically for the other player's paddle. Without interpolation, the paddle would teleport around on the screen. To instead make the paddle movements look smooth despite the latency, the game can create an interpolator using `Rune.interpolatorLatency`.
 
 The game should call the interpolator's `update()` function, which moves the interpolated position towards the true position specified in `game`. The game can at any time get the interpolated position from the interpolator by calling `getPosition()`. This function returns the position adjusted for the time of rendering (see section above) so it can be used directly to achieve both interpolation and supporting variable frame rate.
 
@@ -128,7 +128,7 @@ Here's that code for the paddle game:
 ```javascript
 import { playerSpeed } from "./logic.js"
 
-let opponentInterpolator = Dusk.interpolatorLatency({ maxSpeed: playerSpeed })
+let opponentInterpolator = Rune.interpolatorLatency({ maxSpeed: playerSpeed })
 
 function onChange({ game, futureGame, yourPlayerId }) {
   const opponent = game.players.findIndex((p) => p.id !== yourPlayerId)
@@ -147,7 +147,7 @@ function render() {
 }
 
 // Initialize the game with the callback function
-Dusk.initClient({ onChange })
+Rune.initClient({ onChange })
 ```
 
 There might be game-specific scenarios, where the game will want to immediately move the other players' positions without interpolating. For instance, when a point is scored in Paddle, the player positions reset in `logic.js` and the opponent position should be updated immediately. The game can detect that a point was just scored by comparing `game` with `previousGame`, which contains the game state for the last `onChange` call. The game can then call `moveTo()` on the interpolator, which will also reset the speed inside the interpolator to zero so that it doesn't move anywhere. Here's the code for that:
@@ -164,4 +164,4 @@ function onChange({ previousGame, game }) {
 
 ## Demo and Example Game {#demo-and-example-game}
 
-Using the interpolations described above, your game can achieve flexible frame rate rendering and smooth movements for other players regardless of network conditions. This gives the best player experience for the games that need it. If you want to make your own real-time Dusk game, it's great to start with the Paddle example game. You can [try the demo](/examples/paddle) and see how the opponent gets interpolated when simulating latency. You can also see the [full code here](https://github.com/dusk-gg/dusk/blob/staging/examples/paddle)!
+Using the interpolations described above, your game can achieve flexible frame rate rendering and smooth movements for other players regardless of network conditions. This gives the best player experience for the games that need it. If you want to make your own real-time Rune game, it's great to start with the Paddle example game. You can [try the demo](/examples/paddle) and see how the opponent gets interpolated when simulating latency. You can also see the [full code here](https://github.com/rune/rune/blob/staging/examples/paddle)!

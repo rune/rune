@@ -2,7 +2,7 @@ import { countdownDurationSeconds } from "./logicConfig.ts"
 import { GameState } from "./types.ts"
 
 export function updateCountdown(game: GameState) {
-  const timePassed = (Dusk.gameTime() - game.timerStartedAt) / 1000
+  const timePassed = (Rune.gameTime() - game.timerStartedAt) / 1000
 
   if (timePassed > countdownDurationSeconds) {
     game.stage = "playing"

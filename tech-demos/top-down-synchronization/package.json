@@ -6,16 +6,15 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
-    "upload": "npm run build && npx dusk-cli@latest upload",
+    "upload": "npm run build && npx rune-games-cli@latest upload",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.21.18"
+    "rune-sdk": "^4.22.0"
   },
   "devDependencies": {
     "eslint": "^9.7.0",
-    "eslint-plugin-dusk": "^2.0.0",
     "globals": "^15.8.0",
     "prettier": "^3.3.3",
     "typescript": "^5.4.5",

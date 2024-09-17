@@ -4,12 +4,12 @@ sidebar_position: 65
 
 # Persisted Data
 
-Many games benefit from storing player data across play sessions such as map progress, items, and various game-specific data. Dusk makes it easy to define and store such data. 
+Many games benefit from storing player data across play sessions such as map progress, items, and various game-specific data. Rune makes it easy to define and store such data. 
 
-To enable persistence, you set `persistPlayerData: true` in `Dusk.initLogic()`:
+To enable persistence, you set `persistPlayerData: true` in `Rune.initLogic()`:
 
 ```js
-Dusk.initLogic({
+Rune.initLogic({
     persistPlayerData: true,
     // ... remaining arguments
 })
@@ -17,12 +17,12 @@ Dusk.initLogic({
 
 ## Storing Player Data {#loading-and-saving-data}
 
-Dusk automatically loads and saves player data. You just need to decide what game data should be persisted across play sessions. To persist data for a player, store it in `game.persisted[playerId]`. The `game.persisted` object will always be available and contain all active players in the game. Each player has an object that you can store data in (incl. deep nested data). Any data you store in `game.persisted` will be persisted regardless of whether the game ends, is restarted, the player leaves, etc.
+Rune automatically loads and saves player data. You just need to decide what game data should be persisted across play sessions. To persist data for a player, store it in `game.persisted[playerId]`. The `game.persisted` object will always be available and contain all active players in the game. Each player has an object that you can store data in (incl. deep nested data). Any data you store in `game.persisted` will be persisted regardless of whether the game ends, is restarted, the player leaves, etc.
 
 Here's an example of using `game.persisted` for incrementing the number of sessions the player has played your game.
 
 ```js
-Dusk.initLogic({
+Rune.initLogic({
     persistPlayerData: true,
     setup: (allPlayerIds, { game }) => {
         for (const playerId of allPlayerIds) {
@@ -41,7 +41,7 @@ Dusk.initLogic({
 You can also modify `game.persisted` inside actions and in the `update()` loop. For instance, here's an example of collecting a health potion and using it.
 
 ```js
-Dusk.initLogic({
+Rune.initLogic({
     persistPlayerData: true,
     actions: {
         pickUpItem: (droppedItemId, { game, playerId }) => {
@@ -60,7 +60,7 @@ If the player didn't use the health potion, then they'd automatically have it in
 
 ## Backwards Compatibility {#backwards-compatibility}
 
-Dusk persists data forever, also across game versions. Your game might see a player in `game.persisted` with 1-year-old data saved many game versions ago. We recommend using TypeScript, storing types used in old game versions, and assuming in your logic that all persisted keys can be undefined.
+Rune persists data forever, also across game versions. Your game might see a player in `game.persisted` with 1-year-old data saved many game versions ago. We recommend using TypeScript, storing types used in old game versions, and assuming in your logic that all persisted keys can be undefined.
 
 :::caution
 You should be very careful to ensure your game doesn't break if it encounters old data!
@@ -76,7 +76,7 @@ This guarantees that even if unpublished game version has issues, it will not im
 
 ## TypeScript Support {#typescript-support}
 
-You can provide a `Persisted` type to `DuskClient` to specify what you're storing in `game.persisted`.
+You can provide a `Persisted` type to `RuneClient` to specify what you're storing in `game.persisted`.
 
 ```typescript
 // ... other types
@@ -87,7 +87,7 @@ type Persisted = {
 }
 
 declare global {
-  const Dusk: DuskClient<GameState, GameActions, Persisted>
+  const Rune: RuneClient<GameState, GameActions, Persisted>
 }
 
 ```
@@ -96,9 +96,9 @@ declare global {
 
 Here's some games to get inspired for how to make use of persistence:
 
-- [Cube Rush](https://github.com/dusk-gg/dusk/tree/staging/examples/cube-rush) stores best time the player has achieved
-- [Sudoku](https://github.com/dusk-gg/dusk/tree/staging/examples/sudoku) stores play sessions to decide whether to show onboarding
-- [Pinpoint](https://github.com/dusk-gg/dusk/tree/staging/examples/pinpoint) stores play sessions to decide whether to show onboarding
+- [Cube Rush](https://github.com/rune/rune/tree/staging/examples/cube-rush) stores best time the player has achieved
+- [Sudoku](https://github.com/rune/rune/tree/staging/examples/sudoku) stores play sessions to decide whether to show onboarding
+- [Pinpoint](https://github.com/rune/rune/tree/staging/examples/pinpoint) stores play sessions to decide whether to show onboarding
 
 
 ## Future Plans

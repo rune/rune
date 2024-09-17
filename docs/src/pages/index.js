@@ -15,9 +15,9 @@ import { gameVideoSequences } from "../components/gameVideoSequences"
 const features = [
   {
     icon: require("@site/static/img/home/features/players.png").default,
-    title: "Millions playing your game on Dusk",
+    title: "Millions playing your game on Rune",
     description: [
-      "The Dusk app has more than 10 million installs across iOS and Android.",
+      "The Rune app has more than 10 million installs across iOS and Android.",
       "No need for you to deal with marketing or pay for ads!",
     ],
   },
@@ -26,14 +26,14 @@ const features = [
     title: "Use your favorite web framework",
     description: [
       "Your game can use any web framework such as React, Svelte, Vue, r3f, PixiJS.",
-      "It runs smoothly inside the Dusk app using a highly-optimized WebView.",
+      "It runs smoothly inside the Rune app using a highly-optimized WebView.",
     ],
   },
   {
     icon: require("@site/static/img/home/features/heart.png").default,
     title: "It’s free for everyone",
     description: [
-      "Dusk is completely free for developers and players alike!",
+      "Rune is completely free for developers and players alike!",
       "We will cover our costs through a small cut on any money we help devs make.",
     ],
   },
@@ -42,15 +42,15 @@ const features = [
     title: "We help you make money (coming soon!)",
     description: [
       "Earn money from your game without dealing with ads or purchases.",
-      "Dusk's creator fund pays you directly based on your game's stats.",
+      "Rune's creator fund pays you directly based on your game's stats.",
     ],
   },
   {
     icon: require("@site/static/img/home/features/headset.png").default,
-    title: "Voice chat and social built into Dusk",
+    title: "Voice chat and social built into Rune",
     description: [
-      "The Dusk app has friends, messaging, spectating and voice chat.",
-      "Dusk turns your game into an incredible multiplayer experience!",
+      "The Rune app has friends, messaging, spectating and voice chat.",
+      "Rune turns your game into an incredible multiplayer experience!",
     ],
   },
 ]
@@ -167,7 +167,7 @@ export default function Home() {
 
             <h2>build a multiplayer game played by millions</h2>
             <p>
-              Your game runs inside the Dusk app with 10 million installs across
+              Your game runs inside the Rune app with 10 million installs across
               iOS and Android.
             </p>
             <div className={styles.ctaButtons}>
@@ -176,7 +176,7 @@ export default function Home() {
               </Link>
               <a
                 className={clsx(styles.ctaButton, styles.blue)}
-                href="https://discord.gg/dusk-devs"
+                href="https://discord.gg/rune-devs"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -216,7 +216,7 @@ export default function Home() {
             <h3>no backend needed</h3>
             <HomeGameDemo />
             <p className={styles.description}>
-              You write your game logic in JavaScript and Dusk runs it on
+              You write your game logic in JavaScript and Rune runs it on
               servers all over the world for low latency. Our predict-rollback
               approach removes the need for any game networking code and ensures
               that players have an amazing experience even on bad internet.
@@ -228,7 +228,7 @@ export default function Home() {
             <p>
               Here’s the code for the Tic Tac Toe game above. The game has
               built-in voice chat, matchmaking, and spectating. All powered by
-              Dusk!
+              Rune!
             </p>
             <div className={styles.codeContainer}>
               <div className={styles.buttons}>
@@ -258,10 +258,10 @@ export default function Home() {
           <div className={styles.makeAnyKindOfGame}>
             <h3>make any kind of game</h3>
             <p>
-              Dusk has built-in real-time multiplayer and lets you use the
+              Rune has built-in real-time multiplayer and lets you use the
               flexibility of JS + WASM. You can make games with fun physics,
               stunning graphics, and complex game logic. Here’s a few of the
-              many games live on Dusk.
+              many games live on Rune.
             </p>
 
             <ul>

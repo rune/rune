@@ -8,7 +8,7 @@ const games = [
     name: "Dungeons of Glee",
     rune: true,
     links: [
-      "https://app.dusk.gg/dev-rRTWDp5D",
+      "https://app.rune.ai/dev-rRTWDp5D",
       "https://github.com/kevglass/dungeonsofglee",
     ],
     description: "Crawl a dungeon with friends!",
@@ -17,7 +17,7 @@ const games = [
     name: "FruitScape",
     rune: true,
     links: [
-      "https://app.dusk.gg/dev-R612gCec",
+      "https://app.rune.ai/dev-R612gCec",
       "https://github.com/jallen-dev/fruitscape",
     ],
     description: "They've got fruit you need. Trade to gather the ingredients!",
@@ -26,7 +26,7 @@ const games = [
     name: "Spooky Cookie",
     rune: true,
     links: [
-      "https://app.dusk.gg/dev-5guffVqx",
+      "https://app.rune.ai/dev-5guffVqx",
       "https://github.com/wialy/react-game-jam-spooky-cookie",
     ],
     description:
@@ -36,7 +36,7 @@ const games = [
     name: "Goblin Chess",
     rune: true,
     links: [
-      "https://app.dusk.gg/dev-OVhXwPb9",
+      "https://app.rune.ai/dev-OVhXwPb9",
       "https://github.com/kickassCoderz/goblin-chess",
     ],
     description:
@@ -46,8 +46,8 @@ const games = [
     name: "Tic Tac Toe",
     rune: true,
     links: [
-      "https://developers.dusk.gg/examples/tic-tac-toe/",
-      "https://github.com/dusk-gg/dusk/tree/staging/examples/tic-tac-toe",
+      "https://developers.rune.ai/examples/tic-tac-toe/",
+      "https://github.com/rune/rune/tree/staging/examples/tic-tac-toe",
     ],
     description: "The classic three-in-a-row game.",
   },
@@ -55,8 +55,8 @@ const games = [
     name: "Paddle",
     rune: true,
     links: [
-      "https://developers.dusk.gg/examples/paddle/",
-      "https://github.com/dusk-gg/dusk/tree/staging/examples/paddle",
+      "https://developers.rune.ai/examples/paddle/",
+      "https://github.com/rune/rune/tree/staging/examples/paddle",
     ],
     description: "Serve, rally, score!",
   },
@@ -64,8 +64,8 @@ const games = [
     name: "Sudoku",
     rune: true,
     links: [
-      "https://developers.dusk.gg/examples/sudoku/",
-      "https://github.com/dusk-gg/dusk/tree/staging/examples/sudoku",
+      "https://developers.rune.ai/examples/sudoku/",
+      "https://github.com/rune/rune/tree/staging/examples/sudoku",
     ],
     description: "Collaborative version of the classic Sudoku game.",
   },
@@ -73,8 +73,8 @@ const games = [
     name: "Neon Snake",
     rune: true,
     links: [
-      "https://developers.dusk.gg/examples/neon-snake/",
-      "https://github.com/dusk-gg/dusk/tree/staging/examples/neon-snake",
+      "https://developers.rune.ai/examples/neon-snake/",
+      "https://github.com/rune/rune/tree/staging/examples/neon-snake",
     ],
     description:
       "A new take on the Zatacka snake game. Plot your path and outlast them all!",
@@ -83,8 +83,8 @@ const games = [
     name: "Cube Rush",
     rune: true,
     links: [
-      "https://developers.dusk.gg/examples/cube-rush/",
-      "https://github.com/dusk-gg/dusk/tree/staging/examples/cube-rush",
+      "https://developers.rune.ai/examples/cube-rush/",
+      "https://github.com/rune/rune/tree/staging/examples/cube-rush",
     ],
     description: "Who will race to the finish line first?",
   },
@@ -92,8 +92,8 @@ const games = [
     name: "Outmatched",
     rune: true,
     links: [
-      "https://developers.dusk.gg/examples/outmatched/",
-      "https://github.com/dusk-gg/dusk/tree/staging/examples/outmatched",
+      "https://developers.rune.ai/examples/outmatched/",
+      "https://github.com/rune/rune/tree/staging/examples/outmatched",
     ],
     description: "Multiplayer Match-3 game with combos and special moves!",
   },
@@ -101,8 +101,8 @@ const games = [
     name: "Pinpoint",
     rune: true,
     links: [
-      "https://developers.dusk.gg/examples/pinpoint/",
-      "https://github.com/dusk-gg/dusk/tree/staging/examples/pinpoint",
+      "https://developers.rune.ai/examples/pinpoint/",
+      "https://github.com/rune/rune/tree/staging/examples/pinpoint",
     ],
     description:
       "Look around beautiful 360 degree panoramas and guess where you are!",
@@ -111,8 +111,8 @@ const games = [
     name: "OinkOink",
     rune: true,
     links: [
-      "https://developers.dusk.gg/examples/oink-oink/",
-      "https://github.com/dusk-gg/dusk/tree/staging/examples/oink-oink",
+      "https://developers.rune.ai/examples/oink-oink/",
+      "https://github.com/rune/rune/tree/staging/examples/oink-oink",
     ],
     description:
       "Think you know what a sad frog sounds like? Test your impressions!",

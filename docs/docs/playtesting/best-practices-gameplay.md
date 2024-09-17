@@ -16,15 +16,15 @@ Many players like to try out your game alone before showing it to their friends.
 
 ### Support Two Players {#support-two-players}
 
-The majority of rooms on Dusk have exactly two players. For your game to be most successful, we recommend that it supports playing and is fun when played with one other person.
+The majority of rooms on Rune have exactly two players. For your game to be most successful, we recommend that it supports playing and is fun when played with one other person.
 
 ### Support Spectating {#support-spectators}
 
-Players on Dusk can spectate your game 👀 This can happen in many ways, e.g. if someone joins after the room has hit your game's `maxPlayers` or if someone joins after your game has called `Dusk.gameOver()`. You can identify spectators by having `yourPlayerId` as undefined (see [Player Info](../how-it-works/player-info.md)). Spectators should see all gameplay, but not have any UI for performing actions.
+Players on Rune can spectate your game 👀 This can happen in many ways, e.g. if someone joins after the room has hit your game's `maxPlayers` or if someone joins after your game has called `Rune.gameOver()`. You can identify spectators by having `yourPlayerId` as undefined (see [Player Info](../how-it-works/player-info.md)). Spectators should see all gameplay, but not have any UI for performing actions.
 
 ### Avoid UI Like Menu Screens, Pause Buttons, Audio Buttons, etc. {#avoid-ui-like-menu-screens-pause-buttons-high-score-screen-etc}
 
-Dusk’s UI provides a simple way to play/pause/restart that works for all games so you don’t need a menu screen or a pause button in your game. This lets players get into the action of your game, thereby making it faster to start playing and more fun for players! Similarly, there's no need for any audio buttons as Dusk has in-app UI for that, making things simpler for players.
+Rune’s UI provides a simple way to play/pause/restart that works for all games so you don’t need a menu screen or a pause button in your game. This lets players get into the action of your game, thereby making it faster to start playing and more fun for players! Similarly, there's no need for any audio buttons as Rune has in-app UI for that, making things simpler for players.
 
 ### Use Icons Instead of Text {#use-icons-instead-of-text}
 
@@ -32,12 +32,12 @@ Most players prefer visual explanations over reading. It's ideal if your game ca
 
 ### Translate Text For Non-English Players {#translate-text}
 
-There's many non-English players on Dusk so you increase your game's chances of success if you internationalize it by translating all text. The biggest non-English audiences on Dusk speak Spanish, Russian and Portuguese so translate your game into those languages.
+There's many non-English players on Rune so you increase your game's chances of success if you internationalize it by translating all text. The biggest non-English audiences on Rune speak Spanish, Russian and Portuguese so translate your game into those languages.
 
 ### Persist Player Progress Across Game Sessions {#persist-player-progress}
 
-Players enjoy when they make progress in your game across sessions such as unlocking new content or achieving high scores. Use Dusk's built-in [persistence API](../advanced/persisted-data.md) to save data in a reliable way that automatically syncs it across a user's devices. Avoid using cookies, local stage or IndexedDB as the OS may reset those.
+Players enjoy when they make progress in your game across sessions such as unlocking new content or achieving high scores. Use Rune's built-in [persistence API](../advanced/persisted-data.md) to save data in a reliable way that automatically syncs it across a user's devices. Avoid using cookies, local stage or IndexedDB as the OS may reset those.
 
-### Polish Your Dusk Profile {#polish-your-dusk-profile}
+### Polish Your Rune Profile {#polish-your-rune-profile}
 
-Adjust your name, avatar, and description in Dusk app Profile tab. Your profile will be publicly visible in Dusk app for games that you have created or contributed to.
+Adjust your name, avatar, and description in Rune app Profile tab. Your profile will be publicly visible in Rune app for games that you have created or contributed to.

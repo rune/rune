@@ -4,7 +4,7 @@ import globals from "globals"
 import js from "@eslint/js"
 import tseslint from "typescript-eslint"
 import reactPlugin from "eslint-plugin-react"
-import duskPlugin from "eslint-plugin-dusk"
+import runePlugin from "eslint-plugin-rune"
 import importPlugin from "eslint-plugin-import"
 import react from "eslint-plugin-react"
 import reactHooks from "eslint-plugin-react-hooks"
@@ -43,10 +43,10 @@ export default [
       "**/node_modules/",
       "**/generated/",
       "**/public/logic.js", //These are generated files
-      "packages/dusk-cli/__temp/",
-      "packages/dusk-cli/src/lib/jscodeshift/**/__testfixtures__",
-      "packages/vite-plugin-dusk/test/fixtures/",
-      "packages/dusk-cli/cjs/",
+      "packages/rune-games-cli/__temp/",
+      "packages/rune-games-cli/src/lib/jscodeshift/**/__testfixtures__",
+      "packages/vite-plugin-rune/test/fixtures/",
+      "packages/rune-games-cli/cjs/",
       "**/.docusaurus",
       "docs/static/_examples",
       "docs/static/_tech-demos",
@@ -54,7 +54,7 @@ export default [
     ],
   },
   js.configs.recommended,
-  ...duskPlugin.configs.recommended,
+  ...runePlugin.configs.recommended,
   //Only run it on ts files
   ...tseslint.configs.recommended.map((config) => ({
     files: ["**/*.tsx", "**/*.ts"],
@@ -88,8 +88,8 @@ export default [
   },
   {
     files: [
-      "packages/eslint-plugin-dusk/**/*.spec.js",
-      "packages/eslint-plugin-dusk/test/createConfigTester.js",
+      "packages/eslint-plugin-rune/**/*.spec.js",
+      "packages/eslint-plugin-rune/test/createConfigTester.js",
     ],
     languageOptions: {
       globals: {
@@ -98,8 +98,8 @@ export default [
     },
   },
   {
-    files: ["packages/eslint-plugin-dusk/test/samples/*.js"],
-    ...duskPlugin.configs.logic,
+    files: ["packages/eslint-plugin-rune/test/samples/*.js"],
+    ...runePlugin.configs.logic,
   },
   {
     files: ["docs/**/*.js"],
@@ -117,7 +117,7 @@ export default [
   },
 
   {
-    files: ["packages/dusk-cli/**"],
+    files: ["packages/rune-games-cli/**"],
     plugins: {
       n: nodePlugin,
 
@@ -217,8 +217,8 @@ export default [
   //Eslint only allows to define plugin once, and because each example game installs its own dependencies,
   //We need to point their plugins to root monorepo installs
 ].map((entry) => {
-  if (entry.plugins?.dusk) {
-    entry.plugins.dusk = duskPlugin
+  if (entry.plugins?.rune) {
+    entry.plugins.rune = runePlugin
   }
 
   if (entry.plugins?.prettier) {

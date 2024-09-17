@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Game Previews
 
-All games on Dusk have game previews. These help players get a feel for what the game will look like before they play it. Here's the design guidelines:
+All games on Rune have game previews. These help players get a feel for what the game will look like before they play it. Here's the design guidelines:
 
 - PNG format
 - 686x960 resolution
@@ -18,8 +18,8 @@ The bottom 240 pixels of the game preview is where the text and dev info will be
 
 ## Update Preview {#update-preview}
 
-If you ever want to update your preview image, then just run `npx dusk-cli@latest update-info`.
+If you ever want to update your preview image, then just run `npx rune-games-cli@latest update-info`.
 
 ## Wanna Skip Making One? {#wanna-skip-making-one}
 
-You do not need a game preview to upload an initial version for playtesting. It's only needed before releasing the game to the Dusk community. We can also make a game preview for your game if you'd like, just ask us on [Discord](https://discord.gg/dusk-devs)!
+You do not need a game preview to upload an initial version for playtesting. It's only needed before releasing the game to the Rune community. We can also make a game preview for your game if you'd like, just ask us on [Discord](https://discord.gg/rune-devs)!

@@ -6,7 +6,7 @@ tags: [Game Development, Networking]
 image: /img/blog/social-previews/gotchas-in-multiplayer-game-design.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="Gotchas in Multiplayer Game Design"/>
 </head>
 
-I’ve written a few multiplayer games and seen patterns in the things I got wrong across projects. As part of my work here at Dusk I’m getting to see more and more developers making network games and there’s definitely some common themes in the problems they face.
+I’ve written a few multiplayer games and seen patterns in the things I got wrong across projects. As part of my work here at Rune I’m getting to see more and more developers making network games and there’s definitely some common themes in the problems they face.
 
 When you write a lot of single player games it’s easy to get into habits that make game development faster. For instance, knowing that your data model is as fast to update and as your rendering is a real bonus when trying to move quickly from concept to MVP. Some of these habits can make multiplayer game development harder, so here’s a few things to think about when you’re building your next hit game.
 
@@ -35,7 +35,7 @@ What happens if a player leaves and then re-joins quickly? This might mean they 
  
 ## Determinism
 
-As described [last week](https://developers.dusk.gg/blog/making-js-deterministic-for-fun-and-glory), determinism in multiplayer games is often key to the network model. It’s quite easy to make a deterministic data model that ends up being non-deterministic on the rendering side. Pay special attention to how the renderer converts the inputs given from the network data model - a common issue is running animations independently from the synchronized data model resulting in different player interpretations of whats happened.
+As described [last week](https://developers.rune.ai/blog/making-js-deterministic-for-fun-and-glory), determinism in multiplayer games is often key to the network model. It’s quite easy to make a deterministic data model that ends up being non-deterministic on the rendering side. Pay special attention to how the renderer converts the inputs given from the network data model - a common issue is running animations independently from the synchronized data model resulting in different player interpretations of whats happened.
 
 Be intentional when making effects take place on the client side that aren’t driven by shared data.
 
@@ -66,8 +66,8 @@ Equally knowing the upper end of the players supported by your design is importa
 
 ## Real Life Internet
 
-As mentioned in [game networking models](https://developers.dusk.gg/blog/modern-game-networking-models), the real internet isn’t always smooth sailing. High latency is pretty common as is varying latency on a single connection. Try to think about how the game will feel with players on significantly different network connections. Accessibility-wise you want to get as many players on board as possible, so this may well mean that not all connections are equal.
+As mentioned in [game networking models](https://developers.rune.ai/blog/modern-game-networking-models), the real internet isn’t always smooth sailing. High latency is pretty common as is varying latency on a single connection. Try to think about how the game will feel with players on significantly different network connections. Accessibility-wise you want to get as many players on board as possible, so this may well mean that not all connections are equal.
 
 I’ve seen a couple of games out there that have a lag bonus - if your connection was poor or unstable you get an easier ride in the game. With the right tuning this feels like it could be a good solution.
 
-There are probably many other gotchas and areas to think about when designing multiplayer games, these are just a few that have come up for me. If you have other areas you think should be mentioned or want to discuss any of the above be sure to visit our [Discord](https://discord.gg/dusk-devs). 
+There are probably many other gotchas and areas to think about when designing multiplayer games, these are just a few that have come up for me. If you have other areas you think should be mentioned or want to discuss any of the above be sure to visit our [Discord](https://discord.gg/rune-devs). 

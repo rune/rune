@@ -4,29 +4,29 @@ sidebar_position: 0
 
 # Quick Start
 
-Build a multiplayer game for the [Dusk platform](https://www.dusk.gg) and its millions of players. Dusk handles netcode, servers, voice chat, matchmaking, spectating, and much more.
+Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.
 
 To get started, you only need to run one command:
 
 ```sh
-npx dusk-cli@latest create
+npx rune-games-cli@latest create
 ```
 After this, you'll have a multiplayer Tic Tac Toe game running.
 
-Alternatively, follow the [guide to port your existing game to Dusk](./how-it-works/existing-game.md). 
+Alternatively, follow the [guide to port your existing game to Rune](./how-it-works/existing-game.md). 
 
 ## Uploading & Playing In The App {#playing-the-game-in-app}
 
-Now that you have Tic Tac Toe running locally, it would be great to try playing it in the Dusk app:
+Now that you have Tic Tac Toe running locally, it would be great to try playing it in the Rune app:
 
 ```sh
 npm run upload
 ```
-That's it. You'll now see your game inside Dusk and can play it with your friends!
+That's it. You'll now see your game inside Rune and can play it with your friends!
 
 ## Game Logic {#game-logic}
 
-Dusk games are split into two parts: logic & rendering. Let's look at the logic for the generated Tic Tac Toe game.
+Rune games are split into two parts: logic & rendering. Let's look at the logic for the generated Tic Tac Toe game.
 
 You can find the logic code in the `logic.js` file. The `setup` function is responsible for creating an initial `game` state that's synced across players. We create the 3x3 grid for Tic Tac Toe:
 
@@ -49,10 +49,10 @@ function claimCell(cellIndex, { game, playerId }) {
 }
 ```
 
-Finally, we provide setup function, actions, and other game info to `Dusk.initLogic()`:
+Finally, we provide setup function, actions, and other game info to `Rune.initLogic()`:
 
 ```js
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   setup,
@@ -75,25 +75,25 @@ function onChange({ game, players, yourPlayerId, action }) {
   // ... update your game visuals according to latest received game state. Also play sound effects, update styles, etc.
 }
 
-Dusk.initClient({ onChange })
+Rune.initClient({ onChange })
 ```
 
 The client code also calls actions based on user input:
 
 ```js
 const button = // ... get the cell
-button.addEventListener("click", () => Dusk.actions.claimCell(cellIndex))
+button.addEventListener("click", () => Rune.actions.claimCell(cellIndex))
 ```
 
 You can find additional information about [rendering here](how-it-works/syncing-game-state.md#rendering).
 
 ## What Next? {#next-steps}
 
-You can also make much fancier games than Tic Tac Toe. Dusk supports games with real-time multiplayer, complex physics, beautiful graphics and much more!
+You can also make much fancier games than Tic Tac Toe. Rune supports games with real-time multiplayer, complex physics, beautiful graphics and much more!
 
 Here are some good places to start:
 
 - If you want some inspiration for your next game, we really recommend [checking out the example games](/docs/examples/games)!
-- Building games is more fun when you're part of a community, join the [Dusk Discord server](https://discord.gg/dusk-devs).
-- If your game is ready to be published to the big Dusk community, check out [how to publish your game](publishing/publishing-your-game.md).
-- Want to better understand how Dusk works underneath? See our explanation of [game state syncing](how-it-works/syncing-game-state.md).
+- Building games is more fun when you're part of a community, join the [Rune Discord server](https://discord.gg/rune-devs).
+- If your game is ready to be published to the big Rune community, check out [how to publish your game](publishing/publishing-your-game.md).
+- Want to better understand how Rune works underneath? See our explanation of [game state syncing](how-it-works/syncing-game-state.md).

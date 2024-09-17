@@ -1,4 +1,4 @@
-import type { OnChange } from "dusk-games-sdk/multiplayer"
+import type { OnChange } from "rune-sdk/multiplayer"
 import type { BoardChange, Cells, GameActions, GameState } from "./types"
 import {
   rows,
@@ -119,13 +119,13 @@ let isUpdating = false
 
 shuffleButton.onclick = () => {
   if (yourTurn && !isUpdating) {
-    Dusk.actions.shuffle()
+    Rune.actions.shuffle()
   }
 }
 
 extraMoveButton.onclick = () => {
   if (yourTurn && !isUpdating) {
-    Dusk.actions.extraMove()
+    Rune.actions.extraMove()
   }
 }
 
@@ -151,7 +151,7 @@ const handlePointerMove = (coordinates: Coordinates | null) => {
     const targetIndex = getIndexForCoordinates(coordinates.row, coordinates.col)
     sourceCoordinates = null
     if (isValidMove(cells, sourceIndex, targetIndex)) {
-      Dusk.actions.swap({
+      Rune.actions.swap({
         sourceIndex,
         targetIndex,
       })
@@ -185,7 +185,7 @@ board.onclick = (e) => {
   }
   const index = getIndexForCoordinates(coordinates.row, coordinates.col)
   if (!yourTurn) {
-    Dusk.actions.highlight({ index })
+    Rune.actions.highlight({ index })
   } else if (cells[index] > numberOfTiles) {
     showSpecialTileHint(index)
   }
@@ -897,7 +897,7 @@ const onChange: OnChangeFn = async ({
   ) {
     await showMessage("last-round")
   } else if (gameOver) {
-    Dusk.showGameOverPopUp()
+    Rune.showGameOverPopUp()
   }
   if (yourTurn) {
     scheduleMoveHint(currentPlayerIndex)
@@ -917,4 +917,4 @@ const queueUpdate: OnChangeFn = async (update) => {
   }
 }
 
-Dusk.initClient({ onChange: queueUpdate })
+Rune.initClient({ onChange: queueUpdate })

@@ -87,7 +87,7 @@ export function HomeGameDemo() {
           }}
         />
         <p className={styles.subtitle}>
-          Your game logic on Dusk&apos;s&nbsp;servers
+          Your game logic on Rune&apos;s&nbsp;servers
         </p>
         {dots.map((dot, i) => {
           const left = i < dots.length / 2

@@ -7,7 +7,7 @@
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@photo-sphere-viewer/core": "^5.1.4",
     "@photo-sphere-viewer/cubemap-tiles-adapter": "^5.1.4",
-    "dusk-games-sdk": "^4.21.18",
+    "rune-sdk": "^4.22.0",
     "esbuild": "^0.17.19",
     "howler": "^2.2.3",
     "jotai": "^2.0.3",
@@ -46,7 +46,7 @@
     "dev": "npm run dev:client & npm run dev:logic",
     "dev:client": "react-scripts start",
     "dev:logic": "esbuild src/logic.ts --bundle --outfile=public/logic.js --platform=neutral --tsconfig=tsconfig-logic.json --minify --watch",
-    "deploy": "../../scripts/copy-assets.sh pinpoint && yarn build && dusk upload build",
+    "deploy": "../../scripts/copy-assets.sh pinpoint && yarn build && rune upload build",
     "lint": "eslint src"
   },
   "eslintConfig": {

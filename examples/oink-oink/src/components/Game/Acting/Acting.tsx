@@ -50,7 +50,7 @@ export const Acting = memo(() => {
       <div style={{ height: rel(15) }} />
       <SkipGuessButton
         style={{ opacity: currentTurn.showSkipGuessButton ? 1 : 0 }}
-        onClick={() => Dusk.actions.skipGuess()}
+        onClick={() => Rune.actions.skipGuess()}
       >
         Skip
       </SkipGuessButton>

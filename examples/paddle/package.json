@@ -8,11 +8,11 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
     "lint": "eslint src",
-    "deploy": "../../scripts/copy-assets.sh paddle && yarn build && dusk upload dist",
+    "deploy": "../../scripts/copy-assets.sh paddle && yarn build && rune upload dist",
     "preview": "vite preview"
   },
   "dependencies": {
-    "dusk-games-sdk": "^4.21.18"
+    "rune-sdk": "^4.22.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
@@ -26,7 +26,6 @@
     "typescript": "^5.0.2",
     "typescript-eslint": "^8.0.0-alpha.54",
     "vite": "^5.2.11",
-    "vite-plugin-qrcode": "^0.2.2",
-    "vite-plugin-dusk": "^1.0.0"
+    "vite-plugin-qrcode": "^0.2.2"
   }
 }

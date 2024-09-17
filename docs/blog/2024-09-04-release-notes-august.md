@@ -1,12 +1,12 @@
 ---
 title: New Updates! August 2024
-description: Release notes for the Dusk platform 
+description: Release notes for the Rune platform 
 slug: release-notes-august
 tags: [Release Notes]
-image: /img/blog/social-previews/dusk.png
+image: /img/blog/social-previews/rune.png
 authors:
 - name: Amani Albrecht
-  title: Chief of Staff at Dusk  
+  title: Chief of Staff at Rune  
   url: https://www.linkedin.com/in/amanialbrecht
   image_url: /img/blog/people/amani-albrecht.png
   hide_table_of_contents: true
@@ -32,7 +32,7 @@ authors:
 * Fixed a crash that was happening when auto scrolling to the top on the friends tab if you're already there and have no friends. 
 * Busted a small bug where the "friends" label occasionally wasn't showing on friend profiles 🐛
 * 🎤Fixed some voice chat start errors by fixing the feedback screen logic! 
-* Updated our TikTok social link in the app so everyone can stay up to date on all things Dusk 🔗
+* Updated our TikTok social link in the app so everyone can stay up to date on all things Rune 🔗
 
 ## 💻 SDK Improvements
 

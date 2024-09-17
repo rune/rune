@@ -15,7 +15,7 @@ export function MultiplayerExamples({ data, techDemo }) {
           <h2>{example.title}</h2>
           <a href={`/${type}/${example.slug}/`}>Demo</a> |{" "}
           <a
-            href={`https://github.com/dusk-gg/dusk/tree/staging/${type}/${example.slug}`}
+            href={`https://github.com/rune/rune/tree/staging/${type}/${example.slug}`}
           >
             Source
           </a>

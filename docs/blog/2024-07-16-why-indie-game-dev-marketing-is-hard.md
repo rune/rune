@@ -6,7 +6,7 @@ tags: [Game Development]
 image: /img/blog/social-previews/indie-game-marketing.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://x.com/cokeandcode
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,7 +17,7 @@ authors:
   <meta property="og:title" content="Why Indie Game Dev Marketing is Hard"/>
 </head>
 
-Dusk is our platform to get your games seen by 1000s of players every day. This is one of things that particularly attracted me to the platform. The most common meme I see on my X/Twitter feed is this:
+Rune is our platform to get your games seen by 1000s of players every day. This is one of things that particularly attracted me to the platform. The most common meme I see on my X/Twitter feed is this:
 
 ![](/img/blog/callouts/indie-game-marketing.png)
 
@@ -41,7 +41,7 @@ All of this sounds pretty dire but it is possible. Many of my game dev friends h
 
 Back when the App Store was new there was a gold rush, an opportunity for indie game developers to be visible. Same with Steam and Google Play. There are moments in time in every game distribution platform where there’s room to shine - the only problem is often the player bases aren’t huge at that time. Of course the App Store, Steam and Google Play had huge potential player bases and space to fill.
 
-What we all need to look out for (and what attracted me to Dusk) is a place that:
+What we all need to look out for (and what attracted me to Rune) is a place that:
 
 * Has space to be seen
 * Has enough players to make it worth the time investment
@@ -53,4 +53,4 @@ As I mentioned above the viewing audience is getting less and less willing to ta
 
 The newer generation of players have a lower attention span, they just want it all right now. Platforms that give these players the games in the context of their social media are where we should be looking. Lets bypass traditional marketing altogether and just put the games in front of the players in a familiar social wrapper. 
 
-If you’re interested in this topic or want to hear more about how Dusk is doing this by all means [hit me up on Discord](https://discord.gg/dusk-devs). 
+If you’re interested in this topic or want to hear more about how Rune is doing this by all means [hit me up on Discord](https://discord.gg/rune-devs). 

@@ -7,13 +7,13 @@ let cellButtons, playerContainers
 function initUI(cells, allPlayerIds, yourPlayerId) {
   cellButtons = cells.map((_, cellIndex) => {
     const button = document.createElement("button")
-    button.addEventListener("click", () => Dusk.actions.claimCell(cellIndex))
+    button.addEventListener("click", () => Rune.actions.claimCell(cellIndex))
     board.appendChild(button)
     return button
   })
 
   playerContainers = allPlayerIds.map((playerId, index) => {
-    const { displayName, avatarUrl } = Dusk.getPlayerInfo(playerId)
+    const { displayName, avatarUrl } = Rune.getPlayerInfo(playerId)
     const li = document.createElement("li")
     li.setAttribute("player", index)
     li.innerHTML =
@@ -45,4 +45,4 @@ function onChange({ game, yourPlayerId, action, allPlayerIds }) {
   if (action && action.name === "claimCell") selectSound.play()
 }
 
-Dusk.initClient({ onChange })
+Rune.initClient({ onChange })

@@ -12,85 +12,85 @@ Games are deemed open-source if you can use their code to make your own game. Mo
 
 ## Games
 
-Here's all the open-source multiplayer web games we've found that match the criteria above. Many of them are made multiplayer using [Dusk](https://developers.dusk.gg) and played on [iOS](https://apps.apple.com/us/app/dusk-games-and-voice-chat/id1450358364) / [Android](https://play.google.com/store/apps/details?id=ai.dusk.tincan). The Dusk demo links below simulate multiplayer in your browser.
+Here's all the open-source multiplayer web games we've found that match the criteria above. Many of them are made multiplayer using [Rune](https://developers.rune.ai) and played on [iOS](https://apps.apple.com/us/app/rune-games-and-voice-chat/id1450358364) / [Android](https://play.google.com/store/apps/details?id=ai.rune.tincan). The Rune demo links below simulate multiplayer in your browser.
 
 <table>
   <tr>
     <th>Game</th>
-    <th>Dusk</th>
+    <th>Rune</th>
     <th>Links</th>
     <th>Description</th>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Dungeons of Glee</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://app.dusk.gg/dev-rRTWDp5D">Demo</a>, <a href="https://github.com/kevglass/dungeonsofglee">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://app.rune.ai/dev-rRTWDp5D">Demo</a>, <a href="https://github.com/kevglass/dungeonsofglee">Source</a></td>
     <td style="vertical-align: middle;">Crawl a dungeon with friends!</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">FruitScape</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://app.dusk.gg/dev-R612gCec">Demo</a>, <a href="https://github.com/jallen-dev/fruitscape">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://app.rune.ai/dev-R612gCec">Demo</a>, <a href="https://github.com/jallen-dev/fruitscape">Source</a></td>
     <td style="vertical-align: middle;">They've got fruit you need. Trade to gather the ingredients!</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Spooky Cookie</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://app.dusk.gg/dev-5guffVqx">Demo</a>, <a href="https://github.com/wialy/react-game-jam-spooky-cookie">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://app.rune.ai/dev-5guffVqx">Demo</a>, <a href="https://github.com/wialy/react-game-jam-spooky-cookie">Source</a></td>
     <td style="vertical-align: middle;">Pac-Man mixed with Bomberman. Outplay your rivals in this race to the treats!</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Goblin Chess</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://app.dusk.gg/dev-OVhXwPb9">Demo</a>, <a href="https://github.com/kickassCoderz/goblin-chess">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://app.rune.ai/dev-OVhXwPb9">Demo</a>, <a href="https://github.com/kickassCoderz/goblin-chess">Source</a></td>
     <td style="vertical-align: middle;">The ancient game but with a few twists. Destroy your opponent's king to win.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Tic Tac Toe</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://developers.dusk.gg/examples/tic-tac-toe/">Demo</a>, <a href="https://github.com/dusk-gg/dusk/tree/staging/examples/tic-tac-toe">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://developers.rune.ai/examples/tic-tac-toe/">Demo</a>, <a href="https://github.com/rune/rune/tree/staging/examples/tic-tac-toe">Source</a></td>
     <td style="vertical-align: middle;">The classic three-in-a-row game.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Paddle</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://developers.dusk.gg/examples/paddle/">Demo</a>, <a href="https://github.com/dusk-gg/dusk/tree/staging/examples/paddle">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://developers.rune.ai/examples/paddle/">Demo</a>, <a href="https://github.com/rune/rune/tree/staging/examples/paddle">Source</a></td>
     <td style="vertical-align: middle;">Serve, rally, score!</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Sudoku</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://developers.dusk.gg/examples/sudoku/">Demo</a>, <a href="https://github.com/dusk-gg/dusk/tree/staging/examples/sudoku">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://developers.rune.ai/examples/sudoku/">Demo</a>, <a href="https://github.com/rune/rune/tree/staging/examples/sudoku">Source</a></td>
     <td style="vertical-align: middle;">Collaborative version of the classic Sudoku game.</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Neon Snake</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://developers.dusk.gg/examples/neon-snake/">Demo</a>, <a href="https://github.com/dusk-gg/dusk/tree/staging/examples/neon-snake">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://developers.rune.ai/examples/neon-snake/">Demo</a>, <a href="https://github.com/rune/rune/tree/staging/examples/neon-snake">Source</a></td>
     <td style="vertical-align: middle;">A new take on the Zatacka snake game. Plot your path and outlast them all!</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Cube Rush</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://developers.dusk.gg/examples/cube-rush/">Demo</a>, <a href="https://github.com/dusk-gg/dusk/tree/staging/examples/cube-rush">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://developers.rune.ai/examples/cube-rush/">Demo</a>, <a href="https://github.com/rune/rune/tree/staging/examples/cube-rush">Source</a></td>
     <td style="vertical-align: middle;">Who will race to the finish line first?</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Outmatched</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://developers.dusk.gg/examples/outmatched/">Demo</a>, <a href="https://github.com/dusk-gg/dusk/tree/staging/examples/outmatched">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://developers.rune.ai/examples/outmatched/">Demo</a>, <a href="https://github.com/rune/rune/tree/staging/examples/outmatched">Source</a></td>
     <td style="vertical-align: middle;">Multiplayer Match-3 game with combos and special moves!</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">Pinpoint</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://developers.dusk.gg/examples/pinpoint/">Demo</a>, <a href="https://github.com/dusk-gg/dusk/tree/staging/examples/pinpoint">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://developers.rune.ai/examples/pinpoint/">Demo</a>, <a href="https://github.com/rune/rune/tree/staging/examples/pinpoint">Source</a></td>
     <td style="vertical-align: middle;">Look around beautiful 360 degree panoramas and guess where you are!</td>
   </tr>
   <tr>
     <td style="vertical-align: middle;">OinkOink</td>
     <td style="text-align: center; vertical-align: middle;">✅</td>
-    <td style="vertical-align: middle;"><a href="https://developers.dusk.gg/examples/oink-oink/">Demo</a>, <a href="https://github.com/dusk-gg/dusk/tree/staging/examples/oink-oink">Source</a></td>
+    <td style="vertical-align: middle;"><a href="https://developers.rune.ai/examples/oink-oink/">Demo</a>, <a href="https://github.com/rune/rune/tree/staging/examples/oink-oink">Source</a></td>
     <td style="vertical-align: middle;">Think you know what a sad frog sounds like? Test your impressions!</td>
   </tr>
   <tr>
@@ -158,7 +158,7 @@ Here's all the open-source multiplayer web games we've found that match the crit
 
 ## Supporting Future Games 
 
-Dusk wants to help bring more games like these to life. If you're interested in making an open-source multiplayer web game, then apply for an [open-source grant](./README.md). Also consider giving the repo a star and sharing it to inspire more devs to make games like these!
+Rune wants to help bring more games like these to life. If you're interested in making an open-source multiplayer web game, then apply for an [open-source grant](./README.md). Also consider giving the repo a star and sharing it to inspire more devs to make games like these!
 
 <div align="center">
 <picture>

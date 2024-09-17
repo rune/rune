@@ -67,7 +67,7 @@ export function Header() {
         </PlayerContainer>
       ))}
       {invite && (
-        <PlayerContainer $center onClick={() => Dusk.showInvitePlayers()}>
+        <PlayerContainer $center onClick={() => Rune.showInvitePlayers()}>
           <Avatar src={noAvatar} $playerColor={invite.color} />
           <Invite $playerColor={invite.color}>Invite</Invite>
         </PlayerContainer>

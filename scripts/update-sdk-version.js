@@ -6,9 +6,12 @@ const version = process.argv[2]
 
 const examplesDir = path.resolve(__dirname, "../examples")
 const techDemosDir = path.resolve(__dirname, "../tech-demos")
-const templatesDir = path.resolve(__dirname, "../packages/dusk-cli/templates")
+const templatesDir = path.resolve(
+  __dirname,
+  "../packages/rune-games-cli/templates"
+)
 
-const cliDir = path.resolve(__dirname, "../packages/dusk-cli")
+const cliDir = path.resolve(__dirname, "../packages/rune-games-cli")
 
 //These example games also have sdk version inside html
 const gamesWithHtml = {
@@ -51,7 +54,7 @@ const techDemos = fs
   }))
 
 const cli = {
-  name: "dusk-cli",
+  name: "rune-games-cli",
   dir: cliDir,
   shouldInstall: true,
 }
@@ -68,7 +71,7 @@ locations.forEach(({ name, dir, shouldInstall }) => {
   if (fs.existsSync(packageJsonPath)) {
     const packageJson = require(packageJsonPath)
 
-    packageJson.dependencies["dusk-games-sdk"] = `^${version}`
+    packageJson.dependencies["rune-sdk"] = `^${version}`
 
     console.log(`Updating ${path.relative(path.join(__dirname, ".."), dir)}`)
 
@@ -90,8 +93,8 @@ locations.forEach(({ name, dir, shouldInstall }) => {
     fs.writeFileSync(
       indexHtmlPath,
       indexHtml.replace(
-        /<script src="https:\/\/cdn.jsdelivr.net\/npm\/dusk-games-sdk@.+\/multiplayer-dev.js">/,
-        `<script src="https://cdn.jsdelivr.net/npm/dusk-games-sdk@${version}/multiplayer-dev.js">`
+        /<script src="https:\/\/cdn.jsdelivr.net\/npm\/rune-sdk@.+\/multiplayer-dev.js">/,
+        `<script src="https://cdn.jsdelivr.net/npm/rune-sdk@${version}/multiplayer-dev.js">`
       )
     )
   }

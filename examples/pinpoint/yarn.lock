@@ -4185,19 +4185,6 @@ duplexer@^0.1.2:
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
-dusk-games-sdk@^4.21.18:
-  version "4.21.18"
-  resolved "https://registry.yarnpkg.com/dusk-games-sdk/-/dusk-games-sdk-4.21.18.tgz#e7ec956e1ac5708f23eda22d250d21edcedd648d"
-  integrity sha512-VqE2HuHdEh/9AGD6cJ4bcdAlx/nSaYCfB/zE1B3obQvst3ndRuoJZ1YGlZFvVt8CQPpqDnaQqC3L8iQu4w28ZA==
-  dependencies:
-    "@eslint/eslintrc" "^3.1.0"
-    "@eslint/js" "^9.7.0"
-    es-module-lexer "^1.4.2"
-    globals "^15.8.0"
-    okie "^1.0.1"
-    terser "^5.22.0"
-    tree-model "^1.0.7"
-
 earcut@^2.2.3:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/earcut/-/earcut-2.2.4.tgz#6d02fd4d68160c114825d06890a92ecaae60343a"
@@ -8521,6 +8508,19 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
+
+rune-sdk@^4.22.0:
+  version "4.22.0"
+  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.22.0.tgz#83dc6f83258aec32a7e745255241b23f3402faeb"
+  integrity sha512-zfqPSCosYifSL/CHHCyx03zoKGHU3N7+Q/ax2DyvpBfGGumaHN+wTZrnhepyyhK4Mh2SJXcwwrFmtyoG7F3faw==
+  dependencies:
+    "@eslint/eslintrc" "^3.1.0"
+    "@eslint/js" "^9.7.0"
+    es-module-lexer "^1.4.2"
+    globals "^15.8.0"
+    okie "^1.0.1"
+    terser "^5.22.0"
+    tree-model "^1.0.7"
 
 rw@^1.3.3:
   version "1.3.3"

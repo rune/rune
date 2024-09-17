@@ -50,7 +50,7 @@ export function Cell({
 
   const onClick = useCallback(() => {
     if (gameOver) return
-    Dusk.actions.select({ row, col })
+    Rune.actions.select({ row, col })
   }, [col, gameOver, row])
 
   const onboardingRevealDelay = useMemo(

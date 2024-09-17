@@ -33,7 +33,7 @@ export function initControls(
       getIsPlayer() &&
       Math.abs(position - getPaddlePosition()) > MIN_MOVE_DISTANCE
     ) {
-      Dusk.actions.setPosition(position)
+      Rune.actions.setPosition(position)
     }
   }, 100)
 

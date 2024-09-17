@@ -6,7 +6,7 @@ tags: [Game Development, Tip and Tricks]
 image: /img/blog/social-previews/web-game-performance-optimization.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://www.linkedin.com/in/kevglass/
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,9 +17,9 @@ authors:
   <meta property="og:title" content="Web Game Performance Optimization"/>
 </head>
 
-Dusk is a platform for publishing web games to millions of players, and we love every game that a developer builds on it. One of the more difficult parts about distributing web games is the number of types of devices the game will end up running on. If you are building web games for the desktop then performance is often not a factor. Web games tend towards being more simple visually than traditional desktop or console games and as such the super powered machines that most desktop players have don’t struggle with even non-optimized code. This is great for artistic and creative approaches to building games, developers can simply focus on making the game exactly the way they want it, in the easiest way for them. 
+Rune is a platform for publishing web games to millions of players, and we love every game that a developer builds on it. One of the more difficult parts about distributing web games is the number of types of devices the game will end up running on. If you are building web games for the desktop then performance is often not a factor. Web games tend towards being more simple visually than traditional desktop or console games and as such the super powered machines that most desktop players have don’t struggle with even non-optimized code. This is great for artistic and creative approaches to building games, developers can simply focus on making the game exactly the way they want it, in the easiest way for them. 
 
-However, it’s different when you start considering mobile devices. Here at Dusk we have a large player base which also means a huge variation in end user devices. If you’re trying to be inclusive and accessible in your game dev, which I know most of us are, you need to be making it possible for older devices to play your games (think developing nations and young people). Here’s some stats on the version of devices we see in our player base.
+However, it’s different when you start considering mobile devices. Here at Rune we have a large player base which also means a huge variation in end user devices. If you’re trying to be inclusive and accessible in your game dev, which I know most of us are, you need to be making it possible for older devices to play your games (think developing nations and young people). Here’s some stats on the version of devices we see in our player base.
 
 ![](/img/blog/callouts/version-distribution.png)
 
@@ -100,7 +100,7 @@ There are two ways to approach the framerate optimization:
 * Just always run at 30fps - make the game feel right there and accept that on higher end devices you’re just saving them a lot of battery!
 * Detect when the game is running at less than your target FPS and step it down. This is slightly harder to do because you don’t want tiny peaks and troughs of performance to impact the stepping.
 
-One nice thing about the model Dusk uses is that since the logic is always at a fixed framerate independent of rendering, changing the framerate is often very easy.
+One nice thing about the model Rune uses is that since the logic is always at a fixed framerate independent of rendering, changing the framerate is often very easy.
 
 # Collision Detection and Physics
 
@@ -118,9 +118,9 @@ Throttling down CPU in particular is a really good way to see how it’s going t
 
 # Android System WebView
 
-Most of the time any web view in an application, like Dusk, is going to make use of the [Android System WebView](https://play.google.com/store/apps/details?id=com.google.android.webview). On modern versions of Android this is essentially Chrome and performs really well. 
+Most of the time any web view in an application, like Rune, is going to make use of the [Android System WebView](https://play.google.com/store/apps/details?id=com.google.android.webview). On modern versions of Android this is essentially Chrome and performs really well. 
 
-There are many versions of the Android operating system and particular devices where the Android System WebView can’t be upgraded so leaves your game running on something slower and more buggy. It's such a severe problem that in the Dusk application we enforce a minimum web view version so developers don't have to worry about it.
+There are many versions of the Android operating system and particular devices where the Android System WebView can’t be upgraded so leaves your game running on something slower and more buggy. It's such a severe problem that in the Rune application we enforce a minimum web view version so developers don't have to worry about it.
 
 If you’re hearing about performance issues on your web game and it’s on Android, get them to check the System WebView version.
 
@@ -128,4 +128,4 @@ If you’re hearing about performance issues on your web game and it’s on Andr
 
 Final note. There is nothing like real device testing. The emulator gets you so far but if you can acquire an old device to test on its really worth experiencing how very different it can be. Ebay is a great place to start. I use a Samsung J2 which is definitely the worst device I’ve ever seen but it’s been invaluable in testing performance tuning.
 
-Hopefully this blog is helpful to some web game developers out there. If you’d like to discuss more don’t hesitate to [hit me up on Discord](https://discord.gg/dusk-devs).
+Hopefully this blog is helpful to some web game developers out there. If you’d like to discuss more don’t hesitate to [hit me up on Discord](https://discord.gg/rune-devs).

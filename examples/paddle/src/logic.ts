@@ -1,4 +1,4 @@
-import type { PlayerId } from "dusk-games-sdk"
+import type { PlayerId } from "rune-sdk"
 
 // Use multiplayer so updatesPerSecond can be changed w/o impacting game speed
 const updatesPerSecond = 30
@@ -138,7 +138,7 @@ function ballUpdate(
       game.players[0].score >= POINTS_TO_WIN ||
       game.players[1].score >= POINTS_TO_WIN
     ) {
-      Dusk.gameOver({
+      Rune.gameOver({
         players: {
           [game.players[0].id]:
             game.players[0].score >= POINTS_TO_WIN ? "WON" : "LOST",
@@ -158,7 +158,7 @@ function ballUpdate(
   }
 }
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   inputDelay: 30,

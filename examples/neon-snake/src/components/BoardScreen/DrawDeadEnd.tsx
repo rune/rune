@@ -46,7 +46,7 @@ export function DrawDeadEnd({
       easeOutCubic(
         clamp(
           remap(
-            Dusk.gameTime(),
+            Rune.gameTime(),
             [
               diedAt + deathRevealDelayMs,
               diedAt + deathRevealDelayMs + defaultTransitionMs,

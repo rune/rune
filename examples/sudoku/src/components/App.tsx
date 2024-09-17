@@ -29,7 +29,7 @@ export function App() {
 
   useEffect(() => {
     import("../logic").then(() => {
-      Dusk.initClient({
+      Rune.initClient({
         onChange: ({
           game,
           players,
@@ -87,7 +87,7 @@ export function App() {
   useEffect(() => {
     if (game?.game.gameOver) {
       const handle = setTimeout(
-        () => Dusk.showGameOverPopUp(),
+        () => Rune.showGameOverPopUp(),
         totalBlipsDuration + 2000
       )
       return () => clearTimeout(handle)

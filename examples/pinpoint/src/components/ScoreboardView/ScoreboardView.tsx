@@ -165,12 +165,12 @@ export function ScoreboardView() {
               duration={timings.default}
             >
               <BottomContainer>
-                <CTA onClick={() => Dusk.actions.nextRound()}>
+                <CTA onClick={() => Rune.actions.nextRound()}>
                   <PlayIcon src={playIcon} />
                   <span>Next Round</span>
                 </CTA>
                 {Object.keys(players).length < 6 && (
-                  <InviteLink onClick={() => Dusk.showInvitePlayers()}>
+                  <InviteLink onClick={() => Rune.showInvitePlayers()}>
                     Invite more friends!
                   </InviteLink>
                 )}

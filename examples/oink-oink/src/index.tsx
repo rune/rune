@@ -7,7 +7,7 @@ import { Provider, createStore } from "jotai"
 const store = createStore()
 
 import("./logic").then(() => {
-  Dusk.initClient({
+  Rune.initClient({
     onChange: ({ game, players, yourPlayerId }) => {
       store.set($state, {
         ready: true,

@@ -1,5 +1,5 @@
 import { GameState, Persisted } from "./types/GameState"
-import { GameStateWithPersisted } from "dusk-games-sdk"
+import { GameStateWithPersisted } from "rune-sdk"
 
 export function triggerGameOver(
   game: GameStateWithPersisted<GameState, Persisted>
@@ -10,7 +10,7 @@ export function triggerGameOver(
     }
   })
 
-  Dusk.gameOver({
+  Rune.gameOver({
     players: game.guesses.reduce(
       (acc, guess) => ({
         ...acc,

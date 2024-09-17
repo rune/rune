@@ -6,7 +6,7 @@ tags: [Game Development, Tech Demo]
 image: /img/blog/social-previews/top-down-synchronization.png
 authors:
 - name: Kevin Glass 
-  title: Founding Engineer at Dusk  
+  title: Founding Engineer at Rune  
   url: https://www.linkedin.com/in/kevglass/
   image_url: /img/blog/people/kevin-glass.jpg
   hide_table_of_contents: true
@@ -17,23 +17,23 @@ authors:
   <meta property="og:title" content="Networking a Top Down RPG"/>
 </head>
 
-Here at Dusk we provide a multiplayer Javascript games SDK and platform for everyone to get their creations out to 1000s of players. We provide technical demos to illustrate how you can use the platform to implement various game types.
+Here at Rune we provide a multiplayer Javascript games SDK and platform for everyone to get their creations out to 1000s of players. We provide technical demos to illustrate how you can use the platform to implement various game types.
 
 ![](/img/blog/callouts/top-down-synchronization.gif)
 
-I’ve been putting together a new tech demo that shows how to implement the basic synchronization of movement between clients connected in a Dusk room for a top down game. You can try it out [here](../../tech-demos/top-down-synchronization/). Starting here gives us a super simple example of how to wire everything up without worrying about gravity/physics or complex collision detection.
+I’ve been putting together a new tech demo that shows how to implement the basic synchronization of movement between clients connected in a Rune room for a top down game. You can try it out [here](../../tech-demos/top-down-synchronization/). Starting here gives us a super simple example of how to wire everything up without worrying about gravity/physics or complex collision detection.
 
-Let’s start by looking at the architecture of a Dusk game and the separation between rendering and logic.
+Let’s start by looking at the architecture of a Rune game and the separation between rendering and logic.
 
 ![](/img/blog/callouts/client-logic.png)
 
 It’s often considered good practice to separate your data model and logic from the rendering, i.e. the MVC pattern. However, when it comes to multiplayer this isn’t just best practice, it’s absolutely required to let us run copies of the game logic on both the server and client. 
 
-The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict-rollback network model (that Dusk uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](/docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
+The logic should only contain the data that is required to make the decisions about how the game updates and how winning/losing can be evaluated - i.e. the game state. We want to try and keep it as simple and fast as possible since in the predict-rollback network model (that Rune uses) we will be running multiple copies of the logic. The logic has to be [implemented with some restrictions](/docs/how-it-works/syncing-game-state) that allow it to be executed both on the browser and server.
 
 The renderer, or client, is the code that actually converts the game state to something that the player can view and interact with. The client can be implemented using any library or framework that can run in the browser. 
 
-Let’s get to the code, I’m going to assume you already know how to [create a game project](https://developers.dusk.gg/docs/quick-start) and just jump straight into the logic. In this demo we’re going to have a map, players and trees. So first let’s declare some types to describe those:
+Let’s get to the code, I’m going to assume you already know how to [create a game project](https://developers.rune.ai/docs/quick-start) and just jump straight into the logic. In this demo we’re going to have a map, players and trees. So first let’s declare some types to describe those:
 
 ```js
 // types of entities we'll display in the world
@@ -74,12 +74,12 @@ export type Controls = {
 }
 ```
 
-Next we’ll need to describe the game state we want to synchronize, in Dusk that’s as easy as this:
+Next we’ll need to describe the game state we want to synchronize, in Rune that’s as easy as this:
 
 ```js
 // this is the core of what we're trying to keep
 // in sync across the network. It'll be held on clients
-// and server and the Dusk platform will keep it
+// and server and the Rune platform will keep it
 // in sync by applying deterministic actions
 export interface GameState {
   entities: Entity[]
@@ -90,11 +90,11 @@ export interface GameState {
 We need to setup an initial state for the game which all clients will start from before applying changes they receive from clients:
 
 ```js
-Dusk.initLogic({
+Rune.initLogic({
   setup: (allPlayerIds) => {
     const initialState: GameState = {
       entities: [],
-      // for each of the players Dusk says are in the game
+      // for each of the players Rune says are in the game
       // create a new player entity. We'll initialize their
       // location to place them in the world
       players: allPlayerIds.map((p, index) => {
@@ -132,7 +132,7 @@ Dusk.initLogic({
   },
 ```
 
-In the game logic we need to declare what the clients can do and how the game should update each frame. In Dusk the game update is defined as part of setting up the Dusk SDK like so:
+In the game logic we need to declare what the clients can do and how the game should update each frame. In Rune the game update is defined as part of setting up the Rune SDK like so:
 
 ```js
 update: ({ game }) => {
@@ -160,16 +160,16 @@ The game logic is configured to run at 30 updates a second and on each update we
 
 So how does this synchronize the clients? 
 
-The Dusk platform runs this logic on the server and each of the clients. When a change is made to the game state is first applied locally - so latency in controls is very low - and then sent to the server and subsequently to all other clients. This is all timed so that the local client isn’t applying the changes too early and gives the server time to schedule the change at the right time.
+The Rune platform runs this logic on the server and each of the clients. When a change is made to the game state is first applied locally - so latency in controls is very low - and then sent to the server and subsequently to all other clients. This is all timed so that the local client isn’t applying the changes too early and gives the server time to schedule the change at the right time.
 
 So everyone playing and the server have a copy of the game logic which they’re keeping up to date based on the changes they receive. This relies on the [game logic being fully deterministic](/docs/how-it-works/syncing-game-state) but from a developer point of view means you don’t really have to think about how the sync is happening. As long as you keep your updating code in the game logic, the clients will stay in sync. 
 
 The client will run a copy of this logic and `update()` loop so will immediately update is run. The server will also run a copy of this logic and `update()` loop but slightly behind the client to allow for any action conflict resolution, e.g. two players try to take the same item. When the server has resolved the conflict the client will rollback its changes if needed and apply the new actions from the authoritative server putting the client back in the correct state.
 
-The final bit of the game logic is how the “changes” to the game state can be indicated by players, what Dusk calls actions. 
+The final bit of the game logic is how the “changes” to the game state can be indicated by players, what Rune calls actions. 
 
 ```js
-// actions are the way clients can modify game state. Dusk manages
+// actions are the way clients can modify game state. Rune manages
 // how and when these actions are applied to maintain a consistent
 // game state between all clients.
 actions: {
@@ -190,22 +190,22 @@ The actions block defines the set of calls the renderer can make to translate pl
 
 You can see in this case we’re sending the controls rather than explicit positions, which at first might seem a little strange. This makes sense when you consider one more factor, conflict resolution. 
 
-If two players both make actions on their local copy of logic that conflict in some game specific way then the clients have to rollback their game state, apply the actions in the correct order and recalculate game state. Let’s say they both try to take an item at the same time, because their logic is running locally they’ll both think they took it. Once the actions reach either end it becomes clear that one player took the item first and the Dusk SDK calculates the state to match the correct situation. 
+If two players both make actions on their local copy of logic that conflict in some game specific way then the clients have to rollback their game state, apply the actions in the correct order and recalculate game state. Let’s say they both try to take an item at the same time, because their logic is running locally they’ll both think they took it. Once the actions reach either end it becomes clear that one player took the item first and the Rune SDK calculates the state to match the correct situation. 
 
 Now, if we sent explicit positions this conflict resolution would result in significant jumps - where a player’s actions were completely disregarded because they were in complete conflict. If we send the controls then the resolution is much smoother, the player still pressed the controls and had them applied, just the resulting game state is a little different. A lot of the time this can be hidden altogether in the renderer.
 
-Now we have the game logic, the players can update controls and they’ll move thanks to our update loop. The final part is to get something on the screen and let our players play! The tech demo uses a very simple renderer without a library or framework. It just draws images (and parts of images) to a HTML canvas and uses DOM events for input. Check out [graphics.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/src/graphics.ts) and [input.ts](https://github.com/dusk-gg/dusk/tree/staging/tech-demos/top-down-synchronization/src/input.ts) if you want to see the details. 
+Now we have the game logic, the players can update controls and they’ll move thanks to our update loop. The final part is to get something on the screen and let our players play! The tech demo uses a very simple renderer without a library or framework. It just draws images (and parts of images) to a HTML canvas and uses DOM events for input. Check out [graphics.ts](https://github.com/rune/rune/tree/staging/tech-demos/top-down-synchronization/src/graphics.ts) and [input.ts](https://github.com/rune/rune/tree/staging/tech-demos/top-down-synchronization/src/input.ts) if you want to see the details. 
 
-First we need to register a callback with Dusk so that it can tell us about changes to game state:
+First we need to register a callback with Rune so that it can tell us about changes to game state:
 
 ```js
-// Start the Dusk SDK on the client rendering side. 
-// This tells the Dusk app that we're ready for players 
+// Start the Rune SDK on the client rendering side. 
+// This tells the Rune app that we're ready for players 
 // to see the game. It's also the hook
-// that lets the Dusk SDK update us on 
+// that lets the Rune SDK update us on 
 // changes to game state
-Dusk.initClient({
-  // notification from Dusk that there is a new game state
+Rune.initClient({
+  // notification from Rune that there is a new game state
   onChange: ({ game, yourPlayerId }) => {
     // record the ID of our local player so we can 
     // center the camera on that player.
@@ -221,7 +221,7 @@ Dusk.initClient({
 The rendering itself is purely taking the game state that it’s been given and drawing entities to the canvas:
 
 ```js
-// if the Dusk SDK has given us a game state then
+// if the Rune SDK has given us a game state then
 // render all the entities in the game
 if (gameState) {
   // render all the entities based on the current game state
@@ -259,15 +259,15 @@ if (
 ) {
     lastSentControls = { ...gameInputs }
     lastActionTime = Date.now()
-    Dusk.actions.controls(lastSentControls)
+    Rune.actions.controls(lastSentControls)
 }
 ```
 
-There’s a couple of gates put on sending actions. We don’t want to send unchanged controls into the game logic, it won’t change anything and wastes bandwidth. The Dusk SDK also limits us to 10 actions per second from any client so we make sure we’re not breaking that.
+There’s a couple of gates put on sending actions. We don’t want to send unchanged controls into the game logic, it won’t change anything and wastes bandwidth. The Rune SDK also limits us to 10 actions per second from any client so we make sure we’re not breaking that.
 
 That’s pretty much it, we have a game logic that will keep the client’s game state in sync and a renderer that will let our players play. Of course this is a simple tech demo but with a little more work, collision between players, fighting and item collection could easily be added.
 
-If you have any questions or comments on the tech demo or Dusk in general, be sure to join our [Discord](https://discord.gg/dusk-devs).
+If you have any questions or comments on the tech demo or Rune in general, be sure to join our [Discord](https://discord.gg/rune-devs).
 
 Assets from [Pixel Frog](https://pixelfrog-assets.itch.io/tiny-swords).
 

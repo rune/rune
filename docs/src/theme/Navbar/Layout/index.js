@@ -53,14 +53,14 @@ export default function NavbarLayout() {
       <div className={styles.left}>
         <Link to="/">
           <img
-            alt="Dusk Logo"
+            alt="Rune Logo"
             className={styles.logo}
             src={require("@site/static/img/home/logo.png").default}
           />
         </Link>
       </div>
       <div className={styles.right}>
-        <a href="https://dusk.gg" target="_blank" className={styles.menuLink}>
+        <a href="https://rune.ai" target="_blank" className={styles.menuLink}>
           App
         </a>
         <Link
@@ -88,7 +88,7 @@ export default function NavbarLayout() {
           FAQ
         </Link>
         <a
-          href="https://github.com/dusk-gg/dusk"
+          href="https://github.com/rune/rune"
           target="_blank"
           rel="noreferrer"
           className={styles.menuBtn}

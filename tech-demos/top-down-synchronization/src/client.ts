@@ -7,15 +7,15 @@ import warriorPurpleSrc from "./assets/Warrior_Purple.png"
 import warriorRedSrc from "./assets/Warrior_Red.png"
 import warriorYellowSrc from "./assets/Warrior_Yellow.png"
 import { Controls, GameState, Player, tileMap as gameMap } from "./logic"
-import { PlayerId } from "dusk-games-sdk"
+import { PlayerId } from "rune-sdk"
 import { gameInputs } from "./input"
 ;(async () => {
   // load all our resources at startup. In this case it's a set of tile sets
   // that are provided by https://pixelfrog-assets.itch.io/tiny-swords
   //
   // It's important we wait for all resources to load before calling
-  // Dusk.initClient since Dusk will show an in-app loading screen
-  // until we call initClient. Best practice is to let Dusk handle
+  // Rune.initClient since Rune will show an in-app loading screen
+  // until we call initClient. Best practice is to let Rune handle
   // the loading screen.
   const tileSetElevation = await loadTileSet(tileSetElevationSrc, 64, 64)
   const tileSetFlat = await loadTileSet(tileSetFlatSrc, 64, 64)
@@ -42,8 +42,8 @@ import { gameInputs } from "./input"
   const playerFootPosition = [96, 125]
   const treeFootPosition = [95, 170]
 
-  // the current game state as provided by the Dusk SDK. The client
-  // should be rendering whatever the current state is. The Dusk SDK
+  // the current game state as provided by the Rune SDK. The client
+  // should be rendering whatever the current state is. The Rune SDK
   // will manage the updates and resolution of conflict to the state, so
   // we can simply render what it provides.
   let gameState: GameState
@@ -63,7 +63,7 @@ import { gameInputs } from "./input"
     up: false,
   }
   // The last time that we sent an action to update the local
-  // client's controls. Dusk allows us to send actions at
+  // client's controls. Rune allows us to send actions at
   // up to 10 a second so we don't send a new action if it's
   // not been 1/10th of a second. In a real game you might manage
   // this more carefully and track how many you've sent a second
@@ -93,7 +93,7 @@ import { gameInputs } from "./input"
     ) {
       lastSentControls = { ...gameInputs }
       lastActionTime = Date.now()
-      Dusk.actions.controls(lastSentControls)
+      Rune.actions.controls(lastSentControls)
     }
 
     // schedule the next game loop
@@ -142,7 +142,7 @@ import { gameInputs } from "./input"
       }
     }
 
-    // if the Dusk SDK has given us a game state then
+    // if the Rune SDK has given us a game state then
     // render all the entities in the game
     if (gameState) {
       const frame = Math.floor((Date.now() - startTime) / 100) % 6
@@ -178,11 +178,11 @@ import { gameInputs } from "./input"
     graphicsCtx.restore()
   }
 
-  // Start the Dusk SDK on the client rendering side. This tells the Dusk
+  // Start the Rune SDK on the client rendering side. This tells the Rune
   // app that we're ready for players to see the game. It's also the hook
-  // that lets the Dusk SDK update us on changes to game state
-  Dusk.initClient({
-    // notification from Dusk that there is a new game state
+  // that lets the Rune SDK update us on changes to game state
+  Rune.initClient({
+    // notification from Rune that there is a new game state
     onChange: ({ game, yourPlayerId }) => {
       // record the ID of our local player so we can center the camera
       // on that player.

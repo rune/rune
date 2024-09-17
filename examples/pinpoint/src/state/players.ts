@@ -1,5 +1,5 @@
 import { atom } from "jotai"
-import { Players } from "dusk-games-sdk/multiplayer"
+import { Players } from "rune-sdk/multiplayer"
 import { $myPlayerId } from "./myPlayerId"
 
 export const $players = atom<Players | undefined>(undefined)

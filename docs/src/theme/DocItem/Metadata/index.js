@@ -28,7 +28,7 @@ export function CustomPageMetadata({
   return (
     <Head>
       {title && <title>{formattedTitle}</title>}
-      {title && <meta property="og:title" content={title.split("|")[0] + " | Dusk"} />}
+      {title && <meta property="og:title" content={title.split("|")[0] + " | Rune"} />}
 
       {description && <meta name="description" content={description} />}
       {description && <meta property="og:description" content={description} />}

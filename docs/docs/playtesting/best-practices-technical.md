@@ -4,11 +4,11 @@ sidebar_position: 4
 
 # Best Practices (Tech)
 
-How to code your game to perform the best on Dusk!
+How to code your game to perform the best on Rune!
 
-### Use Dusk Loading Animation {#use-dusk-loading-animation}
+### Use Rune Loading Animation {#use-rune-loading-animation}
 
-Dusk shows an animation while your game is loading. It's a smoother player experience to only have one progress bar to load your game. Avoid having a loading screen in your game by waiting with calling `Dusk.initClient()` until your game has fully completed loading.
+Rune shows an animation while your game is loading. It's a smoother player experience to only have one progress bar to load your game. Avoid having a loading screen in your game by waiting with calling `Rune.initClient()` until your game has fully completed loading.
 
 ### Send Player Input rather than Player State in Actions {#send-player-input}
 
@@ -16,7 +16,7 @@ We recommend sending player input in actions (e.g. "turning left") rather than p
 
 ### No Ads, Branding and Links {#no-ads-branding-and-links}
 
-One of the amazing things about Dusk is that there’s no ads. Leave out any ads, branding and links from your game to keep the focus on the gameplay experience 🧘
+One of the amazing things about Rune is that there’s no ads. Leave out any ads, branding and links from your game to keep the focus on the gameplay experience 🧘
 
 ### No Network Requests or External Resources {#no-network-requests}
 

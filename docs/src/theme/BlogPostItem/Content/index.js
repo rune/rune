@@ -59,7 +59,7 @@ export default function BlogPostItemContent({ children, className }) {
               Thanks for subscribing!
             </div>
             <div className={styles.thankyouBody}>
-              Keep an eye out for our next <b>Dusk Developer Update</b> from
+              Keep an eye out for our next <b>Rune Developer Update</b> from
               Substack in your inbox.
             </div>
           </div>

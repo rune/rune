@@ -7,13 +7,13 @@
     "dev": "vite --host",
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsc && vite build",
-    "deploy": "../../scripts/copy-assets.sh neon-snake && yarn build && dusk upload dist",
+    "deploy": "../../scripts/copy-assets.sh neon-snake && yarn build && rune upload dist",
     "lint": "eslint src",
     "preview": "vite preview"
   },
   "dependencies": {
     "@pixi/react": "^7.1.1",
-    "dusk-games-sdk": "^4.21.18",
+    "rune-sdk": "^4.22.0",
     "jotai": "^2.4.3",
     "pixi.js": "^7.3.2",
     "react": "^18.2.0",

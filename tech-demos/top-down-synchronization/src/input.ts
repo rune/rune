@@ -11,7 +11,7 @@ export const gameInputs: Controls = {
   down: false,
 }
 
-// Since we want to test this tech demo in the Dusk Dev UI we'll
+// Since we want to test this tech demo in the Rune Dev UI we'll
 // adapt our input controls for touch devices vs desktop
 const touchDevice = "ontouchstart" in document.documentElement
 const controls = document.getElementById("controls") as HTMLImageElement
@@ -54,7 +54,7 @@ if (touchDevice) {
 } else {
   // if we're running on desktop we'll use mousedown/mousemove/mouseup along
   // with keyboard controls for testing. You don't have to do
-  // this if you're only considering the Dusk mobile app.
+  // this if you're only considering the Rune mobile app.
   controls.addEventListener("mousedown", (e: MouseEvent) => {
     press(e.clientX, e.clientY)
     mousePressed = true

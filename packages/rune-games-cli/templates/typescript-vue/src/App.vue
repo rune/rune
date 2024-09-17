@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Player, PlayerId } from "rune-sdk/multiplayer"
+import { Player, PlayerId } from "rune-sdk"
 import { ref, onMounted } from "vue"
 
 import selectSoundAudio from "./assets/select.wav"

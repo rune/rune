@@ -109,7 +109,7 @@ Setting `landscape` to true will make your game appear in landscape orientation.
 
 Setting `persistPlayerData` to true will enable storing player data across game sessions. Check out [Persisted Data](advanced/persisted-data.md).
 
-### `reactive?: boolean` ${#reactive-boolean}
+### `reactive?: boolean` {#reactive-boolean}
 
 Default `true`. Setting `reactive` to false will improve game logic performance, but disable referential equality in game state passed to `onChange` callback (e.g. `game`).
 

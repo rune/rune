@@ -2,6 +2,7 @@ import { Text } from "ink"
 import React from "react"
 
 import { Create } from "../flows/Create.js"
+import { DuskToRune } from "../flows/DuskToRune.js"
 import { List } from "../flows/List/List.js"
 import { Logout } from "../flows/Logout.js"
 import { OpenDashboard } from "../flows/OpenDashboard.js"
@@ -29,6 +30,8 @@ export function App() {
         <Text>{cli.help}</Text>
       ) : command === "logout" ? (
         <Logout />
+      ) : command === "dusk-to-rune" ? (
+        <DuskToRune args={args} />
       ) : command === "create" ? (
         <Create args={args} />
       ) : (

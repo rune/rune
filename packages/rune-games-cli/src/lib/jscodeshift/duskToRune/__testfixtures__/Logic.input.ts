@@ -1,4 +1,4 @@
-import type { PlayerId, RuneClient } from "rune-sdk"
+import type { PlayerId, DuskClient } from "dusk-games-sdk/multiplayer"
 
 export type Cells = (PlayerId | null)[]
 export interface GameState {
@@ -14,7 +14,7 @@ type GameActions = {
 }
 
 declare global {
-  const Rune: RuneClient<GameState, GameActions>
+  const Dusk: DuskClient<GameState, GameActions>
 }
 
 function findWinningCombo(cells: Cells) {
@@ -34,7 +34,7 @@ function findWinningCombo(cells: Cells) {
   )
 }
 
-Rune.initLogic({
+Dusk.initLogic({
   minPlayers: 2,
   maxPlayers: 2,
   setup: (allPlayerIds) => ({
@@ -49,7 +49,7 @@ Rune.initLogic({
         game.cells[cellIndex] !== null ||
         playerId === game.lastMovePlayerId
       ) {
-        throw Rune.invalidAction()
+        throw Dusk.invalidAction()
       }
 
       game.cells[cellIndex] = playerId
@@ -59,7 +59,7 @@ Rune.initLogic({
       if (game.winCombo) {
         const [player1, player2] = allPlayerIds
 
-        Rune.gameOver({
+        Dusk.gameOver({
           players: {
             [player1]: game.lastMovePlayerId === player1 ? "WON" : "LOST",
             [player2]: game.lastMovePlayerId === player2 ? "WON" : "LOST",
@@ -70,7 +70,7 @@ Rune.initLogic({
       game.freeCells = game.cells.findIndex((cell) => cell === null) !== -1
 
       if (!game.freeCells) {
-        Rune.gameOver({
+        Dusk.gameOver({
           players: {
             [game.playerIds[0]]: "LOST",
             [game.playerIds[1]]: "LOST",

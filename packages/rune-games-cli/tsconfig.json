@@ -18,5 +18,5 @@
     "ignoreDeprecations": "5.0"
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/*-test.ts", "**/*.test.ts", "**/*.test.tsx", "src/lib/jscodeshift/__testfixtures__/**/*"]
+  "exclude": ["node_modules", "**/*-test.ts", "**/*.test.ts", "**/*.test.tsx", "src/lib/jscodeshift/**/__testfixtures__/**/*"]
 }

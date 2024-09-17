@@ -8,6 +8,7 @@ export const cli = meow(
     $ rune update-info    [Updating game info (title, description, logo)]
     $ rune list           [Lists all your games]
     $ rune update-members [Sets up team for your game]
+    $ rune dusk-to-rune <[optional] path> [Migrates your game from Dusk to Rune]
 
   Options
     --version, -v   Show CLI version 
@@ -66,6 +67,7 @@ export const validCommands = [
   "create",
   "dashboard",
   "dash",
+  "dusk-to-rune",
 ] as const
 
 export function cliCommand() {

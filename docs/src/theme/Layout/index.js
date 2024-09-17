@@ -131,7 +131,7 @@ function Banner() {
     <div class="banner">
       <div class="banner-content">
         <div class="text">
-          <span>Dusk is now Rune!</span>
+          <span>By popular demand, Dusk is now Rune again 🦙</span>
         </div>
       </div>
     </div>

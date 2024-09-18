@@ -30,6 +30,6 @@
     "vite-plugin-qrcode": "^0.2.2"
   },
   "dependencies": {
-    "rune-sdk": "^4.22.0"
+    "rune-sdk": "^4.22.2"
   }
 }

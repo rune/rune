@@ -51,7 +51,7 @@ The Dev Dashboard is also where you request to enable monetization for your acco
 
 ## Payout of Accumulated Credits
 
-Your games earn credits each day based on the metrics described earlier on this page. We use credits so that in the future you can choose to use some credits for optional extra services like AI-powered gameplay. Credits are automatically converted to dollars for payouts at a rate of $1 = 10000 credits.
+Your games earn credits each day based on the metrics described earlier on this page. We use this credits system so that in the future you can choose to use some credits for optional extra services like AI-powered gameplay if you like. Credits are automatically converted to dollars for payouts at a rate of $1 = 10000 credits.
 
 At the beginning of each month, we'll email you with a link to claim your earned money for the last month using our payments provider. We aggregate payouts in this way to minimize transaction fees so that each $ goes longer.
 

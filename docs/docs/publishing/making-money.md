@@ -45,13 +45,15 @@ We also want to avoid the creator fund from being gamed by scammers and bots. To
 
 ## See Stats + Earnings on Dev Dashboard
 
-You can see stats for all your games on the Dev Dashboard. The dashboard also has detailed info on how much each of your games has earned each day and the calculations behind those earnings.
+You can see stats for all your games on the Dev Dashboard. The dashboard has detailed info on how much each of your games has earned each day and the calculations behind those earnings.
 
 The Dev Dashboard is also where you request to enable monetization for your account. You can do that once your games reach 500 hours of playtime within last 30 days. We'll then review if there's any legal issues with your games/account (very unlikely) and enable monetization for you. We'll do this review within 5 business days. Your money will be paid out based on the stats of your games from when you applied. 
 
 ## Payout of Accumulated Credits
 
-Your games earn credits each day based on the metrics described earlier on this page. At the beginning of each month, we'll email you with a link to claim your earned money for the last month using our payments provider. We aggregate payouts in this way to minimize transaction fees so that each $ goes longer. 
+Your games earn credits each day based on the metrics described earlier on this page. We use credits so that in the future you can choose to use some credits for optional extra services like AI-powered gameplay. Credits are automatically converted to dollars for payouts at a rate of $1 = 10000 credits.
+
+At the beginning of each month, we'll email you with a link to claim your earned money for the last month using our payments provider. We aggregate payouts in this way to minimize transaction fees so that each $ goes longer.
 
 ## It’s Your Game
 

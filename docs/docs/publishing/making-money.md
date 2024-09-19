@@ -47,7 +47,7 @@ We also want to avoid the creator fund from being gamed by scammers and bots. To
 
 You can see stats for all your games on the Dev Dashboard. The dashboard has detailed info on how much each of your games has earned each day and the calculations behind those earnings.
 
-The Dev Dashboard is also where you request to enable monetization for your account. You can do that once your games reach 500 hours of playtime within last 30 days. We'll then review if there's any legal issues with your games/account (very unlikely) and enable monetization for you. We'll do this review within 5 business days. Your money will be paid out based on the stats of your games from when you applied. 
+The Dev Dashboard is also where you request to enable monetization for your account. You can do that once your games reach 500 hours of playtime within last 30 days. We'll then review if there's any legal issues with your games/account (very unlikely) and enable monetization for you. Your games will start earning immediately after you apply.
 
 ## Payout of Accumulated Credits
 

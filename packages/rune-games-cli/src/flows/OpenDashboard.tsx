@@ -28,7 +28,7 @@ export function OpenDashboard() {
         })
     }
   }, [dashboardMagicLink])
-  
+
   return (
     <Box flexDirection="column">
       {!error && status === "waiting" && (

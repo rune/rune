@@ -45,15 +45,15 @@ We also want to avoid the creator fund from being gamed by scammers and bots. To
 
 ## See Stats + Earnings on Dev Dashboard
 
-You can see stats for all your games on the Dev Dashboard. The dashboard has detailed info on how much each of your games has earned each day and the calculations behind those earnings.
+You can see stats for all your games on the [Dev Dashboard](TODO). The dashboard has detailed info on how much each of your games has earned each day and the calculations behind those earnings.
 
-The Dev Dashboard is also where you request to enable monetization for your account. You can do that once your games reach 500 hours of playtime within last 30 days. We'll then review if there's any legal issues with your games/account (very unlikely) and enable monetization for you. Your games will start earning immediately after you apply.
+The [Dev Dashboard](TODO) is also where you request to enable monetization for your account. You can do that once your games reach 500 hours of playtime within last 30 days. We'll then review if there's any legal issues with your games/account (very unlikely) and enable monetization for you. Your games will start earning immediately after you apply.
 
 ## Payout of Accumulated Credits
 
-Your games earn credits each day based on the metrics described earlier on this page. We use this credits system so that in the future you can choose to use some credits for optional extra services like AI-powered gameplay if you like. When paying out to you, credits are automatically converted to dollars at a rate of $1 = 10000 credits.
+Your games earn credits each day based on the metrics described earlier on this page. We use this credits system so that in the future you can choose to use some credits for optional extra services like AI-powered gameplay if you like. When paying out to you, credits are automatically converted to dollars at a rate of 1 USD = 10000 credits.
 
-At the beginning of each month, we'll email you with a link to claim your earned money for the accrued earnings last month using our payments provider. We aggregate payouts in this way to minimize transaction fees so that each $ goes longer. This is similar to how e.g. YouTube does it. See the terms and conditions for the creator fund program for [more details](TODO).
+At the beginning of each month, we'll email you with a link to claim your earned money for the accrued earnings last month using our payments provider. We aggregate payouts in this way to minimize transaction fees so that each $ goes further. This is similar to how e.g. YouTube does it. See the terms and conditions for the creator fund program for [more details](TODO).
 
 ## It’s Your Game
 

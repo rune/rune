@@ -9,6 +9,7 @@ export const cli = meow(
     $ rune list           [Lists all your games]
     $ rune update-members [Sets up team for your game]
     $ rune dusk-to-rune <[optional] path> [Migrates your game from Dusk to Rune]
+    $ rune dash Opens the Rune dashboard
 
   Options
     --version, -v   Show CLI version 

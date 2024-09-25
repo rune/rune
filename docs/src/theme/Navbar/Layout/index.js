@@ -87,18 +87,21 @@ export default function NavbarLayout() {
         >
           FAQ
         </Link>
+        <a href="https://github.com/rune/rune" target="_blank" rel="noreferrer" className={styles.menuLink}>
+          Github
+        </a>
         <a
-          href="https://github.com/rune/rune"
+          href="https://dash.rune.ai/"
           target="_blank"
           rel="noreferrer"
           className={styles.menuBtn}
         >
-          <div className={styles.normal}>GitHub</div>
-          <div className={styles.hover}>GitHub</div>
+          <div className={styles.normal}>Dashboard</div>
+          <div className={styles.hover}>Dashboard</div>
         </a>
       </div>
       <div className={clsx(styles.right, styles.rightMobile)}>
-        {location.pathname !== "/" && <SearchBar />}
+        {location.pathname !== "/" && <SearchBar/>}
         {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
       </div>
       <NavbarBackdrop onClick={mobileSidebar.toggle} />

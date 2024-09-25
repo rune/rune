@@ -13,17 +13,9 @@ export function OpenDashboard() {
     "waiting"
   )
 
-  //TODO - remove it
-  const dashboardAllowed =
-    process.env.STAGE === "local" || process.env.STAGE === "launchpad"
-
   useEffect(() => {
-    if (!dashboardAllowed) {
-      return
-    }
-
     createDashboardMagicLink({})
-  }, [createDashboardMagicLink, dashboardAllowed])
+  }, [createDashboardMagicLink])
 
   useEffect(() => {
     if (dashboardMagicLink) {
@@ -36,14 +28,6 @@ export function OpenDashboard() {
         })
     }
   }, [dashboardMagicLink])
-
-  if (!dashboardAllowed) {
-    return (
-      <Box flexDirection="column">
-        <Text color="yellow">Dashboard is not available yet. Stay tuned!</Text>
-      </Box>
-    )
-  }
 
   return (
     <Box flexDirection="column">

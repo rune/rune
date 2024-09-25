@@ -97,7 +97,7 @@ const config = {
           {
             to: "https://github.com/rune/rune",
             position: "left",
-            label: "Github",
+            label: "GitHub",
           },
           {
             to: "https://dash.rune.ai",

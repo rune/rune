@@ -94,6 +94,16 @@ const config = {
             position: "left",
             label: "FAQ",
           },
+          {
+            to: "https://github.com/rune/rune",
+            position: "left",
+            label: "Github",
+          },
+          {
+            to: "https://dash.rune.ai",
+            position: "left",
+            label: "Dashboard",
+          },
         ],
       },
       footer: {

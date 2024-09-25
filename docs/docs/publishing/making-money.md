@@ -5,7 +5,7 @@ sidebar_position: 10
 # Making Money
 
 :::tip
-The creator fund just launched on Oct 1st 🥳 To celebrate the launch, all games will earn 3x for Oct-Dec 2024!
+The creator fund just launched 🥳 To celebrate the launch, all games will earn 3x for Oct-Dec 2024!
 :::
 
 We're passionate about supporting indie game devs in making awesome multiplayer games. As part of that, we have created a creator fund that pays indie devs a bit of money based on their games' metrics. We provide optimized servers and a big audience so you don't need to deal with infrastructure costs or pay for ads.

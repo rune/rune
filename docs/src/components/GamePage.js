@@ -3,6 +3,13 @@ import React, { useEffect } from "react"
 import Layout from "@theme/Layout"
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 
+//Allow game to take more space
+const cssFooterFixes = `
+  div.footer_src-theme-Footer-index-module {
+    height: 80px;
+  }
+`
+
 export function GamePage({ title, slug, techDemo }) {
   const type = techDemo ? "tech-demos" : "examples"
   const isMobile = "ontouchstart" in window
@@ -28,41 +35,28 @@ export function GamePage({ title, slug, techDemo }) {
   }, [])
 
   return (
-    <Layout
-      title={title}
-      description={siteConfig.description}
-      noFooter={isMobile}
-    >
-      {!isMobile && (
-        <a
-          className="menuLink_src-theme-Navbar-Layout-styles-module"
+    <>
+      <style>{cssFooterFixes}</style>
+      <Layout
+        title={title}
+        description={siteConfig.description}
+        noFooter={isMobile}
+      >
+        <iframe
+          src={`/_${
+            techDemo ? "tech-demos" : "examples"
+          }/${slug}/?embedded=1&devuiSettingsKey=${slug}&embeddedType=${type}&embeddedSlug=${slug}`}
           style={{
-            position: "absolute",
-            padding: "8px",
-            margin: "10px",
-            background: "white",
-            color: "#1b0329",
-            borderRadius: "8px",
-            lineHeight: "20px",
+            width: "100%",
+            // svh is important because it takes into account mobile browser bottom nav bar
+            height: isMobile
+              ? "calc(100svh - var(--ifm-navbar-height)"
+              : //In games page we reduce footer from 180px to 80px, so we adjust by 100px to give it some space
+                "calc(100svh - var(--ifm-navbar-height) - 100px",
           }}
-          href={`https://github.com/rune/rune/tree/staging/${type}/${slug}`}
-        >
-          Source
-        </a>
-      )}
-      <iframe
-        src={`/_${
-          techDemo ? "tech-demos" : "examples"
-        }/${slug}/?embedded=1&devuiSettingsKey=${slug}`}
-        style={{
-          width: "100%",
-          // svh is important because it takes into account mobile browser bottom nav bar
-          height: isMobile
-            ? "calc(100svh - var(--ifm-navbar-height)"
-            : "calc(100svh - var(--ifm-navbar-height) - var(--ifm-footer-height)",
-        }}
-      />
-    </Layout>
+        />
+      </Layout>
+    </>
   )
 }
 

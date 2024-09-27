@@ -94,6 +94,19 @@ const config = {
             position: "left",
             label: "FAQ",
           },
+<<<<<<< Updated upstream
+=======
+          {
+            to: "https://dash.rune.ai",
+            position: "left",
+            label: "Dashboard",
+          },
+          {
+            to: "https://github.com/rune/rune",
+            position: "left",
+            label: "Github",
+          },
+>>>>>>> Stashed changes
         ],
       },
       footer: {

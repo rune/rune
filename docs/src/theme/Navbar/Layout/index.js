@@ -72,14 +72,6 @@ export default function NavbarLayout() {
           Blog
         </Link>
         <Link
-          to="/docs/quick-start"
-          className={clsx(styles.menuLink, {
-            [styles.active]: location.pathname.startsWith("/docs/"),
-          })}
-        >
-          Docs
-        </Link>
-        <Link
           to="/faq"
           className={clsx(styles.menuLink, {
             [styles.active]: location.pathname === "/faq",
@@ -87,18 +79,23 @@ export default function NavbarLayout() {
         >
           FAQ
         </Link>
-        <a href="https://github.com/rune/rune" target="_blank" rel="noreferrer" className={styles.menuLink}>
+        <Link
+          to="https://dash.rune.ai" target="_blank" rel="noreferrer" className={styles.menuLink}
+        >
+          Dashboard
+        </Link>
+        <Link
+          to="https://github.com/rune/rune" target="_blank" rel="noreferrer" className={styles.menuLink}
+        >
           Github
-        </a>
-        <a
-          href="https://dash.rune.ai/"
-          target="_blank"
-          rel="noreferrer"
+        </Link>
+        <Link
+          to="/docs/quick-start"
           className={styles.menuBtn}
         >
-          <div className={styles.normal}>Dashboard</div>
-          <div className={styles.hover}>Dashboard</div>
-        </a>
+          <div className={styles.normal}>Docs</div>
+          <div className={styles.hover}>Docs</div>
+        </Link>
       </div>
       <div className={clsx(styles.right, styles.rightMobile)}>
         {location.pathname !== "/" && <SearchBar/>}

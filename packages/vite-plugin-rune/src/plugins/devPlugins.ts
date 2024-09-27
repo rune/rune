@@ -28,10 +28,21 @@ export function getDevPlugins(runePkgPath: string): Plugin[] {
         return {
           html,
           tags: [
+            {
+              tag: "style",
+              children: `html, body { background-color: #1c002b; }`,
+              attrs: {
+                id: "sdk-load-styles",
+                "data-background-color": "1",
+              },
+              injectTo: "head-prepend",
+            },
+
             // Inject a tag to differentiate between different games when running in dev mode
             {
               tag: "script",
               attrs: {
+                id: "sdk-settings",
                 "data-rune-allow-before-sdk": "1",
               },
               children: `window.__SDK_SETTINGS_ID__='${crypto

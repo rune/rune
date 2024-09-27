@@ -95,14 +95,14 @@ const config = {
             label: "FAQ",
           },
           {
-            to: "https://github.com/rune/rune",
-            position: "left",
-            label: "GitHub",
-          },
-          {
             to: "https://dash.rune.ai",
             position: "left",
             label: "Dashboard",
+          },
+          {
+            to: "https://github.com/rune/rune",
+            position: "left",
+            label: "Github",
           },
         ],
       },

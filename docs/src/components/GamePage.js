@@ -36,12 +36,12 @@ export function GamePage({ title, slug, techDemo }) {
 
   return (
     <>
-      <style>{cssFooterFixes}</style>
       <Layout
         title={title}
         description={siteConfig.description}
         noFooter={isMobile}
       >
+        <style>{cssFooterFixes}</style>
         <iframe
           src={`/_${
             techDemo ? "tech-demos" : "examples"

@@ -8,7 +8,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula")
 const config = {
   title: "Rune - multiplayer web games",
   tagline: "Make multiplayer games that reach a community of millions.",
-  url: "http://developers.rune.ai/",
+  url: "https://developers.rune.ai/",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",

@@ -46,7 +46,7 @@ export function OpenDashboard() {
               label={"Open in default browser?"}
               view={
                 <Choose
-                  options={["No", "Yes"]}
+                  options={["Yes", "No"]}
                   onSubmit={(response) => {
                     const shouldOpen = response === "Yes"
 

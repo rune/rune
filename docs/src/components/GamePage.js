@@ -3,19 +3,15 @@ import React, { useEffect } from "react"
 import Layout from "@theme/Layout"
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 
-//Allow game to take more space
-const cssFooterFixes = `
-  div.footer_src-theme-Footer-index-module {
-    height: 80px;
-  }
-`
-
 export function GamePage({ title, slug, techDemo }) {
   const type = techDemo ? "tech-demos" : "examples"
   const isMobile = "ontouchstart" in window
   const { siteConfig } = useDocusaurusContext()
 
   useEffect(() => {
+    //Allow game to take more space
+    document.body.className += " game-page"
+
     if (!isMobile) return
 
     document.body.style.overflow = "hidden"
@@ -41,7 +37,6 @@ export function GamePage({ title, slug, techDemo }) {
         description={siteConfig.description}
         noFooter={isMobile}
       >
-        <style>{cssFooterFixes}</style>
         <iframe
           src={`/_${
             techDemo ? "tech-demos" : "examples"

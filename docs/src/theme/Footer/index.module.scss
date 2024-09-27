@@ -15,6 +15,12 @@ a.link:hover {
   text-decoration: none;
 }
 
+:global(.game-page) {
+  .footer {
+    height: 80px;
+  }
+}
+
 .footer {
   @media (max-width: 700px) {
     display: none;

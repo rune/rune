@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "rune-sdk": "^4.23.2",
+    "rune-sdk": "^4.23.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

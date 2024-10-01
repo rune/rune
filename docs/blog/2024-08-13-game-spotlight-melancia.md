@@ -42,7 +42,7 @@ Things that seem to work about Melancia on Rune (good tips for other devs):
 
 The game was implemented on the Rune SDK without having to change anything or take any special measures. If you’d like to see for yourself, the source is open:
 
-https://github.com/jallen-dev/rune-games/tree/main/games/melancia-game
+https://github.com/jallen-dev/dusk-games/tree/main/games/melancia-game
 
 The game was built over the course of a week, which, while short for game development, is pretty common amongst Rune games. It doesn’t take months of work to put out something to millions of players!
 

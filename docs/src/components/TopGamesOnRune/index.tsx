@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 import React, { useEffect, useMemo, useState } from "react"
 import { TopGame } from "./TopGame"
 import styles from "./styles.module.scss"

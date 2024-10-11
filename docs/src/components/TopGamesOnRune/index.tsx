@@ -40,7 +40,7 @@ export function TopGamesOnRune() {
         <p>{gameRes.topGamesHideReason}</p>
         <img
           className={styles.hiddenGamesImg}
-          src={require("@site/static/img/home/topGamesHidden.png").default}
+          src={require("@site/static/img/home/topGamesHidden.webp").default}
         />
       </div>
     )

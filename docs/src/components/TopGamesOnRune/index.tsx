@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 import React, { useEffect, useMemo, useState } from "react"
 import { TopGame } from "./TopGame"
 import styles from "./styles.module.scss"
@@ -32,6 +34,18 @@ export function TopGamesOnRune() {
     return <p>Failed to fetch games. Try again!</p>
   }
 
+  if (gameRes.topGamesHideReason) {
+    return (
+      <div className={styles.container}>
+        <p>{gameRes.topGamesHideReason}</p>
+        <img
+          className={styles.hiddenGamesImg}
+          src={require("@site/static/img/home/topGamesHidden.webp").default}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className={styles.container}>
       <h2>Week of {dateStartFormatted}</h2>
@@ -63,11 +77,13 @@ export type Game = {
 type GameRes = {
   dateStart: Date | null
   games: (Game | null)[]
+  topGamesHideReason: string | null
 }
 
 const initialGameRes: GameRes = {
   dateStart: null,
   games: new Array(10).fill(null),
+  topGamesHideReason: null,
 }
 
 async function getGameRes() {

@@ -38,10 +38,7 @@ export function TopGamesOnRune() {
         <p>{gameRes.topGamesHideReason}</p>
         <img
           className={styles.hiddenGamesImg}
-          src={
-            require("!!url-loader!@site/static/img/home/topGamesHidden.png")
-              .default
-          }
+          src={require("@site/static/img/home/topGamesHidden.png").default}
         />
       </div>
     )
@@ -88,9 +85,7 @@ const initialGameRes: GameRes = {
 }
 
 async function getGameRes() {
-  const res = await fetch(
-    "https://tango-production.rune.ai/v1/public/games-top-10"
-  )
+  const res = await fetch("http://localhost:3100/v1/public/games-top-10")
   const json = await res.json()
 
   if (!json.success) {

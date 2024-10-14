@@ -5,7 +5,7 @@ sidebar_position: 10
 # Making Money
 
 :::caution
-The creator fund is not yet launched. It will launch in early October 🥳 We're sharing these docs already with you now so you can get a sneak peek into what's coming.   
+The creator fund is not yet launched. It will launch in October 🥳 We're sharing these docs already with you now so you can get a sneak peek into what's coming.   
 :::
 
 We're passionate about supporting indie game devs in making awesome multiplayer games. As part of that, we have created a creator fund that pays indie devs a bit of money based on their games' metrics. We provide optimized servers and a big audience so you don't need to deal with infrastructure costs or pay for ads.

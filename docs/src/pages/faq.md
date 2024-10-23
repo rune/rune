@@ -89,6 +89,10 @@ We’ve talked with a lot of players in the Rune community and accumulated their
 
 We want to let you unleash your creativity while still avoiding content that's inappropriate for the players in the Rune community. We will make our own policy in the future, but until then we're following the Google Play Store Policy. For now, please make sure that your game adheres to [Google’s guidelines on “Inappropriate Content”](https://support.google.com/googleplay/android-developer/answer/9878810).
 
+### How Do I Report DMCA-Infringing Content? {#how-do-you-handle-inappropriate-content}
+
+The Digital Millennium Copyright Act ("DMCA") allows copyright holders or their agents to notify Rune about material they believe infringes upon their copyrights and ask Rune to remove it. You can see all the details on how to report DMCA-infringing content in our page on [DMCA Notices](https://rune.ai/dmca).
+
 ### Can I Use Network Requests / External Resources? {#can-i-use-network-requests--external-resources}
 
 Your game should not use any network requests or external resources. Avoiding these protect player privacy/security and guarantees that your game will keep running even if some external servers get shutdown.

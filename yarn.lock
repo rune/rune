@@ -12487,10 +12487,10 @@ rune-sdk@^4.22.0:
     terser "^5.22.0"
     tree-model "^1.0.7"
 
-rune-sdk@^4.24.1:
-  version "4.24.1"
-  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.24.1.tgz#ceb0a99904fcc2317de480a6b77dfb7ecdea635c"
-  integrity sha512-HWua3ZNuDdFmorXhRB2sAW1pa60uEu7apkYo1U7BMCuuaUC9bA2OGngohBG0wrMmoNS/wJpkAar0blqq+j9Ckw==
+rune-sdk@^4.24.2:
+  version "4.24.2"
+  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.24.2.tgz#c3232bc878951a0d9caf5635912009773ae346af"
+  integrity sha512-xy7qTbQBZlMo/THxInyMP7SQ0XFYDy5YccvPbjJrc5LfxnIogcE175iDu1le7OJKKiyAQJ/7lwDLZaMKaoui6w==
   dependencies:
     "@eslint/eslintrc" "^3.1.0"
     "@eslint/js" "^9.7.0"

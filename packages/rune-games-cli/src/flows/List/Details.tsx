@@ -18,6 +18,18 @@ export function Details({
     return { gameDevs, gameDevMe }
   }, [game, me?.devId])
 
+  const { draftVersion, inReviewVersion, activeVersion } = useMemo(() => {
+    // gameVersions are already ordered by most recent first
+    // Hence .find will take the most recent per status
+    return {
+      draftVersion: game.gameVersions.nodes.find((n) => n.status === "DRAFT"),
+      inReviewVersion: game.gameVersions.nodes.find(
+        (n) => n.status === "IN_REVIEW"
+      ),
+      activeVersion: game.gameVersions.nodes.find((n) => n.status === "ACTIVE"),
+    }
+  }, [game.gameVersions.nodes])
+
   if (!game) return <></>
 
   return (
@@ -36,6 +48,25 @@ export function Details({
         <DetailsRow
           name="Your role"
           value={gameDevMe ? gameDevMe.type : "PLAYER"}
+        />
+        {draftVersion &&
+          draftVersion.gameVersionId > (activeVersion?.gameVersionId ?? 0) && (
+            <DetailsRow
+              name="Draft version"
+              value={draftVersion.gameVersionId.toString()}
+            />
+          )}
+        {inReviewVersion &&
+          inReviewVersion.gameVersionId >
+            (activeVersion?.gameVersionId ?? 0) && (
+            <DetailsRow
+              name="Review version"
+              value={inReviewVersion.gameVersionId.toString()}
+            />
+          )}
+        <DetailsRow
+          name="Active version"
+          value={activeVersion ? activeVersion.gameVersionId.toString() : "-"}
         />
       </Box>
     </Box>

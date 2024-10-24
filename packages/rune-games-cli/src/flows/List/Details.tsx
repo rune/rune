@@ -49,21 +49,24 @@ export function Details({
           name="Your role"
           value={gameDevMe ? gameDevMe.type : "PLAYER"}
         />
-        {draftVersion && (
-          <DetailsRow
-            name="Draft version"
-            value={draftVersion.gameVersionId.toString()}
-          />
-        )}
-        {inReviewVersion && (
-          <DetailsRow
-            name="Review version"
-            value={inReviewVersion.gameVersionId.toString()}
-          />
-        )}
+        {draftVersion &&
+          draftVersion.gameVersionId > (activeVersion?.gameVersionId ?? 0) && (
+            <DetailsRow
+              name="Draft version"
+              value={draftVersion.gameVersionId.toString()}
+            />
+          )}
+        {inReviewVersion &&
+          inReviewVersion.gameVersionId >
+            (activeVersion?.gameVersionId ?? 0) && (
+            <DetailsRow
+              name="Review version"
+              value={inReviewVersion.gameVersionId.toString()}
+            />
+          )}
         {activeVersion && (
           <DetailsRow
-            name="Active version (latest)"
+            name="Active version"
             value={activeVersion.gameVersionId.toString()}
           />
         )}

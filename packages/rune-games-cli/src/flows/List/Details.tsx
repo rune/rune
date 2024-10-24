@@ -64,12 +64,10 @@ export function Details({
               value={inReviewVersion.gameVersionId.toString()}
             />
           )}
-        {activeVersion && (
-          <DetailsRow
-            name="Active version"
-            value={activeVersion.gameVersionId.toString()}
-          />
-        )}
+        <DetailsRow
+          name="Active version"
+          value={activeVersion ? activeVersion.gameVersionId.toString() : "-"}
+        />
       </Box>
     </Box>
   )

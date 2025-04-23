@@ -16,3 +16,7 @@ bun.lockb
 package-lock.json
 yarn.lock
 .npmrc
+
+# Yarn specific
+.yarn/*
+.pnp.*

@@ -96,5 +96,8 @@
     "templates",
     "LICENSE",
     "README.md"
-  ]
+  ],
+  "exports": {
+    "./lib/*": "./dist/lib/*"
+  }
 }

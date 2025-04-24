@@ -91,9 +91,11 @@ export const startDevServer = async ({
         clearTimeout(timeout)
 
         // Extract URLs using regex
-        const localUrlMatch = stdoutBuffer.match(/Local:\s+(http:\/\/localhost:\d+\/)/)
+        const localUrlMatch = stdoutBuffer.match(
+          /Local:\s+(http:\/\/localhost:\d+\/)/
+        )
         const networkUrlMatches = Array.from(
-          stdoutBuffer.matchAll(/Network:\s+(http:\/\/[\d.]+:\d+\/)/g),
+          stdoutBuffer.matchAll(/Network:\s+(http:\/\/[\d.]+:\d+\/)/g)
         )
 
         // Get the local URL

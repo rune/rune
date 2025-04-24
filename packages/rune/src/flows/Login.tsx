@@ -7,16 +7,20 @@ import { useCheckVerification } from "../gql/useCheckVerification.js"
 import { useMe } from "../gql/useMe.js"
 import { useStartVerification } from "../gql/useStartVerification.js"
 import { formatApolloError } from "../lib/formatApolloError.js"
-import { storage } from "../lib/storage/storage.js"
+import {
+  deleteAuthTokenFromStorage,
+  getAuthTokenFromStorage,
+  setAuthTokenInStorage,
+} from "../lib/login.js"
 
 // @ts-ignore
 const TextInput = TextInputImport.default as typeof TextInputImport
 
 const checkVerificationEvery = 2000
-const alreadyHasAuthToken = !!storage.get("authToken")
+const alreadyHasAuthToken = !!getAuthTokenFromStorage()
 
 export function Login() {
-  const [authToken, setAuthToken] = useState(() => storage.get("authToken"))
+  const [authToken, setAuthToken] = useState(() => getAuthTokenFromStorage())
   const { meLoading, meError } = useMe({ skip: !authToken })
   const [email, setEmail] = useState("")
   const {
@@ -61,14 +65,14 @@ export function Login() {
 
   useEffect(() => {
     if (newAuthToken) {
-      storage.set("authToken", newAuthToken)
+      setAuthTokenInStorage(newAuthToken)
       setAuthToken(newAuthToken)
     }
   }, [newAuthToken])
 
   useEffect(() => {
     if (meError?.message.includes("[tango][AUTH_FAILED]")) {
-      storage.delete("authToken")
+      deleteAuthTokenFromStorage()
     }
   }, [meError?.message])
 

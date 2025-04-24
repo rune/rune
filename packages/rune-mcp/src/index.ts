@@ -7,6 +7,9 @@ import { checkProjectErrorsTool } from "./tools/checkProjectErrorsTool.js"
 import { explainRuneProjectTool } from "./tools/explainRuneProjectTool.js"
 import { stopDevServer } from "./services/devServer.js"
 import { ServerCapabilities } from "@modelcontextprotocol/sdk/types.js"
+import { uploadGameTool } from "./tools/uploadGameTool.js"
+import { loginTool } from "./tools/loginTool.js"
+import { listRuneGamesTool } from "./tools/listRuneGamesTool.js"
 
 const capabilities: ServerCapabilities = {
   tools: {},
@@ -22,7 +25,7 @@ const server = new McpServer(
   },
   {
     capabilities,
-  },
+  }
 )
 
 // Register all tools
@@ -31,6 +34,9 @@ restartDevServerTool(server)
 checkDevServerTool(server)
 checkProjectErrorsTool(server)
 explainRuneProjectTool(server)
+uploadGameTool(server)
+loginTool(server)
+listRuneGamesTool(server)
 
 // Handle graceful shutdown
 const handleShutdown = async (signal: string) => {

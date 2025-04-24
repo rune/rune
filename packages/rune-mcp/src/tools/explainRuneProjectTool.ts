@@ -10,6 +10,7 @@ import {
   explainProjectResponse,
 } from "../text/explainRuneProjectToolText.js"
 import { addCopilotInstructions } from "../services/instructions.js"
+import { logError } from "../services/logging.js"
 
 /**
  * Check if a file exists in the project
@@ -21,7 +22,10 @@ const fileExists = (projectPath: string, relativePath: string): boolean => {
 /**
  * Attempt to find an important file in common locations
  */
-const findFile = (projectPath: string, possiblePaths: string[]): string | null => {
+const findFile = (
+  projectPath: string,
+  possiblePaths: string[]
+): string | null => {
   for (const filePath of possiblePaths) {
     if (fileExists(projectPath, filePath)) {
       return filePath
@@ -33,7 +37,10 @@ const findFile = (projectPath: string, possiblePaths: string[]): string | null =
 /**
  * Check if package.json has a specific dependency
  */
-const hasDependency = (packageJsonPath: string, dependencyName: string): boolean => {
+const hasDependency = (
+  packageJsonPath: string,
+  dependencyName: string
+): boolean => {
   try {
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"))
     const allDependencies = {
@@ -119,7 +126,8 @@ export const explainRuneProjectTool = (server: McpServer): void => {
           data: "Adding copilot instructions to the project",
         })
 
-        const copilotInstructionsAdded = await addCopilotInstructions(projectPath)
+        const copilotInstructionsAdded =
+          await addCopilotInstructions(projectPath)
 
         if (copilotInstructionsAdded) {
           server.server.sendLoggingMessage({
@@ -134,12 +142,15 @@ export const explainRuneProjectTool = (server: McpServer): void => {
         }
 
         // Try to determine the project structure
-        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"))
+        const packageJson = JSON.parse(
+          fs.readFileSync(packageJsonPath, "utf-8")
+        )
         const projectName = packageJson.name || path.basename(projectPath)
 
         // Determine language (TypeScript or JavaScript)
         const isTypeScript =
-          hasDependency(packageJsonPath, "typescript") || fileExists(projectPath, "tsconfig.json")
+          hasDependency(packageJsonPath, "typescript") ||
+          fileExists(projectPath, "tsconfig.json")
 
         // Check for UI frameworks
         const hasReact = hasDependency(packageJsonPath, "react")
@@ -156,7 +167,8 @@ export const explainRuneProjectTool = (server: McpServer): void => {
           "src/logic/index.js",
         ]
         const logicFilePath =
-          findFile(projectPath, potentialLogicFiles) || "src/logic.js (not found)"
+          findFile(projectPath, potentialLogicFiles) ||
+          "src/logic.js (not found)"
 
         // Find client/UI file
         const clientExtension = isTypeScript ? ".ts" : ".js"
@@ -173,13 +185,17 @@ export const explainRuneProjectTool = (server: McpServer): void => {
         ].filter(Boolean)
 
         const clientFilePath =
-          findFile(projectPath, potentialClientFiles) || "src/client.js (not found)"
+          findFile(projectPath, potentialClientFiles) ||
+          "src/client.js (not found)"
 
         // Find other important files
         const otherImportantFiles = []
 
         // Check for index.html
-        const indexHtmlPath = findFile(projectPath, ["index.html", "public/index.html"])
+        const indexHtmlPath = findFile(projectPath, [
+          "index.html",
+          "public/index.html",
+        ])
         if (indexHtmlPath) otherImportantFiles.push(indexHtmlPath)
 
         // Check for CSS/styles
@@ -233,15 +249,10 @@ export const explainRuneProjectTool = (server: McpServer): void => {
         }
       } catch (error) {
         // Handle errors
-        const errorMessage = error instanceof Error ? error.message : String(error)
-
-        server.server.sendLoggingMessage({
-          level: "error",
-          data: errorMessage,
-        })
+        logError(server, error, "Error analyzing Rune project")
 
         throw error
       }
-    },
+    }
   )
 }

@@ -98,6 +98,7 @@
     "README.md"
   ],
   "exports": {
-    "./lib/*": "./dist/lib/*"
+    "./lib/*": "./dist/lib/*",
+    "./query/*": "./dist/gql/query/*"
   }
 }

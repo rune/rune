@@ -14,6 +14,7 @@ import {
   checkProjectErrorsScriptNotFound,
   projectPathParameterDescription,
 } from "../text/checkProjectErrorsText.js"
+import { logError } from "../services/logging.js"
 
 const execPromise = promisify(exec)
 
@@ -201,14 +202,7 @@ export const checkProjectErrorsTool = (server: McpServer): void => {
         }
       } catch (error) {
         // Handle general errors
-        const errorMessage =
-          error instanceof Error ? error.message : String(error)
-
-        server.server.sendLoggingMessage({
-          level: "error",
-          data: errorMessage,
-        })
-
+        logError(server, error, "Error checking project for errors")
         throw error
       }
     }

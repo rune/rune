@@ -50,5 +50,5 @@ draft version.`
 
 export const uploadReleaseSuccessResponse = `Game has been uploaded and marked as ready for release.
 The Rune team will review the game and notify you when it is released or contact you
-if there are any issues with  your game that need to be fixed before it can be released.
+if there are any issues with your game that need to be fixed before it can be released.
 You can always make updates to your game and upload a new version.`

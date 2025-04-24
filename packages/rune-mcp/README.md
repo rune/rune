@@ -28,6 +28,7 @@ yarn build
 To test locally using the mcp inspector, you can run
 
 ```bash
+cd packages/rune-mcp
 yarn inspect
 ```
 

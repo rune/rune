@@ -16,5 +16,5 @@ Use the upload-rune-game tool to upload your first game.
 export const listGamesResponse = (games: Game[]) =>
   games.length > 0
     ? `Here are your games on the Rune platform:
-${games.map((game) => `- ${game.title} (latestVersion: ${game.latestVersionStatus})`).join("\n")}`
+${games.map((game) => `- ${game.title} (id: ${game.id} latestVersion: ${game.latestVersionStatus})`).join("\n")}`
     : "You don't have any games uploaded to the Rune platform yet. Use the upload-rune-game tool to upload your first game."

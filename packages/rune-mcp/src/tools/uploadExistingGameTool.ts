@@ -36,7 +36,7 @@ export const uploadExistingGameTool = (server: McpServer) => {
     async ({ isReadyForRelease, projectPath, gameId }) => {
       server.server.sendLoggingMessage({
         level: "info",
-        data: `Preparing to update game with ID: ${gameId}`,
+        data: `Preparing to update game with ID: ${gameId}, to ${process.env.STAGE ?? "production"}`,
       })
 
       server.server.sendLoggingMessage({
@@ -134,6 +134,11 @@ export const uploadExistingGameTool = (server: McpServer) => {
           ],
         }
       }
+
+      server.server.sendLoggingMessage({
+        level: "info",
+        data: `Project validation passed. Uploading the game to ${process.env.STAGE ?? "production"}...`,
+      })
 
       try {
         const { congratulationMsg, newGameVersionId, previewLink } =

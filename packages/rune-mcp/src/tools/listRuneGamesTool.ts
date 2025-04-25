@@ -40,22 +40,22 @@ export const listRuneGamesTool = (server: McpServer) => {
     // User is logged in, fetch their games
     server.server.sendLoggingMessage({
       level: "info",
-      data: "User is logged in. Fetching games...",
+      data: `User is logged in. Fetching games in ${process.env.STAGE ?? "production"}...`,
     })
 
     try {
       const games = await getGames()
-
+      const text = listGamesResponse(games)
       server.server.sendLoggingMessage({
         level: "info",
-        data: `Found ${games.length} games for user`,
+        data: `Found ${games.length} games for user\n${text}`,
       })
 
       return {
         content: [
           {
             type: "text",
-            text: listGamesResponse(games),
+            text,
           },
         ],
       }

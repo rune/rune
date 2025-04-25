@@ -5,8 +5,8 @@ import {
   emailRequiredResponse,
   loginErrorResponse,
   loginToolDescription,
+  loginToolInitiatingResponse,
   resendEmailParameterDescription,
-  verificationEmailSentResponse,
   verificationInProgressResponse,
   verificationSuccessResponse,
 } from "../text/loginToolText.js"
@@ -96,7 +96,7 @@ export const loginTool = (server: McpServer) => {
             content: [
               {
                 type: "text",
-                text: verificationEmailSentResponse(email),
+                text: loginToolInitiatingResponse(email),
               },
             ],
           }

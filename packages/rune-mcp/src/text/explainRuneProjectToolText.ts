@@ -1,38 +1,24 @@
-export const explainRuneProjectToolDescription = `Explain, analyze, and provide guidance for a Rune game project to help users understand its structure and how to modify it.
+export const explainRuneProjectToolDescription = `Analyzes Rune game projects to explain structure and provide guidance.
 
 AGENT INSTRUCTIONS:
-Use this tool whenever a user asks about:
-- What their Rune project is or does
-- Understanding a Rune project's structure
-- Getting an overview or explanation of a Rune game
-- How to edit, extend, or work with a Rune game project
-- "Explain this project" or similar requests when working with a Rune project
+Use when users ask about:
+- Understanding project structure or components
+- Getting an overview of their Rune game
+- How to modify or extend their game
+- "Explain this project" requests for Rune games
 
-You can identify a Rune project by checking for the presence of a package.json file with "rune-sdk" as a dependency.
-This tool will identify important files, explain their purpose, and provide guidance on how to modify them safely.
-
-This should be the FIRST TOOL you try when users ask for explanations about their existing project in a Rune development context.
-
-Common trigger phrases:
-- "Explain this project"
-- "What is this project?"
-- "How does this game work?"
-- "Help me understand this codebase"
-- "What is the structure of this project?"
-- "How do I modify this game?"
-
-The tool analyzes the entire project and provides a detailed overview of its architecture.`
+Identifies Rune projects by checking for "rune-sdk" dependency in package.json.`
 
 export const projectPathParameterDescription =
-  "Path to the Rune game project directory to analyze and explain."
+  "Path to Rune game project directory to analyze."
 
 export const projectNotFoundError = (projectPath: string) =>
   `Error: Project directory not found at ${projectPath}`
 
-export const notRuneProjectError = `Error: This doesn't appear to be a valid Rune project. A valid Rune project typically has:
-- A package.json with rune-games-sdk as a dependency
-- A logic.js/ts file for game state management
-- A client.js/ts or similar file for rendering`
+export const notRuneProjectError = `Error: Not a valid Rune project. A valid project requires:
+- package.json with rune-games-sdk dependency
+- logic.js/ts for game state management
+- client.js/ts or similar for rendering`
 
 export const explainProjectResponse = (projectDetails: {
   name: string

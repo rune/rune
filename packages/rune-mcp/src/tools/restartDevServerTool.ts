@@ -11,7 +11,7 @@ import fs from "fs"
 import {
   projectPathParameterDescription,
   restartDevServerToolDescription,
-  restartDevServerToolResponse,
+  restartDevServerToolSuccessResponse,
 } from "../text/restartDevServerToolText.js"
 
 /**
@@ -85,7 +85,10 @@ export const restartDevServerTool = (server: McpServer): void => {
         content: [
           {
             type: "text",
-            text: restartDevServerToolResponse({ localUrl, networkUrls }),
+            text: restartDevServerToolSuccessResponse({
+              localUrl,
+              networkUrls,
+            }),
           },
         ],
       }

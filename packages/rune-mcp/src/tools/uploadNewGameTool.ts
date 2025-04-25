@@ -149,13 +149,12 @@ export const uploadNewGameTool = (server: McpServer) => {
       })
 
       try {
-        const { congratulationMsg, newGameVersionId, previewLink } =
-          await uploadNewGameVersion({
-            gameId,
-            gameDir: distPath,
-            isReadyForRelease,
-            shouldPostToDiscord: true,
-          })
+        const { newGameVersionId, previewLink } = await uploadNewGameVersion({
+          gameId,
+          gameDir: distPath,
+          isReadyForRelease,
+          shouldPostToDiscord: true,
+        })
 
         server.server.sendLoggingMessage({
           level: "info",
@@ -167,18 +166,8 @@ export const uploadNewGameTool = (server: McpServer) => {
             {
               type: "text",
               text: isReadyForRelease
-                ? uploadReleaseSuccessResponse({
-                    gameId,
-                    newGameVersionId,
-                    previewLink,
-                    congratulationMsg,
-                  })
-                : uploadDraftSuccessResponse({
-                    gameId,
-                    newGameVersionId,
-                    previewLink,
-                    congratulationMsg,
-                  }),
+                ? uploadReleaseSuccessResponse({ gameId, previewLink })
+                : uploadDraftSuccessResponse({ gameId, previewLink }),
             },
           ],
         }

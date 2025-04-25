@@ -1,6 +1,6 @@
 {
   "name": "rune-mcp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Model Context Protocol (MCP) Server for creating multiplayer mobile games with Rune SDK",
   "license": "MIT",
   "keywords": [
@@ -20,7 +20,7 @@
   },
   "author": "Rune AI Inc",
   "bin": {
-    "rune": "./bin/rune.mjs"
+    "rune-mcp": "./bin/rune-mcp.mjs"
   },
   "engines": {
     "node": ">=18.18"

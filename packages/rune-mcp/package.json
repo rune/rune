@@ -1,0 +1,56 @@
+{
+  "name": "rune-mcp",
+  "version": "0.0.1",
+  "description": "Model Context Protocol (MCP) Server for creating multiplayer mobile games with Rune SDK",
+  "license": "MIT",
+  "keywords": [
+    "rune",
+    "model-context-protocol",
+    "mcp",
+    "game",
+    "sdk",
+    "multiplayer",
+    "mobile"
+  ],
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rune/rune.git",
+    "directory": "packages/rune-mcp"
+  },
+  "author": "Rune AI Inc",
+  "bin": {
+    "rune": "./bin/rune.mjs"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "scripts": {
+    "rune-mcp": "node --loader ts-node/esm src/index.js",
+    "build": "rm -rf dist && tsc && chmod +x dist/index.js",
+    "prepublishOnly": "yarn build",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js",
+    "test": "exit 0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.10.2",
+    "adm-zip": "0.5.9",
+    "open": "10.1.1",
+    "rune": "7.10.0",
+    "zod": "3.24.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.14.1",
+    "ts-node": "10.9.1",
+    "typescript": "5.8.3"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "templates",
+    "prompts",
+    "LICENSE",
+    "README.md"
+  ]
+}

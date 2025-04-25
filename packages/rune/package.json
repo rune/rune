@@ -1,6 +1,6 @@
 {
   "name": "rune",
-  "version": "7.9.2",
+  "version": "7.10.0",
   "description": "CLI to upload your games to Rune",
   "license": "MIT",
   "keywords": [
@@ -96,5 +96,9 @@
     "templates",
     "LICENSE",
     "README.md"
-  ]
+  ],
+  "exports": {
+    "./lib/*": "./dist/lib/*",
+    "./query/*": "./dist/gql/query/*"
+  }
 }

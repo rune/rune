@@ -2,13 +2,14 @@ import { spawn } from "child_process"
 import fs from "fs"
 import { Box, Text } from "ink"
 import { UncontrolledTextInput } from "ink-text-input"
-import path from "path"
 import React, { useCallback, useEffect } from "react"
-import { fileURLToPath } from "url"
 
 import { Choose } from "../components/Choose.js"
 import { Select } from "../components/Select.js"
 import { Step } from "../components/Step.js"
+import { createGameFromTemplate, templates } from "../lib/create.js"
+import { formatTargetDir } from "../lib/files.js"
+import { installDependenciesForProject } from "../lib/install.js"
 
 enum Steps {
   Target,
@@ -24,74 +25,11 @@ enum Steps {
 }
 
 const defaultProjectName = "rune-game"
-const templatesDirectory = path.resolve(
-  fileURLToPath(import.meta.url),
-  "../../../templates"
-)
-
-const templates = [
-  { label: "JavaScript", value: "javascript" },
-  { label: "JavaScript + React", value: "javascript-react" },
-  { label: "TypeScript", value: "typescript" },
-  { label: "TypeScript + React", value: "typescript-react" },
-  { label: "TypeScript + Pixi + React", value: "typescript-pixi-react" },
-  { label: "TypeScript + Svelte", value: "typescript-svelte" },
-  { label: "TypeScript + Vue", value: "typescript-vue" },
-]
 
 const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"
 
 function formatRunCommand(command: string) {
   return `${pkgManager}${pkgManager === "yarn" ? "" : " run"} ${command}`
-}
-
-function formatTargetDir(targetDir: string) {
-  return targetDir.trim().replace(/\/+$/g, "")
-}
-
-function copy(src: string, dest: string) {
-  const stat = fs.statSync(src)
-
-  if (stat.isDirectory()) {
-    copyDir(src, dest)
-  } else {
-    fs.copyFileSync(src, dest)
-  }
-}
-
-function copyDir(srcDir: string, destDir: string) {
-  fs.mkdirSync(destDir, { recursive: true })
-
-  for (const file of fs.readdirSync(srcDir)) {
-    const srcFile = path.resolve(srcDir, file)
-    const destFile = path.resolve(destDir, file)
-    copy(srcFile, destFile)
-  }
-}
-
-function emptyDir(dir: string) {
-  if (!fs.existsSync(dir)) {
-    return
-  }
-
-  for (const file of fs.readdirSync(dir)) {
-    if (file === ".git") {
-      continue
-    }
-
-    fs.rmSync(path.resolve(dir, file), { recursive: true, force: true })
-  }
-}
-
-const getPackageName = (targetDir: string) => {
-  const fullTargetDirPath = path.resolve(targetDir)
-
-  const lastDirectoryName = fullTargetDirPath.split(path.sep).pop()
-
-  if (!lastDirectoryName) return "rune-game" // in-case they put in a root relative path
-
-  // Replace any non-hyphen characters (like spaces or underscores) with hyphens
-  return lastDirectoryName.replace(/[^a-zA-Z0-9]/g, "-")
 }
 
 export function Create({ args }: { args: string[] }) {
@@ -113,55 +51,23 @@ export function Create({ args }: { args: string[] }) {
     [setTargetDir, setStep]
   )
   const onCreate = useCallback(() => {
-    if (overwrite) {
-      emptyDir(targetDir)
-    } else if (!fs.existsSync(targetDir)) {
-      fs.mkdirSync(targetDir, { recursive: true })
-    }
-
-    const templateDir = path.resolve(
-      path.join(templatesDirectory, "./", selectedTemplate || "typescript")
-    )
-
-    const files = fs.readdirSync(templateDir)
-
-    for (const file of files.filter((f) => f !== "package.json")) {
-      copy(path.join(templateDir, file), path.join(targetDir, file))
-    }
-
-    // fixes issue where npm removes gitignore file during publish https://github.com/npm/npm/issues/3763
-    fs.renameSync(
-      path.join(targetDir, "gitignore"),
-      path.join(targetDir, ".gitignore")
-    )
-
-    const pkg = JSON.parse(
-      fs.readFileSync(path.join(templateDir, `package.json`), "utf-8")
-    )
-
-    pkg.name = getPackageName(targetDir)
-
-    fs.writeFileSync(
-      path.join(targetDir, "package.json"),
-      `${JSON.stringify(pkg, null, 2)}\n`
-    )
-    setStep(Steps.PromptInstall)
+    createGameFromTemplate({
+      overwrite,
+      targetDir,
+      template: selectedTemplate || "javascript",
+    }).then(() => {
+      setStep(Steps.PromptInstall)
+    })
   }, [targetDir, overwrite, selectedTemplate, setStep])
 
   const onInstall = useCallback(() => {
-    const child = spawn(pkgManager, ["install"], {
-      cwd: targetDir,
-      //Fixes issue when running on windows https://stackoverflow.com/a/54515183
-      shell: process.platform === "win32",
-    })
-
-    child.on("error", () => {
-      setStep(Steps.InstallError)
-    })
-
-    child.on("close", (code) => {
-      setStep(code === 0 ? Steps.PostInstall : Steps.InstallError)
-    })
+    installDependenciesForProject({ pathToProject: targetDir })
+      .then(() => {
+        setStep(Steps.PostInstall)
+      })
+      .catch(() => {
+        setStep(Steps.InstallError)
+      })
   }, [targetDir])
 
   const onPostInstall = useCallback(() => {

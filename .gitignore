@@ -16,3 +16,12 @@ bun.lockb
 package-lock.json
 yarn.lock
 .npmrc
+
+# Yarn specific
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*

@@ -14,8 +14,11 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v3
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Set up node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
           cache: "yarn"

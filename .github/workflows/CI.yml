@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Enable Corepack
+        run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
@@ -31,6 +33,8 @@ jobs:
       GAME_ASSETS_SSH: ${{ secrets.GAME_ASSETS_SSH }}
     steps:
       - uses: actions/checkout@v3
+      - name: Enable Corepack
+        run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
@@ -49,6 +53,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Enable Corepack
+        run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"

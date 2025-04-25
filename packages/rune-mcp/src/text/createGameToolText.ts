@@ -16,8 +16,7 @@ export const gameTypeParameterDescription = `This should be the type of game the
 - card game
 - board game
 - 3D racing game
-- Side Scr
-
+- side-scroller
 This could also be the name of a specific game, such as:
 
 - Chess

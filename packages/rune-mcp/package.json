@@ -19,9 +19,6 @@
     "directory": "packages/rune-mcp"
   },
   "author": "Rune AI Inc",
-  "engines": {
-    "node": ">=20.15.1"
-  },
   "scripts": {
     "build": "rm -rf dist && tsc && chmod +x dist/index.js",
     "prepublishOnly": "yarn build",

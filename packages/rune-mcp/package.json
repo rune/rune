@@ -23,7 +23,8 @@
     "build": "rm -rf dist && tsc && chmod +x dist/index.js",
     "prepublishOnly": "yarn build",
     "typecheck": "tsc --noEmit",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "exit 0"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.10.2",

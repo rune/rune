@@ -1,6 +1,7 @@
-import path from "path"
 import fs from "fs"
+import path from "path"
 import { fileURLToPath } from "url"
+
 import { copy, emptyDir } from "./files.js"
 
 export const templatesDirectory = path.resolve(

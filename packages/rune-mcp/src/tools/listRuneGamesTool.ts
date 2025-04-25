@@ -46,14 +46,6 @@ export const listRuneGamesTool = (server: McpServer) => {
     try {
       const games = await getGames()
 
-      // Format the games list
-      const gamesListText = games
-        .map(
-          (game, i) =>
-            `${i + 1}. ${game.title} (latestVersion: ${game.latestVersionStatus})`
-        )
-        .join("\n")
-
       server.server.sendLoggingMessage({
         level: "info",
         data: `Found ${games.length} games for user`,

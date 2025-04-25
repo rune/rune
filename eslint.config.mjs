@@ -51,6 +51,7 @@ export default [
       "docs/static/_examples",
       "docs/static/_tech-demos",
       "docs/src/theme",
+      ".yarn",
     ],
   },
   js.configs.recommended,

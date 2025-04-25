@@ -53,7 +53,9 @@ export const explainProjectResponse = (projectDetails: {
         ? "Vue"
         : "Vanilla JavaScript"
 
-  const renderingLibrary = projectDetails.hasPixi ? " with PixiJS for rendering" : ""
+  const renderingLibrary = projectDetails.hasPixi
+    ? " with PixiJS for rendering"
+    : ""
 
   const language = projectDetails.isTypeScript ? "TypeScript" : "JavaScript"
 

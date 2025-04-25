@@ -39,7 +39,10 @@ export const checkDevServerTool = (server: McpServer): void => {
           content: [
             {
               type: "text",
-              text: checkDevServerToolRunningResponse({ localUrl, networkUrls }),
+              text: checkDevServerToolRunningResponse({
+                localUrl,
+                networkUrls,
+              }),
             },
           ],
         }
@@ -58,6 +61,6 @@ export const checkDevServerTool = (server: McpServer): void => {
           ],
         }
       }
-    },
+    }
   )
 }

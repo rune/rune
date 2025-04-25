@@ -1,31 +1,47 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import {
+  uploadNewGameToolDescription,
+  gameTitleParameterDescription,
+  gameDescriptionParameterDescription,
+} from "../text/uploadNewGameToolText.js"
+import { z } from "zod"
+import { isLoggedIn } from "../services/login.js"
+import { logError } from "../services/logging.js"
+import { isDir } from "rune/lib/isDir.js"
+import {
+  buildGame,
+  getGameErrors,
+  uploadNewGameVersion,
+} from "../services/game.js"
+import {
   isReadyForReleaseParameterDescription,
   projectPathInvalid,
   projectPathParameterDescription,
   projectValidationFailed,
   redirectToLoginToolResponse,
   uploadDraftSuccessResponse,
-  uploadGameToolDescription,
   uploadReleaseSuccessResponse,
-} from "../text/uploadGameToolText.js"
-import { z } from "zod"
-import { isLoggedIn } from "../services/login.js"
-import { logError } from "../services/logging.js"
-import { isDir } from "rune/lib/isDir.js"
-import { buildGame, getGameErrors } from "../services/game.js"
+} from "../text/commonUploadGameToolText.js"
+import { createGame } from "rune/query/createGame.js"
 
-export const uploadGameTool = (server: McpServer) => {
+export const uploadNewGameTool = (server: McpServer) => {
   server.tool(
-    "upload-rune-game",
-    uploadGameToolDescription,
+    "upload-new-rune-game",
+    uploadNewGameToolDescription,
     {
       projectPath: z.string().describe(projectPathParameterDescription),
+      gameTitle: z.string().describe(gameTitleParameterDescription),
+      gameDescription: z.string().describe(gameDescriptionParameterDescription),
       isReadyForRelease: z
         .boolean()
         .describe(isReadyForReleaseParameterDescription),
     },
-    async ({ isReadyForRelease, projectPath }) => {
+    async ({ isReadyForRelease, projectPath, gameTitle, gameDescription }) => {
+      server.server.sendLoggingMessage({
+        level: "info",
+        data: `Preparing to upload game "${gameTitle}" with description: ${gameDescription || "(none)"}`,
+      })
+
       server.server.sendLoggingMessage({
         level: "info",
         data: "Checking dev is logged in...",
@@ -121,22 +137,61 @@ export const uploadGameTool = (server: McpServer) => {
           ],
         }
       }
-      // TODO: Implement the actual game upload functionality here
+
+      const gameId = await createGame({
+        title: gameTitle,
+        description: gameDescription,
+      })
 
       server.server.sendLoggingMessage({
         level: "info",
-        data: "Game upload Complete",
+        data: `Game created with ID: ${gameId}, now uploading code...`,
       })
 
-      return {
-        content: [
-          {
-            type: "text",
-            text: isReadyForRelease
-              ? uploadReleaseSuccessResponse
-              : uploadDraftSuccessResponse,
-          },
-        ],
+      try {
+        const { congratulationMsg, newGameVersionId, previewLink } =
+          await uploadNewGameVersion({
+            gameId,
+            gameDir: distPath,
+            isReadyForRelease,
+            shouldPostToDiscord: true,
+          })
+
+        server.server.sendLoggingMessage({
+          level: "info",
+          data: `Game upload complete. New game version ID: ${newGameVersionId}, and preview link: ${previewLink}`,
+        })
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: isReadyForRelease
+                ? uploadReleaseSuccessResponse({
+                    gameId,
+                    newGameVersionId,
+                    previewLink,
+                    congratulationMsg,
+                  })
+                : uploadDraftSuccessResponse({
+                    gameId,
+                    newGameVersionId,
+                    previewLink,
+                    congratulationMsg,
+                  }),
+            },
+          ],
+        }
+      } catch (error) {
+        logError(server, error, "Error uploading new game version")
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Error uploading new game version: ${error instanceof Error ? error.message : String(error)}`,
+            },
+          ],
+        }
       }
     }
   )

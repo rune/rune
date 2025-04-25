@@ -1,10 +1,13 @@
+import AdmZip from "adm-zip"
 import { spawn } from "child_process"
+import path from "path"
 import {
   findShortestPathFileThatEndsWith,
   getGameFiles,
 } from "rune/lib/getGameFiles.js"
 import { getMyGames } from "rune/lib/getMyGames.js"
 import { validateGameFilesInCLI } from "rune/lib/validateGameFilesInCli.js"
+import { createGameVersion } from "rune/query/createGameVersion.js"
 import { queryGames } from "rune/query/queryGames.js"
 import { queryMe } from "rune/query/queryMe.js"
 
@@ -159,4 +162,36 @@ export const getGames = async (): Promise<Game[]> => {
       latestVersionStatus: game.gameVersions.nodes[0]?.status ?? "NONE",
     })) ?? []
   )
+}
+
+export const uploadNewGameVersion = async ({
+  gameId,
+  gameDir,
+  isReadyForRelease,
+  shouldPostToDiscord,
+}: {
+  gameId: number
+  gameDir: string
+  isReadyForRelease: boolean
+  shouldPostToDiscord: boolean
+}) => {
+  const gameFiles = await getGameFiles(gameDir)
+
+  const zip = new AdmZip()
+
+  gameFiles.forEach((file) => {
+    const fileDir = path.dirname(path.relative(gameDir, file.path))
+    zip.addLocalFile(file.path, fileDir === "." ? "" : fileDir)
+  })
+
+  return await createGameVersion({
+    gameId,
+    isDraft: !isReadyForRelease,
+    postToDiscord: shouldPostToDiscord,
+    content: {
+      name: "content.zip",
+      content: zip.toBuffer(),
+      type: "application/zip",
+    },
+  })
 }

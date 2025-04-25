@@ -7,9 +7,10 @@ import { checkProjectErrorsTool } from "./tools/checkProjectErrorsTool.js"
 import { explainRuneProjectTool } from "./tools/explainRuneProjectTool.js"
 import { stopDevServer } from "./services/devServer.js"
 import { ServerCapabilities } from "@modelcontextprotocol/sdk/types.js"
-import { uploadGameTool } from "./tools/uploadGameTool.js"
+import { uploadExistingGameTool } from "./tools/uploadExistingGameTool.js"
 import { loginTool } from "./tools/loginTool.js"
 import { listRuneGamesTool } from "./tools/listRuneGamesTool.js"
+import { uploadNewGameTool } from "./tools/uploadNewGameTool.js"
 
 const capabilities: ServerCapabilities = {
   tools: {},
@@ -34,7 +35,8 @@ restartDevServerTool(server)
 checkDevServerTool(server)
 checkProjectErrorsTool(server)
 explainRuneProjectTool(server)
-uploadGameTool(server)
+uploadExistingGameTool(server)
+uploadNewGameTool(server)
 loginTool(server)
 listRuneGamesTool(server)
 

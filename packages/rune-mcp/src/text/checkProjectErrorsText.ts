@@ -33,7 +33,7 @@ ${errors}
 \`\`\`
 
 Please fix the ESLint errors above.
-Rune projects enforce custom ESlint rules to make sure the code will interact correctly with the Rune SDK
+Rune projects enforce custom ESLint rules to make sure the code will interact correctly with the Rune SDK
 so it is important to fix these errors before proceeding.`
 
 export const checkProjectErrorsNoneFound = `Great news! No TypeScript or ESLint errors were found in your project.

@@ -5,8 +5,7 @@ on:
     branches:
       - staging
   pull_request:
-    types: [opened,synchronize]
-
+    types: [opened, synchronize]
 
 concurrency:
   group: tests-${{ github.ref }}
@@ -17,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
           cache: "yarn"
@@ -32,7 +31,7 @@ jobs:
       GAME_ASSETS_SSH: ${{ secrets.GAME_ASSETS_SSH }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
           cache: "yarn"
@@ -50,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
           cache: "yarn"
@@ -61,7 +60,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
           cache: "yarn"

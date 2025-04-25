@@ -1,5 +1,7 @@
 # rune-mcp
 
+⚠️ __ALPHA RELEASE!__ ⚠️
+
 A Model Context Protocol (MCP) server for creating and developing multiplayer mobile games with Rune SDK. This project enables AI assistants like GitHub Copilot to assist developers in creating, developing, and debugging Rune games through specialized tools and templates.
 
 ## Overview
@@ -13,7 +15,35 @@ Rune is a platform for creating and playing multiplayer mobile games with integr
 
 The server integrates with VS Code and GitHub Copilot to provide an enhanced development experience through custom tools.
 
-## Installation
+
+## Use in VS Code with GitHub Copilot
+1. Open the folder or project you would like to use the Rune SDK and the Rune MCP server with.
+2. Create a `.vscode` directory in that folder
+3. Inside that directory create a file called `mcp.json`
+4. Add the following
+   ```json
+   {
+     "servers": {
+       "Rune": {
+         "type": "stdio",
+         "command": "npx",
+         "args": ["rune-mcp"]
+       }
+     }
+   }
+   ```
+Once this is done you should see the option to refresh agents option in the GitHub Copilot chat window.
+This option only appears when you are in agent mode. 
+We recommend using the Claude 3.7 Sonnet model, but feel free to experiment with any models you would like.
+
+## Support
+Please join our [Discord server](https://discord.gg/rune-devs) for help and to report any issues you find! We will be happy to help.
+
+[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-devs)
+
+## Local Development
+
+### Installation
 
 ```bash
 # Install dependencies
@@ -23,8 +53,6 @@ yarn install
 yarn build
 ```
 
-## Development
-
 To test locally using the mcp inspector, you can run
 
 ```bash
@@ -32,7 +60,7 @@ cd packages/rune-mcp
 yarn inspect
 ```
 
-### Testing in VS Code with GitHub Copilot
+### Testing local code in VS Code with GitHub Copilot
 
 1. Create a directory to test with and open that folder in vs code.
 2. Create a `.vscode` directory in that folder

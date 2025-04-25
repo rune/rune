@@ -45,6 +45,7 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 - [eslint-plugin-rune](https://github.com/rune/rune/tree/staging/packages/eslint-plugin-rune) – rules and config for writing safe logic code for the Rune SDK
 - [rune](https://github.com/rune/rune/tree/staging/packages/rune) – command line tool to develop and upload your HTML5 game for Rune
 - [vite-plugin-rune](https://github.com/rune/rune/tree/staging/packages/vite-plugin-rune) – Vite plugin for writing games for the Rune SDK
+- [rune-mcp](https://github.com/rune/rune/tree/staging/packages/vite-plugin-rune) - Model Context Protocol (MCP) that allows AI agents to interact with Rune to develop and upload Rune games
 
 ## Community
 

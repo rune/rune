@@ -27,7 +27,7 @@ The server integrates with VS Code and GitHub Copilot to provide an enhanced dev
        "Rune": {
          "type": "stdio",
          "command": "npx",
-         "args": ["rune-mcp"]
+         "args": ["rune-mcp@latest"]
        }
      }
    }

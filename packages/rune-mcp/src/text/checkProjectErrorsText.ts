@@ -10,31 +10,14 @@ Common use cases:
 - When the user is preparing to commit or deploy their code
 - When the user is experiencing unexpected behavior that might be due to type errors`
 
-export const checkProjectErrorsTypecheckStarted =
-  "Running TypeScript type checker on your project..."
+export type CheckErrorsOutput = {
+  type: "typescript" | "eslint"
+  output: string
+}
 
-export const checkProjectErrorsLintStarted =
-  "No TypeScript errors found. Running ESLint on your project..."
-
-export const checkProjectErrorsTypecheckFailed = (errors: string) =>
-  `TypeScript errors found in your project:
-
-\`\`\`
-${errors}
-\`\`\`
-
-Please fix the TypeScript errors above before proceeding.`
-
-export const checkProjectErrorsLintFailed = (errors: string) =>
-  `ESLint errors found in your project:
-
-\`\`\`
-${errors}
-\`\`\`
-
-Please fix the ESLint errors above.
-Rune projects enforce custom ESLint rules to make sure the code will interact correctly with the Rune SDK
-so it is important to fix these errors before proceeding.`
+export const checkProjectErrorsFound = (errors: CheckErrorsOutput[]) =>
+  errors.map((error) => `${error.type} errors:\n${error.output}\n`).join("") +
+  "Fix the errors and try again."
 
 export const checkProjectErrorsNoneFound = `Great news! No TypeScript or ESLint errors were found in your project.
 

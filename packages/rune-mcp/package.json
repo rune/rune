@@ -48,7 +48,6 @@
   "files": [
     "bin",
     "dist",
-    "templates",
     "prompts",
     "LICENSE",
     "README.md"

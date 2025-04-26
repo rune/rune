@@ -6,13 +6,11 @@ import fs from "fs"
 import path from "path"
 import {
   checkProjectErrorsToolDescription,
-  checkProjectErrorsTypecheckStarted,
-  checkProjectErrorsLintStarted,
-  checkProjectErrorsTypecheckFailed,
-  checkProjectErrorsLintFailed,
+  checkProjectErrorsFound,
   checkProjectErrorsNoneFound,
   checkProjectErrorsScriptNotFound,
   projectPathParameterDescription,
+  CheckErrorsOutput,
 } from "../text/checkProjectErrorsText.js"
 import { logError } from "../services/logging.js"
 
@@ -82,6 +80,9 @@ export const checkProjectErrorsTool = (server: McpServer): void => {
       }
 
       try {
+        // Track errors from both commands
+        const errors: Array<CheckErrorsOutput> = []
+
         // First check if typecheck script exists
         const typecheckExists = scriptExists(packageJsonPath, "typecheck")
         if (!typecheckExists) {
@@ -100,17 +101,35 @@ export const checkProjectErrorsTool = (server: McpServer): void => {
           }
         }
 
+        // Now check if lint script exists
+        const lintExists = scriptExists(packageJsonPath, "lint")
+        if (!lintExists) {
+          server.server.sendLoggingMessage({
+            level: "error",
+            data: "Lint script not found in package.json",
+          })
+
+          return {
+            content: [
+              {
+                type: "text",
+                text: checkProjectErrorsScriptNotFound("lint"),
+              },
+            ],
+          }
+        }
+
+        // Change to the project directory for all commands
+        process.chdir(projectPath)
+
         // Run the typecheck command
         server.server.sendLoggingMessage({
           level: "info",
-          data: checkProjectErrorsTypecheckStarted,
+          data: "TypeScript check started",
         })
 
-        let typecheckResult
         try {
-          // Change to the project directory and run the typecheck
-          process.chdir(projectPath)
-          typecheckResult = await execPromise("npm run typecheck", {
+          const typecheckResult = await execPromise("npm run typecheck", {
             timeout: 60000,
           })
 
@@ -119,69 +138,6 @@ export const checkProjectErrorsTool = (server: McpServer): void => {
             level: "info",
             data: `TypeScript check passed ${typecheckResult.stdout}`,
           })
-
-          // Now check if lint script exists
-          const lintExists = scriptExists(packageJsonPath, "lint")
-          if (!lintExists) {
-            server.server.sendLoggingMessage({
-              level: "error",
-              data: "Lint script not found in package.json",
-            })
-
-            return {
-              content: [
-                {
-                  type: "text",
-                  text: checkProjectErrorsScriptNotFound("lint"),
-                },
-              ],
-            }
-          }
-
-          // Run the lint command
-          server.server.sendLoggingMessage({
-            level: "info",
-            data: checkProjectErrorsLintStarted,
-          })
-
-          try {
-            const lintResult = await execPromise("npm run lint -- --fix", {
-              timeout: 60000,
-            })
-
-            // If we get here, lint passed with no errors
-            server.server.sendLoggingMessage({
-              level: "info",
-              data: `ESLint check passed ${lintResult.stdout}`,
-            })
-
-            return {
-              content: [
-                {
-                  type: "text",
-                  text: checkProjectErrorsNoneFound,
-                },
-              ],
-            }
-          } catch (lintError) {
-            // Lint found errors
-
-            const errorOutput = getErrorOutput(lintError)
-
-            server.server.sendLoggingMessage({
-              level: "error",
-              data: `ESLint errors: ${errorOutput}`,
-            })
-
-            return {
-              content: [
-                {
-                  type: "text",
-                  text: checkProjectErrorsLintFailed(errorOutput),
-                },
-              ],
-            }
-          }
         } catch (typecheckError) {
           // Typecheck found errors
           const errorOutput = getErrorOutput(typecheckError)
@@ -191,11 +147,55 @@ export const checkProjectErrorsTool = (server: McpServer): void => {
             data: `TypeScript errors: ${errorOutput}`,
           })
 
+          errors.push({ type: "typescript", output: errorOutput })
+        }
+
+        // Run the lint command
+        server.server.sendLoggingMessage({
+          level: "info",
+          data: "ESLint check started",
+        })
+
+        try {
+          const lintResult = await execPromise("npm run lint -- --fix", {
+            timeout: 60000,
+          })
+
+          // If we get here, lint passed with no errors
+          server.server.sendLoggingMessage({
+            level: "info",
+            data: `ESLint check passed ${lintResult.stdout}`,
+          })
+        } catch (lintError) {
+          // Lint found errors
+          const errorOutput = getErrorOutput(lintError)
+
+          server.server.sendLoggingMessage({
+            level: "error",
+            data: `ESLint errors: ${errorOutput}`,
+          })
+
+          errors.push({ type: "eslint", output: errorOutput })
+        }
+
+        // Return appropriate response based on the collected errors
+        if (errors.length === 0) {
           return {
             content: [
               {
                 type: "text",
-                text: checkProjectErrorsTypecheckFailed(errorOutput),
+                text: checkProjectErrorsNoneFound,
+              },
+            ],
+          }
+        } else {
+          // Generate response with all errors
+
+          return {
+            content: [
+              {
+                type: "text",
+                text: checkProjectErrorsFound(errors),
               },
             ],
           }

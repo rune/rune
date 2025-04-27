@@ -153,3 +153,42 @@ Rune.initLogic({
 - `maxPlayers`: excess players become spectators
 - Game ends if active players drop below `minPlayers`
 - Implement `playerJoined`/`playerLeft` to support mid-game joining/leaving
+
+# Game Over
+
+Call `Rune.gameOver(options)` when your game ends to trigger Rune's game over popup with the following options:
+
+### Game Results Options
+
+1. **Cooperative Games**: Use `everyone` property for common results
+
+   ```js
+   Rune.gameOver({ everyone: 300 })
+   ```
+
+2. **Competitive Games**: Use `players` object with "WON", "LOST", or "TIE" values
+
+   ```js
+   Rune.gameOver({
+     players: {
+       [playerIdA]: "WON",
+       [playerIdB]: "LOST",
+       [playerIdC]: "TIE",
+     },
+   })
+   ```
+
+3. **Score-Based Games**: Assign numeric scores to players (highest wins)
+   ```js
+   Rune.gameOver({
+     players: {
+       [playerIdA]: 21981,
+       [playerIdB]: 8911,
+     },
+   })
+   ```
+
+### Additional Options
+
+- `minimizePopUp: true`: Initially show popup in minimized state
+- `delayPopUp: true`: Postpone popup display until `Rune.showGameOverPopUp()` is called (auto-shows after a few seconds if not called)

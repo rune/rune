@@ -1,14 +1,11 @@
-export const explainRuneProjectToolDescription = `Analyzes existing Rune game projects to explain structure and provide guidance.
+export const explainRuneProjectToolDescription = `Analyzes existing Rune game projects to explain structure and provide guidance for how to use the Rune SDK correctly.
 
 AGENT INSTRUCTIONS:
-This tool returns same information as create-rune-game tool, but for existing projects.
-Use when users ask about:
-- Understanding project structure or components
-- Getting an overview of their Rune game
-- How to modify or extend their game
-- "Explain this project" requests for Rune games
-
-Identifies Rune projects by checking for "rune-sdk" dependency in package.json.`
+Identify Rune projects by checking for "rune-sdk" dependency in package.json.
+This tool returns same information as create-rune-game tool, but for existing projects. 
+Run this tool if you have a project that uses the Rune SDK but has no copilot-instructions.md file.
+Run this tool to learn more about the Rune API and how to use it.
+Run this tool before making any changes to a project that uses the rune-sdk but has no .github/copilot-instructions.md file.`
 
 export const projectPathParameterDescription =
   "Path to Rune game project directory to analyze."

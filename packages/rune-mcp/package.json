@@ -1,6 +1,6 @@
 {
   "name": "rune-mcp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Model Context Protocol (MCP) Server for creating multiplayer mobile games with Rune SDK",
   "license": "MIT",
   "keywords": [

@@ -49,6 +49,9 @@ To contribute to this project, please make sure to:
 3. Update documentation as needed
 
 ## Local Development
+<details>
+<summary>Toggle to read more on how you can improve the Rune MCP server</summary>
+
 
 ### Installation
 
@@ -112,6 +115,8 @@ This server provides several custom tools for GitHub Copilot to use when assisti
 - `templates/`: Template projects for different frameworks and languages
   - Various templates for JavaScript, TypeScript, React, Vue, Svelte, etc.
 - `prompts/`: Guidance for GitHub Copilot
+
+</details>
 
 ## License
 

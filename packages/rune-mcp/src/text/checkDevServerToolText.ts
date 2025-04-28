@@ -1,15 +1,7 @@
-export const checkDevServerToolDescription = `Check if the Rune game development server is currently running.
-If the server is running, it will provide the local and network URLs for accessing the game, as
-well as the current project path. If the server is not running, it will provide instructions on how to start it.
+export const checkDevServerToolDescription = `Checks if the Rune game development server is running and provides access URLs.
 
 AGENT INSTRUCTIONS:
-Use this tool when the user wants to check if their game's development server is running.
-This can be helpful to diagnose issues or to determine if a server needs to be started.
-
-Common use cases:
-- When the user asks if their server is running
-- When the user reports issues accessing their game
-- Before suggesting to restart or start a dev server`
+Use when user wants to check server status, diagnose access issues, or before suggesting server restart.`
 
 export const checkDevServerToolRunningResponse = ({
   localUrl,
@@ -23,19 +15,19 @@ export const checkDevServerToolRunningResponse = ({
       ? networkUrls.map((url, index) => `  ${index + 1}. ${url}`).join("\n")
       : "  No network URLs available"
 
-  return `The development server is currently running.
+  return `Development server is running.
 
-You can access your game at:
+Access your game at:
 - Local (desktop): ${localUrl}
 - Network (desktop/mobile): 
 ${networkUrlsText}
 
-The network URLs work for both desktop and mobile devices on the same local network. If one URL doesn't work, try another.`
+Network URLs work on devices on same local network. Try another if one doesn't work.`
 }
 
-export const checkDevServerToolNotRunningResponse = `The development server is not currently running.
+export const checkDevServerToolNotRunningResponse = `Development server is not running.
 
 To start the server:
-1. If you create a new game with the "create-rune-game" command, the server should start automatically.
-2. If the server has stopped, you can restart it with the "restart-dev-server" command.
-3. If you're in a different project, provide the path when restarting: "restart-dev-server --projectPath=/path/to/project".`
+1. Create a new game with "create-rune-game" (starts server automatically)
+2. Restart with "restart-dev-server" command
+3. For different projects: "restart-dev-server --projectPath=/path/to/project"`

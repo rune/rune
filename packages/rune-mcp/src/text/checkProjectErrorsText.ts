@@ -20,7 +20,8 @@ export const checkProjectErrorsFound = (errors: CheckErrorsOutput[]) =>
   "Fix the errors and try again."
 
 export const checkProjectErrorsNoneFound = `Great news! No TypeScript or ESLint errors were found in your project.
-
+Note this tool only checks for TypeScript and ESLint errors. If there are errors logged in the development server 
+browser console, the user will need to share those errors with the agent directly.
 Your code looks good and follows the style guidelines.`
 
 export const checkProjectErrorsScriptNotFound = (scriptType: string) =>

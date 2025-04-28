@@ -58,10 +58,18 @@ export const startDevServer = async ({
   pathToProject: string
   server: McpServer
 }): Promise<ServerUrls> => {
+  server.server.sendLoggingMessage({
+    level: "info",
+    data: "Stopping existing dev server if running...",
+  })
   await stopDevServer()
   const pkgManager = process.env.npm_config_user_agent?.split("/")[0] || "npm"
   process.chdir(pathToProject)
   setCurrentProjectPath(pathToProject)
+  server.server.sendLoggingMessage({
+    level: "info",
+    data: "Starting dev server...",
+  })
   devServer = spawn(pkgManager, ["run", "dev", "--clearScreen=false"], {
     //Fixes issue when running on windows https://stackoverflow.com/a/54515183
     shell: process.platform === "win32",
@@ -70,6 +78,10 @@ export const startDevServer = async ({
   // Wait for server to start and extract URLs
   const urls = await new Promise<ServerUrls>((resolve, reject) => {
     if (!devServer || !devServer.stdout) {
+      server.server.sendLoggingMessage({
+        level: "error",
+        data: "Failed to start dev server: no stdout",
+      })
       reject(new Error("Failed to start dev server"))
       return
     }
@@ -77,6 +89,10 @@ export const startDevServer = async ({
     let stdoutBuffer = ""
 
     const timeout = setTimeout(() => {
+      server.server.sendLoggingMessage({
+        level: "error",
+        data: "Timeout waiting for dev server to start",
+      })
       cleanupListeners()
       reject(new Error("Timeout waiting for dev server to start"))
     }, 30000) // 30 second timeout
@@ -87,7 +103,7 @@ export const startDevServer = async ({
       stdoutBuffer += data.toString()
 
       // Check if we've received the key phrase indicating server is ready
-      if (stdoutBuffer.includes("Visit page on mobile")) {
+      if (data.toString().includes("Visit page on mobile")) {
         clearTimeout(timeout)
 
         // Extract URLs using regex
@@ -118,12 +134,20 @@ export const startDevServer = async ({
     }
 
     const onError = (err: Error) => {
+      server.server.sendLoggingMessage({
+        level: "error",
+        data: `Error from dev server: ${err}`,
+      })
       clearTimeout(timeout)
       cleanupListeners()
       reject(new Error(`Failed to start dev server: ${err.message}`))
     }
 
     const onClose = (code: number | null) => {
+      server.server.sendLoggingMessage({
+        level: "info",
+        data: `Dev server closed with code: ${code}`,
+      })
       if (code !== 0) {
         clearTimeout(timeout)
         cleanupListeners()
@@ -143,27 +167,27 @@ export const startDevServer = async ({
     }
 
     // Attach event listeners
-    devServer.stdout.on("data", onData)
+    devServer?.stdout?.on("data", onData)
     devServer.on("error", onError)
     devServer.on("close", onClose)
   })
 
   // These listeners are for the lifetime of the server
-  devServer.stdout?.on("data", (data: Buffer) => {
+  devServer?.stdout?.on("data", (data: Buffer) => {
     server.server.sendLoggingMessage({
       level: "info",
       data: `Dev server: ${data.toString()}`,
     })
   })
 
-  devServer.on("error", (err) => {
+  devServer?.on("error", (err) => {
     server.server.sendLoggingMessage({
       level: "error",
       data: { message: `Dev server error: ${err.message}`, stack: err.stack },
     })
   })
 
-  devServer.on("close", (code) => {
+  devServer?.on("close", (code) => {
     if (code !== 0) {
       server.server.sendLoggingMessage({
         level: "error",
@@ -187,20 +211,21 @@ export const startDevServer = async ({
 
 export const stopDevServer = async (): Promise<void> => {
   if (devServer) {
-    // Gracefully stop the dev server
-    devServer.kill("SIGTERM")
-
     // Wait for the process to exit or force kill after timeout
     await new Promise<void>((resolve) => {
-      const timeout = setTimeout(() => {
-        devServer?.kill("SIGKILL")
-        resolve()
-      }, 5000)
-
+      let timeout: NodeJS.Timeout | undefined = undefined
       devServer?.once("exit", () => {
         clearTimeout(timeout)
         resolve()
       })
+
+      // Gracefully stop the dev server
+      devServer?.kill("SIGTERM")
+
+      timeout = setTimeout(() => {
+        devServer?.kill("SIGKILL")
+        resolve()
+      }, 5000)
     })
 
     devServer = null

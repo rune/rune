@@ -4,14 +4,13 @@ import {
   getCurrentProjectPath,
   openDevServerInBrowser,
   startDevServer,
-  stopDevServer,
 } from "../services/devServer.js"
 import path from "path"
 import fs from "fs"
 import {
   projectPathParameterDescription,
   restartDevServerToolDescription,
-  restartDevServerToolResponse,
+  restartDevServerToolSuccessResponse,
 } from "../text/restartDevServerToolText.js"
 
 /**
@@ -33,9 +32,6 @@ export const restartDevServerTool = (server: McpServer): void => {
         level: "info",
         data: "Restarting development server...",
       })
-
-      // Stop the server if it's running
-      await stopDevServer()
 
       // Determine which project path to use
       const pathToUse = projectPath || getCurrentProjectPath()
@@ -85,7 +81,10 @@ export const restartDevServerTool = (server: McpServer): void => {
         content: [
           {
             type: "text",
-            text: restartDevServerToolResponse({ localUrl, networkUrls }),
+            text: restartDevServerToolSuccessResponse({
+              localUrl,
+              networkUrls,
+            }),
           },
         ],
       }

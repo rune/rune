@@ -11,6 +11,30 @@ import { uploadExistingGameTool } from "./tools/uploadExistingGameTool.js"
 import { loginTool } from "./tools/loginTool.js"
 import { listRuneGamesTool } from "./tools/listRuneGamesTool.js"
 import { uploadNewGameTool } from "./tools/uploadNewGameTool.js"
+import fs from "fs"
+import path from "path"
+import { fileURLToPath } from "url"
+
+// Function to get the version from package.json
+function getPackageVersion(): string {
+  try {
+    // Get the directory of the current module
+    const __filename = fileURLToPath(import.meta.url)
+    const __dirname = path.dirname(__filename)
+
+    // Navigate to the package.json (assuming we're in src/index.ts, need to go up to the package root)
+    const packageJsonPath = path.resolve(__dirname, "..", "package.json")
+
+    // Read and parse the package.json file
+    const packageJsonContent = fs.readFileSync(packageJsonPath, "utf-8")
+    const packageJson = JSON.parse(packageJsonContent)
+
+    return packageJson.version || "0.0.0"
+  } catch (error) {
+    console.error("Error reading package.json version:", error)
+    return "0.0.0" // Fallback version
+  }
+}
 
 const capabilities: ServerCapabilities = {
   tools: {},
@@ -21,7 +45,7 @@ const capabilities: ServerCapabilities = {
 const server = new McpServer(
   {
     name: "rune-mcp",
-    version: "1.0.0",
+    version: getPackageVersion(), // Use the version from package.json
     capabilities,
   },
   {

@@ -4,7 +4,6 @@ import {
   getCurrentProjectPath,
   openDevServerInBrowser,
   startDevServer,
-  stopDevServer,
 } from "../services/devServer.js"
 import path from "path"
 import fs from "fs"

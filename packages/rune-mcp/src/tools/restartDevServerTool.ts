@@ -34,9 +34,6 @@ export const restartDevServerTool = (server: McpServer): void => {
         data: "Restarting development server...",
       })
 
-      // Stop the server if it's running
-      await stopDevServer()
-
       // Determine which project path to use
       const pathToUse = projectPath || getCurrentProjectPath()
 

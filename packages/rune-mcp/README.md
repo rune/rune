@@ -2,25 +2,12 @@
 
 ⚠️ __ALPHA RELEASE!__ ⚠️
 
-A Model Context Protocol (MCP) server for creating and developing multiplayer mobile games with Rune SDK. This project enables AI assistants like GitHub Copilot to assist developers in creating, developing, and debugging Rune games through specialized tools and templates.
+A Model Context Protocol (MCP) server for creating and developing multiplayer mobile games with the Rune SDK. This project enables AI assistants like GitHub Copilot to assist developers in creating, developing, and debugging Rune games through specialized tools and templates.
 
-## Overview
-
-Rune is a platform for creating and playing multiplayer mobile games with integrated voice chat. This MCP server provides tools to:
-
-- Create new Rune game projects with various templates (JavaScript, TypeScript, React, Vue, Svelte, etc.)
-- Check for project errors and provide validation
-- Manage development servers
-- Provide guidance on Rune game development best practices
-
-The server integrates with VS Code and GitHub Copilot to provide an enhanced development experience through custom tools.
-
-
-## Use in VS Code with GitHub Copilot
-1. Open the folder or project you would like to use the Rune SDK and the Rune MCP server with.
-2. Create a `.vscode` directory in that folder
-3. Inside that directory create a file called `mcp.json`
-4. Add the following
+## Quickstart: VSCode + Github Copilot
+1. Create an empty folder (e.g`ai-game`) and open it in VSCode
+2. Create a `.vscode` directory inside the game folder
+3. Inside that directory create a file called `mcp.json` with this content:
    ```json
    {
      "servers": {
@@ -32,12 +19,16 @@ The server integrates with VS Code and GitHub Copilot to provide an enhanced dev
      }
    }
    ```
-Once this is done you should see the option to refresh agents option in the GitHub Copilot chat window.
-This option only appears when you are in agent mode. 
-We recommend using the Claude 3.7 Sonnet model, but feel free to experiment with any models you would like.
+4. When you save the `mcp.json` file, you should see a little "Start" button appear:
+<!-- Screenshot coming soon -->
+5. Now press "Start" and then open up the Copilot window.
+6. IMPORTANT: Set Copilot to "Agent" mode using `Claude 3.7 Sonnet`. You should see "🛠️ 9" in copilot since it has detected the 9 Rune tools:
+<!-- Screenshot coming soon -->
+7. Now type a prompt to build a Rune game. Here's an example prompt: "I'd like to build a Rune game. The game I had in mind is a 2D maze like puzzle game where you have to move some blocks around to get to the end of the maze. Can you build this Rune game for me?"
+<!-- Grab some coffee -->
 
 ## Support
-Please join our [Discord server](https://discord.gg/rune-devs) for help and to report any issues you find! We will be happy to help.
+Please join our [Discord server](https://discord.gg/rune-devs) for help and to report any issues you find! We're excited to help you build your first Rune game with AI
 
 [![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-devs)
 

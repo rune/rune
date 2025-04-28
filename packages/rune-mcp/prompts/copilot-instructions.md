@@ -22,8 +22,6 @@ Rune runs game logic on both clients and server, requiring deterministic code in
 - Non-deterministic functions (Date, fetch, etc.)
 - Regular expressions
 
-Note: `Math.random()` is made deterministic by Rune.
-
 ## Game State Architecture
 
 ### Game Logic (`logic.js`)

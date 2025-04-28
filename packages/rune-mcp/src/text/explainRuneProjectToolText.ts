@@ -1,6 +1,7 @@
-export const explainRuneProjectToolDescription = `Analyzes Rune game projects to explain structure and provide guidance.
+export const explainRuneProjectToolDescription = `Analyzes existing Rune game projects to explain structure and provide guidance.
 
 AGENT INSTRUCTIONS:
+This tool returns same information as create-rune-game tool, but for existing projects.
 Use when users ask about:
 - Understanding project structure or components
 - Getting an overview of their Rune game

@@ -1,8 +1,7 @@
 export const checkProjectErrorsToolDescription = `Check a Rune project for any errors.
 
 AGENT INSTRUCTIONS:
-Use this tool when the user wants to check their Rune project for errors, such as type errors or linting issues.
-When errors are found, you should help the user fix them.
+Use this too to check for errors after making changes to a Rune project.
 
 Common use cases:
 - When the agent has modified the user's code and wants to ensure it is error-free.

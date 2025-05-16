@@ -2,6 +2,26 @@
 sidebar_position: 0
 ---
 
+# AI Quick Start with VSCode / Cursor
+:::tip Try our new AI quick start to have a game up and running even faster!!:::
+- Create an empty folder (e.gai-game) and open it in VSCode.
+- Create a .vscode directory inside the game folder.
+- Inside that directory create a file called mcp.json with this content:
+```json
+ {
+   "servers": {
+     "Rune": {
+       "type": "stdio",
+       "command": "npx",
+       "args": ["rune-mcp@latest"]
+     }
+   }
+ }
+```
+- When you save the `mcp.json` file, you should see a little "Start" button appear. Press "Start" and then open up the Copilot window.
+- IMPORTANT: Set Copilot to "Agent" mode using Claude 3.7 Sonnet. You should see "🛠️ 9" in copilot since it has detected the 9 Rune tools.
+- Now type a prompt to build a Rune game. Here's an example prompt: "I'd like to build the Connect Four game using the Rune SDK. Can you build this as a Rune game for me?"
+
 # Quick Start
 
 Build a multiplayer game for the [Rune platform](https://www.rune.ai) and its millions of players. Rune handles netcode, servers, voice chat, matchmaking, spectating, and much more.

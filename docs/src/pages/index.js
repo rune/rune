@@ -176,7 +176,7 @@ export default function Home() {
               </Link>
               <a
                 className={clsx(styles.ctaButton, styles.blue)}
-                href="https://discord.gg/rune-devs"
+                href="https://discord.gg/rune-ai"
                 target="_blank"
                 rel="noreferrer"
               >

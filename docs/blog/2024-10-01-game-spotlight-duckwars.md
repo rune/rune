@@ -86,4 +86,4 @@ Here's some of the thousands of player's comments on the game
 
 It's clear that Duck Wars is well loved! Ethan has built a great game and entertained a huge number of players worldwide!
 
-If you’d like to talk about the game, learn how it was built, or build your own, drop by our [Discord](https://discord.gg/rune-devs).
+If you’d like to talk about the game, learn how it was built, or build your own, drop by our [Discord](https://discord.gg/rune-ai).

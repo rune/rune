@@ -93,6 +93,6 @@ You can also make much fancier games than Tic Tac Toe. Rune supports games with 
 
 Here are some good places to start:
 - Get some inspiration by looking at the [example games](/docs/examples/games)
-- Game dev is more fun as part of a community, join the [Rune Discord server](https://discord.gg/rune-devs)
+- Game dev is more fun as part of a community, join the [Rune Discord server](https://discord.gg/rune-ai)
 - Learn how Rune works underneath by diving into [game state syncing](how-it-works/syncing-game-state.md)
 - See the Creator Fund details and how to [make money with Rune](publishing/making-money.md)

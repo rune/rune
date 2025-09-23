@@ -39,4 +39,4 @@ Remember this is all about creating something from end to end in the time period
 
 As always we can't wait to see what you build and if we're here to help! More information on how to build and publish a game is [available in the documentation](/docs/quick-start). 
 
-Come join us on the [Discord](https://discord.gg/rune-devs) to get involved!
+Come join us on the [Discord](https://discord.gg/rune-ai) to get involved!

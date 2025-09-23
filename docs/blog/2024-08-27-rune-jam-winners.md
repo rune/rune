@@ -41,6 +41,6 @@ While we celebrate the winning games, we truly believe that the Rune gamers were
 
 Stay tuned for more events like this, and keep pushing the boundaries of creativity! Happy developing, everyone! 🌟
 
-Want to find out more? Why not stop by our [Discord](https://discord.gg/rune-devs) and let’s chat!
+Want to find out more? Why not stop by our [Discord](https://discord.gg/rune-ai) and let’s chat!
 
 

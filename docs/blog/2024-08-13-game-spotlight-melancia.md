@@ -94,4 +94,4 @@ Another player says:
 
 I think they like it! Thanks so much to [jallen](https://x.com/jallen_dev) for building the game and giving joy to so many players around the world.
 
-If you’d like to talk about the game, learn how it was built, or build your own, drop in at the [Discord](https://discord.gg/rune-devs).
+If you’d like to talk about the game, learn how it was built, or build your own, drop in at the [Discord](https://discord.gg/rune-ai).

@@ -130,7 +130,7 @@ const config = {
             items: [
               {
                 label: "Discord",
-                href: "https://discord.gg/rune-devs",
+                href: "https://discord.gg/rune-ai",
               },
               {
                 label: "Twitter",

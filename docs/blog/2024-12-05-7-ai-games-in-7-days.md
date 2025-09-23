@@ -182,6 +182,6 @@ As you can tell, it's a quite minimal API. The idea was to make it as easy as po
 
 It's been a fun, if tiring, week writing a game a day. The games themselves have come out pretty fun and I'm looking forward to how they do when they hit the 100,000's of players available on the Rune platform. Pretty much all the guidance on writing prompts generally applied to using it for games - though it is somewhat challenging to keep the AI from expanding outside the rules you want to enforce for the game. I can't wait to see what kind of AI-powered games the future holds.
 
-Any thoughts or suggestions for how we could have made the games better? Join us on the [Rune Discord](https://discord.gg/rune-devs) for a chat!
+Any thoughts or suggestions for how we could have made the games better? Join us on the [Rune Discord](https://discord.gg/rune-ai) for a chat!
 
 

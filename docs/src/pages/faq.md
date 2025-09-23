@@ -31,7 +31,7 @@ Rune has millions of players so you’ll get tons of people playing your game an
 
 ### Do You Host Game Jams? {#do-you-host-game-jams}
 
-Yes! We host fun community events for all indie game developers regardless of experience level. Some of these events will also have prizes. See `announcements` channel on [Discord](https://discord.gg/rune-devs) or [follow us on Twitter](https://x.com/joinrune) for the latest game jam.
+Yes! We host fun community events for all indie game developers regardless of experience level. Some of these events will also have prizes. See `announcements` channel on [Discord](https://discord.gg/rune-ai) or [follow us on Twitter](https://x.com/joinrune) for the latest game jam.
 
 ### Does Rune Have Ads? {#does-rune-have-ads}
 
@@ -141,6 +141,6 @@ Yes, you're always free to remove your game whenever you'd like. It's your game.
 
 ### I Have a Question / Have Suggestions for a New Feature. How Do I Reach You? {#i-have-a-question--have-suggestions-for-a-new-feature-how-do-i-reach-you}
 
-We’d love to hear from you! Let us know what you think in the `feedback-for-rune` channel on our [Discord](https://discord.gg/rune-devs).
+We’d love to hear from you! Let us know what you think in the `feedback-for-rune` channel on our [Discord](https://discord.gg/rune-ai).
 
 You can also always contact us at [devs@rune.ai](mailto:devs@rune.ai).

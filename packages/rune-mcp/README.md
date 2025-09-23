@@ -35,9 +35,9 @@ A Model Context Protocol (MCP) server to help you develop multiplayer games with
 
 
 ## Support
-Please join our [Discord server](https://discord.gg/rune-devs) for help and to report any issues you find! We're excited to help you build your first Rune game with AI
+Please join our [Discord server](https://discord.gg/rune-ai) for help and to report any issues you find! We're excited to help you build your first Rune game with AI
 
-[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-devs)
+[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-ai)
 
 
 ## Contributing

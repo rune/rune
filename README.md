@@ -5,7 +5,7 @@
 </picture>
 
 <p align="center">
-  <a href="https://developers.rune.ai">Docs</a> · <a href="https://discord.gg/rune-devs">Discord</a> · <a href="https://developers.rune.ai/faq">FAQ</a> · <a href="https://developers.rune.ai/blog">Blog</a> · <a href="https://developers.rune.ai/docs/examples/games">Examples</a> 
+  <a href="https://developers.rune.ai">Docs</a> · <a href="https://discord.gg/rune-ai">Discord</a> · <a href="https://developers.rune.ai/faq">FAQ</a> · <a href="https://developers.rune.ai/blog">Blog</a> · <a href="https://developers.rune.ai/docs/examples/games">Examples</a> 
 </p>
 
 # Rune
@@ -49,9 +49,9 @@ You can make your game using JavaScript / TypeScript and your favorite web frame
 
 ## Community
 
-Have a question or want to discuss with others how to make an amazing multiplayer game? Join our [Discord server](https://discord.gg/rune-devs)!
+Have a question or want to discuss with others how to make an amazing multiplayer game? Join our [Discord server](https://discord.gg/rune-ai)!
 
-[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-devs)
+[![Discord Follow](https://dcbadge.vercel.app/api/server/rune-devs?style=flat)](https://discord.gg/rune-ai)
 
 ## Contributing
 

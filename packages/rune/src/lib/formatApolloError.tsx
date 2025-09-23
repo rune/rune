@@ -9,7 +9,7 @@ export function formatApolloError(
   }
 
   const pleaseMessage =
-    "please contact us on our Discord server: https://discord.gg/rune-devs"
+    "please contact us on our Discord server: https://discord.gg/rune-ai"
 
   const isNetworkError = !!error.networkError
 

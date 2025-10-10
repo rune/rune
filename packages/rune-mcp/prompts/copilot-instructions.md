@@ -30,6 +30,7 @@ Rune runs game logic on both clients and server, requiring deterministic code in
 Rune.initLogic({
   minPlayers: 1 - 6, // <= maxPlayers
   maxPlayers: 1 - 6, // >= minPlayers
+  landscape: true, // Optional, default is false
   setup: () => {
     return {
       // Initial game state

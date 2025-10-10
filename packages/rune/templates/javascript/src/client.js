@@ -39,6 +39,11 @@ function onChange({ game, players, yourPlayerId, action }) {
   if (!cellButtons) initUI(cells, playerIds, players, yourPlayerId)
   if (lastMovePlayerId) board.classList.remove("initial")
 
+  // Set localized "tap to play" text
+  if (!lastMovePlayerId && cellButtons) {
+    cellButtons[4].setAttribute("data-text", Rune.t("tap to play"))
+  }
+
   cellButtons.forEach((button, i) => {
     button.setAttribute("player", playerIds.indexOf(cells[i]))
     button.setAttribute(

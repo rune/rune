@@ -71,19 +71,42 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           translationData.translation &&
           Object.keys(translationData.translation).length > 0
         ) {
-          filesExtracted = true
           const outputPath = `${targetDir}/${lng}.json`
-          await fs.mkdir(targetDir, { recursive: true })
-          // TODO: if the file already exists, pull in any keys from translationData.translation
-          // that are already present and add them.
-          // THe intent is to avoid overwriting the existing translations, but also to remove any
-          // keys that are no longer used (i.e.,  not present in translationData.translation)
-          // ALso, if it turns out all the keys are already present, we should skip writing the file
-          // and not set filesExtracted to true.
-          await fs.writeFile(
-            outputPath,
-            JSON.stringify(translationData.translation, null, 2)
-          )
+          // Load existing translations if the file exists
+          let existingTranslations: Record<string, string> = {}
+          try {
+            const existingContent = await fs.readFile(outputPath, "utf-8")
+            existingTranslations = JSON.parse(existingContent)
+          } catch (error) {
+            // File doesn't exist or can't be read, that's okay
+          }
+
+          // Merge translations: use existing values for keys that are already present,
+          // and add new keys with empty values
+          const mergedTranslations: Record<string, string> = {}
+          const newKeys = translationData.translation as Record<string, string>
+
+          for (const key of Object.keys(newKeys)) {
+            // Preserve existing translation value if it exists, otherwise use empty string
+            mergedTranslations[key] = existingTranslations[key] ?? ""
+          }
+
+          // Check if there are any changes (new keys or removed keys)
+          const existingKeys = Object.keys(existingTranslations)
+          const mergedKeys = Object.keys(mergedTranslations)
+          const hasChanges =
+            existingKeys.length !== mergedKeys.length ||
+            existingKeys.some((key) => !(key in mergedTranslations))
+
+          // Only write if there are changes
+          if (hasChanges) {
+            filesExtracted = true
+            await fs.mkdir(targetDir, { recursive: true })
+            await fs.writeFile(
+              outputPath,
+              JSON.stringify(mergedTranslations, null, 2)
+            )
+          }
         }
       }
 

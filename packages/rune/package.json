@@ -48,13 +48,13 @@
     "core-js": "3.25.0",
     "cross-fetch": "3.1.5",
     "date-fns": "2.29.1",
-    "rune-sdk": "^4.25.5",
     "eslint": "^9.7.0",
     "eslint-plugin-rune": "^2.1.0",
     "figures": "4.0.1",
     "form-data": "4.0.0",
     "glob": "8.0.3",
     "graphql": "15.8.0",
+    "i18next-scanner": "^4.6.0",
     "ink": "3.2.0",
     "ink-spinner": "4.0.3",
     "ink-text-input": "4.0.3",
@@ -65,6 +65,7 @@
     "node-html-parser": "5.2.0",
     "open": "10.1.0",
     "react": "17.0.2",
+    "rune-sdk": "4.25.5-snapshot.511",
     "semver": "7.3.7"
   },
   "devDependencies": {

@@ -23,7 +23,9 @@ function initUI(cells, playerIds, players, yourPlayerId) {
     li.innerHTML = `<img src="${players[playerId].avatarUrl}" />
            <span>${
              players[playerId].displayName +
-             (players[playerId].playerId === yourPlayerId ? "<br>(You)" : "")
+             (players[playerId].playerId === yourPlayerId
+               ? `<br>${Rune.t("(You)")}`
+               : "")
            }</span>`
     playersSection.appendChild(li)
 

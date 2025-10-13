@@ -31,7 +31,10 @@ export function ExtractTranslations({ args }: { args: string[] }) {
     setError(null)
 
     const runExtractor = async () => {
-      // Use require to load CommonJS module - dynamic import doesn't work with ts-node/esm
+      // i18next-scanner is a CommonJS-only module. In ESM contexts (like this file), we use Node's createRequire to load it.
+      // This approach works in Node.js ESM environments, but may not work with ts-node/esm or other ESM loaders.
+      // If you encounter issues running this code, ensure you are using Node.js directly (not ts-node/esm), or use a compatible loader.
+      // For full ESM support, consider switching to a scanner library that provides ESM exports, or use a build step to extract translations.
       const { Parser } = require("i18next-scanner")
 
       const parser = new Parser({

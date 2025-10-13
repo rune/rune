@@ -21,10 +21,15 @@ describe("PackageJSONTransform", () => {
         2
       )
     ).toEqual(
-      fs.readFileSync(
-        path.resolve(__dirname, "../__testfixtures__/testPackage.output.json"),
-        "utf-8"
-      )
+      fs
+        .readFileSync(
+          path.resolve(
+            __dirname,
+            "../__testfixtures__/testPackage.output.json"
+          ),
+          "utf-8"
+        )
+        .trim()
     )
   })
 })

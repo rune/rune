@@ -7,7 +7,7 @@ export function GuessHint({ visible }: { visible: boolean }) {
   return (
     <SimpleCSSTransition visible={visible} duration={timings.default}>
       <Root>
-        <Text>tap to guess</Text>
+        <Text>{Rune.t("tap to guess")}</Text>
         <Arrow src={arrowUp} />
       </Root>
     </SimpleCSSTransition>

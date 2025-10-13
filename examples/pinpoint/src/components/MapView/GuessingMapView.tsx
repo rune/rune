@@ -133,13 +133,13 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
           onInteraction={onInteraction}
         />
         <SimpleCSSTransition visible={hintShown} duration={timings.default}>
-          <Hint>Tap to place your guess</Hint>
+          <Hint>{Rune.t("Tap to place your guess")}</Hint>
         </SimpleCSSTransition>
         <SimpleCSSTransition
           visible={alreadyGuessedShown}
           duration={timings.default}
         >
-          <Hint>You already guessed!</Hint>
+          <Hint>{Rune.t("You already guessed!")}</Hint>
         </SimpleCSSTransition>
         <BackButton src={backButtonImg} onClick={onBackClick} />
         <SimpleCSSTransition
@@ -168,7 +168,9 @@ export function GuessingMapView({ onBackClick }: { onBackClick: () => void }) {
             duration={timings.default}
           >
             <LatestGuess>
-              {players[latestGuess.playerId].displayName} made a guess
+              {Rune.t("{{ player }} made a guess", {
+                player: players[latestGuess.playerId].displayName,
+              })}
             </LatestGuess>
           </SimpleCSSTransition>
         )}

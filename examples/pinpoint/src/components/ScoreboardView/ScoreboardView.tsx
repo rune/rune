@@ -125,9 +125,12 @@ export function ScoreboardView() {
           <WhiteBackground />
           <GreenCircle src={greenCircleImg} />
           <Content>
-            <Header>Scoreboard</Header>
+            <Header>{Rune.t("Scoreboard")}</Header>
             <Subheader>
-              Round {round + 1}/{game.rounds.length}
+              {Rune.t("Round {{ round }}/{{ maxRounds }}", {
+                round: (round + 1).toLocaleString(),
+                maxRounds: game.rounds.length.toLocaleString(),
+              })}
             </Subheader>
 
             <SimpleCSSTransition
@@ -153,7 +156,9 @@ export function ScoreboardView() {
                   }
                 />
               </ListContainer>
-              <Photographer>Photo by {panorama.authorName}</Photographer>
+              <Photographer>
+                {Rune.t("Photo by {{ name }}", { name: panorama.authorName })}
+              </Photographer>
             </SimpleCSSTransition>
 
             <SimpleCSSTransition
@@ -167,11 +172,11 @@ export function ScoreboardView() {
               <BottomContainer>
                 <CTA onClick={() => Rune.actions.nextRound()}>
                   <PlayIcon src={playIcon} />
-                  <span>Next Round</span>
+                  <span>{Rune.t("Next Round")}</span>
                 </CTA>
                 {Object.keys(players).length < 6 && (
                   <InviteLink onClick={() => Rune.showInvitePlayers()}>
-                    Invite more friends!
+                    {Rune.t("Invite more friends!")}
                   </InviteLink>
                 )}
               </BottomContainer>

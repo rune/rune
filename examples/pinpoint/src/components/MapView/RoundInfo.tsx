@@ -29,7 +29,10 @@ export function RoundInfo() {
   return (
     <Root>
       <Header>
-        Round {round + 1}/{game.rounds.length}
+        {Rune.t("Round {{ round }}/{{ maxRounds }}", {
+          round: (round + 1).toLocaleString(),
+          maxRounds: game.rounds.length.toLocaleString(),
+        })}
       </Header>
       <Players>
         {myPlayer && (
@@ -47,7 +50,7 @@ export function RoundInfo() {
                 </AvatarCheckmarkContainer>
               </SimpleCSSTransition>
             </AvatarContainer>
-            <Name>You</Name>
+            <Name>{Rune.t("You")}</Name>
           </Player>
         )}
         {remainingPlayers.map((player) => (
@@ -71,7 +74,7 @@ export function RoundInfo() {
         {myPlayer && remainingPlayers.length < 5 && (
           <Player onClick={() => Rune.showInvitePlayers()}>
             <AvatarPlaceholder src={invitePlayerImg} />
-            <Name>Invite</Name>
+            <Name>{Rune.t("Invite")}</Name>
           </Player>
         )}
       </Players>

@@ -81,8 +81,14 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           try {
             const existingContent = await fs.readFile(outputPath, "utf-8")
             existingTranslations = JSON.parse(existingContent)
-          } catch (error) {
-            // File doesn't exist or can't be read, that's okay
+          } catch (error: any) {
+            if (error.code === "ENOENT") {
+              // File doesn't exist, that's okay
+            } else {
+              console.warn(
+                `Warning: Could not read existing translation file "${outputPath}": ${error.message}`
+              )
+            }
           }
 
           // Merge translations: use existing values for keys that are already present,

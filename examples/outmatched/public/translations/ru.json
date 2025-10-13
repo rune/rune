@@ -1,0 +1,11 @@
+{
+  "1 Move Left": "Остался 1 Ход",
+  "{{movesLeft}} Moves Left": "Осталось Ходов: {{movesLeft}}",
+  "Extra Move!": "Дополнительный Ход!",
+  "Out of Moves!": "Ходы Закончились!",
+  "Your Turn!": "Ваш Ход!",
+  "Last Round!": "Последний Раунд!",
+  "Shuffle!": "Перемешать!",
+  "Match me with the same color!": "Соедини меня с тем же цветом!",
+  "You": "Вы"
+}

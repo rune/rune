@@ -6,7 +6,8 @@ import { $state, store } from "./state/state.ts"
 import { playSound } from "./sounds.ts"
 
 Rune.initClient({
-  onChange: ({ previousGame, game, players, yourPlayerId }) => {
+  onChange: ({ previousGame, game, players, yourPlayerId, event }) => {
+    console.log("event", event)
     if (yourPlayerId) {
       const previousPlayer = previousGame.players.find(
         (p) => p.playerId === yourPlayerId

@@ -1,9 +1,9 @@
 import fs from "fs/promises"
 import globSync from "glob"
-import { createRequire } from "module"
-import { promisify } from "util"
 import { Box, Text } from "ink"
+import { createRequire } from "module"
 import React, { useEffect, useMemo, useState } from "react"
+import { promisify } from "util"
 
 import { Step } from "../components/Step.js"
 

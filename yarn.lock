@@ -1837,6 +1837,11 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@babel/runtime@^7.27.6":
+  version "7.28.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.4.tgz#a70226016fabe25c5783b2f22d3e1c9bc5ca3326"
+  integrity sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==
+
 "@babel/runtime@^7.8.4":
   version "7.24.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.24.5.tgz#230946857c053a36ccc66e1dd03b17dd0c4ed02c"
@@ -6137,6 +6142,13 @@ cross-fetch@3.1.5, cross-fetch@^3.1.5:
   dependencies:
     node-fetch "2.6.7"
 
+cross-fetch@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-4.0.0.tgz#f037aef1580bb3a1a35164ea2a848ba81b445983"
+  integrity sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==
+  dependencies:
+    node-fetch "^2.6.12"
+
 cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz"
@@ -8383,6 +8395,20 @@ husky@7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.2.tgz#21900da0f30199acca43a46c043c4ad84ae88dff"
   integrity sha512-8yKEWNX4z2YsofXAMT7KvA1g8p+GxtB1ffV8XtpAEGuXNAbCV5wdNKH+qTpw8SM9fh4aMPDR+yQuKfgnreyZlg==
+
+i18next-http-backend@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-3.0.2.tgz#7c8daa31aa69679e155ec1f96a37846225bdf907"
+  integrity sha512-PdlvPnvIp4E1sYi46Ik4tBYh/v/NbYfFFgTjkwFl0is8A18s7/bx9aXqsrOax9WUbeNS6mD2oix7Z0yGGf6m5g==
+  dependencies:
+    cross-fetch "4.0.0"
+
+i18next@^25.5.3:
+  version "25.6.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-25.6.0.tgz#d1ed719b35af9db619738e9ce7408b75d6b7957f"
+  integrity sha512-tTn8fLrwBYtnclpL5aPXK/tAYBLWVvoHM1zdfXoRNLcI+RvtMsoZRV98ePlaW3khHYKuNh/Q65W/+NVFUeIwVw==
+  dependencies:
+    "@babel/runtime" "^7.27.6"
 
 iconv-lite@0.6.3, iconv-lite@^0.6.2, iconv-lite@^0.6.3:
   version "0.6.3"
@@ -11145,6 +11171,13 @@ node-fetch@2.6.7, node-fetch@^2.6.1, node-fetch@^2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
+node-fetch@^2.6.12:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
+  integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
+  dependencies:
+    whatwg-url "^5.0.0"
+
 node-gyp-build@^4.3.0:
   version "4.8.1"
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.8.1.tgz#976d3ad905e71b76086f4f0b0d3637fe79b6cda5"
@@ -12935,10 +12968,10 @@ rune-sdk@^4.22.0:
     terser "^5.22.0"
     tree-model "^1.0.7"
 
-rune-sdk@^4.25.5:
-  version "4.25.5"
-  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.25.5.tgz#d24fba56b8bd8731b4f101999414235ff00ea56a"
-  integrity sha512-NORFsLRZszXEeBhzW3/i+/iTelF7mGxrJyvqdgyWaol5lzdxbvlXvb+554FHHnQRtiIm7ja3pPHYMn39IaxtXA==
+rune-sdk@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-5.0.0.tgz#e583ced0e7d2b7f2a4e463b2091db88b8375af6a"
+  integrity sha512-FuB0vXu+mEm/6mjpbjJrVQTRlVa4o9+97zdYkqLBDXg8oWYy85me9FwV89RbbF9mcf3lXSLfClcFNFMnHJJSRw==
   dependencies:
     "@apollo/client" "^3.11.10"
     "@eslint/eslintrc" "^3.1.0"
@@ -12946,6 +12979,8 @@ rune-sdk@^4.25.5:
     es-module-lexer "^1.4.2"
     globals "^15.8.0"
     graphql "15.8.0"
+    i18next "^25.5.3"
+    i18next-http-backend "^3.0.2"
     okie "^1.0.1"
     terser "^5.22.0"
     tree-model "^1.0.7"

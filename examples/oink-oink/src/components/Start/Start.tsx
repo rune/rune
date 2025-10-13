@@ -21,13 +21,13 @@ export const Start = memo(() => {
       <ReadyLabel>
         {numReady}/{players.length}
         <br />
-        Players Ready
+        {Rune.t("Players Ready")}
       </ReadyLabel>
       <ReadyButton
         style={{ opacity: yourPlayer && !yourPlayer.readyToStart ? 1 : 0 }}
         onClick={() => Rune.actions.setReadyToStart()}
       >
-        <div>I'm Ready</div>
+        <div>{Rune.t("I'm Ready")}</div>
       </ReadyButton>
     </Root>
   )

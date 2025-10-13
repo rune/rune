@@ -31,7 +31,7 @@ export const Acting = memo(() => {
 
   return (
     <Root>
-      <Label>Make this sound!</Label>
+      <Label>{Rune.t("Make this sound!")}</Label>
       <div style={{ height: rel(8) }} />
       <SpeakingHead autoplay loop src={speakingAnimation} />
       <div style={{ height: rel(15) }} />
@@ -52,10 +52,10 @@ export const Acting = memo(() => {
         style={{ opacity: currentTurn.showSkipGuessButton ? 1 : 0 }}
         onClick={() => Rune.actions.skipGuess()}
       >
-        Skip
+        {Rune.t("Skip")}
       </SkipGuessButton>
       <div style={{ height: rel(15) }} />
-      <Label>Guesses</Label>
+      <Label>{Rune.t("Guesses")}</Label>
       <div style={{ height: rel(15) }} />
       <RisingGuessesView />
     </Root>

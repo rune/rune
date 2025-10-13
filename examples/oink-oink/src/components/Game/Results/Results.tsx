@@ -127,9 +127,12 @@ export const Results = memo(() => {
   return (
     <Root>
       <Header>
-        <Heading>Leaderboard</Heading>
+        <Heading>{Rune.t("Leaderboard")}</Heading>
         <SubHeading>
-          Round {round + 1}/{numRounds}
+          {Rune.t("Round {{ round }}/{{ numRounds }}", {
+            round: (round + 1).toLocaleString(),
+            numRounds: numRounds.toLocaleString(),
+          })}
         </SubHeading>
       </Header>
 
@@ -160,7 +163,9 @@ export const Results = memo(() => {
               <AvatarImg src={player.info.avatarUrl} />
               <div style={{ width: rel(8) }} />
               <Name>
-                {player.id === yourPlayerId ? "You" : player.info.displayName}
+                {player.id === yourPlayerId
+                  ? Rune.t("You")
+                  : player.info.displayName}
               </Name>
               <div style={{ flex: 1 }} />
               <Score>{player.score.acting}</Score>
@@ -178,7 +183,9 @@ export const Results = memo(() => {
                           : 0,
                     }}
                   >
-                    +{latestRoundScore}pt
+                    {Rune.t("+{{ points }}pt", {
+                      points: latestRoundScore.toLocaleString(),
+                    })}
                   </LatestScore>
                   <AnimatedNumber
                     value={
@@ -187,7 +194,7 @@ export const Results = memo(() => {
                         : score - latestRoundScore
                     }
                   />
-                  pts
+                  {Rune.t("pts")}
                 </ScoreBadge>
               </TotalScore>
             </Item>
@@ -206,7 +213,7 @@ export const Results = memo(() => {
         }}
         onClick={() => Rune.actions.nextRound()}
       >
-        <div>Continue</div>
+        <div>{Rune.t("Continue")}</div>
       </ReadyButton>
     </Root>
   )

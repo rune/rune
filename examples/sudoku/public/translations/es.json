@@ -1,0 +1,12 @@
+{
+  "Notes": "Notas",
+  "Hint": "Pista",
+  "Hint Used!": "¡Pista usada!",
+  "Every row, column and 3x3 grid should contain the numbers 1-9.": "Cada fila, columna y cuadrícula de 3x3 debe contener los números 1-9.",
+  "You": "Tú",
+  "Easy": "Fácil",
+  "Medium": "Medio",
+  "Hard": "Difícil",
+  "Expert": "Experto",
+  "Choose Difficulty": "Elegir dificultad"
+}

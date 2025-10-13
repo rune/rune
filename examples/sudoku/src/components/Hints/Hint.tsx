@@ -82,7 +82,7 @@ export function Hint({ hint }: { hint: Coordinate }) {
       <Root animationKey={animationKey} frames={frames}>
         <SimpleCSSTransition visible={labelVisible} duration={200}>
           <LabelBox>
-            <Label>Hint Used!</Label>
+            <Label>{Rune.t("Hint Used!")}</Label>
           </LabelBox>
         </SimpleCSSTransition>
       </Root>

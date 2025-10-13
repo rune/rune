@@ -39,7 +39,7 @@
   "scripts": {
     "build": "npm run lint && DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build && rollup -c",
     "dev": "npm run dev:client & npm run dev:logic",
-    "dev:client": "react-scripts start",
+    "dev:client": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "dev:logic": "rollup -c --watch",
     "deploy": "../../scripts/copy-assets.sh sudoku && yarn build && rune upload build",
     "lint": "eslint src"

@@ -109,7 +109,9 @@ export function Onboarding() {
           />
         ))}
         <Text>
-          Every row, column and 3x3 grid should contain the numbers 1-9.
+          {Rune.t(
+            "Every row, column and 3x3 grid should contain the numbers 1-9."
+          )}
         </Text>
       </Root>
     </SimpleCSSTransition>

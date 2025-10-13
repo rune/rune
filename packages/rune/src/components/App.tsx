@@ -3,6 +3,7 @@ import React from "react"
 
 import { Create } from "../flows/Create.js"
 import { DuskToRune } from "../flows/DuskToRune.js"
+import { ExtractTranslations } from "../flows/ExtractTranslations.js"
 import { List } from "../flows/List/List.js"
 import { Logout } from "../flows/Logout.js"
 import { OpenDashboard } from "../flows/OpenDashboard.js"
@@ -38,6 +39,8 @@ export function App() {
           <DuskToRune args={args} />
         ) : command === "create" ? (
           <Create args={args} />
+        ) : command === "extract-translations" ? (
+          <ExtractTranslations args={args} />
         ) : (
           <LoginGate>
             {command === "list" ? (

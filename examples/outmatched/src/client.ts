@@ -578,7 +578,11 @@ const setMovesPlayed = (
   const movesLeft = movesPerRound - movesPlayed
   movesList.setAttribute(
     "title",
-    `${movesLeft} Move${movesLeft === 1 ? "" : "s"} Left`
+    movesLeft === 1
+      ? Rune.t("1 Move Left")
+      : Rune.t("{{movesLeft}} Moves Left", {
+          movesLeft: movesLeft.toLocaleString(),
+        })
   )
   extraMovesItems.forEach((element) => {
     element.classList.add("extra")
@@ -609,19 +613,19 @@ const showMessage = async (messageType: string) => {
   const innerMessageElement = document.createElement("span")
   switch (messageType) {
     case "extra-move":
-      innerMessageElement.textContent = "Extra Move!"
+      innerMessageElement.textContent = Rune.t("Extra Move!")
       break
     case "out-of-moves":
-      innerMessageElement.textContent = "Out of Moves!"
+      innerMessageElement.textContent = Rune.t("Out of Moves!")
       break
     case "your-turn":
-      innerMessageElement.textContent = "Your Turn!"
+      innerMessageElement.textContent = Rune.t("Your Turn!")
       break
     case "last-round":
-      innerMessageElement.textContent = "Last Round!"
+      innerMessageElement.textContent = Rune.t("Last Round!")
       break
     case "shuffle":
-      innerMessageElement.textContent = "Shuffle!"
+      innerMessageElement.textContent = Rune.t("Shuffle!")
       break
     default:
       throw new Error(`Invalid message type "${messageType}"`)
@@ -639,7 +643,7 @@ async function showSpecialTileHint(index: number) {
   isUpdating = true
 
   const messageElement = document.createElement("div")
-  messageElement.textContent = "Match me with the same color!"
+  messageElement.textContent = Rune.t("Match me with the same color!")
   messageElement.className = `tooltip ${
     index % cols > cols / 2 ? "left" : "right"
   }`
@@ -801,7 +805,7 @@ const onChange: OnChangeFn = async ({
         li.classList.add("previous-leader")
       }
       li.lastChild!.textContent =
-        id === yourPlayerId ? "You" : player && player.displayName
+        id === yourPlayerId ? Rune.t("You") : player && player.displayName
       ;(li.firstChild as HTMLElement).setAttribute("src", player.avatarUrl)
       li.setAttribute("data-score", players[id].score.toString())
       scores[i] = players[id].score

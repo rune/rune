@@ -9,7 +9,8 @@ export const cli = meow(
     $ rune list           [Lists all your games]
     $ rune update-members [Sets up team for your game]
     $ rune dusk-to-rune <[optional] path> [Migrates your game from Dusk to Rune]
-    $ rune dash Opens the Rune dashboard
+    $ rune dash [Opens the Rune dashboard]
+    $ rune extract-translations <[optional] directory to write translation json files to, defaults to public/translations> [Creates or updates translation files based on your use of the Rune.t() function]
 
   Options
     --version, -v   Show CLI version 
@@ -69,6 +70,7 @@ export const validCommands = [
   "dashboard",
   "dash",
   "dusk-to-rune",
+  "extract-translations",
 ] as const
 
 export function cliCommand() {

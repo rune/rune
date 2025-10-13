@@ -3,7 +3,7 @@ export default function transformJSON(json: any) {
     if (json[dep]) {
       if (json[dep]["dusk-games-sdk"]) {
         delete json[dep]["dusk-games-sdk"]
-        json[dep]["rune-sdk"] = "^4.22.1"
+        json[dep]["rune-sdk"] = "^5.0.0"
       }
     }
   })

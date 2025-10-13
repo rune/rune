@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import styled from "styled-components/macro"
 import checkmarkImg from "./checkmark.svg"
 import starImg from "./star.svg"
@@ -8,21 +8,26 @@ import { range } from "../../lib/range"
 import { useAtomValue } from "jotai"
 import { $game } from "../../state/$game"
 
-const options: {
-  label: string
-  stars: number
-  difficulty: Difficulty
-}[] = [
-  { label: "Easy", stars: 1, difficulty: "easy" },
-  { label: "Medium", stars: 2, difficulty: "medium" },
-  { label: "Hard", stars: 3, difficulty: "hard" },
-  { label: "Expert", stars: 4, difficulty: "expert" },
-]
-
 export function StartGame() {
   const game = useAtomValue($game)
 
   const [difficulty, setDifficulty] = useState<Difficulty>()
+
+  const options = useMemo<
+    Array<{
+      label: string
+      stars: number
+      difficulty: Difficulty
+    }>
+  >(
+    () => [
+      { label: Rune.t("Easy"), stars: 1, difficulty: "easy" },
+      { label: Rune.t("Medium"), stars: 2, difficulty: "medium" },
+      { label: Rune.t("Hard"), stars: 3, difficulty: "hard" },
+      { label: Rune.t("Expert"), stars: 4, difficulty: "expert" },
+    ],
+    []
+  )
 
   useEffect(() => {
     if (difficulty) {
@@ -36,7 +41,7 @@ export function StartGame() {
   return (
     <Root>
       <Box>
-        <Header>Choose Difficulty</Header>
+        <Header>{Rune.t("Choose Difficulty")}</Header>
         <Content>
           {options.map((option) => (
             <Option

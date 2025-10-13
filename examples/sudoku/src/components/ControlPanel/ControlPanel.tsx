@@ -45,7 +45,7 @@ export function ControlPanel() {
     <Root>
       <Button active={inputMode === "note"} onClick={toggleInputMode}>
         <Img src={inputMode === "note" ? penActiveIcon : penIcon} />
-        <Label>Notes</Label>
+        <Label>{Rune.t("Notes")}</Label>
       </Button>
       <Button
         active={hintAnimating}
@@ -53,7 +53,7 @@ export function ControlPanel() {
         onClick={showHint}
       >
         <Img src={hintAnimating ? bulbActiveIcon : bulbIcon} />
-        <Label>Hint</Label>
+        <Label>{Rune.t("Hint")}</Label>
         {hintsLeft > 0 && <Badge>{hintsLeft}</Badge>}
       </Button>
     </Root>

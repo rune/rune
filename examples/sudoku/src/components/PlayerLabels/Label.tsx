@@ -25,7 +25,7 @@ export function Label({
   const players = useAtomValue($players)
   const yourPlayerId = useAtomValue($yourPlayerId)
   const displayName =
-    playerId === yourPlayerId ? "You" : players?.[playerId]?.displayName
+    playerId === yourPlayerId ? Rune.t("You") : players?.[playerId]?.displayName
   const avatarUrl = players?.[playerId]?.avatarUrl
   const lastPlayerActivity = useAtomValue($lastPlayerActivity)[playerId]
   const [nameVisible, setNameVisible] = useState(true)

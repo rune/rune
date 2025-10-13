@@ -65,7 +65,7 @@
     "node-html-parser": "5.2.0",
     "open": "10.1.0",
     "react": "17.0.2",
-    "rune-sdk": "4.25.5-snapshot.511",
+    "rune-sdk": "^5.0.0",
     "semver": "7.3.7"
   },
   "devDependencies": {

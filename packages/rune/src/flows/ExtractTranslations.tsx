@@ -59,7 +59,9 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           parser.parseFuncFromString(content, { list: ["Rune.t"] })
         } catch (error) {
           // Skip files that can't be read, but log for debugging
-          console.warn(`Skipping file "${file}" due to read error: ${error instanceof Error ? error.message : error}`);
+          console.warn(
+            `Skipping file "${file}" due to read error: ${error instanceof Error ? error.message : error}`
+          )
         }
       }
 
@@ -106,7 +108,8 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           const mergedKeys = Object.keys(mergedTranslations)
           const hasChanges =
             existingKeys.length !== mergedKeys.length ||
-            existingKeys.some((key) => !(key in mergedTranslations))
+            existingKeys.some((key) => !mergedKeys.includes(key))
+          // These two tests implicitly would also identify the case where mergedKeys has new keys not in existingKeys
 
           // Only write if there are changes
           if (hasChanges) {

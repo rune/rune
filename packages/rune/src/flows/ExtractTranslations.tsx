@@ -55,7 +55,8 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           const content = await fs.readFile(file, "utf-8")
           parser.parseFuncFromString(content, { list: ["Rune.t"] })
         } catch (error) {
-          // Skip files that can't be read
+          // Skip files that can't be read, but log for debugging
+          console.warn(`Skipping file "${file}" due to read error: ${error instanceof Error ? error.message : error}`);
         }
       }
 

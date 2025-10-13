@@ -61,7 +61,7 @@
     "ink-text-input": "4.0.3",
     "jscodeshift": "0.16.0",
     "lodash": "4.17.21",
-    "meow": "10.1.2",
+    "meow": "10.1.4",
     "mime-types": "2.1.35",
     "node-html-parser": "5.2.0",
     "open": "10.1.0",

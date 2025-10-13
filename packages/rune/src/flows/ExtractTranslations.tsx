@@ -59,9 +59,6 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           parser.parseFuncFromString(content, { list: ["Rune.t"] })
         } catch (error) {
           // Skip files that can't be read, but log for debugging
-          console.warn(
-            `Skipping file "${file}" due to read error: ${error instanceof Error ? error.message : error}`
-          )
         }
       }
 
@@ -83,14 +80,8 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           try {
             const existingContent = await fs.readFile(outputPath, "utf-8")
             existingTranslations = JSON.parse(existingContent)
-          } catch (error: any) {
-            if (error.code === "ENOENT") {
-              // File doesn't exist, that's okay
-            } else {
-              console.warn(
-                `Warning: Could not read existing translation file "${outputPath}": ${error.message}`
-              )
-            }
+          } catch (error) {
+            // skip files that cannot be read or parsed
           }
 
           // Merge translations: use existing values for keys that are already present,

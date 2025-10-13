@@ -10958,6 +10958,24 @@ meow@10.1.2:
     type-fest "^1.2.2"
     yargs-parser "^20.2.9"
 
+meow@10.1.4:
+  version "10.1.4"
+  resolved "https://registry.yarnpkg.com/meow/-/meow-10.1.4.tgz#aa95b9039d3a46c460066fdec6c20fc3a94ee0ad"
+  integrity sha512-FAlXANqPxtd6Od1kTzm39cHbhYn5t/TI0pP5yV9bmzteII7+couYcU+T9sgbzCgi0KVdiw85aRie9UBUfucYvQ==
+  dependencies:
+    "@types/minimist" "^1.2.2"
+    camelcase-keys "^7.0.0"
+    decamelize "^5.0.0"
+    decamelize-keys "^1.1.0"
+    hard-rejection "^2.1.0"
+    minimist-options "4.1.0"
+    normalize-package-data "^3.0.2"
+    read-pkg-up "^8.0.0"
+    redent "^4.0.0"
+    trim-newlines "^4.0.2"
+    type-fest "^1.2.2"
+    yargs-parser "^20.2.9"
+
 meow@^8.0.0:
   version "8.1.2"
   resolved "https://registry.yarnpkg.com/meow/-/meow-8.1.2.tgz#bcbe45bda0ee1729d350c03cffc8395a36c4e897"
@@ -13172,19 +13190,6 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
-
-rune-sdk@^4.22.0:
-  version "4.22.0"
-  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.22.0.tgz#83dc6f83258aec32a7e745255241b23f3402faeb"
-  integrity sha512-zfqPSCosYifSL/CHHCyx03zoKGHU3N7+Q/ax2DyvpBfGGumaHN+wTZrnhepyyhK4Mh2SJXcwwrFmtyoG7F3faw==
-  dependencies:
-    "@eslint/eslintrc" "^3.1.0"
-    "@eslint/js" "^9.7.0"
-    es-module-lexer "^1.4.2"
-    globals "^15.8.0"
-    okie "^1.0.1"
-    terser "^5.22.0"
-    tree-model "^1.0.7"
 
 rune-sdk@^4.25.5:
   version "4.25.5"

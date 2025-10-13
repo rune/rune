@@ -18,7 +18,7 @@ function initUI(cells, allPlayerIds, yourPlayerId) {
     li.setAttribute("player", index)
     li.innerHTML =
       `<img src="${avatarUrl}"/>
-       <span>${displayName + (playerId === yourPlayerId ? "<br>(You)" : "")}</span>`
+       <span>${displayName + (playerId === yourPlayerId ? `<br>${Rune.t("(You)")}` : "")}</span>`
     playersSection.appendChild(li)
     return li
   })
@@ -28,6 +28,11 @@ function onChange({ game, yourPlayerId, action, allPlayerIds }) {
   const { cells, winCombo, lastMovePlayerId, freeCells } = game
   if (!cellButtons) initUI(cells, allPlayerIds, yourPlayerId)
   if (lastMovePlayerId) board.classList.remove("initial")
+
+  // Set localized "tap to play" text
+  if (!lastMovePlayerId && cellButtons) {
+    cellButtons[4].setAttribute("data-text", Rune.t("tap to play"))
+  }
 
   cellButtons.forEach((button, i) => {
     button.setAttribute("player", allPlayerIds.indexOf(cells[i]))

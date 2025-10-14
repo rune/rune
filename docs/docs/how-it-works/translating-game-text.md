@@ -54,7 +54,7 @@ This will find any `Rune.t()` calls in your source code and generate json files 
 
 ## Filling in the translations.
 
-Currently most Rune user read one of these 4 languages:
+Currently most Rune users read one of these 4 languages:
 
 - English
 - Portuguese

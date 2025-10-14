@@ -44,7 +44,7 @@ Rune.t("You gained {{ score }} points", {
 
 ## Extracting Text to Translate
 
-Once you have added `Rune.t()` calls to your game, you can run the Rune cli extraction function to generate the translation files that will map these strings to their actual translated values
+Once you have added `Rune.t()` calls to your game, you can run the Rune CLI extraction function to generate the translation files that will map these strings to their actual translated values
 
 ```bash
 npx rune@latest extract-translations

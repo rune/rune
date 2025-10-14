@@ -37,8 +37,9 @@ Rune.initLogic({
       // Increase score and switch turn
       game.scores[playerId]++
       //Switch turn
-      game.currentPlayerIndex = (game.currentPlayerIndex + 1) % allPlayerIds.length;
-      game.currentPlayerStartedAt = Rune.gameTime();
+      game.currentPlayerIndex =
+        (game.currentPlayerIndex + 1) % allPlayerIds.length
+      game.currentPlayerStartedAt = Rune.gameTime()
       // Determine if game has ended
       if (isVictoryOrDraw(game)) {
         Rune.gameOver({
@@ -58,8 +59,9 @@ Rune.initLogic({
   update: ({ game, allPlayerIds }) => {
     //If 30 seconds have passed since last player scored, switch player
     if ((Rune.gameTime() - game.currentPlayerStartedAt) / 1000 > 30) {
-      game.currentPlayerIndex = (game.currentPlayerIndex + 1) % allPlayerIds.length;
-      game.currentPlayerStartedAt = Rune.gameTime();
+      game.currentPlayerIndex =
+        (game.currentPlayerIndex + 1) % allPlayerIds.length
+      game.currentPlayerStartedAt = Rune.gameTime()
     }
   },
   updatesPerSecond: 10,
@@ -90,6 +92,7 @@ The `actions` option is an object with actions functions exposed to the UI integ
 By default a game will end if a player leaves (see [Joining and Leaving](advanced/joining-leaving.md#minimum-and-maximum-players)), but by defining the `playerJoined`/`playerLeft` events you can [Support Players Joining Midgame](advanced/joining-leaving.md#supporting-players-joining-midgame).
 
 #### `ai: { promptResponse: ({requestId: string, response: string }) => void }` _optional_ {#ai--promptresponse}
+
 :::info
 This is a preview API that is available for developers to test only.
 :::
@@ -102,7 +105,7 @@ Function that is executed every second. See [Using Time in your Game](advanced/r
 
 #### `updatesPerSecond?: number` {#updatespersecond-number}
 
-How many times `update` function should be executed per second. Allowed values 1-30. Default 1. See  [Real-Time Games](advanced/real-time-games.md).
+How many times `update` function should be executed per second. Allowed values 1-30. Default 1. See [Real-Time Games](advanced/real-time-games.md).
 
 #### `inputDelay?: number` {#inputdelay-number}
 
@@ -175,7 +178,7 @@ Only one of `players` and `everyone` can be provided at the same time.
 
 `players` is an object with player IDs as keys and the game result as values. The game result for each player can be `WON`/`LOST`/`TIE` or an integer score (higher is better) score. Mixing `WON`/`LOST`/`TIE` and scores at the same time is not allowed. All players present in the game at the moment the game ends must be mentioned in the `players` object.
 
-####  `everyone: "WON" | "LOST" | "TIE" | number` {#everyone-game-over}
+#### `everyone: "WON" | "LOST" | "TIE" | number` {#everyone-game-over}
 
 `everyone` allows to assign the same result for every player. Providing a score value shows a team score game over popup.
 
@@ -196,11 +199,12 @@ Returns the amount of milliseconds that have passed since the start of the game.
 Returns the amount of milliseconds since the start of epoch with a precision of 1 second. See [Using Time in your Game](advanced/real-time-games.md#world-time).
 
 ### `Rune.ai.promptRequest({ messages: [{ role: string, content: string | { type: "image_data" | "text", image_url?: string, text?: string }}] })` {#runepromptrequest}
+
 :::info
 This is a preview API that is available for developers to test only.
 :::
 
-Calls the Rune's AI to process a generative AI request. See [AI](advanced/ai). 
+Calls the Rune's AI to process a generative AI request. See [AI](advanced/ai).
 
 ```js
 Rune.ai.promptRequest({ messages: [{ role: "user", content: "Who are you" }] })
@@ -251,7 +255,7 @@ Your player id, if the current user is a spectator this argument is undefined.
 
 ##### `players: Record<string, { playerId: string, displayName: string, avatarUrl: string }>` {#players-recordstring--playerid-string-displayname-string-avatarurl-string-}
 
-*Deprecated:* Use [allPlayerIds](#all-player-ids) and [Rune.getPlayerInfo](#rune-get-player-info)
+_Deprecated:_ Use [allPlayerIds](#all-player-ids) and [Rune.getPlayerInfo](#rune-get-player-info)
 
 The `players` argument is an object of the current players, useful to display their names and avatars in the game.
 
@@ -329,3 +333,15 @@ Returns an instance of interpolator. See [Reducing Stutter](advanced/reducing-st
 ### `Rune.interpolatorLatency()` {#runeinterpolatorlatency}
 
 Returns an instance of interpolator. See [Reducing Stutter](advanced/reducing-stutter.md).
+
+### `Rune.t(stringToTranslate, optionalValuesToInterpolate)` {#runet}
+
+Provides a translated string into the player's language at runtime if the language translation is available. When not available, the `stringToTranslate` is rendered as-is.
+
+You can also reference string values provided in the second argument in the string using double brackets `{{ }}` and they will be inserted into the translation string without modification. For example:
+
+```js
+Rune.t("Your Score is {{ score }}", { score: numericScore.toLocaleString() })
+```
+
+All the values in the optional second object must be converted to strings already. See [Translating In-Game Text](how-it-works/translating-game-text.md).

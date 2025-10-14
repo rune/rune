@@ -37,7 +37,7 @@ innerMessageElement.textContent = youWon
 It is possible to render translated text with some dynamic (untranslated values). This is done by adding placeholders to the translation string for each value and then passing the values as a second argument to `Rune.t()`.
 
 ```js
-Rune.t("Your gained {{ score }} points", {
+Rune.t("You gained {{ score }} points", {
   score: numericScore.toLocaleString(),
 })
 ```

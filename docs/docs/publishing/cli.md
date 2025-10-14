@@ -28,6 +28,17 @@ rune create my-game
 
 Follow the instructions on the terminal to run the game in mock Rune app. The interface is identical to the one described in [Simulating Multiplayer](../playtesting/simulating-multiplayer.md).
 
+### `rune extract-translations` {#rune-extract-translations}
+
+Finds any Rune.t() calls that have not already been added to your translation json files and adds them as keys with empty strings as values so their translations can be added. This command currently generates translation files for for languages:
+
+- English (`en.json`)
+- Portuguese (`pt.json`)
+- Russian (`ru.json`)
+- Spanish (`es.json`)
+
+By default these files are written to `public/translations/` directory but this can be overridden by passing an alternate path as an argument to the `extract-translations` command. See [Translating In-Game Text](../how-it-works/translating-game-text.md) for more information about adding translated text to your game.
+
 ### `rune upload` {#rune-upload}
 
 Uploads your game to Rune for publishing, see [Publishing Your Game](publishing-your-game.md) for more info.

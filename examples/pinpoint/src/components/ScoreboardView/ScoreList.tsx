@@ -46,7 +46,7 @@ export function ScoreList({
       <Avatar src={scores[0].player.avatarUrl} />
       <Name>
         {scores[0].player.playerId === myPlayerId
-          ? "You"
+          ? Rune.t("You")
           : scores[0].player.displayName}
       </Name>
       <Score>
@@ -54,7 +54,7 @@ export function ScoreList({
       </Score>
       <SimpleCSSTransition visible={showLatestScore} duration={timings.default}>
         <LatestScoreRight missed={scores[0].missed}>
-          {scores[0].missed ? "No guess" : `+${scores[0].latestScore}`}
+          {scores[0].missed ? Rune.t("No guess") : `+${scores[0].latestScore}`}
         </LatestScoreRight>
       </SimpleCSSTransition>
     </BigItem>
@@ -65,7 +65,7 @@ export function ScoreList({
           <Avatar src={item.player.avatarUrl} />
           <Name>
             {item.player.playerId === myPlayerId
-              ? "You"
+              ? Rune.t("You")
               : item.player.displayName}
           </Name>
           <Score withRightOffset>
@@ -76,7 +76,7 @@ export function ScoreList({
             duration={timings.default}
           >
             <LatestScore missed={item.missed}>
-              {item.missed ? "No guess" : `+${item.latestScore}`}
+              {item.missed ? Rune.t("No guess") : `+${item.latestScore}`}
             </LatestScore>
           </SimpleCSSTransition>
         </Item>

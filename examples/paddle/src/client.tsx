@@ -163,7 +163,7 @@ window.onload = function () {
         GAME_RENDERED_HEIGHT - 25,
         images[playerIndex],
         yourPlayerId !== undefined
-          ? "You"
+          ? Rune.t("You")
           : players[game.players[playerIndex].id]?.displayName || "",
         game.players[playerIndex].score
       )

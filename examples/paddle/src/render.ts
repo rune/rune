@@ -114,7 +114,7 @@ export function renderHelp(
   context.font = "400 10px Poppins"
   context.fillStyle = "rgba(255, 255, 255, 1)"
   context.textAlign = "center"
-  context.fillText("Hold to move", x + PADDLE_WIDTH / 2, y + 55)
+  context.fillText(Rune.t("Hold to move"), x + PADDLE_WIDTH / 2, y + 55)
 
   context.drawImage(handImage, x + PADDLE_WIDTH / 2 - 20, y - 8, 69, 54)
 }

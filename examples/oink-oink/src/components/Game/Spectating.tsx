@@ -13,9 +13,9 @@ export const Spectating = memo(() => {
       <Player>
         <AvatarImg src={actorPlayer?.info.avatarUrl} />
         <Label>
-          {actorPlayer?.info.displayName}
-          <br />
-          is acting
+          {Rune.t("{{ name }} is acting", {
+            name: actorPlayer?.info.displayName ?? "",
+          })}
         </Label>
       </Player>
       <Bottom>

@@ -48,7 +48,7 @@ export const Guessing = memo(() => {
 
   return (
     <Root>
-      <Prompt>Guess the animal</Prompt>
+      <Prompt>{Rune.t("Guess the animal")}</Prompt>
       <Grid>
         {animals.map((animal, i) => (
           <Item
@@ -70,7 +70,7 @@ export const Guessing = memo(() => {
           </Item>
         ))}
       </Grid>
-      <Prompt>Guess the emotion</Prompt>
+      <Prompt>{Rune.t("Guess the emotion")}</Prompt>
       <Grid>
         {emotions.map((emotion, i) => (
           <Item

@@ -24,9 +24,12 @@ export function StartOfRoundOverlay({ visible }: { visible: boolean }) {
       <Root>
         <Box>
           <HeaderMapImg src={mapImg} />
-          <Heading>Guess the Location!</Heading>
+          <Heading>{Rune.t("Guess the Location!")}</Heading>
           <Label>
-            Round {round + 1}/{maxRound}
+            {Rune.t("Round {{ round }}/{{ maxRounds }}", {
+              round: (round + 1).toLocaleString(),
+              maxRounds: maxRound.toLocaleString(),
+            })}
           </Label>
           <PlayersContainer>
             {playersArray.map((player) => (

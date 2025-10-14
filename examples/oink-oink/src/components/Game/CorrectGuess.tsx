@@ -26,14 +26,16 @@ export const CorrectGuess = memo((guess: Guess) => {
     }
   }, [guess.playerId, yourPlayerId])
 
+  const correctText = Rune.t("Correct!")
+
   return (
     <Root>
       {guess.playerId === yourPlayerId ? (
         <>
           <Confetti autoplay keepLastFrame src={confettiAnimation} />
           <CheckmarkImg src={checkmark} />
-          <Label big uppercase>
-            Correct!
+          <Label big={correctText.length < 9} uppercase>
+            {correctText}
           </Label>
           <div style={{ height: rel(24) }} />
           <GuessContainer>
@@ -45,9 +47,9 @@ export const CorrectGuess = memo((guess: Guess) => {
       ) : (
         <>
           <Label>
-            {guessPlayer?.info.displayName}
-            <br />
-            got it!
+            {Rune.t("{{ name }} got it!", {
+              name: guessPlayer?.info.displayName ?? "",
+            })}
           </Label>
           <GuessContainer>
             <EmotionImg src={art.emotions[guess.emotion]} />
@@ -81,6 +83,8 @@ const Label = styled.div<{ big?: boolean; uppercase?: boolean }>`
   font-size: ${({ big }) => rel(big ? 64 : 28)};
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
   text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   ${({ uppercase }) =>
     uppercase &&
     css`

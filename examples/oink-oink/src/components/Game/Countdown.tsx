@@ -27,20 +27,20 @@ export const Countdown = memo(() => {
   return (
     <Root>
       <RoundLabel>
-        Round
+        {Rune.t("Round")}
         <br />
         {round + 1}/{numRounds}
       </RoundLabel>
       <UpNext>
         {yourPlayer?.actor ? (
-          <UpNextLabel>You’re up next!</UpNextLabel>
+          <UpNextLabel>{Rune.t("You're up next!")}</UpNextLabel>
         ) : (
           <>
             <Avatar src={actorPlayer?.info.avatarUrl} />
             <UpNextLabel>
-              {actorPlayer?.info.displayName}
-              <br />
-              is up next!
+              {Rune.t("{{ name }} is up next!", {
+                name: actorPlayer?.info.displayName ?? "",
+              })}
             </UpNextLabel>
           </>
         )}

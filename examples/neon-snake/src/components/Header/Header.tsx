@@ -61,7 +61,9 @@ export function Header() {
             <Avatar src={players[playerId].avatarUrl} $playerColor={color} />
           )}
           <Name $playerColor={color}>
-            {playerId === yourPlayerId ? "You" : players[playerId].displayName}
+            {playerId === yourPlayerId
+              ? Rune.t("You")
+              : players[playerId].displayName}
           </Name>
           <Score $playerColor={color}>{score}</Score>
         </PlayerContainer>
@@ -69,7 +71,7 @@ export function Header() {
       {invite && (
         <PlayerContainer $center onClick={() => Rune.showInvitePlayers()}>
           <Avatar src={noAvatar} $playerColor={invite.color} />
-          <Invite $playerColor={invite.color}>Invite</Invite>
+          <Invite $playerColor={invite.color}>{Rune.t("Invite")}</Invite>
         </PlayerContainer>
       )}
     </Root>

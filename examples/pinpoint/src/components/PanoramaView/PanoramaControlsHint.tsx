@@ -16,12 +16,12 @@ export function PanoramaControlsHint({ visible }: { visible: boolean }) {
       <Root>
         <Top>
           <img src={arrowLeft} />
-          <Text>swipe to turn</Text>
+          <Text>{Rune.t("swipe to turn")}</Text>
           <img src={arrowRight} />
         </Top>
         <Bottom>
           <img src={arrowDown} />
-          <Text>pinch to zoom</Text>
+          <Text>{Rune.t("pinch to zoom")}</Text>
           <img src={arrowUp} />
         </Bottom>
       </Root>

@@ -130,13 +130,15 @@ export function PanoramaView({
       </BottomContainer>
       {isSpectator && (
         <LabelContainer>
-          <Label>You are spectating&nbsp;👀</Label>
+          <Label>{Rune.t("You are spectating 👀")}</Label>
         </LabelContainer>
       )}
       <SimpleCSSTransition visible={meLastOneLeft} duration={timings.default}>
         <LabelContainer>
           <Label>
-            You're the last one left. It's time to guess the location!&nbsp;📍
+            {Rune.t(
+              "You're the last one left. It's time to guess the location! 📍"
+            )}
           </Label>
         </LabelContainer>
       </SimpleCSSTransition>

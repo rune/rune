@@ -47,13 +47,17 @@ const uiCountdown = uiScreens.COUNTDOWN.getElementsByClassName("countdown")[0]!
 
 /* Playing Screen */
 const uiInfo = document.getElementById("info")!
+const uiPlaceLabel = uiInfo.getElementsByClassName("placeLabel")[0]!
 const uiPlace = uiInfo.getElementsByClassName("place")[0]!
+const uiSpeedLabel = uiInfo.getElementsByClassName("speedLabel")[0]!
 const uiSpeed = uiInfo.getElementsByClassName("speed")[0]!
 
 const uiTrackProgress = uiInfo.getElementsByClassName("trackProgressTrack")[0]!
 const uiSpectating = uiInfo.getElementsByClassName(
   "spectating"
 )[0]! as HTMLElement
+const uiSpectatingPrefix =
+  uiSpectating.getElementsByClassName("spectatingPrefix")[0]!
 const uiSpectatingDisplayName =
   uiSpectating.getElementsByClassName("displayName")[0]!
 const uiSpectatingAvatar = uiSpectating.getElementsByClassName(
@@ -61,9 +65,13 @@ const uiSpectatingAvatar = uiSpectating.getElementsByClassName(
 )[0]! as HTMLImageElement
 
 const uiStats = document.getElementById("stats")!
+const uiYouPlacedLabel = uiStats.getElementsByClassName("youPlacedLabel")[0]!
 const uiStatsPlace = uiStats.getElementsByClassName("place")[0]!
+const uiTopSpeedLabel = uiStats.getElementsByClassName("topSpeedLabel")[0]!
 const uiStatsTopSpeed = uiStats.getElementsByClassName("topSpeed")[0]!
+const uiTimeLabel = uiStats.getElementsByClassName("timeLabel")[0]!
 const uiStatsElapse = uiStats.getElementsByClassName("elapse")[0]!
+const uiBestTimeLabel = uiStats.getElementsByClassName("bestTimeLabel")[0]!
 const uiStatsBestTime = uiStats.getElementsByClassName("bestTime")[0]!
 const uiStatsBestTimeContainer = uiStats.getElementsByClassName(
   "bestTimeContainer"
@@ -100,6 +108,7 @@ Rune.initClient({
 
       initControls()
       initRender()
+      initLabels()
       animate() // start game loop
     }
 
@@ -180,6 +189,18 @@ let playerHtmlObjs: Record<PlayerId, { avatar: HTMLImageElement }> = {}
 let spectatingPlayerId: PlayerId | undefined
 
 // INIT HELPERS
+function initLabels() {
+  // Initialize all UI labels with translated text
+  uiStartBtn.textContent = Rune.t("Start")
+  uiPlaceLabel.textContent = Rune.t("Place")
+  uiSpeedLabel.textContent = Rune.t("Speed")
+  uiSpectatingPrefix.textContent = Rune.t("You are spectating")
+  uiYouPlacedLabel.textContent = Rune.t("You placed")
+  uiTopSpeedLabel.textContent = Rune.t("Top speed")
+  uiTimeLabel.textContent = Rune.t("Time")
+  uiBestTimeLabel.textContent = Rune.t("Your all-time best time")
+}
+
 function initControls() {
   uiStartBtn.addEventListener("click", () => {
     Rune.actions.switchPhase("COUNTDOWN")
@@ -598,14 +619,17 @@ function getPlace(playerId: PlayerId) {
 
 // RENDERERS
 function renderPlace(place: number) {
-  const placeSuffix =
-    place === 1 ? "st" : place === 2 ? "nd" : place === 3 ? "rd" : "th"
-
-  return `${place}<sup>${placeSuffix}</sup>`
+  if (place === 1) return Rune.t("1st")
+  if (place === 2) return Rune.t("2nd")
+  if (place === 3) return Rune.t("3rd")
+  if (place === 4) return Rune.t("4th")
+  if (place === 5) return Rune.t("5th")
+  if (place === 6) return Rune.t("6th")
+  return `${place}th`
 }
 
 function renderSpeed(speed: number) {
-  return `${speed.toFixed(0)} km/h`
+  return Rune.t("{{speed}} km/h", { speed: speed.toFixed(0) })
 }
 
 function renderElapse(elapse?: number) {

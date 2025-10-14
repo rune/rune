@@ -1,0 +1,19 @@
+{
+  "Tap to place your guess": "Toque para colocar seu palpite",
+  "You already guessed!": "Você já adivinhou!",
+  "{{ player }} made a guess": "{{ player }} fez um palpite",
+  "Round {{ round }}/{{ maxRounds }}": "Rodada {{ round }}/{{ maxRounds }}",
+  "You": "Você",
+  "Invite": "Convidar",
+  "tap to guess": "toque para adivinhar",
+  "swipe to turn": "deslize para girar",
+  "pinch to zoom": "belisque para ampliar",
+  "You are spectating 👀": "Você está assistindo 👀",
+  "You're the last one left. It's time to guess the location! 📍": "Você é o último restante. É hora de adivinhar a localização! 📍",
+  "Guess the Location!": "Adivinhe a Localização!",
+  "Scoreboard": "Placar",
+  "Photo by {{ name }}": "Foto de {{ name }}",
+  "Next Round": "Próxima Rodada",
+  "Invite more friends!": "Convide mais amigos!",
+  "No guess": "Sem palpite"
+}

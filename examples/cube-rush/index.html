@@ -10,7 +10,7 @@
   <body>
     <div class="screen pausedScreen" id="pausedScreen">
       <img src="/src/logo.svg" class="logo" />
-      <button class="startBtn" type="button">Start</button>
+      <button class="startBtn" type="button"></button>
     </div>
 
     <div class="screen countdownScreen" id="countdownScreen">
@@ -21,11 +21,11 @@
       <div class="info" id="info">
         <div class="side">
           <div class="infoValue">
-            <p>Place</p>
+            <p class="placeLabel"></p>
             <div class="place">-</div>
           </div>
           <div class="infoValue">
-            <p>Speed</p>
+            <p class="speedLabel"></p>
             <div class="speed">-</div>
           </div>
         </div>
@@ -34,7 +34,8 @@
             <div class="trackProgressTrack"></div>
           </div>
           <div class="spectating">
-            You are spectating <span class="displayName">-</span>
+            <span class="spectatingPrefix"></span>
+            <span class="displayName">-</span>
             <img class="avatar" />
           </div>
         </div>
@@ -43,22 +44,21 @@
       <div class="stats" id="stats" style="visibility: hidden">
         <div class="content">
           <div class="infoValue">
-            <p>You placed</p>
+            <p class="youPlacedLabel"></p>
             <div class="place">-</div>
           </div>
           <div class="infoValue">
-            <p>Top speed</p>
+            <p class="topSpeedLabel"></p>
             <div class="topSpeed">-</div>
           </div>
           <div class="infoValue">
-            <p>Time</p>
+            <p class="timeLabel"></p>
             <div class="elapse">-</div>
           </div>
           <div class="infoValue bestTimeContainer" style="display: none">
-            <p>Your all-time best time</p>
+            <p class="bestTimeLabel"></p>
             <div class="bestTime">-</div>
           </div>
-
         </div>
       </div>
       <div class="controlsPreview">

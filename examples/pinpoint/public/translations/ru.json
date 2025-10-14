@@ -1,0 +1,19 @@
+{
+  "Tap to place your guess": "Нажмите, чтобы разместить вашу догадку",
+  "You already guessed!": "Вы уже сделали догадку!",
+  "{{ player }} made a guess": "{{ player }} сделал(а) догадку",
+  "Round {{ round }}/{{ maxRounds }}": "Раунд {{ round }}/{{ maxRounds }}",
+  "You": "Вы",
+  "Invite": "Пригласить",
+  "tap to guess": "нажмите, чтобы угадать",
+  "swipe to turn": "проведите, чтобы повернуть",
+  "pinch to zoom": "сожмите, чтобы увеличить",
+  "You are spectating 👀": "Вы наблюдаете 👀",
+  "You're the last one left. It's time to guess the location! 📍": "Вы остались последним. Пора угадать местоположение! 📍",
+  "Guess the Location!": "Угадайте Местоположение!",
+  "Scoreboard": "Таблица Результатов",
+  "Photo by {{ name }}": "Фото от {{ name }}",
+  "Next Round": "Следующий Раунд",
+  "Invite more friends!": "Пригласите больше друзей!",
+  "No guess": "Нет догадки"
+}

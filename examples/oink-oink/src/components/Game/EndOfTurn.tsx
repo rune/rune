@@ -28,16 +28,20 @@ export const EndOfTurn = memo(() => {
       {isActor && hasGuess ? (
         <>
           <Confetti autoplay keepLastFrame src={confettiAnimation} />
-          <Heading>Great job!</Heading>
+          <Heading>{Rune.t("Great job!")}</Heading>
           <div style={{ height: rel(58) }} />
-          <Score>+{actorPlayer.latestTurnScore.acting}pt</Score>
-          <Label>Points</Label>
+          <Score>
+            {Rune.t("+{{ points }}pt", {
+              points: actorPlayer.latestTurnScore.acting.toLocaleString(),
+            })}
+          </Score>
+          <Label>{Rune.t("Points")}</Label>
         </>
       ) : isActor && !hasGuess ? (
-        <Label>Better luck next time!</Label>
+        <Label>{Rune.t("Better luck next time!")}</Label>
       ) : !isActor && hasGuess ? (
         <>
-          <Label>The answer was...</Label>
+          <Label>{Rune.t("The answer was...")}</Label>
           <GuessContainer>
             <EmotionImg src={art.emotions[currentTurn.emotion]} />
             <Plus>+</Plus>
@@ -45,19 +49,23 @@ export const EndOfTurn = memo(() => {
           </GuessContainer>
           <Label>{actorPlayer.info.displayName}</Label>
           <AvatarImg src={actorPlayer.info.avatarUrl} />
-          <Score>+{actorPlayer.latestTurnScore.acting}pt</Score>
-          <Label>Points</Label>
-          <Label>For acting</Label>
+          <Score>
+            {Rune.t("+{{ points }}pt", {
+              points: actorPlayer.latestTurnScore.acting.toLocaleString(),
+            })}
+          </Score>
+          <Label>{Rune.t("Points")}</Label>
+          <Label>{Rune.t("For acting")}</Label>
         </>
       ) : (
         <>
-          <Label>The answer was...</Label>
+          <Label>{Rune.t("The answer was...")}</Label>
           <GuessContainer>
             <EmotionImg src={art.emotions[currentTurn.emotion]} />
             <Plus>+</Plus>
             <AnimalImg src={art.animals[currentTurn.animal]} />
           </GuessContainer>
-          <Label>Better luck next time!</Label>
+          <Label>{Rune.t("Better luck next time!")}</Label>
         </>
       )}
     </Root>
@@ -75,7 +83,10 @@ const Root = styled.div`
 `
 
 const Heading = styled.div`
-  font-size: ${rel(64)};
+  font-size: ${rel(48)};
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
 `
 
@@ -97,6 +108,9 @@ const Score = styled.div`
 const Label = styled.div`
   font-size: ${rel(28)};
   text-shadow: 0 ${rel(3)} 0 rgba(0, 0, 0, 0.35);
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 `
 
 const AvatarImg = styled.img`

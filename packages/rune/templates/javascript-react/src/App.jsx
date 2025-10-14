@@ -9,13 +9,15 @@ function App() {
   const [yourPlayerId, setYourPlayerId] = useState()
 
   useEffect(() => {
-    Rune.initClient({
-      onChange: ({ game, action, yourPlayerId }) => {
-        setGame(game)
-        setYourPlayerId(yourPlayerId)
+    import("./logic").then(() => {
+      Rune.initClient({
+        onChange: ({ game, action, yourPlayerId }) => {
+          setGame(game)
+          setYourPlayerId(yourPlayerId)
 
-        if (action && action.name === "claimCell") selectSound.play()
-      },
+          if (action && action.name === "claimCell") selectSound.play()
+        },
+      })
     })
   }, [])
 
@@ -44,6 +46,9 @@ function App() {
                 (winCombo && !winCombo.includes(cellIndex)) ||
                   (!freeCells && !winCombo)
               )}
+              {...(cellIndex === 4 && !lastMovePlayerId
+                ? { "data-text": Rune.t("tap to play") }
+                : {})}
               {...(cells[cellIndex] ||
               lastMovePlayerId === yourPlayerId ||
               winCombo
@@ -71,7 +76,7 @@ function App() {
                 {player.playerId === yourPlayerId && (
                   <span>
                     <br />
-                    (You)
+                    {Rune.t("(You)")}
                   </span>
                 )}
               </span>

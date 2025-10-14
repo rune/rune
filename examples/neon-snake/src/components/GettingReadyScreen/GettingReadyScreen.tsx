@@ -2,12 +2,20 @@ import { styled } from "styled-components"
 import { rel } from "../../lib/rel.ts"
 import logo from "./logo.png"
 import { Instructions } from "../Instructions/Intructions.tsx"
+import { useAtomValue } from "jotai"
+import { $ready } from "../../state/state.ts"
 
 export function GettingReadyScreen() {
+  const ready = useAtomValue($ready)
+
   return (
     <Root>
       <Logo src={logo} />
-      <StartButton onClick={() => Rune.actions.setReady()}>Start</StartButton>
+      {ready && (
+        <StartButton onClick={() => Rune.actions.setReady()}>
+          {Rune.t("Start")}
+        </StartButton>
+      )}
       <Instructions />
     </Root>
   )

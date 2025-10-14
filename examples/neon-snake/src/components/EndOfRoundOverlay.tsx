@@ -14,8 +14,6 @@ import {
   defaultTransitionMs,
 } from "./BoardScreen/drawConfig.ts"
 
-const winnerString = "Winner"
-
 export function EndOfRoundOverlay() {
   const lastRoundWinnerId = useAtomValue($lastRoundWinnerId)
   const players = useAtomValue($players)
@@ -29,6 +27,7 @@ export function EndOfRoundOverlay() {
   }, [])
 
   const winner = lastRoundWinnerId ? players[lastRoundWinnerId] : null
+  const translatedWinnerString = Rune.t("Winner")
 
   if (!winner || !winnerColor) return null
 
@@ -38,17 +37,19 @@ export function EndOfRoundOverlay() {
         <User>
           <Avatar src={winner.avatarUrl} $playerColor={winnerColor} />
           <Name $playerColor={winnerColor}>
-            {winner.playerId === yourPlayerId ? "You" : winner.displayName}
+            {winner.playerId === yourPlayerId
+              ? Rune.t("You")
+              : winner.displayName}
           </Name>
         </User>
         <Winner>
-          {winnerString.split("").map((letter, index) => (
+          {translatedWinnerString.split("").map((letter, index) => (
             <span key={index} style={{ color: colors[index % colors.length] }}>
               {letter}
             </span>
           ))}
         </Winner>
-        <Points>1 Point</Points>
+        <Points>{Rune.t("1 Point")}</Points>
       </Box>
     </Root>
   )
@@ -103,7 +104,7 @@ const Name = styled.div<{ $playerColor: string }>`
 `
 
 const Winner = styled.div`
-  font-size: ${rel(56)};
+  font-size: ${rel(48)};
   letter-spacing: ${rel(-2)};
   text-transform: uppercase;
 `

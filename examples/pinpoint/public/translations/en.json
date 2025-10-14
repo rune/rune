@@ -1,0 +1,19 @@
+{
+  "Tap to place your guess": "Tap to place your guess",
+  "You already guessed!": "You already guessed!",
+  "{{ player }} made a guess": "{{ player }} made a guess",
+  "Round {{ round }}/{{ maxRounds }}": "Round {{ round }}/{{ maxRounds }}",
+  "You": "You",
+  "Invite": "Invite",
+  "tap to guess": "tap to guess",
+  "swipe to turn": "swipe to turn",
+  "pinch to zoom": "pinch to zoom",
+  "You are spectating 👀": "You are spectating 👀",
+  "You're the last one left. It's time to guess the location! 📍": "You're the last one left. It's time to guess the location! 📍",
+  "Guess the Location!": "Guess the Location!",
+  "Scoreboard": "Scoreboard",
+  "Photo by {{ name }}": "Photo by {{ name }}",
+  "Next Round": "Next Round",
+  "Invite more friends!": "Invite more friends!",
+  "No guess": "No guess"
+}

@@ -344,4 +344,4 @@ You can also reference string values provided in the second argument in the stri
 Rune.t("Your Score is {{ score }}", { score: numericScore.toLocaleString() })
 ```
 
-All the values in the optional second object must be converted to strings already. See [Translating In-Game Text](../how-it-works/translating-game-text.md).
+All the values in the optional second object must be converted to strings already. See [Translating In-Game Text](how-it-works/translating-game-text.md).

@@ -1669,10 +1669,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-sdk@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-5.0.0.tgz#e583ced0e7d2b7f2a4e463b2091db88b8375af6a"
-  integrity sha512-FuB0vXu+mEm/6mjpbjJrVQTRlVa4o9+97zdYkqLBDXg8oWYy85me9FwV89RbbF9mcf3lXSLfClcFNFMnHJJSRw==
+rune-sdk@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-5.0.1.tgz#630125292a6869ef81376b956f4b155d30f19813"
+  integrity sha512-I0GOnJR3fe4qC1MgHj4DqG3/B7NA1puDElKOhjgl9TfW52kCc+HdwU2LfuwyhUcG2i3BBX0LWk0zPqBNLL0dhg==
   dependencies:
     "@apollo/client" "^3.11.10"
     "@eslint/eslintrc" "^3.1.0"

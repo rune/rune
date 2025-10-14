@@ -13190,6 +13190,23 @@ rune-sdk@^5.0.1:
     terser "^5.22.0"
     tree-model "^1.0.7"
 
+rune-sdk@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-5.0.1.tgz#630125292a6869ef81376b956f4b155d30f19813"
+  integrity sha512-I0GOnJR3fe4qC1MgHj4DqG3/B7NA1puDElKOhjgl9TfW52kCc+HdwU2LfuwyhUcG2i3BBX0LWk0zPqBNLL0dhg==
+  dependencies:
+    "@apollo/client" "^3.11.10"
+    "@eslint/eslintrc" "^3.1.0"
+    "@eslint/js" "^9.7.0"
+    es-module-lexer "^1.4.2"
+    globals "^15.8.0"
+    graphql "15.8.0"
+    i18next "^25.5.3"
+    i18next-http-backend "^3.0.2"
+    okie "^1.0.1"
+    terser "^5.22.0"
+    tree-model "^1.0.7"
+
 rxjs@^6.3.3, rxjs@^6.6.0:
   version "6.6.7"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"

@@ -33,6 +33,9 @@
           (game.winCombo && !game.winCombo.includes(index)) ||
             (!game.freeCells && !game.winCombo)
         )}
+        {...index === 4 && !game.lastMovePlayerId
+          ? { "data-text": Rune.t("tap to play") }
+          : {}}
         {...game.cells[index] ||
         game.lastMovePlayerId === mPlayerId ||
         game.winCombo
@@ -59,7 +62,7 @@
           {#if player.playerId === mPlayerId}
             <span>
               <br />
-              (You)
+              {Rune.t("(You)")}
             </span>
           {/if}
         </span>
@@ -175,7 +178,7 @@
 
   #board.initial button:nth-child(5)::before {
     opacity: 1;
-    content: "tap to play";
+    content: attr(data-text);
     display: flex;
     align-items: center;
     justify-content: center;

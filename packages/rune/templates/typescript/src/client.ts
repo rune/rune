@@ -33,7 +33,7 @@ function initUI(
     li.innerHTML = `<img src="${player.avatarUrl}" />
            <span>${
              player.displayName +
-             (player.playerId === yourPlayerId ? "<br>(You)" : "")
+             (player.playerId === yourPlayerId ? `<br>${Rune.t("(You)")}` : "")
            }</span>`
     playersSection.appendChild(li)
 
@@ -48,6 +48,11 @@ Rune.initClient({
     if (!cellButtons) initUI(cells, playerIds, yourPlayerId)
 
     if (lastMovePlayerId) board.classList.remove("initial")
+
+    // Set localized "tap to play" text
+    if (!lastMovePlayerId && cellButtons) {
+      cellButtons[4].setAttribute("data-text", Rune.t("tap to play"))
+    }
 
     cellButtons.forEach((button, i) => {
       const cellValue = cells[i]

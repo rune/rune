@@ -61,7 +61,7 @@ Currently most Rune user read one of these 4 languages:
 - Russian
 - Spanish
 
-So the extract-translation command will create one json file where the keys are the strings passed to `Rune.t()` and the values are empty strings. You can fill in these translations manually, using some translation software or service, or passing the json files to an LLM for it to create the translations. Once these translations are filled in, running `npx rune@latest extract-translations` again will not overwrite them, only add new string keys that are not already in the json files or remove any keys that are no longer referenced in your game.
+So the extract-translations command will create one json file where the keys are the strings passed to `Rune.t()` and the values are empty strings. You can fill in these translations manually, using some translation software or service, or passing the json files to an LLM for it to create the translations. Once these translations are filled in, running `npx rune@latest extract-translations` again will not overwrite them, only add new string keys that are not already in the json files or remove any keys that are no longer referenced in your game.
 
 For example, the extraction command might generate a file like this named `es.json` for Spanish translations:
 

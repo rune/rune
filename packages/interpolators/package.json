@@ -28,6 +28,6 @@
     "typescript": "5.2.2"
   },
   "peerDependencies": {
-    "rune-sdk": "^5.0.0"
+    "rune-sdk": "^5.0.1"
   }
 }

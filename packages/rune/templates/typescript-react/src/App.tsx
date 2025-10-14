@@ -46,6 +46,9 @@ function App() {
                 (winCombo && !winCombo.includes(cellIndex)) ||
                   (!freeCells && !winCombo)
               )}
+              {...(cellIndex === 4 && !lastMovePlayerId
+                ? { "data-text": Rune.t("tap to play") }
+                : {})}
               {...(cells[cellIndex] ||
               lastMovePlayerId === yourPlayerId ||
               winCombo
@@ -73,7 +76,7 @@ function App() {
                 {player.playerId === yourPlayerId && (
                   <span>
                     <br />
-                    (You)
+                    {Rune.t("(You)")}
                   </span>
                 )}
               </span>

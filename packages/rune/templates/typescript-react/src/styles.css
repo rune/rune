@@ -122,7 +122,7 @@ button:not([data-disabled]) {
 
 #board.initial button:nth-child(5)::before {
   opacity: 1;
-  content: "tap to play";
+  content: attr(data-text);
   display: flex;
   align-items: center;
   justify-content: center;

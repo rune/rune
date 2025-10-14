@@ -63,7 +63,7 @@ function App() {
                 {player.playerId === yourPlayerId && (
                   <span>
                     <br />
-                    (You)
+                    {Rune.t("(You)")}
                   </span>
                 )}
               </span>

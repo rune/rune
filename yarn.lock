@@ -10940,24 +10940,6 @@ media-typer@^1.1.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-1.1.0.tgz#6ab74b8f2d3320f2064b2a87a38e7931ff3a5561"
   integrity sha512-aisnrDP4GNe06UcKFnV5bfMNPBUw4jsLGaWwWfnH3v02GnBuXX2MCVn5RbrWo0j3pczUilYblq7fQ7Nw2t5XKw==
 
-meow@10.1.2:
-  version "10.1.2"
-  resolved "https://registry.yarnpkg.com/meow/-/meow-10.1.2.tgz#62951cb69afa69594142c8250806bc30a3912e4d"
-  integrity sha512-zbuAlN+V/sXlbGchNS9WTWjUzeamwMt/BApKCJi7B0QyZstZaMx0n4Unll/fg0njGtMdC9UP5SAscvOCLYdM+Q==
-  dependencies:
-    "@types/minimist" "^1.2.2"
-    camelcase-keys "^7.0.0"
-    decamelize "^5.0.0"
-    decamelize-keys "^1.1.0"
-    hard-rejection "^2.1.0"
-    minimist-options "4.1.0"
-    normalize-package-data "^3.0.2"
-    read-pkg-up "^8.0.0"
-    redent "^4.0.0"
-    trim-newlines "^4.0.2"
-    type-fest "^1.2.2"
-    yargs-parser "^20.2.9"
-
 meow@10.1.4:
   version "10.1.4"
   resolved "https://registry.yarnpkg.com/meow/-/meow-10.1.4.tgz#aa95b9039d3a46c460066fdec6c20fc3a94ee0ad"
@@ -13191,21 +13173,6 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rune-sdk@^4.25.5:
-  version "4.25.5"
-  resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-4.25.5.tgz#d24fba56b8bd8731b4f101999414235ff00ea56a"
-  integrity sha512-NORFsLRZszXEeBhzW3/i+/iTelF7mGxrJyvqdgyWaol5lzdxbvlXvb+554FHHnQRtiIm7ja3pPHYMn39IaxtXA==
-  dependencies:
-    "@apollo/client" "^3.11.10"
-    "@eslint/eslintrc" "^3.1.0"
-    "@eslint/js" "^9.7.0"
-    es-module-lexer "^1.4.2"
-    globals "^15.8.0"
-    graphql "15.8.0"
-    okie "^1.0.1"
-    terser "^5.22.0"
-    tree-model "^1.0.7"
-
 rune-sdk@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/rune-sdk/-/rune-sdk-5.0.0.tgz#e583ced0e7d2b7f2a4e463b2091db88b8375af6a"
@@ -13222,38 +13189,6 @@ rune-sdk@^5.0.0:
     okie "^1.0.1"
     terser "^5.22.0"
     tree-model "^1.0.7"
-
-rune@7.10.0:
-  version "7.10.0"
-  resolved "https://registry.yarnpkg.com/rune/-/rune-7.10.0.tgz#cb7caa62656a988fb4fd53c5e9c956d0c7affdeb"
-  integrity sha512-+AvMjaY9qVYmESnOicN2KHuxT1UGgIQQE0DxoxCIdl9Jcora++cq/9Az45st0+K6ckwuWlWN6xY9DjksJDIrnw==
-  dependencies:
-    "@apollo/client" "3.6.9"
-    "@jest/globals" "29.3.1"
-    adm-zip "0.5.9"
-    apollo-upload-client "17.0.0"
-    bson "4.6.5"
-    core-js "3.25.0"
-    cross-fetch "3.1.5"
-    date-fns "2.29.1"
-    eslint "^9.7.0"
-    eslint-plugin-rune "^2.1.0"
-    figures "4.0.1"
-    form-data "4.0.0"
-    glob "8.0.3"
-    graphql "15.8.0"
-    ink "3.2.0"
-    ink-spinner "4.0.3"
-    ink-text-input "4.0.3"
-    jscodeshift "0.16.0"
-    lodash "4.17.21"
-    meow "10.1.2"
-    mime-types "2.1.35"
-    node-html-parser "5.2.0"
-    open "10.1.0"
-    react "17.0.2"
-    rune-sdk "^4.25.5"
-    semver "7.3.7"
 
 rxjs@^6.3.3, rxjs@^6.6.0:
   version "6.6.7"

@@ -336,7 +336,7 @@ Returns an instance of interpolator. See [Reducing Stutter](advanced/reducing-st
 
 ### `Rune.t(stringToTranslate, optionalValuesToInterpolate)` {#runet}
 
-Provides a translated string into the player's language at runtime if the language translation is available. When not available, the `stringToTranslate`is rendered as-is.
+Provides a translated string into the player's language at runtime if the language translation is available. When not available, the `stringToTranslate` is rendered as-is.
 
 You can also reference string values provided in the second argument in the string using double brackets `{{ }}` and they will be inserted into the translation string without modification. For example:
 

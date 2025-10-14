@@ -30,7 +30,7 @@ Follow the instructions on the terminal to run the game in mock Rune app. The in
 
 ### `rune extract-translations` {#rune-extract-translations}
 
-Finds any Rune.t() calls that have not already been added to your translation json files and adds them as keys with empty strings as values so their translations can be added. This command currently generates translation files for for languages:
+Finds any Rune.t() calls that have not already been added to your translation json files and adds them as keys with empty strings as values so their translations can be added. This command currently generates translation files for 4 languages:
 
 - English (`en.json`)
 - Portuguese (`pt.json`)

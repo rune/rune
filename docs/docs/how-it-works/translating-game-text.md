@@ -50,7 +50,7 @@ Once you have added `Rune.t()` calls to your game, you can run the Rune cli extr
 npx rune@latest extract-translations
 ```
 
-This will fine any `Rune.t()` calls in your source code and generate json files with all the keys in a `public/translations` folder, such as `en.json` for English, `es.json` for Spanish and so on. These files will need to be bundled with your game so the Rune client can fetch the correct language file at runtime. It expects these files to exist in a `/translations/` directory relative to the index.html file that renders the game. If you would like to generate the files in a different location in your repo because your packaging method does not use a `/public` folder, you can specify the path to write the translations as an argument to the above command.
+This will find any `Rune.t()` calls in your source code and generate json files with all the keys in a `public/translations` folder, such as `en.json` for English, `es.json` for Spanish and so on. These files will need to be bundled with your game so the Rune client can fetch the correct language file at runtime. It expects these files to exist in a `/translations/` directory relative to the index.html file that renders the game. If you would like to generate the files in a different location in your repo because your packaging method does not use a `/public` folder, you can specify the path to write the translations as an argument to the above command.
 
 ## Filling in the translations.
 

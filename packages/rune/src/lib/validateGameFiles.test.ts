@@ -271,6 +271,33 @@ describe("validateGameFiles", () => {
             { path: "media/background.png", size: 1 * 1e6 },
             validLogicFile,
             {
+              path: "src/index.html",
+              size: 1 * 1e6,
+              content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script id="rune-translation-data" type="application/json">{}</script>
+                </head>
+                <body>
+                  <script src="https://cdn.jsdelivr.net/npm/${packageName}@4/dist/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
+                </body>
+              </html>`,
+            },
+          ])
+        ).resolves.toEqual({
+          valid: true,
+          errors: [],
+          sdk: name,
+        })
+
+        await expect(
+          validateGameFiles([
+            { path: "media/background.png", size: 1 * 1e6 },
+            validLogicFile,
+            {
               path: "src/nestedFolder/index.html",
               size: 1 * 1e6,
               content: `

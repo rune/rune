@@ -189,7 +189,11 @@ export async function validateGameFiles(
           indexHtml,
         })
 
-        if (scripts.indexOf(sdkScript) !== 0) {
+        const indexOfFirstScript = scripts.findIndex(
+          (script) => script.getAttribute("type") !== "application/json"
+        )
+
+        if (scripts.indexOf(sdkScript) !== indexOfFirstScript) {
           errors.push({
             message: `${sdkName} SDK must be the first script in index.html`,
           })

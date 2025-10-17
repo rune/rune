@@ -23,7 +23,17 @@ export default [
     plugins: {
       "react-hooks": pluginReactHooks,
     },
-    rules: pluginReactHooks.configs.recommended.rules,
+    rules: {
+      ...pluginReactHooks.configs.recommended.rules,
+      "@typescript-eslint/no-unused-expressions": [
+        "error",
+        {
+          allowShortCircuit: true,
+          allowTernary: true,
+          allowTaggedTemplates: true,
+        },
+      ],
+    },
   },
   {
     rules: {

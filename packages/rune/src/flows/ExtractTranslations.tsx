@@ -138,7 +138,7 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           existingTranslations = {}
           setWarnings((prev) => [
             ...prev,
-            `Could not parse translation JSON from <script id="${TRANSLATION_JSON_SCRIPT_ID}"> in ${indexHtmlPath}: ${error instanceof Error ? error.message : String(error)}. Falling back to empty translations.`
+            `Could not parse translation JSON from <script id="${TRANSLATION_JSON_SCRIPT_ID}"> in ${indexHtmlPath}: ${error instanceof Error ? error.message : String(error)}. Falling back to empty translations.`,
           ])
         }
       }

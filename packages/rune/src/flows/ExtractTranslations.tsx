@@ -104,12 +104,26 @@ export function ExtractTranslations({ args }: { args: string[] }) {
         let [head] = parsedIndexHtml.getElementsByTagName("head")
         if (!head) {
           head = new HTMLElement("head", {}, "", parsedIndexHtml)
-          // parsedIndexHtml.appendChild(head)
+          const [html] = parsedIndexHtml.getElementsByTagName("html")
+          if (html) {
+            html.prepend(head)
+            setWarnings((prev) => [
+              ...prev,
+              `No <head> tag found in ${indexHtmlPath}. Adding one.`,
+            ])
+          } else {
+            setError(
+              new Error(
+                `No <html> tag found in ${indexHtmlPath}. Cannot insert translation script tag.`
+              )
+            )
+            return false
+          }
         }
         scriptTag = new HTMLElement(
           "script",
           {},
-          `id="${TRANSLATION_JSON_SCRIPT_ID}" type="application/json" data-rune-allow-before-sdk="1"`,
+          `id="${TRANSLATION_JSON_SCRIPT_ID}" type="application/json"`,
           head
         )
         scriptTag.innerHTML = "{}"

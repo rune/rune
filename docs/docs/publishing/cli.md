@@ -62,7 +62,7 @@ This command writes the translations into a script tag in your `index.html` that
 </script>
 ```
 
-You can replace the empty strings with the translated values. Do not change the type or `id` attributes of this script will prevent Rune from loading your translated strings. See [Translating In-Game Text](../how-it-works/translating-game-text.md) for more information about adding translated text to your game.
+You can replace the empty strings with the translated values. Do not change the type or `id` attributes, as this will prevent Rune from loading your translated strings. See [Translating In-Game Text](../how-it-works/translating-game-text.md) for more information about adding translated text to your game.
 
 ### `rune upload` {#rune-upload}
 

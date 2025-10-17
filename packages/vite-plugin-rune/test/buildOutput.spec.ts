@@ -51,4 +51,24 @@ describe("build output", () => {
     expect(clientChunk).toBeTruthy()
     expect(clientChunk?.code).toContain("client-only-string")
   })
+
+  it("project with json script tags", async () => {
+    const output = await buildFixture("json-scripts")
+    const html = output.find(
+      (chunk): chunk is OutputAsset => chunk.type === "asset"
+    )
+    expect(html).toBeTruthy()
+    expect(html!.fileName).toBe("index.html")
+
+    const lastScriptIndex = html!.source
+      .toString()
+      .lastIndexOf('<script type="application/json"')
+
+    const sdkIndex = html!.source.toString().indexOf("multiplayer.js")
+    const firstChunk = html!.source.toString().indexOf('<script type="module"')
+
+    expect(lastScriptIndex).toBeGreaterThan(0)
+    expect(lastScriptIndex).toBeLessThan(sdkIndex)
+    expect(sdkIndex).toBeLessThan(firstChunk)
+  })
 })

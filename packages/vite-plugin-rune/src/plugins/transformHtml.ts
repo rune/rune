@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs"
 import type { Plugin } from "vite"
+import { extractJsonTags } from "../lib/extractJsonTags.js"
 
 export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
   const runeVersion = JSON.parse(readFileSync(runePkgPath, "utf-8")).version
@@ -10,14 +11,18 @@ export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
       apply: "build",
       enforce: "post",
       transformIndexHtml(html) {
+        // Detect and extract application/json script tags from the head
+        const { modifiedHtml, jsonScripts: scripts } = extractJsonTags(html)
+
         return {
           //Remove the inlined logic file in case of build.
           //Vite puts the chunks as link preload tags in html, and we want them to be simple script tags.
           //Also remove client, so that logic & client scripts are next to each other
-          html: html
+          html: modifiedHtml
             .replace(/<link.* href="(\.)*\/logic\.js">/, "")
             .replace(/<script.* src="(\.)*\/client\.js"><\/script>/, ""),
           tags: [
+            ...scripts,
             {
               tag: "script",
               attrs: {

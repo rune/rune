@@ -20,6 +20,7 @@ describe("JSON script tags in dev mode", () => {
       .indexOf('<script src="/@rune-sdk">')
     const firstChunk = html!.source.toString().indexOf('<script type="module"')
 
+    expect(lastScriptIndex).toBeGreaterThan(0)
     expect(lastScriptIndex).toBeLessThan(sdkIndex)
     expect(sdkIndex).toBeLessThan(firstChunk)
   })

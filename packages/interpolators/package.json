@@ -1,7 +1,7 @@
 {
   "name": "rune-interpolators",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Directory containing Rune interpolators",
   "license": "MIT",
   "author": "Rune AI Inc.",

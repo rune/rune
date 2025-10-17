@@ -132,7 +132,15 @@ export function ExtractTranslations({ args }: { args: string[] }) {
 
       const translationJson = scriptTag?.text
       if (translationJson) {
-        existingTranslations = JSON.parse(translationJson)
+        try {
+          existingTranslations = JSON.parse(translationJson)
+        } catch (error) {
+          existingTranslations = {}
+          setWarnings((prev) => [
+            ...prev,
+            `Could not parse translation JSON from <script id="${TRANSLATION_JSON_SCRIPT_ID}"> in ${indexHtmlPath}: ${error instanceof Error ? error.message : String(error)}. Falling back to empty translations.`
+          ])
+        }
       }
 
       // Get the extracted translations

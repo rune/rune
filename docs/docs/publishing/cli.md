@@ -28,6 +28,42 @@ rune create my-game
 
 Follow the instructions on the terminal to run the game in mock Rune app. The interface is identical to the one described in [Simulating Multiplayer](../playtesting/simulating-multiplayer.md).
 
+### `rune extract-translations` {#rune-extract-translations}
+
+Finds any Rune.t() calls that have not already been added to the json script tag in the `<head>` of your index.html and adds them as keys for each language with empty strings as values so their translations can be added. This command currently generates translation files for 4 languages:
+
+- English ("en")
+- Portuguese ("pt")
+- Russian ("ru")
+- Spanish ("es")
+
+This command writes the translations into a script tag in your `index.html` that will look something like this:
+
+```html
+<script id="rune-translation-data" type="application/json">
+  {
+    "en": {
+      "(You)": "",
+      "tap to play": ""
+    },
+    "es": {
+      "(You)": "",
+      "tap to play": ""
+    },
+    "pt": {
+      "(You)": "",
+      "tap to play": ""
+    },
+    "ru": {
+      "(You)": "",
+      "tap to play": ""
+    }
+  }
+</script>
+```
+
+You can replace the empty strings with the translated values. Do not change the type or `id` attributes, as this will prevent Rune from loading your translated strings. See [Translating In-Game Text](../how-it-works/translating-game-text.md) for more information about adding translated text to your game.
+
 ### `rune upload` {#rune-upload}
 
 Uploads your game to Rune for publishing, see [Publishing Your Game](publishing-your-game.md) for more info.

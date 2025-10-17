@@ -4,7 +4,7 @@ import globSync from "glob"
 import { Box, Text } from "ink"
 import { createRequire } from "module"
 import { parse, HTMLElement } from "node-html-parser"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { promisify } from "util"
 
 import { Step } from "../components/Step.js"
@@ -23,14 +23,13 @@ enum Steps {
 const lngs = ["en", "es", "pt", "ru"]
 const TRANSLATION_JSON_SCRIPT_ID = "rune-translation-data"
 
-export function ExtractTranslations({ args }: { args: string[] }) {
+export function ExtractTranslations() {
   const [step, setStep] = useState(Steps.Ready)
   const [error, setError] = useState<Error | null>(null)
   const [warnings, setWarnings] = useState<string[]>([])
-  const targetDir = useMemo(() => args[0] || "public/translations", [args])
 
   useEffect(() => {
-    if (step !== Steps.Ready || !targetDir) return
+    if (step !== Steps.Ready) return
     setStep(Steps.Extracting)
     setError(null)
 
@@ -191,21 +190,18 @@ export function ExtractTranslations({ args }: { args: string[] }) {
     }
 
     runExtractor()
-      .then(async (filesExtracted) => {
-        setStep(filesExtracted ? Steps.Done : Steps.NoFilesExtracted)
+      .then(async (translationsUpdated) => {
+        setStep(translationsUpdated ? Steps.Done : Steps.NoFilesExtracted)
       })
       .catch((error) => {
         setStep(Steps.Failed)
         setError(error)
       })
-  }, [step, targetDir])
+  }, [step])
 
   return (
     <Box flexDirection="column">
-      <Step
-        status="success"
-        label={`Extracting translations to ${targetDir}`}
-      />
+      <Step status="success" label="Extracting translations" />
       {warnings.map((warning) => (
         <Step
           key={warning}

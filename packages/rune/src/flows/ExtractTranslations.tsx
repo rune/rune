@@ -125,8 +125,15 @@ export function ExtractTranslations() {
           `id="${TRANSLATION_JSON_SCRIPT_ID}" type="application/json"`,
           head
         )
-        scriptTag.innerHTML = "{}"
-        head.appendChild(scriptTag)
+        scriptTag.textContent = "{}"
+        // Insert before the first script tag, otherwise append to head
+        const [firstScriptTag] = head.getElementsByTagName("script")
+
+        if (firstScriptTag) {
+          firstScriptTag.insertAdjacentHTML("beforebegin", scriptTag.toString())
+        } else {
+          head.append(scriptTag)
+        }
       }
 
       const translationJson = scriptTag?.text

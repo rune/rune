@@ -164,7 +164,7 @@ The interpolated values can be set dynamically, but should always be strings.
 ### Adding Translations
 
 In order to add translations for your game after you have added `Rune.t()` calls you can run `npx rune@latest extract-translations` from the root of your project.
-By default this will insert a `<script>` tag with type `application/json` into your `index.html` file containing the extracted strings in a json object. This json will have a section for each language currently supported by Rune, identified by the language code ("en", "es", "pt" and "ru"). Each translation string is duplicated as the a key in each of these language sections, with the value as an empty string. You should replace the empty strings with the correct translations for the expected language.
+By default this will insert a `<script>` tag with type `application/json` into your `index.html` file containing the extracted strings in a json object. This json will have a section for each language currently supported by Rune, identified by the language code ("en", "es", "pt" and "ru"). Each translation string is duplicated as the key in each of these language sections, with the value as an empty string. You should replace the empty strings with the correct translations for the expected language.
 
 ## Events
 

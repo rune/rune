@@ -126,7 +126,7 @@ export function ExtractTranslations() {
           head
         )
         scriptTag.innerHTML = "{}"
-        head.appendChild(scriptTag)
+        head.prepend(scriptTag)
       }
 
       const translationJson = scriptTag?.text

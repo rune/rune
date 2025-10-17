@@ -1,36 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
+    <script id="rune-translation-data" type="application/json">
+      {
+        "en": {
+          "You": "You",
+          "Hold to move": "Hold to move"
+        },
+        "es": {
+          "You": "Tú",
+          "Hold to move": "Mantén presionado para mover"
+        },
+        "pt": {
+          "You": "Você",
+          "Hold to move": "Segure para mover"
+        },
+        "ru": {
+          "You": "Вы",
+          "Hold to move": "Удерживайте для движения"
+        }
+      }
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @font-face {
+        font-family: Poppins;
+        src: url(@/fonts/Poppins-Regular.ttf);
+      }
+    </style>
+    <style>
+      @font-face {
+        font-family: Poppins Bold;
+        src: url(@/fonts/Poppins-ExtraBold.ttf);
+      }
+    </style>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    @font-face {
-      font-family: Poppins;
-      src: url(@/fonts/Poppins-Regular.ttf);
-    }
-  </style>
-  <style>
-    @font-face {
-      font-family: Poppins Bold;
-      src: url(@/fonts/Poppins-ExtraBold.ttf);
-    }
-  </style>
+    <style>
+      body {
+        margin: 0 auto;
+        padding: 0;
+        overflow: hidden;
+        touch-action: none;
+      }
+    </style>
 
-  <style>
-    body {
-      margin: 0 auto;
-      padding: 0;
-      overflow: hidden;
-      touch-action: none;
-    }
-  </style>
-
-  <link rel="preload" href="fonts/Poppins-Regular.ttf" as="font" crossorigin="anonymous" />
-  <link rel="preload" href="fonts/Poppins-ExtraBold.ttf" as="font" crossorigin="anonymous" />
-</head>
-<body>
-<script type="module" src="/src/logic.ts"></script>
-<script type="module" src="/src/client.tsx"></script>
-</body>
+    <link
+      rel="preload"
+      href="fonts/Poppins-Regular.ttf"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="fonts/Poppins-ExtraBold.ttf"
+      as="font"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <script type="module" src="/src/logic.ts"></script>
+    <script type="module" src="/src/client.tsx"></script>
+  </body>
 </html>

@@ -130,7 +130,7 @@ export function ExtractTranslations() {
         const [firstScriptTag] = head.getElementsByTagName("script")
 
         if (firstScriptTag) {
-          firstScriptTag.insertAdjacentHTML("beforebegin", scriptTag.toString())
+          firstScriptTag.before(scriptTag)
         } else {
           head.append(scriptTag)
         }

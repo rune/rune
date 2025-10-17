@@ -77,7 +77,7 @@ This will find any `Rune.t()` calls in your source code and insert or update a s
 
 In order for the translations to be loaded, this script tag must appear in the index.html above where the Rune SDK is loaded.
 
-## Filling in the translations.
+## Filling in the translations
 
 Currently most Rune users read one of these 4 languages:
 

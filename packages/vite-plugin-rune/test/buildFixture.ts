@@ -5,6 +5,8 @@ import path from "node:path"
 import rune, { ViteRunePluginOptions } from "../src/index.js"
 import type { RollupOutput } from "rollup"
 import { fileURLToPath } from "url"
+import { getDevPlugins } from "../src/plugins/devPlugins.js"
+import { createRequire } from "node:module"
 
 export const fixturesPath = fileURLToPath(
   new URL("./fixtures", import.meta.url)
@@ -44,6 +46,26 @@ export const buildFixture = async (
         logicPath: path.resolve(fixturesPath, fixtureName, "logic.ts"),
         ...(options || {}),
       }),
+    ],
+  })) as RollupOutput
+  return output
+}
+
+const require = createRequire(import.meta.url)
+
+export const buildDevFixture = async (fixtureName: string, logger?: Logger) => {
+  const runePkgPath = require.resolve("rune-sdk/package.json")
+  const { output } = (await build({
+    root: path.resolve(fixturesPath, fixtureName),
+    build: {
+      write: false,
+    },
+    customLogger: logger || createLogger(),
+    plugins: [
+      ...getDevPlugins(runePkgPath).map((plugin) => ({
+        ...plugin,
+        apply: "build" as const,
+      })),
     ],
   })) as RollupOutput
   return output

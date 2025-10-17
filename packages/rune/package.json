@@ -1,6 +1,6 @@
 {
   "name": "rune",
-  "version": "7.11.0",
+  "version": "8.0.0",
   "description": "CLI to upload your games to Rune",
   "license": "MIT",
   "keywords": [
@@ -63,7 +63,7 @@
     "lodash": "4.17.21",
     "meow": "10.1.4",
     "mime-types": "2.1.35",
-    "node-html-parser": "5.2.0",
+    "node-html-parser": "^7.0.1",
     "open": "10.1.0",
     "react": "17.0.2",
     "semver": "7.3.7"

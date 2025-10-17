@@ -40,7 +40,7 @@ export function App() {
         ) : command === "create" ? (
           <Create args={args} />
         ) : command === "extract-translations" ? (
-          <ExtractTranslations args={args} />
+          <ExtractTranslations />
         ) : (
           <LoginGate>
             {command === "list" ? (

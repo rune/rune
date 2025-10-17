@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs"
 import path from "node:path"
 import type { Plugin } from "vite"
 import crypto from "crypto"
+import { extractJsonTags } from "../lib/extractJsonTags.js"
 
 const runtimePublicPath = "/@rune-sdk"
 
@@ -25,8 +26,11 @@ export function getDevPlugins(runePkgPath: string): Plugin[] {
       apply: "serve",
       enforce: "post",
       transformIndexHtml(html) {
+        // Detect and extract application/json script tags from the head
+        const { modifiedHtml, jsonScripts: scripts } = extractJsonTags(html)
+
         return {
-          html,
+          html: modifiedHtml,
           tags: [
             {
               tag: "style",
@@ -37,8 +41,6 @@ export function getDevPlugins(runePkgPath: string): Plugin[] {
               },
               injectTo: "head-prepend",
             },
-
-            // Inject a tag to differentiate between different games when running in dev mode
             {
               tag: "script",
               attrs: {
@@ -51,6 +53,7 @@ export function getDevPlugins(runePkgPath: string): Plugin[] {
                 .digest("hex")}'`,
               injectTo: "head-prepend",
             },
+            ...scripts,
             {
               tag: "script",
               attrs: {

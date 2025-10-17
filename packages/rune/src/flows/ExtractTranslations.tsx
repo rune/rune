@@ -1,8 +1,10 @@
-import fs from "fs/promises"
+import { existsSync } from "fs"
+import { readFile, writeFile } from "fs/promises"
 import globSync from "glob"
 import { Box, Text } from "ink"
 import { createRequire } from "module"
-import React, { useEffect, useMemo, useState } from "react"
+import { parse, HTMLElement } from "node-html-parser"
+import React, { useEffect, useState } from "react"
 import { promisify } from "util"
 
 import { Step } from "../components/Step.js"
@@ -19,14 +21,15 @@ enum Steps {
 }
 
 const lngs = ["en", "es", "pt", "ru"]
+const TRANSLATION_JSON_SCRIPT_ID = "rune-translation-data"
 
-export function ExtractTranslations({ args }: { args: string[] }) {
+export function ExtractTranslations() {
   const [step, setStep] = useState(Steps.Ready)
   const [error, setError] = useState<Error | null>(null)
-  const targetDir = useMemo(() => args[0] || "public/translations", [args])
+  const [warnings, setWarnings] = useState<string[]>([])
 
   useEffect(() => {
-    if (step !== Steps.Ready || !targetDir) return
+    if (step !== Steps.Ready) return
     setStep(Steps.Extracting)
     setError(null)
 
@@ -55,18 +58,96 @@ export function ExtractTranslations({ args }: { args: string[] }) {
 
       for (const file of files) {
         try {
-          const content = await fs.readFile(file, "utf-8")
+          const content = await readFile(file, "utf-8")
           parser.parseFuncFromString(content, { list: ["Rune.t"] })
         } catch (error) {
           // Skip files that can't be read, but log for debugging
         }
       }
 
+      let indexHtmlPath = "paste-translations-into-index.html"
+      if (existsSync("index.html")) {
+        indexHtmlPath = "index.html"
+      } else if (existsSync("public/index.html")) {
+        indexHtmlPath = "public/index.html"
+      } else if (existsSync("src/index.html")) {
+        indexHtmlPath = "src/index.html"
+      } else {
+        setWarnings((prev) => [
+          ...prev,
+          `Could not find index.html in the project root, public/, or src/ directories. Please manually add the translation script tag written to ${indexHtmlPath} to the <head> of your HTML.`,
+        ])
+      }
+
+      let existingTranslations: Record<string, Record<string, string>> = {}
+      let parsedIndexHtml: HTMLElement
+      let scriptTag: HTMLElement | undefined
+      try {
+        const indexHtmlContent = await readFile(indexHtmlPath, "utf-8")
+        parsedIndexHtml = parse(indexHtmlContent)
+      } catch (error) {
+        parsedIndexHtml = parse("<html><head></head></html>")
+        setWarnings((prev) => [
+          ...prev,
+          `Could not read or parse ${indexHtmlPath}. Please manually add the translation script tag written to ${indexHtmlPath} to the <head> of your HTML.`,
+        ])
+      }
+      const scripts = parsedIndexHtml.getElementsByTagName("script")
+      scriptTag = scripts.find(
+        (script) =>
+          script.getAttribute("id") === TRANSLATION_JSON_SCRIPT_ID &&
+          script.getAttribute("type") === "application/json"
+      )
+
+      if (!scriptTag) {
+        let [head] = parsedIndexHtml.getElementsByTagName("head")
+        if (!head) {
+          head = new HTMLElement("head", {}, "", parsedIndexHtml)
+          const [html] = parsedIndexHtml.getElementsByTagName("html")
+          if (html) {
+            html.prepend(head)
+            setWarnings((prev) => [
+              ...prev,
+              `No <head> tag found in ${indexHtmlPath}. Adding one.`,
+            ])
+          } else {
+            setError(
+              new Error(
+                `No <html> tag found in ${indexHtmlPath}. Cannot insert translation script tag.`
+              )
+            )
+            return false
+          }
+        }
+        scriptTag = new HTMLElement(
+          "script",
+          {},
+          `id="${TRANSLATION_JSON_SCRIPT_ID}" type="application/json"`,
+          head
+        )
+        scriptTag.innerHTML = "{}"
+        head.appendChild(scriptTag)
+      }
+
+      const translationJson = scriptTag?.text
+      if (translationJson) {
+        try {
+          existingTranslations = JSON.parse(translationJson)
+        } catch (error) {
+          existingTranslations = {}
+          setWarnings((prev) => [
+            ...prev,
+            `Could not parse translation JSON from <script id="${TRANSLATION_JSON_SCRIPT_ID}"> in ${indexHtmlPath}: ${error instanceof Error ? error.message : String(error)}. Falling back to empty translations.`,
+          ])
+        }
+      }
+
       // Get the extracted translations
       const translations = parser.get()
-      let filesExtracted = false
+      let translationsUpdated = false
 
       // Write translation files for each language
+      const updatedTranslations: Record<string, Record<string, string>> = {}
       for (const lng of lngs) {
         const translationData = translations[lng]
         if (
@@ -74,15 +155,8 @@ export function ExtractTranslations({ args }: { args: string[] }) {
           translationData.translation &&
           Object.keys(translationData.translation).length > 0
         ) {
-          const outputPath = `${targetDir}/${lng}.json`
           // Load existing translations if the file exists
-          let existingTranslations: Record<string, string> = {}
-          try {
-            const existingContent = await fs.readFile(outputPath, "utf-8")
-            existingTranslations = JSON.parse(existingContent)
-          } catch (error) {
-            // skip files that cannot be read or parsed
-          }
+          const existing = existingTranslations[lng] || {}
 
           // Merge translations: use existing values for keys that are already present,
           // and add new keys with empty values
@@ -91,48 +165,51 @@ export function ExtractTranslations({ args }: { args: string[] }) {
 
           for (const key of Object.keys(newKeys)) {
             // Preserve existing translation value if it exists, otherwise use empty string
-            mergedTranslations[key] = existingTranslations[key] ?? ""
+            mergedTranslations[key] = existing[key] ?? ""
           }
 
           // Check if there are any changes (new keys or removed keys)
-          const existingKeys = Object.keys(existingTranslations)
+          const existingKeys = Object.keys(existing)
           const mergedKeys = Object.keys(mergedTranslations)
-          const hasChanges =
+          translationsUpdated =
+            translationsUpdated ||
             existingKeys.length !== mergedKeys.length ||
             existingKeys.some((key) => !mergedKeys.includes(key))
           // These two tests implicitly would also identify the case where mergedKeys has new keys not in existingKeys
 
-          // Only write if there are changes
-          if (hasChanges) {
-            filesExtracted = true
-            await fs.mkdir(targetDir, { recursive: true })
-            await fs.writeFile(
-              outputPath,
-              JSON.stringify(mergedTranslations, null, 2)
-            )
-          }
+          updatedTranslations[lng] = mergedTranslations
         }
       }
 
-      return filesExtracted
+      if (translationsUpdated && scriptTag) {
+        scriptTag.innerHTML = JSON.stringify(updatedTranslations, null, 2)
+        await writeFile(indexHtmlPath, parsedIndexHtml.toString(), "utf-8")
+      }
+
+      return translationsUpdated
     }
 
     runExtractor()
-      .then(async (filesExtracted) => {
-        setStep(filesExtracted ? Steps.Done : Steps.NoFilesExtracted)
+      .then(async (translationsUpdated) => {
+        setStep(translationsUpdated ? Steps.Done : Steps.NoFilesExtracted)
       })
       .catch((error) => {
         setStep(Steps.Failed)
         setError(error)
       })
-  }, [step, targetDir])
+  }, [step])
 
   return (
     <Box flexDirection="column">
-      <Step
-        status="success"
-        label={`Extracting translations to ${targetDir}`}
-      />
+      <Step status="success" label="Extracting translations" />
+      {warnings.map((warning) => (
+        <Step
+          key={warning}
+          status="error"
+          label="Warning"
+          view={<Text>{warning}</Text>}
+        />
+      ))}
       {step === Steps.Extracting && (
         <Step status="waiting" label="Extracting..." />
       )}

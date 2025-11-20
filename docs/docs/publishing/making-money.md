@@ -4,10 +4,6 @@ sidebar_position: 10
 
 # Making Money
 
-:::tip
-To celebrate the launch of the creator fund, all games will earn 5x until end of March 2025!
-:::
-
 We're passionate about supporting indie game devs in making awesome multiplayer games. As part of that, we have created a creator fund that pays indie devs a bit of money based on their games' metrics. We provide optimized servers and a big audience so you don't need to deal with infrastructure costs or pay for ads.
 
 You can focus entirely on what you do best — making great games!
@@ -56,8 +52,6 @@ Here's how many credits your game earns for each metric in each region:
 | T4     | 7                           | 80                      | 1                       |
 
 The playing again and playtime credits can accumulate for each player for each day, i.e. a dedicated player will keep earning credits on your game. The game share credits will only be awarded once per player to minimize risk of scammers. Of course, your game will also earn playtime credits if players play for less an hour, that'll be scaled accordingly.
-
-To celebrate the launch of the creator fund, **all games will earn 5x the credit amounts listed above until end of March 2025!** 🚀
 
 As you can tell from the numbers, the creator fund tries to prioritize high-quality games that players love coming back to and sharing with their friends.
 

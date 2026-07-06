@@ -73,10 +73,16 @@ export const create: Rule.RuleModule["create"] = (context) => {
 
   const checkLocalVariableMutation = (
     reportNode: Node,
-    variableName: string
+    variableName: string,
+    isRebinding = false
   ) => {
     const scope = sourceCode.getScope(reportNode)
-    const variable = resolveVariable(findVariable(variableName, scope))
+    const found = findVariable(variableName, scope)
+    // Rebinding a variable only writes to the binding itself and can never
+    // mutate whatever its initializer referenced, so alias resolution only
+    // applies to object mutations. Without it, `let min = Infinity` makes the
+    // local an "alias" of the global Infinity and `min = x` gets reported.
+    const variable = isRebinding ? found : resolveVariable(found)
 
     if (
       variable && // undefined variables are handled by builtin rule
@@ -89,10 +95,14 @@ export const create: Rule.RuleModule["create"] = (context) => {
     }
   }
 
-  const checkPatternVariableName = (sourceNode: Node, node: Pattern): void => {
+  const checkPatternVariableName = (
+    sourceNode: Node,
+    node: Pattern,
+    isRebinding = false
+  ): void => {
     switch (node.type) {
       case "Identifier": {
-        checkLocalVariableMutation(node, node.name)
+        checkLocalVariableMutation(node, node.name, isRebinding)
         break
       }
       case "MemberExpression": {
@@ -106,7 +116,7 @@ export const create: Rule.RuleModule["create"] = (context) => {
       case "ArrayPattern":
         for (const element of node.elements) {
           if (element) {
-            checkPatternVariableName(sourceNode, element)
+            checkPatternVariableName(sourceNode, element, isRebinding)
           }
         }
         break
@@ -114,15 +124,16 @@ export const create: Rule.RuleModule["create"] = (context) => {
         for (const property of node.properties) {
           checkPatternVariableName(
             sourceNode,
-            property.type === "Property" ? property.value : property.argument
+            property.type === "Property" ? property.value : property.argument,
+            isRebinding
           )
         }
         break
       case "RestElement":
-        checkPatternVariableName(sourceNode, node.argument)
+        checkPatternVariableName(sourceNode, node.argument, isRebinding)
         break
       case "AssignmentPattern":
-        checkPatternVariableName(sourceNode, node.left)
+        checkPatternVariableName(sourceNode, node.left, isRebinding)
         break
     }
   }
@@ -133,7 +144,7 @@ export const create: Rule.RuleModule["create"] = (context) => {
         switch (node.argument.type) {
           case "Identifier":
           case "MemberExpression":
-            checkPatternVariableName(node, node.argument)
+            checkPatternVariableName(node, node.argument, true)
             break
         }
       }
@@ -145,7 +156,7 @@ export const create: Rule.RuleModule["create"] = (context) => {
       ) {
         checkLocalVariableMutation(node, node.argument.object.name)
       } else if (node.argument.type === "Identifier") {
-        checkLocalVariableMutation(node, node.argument.name)
+        checkLocalVariableMutation(node, node.argument.name, true)
       }
     },
     AssignmentExpression(node) {
@@ -154,7 +165,7 @@ export const create: Rule.RuleModule["create"] = (context) => {
        * OK: local = 'value'
        * NOK: global = 'value'
        */
-      checkPatternVariableName(node, node.left)
+      checkPatternVariableName(node, node.left, true)
     },
     MemberExpression(node) {
       /*

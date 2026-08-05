@@ -22,7 +22,7 @@ describe("build output", () => {
     expect(html).toBeTruthy()
     expect(html.fileName).toBe("index.html")
     expect(html.source).toMatch(
-      /<script src="https:\/\/cdn.jsdelivr.net\/npm\/rune-sdk@[^/"]+\/multiplayer\.js"/
+      /<script src="https:\/\/cdn.jsdelivr.net\/npm\/rune-sdk@[^/"]+\/(dist\/)?multiplayer\.js"/
     )
 
     const logicScript = '<script type="module" crossorigin src="./logic.js">'

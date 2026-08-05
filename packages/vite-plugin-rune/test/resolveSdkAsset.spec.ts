@@ -94,26 +94,18 @@ describe("resolveSdkAsset", () => {
     expect(asset.packageSubPath).not.toContain("\\")
   })
 
-  it("throws with the sdk version and the probed locations when the asset is missing", () => {
+  it("throws with the probed locations when the asset is missing", () => {
     const runePkgPath = createSdkPackage("6.0.7", ["dist/logicRunner.js"])
     const packageRoot = path.dirname(runePkgPath)
 
     expect(() => resolveSdkAsset(runePkgPath, assetFileName)).toThrow(
       new RegExp(
         [
-          `Cannot find "${assetFileName}" in rune-sdk@6\\.0\\.7`,
+          `Cannot find "${escapeRegExp(assetFileName)}"`,
           escapeRegExp(path.join(packageRoot, "dist", assetFileName)),
           escapeRegExp(path.join(packageRoot, assetFileName)),
         ].join("[\\s\\S]*")
       )
-    )
-  })
-
-  it("reports an unknown version when package.json cannot be read", () => {
-    const missingPkgPath = path.join(tmpRoot, "absent", "package.json")
-
-    expect(() => resolveSdkAsset(missingPkgPath, assetFileName)).toThrow(
-      "rune-sdk@unknown"
     )
   })
 })

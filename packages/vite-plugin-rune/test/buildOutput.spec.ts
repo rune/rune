@@ -1,6 +1,11 @@
 import { describe, expect, it } from "@jest/globals"
 import type { OutputChunk, OutputAsset } from "rollup"
+import { existsSync } from "node:fs"
+import { createRequire } from "node:module"
+import path from "node:path"
 import { buildFixture } from "./buildFixture.js"
+
+const require = createRequire(import.meta.url)
 
 describe("build output", () => {
   it("basic project", async () => {
@@ -21,9 +26,17 @@ describe("build output", () => {
     const html = output.find((chunk) => chunk.type === "asset") as OutputAsset
     expect(html).toBeTruthy()
     expect(html.fileName).toBe("index.html")
-    expect(html.source).toMatch(
-      /<script src="https:\/\/cdn.jsdelivr.net\/npm\/rune-sdk@[^/"]+\/(dist\/)?multiplayer\.js"/
+    const sdkScript = String(html.source).match(
+      /<script src="https:\/\/cdn\.jsdelivr\.net\/npm\/rune-sdk@([^/"]+)\/([^"]+)"/
     )
+    expect(sdkScript).toBeTruthy()
+
+    const runePkgPath = require.resolve("rune-sdk/package.json")
+    const [, version, packageSubPath] = sdkScript!
+    expect(version).toBe(require(runePkgPath).version)
+    expect(
+      existsSync(path.join(path.dirname(runePkgPath), packageSubPath))
+    ).toBe(true)
 
     const logicScript = '<script type="module" crossorigin src="./logic.js">'
     const clientScript = '<script type="module" crossorigin src="./client.js">'

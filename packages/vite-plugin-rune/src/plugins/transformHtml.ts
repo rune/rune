@@ -7,7 +7,6 @@ const runtimeFileName = "multiplayer.js"
 
 export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
   const runeVersion = JSON.parse(readFileSync(runePkgPath, "utf-8")).version
-  const { packageSubPath } = resolveSdkAsset(runePkgPath, runtimeFileName)
 
   return [
     {
@@ -15,6 +14,8 @@ export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
       apply: "build",
       enforce: "post",
       transformIndexHtml(html) {
+        const { packageSubPath } = resolveSdkAsset(runePkgPath, runtimeFileName)
+
         // Detect and extract application/json script tags from the head
         const { modifiedHtml, jsonScripts: scripts } = extractJsonTags(html)
 

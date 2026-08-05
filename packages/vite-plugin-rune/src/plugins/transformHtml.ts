@@ -1,6 +1,9 @@
 import { readFileSync } from "node:fs"
 import type { Plugin } from "vite"
 import { extractJsonTags } from "../lib/extractJsonTags.js"
+import { resolveSdkAsset } from "../lib/resolveSdkAsset.js"
+
+const runtimeFileName = "multiplayer.js"
 
 export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
   const runeVersion = JSON.parse(readFileSync(runePkgPath, "utf-8")).version
@@ -11,6 +14,8 @@ export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
       apply: "build",
       enforce: "post",
       transformIndexHtml(html) {
+        const { packageSubPath } = resolveSdkAsset(runePkgPath, runtimeFileName)
+
         // Detect and extract application/json script tags from the head
         const { modifiedHtml, jsonScripts: scripts } = extractJsonTags(html)
 
@@ -26,7 +31,7 @@ export function getTransformHtmlForBuildPlugins(runePkgPath: string): Plugin[] {
             {
               tag: "script",
               attrs: {
-                src: `https://cdn.jsdelivr.net/npm/rune-sdk@${runeVersion}/multiplayer.js`,
+                src: `https://cdn.jsdelivr.net/npm/rune-sdk@${runeVersion}/${packageSubPath}`,
               },
               injectTo: "head-prepend",
             },

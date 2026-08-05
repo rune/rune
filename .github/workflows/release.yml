@@ -1,10 +1,19 @@
 name: Release NPM packages
 
+# Publishes any package under packages/ whose version is not yet on npm.
+#
+# Authenticates to npm over GitHub OIDC (trusted publishing), so no npm
+# credential is stored in this repo. npm's trusted publisher config is keyed on
+# the repo AND this workflow's filename — renaming release.yml breaks publishing
+# until the config is updated at npmjs.com, and each package needs its own entry
+# (a package can only have one trusted publisher at a time).
+
 on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  id-token: write
 
 jobs:
   npm:
@@ -17,19 +26,16 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
+      # Not .node-version (v20): trusted publishing needs Node >= 22.14.0 and npm
+      # >= 11.5.1. Node 24 is the first line that clears both out of the box —
+      # every 22.x ships npm 10.x, which has no OIDC support at all. Only this
+      # job is pinned forward; the rest of CI stays on v20, where docusaurus
+      # still builds.
       - name: Set up node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".node-version"
+          node-version: "24"
           cache: "yarn"
-
-      - name: Git Identity
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install npm dependencies
         run: yarn --prefer-offline --frozen-lockfile --non-interactive --ignore-scripts --silent
@@ -37,10 +43,35 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Publish to NPM
+      # Replaces `lerna publish from-package`, which publishes through its
+      # bundled libnpmpublish and never performs the OIDC exchange — only the npm
+      # CLI does. Same selection rule: publish a package when its version is not
+      # already on the registry, skip it otherwise.
+      - name: Publish changed packages to NPM
         run: |
-          echo '//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}' > .npmrc
-          yarn lerna publish from-package --yes
-          rm .npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          set -euo pipefail
+          published=0
+          for dir in packages/*/; do
+            [ -f "$dir/package.json" ] || continue
+
+            name=$(jq -r '.name' "$dir/package.json")
+            version=$(jq -r '.version' "$dir/package.json")
+
+            if [ "$(jq -r '.private // false' "$dir/package.json")" = "true" ]; then
+              echo "skip $name (private)"
+              continue
+            fi
+
+            if [ -n "$(npm view "$name@$version" version 2>/dev/null || true)" ]; then
+              echo "skip $name@$version (already on npm)"
+              continue
+            fi
+
+            echo "publishing $name@$version"
+            (cd "$dir" && npm publish)
+            published=$((published + 1))
+          done
+
+          if [ "$published" -eq 0 ]; then
+            echo "Nothing to publish — every package matches the registry."
+          fi

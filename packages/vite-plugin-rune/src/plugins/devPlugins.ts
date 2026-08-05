@@ -1,10 +1,11 @@
 import { readFileSync } from "node:fs"
-import path from "node:path"
 import type { Plugin } from "vite"
 import crypto from "crypto"
 import { extractJsonTags } from "../lib/extractJsonTags.js"
+import { resolveSdkAsset } from "../lib/resolveSdkAsset.js"
 
 const runtimePublicPath = "/@rune-sdk"
+const runtimeFileName = "multiplayer-dev.js"
 
 export function getDevPlugins(runePkgPath: string): Plugin[] {
   return [
@@ -16,7 +17,7 @@ export function getDevPlugins(runePkgPath: string): Plugin[] {
       load: (id) =>
         id === runtimePublicPath
           ? readFileSync(
-              path.resolve(runePkgPath, "../multiplayer-dev.js"),
+              resolveSdkAsset(runePkgPath, runtimeFileName).absolutePath,
               "utf-8"
             )
           : undefined,

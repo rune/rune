@@ -1,6 +1,6 @@
 import { GameState, Color, Persisted } from "../lib/types/GameState"
 import { atom } from "jotai"
-import { Players, PlayerId } from "rune-sdk/multiplayer"
+import { Players, PlayerId } from "rune-sdk"
 import { cellPointer } from "../lib/cellPointer"
 import { $onboardingVisible } from "./$onboardingVisible"
 import { GameStateWithPersisted } from "rune-sdk"

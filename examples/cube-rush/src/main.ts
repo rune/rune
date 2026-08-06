@@ -4,7 +4,7 @@ import {
   InterpolatorLatency,
   Players,
 } from "rune-sdk"
-import { PlayerId } from "rune-sdk/multiplayer"
+import { PlayerId } from "rune-sdk"
 import * as THREE from "three"
 // eslint-disable-next-line
 // @ts-ignore

@@ -1,4 +1,4 @@
-import type { RuneClient } from "rune-sdk/multiplayer.js"
+import type { RuneClient } from "rune-sdk"
 import { helpers } from "./shared/helpers.js"
 
 export interface GameState {

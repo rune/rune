@@ -1,5 +1,5 @@
 import styled from "styled-components/macro"
-import { Player } from "rune-sdk/multiplayer"
+import { Player } from "rune-sdk"
 import { useMemo } from "react"
 import { AnimatedNumber } from "./AnimatedNumber"
 import { timings } from "../animation/config"

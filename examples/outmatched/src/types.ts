@@ -1,4 +1,4 @@
-import type { RuneClient, PlayerId } from "rune-sdk/multiplayer"
+import type { RuneClient, PlayerId } from "rune-sdk"
 
 export type Tile = number
 export type Cells = Tile[]

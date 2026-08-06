@@ -1,4 +1,4 @@
-import { RuneClient } from "rune-sdk/multiplayer"
+import { RuneClient } from "rune-sdk"
 import { GameState } from "./GameState"
 import { GameActions } from "./GameActions"
 

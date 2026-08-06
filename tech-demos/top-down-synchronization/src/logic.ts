@@ -1,4 +1,4 @@
-import type { PlayerId, RuneClient } from "rune-sdk/multiplayer"
+import type { PlayerId, RuneClient } from "rune-sdk"
 
 // how much the players will move per frame
 export const MOVE_SPEED = 4

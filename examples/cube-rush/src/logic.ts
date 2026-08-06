@@ -1,4 +1,4 @@
-import type { PlayerId, RuneClient } from "rune-sdk/multiplayer"
+import type { PlayerId, RuneClient } from "rune-sdk"
 import {
   COUNTDOWN_MS,
   CUBE_DEPTH,

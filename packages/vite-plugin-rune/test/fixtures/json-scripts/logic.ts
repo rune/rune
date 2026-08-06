@@ -1,4 +1,4 @@
-import type { RuneClient } from "rune-sdk/multiplayer"
+import type { RuneClient } from "rune-sdk"
 
 export interface GameState {
   count: number

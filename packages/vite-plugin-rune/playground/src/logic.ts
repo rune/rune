@@ -1,4 +1,4 @@
-import type { RuneClient } from "rune-sdk/multiplayer"
+import type { RuneClient } from "rune-sdk"
 import { helpers } from "./shared/helpers"
 import data from "./data.json"
 //@ts-ignore

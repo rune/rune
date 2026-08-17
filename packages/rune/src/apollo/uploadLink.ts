@@ -22,10 +22,10 @@ const options = {
 export const uploadLink = createUploadLink({
   uri:
     process.env.STAGE === "local"
-      ? "http://localhost:3000/dev/graphql"
-      : `https://tango-${
-          process.env.STAGE ?? "production"
-        }.rune.ai/dev/graphql`,
+      ? "http://localhost:3000/cli/graphql"
+      : process.env.STAGE === "launchpad"
+        ? "https://forge-api-launchpad.rune.ai/cli/graphql"
+        : "https://forge-api.rune.ai/cli/graphql",
   fetch,
   ...(options as any),
 })

@@ -11,6 +11,7 @@ export function useGame(id: number | null | undefined) {
   return {
     game: data?.gameById,
     gameLoading: rest.loading,
+    gameError: rest.error,
   }
 }
 

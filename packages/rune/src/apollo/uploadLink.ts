@@ -19,13 +19,23 @@ const options = {
   },
 }
 
+function apiUrl() {
+  switch (process.env.STAGE) {
+    case undefined:
+    case "production":
+      return "https://forge-api.rune.ai/cli/graphql"
+    case "launchpad":
+      return "https://forge-api-launchpad.rune.ai/cli/graphql"
+    case "local":
+      return "http://localhost:3000/cli/graphql"
+    default:
+      // Refuse rather than quietly send the request to production
+      throw new Error(`Unsupported STAGE "${process.env.STAGE}"`)
+  }
+}
+
 export const uploadLink = createUploadLink({
-  uri:
-    process.env.STAGE === "local"
-      ? "http://localhost:3000/cli/graphql"
-      : process.env.STAGE === "launchpad"
-        ? "https://forge-api-launchpad.rune.ai/cli/graphql"
-        : "https://forge-api.rune.ai/cli/graphql",
+  uri: apiUrl(),
   fetch,
   ...(options as any),
 })

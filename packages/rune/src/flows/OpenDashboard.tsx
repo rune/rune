@@ -5,6 +5,7 @@ import React, { useState } from "react"
 import { Choose } from "../components/Choose.js"
 import { Step } from "../components/Step.js"
 import { useGame } from "../gql/useGame.js"
+import { formatApolloError } from "../lib/formatApolloError.js"
 
 import { ChooseGameStep } from "./Upload/ChooseGameStep.js"
 
@@ -15,7 +16,7 @@ const appOrigin =
 
 export function OpenDashboard() {
   const [gameId, setGameId] = useState<number | null | undefined>()
-  const { game } = useGame(gameId)
+  const { game, gameError } = useGame(gameId)
   const [status, setStatus] = useState<
     "waiting" | "opened" | "failedBrowser" | "skipped"
   >("waiting")
@@ -29,6 +30,8 @@ export function OpenDashboard() {
         onComplete={setGameId}
         onlyExisting
       />
+
+      {gameError && <Text color="red">{formatApolloError(gameError, {})}</Text>}
 
       {statsLink && (
         <>

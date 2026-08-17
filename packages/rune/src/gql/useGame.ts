@@ -18,6 +18,7 @@ gql`
   query Game($id: Int!) {
     gameById(id: $id) {
       id
+      key
       title
       description
       createdAt

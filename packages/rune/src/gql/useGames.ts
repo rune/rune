@@ -22,6 +22,7 @@ gql`
     games {
       nodes {
         id
+        key
         title
         description
         gameDevs {

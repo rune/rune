@@ -931,4 +931,47 @@ describe("validateGameFiles", () => {
       })
     )
   })
+
+  test("should accept the SDK served from cdn.rune.ai", async () => {
+    await expect(
+      validateGameFiles([
+        {
+          path: "src/logic.js",
+          size: 1 * 1e6,
+          // language=JavaScript
+          content: `
+            Rune.initLogic({
+              minPlayers: 1,
+              maxPlayers: 4,
+              setup: () => {
+                return {}
+              },
+              actions: {},
+              events: {
+                playerJoined: () => {},
+                playerLeft () {},
+              },
+            })`,
+        },
+        {
+          path: "src/index.html",
+          size: 1 * 1e6,
+          content: `
+              <!DOCTYPE html>
+              <html lang="en">
+                <head>
+                  <title>Game</title>
+                  <script src="https://cdn.rune.ai/rune-sdk@9/multiplayer.js"></script>
+                  <script src="src/logic.js"></script>
+                </head>
+                <body></body>
+              </html>`,
+        },
+      ])
+    ).resolves.toEqual({
+      valid: true,
+      errors: [],
+      sdk: "Rune",
+    })
+  })
 })

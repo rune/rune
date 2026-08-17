@@ -1,4 +1,4 @@
-schema: ${SCHEMA_PATH:https://tango-production.rune.ai/dev/graphql}
+schema: ${SCHEMA_PATH:https://forge-api.rune.ai/cli/graphql}
 overwrite: true
 generates:
   src/generated/schema.graphql:

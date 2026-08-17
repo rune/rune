@@ -26,7 +26,6 @@ const apiUrls: Record<string, string> = {
 }
 
 const stage = process.env.STAGE ?? "production"
-// Refuse rather than quietly send the request to production
 if (!apiUrls[stage]) throw new Error(`Unsupported STAGE "${stage}"`)
 
 export const uploadLink = createUploadLink({

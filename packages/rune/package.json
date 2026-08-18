@@ -37,7 +37,7 @@
     "typecheck": "tsc --noEmit",
     "test": "JEST_CHECK_TYPES=1 jest",
     "test:watch": "jest --watch",
-    "gql-gen-local": "SCHEMA_PATH=http://localhost:3000/dev/graphql gql-gen"
+    "gql-gen-local": "SCHEMA_PATH=http://localhost:3000/cli/graphql gql-gen"
   },
   "dependencies": {
     "@apollo/client": "3.6.9",

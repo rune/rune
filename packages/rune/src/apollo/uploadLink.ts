@@ -19,13 +19,17 @@ const options = {
   },
 }
 
+const apiUrls: Record<string, string> = {
+  production: "https://forge-api.rune.ai/cli/graphql",
+  launchpad: "https://forge-api-launchpad.rune.ai/cli/graphql",
+  local: "http://localhost:3000/cli/graphql",
+}
+
+const stage = process.env.STAGE ?? "production"
+if (!apiUrls[stage]) throw new Error(`Unsupported STAGE "${stage}"`)
+
 export const uploadLink = createUploadLink({
-  uri:
-    process.env.STAGE === "local"
-      ? "http://localhost:3000/dev/graphql"
-      : `https://tango-${
-          process.env.STAGE ?? "production"
-        }.rune.ai/dev/graphql`,
+  uri: apiUrls[stage],
   fetch,
   ...(options as any),
 })

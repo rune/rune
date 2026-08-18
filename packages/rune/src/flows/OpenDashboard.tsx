@@ -1,38 +1,46 @@
 import { Box, Text } from "ink"
 import open from "open"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import { Choose } from "../components/Choose.js"
 import { Step } from "../components/Step.js"
-import { useDashboardMagicLink } from "../gql/useMagicDashboardLink.js"
+import { useGame } from "../gql/useGame.js"
 import { formatApolloError } from "../lib/formatApolloError.js"
 
+import { ChooseGameStep } from "./Upload/ChooseGameStep.js"
+
+const appOrigin =
+  process.env.STAGE === "launchpad"
+    ? "https://launchpad.rune.ai"
+    : "https://rune.ai"
+
 export function OpenDashboard() {
-  const { createDashboardMagicLink, dashboardMagicLink, error } =
-    useDashboardMagicLink()
+  const [gameId, setGameId] = useState<number | null | undefined>()
+  const { game, gameError } = useGame(gameId)
   const [status, setStatus] = useState<
     "waiting" | "opened" | "failedBrowser" | "skipped"
   >("waiting")
 
-  useEffect(() => {
-    createDashboardMagicLink({})
-  }, [createDashboardMagicLink])
+  const statsLink = game && `${appOrigin}/app/stats/${game.key}`
 
   return (
     <Box flexDirection="column">
-      {!error && !dashboardMagicLink && (
-        <Step status="waiting" label="Opening..." />
-      )}
-      {error && <Text color="red">{formatApolloError(error, {})}</Text>}
+      <ChooseGameStep
+        currentGameId={gameId}
+        onComplete={setGameId}
+        onlyExisting
+      />
 
-      {!error && dashboardMagicLink && (
+      {gameError && <Text color="red">{formatApolloError(gameError, {})}</Text>}
+
+      {statsLink && (
         <>
           <Text>
-            Dashboard link: <Text color="green">{dashboardMagicLink}</Text>
+            Stats: <Text color="green">{statsLink}</Text>
           </Text>
 
           {status === "opened" ? (
-            <Step status="success" label="Dashboard opened" />
+            <Step status="success" label="Stats opened" />
           ) : status === "failedBrowser" ? (
             <Step
               status="error"
@@ -51,7 +59,7 @@ export function OpenDashboard() {
                     const shouldOpen = response === "Yes"
 
                     if (shouldOpen) {
-                      open(dashboardMagicLink)
+                      open(statsLink)
                         .then(() => {
                           setStatus("opened")
                         })

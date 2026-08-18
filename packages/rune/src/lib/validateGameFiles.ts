@@ -13,6 +13,7 @@ export const MAX_PLAYERS = 6
 export const validationOptions = {
   sdkUrlStartOldRune: "https://cdn.jsdelivr.net/npm/rune-games-sdk",
   sdkUrlStartRune: "https://cdn.jsdelivr.net/npm/rune-sdk",
+  sdkUrlStartRuneCdn: "https://cdn.rune.ai/rune-sdk",
   sdkUrlStartDusk: "https://cdn.jsdelivr.net/npm/dusk-games-sdk",
   sdkVersionRegex: /(?:rune|rune-games|dusk-games)-sdk@(\d+(\.\d+(\.\d+)?)?)/,
   minSdkVersion: "4.8.1",
@@ -48,8 +49,12 @@ export interface ValidationResult {
 export function parseGameIndexHtml(indexHtmlContent: string) {
   if (!valid(indexHtmlContent)) return null
 
-  const { sdkUrlStartRune, sdkUrlStartOldRune, sdkUrlStartDusk } =
-    validationOptions
+  const {
+    sdkUrlStartRune,
+    sdkUrlStartRuneCdn,
+    sdkUrlStartOldRune,
+    sdkUrlStartDusk,
+  } = validationOptions
 
   const parsedIndexHtml = parse(indexHtmlContent)
   const scripts = parsedIndexHtml.getElementsByTagName("script")
@@ -57,6 +62,7 @@ export function parseGameIndexHtml(indexHtmlContent: string) {
     (script) =>
       script.getAttribute("src")?.startsWith(sdkUrlStartDusk) ||
       script.getAttribute("src")?.startsWith(sdkUrlStartRune) ||
+      script.getAttribute("src")?.startsWith(sdkUrlStartRuneCdn) ||
       script.getAttribute("src")?.startsWith(sdkUrlStartOldRune)
   )
 
@@ -156,8 +162,12 @@ export async function validateGameFiles(
     } else {
       const { sdkScript, scripts } = gameIndexHtmlElements
 
-      const { sdkUrlStartDusk, sdkUrlStartRune, sdkUrlStartOldRune } =
-        validationOptions
+      const {
+        sdkUrlStartDusk,
+        sdkUrlStartRune,
+        sdkUrlStartRuneCdn,
+        sdkUrlStartOldRune,
+      } = validationOptions
 
       sdkName = scripts.some((script) =>
         script.getAttribute("src")?.startsWith(sdkUrlStartDusk)
@@ -169,6 +179,7 @@ export async function validateGameFiles(
         scripts.filter(
           (script) =>
             script.getAttribute("src")?.startsWith(sdkUrlStartRune) ||
+            script.getAttribute("src")?.startsWith(sdkUrlStartRuneCdn) ||
             script.getAttribute("src")?.startsWith(sdkUrlStartOldRune) ||
             script.getAttribute("src")?.startsWith(sdkUrlStartDusk)
         ).length > 1

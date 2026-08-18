@@ -1,3 +1,8 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
 input CheckVerificationInput {
   clientMutationId: String
   verificationToken: String!
@@ -11,8 +16,6 @@ type CheckVerificationPayload {
 input CreateGameInput {
   clientMutationId: String
   description: String
-
-  """@deprecated: Use previewImg"""
   logo: Upload
   previewImg: Upload
   title: String!
@@ -39,122 +42,25 @@ type CreateGameVersionPayload {
   previewLink: String!
 }
 
-"""A location in a connection that can be used for resuming pagination."""
-scalar Cursor
-
-input DashboardMagicLinkInput {
-  clientMutationId: String
-}
-
-type DashboardMagicLinkPayload {
-  clientMutationId: String
-  dashboardMagicLink: String!
-}
-
-"""
-A point in time as described by the [ISO
-8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
-"""
-scalar Datetime
-
 type Game {
-  appId: Int
-  blurredImgDataUrl: String @deprecated(reason: "true")
-
-  """(Denormalized) Total number of comments ."""
-  commentCount: Int!
-  createdAt: Datetime!
+  createdAt: String!
   description: String
-
-  """Reads and enables pagination through a set of `GameDev`."""
-  gameDevs(
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
-
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-  ): GameDevsConnection!
-
-  """Reads and enables pagination through a set of `GameVersion`."""
-  gameVersions(
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
-
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """
-    A condition to be used in determining which values should be returned by the collection.
-    """
-    condition: GameVersionCondition
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-
-    """The method to use when ordering `GameVersion`."""
-    orderBy: [GameVersionsOrderBy!] = [PRIMARY_KEY_ASC]
-  ): GameVersionsConnection!
+  gameDevs: GameDevsConnection!
+  gameVersions(orderBy: [GameVersionsOrderBy!]): GameVersionsConnection!
   id: Int!
-  isAllowedInsideRoom: Boolean! @deprecated(reason: "true")
+
+  """Identifies the game in rune.ai URLs, such as its stats page."""
+  key: String!
   logoUrl: String!
-  playTime: Float!
-  players: Int!
-  plays: Int!
   previewImgUrl: String
   title: String!
   type: GameType!
-  updatedAt: Datetime!
-}
-
-"""
-A condition to be used against `Game` object types. All fields are tested for equality and combined with a logical ‘and.’
-"""
-input GameCondition {
-  """Checks for equality with the object’s `appId` field."""
-  appId: Int
-
-  """Checks for equality with the object’s `id` field."""
-  id: Int
 }
 
 type GameDev {
-  """@deprecated: use GameDev.userProfileEditable"""
   displayName: String
-
-  """Reads a single `Game` that is related to this `GameDev`."""
-  game: Game
-  gameId: Int!
-  status: GameDevStatus!
   type: GameDevType!
   userId: Int!
-  userProfileEditable: UserProfileEditable
-}
-
-enum GameDevStatus {
-  ACTIVE
-  INACTIVE
-  INVITED
 }
 
 enum GameDevType {
@@ -163,30 +69,8 @@ enum GameDevType {
   TESTER
 }
 
-"""A connection to a list of `GameDev` values."""
 type GameDevsConnection {
-  """
-  A list of edges which contains the `GameDev` and cursor to aid in pagination.
-  """
-  edges: [GameDevsEdge!]!
-
-  """A list of `GameDev` objects."""
   nodes: [GameDev!]!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """The count of *all* `GameDev` you could get from the connection."""
-  totalCount: Int!
-}
-
-"""A `GameDev` edge in the connection."""
-type GameDevsEdge {
-  """A cursor for use in pagination."""
-  cursor: Cursor
-
-  """The `GameDev` at the end of the edge."""
-  node: GameDev!
 }
 
 enum GameType {
@@ -195,35 +79,9 @@ enum GameType {
 }
 
 type GameVersion {
-  createdByDevId: Int!
-
-  """Reads a single `Game` that is related to this `GameVersion`."""
-  game: Game
   gameId: Int!
   gameVersionId: Int!
-  key: String!
-  landscape: Boolean!
-  multiplayerMaxPlayers: Int!
-  multiplayerMinPlayers: Int!
-  multiplayerSupportsPlayerJoining: Boolean!
-  multiplayerSupportsPlayerLeaving: Boolean!
-  persistPlayerData: Boolean!
-  sdkVersion: String!
   status: GameVersionStatus!
-  updatesPerSecond: Int!
-  usesUpdates: Boolean!
-}
-
-"""
-A condition to be used against `GameVersion` object types. All fields are tested
-for equality and combined with a logical ‘and.’
-"""
-input GameVersionCondition {
-  """Checks for equality with the object’s `gameId` field."""
-  gameId: Int
-
-  """Checks for equality with the object’s `key` field."""
-  key: String
 }
 
 enum GameVersionStatus {
@@ -234,89 +92,17 @@ enum GameVersionStatus {
   UPLOADING
 }
 
-"""A connection to a list of `GameVersion` values."""
 type GameVersionsConnection {
-  """
-  A list of edges which contains the `GameVersion` and cursor to aid in pagination.
-  """
-  edges: [GameVersionsEdge!]!
-
-  """A list of `GameVersion` objects."""
   nodes: [GameVersion!]!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """The count of *all* `GameVersion` you could get from the connection."""
-  totalCount: Int!
 }
 
-"""A `GameVersion` edge in the connection."""
-type GameVersionsEdge {
-  """A cursor for use in pagination."""
-  cursor: Cursor
-
-  """The `GameVersion` at the end of the edge."""
-  node: GameVersion!
-}
-
-"""Methods to use when ordering `GameVersion`."""
 enum GameVersionsOrderBy {
-  GAME_ID_ASC
-  GAME_ID_DESC
-  KEY_ASC
-  KEY_DESC
-  NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
 }
 
-"""A connection to a list of `Game` values."""
 type GamesConnection {
-  """
-  A list of edges which contains the `Game` and cursor to aid in pagination.
-  """
-  edges: [GamesEdge!]!
-
-  """A list of `Game` objects."""
   nodes: [Game!]!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """The count of *all* `Game` you could get from the connection."""
-  totalCount: Int!
-}
-
-"""A `Game` edge in the connection."""
-type GamesEdge {
-  """A cursor for use in pagination."""
-  cursor: Cursor
-
-  """The `Game` at the end of the edge."""
-  node: Game!
-}
-
-"""Methods to use when ordering `Game`."""
-enum GamesOrderBy {
-  APP_ID_ASC
-  APP_ID_DESC
-  ID_ASC
-  ID_DESC
-  NATURAL
-  PRIMARY_KEY_ASC
-  PRIMARY_KEY_DESC
-}
-
-input InviteGameDevInput {
-  clientMutationId: String
-  gameId: Int!
-  type: GameDevType!
-  userTag: String!
-}
-
-type InviteGameDevPayload {
-  clientMutationId: String
 }
 
 type Me {
@@ -326,258 +112,44 @@ type Me {
   email: String
 }
 
-"""
-The root mutation type which contains root level fields which mutate data.
-"""
 type Mutation {
-  checkVerification(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: CheckVerificationInput!
-  ): CheckVerificationPayload!
-  createDashboardMagicLink(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: DashboardMagicLinkInput!
-  ): DashboardMagicLinkPayload!
-  createGame(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: CreateGameInput!
-  ): CreateGamePayload!
-  createGameVersion(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: CreateGameVersionInput!
-  ): CreateGameVersionPayload!
-  inviteGameDev(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: InviteGameDevInput!
-  ): InviteGameDevPayload!
-  requestPayout(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: RequestPayoutInput!
-  ): RequestPayoutPayload!
-  startVerification(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: StartVerificationInput!
-  ): StartVerificationPayload!
-  updateGame(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: UpdateGameInput!
-  ): UpdateGamePayload!
-  updateGameDev(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: UpdateGameDevInput!
-  ): UpdateGameDevPayload!
-  updateGameSdk(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: UpdateGameSdkInput!
-  ): UpdateGameSdkPayload!
+  """
+  Step 2 of the CLI's magic-link login. The CLI polls this every 2s; authToken stays null until the emailed link is confirmed.
+  """
+  checkVerification(input: CheckVerificationInput!): CheckVerificationPayload!
+
+  """
+  Create a game and make the caller its ADMIN. Media is generated when no preview image is supplied.
+  """
+  createGame(input: CreateGameInput!): CreateGamePayload!
+  createGameVersion(input: CreateGameVersionInput!): CreateGameVersionPayload!
+
+  """
+  Step 1 of the CLI's magic-link login. Emails a confirmation link and returns a token for polling checkVerification. Anonymous, and the response is identical whether or not the email has an account.
+  """
+  startVerification(input: StartVerificationInput!): StartVerificationPayload!
+
+  """
+  Update a game's title, description or media. Blank fields are left unchanged rather than cleared.
+  """
+  updateGame(input: UpdateGameInput!): UpdateGamePayload!
 }
 
-"""Information about pagination in a connection."""
-type PageInfo {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: Cursor
-
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: Cursor
-}
-
-"""The root query type which gives access points into the data universe."""
 type Query {
-  gameByAppId(appId: Int!): Game
+  """
+  A single game, or null when the requester is not an ACTIVE member of it.
+  """
   gameById(id: Int!): Game
-  gameVersionByGameIdAndGameVersionId(gameId: Int!, gameVersionId: Int!): GameVersion
-  gameVersionByKey(key: String!): GameVersion
 
-  """Reads and enables pagination through a set of `GameVersion`."""
-  gameVersions(
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
+  """
+  Games the requester is an ACTIVE member of. Tango returned every game and left the filtering to the CLI.
+  """
+  games: GamesConnection!
 
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """
-    A condition to be used in determining which values should be returned by the collection.
-    """
-    condition: GameVersionCondition
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-
-    """The method to use when ordering `GameVersion`."""
-    orderBy: [GameVersionsOrderBy!] = [PRIMARY_KEY_ASC]
-  ): GameVersionsConnection
-
-  """Reads and enables pagination through a set of `Game`."""
-  games(
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
-
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """
-    A condition to be used in determining which values should be returned by the collection.
-    """
-    condition: GameCondition
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-
-    """The method to use when ordering `Game`."""
-    orderBy: [GamesOrderBy!] = [PRIMARY_KEY_ASC]
-  ): GamesConnection
+  """
+  The authenticated dev. The CLI's LoginGate runs this on every start, so it doubles as the token-validity probe that clears a stale token.
+  """
   me: Me!
-
-  """
-  Exposes the root query type nested one level down. This is helpful for Relay 1
-  which can only query top level fields if they are in a particular form.
-  """
-  query: Query!
-  userDevByUserId(userId: Int!): UserDev
-
-  """Reads and enables pagination through a set of `UserDev`."""
-  userDevs(
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
-
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """
-    A condition to be used in determining which values should be returned by the collection.
-    """
-    condition: UserDevCondition
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-
-    """The method to use when ordering `UserDev`."""
-    orderBy: [UserDevsOrderBy!] = [PRIMARY_KEY_ASC]
-  ): UserDevsConnection
-
-  """Reads and enables pagination through a set of `UserPrivateReadonly`."""
-  userPrivateReadonlies(
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
-
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """
-    A condition to be used in determining which values should be returned by the collection.
-    """
-    condition: UserPrivateReadonlyCondition
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-
-    """The method to use when ordering `UserPrivateReadonly`."""
-    orderBy: [UserPrivateReadonliesOrderBy!] = [NATURAL]
-  ): UserPrivateReadonliesConnection
-  userPrivateReadonlyByEmail(email: String!): UserPrivateReadonly
-  userPrivateReadonlyByUserId(userId: Int!): UserPrivateReadonly
-  userProfileEditableByUserId(userId: Int!): UserProfileEditable
-
-  """Reads and enables pagination through a set of `UserProfileEditable`."""
-  userProfileEditables(
-    """Read all values in the set after (below) this cursor."""
-    after: Cursor
-
-    """Read all values in the set before (above) this cursor."""
-    before: Cursor
-
-    """
-    A condition to be used in determining which values should be returned by the collection.
-    """
-    condition: UserProfileEditableCondition
-
-    """Only read the first `n` values of the set."""
-    first: Int
-
-    """Only read the last `n` values of the set."""
-    last: Int
-
-    """
-    Skip the first `n` values from our `after` cursor, an alternative to cursor
-    based pagination. May not be used with `last`.
-    """
-    offset: Int
-
-    """The method to use when ordering `UserProfileEditable`."""
-    orderBy: [UserProfileEditablesOrderBy!] = [NATURAL]
-  ): UserProfileEditablesConnection
-}
-
-input RequestPayoutInput {
-  amount: Int!
-  clientMutationId: String
-}
-
-type RequestPayoutPayload {
-  clientMutationId: String
 }
 
 input StartVerificationInput {
@@ -588,19 +160,6 @@ input StartVerificationInput {
 type StartVerificationPayload {
   clientMutationId: String
   verificationToken: String!
-}
-
-input UpdateGameDevInput {
-  clientMutationId: String
-  gameId: Int!
-
-  """Use null to remove game dev from the team"""
-  type: GameDevType
-  userId: Int!
-}
-
-type UpdateGameDevPayload {
-  clientMutationId: String
 }
 
 input UpdateGameInput {
@@ -617,176 +176,5 @@ type UpdateGamePayload {
   game: Game!
 }
 
-input UpdateGameSdkInput {
-  clientMutationId: String
-  gameId: Int!
-}
-
-type UpdateGameSdkPayload {
-  clientMutationId: String
-  error: String
-  success: Boolean!
-}
-
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
-
-type UserDev {
-  badge: UserDevBadge
-  createdAt: Datetime!
-  updatedAt: Datetime!
-  userId: Int!
-}
-
-enum UserDevBadge {
-  TOP_DEVELOPER
-}
-
-"""
-A condition to be used against `UserDev` object types. All fields are tested for equality and combined with a logical ‘and.’
-"""
-input UserDevCondition {
-  """Checks for equality with the object’s `userId` field."""
-  userId: Int
-}
-
-"""A connection to a list of `UserDev` values."""
-type UserDevsConnection {
-  """
-  A list of edges which contains the `UserDev` and cursor to aid in pagination.
-  """
-  edges: [UserDevsEdge!]!
-
-  """A list of `UserDev` objects."""
-  nodes: [UserDev!]!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """The count of *all* `UserDev` you could get from the connection."""
-  totalCount: Int!
-}
-
-"""A `UserDev` edge in the connection."""
-type UserDevsEdge {
-  """A cursor for use in pagination."""
-  cursor: Cursor
-
-  """The `UserDev` at the end of the edge."""
-  node: UserDev!
-}
-
-"""Methods to use when ordering `UserDev`."""
-enum UserDevsOrderBy {
-  NATURAL
-  PRIMARY_KEY_ASC
-  PRIMARY_KEY_DESC
-  USER_ID_ASC
-  USER_ID_DESC
-}
-
-"""A connection to a list of `UserPrivateReadonly` values."""
-type UserPrivateReadonliesConnection {
-  """
-  A list of edges which contains the `UserPrivateReadonly` and cursor to aid in pagination.
-  """
-  edges: [UserPrivateReadonliesEdge!]!
-
-  """A list of `UserPrivateReadonly` objects."""
-  nodes: [UserPrivateReadonly!]!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """
-  The count of *all* `UserPrivateReadonly` you could get from the connection.
-  """
-  totalCount: Int!
-}
-
-"""A `UserPrivateReadonly` edge in the connection."""
-type UserPrivateReadonliesEdge {
-  """A cursor for use in pagination."""
-  cursor: Cursor
-
-  """The `UserPrivateReadonly` at the end of the edge."""
-  node: UserPrivateReadonly!
-}
-
-"""Methods to use when ordering `UserPrivateReadonly`."""
-enum UserPrivateReadonliesOrderBy {
-  EMAIL_ASC
-  EMAIL_DESC
-  NATURAL
-  USER_ID_ASC
-  USER_ID_DESC
-}
-
-"""
-Contains sensitive information that can only be read by the user themself. They cannot update this table directly as that could cause issues with data integrity (e.g. phone verification, current room, etc.).
-"""
-type UserPrivateReadonly {
-  email: String
-  userId: Int!
-}
-
-"""
-A condition to be used against `UserPrivateReadonly` object types. All fields
-are tested for equality and combined with a logical ‘and.’
-"""
-input UserPrivateReadonlyCondition {
-  """Checks for equality with the object’s `email` field."""
-  email: String
-
-  """Checks for equality with the object’s `userId` field."""
-  userId: Int
-}
-
-type UserProfileEditable {
-  displayName: String!
-  userId: Int!
-}
-
-"""
-A condition to be used against `UserProfileEditable` object types. All fields
-are tested for equality and combined with a logical ‘and.’
-"""
-input UserProfileEditableCondition {
-  """Checks for equality with the object’s `userId` field."""
-  userId: Int
-}
-
-"""A connection to a list of `UserProfileEditable` values."""
-type UserProfileEditablesConnection {
-  """
-  A list of edges which contains the `UserProfileEditable` and cursor to aid in pagination.
-  """
-  edges: [UserProfileEditablesEdge!]!
-
-  """A list of `UserProfileEditable` objects."""
-  nodes: [UserProfileEditable!]!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """
-  The count of *all* `UserProfileEditable` you could get from the connection.
-  """
-  totalCount: Int!
-}
-
-"""A `UserProfileEditable` edge in the connection."""
-type UserProfileEditablesEdge {
-  """A cursor for use in pagination."""
-  cursor: Cursor
-
-  """The `UserProfileEditable` at the end of the edge."""
-  node: UserProfileEditable!
-}
-
-"""Methods to use when ordering `UserProfileEditable`."""
-enum UserProfileEditablesOrderBy {
-  NATURAL
-  USER_ID_ASC
-  USER_ID_DESC
-}

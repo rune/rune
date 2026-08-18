@@ -7,6 +7,7 @@ import { gameItemLabel } from "./gameItemLabel"
 const game = {
   __typename: "Game" as const,
   id: 1,
+  key: "abc12345",
   title: "Super Game",
   description: null,
 }

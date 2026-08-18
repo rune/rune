@@ -11,6 +11,7 @@ export function useGame(id: number | null | undefined) {
   return {
     game: data?.gameById,
     gameLoading: rest.loading,
+    gameError: rest.error,
   }
 }
 
@@ -18,6 +19,7 @@ gql`
   query Game($id: Int!) {
     gameById(id: $id) {
       id
+      key
       title
       description
       createdAt

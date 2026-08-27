@@ -3,8 +3,12 @@ import { Box, Text, Newline } from "ink"
 import path from "path"
 import React, { useEffect } from "react"
 
+import { OpenLinkStep } from "../../components/OpenLinkStep.js"
 import { Step } from "../../components/Step.js"
 import { useCreateGameVersion } from "../../gql/useCreateGameVersion.js"
+import { useGame } from "../../gql/useGame.js"
+import { useMe } from "../../gql/useMe.js"
+import { publishLink } from "../../lib/appLinks.js"
 import { formatApolloError } from "../../lib/formatApolloError.js"
 import { getGameFiles } from "../../lib/getGameFiles.js"
 
@@ -27,6 +31,13 @@ export function CreateGameVersionStep({
     previewLink,
     congratulationMsg,
   } = useCreateGameVersion()
+
+  const { me } = useMe()
+  const { game } = useGame(gameId)
+
+  const isGameDev = game?.gameDevs.nodes.some(
+    (gameDev) => gameDev.userId === me?.devId
+  )
 
   useEffect(() => {
     getGameFiles(gameDir).then((gameFiles) => {
@@ -102,6 +113,15 @@ export function CreateGameVersionStep({
           )
         }
       />
+
+      {newGameVersionId && !createGameVersionError && game && isGameDev && (
+        <OpenLinkStep
+          label="Publish page"
+          link={publishLink(game.key)}
+          openedLabel="Publish page opened"
+          promptToOpen={readyForRelease}
+        />
+      )}
     </Box>
   )
 }

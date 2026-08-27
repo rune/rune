@@ -22,7 +22,7 @@ const options = {
 const apiUrls: Record<string, string> = {
   production: "https://forge-api.rune.ai/cli/graphql",
   launchpad: "https://forge-api-launchpad.rune.ai/cli/graphql",
-  local: "http://localhost:3000/cli/graphql",
+  local: "http://localhost:4000/cli/graphql",
 }
 
 const stage = process.env.STAGE ?? "production"

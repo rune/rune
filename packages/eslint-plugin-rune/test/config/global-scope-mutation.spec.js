@@ -45,6 +45,16 @@ test("global scope mutation", ({ type }) => ({
     "let rune = 'Rune'; rune = Rune;",
     "let rune = 'Rune'; rune = Rune.initLogic;",
     "const getSeedsByDifficulty = (seeds, difficulty) => seeds.filter((seed) => !difficulty || seed.difficulty === difficulty);",
+    // Rebinding a local variable is never a parent-scope mutation, even when
+    // its initializer is a global (Infinity/NaN/undefined or an alias)
+    "() => { let hest = Infinity; hest = 1 }",
+    "() => { let hest = NaN; hest = 1 }",
+    "() => { let hest = undefined; hest = 1 }",
+    "() => { let hest = Infinity; hest++ }",
+    "() => { let hest = Infinity; hest += 1 }",
+    "() => { let hest = Infinity; [hest] = [1] }",
+    "() => { let hest = Infinity; ({ hest } = { hest: 1 }) }",
+    "const hest = {}; () => { let klad = hest; klad = null }",
     // These are unsafe and ways to circumvent the intention of the rule, but still allowed
     "const hest = ['snel']; const klap = (hest) => { hest.push('klad') }; (() => { klap(hest) })()",
     "[Rune].map((r) => { r.hest = 'snel' })",
@@ -84,6 +94,8 @@ test("global scope mutation", ({ type }) => ({
   ],
   invalid: [
     "let hest; (() => { hest = 'snel' })()",
+    "let hest = Infinity; (() => { hest = 1 })()",
+    "let hest = Infinity; (() => { hest++ })()",
     "Math.smth = 4",
     "const hest = ['snel', 'klad']; (() => { hest.splice(0, 1) })()",
     "const hest = { snel: true }; () => Object.assign(hest, { klad: true })",

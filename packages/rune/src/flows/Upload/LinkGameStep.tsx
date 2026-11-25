@@ -14,10 +14,14 @@ import { writeProjectFile } from "../../lib/projectFile.js"
 import { ChooseGameStep } from "./ChooseGameStep.js"
 
 type Choice =
-  | { kind: "existing"; gameKey: string; title: string }
+  | { kind: "existing"; gameKey: string; title: string; isRuneGame: boolean }
   | { kind: "new"; title: string; description: string }
 
 async function linkFolder(dir: string, choice: Choice) {
+  if (choice.kind === "existing" && !choice.isRuneGame) {
+    writeProjectFile(dir, { gameKey: choice.gameKey, base: null })
+    return `Linked this folder to "${choice.title}" in rune.json. This upload moves the game to the Rune editor, where it gets checkpoints, editing of its title and description, and the agent.`
+  }
   if (choice.kind === "existing") {
     const base = await fetchCurrentCheckpoint(choice.gameKey)
     writeProjectFile(dir, { gameKey: choice.gameKey, base })
@@ -67,16 +71,14 @@ export function LinkGameStep({
   )
 
   const chooseExisting = useCallback(
-    (game: { key: string; title: string; isRuneGame: boolean }) => {
-      if (game.isRuneGame) {
-        setChoice({ kind: "existing", gameKey: game.key, title: game.title })
-      } else {
-        fail(
-          `"${game.title}" was uploaded with an older CLI, so it isn't a Rune game yet and can't be uploaded as a checkpoint.`
-        )
-      }
-    },
-    [fail]
+    (game: { key: string; title: string; isRuneGame: boolean }) =>
+      setChoice({
+        kind: "existing",
+        gameKey: game.key,
+        title: game.title,
+        isRuneGame: game.isRuneGame,
+      }),
+    []
   )
 
   useEffect(() => {

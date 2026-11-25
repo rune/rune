@@ -5,6 +5,7 @@ export const cli = meow(
   Usage
     $ rune create <[optional] project name, defaults to current directory>
     $ rune upload <[optional] game path, defaults to current directory>
+    $ rune pull <[optional] game key, defaults to rune.json's> [Downloads the game's current checkpoint and links this folder to it]
     $ rune update-info    [Updating game info (title, description, logo)]
     $ rune list           [Lists all your games]
     $ rune dusk-to-rune <[optional] path> [Migrates your game from Dusk to Rune]
@@ -63,6 +64,7 @@ export const validCommands = [
   "logout",
   "list",
   "upload",
+  "pull",
   "update-info",
   "create",
   "dashboard",

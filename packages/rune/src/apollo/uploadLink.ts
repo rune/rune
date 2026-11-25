@@ -29,7 +29,7 @@ const stage = process.env.STAGE ?? "production"
 if (!apiUrls[stage]) throw new Error(`Unsupported STAGE "${stage}"`)
 
 export const uploadLink = createUploadLink({
-  uri: apiUrls[stage],
+  uri: process.env.RUNE_API_URL ?? apiUrls[stage],
   fetch,
   ...(options as any),
 })

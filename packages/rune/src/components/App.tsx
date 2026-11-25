@@ -7,8 +7,10 @@ import { ExtractTranslations } from "../flows/ExtractTranslations.js"
 import { List } from "../flows/List/List.js"
 import { Logout } from "../flows/Logout.js"
 import { OpenDashboard } from "../flows/OpenDashboard.js"
+import { CheckpointUpload, Pull } from "../flows/CheckpointSync.js"
 import { Update } from "../flows/Update/Update.js"
 import { Upload } from "../flows/Upload/Upload.js"
+import { readRuneJson } from "../lib/checkpointSync.js"
 import { cliCommand, cli } from "../lib/cli.js"
 import { packageJson } from "../lib/packageJson.js"
 
@@ -44,6 +46,10 @@ export function App() {
           <LoginGate>
             {command === "list" ? (
               <List />
+            ) : command === "pull" ? (
+              <Pull args={args} />
+            ) : command === "upload" && readRuneJson(args[0] ?? ".") ? (
+              <CheckpointUpload args={args} release={!!flags.release} />
             ) : command === "upload" ? (
               <Upload flags={flags} />
             ) : command === "update-info" ? (

@@ -19,6 +19,7 @@ export const cli = meow(
     --release, -r   Mark the game version as ready for release
     --draft,   -d   Mark the game version as draft
     --name,    -n   <game name>  Name of the existing game.
+    --new           <game name>  Create a new Rune game from this folder and upload it as its first checkpoint.
 
   Examples
     $ rune create my-game
@@ -54,6 +55,9 @@ export const cli = meow(
       name: {
         type: "string",
         alias: "n",
+      },
+      new: {
+        type: "string",
       },
     },
   }

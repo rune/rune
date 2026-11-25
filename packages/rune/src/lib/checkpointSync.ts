@@ -10,7 +10,7 @@ export const RUNE_JSON = "rune.json"
 
 export interface RuneJson {
   gameKey: string
-  base: string
+  base: string | null
   [key: string]: unknown
 }
 
@@ -22,7 +22,10 @@ export function readRuneJson(dir: string): RuneJson | null {
   }
 }
 
-function writeRuneJson(dir: string, values: { gameKey: string; base: string }) {
+function writeRuneJson(
+  dir: string,
+  values: { gameKey: string; base: string | null }
+) {
   const existing = readRuneJson(dir) ?? {}
   fs.writeFileSync(
     path.join(dir, RUNE_JSON),
@@ -56,7 +59,7 @@ const UPLOAD_CHECKPOINT = gql`
   mutation UploadCheckpoint(
     $gameKey: String!
     $content: Upload!
-    $base: String!
+    $base: String
     $release: Boolean
   ) {
     uploadCheckpoint(
@@ -133,9 +136,34 @@ export async function pull(dir: string, gameKey: string) {
 
 export class PullFirstError extends Error {}
 
+const CREATE_RUNE_GAME = gql`
+  mutation CreateRuneGame($title: String!) {
+    createRuneGame(title: $title) {
+      gameKey
+      editorLink
+    }
+  }
+`
+
+// A new game has no checkpoint yet, so its rune.json starts with a null base.
+export async function createRuneGame(dir: string, title: string) {
+  if (readRuneJson(dir)) {
+    throw new Error(
+      "This folder is already linked to a game in rune.json. Run `rune upload` without --new."
+    )
+  }
+  const { data } = await client.mutate({
+    mutation: CREATE_RUNE_GAME,
+    variables: { title },
+  })
+  const { gameKey, editorLink } = data.createRuneGame
+  writeRuneJson(dir, { gameKey, base: null })
+  return { gameKey: gameKey as string, editorLink: editorLink as string }
+}
+
 export async function uploadCheckpoint(dir: string, release: boolean) {
   const runeJson = readRuneJson(dir)
-  if (!runeJson?.gameKey || !runeJson.base) {
+  if (!runeJson?.gameKey || runeJson.base === undefined) {
     throw new PullFirstError(
       "No rune.json here. Run `rune pull <game key>` first to link this folder to its game."
     )

@@ -3,7 +3,12 @@ import path from "path"
 import React, { useEffect, useState } from "react"
 
 import { Step } from "../components/Step.js"
-import { pull, readRuneJson, uploadCheckpoint } from "../lib/checkpointSync.js"
+import {
+  createRuneGame,
+  pull,
+  readRuneJson,
+  uploadCheckpoint,
+} from "../lib/checkpointSync.js"
 
 type State =
   | { status: "waiting" }
@@ -61,17 +66,24 @@ export function Pull({ args }: { args: string[] }) {
 export function CheckpointUpload({
   args,
   release,
+  newTitle,
 }: {
   args: string[]
   release: boolean
+  newTitle?: string
 }) {
   const dir = path.resolve(args[0] ?? ".")
 
   const state = useTask(async () => {
+    const created = newTitle ? await createRuneGame(dir, newTitle) : null
     const { commitHash, previewLink } = await uploadCheckpoint(dir, release)
     return {
-      label: `Uploaded as checkpoint ${commitHash}`,
-      detail: `Test link: ${previewLink}`,
+      label: created
+        ? `Created “${newTitle}” (${created.gameKey}) and uploaded its first checkpoint ${commitHash}`
+        : `Uploaded as checkpoint ${commitHash}`,
+      detail:
+        `Test link: ${previewLink}` +
+        (created ? `\nOpen it in Rune: ${created.editorLink}` : ""),
     }
   })
 

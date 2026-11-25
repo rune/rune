@@ -48,8 +48,13 @@ export function App() {
               <List />
             ) : command === "pull" ? (
               <Pull args={args} />
-            ) : command === "upload" && readRuneJson(args[0] ?? ".") ? (
-              <CheckpointUpload args={args} release={!!flags.release} />
+            ) : command === "upload" &&
+              (flags.new || readRuneJson(args[0] ?? ".")) ? (
+              <CheckpointUpload
+                args={args}
+                release={!!flags.release}
+                newTitle={flags.new}
+              />
             ) : command === "upload" ? (
               <Upload flags={flags} />
             ) : command === "update-info" ? (

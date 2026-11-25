@@ -1,4 +1,5 @@
 import { Text } from "ink"
+import path from "path"
 import React from "react"
 
 import { Create } from "../flows/Create.js"
@@ -45,7 +46,12 @@ export function App() {
             {command === "list" ? (
               <List />
             ) : command === "upload" ? (
-              <Upload flags={flags} />
+              <Upload
+                dir={path.resolve(args[0] ?? ".")}
+                release={flags.release}
+                name={flags.name}
+                description={flags.description}
+              />
             ) : command === "update-info" ? (
               <Update args={args} />
             ) : command === "dashboard" || command === "dash" ? (

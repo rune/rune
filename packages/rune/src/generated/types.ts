@@ -26,6 +26,25 @@ export interface CheckVerificationPayload {
   clientMutationId: Maybe<Scalars['String']>;
 }
 
+export interface CheckpointAssetFile {
+  __typename: 'CheckpointAssetFile';
+  path: Scalars['String'];
+  url: Scalars['String'];
+}
+
+export interface CheckpointCodeFile {
+  __typename: 'CheckpointCodeFile';
+  content: Scalars['String'];
+  path: Scalars['String'];
+}
+
+export interface CheckpointFiles {
+  __typename: 'CheckpointFiles';
+  assetFiles: Array<CheckpointAssetFile>;
+  codeFiles: Array<CheckpointCodeFile>;
+  commitHash: Scalars['String'];
+}
+
 export interface CreateGameInput {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
@@ -57,6 +76,13 @@ export interface CreateGameVersionPayload {
   previewLink: Scalars['String'];
 }
 
+export interface CreateRuneGamePayload {
+  __typename: 'CreateRuneGamePayload';
+  editorLink: Scalars['String'];
+  gameId: Scalars['Int'];
+  gameKey: Scalars['String'];
+}
+
 export interface Game {
   __typename: 'Game';
   createdAt: Scalars['String'];
@@ -64,6 +90,8 @@ export interface Game {
   gameDevs: GameDevsConnection;
   gameVersions: GameVersionsConnection;
   id: Scalars['Int'];
+  /** Made in the Rune editor or by createRuneGame: uploaded with uploadCheckpoint, never createGameVersion. */
+  isRuneGame: Scalars['Boolean'];
   /** Identifies the game in rune.ai URLs, such as its stats page. */
   key: Scalars['String'];
   logoUrl: Scalars['String'];
@@ -145,10 +173,14 @@ export interface Mutation {
   /** Create a game and make the caller its ADMIN. Media is generated when no preview image is supplied. */
   createGame: CreateGamePayload;
   createGameVersion: CreateGameVersionPayload;
+  /** Create a game the Rune editor opens, exactly as the editor creates one. Its first uploadCheckpoint needs no base. */
+  createRuneGame: CreateRuneGamePayload;
   /** Step 1 of the CLI's magic-link login. Emails a confirmation link and returns a token for polling checkVerification. Anonymous, and the response is identical whether or not the email has an account. */
   startVerification: StartVerificationPayload;
   /** Update a game's title, description or media. Blank fields are left unchanged rather than cleared. */
   updateGame: UpdateGamePayload;
+  /** Replace a Rune game's files with a zip, saved as a checkpoint the editor can revert, then build its test link and, on release, submit it for review. */
+  uploadCheckpoint: UploadCheckpointPayload;
 }
 
 
@@ -167,6 +199,12 @@ export interface MutationCreateGameVersionArgs {
 }
 
 
+export interface MutationCreateRuneGameArgs {
+  description: Scalars['String'];
+  title: Scalars['String'];
+}
+
+
 export interface MutationStartVerificationArgs {
   input: StartVerificationInput;
 }
@@ -176,8 +214,20 @@ export interface MutationUpdateGameArgs {
   input: UpdateGameInput;
 }
 
+
+export interface MutationUploadCheckpointArgs {
+  base?: InputMaybe<Scalars['String']>;
+  content: Scalars['Upload'];
+  gameKey: Scalars['String'];
+  release?: InputMaybe<Scalars['Boolean']>;
+}
+
 export interface Query {
   __typename: 'Query';
+  /** A checkpoint's code and its asset download URLs, read from the checkpoint itself rather than the editor's current files. */
+  checkpointFiles: CheckpointFiles;
+  /** The commit hash of the game's current checkpoint, or null while it has none, such as during a revert. */
+  currentCheckpoint: Maybe<Scalars['String']>;
   /** A single game, or null when the requester is not an ACTIVE member of it. */
   gameById: Maybe<Game>;
   /** Games the requester is an ACTIVE member of. Tango returned every game and left the filtering to the CLI. */
@@ -187,8 +237,25 @@ export interface Query {
 }
 
 
+export interface QueryCheckpointFilesArgs {
+  commitHash: Scalars['String'];
+  gameKey: Scalars['String'];
+}
+
+
+export interface QueryCurrentCheckpointArgs {
+  gameKey: Scalars['String'];
+}
+
+
 export interface QueryGameByIdArgs {
   id: Scalars['Int'];
+  includeRuneGames?: InputMaybe<Scalars['Boolean']>;
+}
+
+
+export interface QueryGamesArgs {
+  includeRuneGames?: InputMaybe<Scalars['Boolean']>;
 }
 
 export interface StartVerificationInput {
@@ -216,6 +283,39 @@ export interface UpdateGamePayload {
   clientMutationId: Maybe<Scalars['String']>;
   game: Game;
 }
+
+export interface UploadCheckpointPayload {
+  __typename: 'UploadCheckpointPayload';
+  /** The new checkpoint; the project's next base. */
+  commitHash: Scalars['String'];
+  gameVersion: GameVersion;
+  previewLink: Scalars['String'];
+}
+
+export type CreateRuneGameMutationVariables = Exact<{
+  title: Scalars['String'];
+  description: Scalars['String'];
+}>;
+
+
+export type CreateRuneGameMutation = { __typename: 'Mutation', createRuneGame: { __typename: 'CreateRuneGamePayload', gameKey: string, editorLink: string } };
+
+export type UploadCheckpointMutationVariables = Exact<{
+  gameKey: Scalars['String'];
+  content: Scalars['Upload'];
+  base?: Maybe<Scalars['String']>;
+  release?: Maybe<Scalars['Boolean']>;
+}>;
+
+
+export type UploadCheckpointMutation = { __typename: 'Mutation', uploadCheckpoint: { __typename: 'UploadCheckpointPayload', commitHash: string, previewLink: string, gameVersion: { __typename: 'GameVersion', gameId: number, gameVersionId: number } } };
+
+export type CurrentCheckpointQueryVariables = Exact<{
+  gameKey: Scalars['String'];
+}>;
+
+
+export type CurrentCheckpointQuery = { __typename: 'Query', currentCheckpoint: string | null };
 
 export type CheckVerificationMutationVariables = Exact<{
   verificationToken: Scalars['String'];
@@ -277,6 +377,22 @@ export type CheckVerificationPayloadFieldPolicy = {
 	authToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type CheckpointAssetFileKeySpecifier = ('path' | 'url' | CheckpointAssetFileKeySpecifier)[];
+export type CheckpointAssetFileFieldPolicy = {
+	path?: FieldPolicy<any> | FieldReadFunction<any>,
+	url?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CheckpointCodeFileKeySpecifier = ('content' | 'path' | CheckpointCodeFileKeySpecifier)[];
+export type CheckpointCodeFileFieldPolicy = {
+	content?: FieldPolicy<any> | FieldReadFunction<any>,
+	path?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CheckpointFilesKeySpecifier = ('assetFiles' | 'codeFiles' | 'commitHash' | CheckpointFilesKeySpecifier)[];
+export type CheckpointFilesFieldPolicy = {
+	assetFiles?: FieldPolicy<any> | FieldReadFunction<any>,
+	codeFiles?: FieldPolicy<any> | FieldReadFunction<any>,
+	commitHash?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type CreateGamePayloadKeySpecifier = ('clientMutationId' | 'game' | CreateGamePayloadKeySpecifier)[];
 export type CreateGamePayloadFieldPolicy = {
 	clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -289,13 +405,20 @@ export type CreateGameVersionPayloadFieldPolicy = {
 	gameVersion?: FieldPolicy<any> | FieldReadFunction<any>,
 	previewLink?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type GameKeySpecifier = ('createdAt' | 'description' | 'gameDevs' | 'gameVersions' | 'id' | 'key' | 'logoUrl' | 'previewImgUrl' | 'title' | 'type' | GameKeySpecifier)[];
+export type CreateRuneGamePayloadKeySpecifier = ('editorLink' | 'gameId' | 'gameKey' | CreateRuneGamePayloadKeySpecifier)[];
+export type CreateRuneGamePayloadFieldPolicy = {
+	editorLink?: FieldPolicy<any> | FieldReadFunction<any>,
+	gameId?: FieldPolicy<any> | FieldReadFunction<any>,
+	gameKey?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type GameKeySpecifier = ('createdAt' | 'description' | 'gameDevs' | 'gameVersions' | 'id' | 'isRuneGame' | 'key' | 'logoUrl' | 'previewImgUrl' | 'title' | 'type' | GameKeySpecifier)[];
 export type GameFieldPolicy = {
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameDevs?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameVersions?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	isRuneGame?: FieldPolicy<any> | FieldReadFunction<any>,
 	key?: FieldPolicy<any> | FieldReadFunction<any>,
 	logoUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	previewImgUrl?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -333,16 +456,20 @@ export type MeFieldPolicy = {
 	displayName?: FieldPolicy<any> | FieldReadFunction<any>,
 	email?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('checkVerification' | 'createGame' | 'createGameVersion' | 'startVerification' | 'updateGame' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('checkVerification' | 'createGame' | 'createGameVersion' | 'createRuneGame' | 'startVerification' | 'updateGame' | 'uploadCheckpoint' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	checkVerification?: FieldPolicy<any> | FieldReadFunction<any>,
 	createGame?: FieldPolicy<any> | FieldReadFunction<any>,
 	createGameVersion?: FieldPolicy<any> | FieldReadFunction<any>,
+	createRuneGame?: FieldPolicy<any> | FieldReadFunction<any>,
 	startVerification?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateGame?: FieldPolicy<any> | FieldReadFunction<any>
+	updateGame?: FieldPolicy<any> | FieldReadFunction<any>,
+	uploadCheckpoint?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('gameById' | 'games' | 'me' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('checkpointFiles' | 'currentCheckpoint' | 'gameById' | 'games' | 'me' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
+	checkpointFiles?: FieldPolicy<any> | FieldReadFunction<any>,
+	currentCheckpoint?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameById?: FieldPolicy<any> | FieldReadFunction<any>,
 	games?: FieldPolicy<any> | FieldReadFunction<any>,
 	me?: FieldPolicy<any> | FieldReadFunction<any>
@@ -357,10 +484,28 @@ export type UpdateGamePayloadFieldPolicy = {
 	clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>,
 	game?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type UploadCheckpointPayloadKeySpecifier = ('commitHash' | 'gameVersion' | 'previewLink' | UploadCheckpointPayloadKeySpecifier)[];
+export type UploadCheckpointPayloadFieldPolicy = {
+	commitHash?: FieldPolicy<any> | FieldReadFunction<any>,
+	gameVersion?: FieldPolicy<any> | FieldReadFunction<any>,
+	previewLink?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type StrictTypedTypePolicies = {
 	CheckVerificationPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CheckVerificationPayloadKeySpecifier | (() => undefined | CheckVerificationPayloadKeySpecifier),
 		fields?: CheckVerificationPayloadFieldPolicy,
+	},
+	CheckpointAssetFile?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CheckpointAssetFileKeySpecifier | (() => undefined | CheckpointAssetFileKeySpecifier),
+		fields?: CheckpointAssetFileFieldPolicy,
+	},
+	CheckpointCodeFile?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CheckpointCodeFileKeySpecifier | (() => undefined | CheckpointCodeFileKeySpecifier),
+		fields?: CheckpointCodeFileFieldPolicy,
+	},
+	CheckpointFiles?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CheckpointFilesKeySpecifier | (() => undefined | CheckpointFilesKeySpecifier),
+		fields?: CheckpointFilesFieldPolicy,
 	},
 	CreateGamePayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CreateGamePayloadKeySpecifier | (() => undefined | CreateGamePayloadKeySpecifier),
@@ -369,6 +514,10 @@ export type StrictTypedTypePolicies = {
 	CreateGameVersionPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CreateGameVersionPayloadKeySpecifier | (() => undefined | CreateGameVersionPayloadKeySpecifier),
 		fields?: CreateGameVersionPayloadFieldPolicy,
+	},
+	CreateRuneGamePayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CreateRuneGamePayloadKeySpecifier | (() => undefined | CreateRuneGamePayloadKeySpecifier),
+		fields?: CreateRuneGamePayloadFieldPolicy,
 	},
 	Game?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | GameKeySpecifier | (() => undefined | GameKeySpecifier),
@@ -413,10 +562,17 @@ export type StrictTypedTypePolicies = {
 	UpdateGamePayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | UpdateGamePayloadKeySpecifier | (() => undefined | UpdateGamePayloadKeySpecifier),
 		fields?: UpdateGamePayloadFieldPolicy,
+	},
+	UploadCheckpointPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | UploadCheckpointPayloadKeySpecifier | (() => undefined | UploadCheckpointPayloadKeySpecifier),
+		fields?: UploadCheckpointPayloadFieldPolicy,
 	}
 };
 export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies;
 
+export const CreateRuneGameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRuneGame"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRuneGame"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"Argument","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameKey"}},{"kind":"Field","name":{"kind":"Name","value":"editorLink"}}]}}]}}]} as unknown as DocumentNode<CreateRuneGameMutation, CreateRuneGameMutationVariables>;
+export const UploadCheckpointDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UploadCheckpoint"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"base"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"release"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uploadCheckpoint"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"gameKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameKey"}}},{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"Argument","name":{"kind":"Name","value":"base"},"value":{"kind":"Variable","name":{"kind":"Name","value":"base"}}},{"kind":"Argument","name":{"kind":"Name","value":"release"},"value":{"kind":"Variable","name":{"kind":"Name","value":"release"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commitHash"}},{"kind":"Field","name":{"kind":"Name","value":"previewLink"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersion"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}}]}}]}}]}}]} as unknown as DocumentNode<UploadCheckpointMutation, UploadCheckpointMutationVariables>;
+export const CurrentCheckpointDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CurrentCheckpoint"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentCheckpoint"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"gameKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameKey"}}}]}]}}]} as unknown as DocumentNode<CurrentCheckpointQuery, CurrentCheckpointQueryVariables>;
 export const CheckVerificationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CheckVerification"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"verificationToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkVerification"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verificationToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"verificationToken"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authToken"}}]}}]}}]} as unknown as DocumentNode<CheckVerificationMutation, CheckVerificationMutationVariables>;
 export const CreateGameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGame"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"game"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateGameInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGame"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"game"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"game"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateGameMutation, CreateGameMutationVariables>;
 export const CreateGameVersionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGameVersion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isDraft"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"postToDiscord"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGameVersion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gameId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"isDraft"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isDraft"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"postToDiscord"},"value":{"kind":"Variable","name":{"kind":"Name","value":"postToDiscord"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"previewLink"}},{"kind":"Field","name":{"kind":"Name","value":"congratulationMsg"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersion"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gameId"}},{"kind":"Field","name":{"kind":"Name","value":"gameVersionId"}}]}}]}}]}}]} as unknown as DocumentNode<CreateGameVersionMutation, CreateGameVersionMutationVariables>;

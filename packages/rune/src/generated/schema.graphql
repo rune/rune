@@ -13,6 +13,22 @@ type CheckVerificationPayload {
   clientMutationId: String
 }
 
+type CheckpointAssetFile {
+  path: String!
+  url: String!
+}
+
+type CheckpointCodeFile {
+  content: String!
+  path: String!
+}
+
+type CheckpointFiles {
+  assetFiles: [CheckpointAssetFile!]!
+  codeFiles: [CheckpointCodeFile!]!
+  commitHash: String!
+}
+
 input CreateGameInput {
   clientMutationId: String
   description: String
@@ -42,12 +58,23 @@ type CreateGameVersionPayload {
   previewLink: String!
 }
 
+type CreateRuneGamePayload {
+  editorLink: String!
+  gameId: Int!
+  gameKey: String!
+}
+
 type Game {
   createdAt: String!
   description: String
   gameDevs: GameDevsConnection!
   gameVersions(orderBy: [GameVersionsOrderBy!]): GameVersionsConnection!
   id: Int!
+
+  """
+  Made in the Rune editor or by createRuneGame: uploaded with uploadCheckpoint, never createGameVersion.
+  """
+  isRuneGame: Boolean!
 
   """Identifies the game in rune.ai URLs, such as its stats page."""
   key: String!
@@ -125,6 +152,11 @@ type Mutation {
   createGameVersion(input: CreateGameVersionInput!): CreateGameVersionPayload!
 
   """
+  Create a game the Rune editor opens, exactly as the editor creates one. Its first uploadCheckpoint needs no base.
+  """
+  createRuneGame(description: String!, title: String!): CreateRuneGamePayload!
+
+  """
   Step 1 of the CLI's magic-link login. Emails a confirmation link and returns a token for polling checkVerification. Anonymous, and the response is identical whether or not the email has an account.
   """
   startVerification(input: StartVerificationInput!): StartVerificationPayload!
@@ -133,18 +165,49 @@ type Mutation {
   Update a game's title, description or media. Blank fields are left unchanged rather than cleared.
   """
   updateGame(input: UpdateGameInput!): UpdateGamePayload!
+
+  """
+  Replace a Rune game's files with a zip, saved as a checkpoint the editor can revert, then build its test link and, on release, submit it for review.
+  """
+  uploadCheckpoint(
+    """
+    The checkpoint the project last pulled or uploaded. Omitted only for a game's first upload, while it has no checkpoint.
+    """
+    base: String
+    content: Upload!
+    gameKey: String!
+    release: Boolean
+  ): UploadCheckpointPayload!
 }
 
 type Query {
   """
+  A checkpoint's code and its asset download URLs, read from the checkpoint itself rather than the editor's current files.
+  """
+  checkpointFiles(commitHash: String!, gameKey: String!): CheckpointFiles!
+
+  """
+  The commit hash of the game's current checkpoint, or null while it has none, such as during a revert.
+  """
+  currentCheckpoint(gameKey: String!): String
+
+  """
   A single game, or null when the requester is not an ACTIVE member of it.
   """
-  gameById(id: Int!): Game
+  gameById(
+    id: Int!
+
+    """Also return Rune games (isRuneGame). Older CLIs leave it off."""
+    includeRuneGames: Boolean
+  ): Game
 
   """
   Games the requester is an ACTIVE member of. Tango returned every game and left the filtering to the CLI.
   """
-  games: GamesConnection!
+  games(
+    """Also return Rune games (isRuneGame). Older CLIs leave it off."""
+    includeRuneGames: Boolean
+  ): GamesConnection!
 
   """
   The authenticated dev. The CLI's LoginGate runs this on every start, so it doubles as the token-validity probe that clears a stale token.
@@ -178,3 +241,10 @@ type UpdateGamePayload {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+type UploadCheckpointPayload {
+  """The new checkpoint; the project's next base."""
+  commitHash: String!
+  gameVersion: GameVersion!
+  previewLink: String!
+}

@@ -4,7 +4,7 @@ export const cli = meow(
   `
   Usage
     $ rune create <[optional] project name, defaults to current directory>
-    $ rune upload <[optional] game path, defaults to current directory>
+    $ rune upload <[optional] game path, defaults to current directory> [Uploads the game as a checkpoint in the Rune editor; the first upload links the folder to a game in rune.json]
     $ rune update-info    [Updating game info (title, description, logo)]
     $ rune list           [Lists all your games]
     $ rune dusk-to-rune <[optional] path> [Migrates your game from Dusk to Rune]
@@ -15,9 +15,9 @@ export const cli = meow(
     --version, -v   Show CLI version 
 
   Optional Upload Options
-    --release, -r   Mark the game version as ready for release
-    --draft,   -d   Mark the game version as draft
-    --name,    -n   <game name>  Name of the existing game.
+    --release, -r   Submit the upload for review
+    --name,    -n   <game name>  First upload: link to your game with this name, or create it
+    --description   <text>  First upload: the new game's description
 
   Examples
     $ rune create my-game
@@ -26,7 +26,9 @@ export const cli = meow(
 
     $ rune upload ./my-game
 
-    $ rune upload ./my-game --release --name "My Awesome Game"
+    $ rune upload ./my-game --release
+
+    $ rune upload --name "My Awesome Game" --description "Race your friends"
     
 `,
   {
@@ -44,15 +46,13 @@ export const cli = meow(
         type: "boolean",
         default: false,
       },
-      draft: {
-        alias: "d",
-        type: "boolean",
-        default: false,
-      },
 
       name: {
         type: "string",
         alias: "n",
+      },
+      description: {
+        type: "string",
       },
     },
   }

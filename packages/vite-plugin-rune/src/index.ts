@@ -7,6 +7,7 @@ import { getDetectExternalImportsPlugin } from "./plugins/detectExternalImports.
 import { getDevPlugins } from "./plugins/devPlugins.js"
 import { createRequire } from "node:module"
 import { packageVersionCheck } from "./plugins/packageVersionCheck.js"
+import { getOutputLayoutPlugin } from "./plugins/outputLayout.js"
 
 const require = createRequire(import.meta.url)
 
@@ -48,5 +49,6 @@ export default function runePlugin(options: ViteRunePluginOptions): Plugin[] {
     ...getDevPlugins(runePkgPath),
     ...getTransformHtmlForBuildPlugins(runePkgPath),
     ...getBuildLogicPlugin(options, logicPath),
+    ...getOutputLayoutPlugin(),
   ]
 }

@@ -48,6 +48,24 @@ describe("build output", () => {
     )
   })
 
+  it("keeps code and styles out of assets/", async () => {
+    const output = await buildFixture("styles-and-assets")
+    const fileNames = output.map((file) => file.fileName)
+
+    expect(fileNames).toEqual(
+      expect.arrayContaining(["index.html", "logic.js", "client.js"])
+    )
+    expect(fileNames.filter((name) => name.startsWith("assets/"))).toEqual([
+      expect.stringMatching(/^assets\/beep-[\w-]+\.wav$/),
+    ])
+    expect(fileNames).toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(/^describe-[\w-]+\.js$/),
+        expect.stringMatching(/^index-[\w-]+\.css$/),
+      ])
+    )
+  })
+
   it("nested project", async () => {
     const output = await buildFixture("nested")
     const chunks = output.filter(

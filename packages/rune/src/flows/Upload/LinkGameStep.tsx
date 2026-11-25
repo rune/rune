@@ -46,7 +46,10 @@ export function LinkGameStep({
   onError: (message: string) => void
 }) {
   const { me } = useMe()
-  const { games, gamesLoading } = useGames({ skip: !me })
+  const { games, gamesLoading } = useGames({
+    skip: !me,
+    includeRuneGames: true,
+  })
   const myGames = useMemo(
     () => getMyGames({ games, devId: me?.devId }).myGames,
     [games, me]
@@ -63,6 +66,19 @@ export function LinkGameStep({
     [onError]
   )
 
+  const chooseExisting = useCallback(
+    (game: { key: string; title: string; isRuneGame: boolean }) => {
+      if (game.isRuneGame) {
+        setChoice({ kind: "existing", gameKey: game.key, title: game.title })
+      } else {
+        fail(
+          `"${game.title}" was uploaded with an older CLI, so it isn't a Rune game yet and can't be uploaded as a checkpoint.`
+        )
+      }
+    },
+    [fail]
+  )
+
   useEffect(() => {
     if (!name || gamesLoading || !myGames) return
 
@@ -70,13 +86,13 @@ export function LinkGameStep({
       (game) => game.title.toLowerCase() === name.toLowerCase()
     )
     if (game) {
-      setChoice({ kind: "existing", gameKey: game.key, title: game.title })
+      chooseExisting(game)
     } else if (description) {
       setChoice({ kind: "new", title: name, description })
     } else {
       fail(`You have no game called "${name}". Add --description to create it.`)
     }
-  }, [name, description, gamesLoading, myGames, fail])
+  }, [name, description, gamesLoading, myGames, chooseExisting, fail])
 
   useEffect(() => {
     if (!choice) return
@@ -93,12 +109,12 @@ export function LinkGameStep({
     (gameId: number | null) => {
       const game = games?.find((game) => game.id === gameId)
       if (game) {
-        setChoice({ kind: "existing", gameKey: game.key, title: game.title })
+        chooseExisting(game)
       } else {
         setNewTitle("")
       }
     },
-    [games]
+    [games, chooseExisting]
   )
 
   if (failed) return null
@@ -108,7 +124,11 @@ export function LinkGameStep({
 
   return (
     <Box flexDirection="column">
-      <ChooseGameStep currentGameId={undefined} onComplete={onChooseGame} />
+      <ChooseGameStep
+        currentGameId={undefined}
+        onComplete={onChooseGame}
+        includeRuneGames
+      />
       {newTitle !== null && (
         <Step
           status="userInput"

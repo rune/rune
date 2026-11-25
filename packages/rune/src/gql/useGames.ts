@@ -4,11 +4,14 @@ import { GamesDocument } from "../generated/types.js"
 
 export function useGames({
   skip,
+  includeRuneGames,
 }: {
   skip?: boolean
+  includeRuneGames?: boolean
 } = {}) {
   const { data, ...rest } = useQuery(GamesDocument, {
     skip,
+    variables: { includeRuneGames },
   })
 
   return {
@@ -18,12 +21,13 @@ export function useGames({
 }
 
 gql`
-  query Games {
-    games {
+  query Games($includeRuneGames: Boolean) {
+    games(includeRuneGames: $includeRuneGames) {
       nodes {
         id
         key
         title
+        isRuneGame
         description
         gameDevs {
           nodes {

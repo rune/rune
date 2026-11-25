@@ -9,6 +9,7 @@ const game = {
   id: 1,
   key: "abc12345",
   title: "Super Game",
+  isRuneGame: false,
   description: null,
 }
 

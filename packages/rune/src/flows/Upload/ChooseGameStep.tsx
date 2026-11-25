@@ -11,13 +11,15 @@ export function ChooseGameStep({
   currentGameId,
   onComplete,
   onlyExisting,
+  includeRuneGames,
 }: {
   currentGameId: number | null | undefined
   onComplete: (gameId: number | null) => void
   onlyExisting?: boolean
+  includeRuneGames?: boolean
 }) {
   const { me } = useMe()
-  const { games, gamesLoading } = useGames({ skip: !me })
+  const { games, gamesLoading } = useGames({ skip: !me, includeRuneGames })
   const [gameId, setGameId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 

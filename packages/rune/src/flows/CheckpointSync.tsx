@@ -54,9 +54,9 @@ export function Pull({ args }: { args: string[] }) {
     const { commitHash, fileCount, overwritten } = await pull(dir, gameKey)
     return {
       label: `Pulled ${fileCount} files at checkpoint ${commitHash}`,
-      detail:
-        (overwritten ? `Replaced ${overwritten} local files. ` : "") +
-        `rune.json now links ${path.basename(dir)} to ${gameKey}.`,
+      detail: `${
+        overwritten ? `Replaced ${overwritten} local files. ` : ""
+      }rune.json now links ${path.basename(dir)} to ${gameKey}.`,
     }
   })
 
@@ -81,9 +81,9 @@ export function CheckpointUpload({
       label: created
         ? `Created “${newTitle}” (${created.gameKey}) and uploaded its first checkpoint ${commitHash}`
         : `Uploaded as checkpoint ${commitHash}`,
-      detail:
-        `Test link: ${previewLink}` +
-        (created ? `\nOpen it in Rune: ${created.editorLink}` : ""),
+      detail: `Test link: ${previewLink}${
+        created ? `\nOpen it in Rune: ${created.editorLink}` : ""
+      }`,
     }
   })
 

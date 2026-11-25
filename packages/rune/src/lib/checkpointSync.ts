@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client/index.js"
 import AdmZip from "adm-zip"
+import fetch from "cross-fetch"
 import fs from "fs"
 import path from "path"
-import fetch from "cross-fetch"
 
 import { client } from "../apollo/client.js"
 
@@ -29,7 +29,7 @@ function writeRuneJson(
   const existing = readRuneJson(dir) ?? {}
   fs.writeFileSync(
     path.join(dir, RUNE_JSON),
-    JSON.stringify({ ...existing, ...values }, null, 2) + "\n"
+    `${JSON.stringify({ ...existing, ...values }, null, 2)}\n`
   )
 }
 

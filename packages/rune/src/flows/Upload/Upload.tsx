@@ -20,7 +20,7 @@ import { LinkGameStep } from "./LinkGameStep.js"
 
 const CHANGED_IN_RUNE_EXIT_CODE = 2
 const CHANGED_IN_RUNE =
-  "This game was changed in Rune since your last upload. Keep working there."
+  "This game was changed in Rune since your last upload. Keep working there, or run `rune upload --force` to upload over Rune's changes (they stay as checkpoints you can revert to)."
 
 class ChangedInRuneError extends Error {}
 
@@ -30,19 +30,21 @@ type UploadState =
   | { step: "done"; gameKey: string; previewLink: string }
   | { step: "error"; message: string; exitCode: number }
 
-async function uploadProject(dir: string, release: boolean) {
+async function uploadProject(dir: string, release: boolean, force: boolean) {
   const project = readProjectFile(dir)
   if (!project) throw new Error(`No rune.json in ${dir}`)
 
   const current = await fetchCurrentCheckpoint(project.gameKey)
-  if (current !== project.base) throw new ChangedInRuneError(CHANGED_IN_RUNE)
+  if (current !== project.base && !force) {
+    throw new ChangedInRuneError(CHANGED_IN_RUNE)
+  }
 
   const content = await zipProject(dir)
   let result
   try {
     result = await uploadCheckpoint({
       gameKey: project.gameKey,
-      base: project.base,
+      base: force ? current : project.base,
       release,
       content: { name: "content.zip", content, type: "application/zip" },
     })
@@ -77,9 +79,11 @@ export function Upload({
   name,
   description,
   skipConfirm,
+  force,
 }: {
   dir: string
   release: boolean
+  force: boolean
   name: string | undefined
   description: string | undefined
   skipConfirm: boolean
@@ -104,7 +108,7 @@ export function Upload({
   useEffect(() => {
     if (state.step !== "uploading") return
 
-    uploadProject(dir, release)
+    uploadProject(dir, release, force)
       .then((result) => setState({ step: "done", ...result }))
       .catch((error) =>
         setState({
@@ -114,7 +118,7 @@ export function Upload({
             error instanceof ChangedInRuneError ? CHANGED_IN_RUNE_EXIT_CODE : 1,
         })
       )
-  }, [dir, release, state.step])
+  }, [dir, release, force, state.step])
 
   useEffect(() => {
     if (state.step === "error") process.exitCode = state.exitCode

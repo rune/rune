@@ -13,11 +13,13 @@ export function ChooseGameStep({
   onComplete,
   onlyExisting,
   includeRuneGames,
+  uploadableOnly,
 }: {
   currentGameId: number | null | undefined
   onComplete: (gameId: number | null) => void
   onlyExisting?: boolean
   includeRuneGames?: boolean
+  uploadableOnly?: boolean
 }) {
   const { me } = useMe()
   const { games, gamesLoading, gamesError } = useGames({
@@ -32,7 +34,10 @@ export function ChooseGameStep({
   }, [currentGameId])
 
   const items = useMemo(() => {
-    const { myGames, otherGames } = getMyGames({ games, devId: me?.devId })
+    const { myGames, otherGames } = getMyGames({
+      games: uploadableOnly ? games?.filter((game) => game.canUpload) : games,
+      devId: me?.devId,
+    })
 
     return [
       ...(onlyExisting ? [] : [{ label: "New game", value: null }]),
@@ -47,7 +52,7 @@ export function ChooseGameStep({
           }))
         : []),
     ]
-  }, [games, me, onlyExisting])
+  }, [games, me, onlyExisting, uploadableOnly])
 
   useEffect(() => {
     if (onlyExisting && items.length && !gameId) setGameId(items[0]!.value)

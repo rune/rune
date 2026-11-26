@@ -97,7 +97,9 @@ export function LinkGameStep({
     const game = myGames.find(
       (game) => game.title.toLowerCase() === name.toLowerCase()
     )
-    if (game) {
+    if (game && !game.canUpload) {
+      fail("Only the game's creator can upload it to the Rune editor.")
+    } else if (game) {
       chooseExisting(game)
     } else if (description) {
       setChoice({ kind: "new", title: name, description })
@@ -169,6 +171,7 @@ export function LinkGameStep({
         currentGameId={undefined}
         onComplete={onChooseGame}
         includeRuneGames
+        uploadableOnly
       />
       {newTitle !== null && (
         <Step

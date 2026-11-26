@@ -29,6 +29,7 @@ gql`
         key
         title
         isRuneGame
+        canUpload
         description
         gameDevs {
           nodes {

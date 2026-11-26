@@ -65,6 +65,10 @@ type CreateRuneGamePayload {
 }
 
 type Game {
+  """
+  True when the requester may upload the game to the Rune editor: its creator, or the earliest admin when it has none.
+  """
+  canUpload: Boolean!
   createdAt: String!
   description: String
   gameDevs: GameDevsConnection!

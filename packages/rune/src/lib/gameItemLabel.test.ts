@@ -10,6 +10,7 @@ const game = {
   key: "abc12345",
   title: "Super Game",
   isRuneGame: false,
+  canUpload: true,
   description: null,
 }
 

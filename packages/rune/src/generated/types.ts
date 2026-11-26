@@ -26,25 +26,6 @@ export interface CheckVerificationPayload {
   clientMutationId: Maybe<Scalars['String']>;
 }
 
-export interface CheckpointAssetFile {
-  __typename: 'CheckpointAssetFile';
-  path: Scalars['String'];
-  url: Scalars['String'];
-}
-
-export interface CheckpointCodeFile {
-  __typename: 'CheckpointCodeFile';
-  content: Scalars['String'];
-  path: Scalars['String'];
-}
-
-export interface CheckpointFiles {
-  __typename: 'CheckpointFiles';
-  assetFiles: Array<CheckpointAssetFile>;
-  codeFiles: Array<CheckpointCodeFile>;
-  commitHash: Scalars['String'];
-}
-
 export interface CreateGameInput {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
@@ -79,20 +60,19 @@ export interface CreateGameVersionPayload {
 export interface CreateRuneGamePayload {
   __typename: 'CreateRuneGamePayload';
   editorLink: Scalars['String'];
-  gameId: Scalars['Int'];
   gameKey: Scalars['String'];
 }
 
 export interface Game {
   __typename: 'Game';
-  /** True when the requester may upload the game to the Rune editor: its creator, or the earliest admin when it has none. */
+  /** The requester owns the game and maintains it (an ACTIVE ADMIN or DEV member), so uploadCheckpoint accepts it. */
   canUpload: Scalars['Boolean'];
   createdAt: Scalars['String'];
   description: Maybe<Scalars['String']>;
   gameDevs: GameDevsConnection;
   gameVersions: GameVersionsConnection;
   id: Scalars['Int'];
-  /** Made in the Rune editor or by createRuneGame: uploaded with uploadCheckpoint, never createGameVersion. */
+  /** Opened by the Rune editor: upload it with uploadCheckpoint, never createGameVersion. */
   isRuneGame: Scalars['Boolean'];
   /** Identifies the game in rune.ai URLs, such as its stats page. */
   key: Scalars['String'];
@@ -181,7 +161,7 @@ export interface Mutation {
   startVerification: StartVerificationPayload;
   /** Update a game's title, description or media. Blank fields are left unchanged rather than cleared. */
   updateGame: UpdateGamePayload;
-  /** Replace a Rune game's files with a zip, saved as a checkpoint the editor can revert, then build its test link and, on release, submit it for review. */
+  /** Replace a Rune game's files with a zip, saved as a checkpoint the editor can revert, then build its test link and, on release, submit it for review. The first upload to a game made by an older CLI makes it a Rune game. */
   uploadCheckpoint: UploadCheckpointPayload;
 }
 
@@ -226,22 +206,14 @@ export interface MutationUploadCheckpointArgs {
 
 export interface Query {
   __typename: 'Query';
-  /** A checkpoint's code and its asset download URLs, read from the checkpoint itself rather than the editor's current files. */
-  checkpointFiles: CheckpointFiles;
-  /** The commit hash of the game's current checkpoint, or null while it has none, such as during a revert. */
+  /** The commit hash of the game's current checkpoint, or null while it has none: a new game, one uploaded with an older CLI, or one whose revert failed. */
   currentCheckpoint: Maybe<Scalars['String']>;
   /** A single game, or null when the requester is not an ACTIVE member of it. */
   gameById: Maybe<Game>;
-  /** Games the requester is an ACTIVE member of. Tango returned every game and left the filtering to the CLI. */
+  /** Games the requester is an ACTIVE member of (any role), without Rune games unless includeRuneGames is set. */
   games: GamesConnection;
   /** The authenticated dev. The CLI's LoginGate runs this on every start, so it doubles as the token-validity probe that clears a stale token. */
   me: Me;
-}
-
-
-export interface QueryCheckpointFilesArgs {
-  commitHash: Scalars['String'];
-  gameKey: Scalars['String'];
 }
 
 
@@ -252,7 +224,6 @@ export interface QueryCurrentCheckpointArgs {
 
 export interface QueryGameByIdArgs {
   id: Scalars['Int'];
-  includeRuneGames?: InputMaybe<Scalars['Boolean']>;
 }
 
 
@@ -381,22 +352,6 @@ export type CheckVerificationPayloadFieldPolicy = {
 	authToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CheckpointAssetFileKeySpecifier = ('path' | 'url' | CheckpointAssetFileKeySpecifier)[];
-export type CheckpointAssetFileFieldPolicy = {
-	path?: FieldPolicy<any> | FieldReadFunction<any>,
-	url?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type CheckpointCodeFileKeySpecifier = ('content' | 'path' | CheckpointCodeFileKeySpecifier)[];
-export type CheckpointCodeFileFieldPolicy = {
-	content?: FieldPolicy<any> | FieldReadFunction<any>,
-	path?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type CheckpointFilesKeySpecifier = ('assetFiles' | 'codeFiles' | 'commitHash' | CheckpointFilesKeySpecifier)[];
-export type CheckpointFilesFieldPolicy = {
-	assetFiles?: FieldPolicy<any> | FieldReadFunction<any>,
-	codeFiles?: FieldPolicy<any> | FieldReadFunction<any>,
-	commitHash?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type CreateGamePayloadKeySpecifier = ('clientMutationId' | 'game' | CreateGamePayloadKeySpecifier)[];
 export type CreateGamePayloadFieldPolicy = {
 	clientMutationId?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -409,10 +364,9 @@ export type CreateGameVersionPayloadFieldPolicy = {
 	gameVersion?: FieldPolicy<any> | FieldReadFunction<any>,
 	previewLink?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CreateRuneGamePayloadKeySpecifier = ('editorLink' | 'gameId' | 'gameKey' | CreateRuneGamePayloadKeySpecifier)[];
+export type CreateRuneGamePayloadKeySpecifier = ('editorLink' | 'gameKey' | CreateRuneGamePayloadKeySpecifier)[];
 export type CreateRuneGamePayloadFieldPolicy = {
 	editorLink?: FieldPolicy<any> | FieldReadFunction<any>,
-	gameId?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameKey?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type GameKeySpecifier = ('canUpload' | 'createdAt' | 'description' | 'gameDevs' | 'gameVersions' | 'id' | 'isRuneGame' | 'key' | 'logoUrl' | 'previewImgUrl' | 'title' | 'type' | GameKeySpecifier)[];
@@ -471,9 +425,8 @@ export type MutationFieldPolicy = {
 	updateGame?: FieldPolicy<any> | FieldReadFunction<any>,
 	uploadCheckpoint?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('checkpointFiles' | 'currentCheckpoint' | 'gameById' | 'games' | 'me' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('currentCheckpoint' | 'gameById' | 'games' | 'me' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
-	checkpointFiles?: FieldPolicy<any> | FieldReadFunction<any>,
 	currentCheckpoint?: FieldPolicy<any> | FieldReadFunction<any>,
 	gameById?: FieldPolicy<any> | FieldReadFunction<any>,
 	games?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -499,18 +452,6 @@ export type StrictTypedTypePolicies = {
 	CheckVerificationPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CheckVerificationPayloadKeySpecifier | (() => undefined | CheckVerificationPayloadKeySpecifier),
 		fields?: CheckVerificationPayloadFieldPolicy,
-	},
-	CheckpointAssetFile?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CheckpointAssetFileKeySpecifier | (() => undefined | CheckpointAssetFileKeySpecifier),
-		fields?: CheckpointAssetFileFieldPolicy,
-	},
-	CheckpointCodeFile?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CheckpointCodeFileKeySpecifier | (() => undefined | CheckpointCodeFileKeySpecifier),
-		fields?: CheckpointCodeFileFieldPolicy,
-	},
-	CheckpointFiles?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CheckpointFilesKeySpecifier | (() => undefined | CheckpointFilesKeySpecifier),
-		fields?: CheckpointFilesFieldPolicy,
 	},
 	CreateGamePayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CreateGamePayloadKeySpecifier | (() => undefined | CreateGamePayloadKeySpecifier),

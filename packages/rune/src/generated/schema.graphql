@@ -13,22 +13,6 @@ type CheckVerificationPayload {
   clientMutationId: String
 }
 
-type CheckpointAssetFile {
-  path: String!
-  url: String!
-}
-
-type CheckpointCodeFile {
-  content: String!
-  path: String!
-}
-
-type CheckpointFiles {
-  assetFiles: [CheckpointAssetFile!]!
-  codeFiles: [CheckpointCodeFile!]!
-  commitHash: String!
-}
-
 input CreateGameInput {
   clientMutationId: String
   description: String
@@ -60,13 +44,12 @@ type CreateGameVersionPayload {
 
 type CreateRuneGamePayload {
   editorLink: String!
-  gameId: Int!
   gameKey: String!
 }
 
 type Game {
   """
-  True when the requester may upload the game to the Rune editor: its creator, or the earliest admin when it has none.
+  The requester owns the game and maintains it (an ACTIVE ADMIN or DEV member), so uploadCheckpoint accepts it.
   """
   canUpload: Boolean!
   createdAt: String!
@@ -76,7 +59,7 @@ type Game {
   id: Int!
 
   """
-  Made in the Rune editor or by createRuneGame: uploaded with uploadCheckpoint, never createGameVersion.
+  Opened by the Rune editor: upload it with uploadCheckpoint, never createGameVersion.
   """
   isRuneGame: Boolean!
 
@@ -171,11 +154,11 @@ type Mutation {
   updateGame(input: UpdateGameInput!): UpdateGamePayload!
 
   """
-  Replace a Rune game's files with a zip, saved as a checkpoint the editor can revert, then build its test link and, on release, submit it for review.
+  Replace a Rune game's files with a zip, saved as a checkpoint the editor can revert, then build its test link and, on release, submit it for review. The first upload to a game made by an older CLI makes it a Rune game.
   """
   uploadCheckpoint(
     """
-    The checkpoint the project last pulled or uploaded. Omitted only for a game's first upload, while it has no checkpoint.
+    The checkpoint the project last pulled or uploaded. Omitted when the project has none yet: the upload then replaces whatever the editor holds, after checkpointing it.
     """
     base: String
     content: Upload!
@@ -186,30 +169,22 @@ type Mutation {
 
 type Query {
   """
-  A checkpoint's code and its asset download URLs, read from the checkpoint itself rather than the editor's current files.
-  """
-  checkpointFiles(commitHash: String!, gameKey: String!): CheckpointFiles!
-
-  """
-  The commit hash of the game's current checkpoint, or null while it has none, such as during a revert.
+  The commit hash of the game's current checkpoint, or null while it has none: a new game, one uploaded with an older CLI, or one whose revert failed.
   """
   currentCheckpoint(gameKey: String!): String
 
   """
   A single game, or null when the requester is not an ACTIVE member of it.
   """
-  gameById(
-    id: Int!
-
-    """Also return Rune games (isRuneGame). Older CLIs leave it off."""
-    includeRuneGames: Boolean
-  ): Game
+  gameById(id: Int!): Game
 
   """
-  Games the requester is an ACTIVE member of. Tango returned every game and left the filtering to the CLI.
+  Games the requester is an ACTIVE member of (any role), without Rune games unless includeRuneGames is set.
   """
   games(
-    """Also return Rune games (isRuneGame). Older CLIs leave it off."""
+    """
+    Include Rune games (isRuneGame); canUpload marks the ones the requester can upload. Older CLIs leave it off.
+    """
     includeRuneGames: Boolean
   ): GamesConnection!
 

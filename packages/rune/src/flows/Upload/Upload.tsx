@@ -18,7 +18,6 @@ import { gameFilesDir, zipProject } from "../../lib/zipProject.js"
 
 import { LinkGameStep } from "./LinkGameStep.js"
 
-// Its own exit code, so scripts can tell "edited in Rune" from a failure.
 const CHANGED_IN_RUNE_EXIT_CODE = 2
 const CHANGED_IN_RUNE =
   "This game was changed in Rune since your last upload. Keep working there."

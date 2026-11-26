@@ -5,6 +5,7 @@ import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
 import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
+import { apiErrorMessage } from "../../lib/apiErrorMessage.js"
 import { gameItemLabel } from "../../lib/gameItemLabel.js"
 import { getMyGames } from "../../lib/getMyGames.js"
 
@@ -12,7 +13,10 @@ import { Details } from "./Details.js"
 
 export function List() {
   const { me } = useMe()
-  const { games, gamesLoading } = useGames({ skip: !me })
+  const { games, gamesLoading, gamesError } = useGames({
+    skip: !me,
+    includeRuneGames: true,
+  })
   const [gameId, setGameId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
@@ -54,6 +58,11 @@ export function List() {
     <Box flexDirection="column">
       {gamesLoading ? (
         <Step status="waiting" label="Loading games" />
+      ) : gamesError ? (
+        <Step
+          status="error"
+          label={`Couldn't load your games: ${apiErrorMessage(gamesError)}`}
+        />
       ) : items.length > 0 ? (
         <Select
           items={items}

@@ -51,6 +51,7 @@ export function App() {
                 release={flags.release}
                 name={flags.name}
                 description={flags.description}
+                skipConfirm={flags.yes}
               />
             ) : command === "update-info" ? (
               <Update args={args} />

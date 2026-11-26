@@ -10,6 +10,13 @@ export function apiErrorCode(error: unknown) {
   return error.graphQLErrors[0]?.message.match(/^\[tango\]\[(\w+)\]/)?.[1]
 }
 
+// An upload that failed after saving its checkpoint still moved the base.
+export function apiErrorCommitHash(error: unknown) {
+  if (!isApolloError(error)) return undefined
+  const commitHash = error.graphQLErrors[0]?.extensions?.commitHash
+  return typeof commitHash === "string" ? commitHash : undefined
+}
+
 // The API sends refusals as "[tango][CODE] message" and masks anything else
 // to a bare "[tango][UNEXPECTED_ERR]".
 export function apiErrorMessage(error: unknown) {

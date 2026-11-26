@@ -17,6 +17,7 @@ export function useGames({
   return {
     games: data?.games?.nodes,
     gamesLoading: rest.loading,
+    gamesError: rest.error,
   }
 }
 

@@ -4,6 +4,7 @@ import { Select } from "../../components/Select.js"
 import { Step } from "../../components/Step.js"
 import { useGames } from "../../gql/useGames.js"
 import { useMe } from "../../gql/useMe.js"
+import { apiErrorMessage } from "../../lib/apiErrorMessage.js"
 import { gameItemLabel } from "../../lib/gameItemLabel.js"
 import { getMyGames } from "../../lib/getMyGames.js"
 
@@ -19,7 +20,10 @@ export function ChooseGameStep({
   includeRuneGames?: boolean
 }) {
   const { me } = useMe()
-  const { games, gamesLoading } = useGames({ skip: !me, includeRuneGames })
+  const { games, gamesLoading, gamesError } = useGames({
+    skip: !me,
+    includeRuneGames,
+  })
   const [gameId, setGameId] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
@@ -62,6 +66,15 @@ export function ChooseGameStep({
 
     return games?.find((game) => game.id === gameId)?.title ?? "..."
   }, [gameId, games])
+
+  if (gamesError) {
+    return (
+      <Step
+        status="error"
+        label={`Couldn't load your games: ${apiErrorMessage(gamesError)}`}
+      />
+    )
+  }
 
   if (!gamesLoading && items.length === 0) {
     return <Step status="error" label="No games found" />

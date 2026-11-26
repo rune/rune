@@ -7,7 +7,11 @@ import {
   fetchCurrentCheckpoint,
   uploadCheckpoint,
 } from "../../gql/uploadCheckpoint.js"
-import { apiErrorCode, apiErrorMessage } from "../../lib/apiErrorMessage.js"
+import {
+  apiErrorCode,
+  apiErrorCommitHash,
+  apiErrorMessage,
+} from "../../lib/apiErrorMessage.js"
 import { publishLink } from "../../lib/appLinks.js"
 import { readProjectFile, writeProjectFile } from "../../lib/projectFile.js"
 import { gameFilesDir, zipProject } from "../../lib/zipProject.js"
@@ -32,11 +36,6 @@ async function uploadProject(dir: string, release: boolean) {
   if (!project) throw new Error(`No rune.json in ${dir}`)
 
   const current = await fetchCurrentCheckpoint(project.gameKey)
-  if (current === null && project.base !== null) {
-    throw new Error(
-      "The game is being reverted in Rune. Try again in a moment."
-    )
-  }
   if (current !== project.base) throw new ChangedInRuneError(CHANGED_IN_RUNE)
 
   const content = await zipProject(dir)
@@ -49,8 +48,22 @@ async function uploadProject(dir: string, release: boolean) {
       content: { name: "content.zip", content, type: "application/zip" },
     })
   } catch (error) {
-    if (apiErrorCode(error) === "CHECKPOINT_MOVED") {
-      throw new ChangedInRuneError(CHANGED_IN_RUNE)
+    const commitHash = apiErrorCommitHash(error)
+    if (commitHash) {
+      writeProjectFile(dir, { gameKey: project.gameKey, base: commitHash })
+    }
+    const code = apiErrorCode(error)
+    if (code === "CHECKPOINT_MOVED") {
+      throw new ChangedInRuneError(apiErrorMessage(error))
+    }
+    if (
+      code === "GAME_DETAILS_INVALID" &&
+      commitHash &&
+      project.base === null
+    ) {
+      throw new Error(
+        "Converted. Set a name and description in the Rune editor to get a test link."
+      )
     }
     throw error
   }
@@ -64,11 +77,13 @@ export function Upload({
   release,
   name,
   description,
+  skipConfirm,
 }: {
   dir: string
   release: boolean
   name: string | undefined
   description: string | undefined
+  skipConfirm: boolean
 }) {
   const [state, setState] = useState<UploadState>(() => {
     try {
@@ -113,6 +128,7 @@ export function Upload({
           dir={dir}
           name={name}
           description={description}
+          skipConfirm={skipConfirm}
           onLinked={onLinked}
           onError={onError}
         />

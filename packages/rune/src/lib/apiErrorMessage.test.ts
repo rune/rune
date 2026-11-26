@@ -1,6 +1,10 @@
 import { describe, test, expect } from "@jest/globals"
 
-import { apiErrorCode, apiErrorMessage } from "./apiErrorMessage"
+import {
+  apiErrorCode,
+  apiErrorCommitHash,
+  apiErrorMessage,
+} from "./apiErrorMessage"
 
 const apolloError = (message: string) =>
   Object.assign(new Error(message), {
@@ -13,11 +17,11 @@ describe("apiErrorMessage", () => {
     expect(
       apiErrorMessage(
         apolloError(
-          "[tango][CHECKPOINT_MOVED] The game changed since your last pull or upload. Run `rune pull`, then upload again."
+          "[tango][CHECKPOINT_MOVED] This game was changed in Rune since your last upload. Keep working there."
         )
       )
     ).toBe(
-      "The game changed since your last pull or upload. Run `rune pull`, then upload again."
+      "This game was changed in Rune since your last upload. Keep working there."
     )
     expect(
       apiErrorMessage(
@@ -40,9 +44,9 @@ describe("apiErrorMessage", () => {
   })
 
   test("shows a local error's message", () => {
-    expect(apiErrorMessage(new Error("Run `rune pull` first."))).toBe(
-      "Run `rune pull` first."
-    )
+    expect(
+      apiErrorMessage(new Error("Run your build first (no dist/index.html)."))
+    ).toBe("Run your build first (no dist/index.html).")
   })
 })
 
@@ -55,5 +59,23 @@ describe("apiErrorCode", () => {
       "GAME_NOT_FOUND"
     )
     expect(apiErrorCode(new Error("local"))).toBeUndefined()
+  })
+})
+
+describe("apiErrorCommitHash", () => {
+  test("reads the checkpoint a failed upload still saved", () => {
+    const error = Object.assign(new Error("[tango][GAME_LOGIC_ERROR] x"), {
+      graphQLErrors: [
+        {
+          message: "[tango][GAME_LOGIC_ERROR] x",
+          extensions: { commitHash: "hash-2" },
+        },
+      ],
+      networkError: null,
+    })
+    expect(apiErrorCommitHash(error)).toBe("hash-2")
+    expect(apiErrorCommitHash(apolloError("[tango][GAME_NOT_FOUND]"))).toBe(
+      undefined
+    )
   })
 })

@@ -18,6 +18,7 @@ export const cli = meow(
     --release, -r   Submit the upload for review
     --name,    -n   <game name>  First upload: link to your game with this name, or create it
     --description   <text>  First upload: the new game's description
+    --yes,     -y   First upload: replace an existing Rune game's files without asking
 
   Examples
     $ rune create my-game
@@ -53,6 +54,11 @@ export const cli = meow(
       },
       description: {
         type: "string",
+      },
+      yes: {
+        type: "boolean",
+        alias: "y",
+        default: false,
       },
     },
   }

@@ -168,7 +168,7 @@ function OccupiedSpace({
   return (
     <Sprite
       ref={spriteRef}
-      image={`${side}.svg`}
+      image={`assets/${side}.svg`}
       width={0}
       height={0}
       x={width * x + width / 2}
